@@ -24,6 +24,7 @@ def _snapshot(project: Path) -> dict[str, bytes]:
         project / "README.md",
         project / "daily",
         project / "topics",
+        project / "site",
         project / "data",
     ]
     files: list[Path] = []
@@ -57,6 +58,8 @@ def test_rebuild_is_deterministic_and_uses_no_network(
     assert "README.md" in first
     assert "data/feed_index.json" in first
     assert "data/topics.json" in first
+    assert "site/index.html" in first
+    assert "site/assets/style.css" in first
     assert not any(path.startswith("daily/") for path in first)
 
 
