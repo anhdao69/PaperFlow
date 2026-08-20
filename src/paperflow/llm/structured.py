@@ -3,14 +3,32 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from pathlib import Path
+from typing import Any, Literal, TypeVar
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, TemplateNotFound
-from pydantic import ConfigDict, Field
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationError,
+    field_validator,
+    model_validator,
+)
 
+from paperflow.atomic import atomic_write_text
 from paperflow.config import PromptDefinition, PromptManifest
-from paperflow.models import DomainModel, NonEmptyText
+from paperflow.models import (
+    DomainModel,
+    LLMCallResult,
+    NonEmptyText,
+    Sha256,
+    validate_canonical_arxiv_id,
+)
 from paperflow.taxonomy import TaxonomyConfig
+
+OutputT = TypeVar("OutputT", bound=BaseModel)
 
 
 class PromptPaper(DomainModel):
@@ -31,6 +49,101 @@ class RenderedPrompt(DomainModel):
     system: str
     user: str
     system_hash: str
+
+
+class LLMCacheKey(DomainModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    task: Literal["filter", "summary"]
+    arxiv_id: str
+    abstract_hash: Sha256
+    prompt_hash: Sha256
+    model_id: NonEmptyText
+    taxonomy_hash: Sha256 | None = None
+
+    _validate_arxiv_id = field_validator("arxiv_id")(validate_canonical_arxiv_id)
+
+    @model_validator(mode="after")
+    def validate_task_components(self) -> LLMCacheKey:
+        if self.task == "filter" and self.taxonomy_hash is None:
+            raise ValueError("filter cache keys require taxonomy_hash")
+        if self.task == "summary" and self.taxonomy_hash is not None:
+            raise ValueError("summary cache keys must not include taxonomy_hash")
+        return self
+
+    def fingerprint(self) -> str:
+        normalized = json.dumps(
+            self.model_dump(mode="json"),
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode()
+        return hashlib.sha256(normalized).hexdigest()
+
+
+class _LLMCacheRecord(DomainModel):
+    schema_version: Literal[1] = 1
+    key: LLMCacheKey
+    result: dict[str, Any]
+
+
+class LLMCache:
+    """Optional validated disk cache; corrupt or stale records are misses."""
+
+    def __init__(self, root: Path) -> None:
+        self.root = root
+
+    def load(
+        self, key: LLMCacheKey, schema: type[OutputT]
+    ) -> LLMCallResult[OutputT] | None:
+        path = self._path(key)
+        try:
+            record = _LLMCacheRecord.model_validate_json(
+                path.read_text(encoding="utf-8")
+            )
+            if record.key != key:
+                return None
+            return LLMCallResult[schema].model_validate(record.result)
+        except (OSError, ValidationError, ValueError):
+            return None
+
+    def store(
+        self, key: LLMCacheKey, result: LLMCallResult[OutputT]
+    ) -> Path:
+        record = _LLMCacheRecord(
+            key=key,
+            result=result.model_dump(mode="json"),
+        )
+        path = self._path(key)
+        encoded = json.dumps(
+            record.model_dump(mode="json"),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ) + "\n"
+        atomic_write_text(
+            path,
+            encoded,
+            validator=lambda staged: _LLMCacheRecord.model_validate_json(
+                staged.read_text(encoding="utf-8")
+            ),
+        )
+        return path
+
+    def _path(self, key: LLMCacheKey) -> Path:
+        safe_id = key.arxiv_id.replace("/", "_")
+        return self.root / f"llm_{key.task}" / f"{safe_id}__{key.fingerprint()}.json"
+
+
+def summary_cache_key(
+    paper: PromptPaper, prompt: RenderedPrompt, model_id: str
+) -> LLMCacheKey:
+    return LLMCacheKey(
+        task="summary",
+        arxiv_id=paper.arxiv_id,
+        abstract_hash=hashlib.sha256(paper.abstract.encode()).hexdigest(),
+        prompt_hash=prompt.system_hash,
+        model_id=model_id,
+    )
 
 
 def prompt_hash(content: str) -> str:

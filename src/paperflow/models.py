@@ -114,6 +114,25 @@ class FilterBatchResponse(DomainModel):
     results: list[FilterResult]
 
 
+class SummaryContent(DomainModel):
+    tldr: NonEmptyText
+    bullets: list[NonEmptyText] = Field(min_length=3, max_length=5)
+    problem: NonEmptyText | None = None
+    method: NonEmptyText | None = None
+    contribution: NonEmptyText | None = None
+
+
+class SummaryResult(SummaryContent):
+    arxiv_id: str
+
+    @field_validator("arxiv_id")
+    @classmethod
+    def require_canonical_arxiv_id(cls, value: str) -> str:
+        if not _CANONICAL_ARXIV_ID.fullmatch(value):
+            raise ValueError("arxiv_id must be a canonical versionless arXiv ID")
+        return value
+
+
 class FilterStatus(StrEnum):
     KEPT = "kept"
     DROPPED = "dropped"
