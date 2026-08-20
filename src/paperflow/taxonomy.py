@@ -17,6 +17,26 @@ from paperflow.models import DomainModel, TopicAssignment, TopicConfig
 _SAFE_ID = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 
 
+class TaxonomyAssignmentError(ValueError):
+    """Base error for a structurally valid but unknown taxonomy assignment."""
+
+
+class UnknownTopicError(TaxonomyAssignmentError):
+    """Raised when an assignment names no active topic."""
+
+
+class DuplicateTopicAssignmentError(TaxonomyAssignmentError):
+    """Raised when one paper repeats a parent topic assignment."""
+
+
+class DuplicateSubtopicError(TaxonomyAssignmentError):
+    """Raised when one topic assignment repeats a child ID."""
+
+
+class InvalidParentChildError(TaxonomyAssignmentError):
+    """Raised when a subtopic is unknown or belongs to another topic."""
+
+
 class TaxonomyConfig(DomainModel):
     """Validated two-level PaperFlow taxonomy in configured display order."""
 
@@ -143,13 +163,23 @@ def validate_assignments(
     seen_topics: set[str] = set()
     for assignment in assignments:
         if assignment.topic_id in seen_topics:
-            raise ValueError(f"duplicate topic assignment: {assignment.topic_id}")
+            raise DuplicateTopicAssignmentError(
+                f"duplicate topic assignment: {assignment.topic_id}"
+            )
         seen_topics.add(assignment.topic_id)
         if not taxonomy.has_topic(assignment.topic_id):
-            raise ValueError(f"unknown topic assignment: {assignment.topic_id}")
+            raise UnknownTopicError(
+                f"unknown topic assignment: {assignment.topic_id}"
+            )
+        seen_subtopics: set[str] = set()
         for subtopic_id in assignment.subtopic_ids:
+            if subtopic_id in seen_subtopics:
+                raise DuplicateSubtopicError(
+                    f"duplicate subtopic assignment: {subtopic_id}"
+                )
+            seen_subtopics.add(subtopic_id)
             if not taxonomy.is_child(assignment.topic_id, subtopic_id):
-                raise ValueError(
+                raise InvalidParentChildError(
                     f"subtopic {subtopic_id!r} is not a child of "
                     f"{assignment.topic_id!r}"
                 )

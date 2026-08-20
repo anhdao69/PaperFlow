@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from collections import defaultdict
 from collections.abc import Iterable, Iterator
 from pathlib import Path
 
@@ -29,6 +30,28 @@ class ScreeningLedger:
             stream.flush()
             os.fsync(stream.fileno())
         return path
+
+    def append_many(self, events: Iterable[ScreeningEvent]) -> tuple[Path, ...]:
+        """Append a validated event batch with one write per monthly ledger."""
+        grouped: dict[str, list[ScreeningEvent]] = defaultdict(list)
+        for event in events:
+            grouped[f"{event.observed_at:%Y-%m}.jsonl"].append(event)
+        if not grouped:
+            return ()
+        self.root.mkdir(parents=True, exist_ok=True)
+        paths: list[Path] = []
+        for filename in sorted(grouped):
+            path = self.root / filename
+            encoded = "".join(
+                event.model_dump_json(exclude_none=True) + "\n"
+                for event in grouped[filename]
+            )
+            with path.open("a", encoding="utf-8") as stream:
+                stream.write(encoded)
+                stream.flush()
+                os.fsync(stream.fileno())
+            paths.append(path)
+        return tuple(paths)
 
     def iter_events(self) -> Iterator[ScreeningEvent]:
         for path in sorted(self.root.glob("????-??.jsonl")):

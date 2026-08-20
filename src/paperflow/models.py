@@ -86,6 +86,34 @@ class TopicAssignment(DomainModel):
         return value
 
 
+class FilterResult(DomainModel):
+    arxiv_id: str
+    keep: bool
+    relevance: int = Field(ge=1, le=10)
+    novelty: int = Field(ge=1, le=10)
+    assignments: list[TopicAssignment]
+    reason: NonEmptyText
+
+    @field_validator("arxiv_id")
+    @classmethod
+    def require_canonical_arxiv_id(cls, value: str) -> str:
+        if not _CANONICAL_ARXIV_ID.fullmatch(value):
+            raise ValueError("arxiv_id must be a canonical versionless arXiv ID")
+        return value
+
+    @model_validator(mode="after")
+    def validate_decision(self) -> FilterResult:
+        if self.keep and not self.assignments:
+            raise ValueError("KEEP requires at least one topic assignment")
+        if not self.keep and self.assignments:
+            raise ValueError("DROP requires empty topic assignments")
+        return self
+
+
+class FilterBatchResponse(DomainModel):
+    results: list[FilterResult]
+
+
 class FilterStatus(StrEnum):
     KEPT = "kept"
     DROPPED = "dropped"
