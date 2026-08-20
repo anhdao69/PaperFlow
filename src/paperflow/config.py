@@ -154,7 +154,7 @@ class RuntimeConfig(StrictConfigModel):
 
 class ModelProfile(StrictConfigModel):
     model_id: str = Field(pattern=r"^[a-z0-9][a-z0-9._-]*/[A-Za-z0-9][A-Za-z0-9._:-]*$")
-    temperature: float = Field(ge=0, le=2)
+    temperature: float | None = Field(default=None, ge=0, le=2)
     max_output_tokens: int = Field(ge=1, le=100_000)
 
 

@@ -145,6 +145,20 @@ class CandidatePaper(DomainModel):
         return value
 
 
+class LLMCallResult[StructuredOutputT: BaseModel](DomainModel):
+    parsed: StructuredOutputT
+    requested_model: NonEmptyText
+    actual_model: str | None = None
+    provider: str | None = None
+    input_tokens: int | None = Field(default=None, ge=0)
+    output_tokens: int | None = Field(default=None, ge=0)
+    cached_input_tokens: int | None = Field(default=None, ge=0)
+    cost_usd: float | None = Field(default=None, ge=0)
+    latency_ms: int = Field(ge=0)
+    request_id: str | None = None
+    attempt: int = Field(ge=1)
+
+
 def require_aware_datetime(value: datetime | None) -> datetime | None:
     if value is None:
         return None
