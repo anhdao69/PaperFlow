@@ -104,10 +104,45 @@ class FigureStatus(StrEnum):
     FAILED = "failed"
 
 
+class AnnounceType(StrEnum):
+    NEW = "new"
+    CROSS = "cross"
+    REPLACE = "replace"
+
+
 def validate_canonical_arxiv_id(value: str) -> str:
     if not _CANONICAL_ARXIV_ID.fullmatch(value):
         raise ValueError("arxiv_id must be a canonical versionless arXiv ID")
     return value
+
+
+class RawArxivEntry(DomainModel):
+    source_arxiv_id: NonEmptyText
+    title: NonEmptyText
+    abstract: NonEmptyText
+    authors: list[NonEmptyText] = Field(min_length=1)
+    categories: list[NonEmptyText] = Field(min_length=1)
+    announce_type: AnnounceType
+
+
+class CandidatePaper(DomainModel):
+    arxiv_id: str
+    source_arxiv_id: NonEmptyText
+    title: NonEmptyText
+    abstract: NonEmptyText
+    authors: list[NonEmptyText] = Field(min_length=1)
+    categories: list[NonEmptyText] = Field(min_length=1)
+    arxiv_url: AnyHttpUrl
+    pdf_url: AnyHttpUrl
+
+    _validate_arxiv_id = field_validator("arxiv_id")(validate_canonical_arxiv_id)
+
+    @field_validator("authors", "categories")
+    @classmethod
+    def require_unique_candidate_values(cls, value: list[str]) -> list[str]:
+        if len(value) != len(set(value)):
+            raise ValueError("candidate list values must be unique")
+        return value
 
 
 def require_aware_datetime(value: datetime | None) -> datetime | None:
