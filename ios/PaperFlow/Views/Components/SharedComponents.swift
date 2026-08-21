@@ -131,35 +131,41 @@ struct PFFigureView: View {
     var contentMode: ContentMode = .fill
 
     var body: some View {
-        Group {
-            if status == .ready,
-               let relativePath,
-               let url = PFPublication.figureURL(for: relativePath) {
-                AsyncImage(url: url, transaction: Transaction(animation: .easeIn(duration: 0.2))) { phase in
-                    switch phase {
-                    case let .success(image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: contentMode)
-                            .accessibilityLabel("Scientific figure")
-                    case .empty:
-                        ZStack {
-                            PFTheme.primarySoft
-                            ProgressView().tint(PFTheme.primary)
+        GeometryReader { geometry in
+            Group {
+                if status == .ready,
+                   let relativePath,
+                   let url = PFPublication.figureURL(for: relativePath) {
+                    AsyncImage(
+                        url: url,
+                        transaction: Transaction(animation: .easeIn(duration: 0.2))
+                    ) { phase in
+                        switch phase {
+                        case let .success(image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: contentMode)
+                                .accessibilityLabel("Scientific figure")
+                        case .empty:
+                            ZStack {
+                                PFTheme.primarySoft
+                                ProgressView().tint(PFTheme.primary)
+                            }
+                        case .failure:
+                            PFFigurePlaceholder(status: .failed, height: height)
+                        @unknown default:
+                            PFFigurePlaceholder(status: status, height: height)
                         }
-                    case .failure:
-                        PFFigurePlaceholder(status: .failed, height: height)
-                    @unknown default:
-                        PFFigurePlaceholder(status: status, height: height)
                     }
+                } else {
+                    PFFigurePlaceholder(status: status, height: height)
                 }
-            } else {
-                PFFigurePlaceholder(status: status, height: height)
             }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .clipped()
         }
         .frame(maxWidth: .infinity)
         .frame(height: height)
-        .clipped()
         .clipShape(.rect(cornerRadius: PFTheme.Radius.card))
     }
 }
