@@ -10,4 +10,4 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
-| 2026-08-21 | [Open-Vocabulary 3D Object Detection with Co-Distillation Discovery and Dual Guidance Robust Training](https://arxiv.org/abs/2608.19973) | 3D Vision: 3D Foundation Models | Recently, open-vocabulary 3D object detection (3D-OVD) has gained increasing attention for its ability to detect unseen objects in 3D scenes. Existing approaches typically adopt a two-stage pipeline that first discovers novel objects using… | 6 | 6 |
+| 2026-08-21 | [Open-Vocabulary 3D Object Detection with Co-Distillation Discovery and Dual Guidance Robust Training](https://arxiv.org/abs/2608.19973) | 3D Vision: 3D Foundation Models | A two-part framework improves open-vocabulary 3D object detection by making novel-object discovery more reliable and training more robust to localization and semantic errors. | 6 | 6 |
