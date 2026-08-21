@@ -99,3 +99,12 @@ def test_rebuild_generates_and_preserves_successful_zero_day(tmp_path: Path) -> 
         (project / "data/feed_index.json").read_text(encoding="utf-8")
     )
     assert [day.date.isoformat() for day in rebuilt.days] == ["2026-08-20"]
+
+
+def test_rebuild_dry_run_validates_without_writes(tmp_path: Path) -> None:
+    project = _project(tmp_path)
+    before = _snapshot(project)
+
+    assert main(["--root", str(project), "--dry-run"]) == 0
+
+    assert _snapshot(project) == before

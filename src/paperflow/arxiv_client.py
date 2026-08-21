@@ -14,7 +14,8 @@ from typing import Protocol
 from urllib.parse import quote
 
 from paperflow.atomic import atomic_write_text
-from paperflow.models import AnnounceType, RawArxivEntry
+from paperflow.models import AnnounceType, CandidatePaper, RawArxivEntry
+from paperflow.normalize import normalize_arxiv_id, normalize_scientific_text
 
 _ANNOUNCE_TYPE = re.compile(r"Announce Type:\s*(new|cross|replace)\b", re.IGNORECASE)
 _ABSTRACT_PREFIX = re.compile(r"^.*?Abstract:\s*", re.IGNORECASE | re.DOTALL)
@@ -72,6 +73,68 @@ class ArxivClient:
                     f"arXiv response for {category} was invalid"
                 ) from error
         return entries
+
+
+class ArxivMetadataRefetcher:
+    """Refetch one retry/reclassification paper from the arXiv Atom API."""
+
+    def __init__(self, transport: HttpTransport, *, timeout_seconds: float) -> None:
+        self._transport = transport
+        self._timeout_seconds = timeout_seconds
+
+    def refetch(self, arxiv_id: str) -> CandidatePaper | None:
+        canonical = normalize_arxiv_id(arxiv_id)
+        url = "https://export.arxiv.org/api/query?id_list=" + quote(
+            canonical, safe="/"
+        )
+        try:
+            payload = self._transport.get(url, timeout=self._timeout_seconds)
+            return parse_arxiv_atom_candidate(payload, expected_id=canonical)
+        except (ArxivSourceError, ET.ParseError, ValueError):
+            return None
+
+
+def parse_arxiv_atom_candidate(
+    payload: bytes, *, expected_id: str
+) -> CandidatePaper | None:
+    namespace = "{http://www.w3.org/2005/Atom}"
+    root = ET.fromstring(payload)
+    entry = root.find(f"{namespace}entry")
+    if entry is None:
+        return None
+    source_id = _atom_text(entry, f"{namespace}id").rsplit("/", 1)[-1]
+    canonical = normalize_arxiv_id(source_id)
+    if canonical != expected_id:
+        raise ValueError("arXiv metadata response ID did not match request")
+    authors = [
+        normalize_scientific_text(name.text)
+        for name in entry.findall(f"{namespace}author/{namespace}name")
+        if name.text and name.text.strip()
+    ]
+    categories = [
+        value
+        for category in entry.findall(f"{namespace}category")
+        if (value := category.attrib.get("term", "").strip())
+    ]
+    return CandidatePaper(
+        arxiv_id=canonical,
+        source_arxiv_id=source_id,
+        title=normalize_scientific_text(_atom_text(entry, f"{namespace}title")),
+        abstract=normalize_scientific_text(
+            _atom_text(entry, f"{namespace}summary")
+        ),
+        authors=list(dict.fromkeys(authors)),
+        categories=list(dict.fromkeys(categories)),
+        arxiv_url=f"https://arxiv.org/abs/{canonical}",
+        pdf_url=f"https://arxiv.org/pdf/{canonical}",
+    )
+
+
+def _atom_text(entry: ET.Element, tag: str) -> str:
+    value = entry.findtext(tag)
+    if value is None or not value.strip():
+        raise ValueError(f"arXiv metadata entry is missing {tag.rsplit('}', 1)[-1]}")
+    return value.strip()
 
 
 def parse_arxiv_rss(payload: bytes, *, source_category: str) -> list[RawArxivEntry]:

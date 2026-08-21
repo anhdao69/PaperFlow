@@ -8,6 +8,7 @@ import pytest
 from paperflow.arxiv_client import (
     ArxivClient,
     ArxivSourceError,
+    parse_arxiv_atom_candidate,
     parse_arxiv_rss,
     save_raw_snapshot,
 )
@@ -121,3 +122,25 @@ def test_raw_snapshot_is_written_only_below_supplied_cache(tmp_path: Path) -> No
     assert json.loads(path.read_text(encoding="utf-8"))["entry_count"] == 1
     with pytest.raises(ValueError, match="unsafe"):
         save_raw_snapshot(tmp_path / "cache", "../outside", entries)
+
+
+def test_atom_metadata_refetch_parses_one_canonical_candidate() -> None:
+    payload = b"""<?xml version='1.0' encoding='UTF-8'?>
+    <feed xmlns='http://www.w3.org/2005/Atom'>
+      <entry>
+        <id>http://arxiv.org/abs/2608.12345v2</id>
+        <title>  Spatial   model  </title>
+        <summary>A useful\nabstract.</summary>
+        <author><name>Author One</name></author>
+        <category term='cs.AI'/><category term='cs.CV'/>
+      </entry>
+    </feed>"""
+
+    paper = parse_arxiv_atom_candidate(payload, expected_id="2608.12345")
+
+    assert paper is not None
+    assert paper.arxiv_id == "2608.12345"
+    assert paper.source_arxiv_id == "2608.12345v2"
+    assert paper.title == "Spatial model"
+    assert paper.abstract == "A useful abstract."
+    assert paper.categories == ["cs.AI", "cs.CV"]

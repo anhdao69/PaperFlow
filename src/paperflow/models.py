@@ -388,3 +388,65 @@ class RunState(DomainModel):
         ):
             raise ValueError("successful local date must match successful timestamp")
         return self
+
+
+class ModelUsageStats(DomainModel):
+    calls: int = Field(ge=0)
+    input_tokens: int = Field(ge=0)
+    output_tokens: int = Field(ge=0)
+    cached_input_tokens: int = Field(ge=0)
+    cost_usd: float = Field(ge=0)
+    providers: dict[str, int] = Field(default_factory=dict)
+
+    @field_validator("providers")
+    @classmethod
+    def validate_provider_counts(cls, value: dict[str, int]) -> dict[str, int]:
+        if any(not provider.strip() or count < 1 for provider, count in value.items()):
+            raise ValueError(
+                "provider usage requires non-empty names and positive counts"
+            )
+        return value
+
+
+class RunStats(DomainModel):
+    """Persisted, public-safe operational counts for one local run date."""
+
+    schema_version: Literal[1] = 1
+    run_id: NonEmptyText
+    date: date
+    source_ok: bool
+    fetched: int = Field(ge=0)
+    deduplicated: int = Field(ge=0)
+    terminal_skipped: int = Field(ge=0)
+    failed_backlog_added: int = Field(ge=0)
+    screened: int = Field(ge=0)
+    kept: int = Field(ge=0)
+    dropped: int = Field(ge=0)
+    filter_failed: int = Field(ge=0)
+    summary_generated: int = Field(ge=0)
+    summary_failed: int = Field(ge=0)
+    figure_mode: Literal["disabled", "placeholder", "extraction"]
+    llm_input_tokens: int = Field(ge=0)
+    llm_output_tokens: int = Field(ge=0)
+    llm_cached_input_tokens: int = Field(ge=0)
+    llm_cost_usd: float = Field(ge=0)
+    model_breakdown: dict[str, ModelUsageStats] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def validate_arithmetic(self) -> RunStats:
+        if self.deduplicated > self.fetched:
+            raise ValueError("deduplicated count cannot exceed fetched count")
+        if self.screened != self.kept + self.dropped + self.filter_failed:
+            raise ValueError("screened must equal kept + dropped + filter_failed")
+        breakdown = tuple(self.model_breakdown.values())
+        if self.llm_input_tokens != sum(item.input_tokens for item in breakdown):
+            raise ValueError("LLM input-token total does not match model breakdown")
+        if self.llm_output_tokens != sum(item.output_tokens for item in breakdown):
+            raise ValueError("LLM output-token total does not match model breakdown")
+        if self.llm_cached_input_tokens != sum(
+            item.cached_input_tokens for item in breakdown
+        ):
+            raise ValueError("LLM cached-token total does not match model breakdown")
+        if abs(self.llm_cost_usd - sum(item.cost_usd for item in breakdown)) > 1e-9:
+            raise ValueError("LLM cost total does not match model breakdown")
+        return self

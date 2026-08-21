@@ -2,15 +2,22 @@
 
 from __future__ import annotations
 
+import argparse
 import posixpath
 from collections.abc import Iterable, Mapping
+from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from tempfile import TemporaryDirectory
 from urllib.parse import urlsplit
 
 from paperflow.atomic import atomic_write_text, install_staged_files
+from paperflow.cli.sync_schedule import sync_schedule
+from paperflow.config import ConfigBundle, load_config_bundle
 from paperflow.generated_files import generated_cleanup_candidates, is_generated_file
+from paperflow.llm.structured import PromptRenderer
+from paperflow.models import FilterStatus, RunState, RunStats
+from paperflow.paper_store import load_run_state, load_selected_store
 from paperflow.render.contracts import (
     DailyFeed,
     FeedIndex,
@@ -21,9 +28,23 @@ from paperflow.render.contracts import (
 )
 from paperflow.render.json_api import render_json_files
 from paperflow.render.markdown import render_markdown_files
-from paperflow.render.view_models import PublicProjection
+from paperflow.render.view_models import PublicProjection, build_public_projection
 from paperflow.render.website import render_website_files
-from paperflow.taxonomy import TaxonomyConfig
+from paperflow.screening_ledger import ScreeningLedger
+from paperflow.taxonomy import (
+    TaxonomyConfig,
+    load_taxonomy,
+    taxonomy_hash,
+    validate_assignments,
+)
+
+
+@dataclass(frozen=True)
+class RepositoryValidationReport:
+    selected_papers: int
+    screening_events: int
+    run_stats_files: int
+    generated_files: int
 
 
 def build_output_bundle(
@@ -274,3 +295,125 @@ class _LinkParser(HTMLParser):
         for key, value in attrs:
             if key == "href" and value:
                 self.hrefs.append(value)
+
+
+def validate_repository(root: Path) -> RepositoryValidationReport:
+    """Validate every persisted V1 domain without making network requests."""
+    root = root.resolve()
+    bundle = load_config_bundle(root)
+    taxonomy = load_taxonomy(root / "configs/topics.yaml")
+    renderer = PromptRenderer(root / "configs/prompts", bundle.prompts)
+    renderer.validate_templates()
+    if not renderer.render_taxonomy(taxonomy).strip():
+        raise ValueError("rendered taxonomy prompt cannot be empty")
+    sync_schedule(root, check=True)
+
+    selected = load_selected_store(root / "data/papers.json", taxonomy)
+    state = load_run_state(root / "data/state.json")
+    ledger = ScreeningLedger(root / "data/screening_events")
+    events = tuple(ledger.iter_events())
+    latest = ledger.load_latest()
+    if latest != ledger.load_latest():
+        raise ValueError("screening latest-state reduction is not deterministic")
+    for event in latest.values():
+        if event.filter_status == FilterStatus.KEPT:
+            validate_assignments(taxonomy, event.topic_assignments)
+
+    index = FeedIndex.model_validate_json(
+        (root / "data/feed_index.json").read_text(encoding="utf-8")
+    )
+    if index.timezone != bundle.runtime.timezone:
+        raise ValueError("feed-index timezone does not match runtime config")
+    projection = build_public_projection(
+        selected.papers,
+        taxonomy,
+        generated_at=index.generated_at,
+        timezone=bundle.runtime.timezone,
+        base_url=str(bundle.runtime.publishing.base_url),
+        successful_dates=(day.date for day in index.days),
+    )
+    expected = build_output_bundle(
+        projection,
+        taxonomy,
+        readme_latest_limit=bundle.runtime.publishing.readme_latest_limit,
+    )
+    validate_generated_artifacts(
+        root,
+        projection,
+        taxonomy,
+        readme_latest_limit=bundle.runtime.publishing.readme_latest_limit,
+    )
+    stale = (
+        *plan_stale_markdown_cleanup(root, expected),
+        *plan_stale_website_cleanup(root, expected),
+    )
+    if stale:
+        raise ValueError(f"stale generated artifact remains: {stale[0]}")
+
+    stats = _load_run_stats(root / "data/run_stats")
+    if state.last_successful_local_date is not None:
+        expected_stats = root / "data/run_stats" / (
+            f"{state.last_successful_local_date.isoformat()}.json"
+        )
+        if not expected_stats.is_file():
+            raise ValueError("successful run state has no matching run-stats file")
+        successful_stats = RunStats.model_validate_json(
+            expected_stats.read_text(encoding="utf-8")
+        )
+        if successful_stats.run_id != state.last_successful_run_id:
+            raise ValueError("run state and run stats disagree on successful run ID")
+        _validate_success_hashes(bundle, taxonomy, state)
+
+    return RepositoryValidationReport(
+        selected_papers=len(selected.papers),
+        screening_events=len(events),
+        run_stats_files=len(stats),
+        generated_files=len(expected),
+    )
+
+
+def _load_run_stats(root: Path) -> tuple[RunStats, ...]:
+    if not root.exists():
+        return ()
+    result: list[RunStats] = []
+    for path in sorted(root.glob("*.json")):
+        stats = RunStats.model_validate_json(path.read_text(encoding="utf-8"))
+        if path.name != f"{stats.date.isoformat()}.json":
+            raise ValueError(f"run-stats filename/date mismatch: {path.name}")
+        result.append(stats)
+    return tuple(result)
+
+
+def _validate_success_hashes(
+    bundle: ConfigBundle,
+    taxonomy: TaxonomyConfig,
+    state: RunState,
+) -> None:
+    if state.runtime_config_hash != bundle.runtime_hash:
+        raise ValueError("successful state runtime hash is stale")
+    if state.model_config_hash != bundle.model_hash:
+        raise ValueError("successful state model hash is stale")
+    if state.taxonomy_hash != taxonomy_hash(taxonomy):
+        raise ValueError("successful state taxonomy hash is stale")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path("."))
+    arguments = parser.parse_args(argv)
+    try:
+        report = validate_repository(arguments.root)
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
+    print(
+        "PaperFlow repository valid: "
+        f"{report.selected_papers} selected, "
+        f"{report.screening_events} screening events, "
+        f"{report.run_stats_files} run stats, "
+        f"{report.generated_files} generated files"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

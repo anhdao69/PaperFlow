@@ -69,6 +69,7 @@ class FilterBatchEnvelope(DomainModel):
 @dataclass(frozen=True)
 class FilterRunResult:
     events: tuple[ScreeningEvent, ...]
+    llm_calls: tuple[LLMCallResult[FilterBatchEnvelope], ...] = ()
 
     @property
     def valid_kept(self) -> tuple[ScreeningEvent, ...]:
@@ -195,7 +196,14 @@ def filter_workset(
     )
     if ledger is not None:
         ledger.append_many(events)
-    return FilterRunResult(events=events)
+    calls: list[LLMCallResult[FilterBatchEnvelope]] = []
+    seen_calls: set[int] = set()
+    for decision in ordered_decisions:
+        if decision.llm_result is None or id(decision.llm_result) in seen_calls:
+            continue
+        seen_calls.add(id(decision.llm_result))
+        calls.append(decision.llm_result)
+    return FilterRunResult(events=events, llm_calls=tuple(calls))
 
 
 def _filter_batch(
