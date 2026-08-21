@@ -1,3 +1,4 @@
+import SwiftData
 import SwiftUI
 
 @main
@@ -9,5 +10,6 @@ struct PaperFlowApp: App {
             RootTabView(model: model)
                 .task { await model.loadFixtureShellIfNeeded() }
         }
+        .modelContainer(for: [PersonalPaperState.self, SavedPaperSnapshot.self])
     }
 }
