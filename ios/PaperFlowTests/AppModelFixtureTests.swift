@@ -13,6 +13,15 @@ final class AppModelFixtureTests: XCTestCase {
         XCTAssertEqual(model.topicsIndex?.topics.count, 1)
         XCTAssertEqual(model.dailyFeed?.paperCount, 0)
     }
+
+    func testBundledTopicFixtureLoadsLazilyWithoutNetwork() async throws {
+        let feed = try await BundledFixtureFeedClient().fetchTopicFeed(
+            relativePath: "data/topic_feeds/world-models/all.json"
+        )
+
+        XCTAssertEqual(try feed.validated().topicId, "world-models")
+        XCTAssertEqual(feed.totalPaperCount, 0)
+    }
 }
 
 private struct InMemoryFeedClient: PublicFeedClientProtocol {
@@ -42,6 +51,10 @@ private struct InMemoryFeedClient: PublicFeedClientProtocol {
             DailyFeed.self,
             #"{"schema_version":1,"date":"2026-08-20","paper_count":0,"papers":[]}"#
         )
+    }
+
+    func fetchTopicFeed(relativePath: String) async throws -> TopicFeed {
+        throw FixtureError.unexpectedDailyFeedPath(relativePath)
     }
 
     private func decode<T: Decodable>(_ type: T.Type, _ json: String) throws -> T {

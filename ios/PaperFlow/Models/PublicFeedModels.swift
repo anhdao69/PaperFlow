@@ -245,6 +245,16 @@ enum PublicFeedDecoder {
     private static let instantFormatter = ISO8601DateFormatter()
 }
 
+enum PublicFeedEncoder {
+    static func encode<T: Encodable>(_ value: T) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.outputFormatting = [.sortedKeys]
+        return try encoder.encode(value)
+    }
+}
+
 enum PublicationURLResolver {
     static func validateRelativePath(_ path: String) throws -> String {
         guard !path.isEmpty,
