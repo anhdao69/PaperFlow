@@ -6,6 +6,8 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**0 papers total**
+**1 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [Stream4D: 4D-Consistency for Streaming Autoregressive Diffusion Video Models](https://arxiv.org/abs/2608.19556) | World Models: Video World Models; Video Generation: Autoregressive Video Models | Streaming autoregressive diffusion models enable real-time, long-horizon video generation, but their training objectives optimize local frame prediction rather than the geometry and dynamics of a coherent world: long rollouts accumulate ge… | 8 | 8 |

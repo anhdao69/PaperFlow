@@ -6,6 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**0 papers total**
+**6 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [Daedalus-150M: A Convolution-Attention Hybrid Designed for CPU Inference](https://arxiv.org/abs/2608.20210) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Small language models are usually built like large ones and then squeezed onto a CPU afterwards. We did the opposite: we fixed the target first, one user, one token at a time, 4-bit weights, ordinary CPU, and chose the architecture to suit… | 8 | 8 |
+| 2026-08-21 | [Ask Self, Ask Others: Relation Is All You Need](https://arxiv.org/abs/2608.20172) | Efficient AI: Efficient Attention | Attention directly derives normalized information flow from pairwise scores. We introduce Relation, an alternative token-mixing primitive that first organizes pairwise evidence into explicit Self and Exchange relations and derives informat… | 7 | 8 |
+| 2026-08-21 | [Core-KAN: Continuous Vision Kernels with Kolmogorov-Arnold Networks](https://arxiv.org/abs/2608.19817) | Efficient AI: Efficient Attention | Conventional convolutional kernels are typically defined on fixed discrete grids, limiting their ability to accommodate heterogeneous local structures. Existing adaptive operators improve flexibility but often couple geometric scale variat… | 6 | 7 |
+| 2026-08-21 | [Asymmetric Attention Heads: Structured Head-Wise Context Allocation for Transformer Attention](https://arxiv.org/abs/2608.19203) | Efficient AI: Efficient Attention | Standard multi-head attention (MHA) gives every head the same full causal context span, although heads can serve different contextual roles. Some heads may rely mainly on nearby lexical or syntactic context, while others may depend on long… | 8 | 7 |
+| 2026-08-21 | [Partition the Support, Reconstruct the Residual: Training-Free Sparse Attention for Video Generation and World Models](https://arxiv.org/abs/2608.18484) | World Models: Video World Models; Video Generation: Video Diffusion, Video Prediction; Efficient AI: Token Pruning and Eviction, Efficient Attention | Training-free block-sparse attention can accelerate video transformers, but row-wise attention concentration does not by itself specify an executable sparse operator. Queries sharing a block route may have poorly overlapping supports, whil… | 8 | 8 |
+| 2026-08-21 | [ERASE: EaRly bAckpropagation SchEdule for Faster Training of Modern Recommendation Systems](https://arxiv.org/abs/2608.18469) | Efficient AI: Efficient Attention | Lightweight proxy models enable rapid experimentation without repeatedly training frontier-scale systems, but their small kernels often leave modern accelerators underutilized. Conventional training compounds this inefficiency by schedulin… | 6 | 7 |

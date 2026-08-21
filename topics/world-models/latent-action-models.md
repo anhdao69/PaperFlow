@@ -6,6 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**0 papers total**
+**5 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [DECOWAM: Decoupled Whole-Body World-Action Model for Legged Mobile Manipulation](https://arxiv.org/abs/2608.20114) | Embodied AI: Vision-Language-Action, Robot Learning; World Models: Latent Action Models, World Action Models, Video World Models; Video Generation: Video Prediction | Mobile manipulation requires a robot to predict how locomotion and arm motion jointly alter future observations and control. Existing world-action models, developed largely for fixed-base platforms, do not explicitly distinguish camera ego… | 9 | 8 |
+| 2026-08-21 | [What Matters for Latent Actions in Robot Learning](https://arxiv.org/abs/2608.19613) | Embodied AI: Vision-Language-Action, Robot Learning; World Models: Latent Action Models, World Action Models | Latent Action Models (LAMs) have emerged as a promising paradigm for enabling robot learning to leverage large-scale unlabeled videos through latent actions that serve as compact surrogates for physical actions. Despite rapid progress, res… | 10 | 8 |
+| 2026-08-21 | [Beyond Multimodal Alignment: Certifying Physical Language through Response Substitution and Ordered Execution](https://arxiv.org/abs/2608.19492) | World Models: Latent Action Models, World Action Models | World models increasingly treat compact multimodal representations as interfaces between perception and physical interaction, yet existing probes do not establish whether different sensors carry the same executable meaning or whether that… | 8 | 8 |
+| 2026-08-21 | [Vector Symbolic Policy Gradient](https://arxiv.org/abs/2608.18404) | Embodied AI: Robot Learning; World Models: Latent Action Models | We answer this question with Vector-Symbolic Policy Gradient (VSPG), a discrete-action actor that represents each action by a unit-norm hypervector and scores it by similarity to the encoded state. Under the standard softmax policy-gradien… | 7 | 8 |
+| 2026-08-21 | [GigaBrain-WBC-0.5: A Behavior World Model for Robust Whole-Body Control with Environment Interaction](https://arxiv.org/abs/2608.18234) | Embodied AI: Vision-Language-Action, Robot Learning; World Models: Latent Action Models, World Action Models | Whole-body motion tracking policies turn a humanoid into a robust control interface: the teleoperator---or an upstream model---only supplies a coarse movement intent, while the low-level policy keeps the robot balanced and physically feasi… | 9 | 8 |

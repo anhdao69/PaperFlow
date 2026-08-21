@@ -6,6 +6,8 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**0 papers total**
+**1 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [GrabVG: Graph-Attentive Binding for Visual Grounding in UAV Imagery](https://arxiv.org/abs/2608.18996) | Embodied AI: Vision-Language Navigation; Spatial Intelligence: Spatial Reasoning | Visual grounding in Unmanned Aerial Vehicle (UAV) imagery aims to localize a target object in complex bird's-eye-view scenes according to a natural language description. However, the abundance of small, densely distributed, and visually si… | 7 | 7 |

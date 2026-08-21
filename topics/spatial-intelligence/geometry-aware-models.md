@@ -6,6 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Geometry-Aware Models
 
-**0 papers total**
+**4 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [Gravity-aware partially calibrated absolute pose estimation from affine- or rotation-covariant features](https://arxiv.org/abs/2608.20056) | Spatial Intelligence: Geometry-Aware Models | Inertial measurement units (IMUs) are now standard in most consumer devices, such as smartphones, drones, and extended reality (XR) headsets. By fusing visual and inertial data, localization systems gain significantly in speed and robustne… | 6 | 6 |
+| 2026-08-21 | [CVSD-Reg: Cross-Modal Visual Semantic Prior Distillation for Robust LiDAR Registration](https://arxiv.org/abs/2608.19536) | Spatial Intelligence: Geometry-Aware Models; 3D Vision: 3D Reconstruction | Learning-based global point cloud registration has achieved remarkable progress, yet its reliance on geometric representations makes existing methods sensitive to variations in point density, scan pattern, viewpoint, and sensor characteris… | 7 | 7 |
+| 2026-08-21 | [LF-GICP: Parameter-Free Degeneracy-Aware LiDAR Odometry via a Voxel-Normal Localizability Field](https://arxiv.org/abs/2608.19522) | Spatial Intelligence: Geometry-Aware Models | Scan-to-map LiDAR odometry drifts unboundedly along the unobservable axes of geometrically degenerate environments like tunnels and corridors, and existing degeneracy handling requires environment-specific parameter tuning. This paper pres… | 6 | 7 |
+| 2026-08-21 | [SceneGTMM: A Conformal Mapping-based Scene-Aware Transferable GNN-Transformer Dual-Graph Interaction Framework for Map Matching](https://arxiv.org/abs/2608.19298) | Spatial Intelligence: Spatial Reasoning, Geometry-Aware Models | Map matching is a key technology connecting positioning data with high precision road networks, but it faces challenges in noise robustness, cross regional transfer, and interpretability. To addr ess the limitations of existing methods in… | 7 | 6 |

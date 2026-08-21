@@ -6,6 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Reasoning
 
-**0 papers total**
+**5 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [Where Grounding Accuracy Lives on the IoU Curve: Label-Free Inference-Time Boundary Refinement](https://arxiv.org/abs/2608.19553) | Multimodal Foundation Models: Vision-Language Models; Spatial Intelligence: Spatial Reasoning | Vision--language models can identify the correct referent while returning an imprecise bounding box. We study whether a frozen direct-answer model can use its own prediction to allocate one additional localized observation without accessin… | 7 | 6 |
+| 2026-08-21 | [SceneGTMM: A Conformal Mapping-based Scene-Aware Transferable GNN-Transformer Dual-Graph Interaction Framework for Map Matching](https://arxiv.org/abs/2608.19298) | Spatial Intelligence: Spatial Reasoning, Geometry-Aware Models | Map matching is a key technology connecting positioning data with high precision road networks, but it faces challenges in noise robustness, cross regional transfer, and interpretability. To addr ess the limitations of existing methods in… | 7 | 6 |
+| 2026-08-21 | [GrabVG: Graph-Attentive Binding for Visual Grounding in UAV Imagery](https://arxiv.org/abs/2608.18996) | Embodied AI: Vision-Language Navigation; Spatial Intelligence: Spatial Reasoning | Visual grounding in Unmanned Aerial Vehicle (UAV) imagery aims to localize a target object in complex bird's-eye-view scenes according to a natural language description. However, the abundance of small, densely distributed, and visually si… | 7 | 7 |
+| 2026-08-21 | [Physics-Unrolled Neural Operator for Wireless Field Modeling](https://arxiv.org/abs/2608.18495) | Spatial Intelligence: Spatial Reasoning | Radio maps are essential for wireless decision-making tasks such as access-point placement, coverage planning, and localization, but their fine spatial details are governed by complex propagation effects and are costly to simulate accurate… | 5 | 6 |
+| 2026-08-21 | [Solving Is Not Drawing: A Benchmark for Diagrammatic Reasoning in Olympiad Geometry](https://arxiv.org/abs/2608.18111) | Spatial Intelligence: Spatial Reasoning | Foundation models such as GPT and Claude now solve olympiad-level mathematics with remarkable proficiency, so much so that geometry problem solving has become a standard proxy for their mathematical reasoning. Yet solving a geometry proble… | 8 | 8 |

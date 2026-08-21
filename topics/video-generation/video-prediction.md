@@ -6,6 +6,9 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Prediction
 
-**0 papers total**
+**2 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [DECOWAM: Decoupled Whole-Body World-Action Model for Legged Mobile Manipulation](https://arxiv.org/abs/2608.20114) | Embodied AI: Vision-Language-Action, Robot Learning; World Models: Latent Action Models, World Action Models, Video World Models; Video Generation: Video Prediction | Mobile manipulation requires a robot to predict how locomotion and arm motion jointly alter future observations and control. Existing world-action models, developed largely for fixed-base platforms, do not explicitly distinguish camera ego… | 9 | 8 |
+| 2026-08-21 | [Partition the Support, Reconstruct the Residual: Training-Free Sparse Attention for Video Generation and World Models](https://arxiv.org/abs/2608.18484) | World Models: Video World Models; Video Generation: Video Diffusion, Video Prediction; Efficient AI: Token Pruning and Eviction, Efficient Attention | Training-free block-sparse attention can accelerate video transformers, but row-wise attention concentration does not by itself specify an executable sparse operator. Queries sharing a block route may have poorly overlapping supports, whil… | 8 | 8 |

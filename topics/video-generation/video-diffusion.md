@@ -6,6 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**0 papers total**
+**5 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [4DAnyone: Create Anyone in 4D from a Casual Monocular Video](https://arxiv.org/abs/2608.20335) | 3D Vision: 3D Reconstruction; Video Generation: Video Diffusion | We present 4DAnyone, a framework for reconstructing 4D humans from an uncalibrated monocular video by generating reconstruction-grade multiview-consistent videos and lifting them into 4D Gaussian Splatting (4DGS). Existing camera-controlle… | 8 | 8 |
+| 2026-08-21 | [Manifold Drift in Flow Preference Optimization: A Root Cause of Reward Hacking](https://arxiv.org/abs/2608.20011) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation: Video Diffusion | Preference optimization is a standard alignment method for generative models, yet extending it to continuous-time dynamics remains non-trivial. In flow matching, reward-driven updates modify transport trajectories without an inherent const… | 6 | 8 |
+| 2026-08-21 | [AvatarDynamizer: From Static to Dynamic Human Avatars via Generative Dynamic Textures](https://arxiv.org/abs/2608.19900) | Video Generation: Video Diffusion | For full-body avatars, modeling surface dynamics is crucial for overcoming the uncanny valley and achieving perceptual realism. Person-agnostic methods recover static 3D avatars from monocular images, videos, or text prompts, but their ske… | 5 | 6 |
+| 2026-08-21 | [A Plug-in Interpretation of Conditioning in Score-Based Diffusion Models](https://arxiv.org/abs/2608.19504) | Video Generation: Video Diffusion | We propose a conditioning mechanism for diffusion models based on multi-speed joint diffusion of the target and the condition. The mechanism learns an unconditional joint score network and enforces conditioning at inference via a plug-in c… | 5 | 7 |
+| 2026-08-21 | [Partition the Support, Reconstruct the Residual: Training-Free Sparse Attention for Video Generation and World Models](https://arxiv.org/abs/2608.18484) | World Models: Video World Models; Video Generation: Video Diffusion, Video Prediction; Efficient AI: Token Pruning and Eviction, Efficient Attention | Training-free block-sparse attention can accelerate video transformers, but row-wise attention concentration does not by itself specify an executable sparse operator. Queries sharing a block route may have poorly overlapping supports, whil… | 8 | 8 |
