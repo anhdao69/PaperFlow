@@ -6,7 +6,7 @@ struct RootTabView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                TodayRootView(model: model)
+                TodayHomeView(model: model)
             }
             .tabItem { Label("Today", systemImage: "calendar") }
             .accessibilityIdentifier("tab.today")
@@ -25,64 +25,6 @@ struct RootTabView: View {
         }
         .tint(PFTheme.primary)
         .accessibilityIdentifier("root.tabs")
-    }
-}
-
-private struct TodayRootView: View {
-    @Bindable var model: AppModel
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: PFTheme.Spacing.large) {
-                VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
-                    Text("PaperFlow")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(PFTheme.primary)
-                    Text("Today")
-                        .font(.largeTitle.bold())
-                }
-                stateContent
-            }
-            .padding(PFTheme.Spacing.standard)
-        }
-        .background(PFTheme.background)
-        .navigationBarTitleDisplayMode(.inline)
-        .accessibilityIdentifier("screen.today")
-    }
-
-    @ViewBuilder
-    private var stateContent: some View {
-        switch model.loadState {
-        case .idle, .loading:
-            PFLoadingShell()
-        case let .failed(message):
-            PFErrorShell(message: message)
-        case .loaded:
-            if let feed = model.dailyFeed {
-                VStack(alignment: .leading, spacing: PFTheme.Spacing.standard) {
-                    PFSectionHeader(title: "Today’s Papers", count: feed.paperCount)
-                    PFProgressView(reviewed: 0, total: feed.paperCount)
-                    if let first = feed.papers.first {
-                        PFPaperListCard(paper: first)
-                    } else {
-                        PFEmptyShell(
-                            title: "No papers today",
-                            message: "No papers matched the configured research interests."
-                        )
-                    }
-                    PFPrimaryButton(
-                        title: "Browse Papers",
-                        systemImage: "list.bullet",
-                        accessibilityIdentifier: "today.browse"
-                    ) {}
-                }
-            } else {
-                PFEmptyShell(
-                    title: "Today’s feed isn’t available yet",
-                    message: "Check again after the next PaperFlow publication."
-                )
-            }
-        }
     }
 }
 

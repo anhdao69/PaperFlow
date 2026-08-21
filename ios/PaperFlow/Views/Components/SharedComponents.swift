@@ -70,6 +70,7 @@ struct PFProgressView: View {
 
 struct PFFigurePlaceholder: View {
     let status: FigureStatus
+    var height: CGFloat = 132
 
     var body: some View {
         ZStack {
@@ -83,9 +84,36 @@ struct PFFigurePlaceholder: View {
                     .foregroundStyle(PFTheme.textSecondary)
             }
         }
-        .frame(height: 132)
+        .frame(height: height)
         .clipShape(.rect(cornerRadius: PFTheme.Radius.card))
         .accessibilityLabel(status == .failed ? "Figure unavailable" : "Figure placeholder")
+    }
+}
+
+struct PFCircularProgress: View {
+    let progress: CollectionProgress
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(PFTheme.primarySoft, lineWidth: 9)
+            Circle()
+                .trim(from: 0, to: progress.fraction)
+                .stroke(PFTheme.primary, style: StrokeStyle(lineWidth: 9, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+            Text("\(progress.percentage)%")
+                .font(.title3.bold())
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.45)
+        }
+        .frame(
+            width: dynamicTypeSize.isAccessibilitySize ? 112 : 78,
+            height: dynamicTypeSize.isAccessibilitySize ? 112 : 78
+        )
+        .accessibilityLabel("Review progress")
+        .accessibilityValue("\(progress.reviewed) of \(progress.total) papers reviewed")
     }
 }
 

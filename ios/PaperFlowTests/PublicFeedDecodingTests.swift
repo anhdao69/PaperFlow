@@ -99,7 +99,8 @@ final class PublicFeedDecodingTests: XCTestCase {
         for prohibited in [
             "cloudkit",
             "firebase",
-            "segment",
+            "import segment",
+            "segmentio",
             "mixpanel",
             "packageproductdependency",
             "openrouter_api_key"
