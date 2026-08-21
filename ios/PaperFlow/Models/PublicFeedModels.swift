@@ -224,6 +224,9 @@ enum PublicFeedDecoder {
             let container = try decoder.singleValueContainer()
             let value = try container.decode(String.self)
             if let day = Self.dayFormatter.date(from: value) { return day }
+            if let instant = Self.fractionalInstantFormatter.date(from: value) {
+                return instant
+            }
             if let instant = Self.instantFormatter.date(from: value) { return instant }
             throw DecodingError.dataCorruptedError(
                 in: container,
@@ -243,6 +246,12 @@ enum PublicFeedDecoder {
     }()
 
     private static let instantFormatter = ISO8601DateFormatter()
+
+    private static let fractionalInstantFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions.insert(.withFractionalSeconds)
+        return formatter
+    }()
 }
 
 enum PublicFeedEncoder {

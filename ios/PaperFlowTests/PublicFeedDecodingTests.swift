@@ -51,6 +51,18 @@ final class PublicFeedDecodingTests: XCTestCase {
         )
     }
 
+    func testProductionFractionalAndWholeSecondTimestampsDecode() throws {
+        for value in [
+            "2026-08-21T00:59:23.144694-04:00",
+            "2026-08-20T21:05:00-04:00"
+        ] {
+            let payload = Data(#"{"date":"\#(value)"}"#.utf8)
+            XCTAssertNoThrow(
+                try PublicFeedDecoder.decode(DateBox.self, from: payload)
+            )
+        }
+    }
+
     func testPublicationRootResolutionAndUnsafePathRejection() throws {
         let base = try XCTUnwrap(URL(string: "https://example.test/PaperFlow/"))
         XCTAssertEqual(
@@ -127,4 +139,8 @@ final class PublicFeedDecodingTests: XCTestCase {
     private var contractRoot: URL {
         repositoryRoot.appendingPathComponent("tests/fixtures/contracts/v1")
     }
+}
+
+private struct DateBox: Decodable {
+    let date: Date
 }
