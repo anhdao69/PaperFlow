@@ -62,4 +62,3 @@ the automated simulator equivalent passed and the owner confirmed the installed 
 was open.
 
 Signed-off-by: Codex
-
