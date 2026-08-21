@@ -4,9 +4,12 @@ import SwiftUI
 struct PaperDetailView: View {
     let paper: PublicPaper
     let topics: TopicsIndex?
+    var onSwipeSave: (() throws -> Void)? = nil
+    var onSwipeSkip: (() throws -> Void)? = nil
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openURL) private var openURL
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.dismiss) private var dismiss
     @Query private var personalStates: [PersonalPaperState]
     @State private var showsFullAbstract = false
     @State private var noteDraft = ""
@@ -23,6 +26,7 @@ struct PaperDetailView: View {
                 summarySection
                 abstractSection
                 whySelectedSection
+                swipeDecisionSection
                 personalSection
                 externalActions
             }
@@ -128,6 +132,35 @@ struct PaperDetailView: View {
     }
 
     @ViewBuilder
+    private var swipeDecisionSection: some View {
+        if let onSwipeSave, let onSwipeSkip {
+            detailSection("Triage Decision") {
+                HStack {
+                    Button("Skip", systemImage: "xmark", role: .destructive) {
+                        perform {
+                            try onSwipeSkip()
+                            dismiss()
+                        }
+                    }
+                    .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                    .buttonStyle(.bordered)
+                    .accessibilityIdentifier("detail.swipe.skip")
+                    Button("Save", systemImage: "bookmark.fill") {
+                        perform {
+                            try onSwipeSave()
+                            dismiss()
+                        }
+                    }
+                    .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                    .buttonStyle(.borderedProminent)
+                    .tint(PFTheme.success)
+                    .accessibilityIdentifier("detail.swipe.save")
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
     private var personalSection: some View {
         detailSection("Personal State") {
             if let state = currentState, state.saved {
@@ -169,7 +202,7 @@ struct PaperDetailView: View {
                     perform { try actionService.unsave(arxivID: paper.arxivId) }
                 }
                 .accessibilityIdentifier("detail.unsave")
-            } else {
+            } else if onSwipeSave == nil {
                 PFPrimaryButton(
                     title: "Save for Deep Read",
                     systemImage: "bookmark",
@@ -182,6 +215,9 @@ struct PaperDetailView: View {
                         noteLoaded = true
                     }
                 }
+            } else {
+                Text("Choose Save above to add this paper to your deep-read queue.")
+                    .foregroundStyle(PFTheme.textSecondary)
             }
         }
     }

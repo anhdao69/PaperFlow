@@ -136,16 +136,26 @@ struct TodayHomeView: View {
                         .foregroundStyle(PFTheme.textSecondary)
                 } else {
                     progressSummary(progress)
-                    NavigationLink {
-                        DayBrowseView(feed: feed, topics: model.topicsIndex)
-                    } label: {
-                        Label("Browse", systemImage: "list.bullet")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                    HStack {
+                        NavigationLink {
+                            DayBrowseView(feed: feed, topics: model.topicsIndex)
+                        } label: {
+                            Label("Browse", systemImage: "list.bullet")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                        }
+                        .accessibilityIdentifier("today.browse")
+                        NavigationLink {
+                            DaySwipeView(feed: feed, topics: model.topicsIndex)
+                        } label: {
+                            Label("Swipe", systemImage: "rectangle.stack")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                        }
+                        .accessibilityIdentifier("today.swipe")
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(PFTheme.primary)
-                    .accessibilityIdentifier("today.browse")
                 }
             }
             .padding(PFTheme.Spacing.standard)

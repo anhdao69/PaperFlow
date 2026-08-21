@@ -35,16 +35,25 @@ struct DayOverviewView: View {
                             message: "No papers matched the configured research interests for this day."
                         )
                     } else {
-                        NavigationLink {
-                            DayBrowseView(feed: feed, topics: model.topicsIndex)
-                        } label: {
-                            Label("Browse", systemImage: "list.bullet")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                        HStack {
+                            NavigationLink {
+                                DayBrowseView(feed: feed, topics: model.topicsIndex)
+                            } label: {
+                                Label("Browse", systemImage: "list.bullet")
+                                    .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                            }
+                            .accessibilityIdentifier("day.overview.browse")
+                            NavigationLink {
+                                DaySwipeView(feed: feed, topics: model.topicsIndex)
+                            } label: {
+                                Label("Swipe", systemImage: "rectangle.stack")
+                                    .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                            }
+                            .accessibilityIdentifier("day.overview.swipe")
                         }
+                        .font(.headline)
                         .buttonStyle(.borderedProminent)
                         .tint(PFTheme.primary)
-                        .accessibilityIdentifier("day.overview.browse")
                     }
                 } else if let error = model.dayErrors[day.date] {
                     PFErrorShell(message: error)
