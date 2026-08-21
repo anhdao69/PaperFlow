@@ -62,16 +62,36 @@ struct PFRatingControl: View {
 struct PFSavedPaperRow: View {
     let state: PersonalPaperState
     let topics: TopicsIndex?
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         if let snapshot = state.snapshot {
-            HStack(alignment: .top, spacing: PFTheme.Spacing.medium) {
-                PFFigurePlaceholder(status: snapshot.figureStatus, height: 96)
-                    .frame(width: 104)
-                VStack(alignment: .leading, spacing: PFTheme.Spacing.small) {
+            Group {
+                if dynamicTypeSize.isAccessibilitySize {
+                    VStack(alignment: .leading, spacing: PFTheme.Spacing.medium) {
+                        PFFigurePlaceholder(status: snapshot.figureStatus, height: 140)
+                        content(snapshot)
+                    }
+                } else {
+                    HStack(alignment: .top, spacing: PFTheme.Spacing.medium) {
+                        PFFigurePlaceholder(status: snapshot.figureStatus, height: 96)
+                            .frame(width: 104)
+                        content(snapshot)
+                    }
+                }
+            }
+            .padding(PFTheme.Spacing.standard)
+            .background(PFTheme.surface, in: .rect(cornerRadius: PFTheme.Radius.card))
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("saved.paper.\(state.canonicalArxivID)")
+        }
+    }
+
+    private func content(_ snapshot: SavedPaperSnapshot) -> some View {
+        VStack(alignment: .leading, spacing: PFTheme.Spacing.small) {
                     Text(snapshot.title)
                         .font(.headline)
-                        .lineLimit(3)
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
                     Text(snapshot.authors.joined(separator: ", "))
                         .font(.subheadline)
                         .foregroundStyle(PFTheme.textSecondary)
@@ -92,12 +112,6 @@ struct PFSavedPaperRow: View {
                     }
                     .font(.caption)
                     .foregroundStyle(PFTheme.textSecondary)
-                }
-            }
-            .padding(PFTheme.Spacing.standard)
-            .background(PFTheme.surface, in: .rect(cornerRadius: PFTheme.Radius.card))
-            .accessibilityElement(children: .combine)
-            .accessibilityIdentifier("saved.paper.\(state.canonicalArxivID)")
         }
     }
 

@@ -7,6 +7,12 @@ struct TopicsHomeView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: PFTheme.Spacing.large) {
                 Text("Topics").font(.largeTitle.bold())
+                if model.isShowingCachedData {
+                    PFOfflineIndicator(lastUpdatedAt: model.lastUpdatedAt)
+                }
+                if let message = model.refreshMessage {
+                    PFErrorBanner(message: message) { Task { await model.refresh() } }
+                }
                 if let index = model.topicsIndex {
                     VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
                         Text("Total Papers")
@@ -43,6 +49,7 @@ struct TopicsHomeView: View {
         }
         .background(PFTheme.background)
         .navigationBarTitleDisplayMode(.inline)
+        .refreshable { await model.refresh() }
     }
 
     private func topicRow(_ topic: PublicTopic) -> some View {

@@ -3,6 +3,7 @@ import SwiftUI
 struct TopicDetailView: View {
     @Bindable var model: AppModel
     let topic: PublicTopic
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         ScrollView {
@@ -35,26 +36,12 @@ struct TopicDetailView: View {
                     }
                 }
 
-                HStack {
-                    NavigationLink {
-                        TopicBrowseView(model: model, topic: topic)
-                    } label: {
-                        Label("Browse All", systemImage: "list.bullet")
-                            .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                Group {
+                    if dynamicTypeSize.isAccessibilitySize {
+                        VStack { topicActions }
+                    } else {
+                        HStack { topicActions }
                     }
-                    .accessibilityIdentifier("topic.browse")
-                    NavigationLink {
-                        TopicSwipeView(
-                            model: model,
-                            title: topic.name,
-                            collectionID: "topic-\(topic.id)",
-                            relativePath: topic.feedUrl
-                        )
-                    } label: {
-                        Label("Swipe Unread", systemImage: "rectangle.stack")
-                            .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
-                    }
-                    .accessibilityIdentifier("topic.swipe")
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(PFTheme.primary)
@@ -64,6 +51,29 @@ struct TopicDetailView: View {
         .background(PFTheme.background)
         .navigationTitle(topic.name)
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    @ViewBuilder
+    private var topicActions: some View {
+        NavigationLink {
+            TopicBrowseView(model: model, topic: topic)
+        } label: {
+            Label("Browse All", systemImage: "list.bullet")
+                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+        }
+        .accessibilityIdentifier("topic.browse")
+        NavigationLink {
+            TopicSwipeView(
+                model: model,
+                title: topic.name,
+                collectionID: "topic-\(topic.id)",
+                relativePath: topic.feedUrl
+            )
+        } label: {
+            Label("Swipe Unread", systemImage: "rectangle.stack")
+                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+        }
+        .accessibilityIdentifier("topic.swipe")
     }
 
     private func row(title: String, count: Int) -> some View {

@@ -18,6 +18,13 @@ struct SavedHomeView: View {
                         .foregroundStyle(PFTheme.textSecondary)
                 }
 
+                if model.isShowingCachedData {
+                    PFOfflineIndicator(lastUpdatedAt: model.lastUpdatedAt)
+                    Text("Saved papers and personal actions remain available offline.")
+                        .font(.caption)
+                        .foregroundStyle(PFTheme.textSecondary)
+                }
+
                 if counts.total == 0 {
                     VStack(spacing: PFTheme.Spacing.standard) {
                         PFEmptyShell(

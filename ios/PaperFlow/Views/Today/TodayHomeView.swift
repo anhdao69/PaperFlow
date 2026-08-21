@@ -16,6 +16,7 @@ struct TodayHomeView: View {
         }
         .background(PFTheme.background)
         .navigationBarTitleDisplayMode(.inline)
+        .refreshable { await model.refresh() }
         .accessibilityIdentifier("screen.today")
     }
 
@@ -38,7 +39,7 @@ struct TodayHomeView: View {
         case .idle, .loading:
             PFLoadingShell()
         case let .failed(message):
-            PFErrorShell(message: message)
+            PFErrorShell(message: message) { Task { await model.refresh() } }
         case .loaded:
             if let index = model.feedIndex {
                 loadedContent(index)
@@ -50,14 +51,11 @@ struct TodayHomeView: View {
 
     @ViewBuilder
     private func loadedContent(_ index: FeedIndex) -> some View {
-        if model.isShowingCachedData, let updated = model.lastUpdatedAt {
-            Label(
-                "Offline · Updated \(updated.formatted(date: .abbreviated, time: .shortened))",
-                systemImage: "wifi.slash"
-            )
-            .font(.caption)
-            .foregroundStyle(PFTheme.textSecondary)
-            .accessibilityIdentifier("today.offline")
+        if model.isShowingCachedData {
+            PFOfflineIndicator(lastUpdatedAt: model.lastUpdatedAt)
+        }
+        if let message = model.refreshMessage {
+            PFErrorBanner(message: message) { Task { await model.refresh() } }
         }
 
         let selection = try? TodayViewModel.selection(for: index, now: model.currentDate)
@@ -117,8 +115,10 @@ struct TodayHomeView: View {
                     if dynamicTypeSize.isAccessibilitySize {
                         VStack(alignment: .leading, spacing: PFTheme.Spacing.small) {
                             Text(title).font(.headline)
-                            Label("\(day.paperCount) papers", systemImage: "chevron.right")
-                                .monospacedDigit()
+                            HStack {
+                                Text(PFAccessibility.paperCount(day.paperCount)).monospacedDigit()
+                                Image(systemName: "chevron.right")
+                            }
                         }
                     } else {
                         HStack {
@@ -136,23 +136,12 @@ struct TodayHomeView: View {
                         .foregroundStyle(PFTheme.textSecondary)
                 } else {
                     progressSummary(progress)
-                    HStack {
-                        NavigationLink {
-                            DayBrowseView(feed: feed, topics: model.topicsIndex)
-                        } label: {
-                            Label("Browse", systemImage: "list.bullet")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                    Group {
+                        if dynamicTypeSize.isAccessibilitySize {
+                            VStack { dayActions(feed) }
+                        } else {
+                            HStack { dayActions(feed) }
                         }
-                        .accessibilityIdentifier("today.browse")
-                        NavigationLink {
-                            DaySwipeView(feed: feed, topics: model.topicsIndex)
-                        } label: {
-                            Label("Swipe", systemImage: "rectangle.stack")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
-                        }
-                        .accessibilityIdentifier("today.swipe")
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(PFTheme.primary)
@@ -166,6 +155,26 @@ struct TodayHomeView: View {
             PFLoadingShell()
                 .task { await model.loadDay(day) }
         }
+    }
+
+    @ViewBuilder
+    private func dayActions(_ feed: DailyFeed) -> some View {
+        NavigationLink {
+            DayBrowseView(feed: feed, topics: model.topicsIndex)
+        } label: {
+            Label("Browse", systemImage: "list.bullet")
+                .font(.headline)
+                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+        }
+        .accessibilityIdentifier("today.browse")
+        NavigationLink {
+            DaySwipeView(feed: feed, topics: model.topicsIndex)
+        } label: {
+            Label("Swipe", systemImage: "rectangle.stack")
+                .font(.headline)
+                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+        }
+        .accessibilityIdentifier("today.swipe")
     }
 
     @ViewBuilder

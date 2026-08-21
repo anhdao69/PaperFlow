@@ -14,6 +14,7 @@ struct SavedCollectionView: View {
     let status: ReadingStatus
     @Query private var personalStates: [PersonalPaperState]
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.pfHaptics) private var haptics
     @State private var searchText = ""
     @State private var sort: SavedSort
     @State private var pendingUnsaveID: String?
@@ -121,7 +122,7 @@ struct SavedCollectionView: View {
                 Menu {
                     ForEach(ReadingStatus.allCases, id: \.self) { option in
                         Button {
-                            perform { try actionService.transition(arxivID: state.canonicalArxivID, to: option) }
+                            transition(state, to: option)
                         } label: {
                             if option == (state.readingStatus ?? .queue) {
                                 Label(option.displayName, systemImage: "checkmark")
@@ -145,7 +146,7 @@ struct SavedCollectionView: View {
         .contextMenu {
             ForEach(ReadingStatus.allCases, id: \.self) { option in
                 Button("Mark \(option.displayName)") {
-                    perform { try actionService.transition(arxivID: state.canonicalArxivID, to: option) }
+                    transition(state, to: option)
                 }
             }
             Button("Remove from Saved", role: .destructive) {
@@ -183,5 +184,12 @@ struct SavedCollectionView: View {
 
     private func perform(_ operation: () throws -> Void) {
         do { try operation() } catch { actionError = "Your previous personal state is unchanged." }
+    }
+
+    private func transition(_ state: PersonalPaperState, to status: ReadingStatus) {
+        perform {
+            try actionService.transition(arxivID: state.canonicalArxivID, to: status)
+            if status == .done { haptics.trigger(.completedReading) }
+        }
     }
 }

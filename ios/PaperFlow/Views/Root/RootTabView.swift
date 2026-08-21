@@ -2,26 +2,27 @@ import SwiftUI
 
 struct RootTabView: View {
     @Bindable var model: AppModel
-    @State private var selection: PaperFlowTab = .today
+    @State private var restoration = NavigationRestoration()
 
     var body: some View {
-        TabView(selection: $selection) {
-            NavigationStack {
+        @Bindable var restoration = restoration
+        TabView(selection: $restoration.selectedTab) {
+            NavigationStack(path: $restoration.todayPath) {
                 TodayHomeView(model: model)
             }
             .tag(PaperFlowTab.today)
             .tabItem { Label("Today", systemImage: "calendar") }
             .accessibilityIdentifier("tab.today")
 
-            NavigationStack {
+            NavigationStack(path: $restoration.topicsPath) {
                 TopicsHomeView(model: model)
             }
             .tag(PaperFlowTab.topics)
             .tabItem { Label("Topics", systemImage: "square.grid.2x2") }
             .accessibilityIdentifier("tab.topics")
 
-            NavigationStack {
-                SavedHomeView(model: model) { selection = .today }
+            NavigationStack(path: $restoration.savedPath) {
+                SavedHomeView(model: model) { restoration.selectedTab = .today }
             }
             .tag(PaperFlowTab.saved)
             .tabItem { Label("Saved", systemImage: "bookmark") }
@@ -30,10 +31,4 @@ struct RootTabView: View {
         .tint(PFTheme.primary)
         .accessibilityIdentifier("root.tabs")
     }
-}
-
-private enum PaperFlowTab: Hashable {
-    case today
-    case topics
-    case saved
 }

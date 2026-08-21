@@ -35,21 +35,12 @@ struct DayOverviewView: View {
                             message: "No papers matched the configured research interests for this day."
                         )
                     } else {
-                        HStack {
-                            NavigationLink {
-                                DayBrowseView(feed: feed, topics: model.topicsIndex)
-                            } label: {
-                                Label("Browse", systemImage: "list.bullet")
-                                    .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+                        Group {
+                            if dynamicTypeSize.isAccessibilitySize {
+                                VStack { dayActions(feed) }
+                            } else {
+                                HStack { dayActions(feed) }
                             }
-                            .accessibilityIdentifier("day.overview.browse")
-                            NavigationLink {
-                                DaySwipeView(feed: feed, topics: model.topicsIndex)
-                            } label: {
-                                Label("Swipe", systemImage: "rectangle.stack")
-                                    .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
-                            }
-                            .accessibilityIdentifier("day.overview.swipe")
                         }
                         .font(.headline)
                         .buttonStyle(.borderedProminent)
@@ -68,6 +59,24 @@ struct DayOverviewView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await model.loadDay(day) }
         .accessibilityIdentifier("screen.day.overview")
+    }
+
+    @ViewBuilder
+    private func dayActions(_ feed: DailyFeed) -> some View {
+        NavigationLink {
+            DayBrowseView(feed: feed, topics: model.topicsIndex)
+        } label: {
+            Label("Browse", systemImage: "list.bullet")
+                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+        }
+        .accessibilityIdentifier("day.overview.browse")
+        NavigationLink {
+            DaySwipeView(feed: feed, topics: model.topicsIndex)
+        } label: {
+            Label("Swipe", systemImage: "rectangle.stack")
+                .frame(maxWidth: .infinity, minHeight: PFTheme.minimumTapTarget)
+        }
+        .accessibilityIdentifier("day.overview.swipe")
     }
 
     private func progressLabels(_ progress: CollectionProgress) -> some View {

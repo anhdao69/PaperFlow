@@ -64,7 +64,7 @@ struct PFProgressView: View {
                 .foregroundStyle(PFTheme.textSecondary)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityValue("\(reviewed) of \(total) papers reviewed")
+        .accessibilityValue(PFAccessibility.progress(reviewed: reviewed, total: total))
     }
 }
 
@@ -148,12 +148,25 @@ struct PFPaperListCard: View {
 
 struct PFLoadingShell: View {
     var body: some View {
-        VStack(spacing: PFTheme.Spacing.standard) {
-            ProgressView()
-            Text("Loading PaperFlow…")
+        PFLoadingSkeleton()
+    }
+}
+
+struct PFLoadingSkeleton: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: PFTheme.Spacing.medium) {
+            RoundedRectangle(cornerRadius: PFTheme.Radius.control)
+                .fill(PFTheme.surfaceSecondary)
+                .frame(height: 22)
+                .frame(maxWidth: 180)
+            RoundedRectangle(cornerRadius: PFTheme.Radius.card)
+                .fill(PFTheme.surface)
+                .frame(height: 150)
+            ProgressView("Loading PaperFlow…")
                 .foregroundStyle(PFTheme.textSecondary)
         }
-        .frame(maxWidth: .infinity, minHeight: 180)
+        .frame(maxWidth: .infinity, minHeight: 180, alignment: .topLeading)
+        .accessibilityElement(children: .combine)
         .accessibilityIdentifier("state.loading")
     }
 }
@@ -170,13 +183,72 @@ struct PFEmptyShell: View {
 
 struct PFErrorShell: View {
     let message: String
+    var retry: (() -> Void)? = nil
 
     var body: some View {
-        ContentUnavailableView(
-            "Unable to Load",
-            systemImage: "exclamationmark.triangle",
-            description: Text(message)
-        )
+        VStack(spacing: PFTheme.Spacing.standard) {
+            ContentUnavailableView(
+                "Unable to Load",
+                systemImage: "exclamationmark.triangle",
+                description: Text(message)
+            )
+            if let retry {
+                Button("Try Again", systemImage: "arrow.clockwise", action: retry)
+                    .buttonStyle(.borderedProminent)
+                    .frame(minHeight: PFTheme.minimumTapTarget)
+                    .accessibilityIdentifier("state.retry")
+            }
+        }
         .accessibilityIdentifier("state.error")
+    }
+}
+
+struct PFErrorBanner: View {
+    let message: String
+    let retry: () -> Void
+
+    var body: some View {
+        HStack(alignment: .top, spacing: PFTheme.Spacing.medium) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(PFTheme.warning)
+            VStack(alignment: .leading, spacing: PFTheme.Spacing.small) {
+                Text(message)
+                    .font(.subheadline)
+                Button("Try Again", systemImage: "arrow.clockwise", action: retry)
+                    .frame(minHeight: PFTheme.minimumTapTarget)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(PFTheme.Spacing.standard)
+        .background(PFTheme.surface, in: .rect(cornerRadius: PFTheme.Radius.card))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("state.error.banner")
+    }
+}
+
+struct PFOfflineIndicator: View {
+    let lastUpdatedAt: Date?
+
+    var body: some View {
+        Label(label, systemImage: "wifi.slash")
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(PFTheme.textSecondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityIdentifier("state.offline")
+    }
+
+    private var label: String {
+        guard let lastUpdatedAt else { return "Offline · Downloaded data" }
+        return "Offline · Updated \(lastUpdatedAt.formatted(date: .abbreviated, time: .shortened))"
+    }
+}
+
+enum PFAccessibility {
+    static func progress(reviewed: Int, total: Int) -> String {
+        "\(reviewed) of \(total) papers reviewed"
+    }
+
+    static func paperCount(_ count: Int) -> String {
+        "\(count) \(count == 1 ? "paper" : "papers")"
     }
 }

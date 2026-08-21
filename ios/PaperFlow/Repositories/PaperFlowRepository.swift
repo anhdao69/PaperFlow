@@ -16,7 +16,14 @@ enum PaperFlowRepositoryError: Error, Equatable {
     case unavailable(String)
 }
 
-actor PaperFlowRepository {
+protocol PaperFlowDataSource: Sendable {
+    func feedIndex() async throws -> PublicFeedResult<FeedIndex>
+    func topicsIndex() async throws -> PublicFeedResult<TopicsIndex>
+    func dailyFeed(relativePath: String) async throws -> PublicFeedResult<DailyFeed>
+    func topicFeed(relativePath: String) async throws -> PublicFeedResult<TopicFeed>
+}
+
+actor PaperFlowRepository: PaperFlowDataSource {
     private let client: any PublicFeedClientProtocol
     private let cache: any PublicFeedCache
     private let clock: @Sendable () -> Date
@@ -166,4 +173,48 @@ actor PaperFlowRepository {
         }
     }
 
+}
+
+actor DirectPublicFeedDataSource: PaperFlowDataSource {
+    private let client: any PublicFeedClientProtocol
+    private let clock: @Sendable () -> Date
+    private let reportedSource: PublicFeedSource
+    private let refreshErrorDescription: String?
+
+    init(
+        client: any PublicFeedClientProtocol,
+        clock: @escaping @Sendable () -> Date = { Date() },
+        reportedSource: PublicFeedSource = .network,
+        refreshErrorDescription: String? = nil
+    ) {
+        self.client = client
+        self.clock = clock
+        self.reportedSource = reportedSource
+        self.refreshErrorDescription = refreshErrorDescription
+    }
+
+    func feedIndex() async throws -> PublicFeedResult<FeedIndex> {
+        result(try await client.fetchFeedIndex().validated())
+    }
+
+    func topicsIndex() async throws -> PublicFeedResult<TopicsIndex> {
+        result(try await client.fetchTopicsIndex().validated())
+    }
+
+    func dailyFeed(relativePath: String) async throws -> PublicFeedResult<DailyFeed> {
+        result(try await client.fetchDailyFeed(relativePath: relativePath).validated())
+    }
+
+    func topicFeed(relativePath: String) async throws -> PublicFeedResult<TopicFeed> {
+        result(try await client.fetchTopicFeed(relativePath: relativePath).validated())
+    }
+
+    private func result<Value: Sendable>(_ value: Value) -> PublicFeedResult<Value> {
+        PublicFeedResult(
+            value: value,
+            source: reportedSource,
+            lastSuccessfulRefresh: clock(),
+            refreshErrorDescription: refreshErrorDescription
+        )
+    }
 }

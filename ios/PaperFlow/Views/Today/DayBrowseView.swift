@@ -8,6 +8,7 @@ struct DayBrowseView: View {
     @State private var showsFilters = false
     @State private var actionError: String?
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.pfHaptics) private var haptics
     @Query private var personalStates: [PersonalPaperState]
 
     init(feed: DailyFeed, topics: TopicsIndex?) {
@@ -176,6 +177,7 @@ struct DayBrowseView: View {
                 try service.unsave(arxivID: paper.arxivId)
             } else {
                 try service.save(paper)
+                haptics.trigger(.save)
             }
         } catch {
             actionError = "Your previous personal state is unchanged."

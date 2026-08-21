@@ -10,6 +10,7 @@ struct PaperDetailView: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.pfHaptics) private var haptics
     @Query private var personalStates: [PersonalPaperState]
     @State private var showsFullAbstract = false
     @State private var noteDraft = ""
@@ -167,7 +168,10 @@ struct PaperDetailView: View {
         detailSection("Personal State") {
             if let state = currentState, state.saved {
                 PFReadingStatusPicker(status: state.readingStatus ?? .queue) { status in
-                    perform { try actionService.transition(arxivID: paper.arxivId, to: status) }
+                    perform {
+                        try actionService.transition(arxivID: paper.arxivId, to: status)
+                        if status == .done { haptics.trigger(.completedReading) }
+                    }
                 }
                 .accessibilityIdentifier("detail.reading.status")
 
@@ -190,6 +194,7 @@ struct PaperDetailView: View {
                 ) {
                     perform {
                         try actionService.save(paper)
+                        haptics.trigger(.save)
                         try markOpenedIfNeeded()
                         noteDraft = currentState?.note ?? ""
                         noteLoaded = true

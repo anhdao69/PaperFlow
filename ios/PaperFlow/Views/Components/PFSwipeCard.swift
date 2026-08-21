@@ -9,6 +9,8 @@ struct PFSwipeCard: View {
 
     @State private var offset: CGSize = .zero
     @State private var crossedDecision: SwipeDecision?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     private let threshold: CGFloat = 105
 
     var body: some View {
@@ -16,7 +18,7 @@ struct PFSwipeCard: View {
             PFFigurePlaceholder(status: paper.figureStatus, height: 210)
             Text(paper.title)
                 .font(.title2.bold())
-                .lineLimit(3)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
                 .fixedSize(horizontal: false, vertical: true)
             if !topicLabels.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -45,13 +47,16 @@ struct PFSwipeCard: View {
         .contentShape(.rect)
         .onTapGesture(perform: onOpenDetail)
         .offset(offset)
-        .rotationEffect(.degrees(Double(offset.width / 24).clamped(to: -7 ... 7)))
+        .rotationEffect(.degrees(PFMotionPolicy.rotation(
+            Double(offset.width / 24).clamped(to: -7 ... 7),
+            reduceMotion: reduceMotion
+        )))
         .gesture(
             DragGesture(minimumDistance: 8)
                 .onChanged(handleDrag)
                 .onEnded(handleEnd)
         )
-        .animation(.spring(response: 0.28, dampingFraction: 0.82), value: offset)
+        .animation(PFMotionPolicy.animation(reduceMotion: reduceMotion), value: offset)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("swipe.card.\(paper.arxivId)")
