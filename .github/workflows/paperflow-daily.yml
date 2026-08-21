@@ -1,0 +1,44 @@
+name: PaperFlow Daily
+
+on:
+  # BEGIN AUTO-GENERATED PAPERFLOW SCHEDULE
+  # Recurring schedule disabled in configs/runtime.yaml.
+  # Inactive candidate: "0 1 * * *"
+  # Inactive candidate: "0 2 * * *"
+  # END AUTO-GENERATED PAPERFLOW SCHEDULE
+  workflow_dispatch:
+
+concurrency:
+  group: paperflow-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e .
+      - name: Confirm manual schedule bypass
+        run: python -m paperflow.schedule --manual
+      - name: Run PaperFlow
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m paperflow.main
+      - name: Validate generated outputs
+        run: python -m paperflow.render.validation
+      - name: Commit generated content
+        run: |
+          git config user.name "paperflow-bot"
+          git config user.email "paperflow-bot@users.noreply.github.com"
+          python -m paperflow.cli.commit_generated \
+            --message "chore: update PaperFlow generated content"
+          git push
