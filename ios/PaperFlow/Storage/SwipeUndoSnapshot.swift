@@ -12,6 +12,9 @@ struct SavedPaperSnapshotValue: Equatable, Sendable {
     let subtopicIDs: [String]
     let relevance: Int
     let novelty: Int
+    let heroFigure: String?
+    let figureStatusRawValue: String?
+    let topicAssignmentsData: Data?
     let capturedAt: Date
 
     init(_ snapshot: SavedPaperSnapshot) {
@@ -26,6 +29,9 @@ struct SavedPaperSnapshotValue: Equatable, Sendable {
         subtopicIDs = snapshot.subtopicIDs
         relevance = snapshot.relevance
         novelty = snapshot.novelty
+        heroFigure = snapshot.heroFigure
+        figureStatusRawValue = snapshot.figureStatusRawValue
+        topicAssignmentsData = snapshot.topicAssignmentsData
         capturedAt = snapshot.capturedAt
     }
 }

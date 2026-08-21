@@ -96,9 +96,11 @@ struct PaperDetailView: View {
             detailSection("TL;DR") {
                 Text(tldr).font(.body)
             }
-            detailSection("Key Points") {
-                VStack(alignment: .leading, spacing: PFTheme.Spacing.small) {
-                    ForEach(bullets, id: \.self) { Text("• \($0)") }
+            if !bullets.isEmpty {
+                detailSection("Key Points") {
+                    VStack(alignment: .leading, spacing: PFTheme.Spacing.small) {
+                        ForEach(bullets, id: \.self) { Text("• \($0)") }
+                    }
                 }
             }
         case .abstractFallback:
@@ -164,38 +166,16 @@ struct PaperDetailView: View {
     private var personalSection: some View {
         detailSection("Personal State") {
             if let state = currentState, state.saved {
-                Picker("Reading Status", selection: Binding(
-                    get: { state.readingStatus ?? .queue },
-                    set: { status in
-                        perform { try actionService.transition(arxivID: paper.arxivId, to: status) }
-                    }
-                )) {
-                    ForEach(ReadingStatus.allCases, id: \.self) {
-                        Text($0.displayName).tag($0)
-                    }
+                PFReadingStatusPicker(status: state.readingStatus ?? .queue) { status in
+                    perform { try actionService.transition(arxivID: paper.arxivId, to: status) }
                 }
-                .pickerStyle(.segmented)
                 .accessibilityIdentifier("detail.reading.status")
 
-                Text("Notes").font(.subheadline.weight(.semibold))
-                TextEditor(text: $noteDraft)
-                    .frame(minHeight: 100)
-                    .padding(PFTheme.Spacing.small)
-                    .background(PFTheme.surfaceSecondary, in: .rect(cornerRadius: PFTheme.Radius.control))
+                PFNoteEditor(text: $noteDraft)
                     .accessibilityIdentifier("detail.notes")
 
-                Text("My Rating").font(.subheadline.weight(.semibold))
-                HStack {
-                    ForEach(1 ... 5, id: \.self) { rating in
-                        Button {
-                            perform { try actionService.updateRating(arxivID: paper.arxivId, rating: rating) }
-                        } label: {
-                            Image(systemName: rating <= (state.rating ?? 0) ? "star.fill" : "star")
-                                .font(.title3)
-                        }
-                        .frame(minWidth: PFTheme.minimumTapTarget, minHeight: PFTheme.minimumTapTarget)
-                        .accessibilityLabel("Rate \(rating) stars")
-                    }
+                PFRatingControl(rating: state.rating) { rating in
+                    perform { try actionService.updateRating(arxivID: paper.arxivId, rating: rating) }
                 }
 
                 Button("Remove from Saved", role: .destructive) {
@@ -303,15 +283,5 @@ struct PaperDetailView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(PFTheme.Spacing.standard)
         .background(PFTheme.surface, in: .rect(cornerRadius: PFTheme.Radius.card))
-    }
-}
-
-private extension ReadingStatus {
-    var displayName: String {
-        switch self {
-        case .queue: "Queue"
-        case .reading: "Reading"
-        case .done: "Done"
-        }
     }
 }
