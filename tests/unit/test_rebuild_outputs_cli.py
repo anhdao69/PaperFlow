@@ -5,6 +5,7 @@ import socket
 from pathlib import Path
 
 from paperflow.cli.rebuild_outputs import main
+from paperflow.models import RunState, SelectedPaperCollection
 from paperflow.render.contracts import DailyFeed, FeedIndex
 
 ROOT = Path(__file__).parents[2]
@@ -14,8 +15,12 @@ def _project(tmp_path: Path) -> Path:
     project = tmp_path / "project"
     shutil.copytree(ROOT / "configs", project / "configs")
     (project / "data").mkdir()
-    shutil.copy2(ROOT / "data/papers.json", project / "data/papers.json")
-    shutil.copy2(ROOT / "data/state.json", project / "data/state.json")
+    (project / "data/papers.json").write_text(
+        SelectedPaperCollection().model_dump_json(indent=2) + "\n"
+    )
+    (project / "data/state.json").write_text(
+        RunState().model_dump_json(indent=2) + "\n"
+    )
     return project
 
 

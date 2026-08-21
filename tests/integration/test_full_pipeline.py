@@ -12,6 +12,7 @@ import yaml
 from pydantic import BaseModel
 
 from paperflow.arxiv_client import ArxivSourceError
+from paperflow.cli.rebuild_outputs import main as rebuild_outputs
 from paperflow.cli.sync_schedule import sync_schedule
 from paperflow.config import load_config_bundle
 from paperflow.llm.filtering import FilterBatchEnvelope
@@ -21,7 +22,9 @@ from paperflow.models import (
     CandidatePaper,
     LLMCallResult,
     RawArxivEntry,
+    RunState,
     RunStats,
+    SelectedPaperCollection,
     SummaryContent,
 )
 from paperflow.paper_store import load_run_state, load_selected_store
@@ -35,9 +38,14 @@ ROOT = Path(__file__).parents[2]
 
 def project_copy(tmp_path: Path) -> Path:
     project = tmp_path / "project"
-    for relative in ("configs", "data", "site", "topics"):
-        shutil.copytree(ROOT / relative, project / relative)
-    shutil.copy2(ROOT / "README.md", project / "README.md")
+    shutil.copytree(ROOT / "configs", project / "configs")
+    data = project / "data"
+    data.mkdir()
+    (data / "papers.json").write_text(
+        SelectedPaperCollection().model_dump_json(indent=2) + "\n"
+    )
+    (data / "state.json").write_text(RunState().model_dump_json(indent=2) + "\n")
+    assert rebuild_outputs(["--root", str(project)]) == 0
     workflow = project / ".github/workflows/paperflow-daily.yml"
     workflow.parent.mkdir(parents=True)
     shutil.copy2(ROOT / ".github/workflows/paperflow-daily.yml", workflow)

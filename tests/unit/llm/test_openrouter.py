@@ -15,6 +15,7 @@ from paperflow.llm.openrouter import (
     OpenRouterTransportError,
     redact_sensitive,
 )
+from paperflow.models import SummaryContent
 
 ROOT = Path(__file__).parents[3]
 
@@ -119,6 +120,40 @@ def test_request_uses_ordered_yaml_model_fallbacks_and_strict_schema() -> None:
     assert payload["response_format"]["json_schema"]["strict"] is True
     assert payload["provider"]["require_parameters"] is True
     assert payload["usage"] == {"include": True}
+
+
+def test_strict_schema_requires_nullable_fields_without_defaults() -> None:
+    body = json.loads(_response().body)
+    body["choices"][0]["message"]["content"] = json.dumps(
+        {
+            "tldr": "A concise summary.",
+            "bullets": ["First.", "Second.", "Third."],
+            "problem": None,
+            "method": None,
+            "contribution": None,
+        }
+    )
+    transport = FakeTransport([HttpResponse(200, json.dumps(body).encode(), {})])
+
+    _client(transport).structured_chat(
+        task_name="summary",
+        messages=[{"role": "user", "content": "Summarize."}],
+        schema=SummaryContent,
+        model_chain=["gpt_5_6_luna"],
+        request_metadata={"run_id": "fixture-run"},
+    )
+
+    schema = transport.calls[0]["payload"]["response_format"]["json_schema"]["schema"]
+    assert schema["required"] == [
+        "tldr",
+        "bullets",
+        "problem",
+        "method",
+        "contribution",
+    ]
+    assert schema["additionalProperties"] is False
+    for field in ("problem", "method", "contribution"):
+        assert "default" not in schema["properties"][field]
 
 
 def test_requested_and_actual_model_can_differ_after_fallback() -> None:

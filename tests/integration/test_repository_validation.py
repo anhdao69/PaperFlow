@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import json
 import shutil
 from pathlib import Path
 
 import pytest
 
 from paperflow.generated_files import GENERATED_FILE_MARKER
+from paperflow.paper_store import load_selected_store
 from paperflow.render.validation import validate_repository
+from paperflow.taxonomy import load_taxonomy
 
 ROOT = Path(__file__).parents[2]
 
@@ -34,14 +37,19 @@ def snapshot(project: Path) -> dict[str, bytes]:
 
 def test_checked_in_repository_passes_full_validation() -> None:
     report = validate_repository(ROOT)
-    assert report.selected_papers == 0
+    taxonomy = load_taxonomy(ROOT / "configs/topics.yaml")
+    selected = load_selected_store(ROOT / "data/papers.json", taxonomy)
+
+    assert report.selected_papers == len(selected.papers)
     assert report.generated_files > 80
 
 
 def test_validation_failure_changes_no_bytes(tmp_path: Path) -> None:
     project = copy_project(tmp_path)
     index = project / "data/feed_index.json"
-    index.write_text(index.read_text().replace('"day_count": 0', '"day_count": 1'))
+    content = json.loads(index.read_text())
+    content["day_count"] += 1
+    index.write_text(json.dumps(content, indent=2, sort_keys=True) + "\n")
     before = snapshot(project)
 
     with pytest.raises(ValueError):

@@ -91,6 +91,31 @@ class UrllibJsonTransport:
             raise OpenRouterTransportError(message) from error
 
 
+def _strict_json_schema(schema: type[BaseModel]) -> dict[str, object]:
+    """Return a Pydantic schema compatible with strict structured outputs."""
+
+    def normalize(node: Any) -> Any:
+        if isinstance(node, dict):
+            normalized = {
+                key: normalize(value)
+                for key, value in node.items()
+                if key != "default"
+            }
+            properties = normalized.get("properties")
+            if isinstance(properties, dict):
+                normalized["required"] = list(properties)
+                normalized.setdefault("additionalProperties", False)
+            return normalized
+        if isinstance(node, list):
+            return [normalize(item) for item in node]
+        return node
+
+    normalized = normalize(schema.model_json_schema())
+    if not isinstance(normalized, dict):
+        raise TypeError("Pydantic model JSON schema must be an object")
+    return normalized
+
+
 class OpenRouterClient:
     def __init__(
         self,
@@ -226,7 +251,7 @@ class OpenRouterClient:
                 "json_schema": {
                     "name": schema.__name__,
                     "strict": True,
-                    "schema": schema.model_json_schema(),
+                    "schema": _strict_json_schema(schema),
                 },
             },
             "provider": provider,

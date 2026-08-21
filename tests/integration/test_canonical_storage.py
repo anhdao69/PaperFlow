@@ -12,12 +12,16 @@ from paperflow.taxonomy import load_taxonomy
 HASH = "d" * 64
 
 
-def test_checked_in_empty_canonical_files_validate() -> None:
+def test_checked_in_canonical_files_validate() -> None:
     root = Path(__file__).parents[2]
     taxonomy = load_taxonomy(root / "configs/topics.yaml")
 
-    assert not load_selected_store(root / "data/papers.json", taxonomy).papers
-    assert load_run_state(root / "data/state.json").last_successful_run_id is None
+    selected = load_selected_store(root / "data/papers.json", taxonomy)
+    state = load_run_state(root / "data/state.json")
+
+    assert selected.schema_version == 1
+    assert state.schema_version == 1
+    assert all(key == paper.arxiv_id for key, paper in selected.papers.items())
 
 
 def _event(
