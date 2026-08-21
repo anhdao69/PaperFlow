@@ -28,6 +28,30 @@ struct TopicAssignment: Codable, Hashable, Sendable {
     let subtopicIds: [String]
 }
 
+struct PublicFigure: Codable, Hashable, Identifiable, Sendable {
+    var id: String { figureId }
+    let figureId: String
+    let figureNumber: String?
+    let kind: String
+    let page: Int
+    let caption: String?
+    let imagePath: String
+    let width: Int
+    let height: Int
+
+    func validated() throws -> Self {
+        guard !figureId.isEmpty,
+              ["figure", "table"].contains(kind),
+              page > 0,
+              width > 0,
+              height > 0 else {
+            throw PublicContractError.invalidFigure
+        }
+        _ = try PublicationURLResolver.validateRelativePath(imagePath)
+        return self
+    }
+}
+
 struct PublicPaper: Codable, Hashable, Identifiable, Sendable {
     var id: String { arxivId }
     let arxivId: String
@@ -46,9 +70,11 @@ struct PublicPaper: Codable, Hashable, Identifiable, Sendable {
     let bullets: [String]
     let summaryStatus: SummaryStatus
     let heroFigure: String?
+    var figures: [PublicFigure]? = nil
     let figureStatus: FigureStatus
 
     var displaySummary: String { tldr ?? abstract }
+    var figureGallery: [PublicFigure] { figures ?? [] }
 
     func validated() throws -> Self {
         guard Self.normalizeArxivID(arxivId) == arxivId else {
@@ -70,7 +96,12 @@ struct PublicPaper: Codable, Hashable, Identifiable, Sendable {
         if figureStatus == .ready {
             guard let heroFigure else { throw PublicContractError.invalidFigure }
             _ = try PublicationURLResolver.validateRelativePath(heroFigure)
-        } else if heroFigure != nil {
+            for figure in figureGallery { _ = try figure.validated() }
+            guard Set(figureGallery.map(\.figureId)).count == figureGallery.count,
+                  Set(figureGallery.map(\.imagePath)).count == figureGallery.count else {
+                throw PublicContractError.invalidFigure
+            }
+        } else if heroFigure != nil || !figureGallery.isEmpty {
             throw PublicContractError.invalidFigure
         }
         return self
@@ -285,5 +316,15 @@ enum PublicationURLResolver {
             throw PublicContractError.invalidAbsoluteURL
         }
         return resolved
+    }
+}
+
+enum PFPublication {
+    static func figureURL(for path: String, bundle: Bundle = .main) -> URL? {
+        guard let value = bundle.object(forInfoDictionaryKey: "PaperFlowBaseURL") as? String,
+              let root = URL(string: value) else {
+            return nil
+        }
+        return try? PublicationURLResolver.resolve(path, against: root)
     }
 }

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**22 papers total**
+**23 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-21 | [MR-IQA-2: Faithful Image Quality Reflection via Fine-Grained Credit Assignment](https://arxiv.org/abs/2608.18579) | Multimodal Foundation Models: Vision-Language Models, Multimodal Large Language Models | MR-IQA-2 improves blind image quality assessment by separately supervising reasoning and ratings, using visual editing and judging to make reasoning more faithful. | 5 | 7 |
 | 2026-08-21 | [Manifold Drift in Flow Preference Optimization: A Root Cause of Reward Hacking](https://arxiv.org/abs/2608.20011) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation: Video Diffusion | ThermoDPO addresses reward hacking in flow preference optimization by constraining updates toward the pretrained data manifold. | 6 | 8 |
 | 2026-08-21 | [Towards Clinically Faithful Medical Image Captioning via Enhanced Vision-Language Alignment](https://arxiv.org/abs/2608.19825) | Multimodal Foundation Models: Vision-Language Models, Multimodal Large Language Models | The paper improves medical image captioning by combining clinically aligned training objectives with inference-time caption reranking. | 7 | 6 |
 | 2026-08-21 | [Question-Guided Evidence Acquisition for Multimodal Visual Question Answering](https://arxiv.org/abs/2608.19739) | Multimodal Foundation Models: Vision-Language Models, Multimodal Large Language Models | Q-Guide improves document VQA by letting a model identify missing evidence and selectively use text reading, zooming, or spatial grounding before answering. | 7 | 7 |

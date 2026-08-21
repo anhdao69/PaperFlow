@@ -94,6 +94,7 @@ def test_public_paper_allowlist_excludes_private_provenance_and_retry_fields() -
         "bullets",
         "summary_status",
         "hero_figure",
+        "figures",
         "figure_status",
     }
     serialized = paper.model_dump_json()

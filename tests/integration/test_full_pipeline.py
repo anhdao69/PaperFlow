@@ -167,6 +167,7 @@ def test_five_date_core_soak_with_retry_fallback_and_failure_drill(
     runtime_path = project / "configs/runtime.yaml"
     runtime = yaml.safe_load(runtime_path.read_text())
     runtime["schedule"]["enabled"] = True
+    runtime["figures"]["enabled"] = False
     runtime_path.write_text(yaml.safe_dump(runtime, sort_keys=False))
     assert sync_schedule(project, check=False) is True
     entries, fixture = raw_fixture()

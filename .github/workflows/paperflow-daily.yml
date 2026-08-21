@@ -26,7 +26,22 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
       - run: python -m pip install -e .
+      - name: Build pinned PDFFigures2
+        run: |
+          git clone --filter=blob:none https://github.com/allenai/pdffigures2.git /tmp/pdffigures2
+          git -C /tmp/pdffigures2 checkout 3d7ad46753d4a315cccd1c2bcab398380e88c534
+          curl --fail --location --retry 3 \
+            --output /tmp/sbt.tgz \
+            https://github.com/sbt/sbt/releases/download/v1.7.1/sbt-1.7.1.tgz
+          tar -xzf /tmp/sbt.tgz -C /tmp
+          cd /tmp/pdffigures2
+          /tmp/sbt/bin/sbt -Dsbt.log.noformat=true -batch -no-colors assembly
+          echo "PAPERFLOW_PDFFIGURES2_JAR=/tmp/pdffigures2/pdffigures2.jar" >> "$GITHUB_ENV"
       - name: Confirm manual schedule bypass
         run: python -m paperflow.schedule --manual
       - name: Run PaperFlow

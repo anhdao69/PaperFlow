@@ -16,7 +16,7 @@ ROOT = Path(__file__).parents[2]
 
 def copy_project(tmp_path: Path) -> Path:
     project = tmp_path / "project"
-    for relative in ("configs", "data", "site", "topics"):
+    for relative in ("configs", "data", "figures", "site", "topics"):
         shutil.copytree(ROOT / relative, project / relative)
     if (ROOT / "daily").exists():
         shutil.copytree(ROOT / "daily", project / "daily")
@@ -64,4 +64,17 @@ def test_stale_marked_site_file_is_rejected(tmp_path: Path) -> None:
     stale.write_text(GENERATED_FILE_MARKER)
 
     with pytest.raises(ValueError, match="stale generated artifact"):
+        validate_repository(project)
+
+
+def test_ready_figure_asset_must_exist(tmp_path: Path) -> None:
+    project = copy_project(tmp_path)
+    papers_path = project / "data/papers.json"
+    content = json.loads(papers_path.read_text())
+    paper = next(iter(content["papers"].values()))
+    paper["figure_status"] = "ready"
+    paper["hero_figure"] = "figures/does-not-exist/hero.webp"
+    papers_path.write_text(json.dumps(content, indent=2, sort_keys=True) + "\n")
+
+    with pytest.raises(ValueError, match="ready figure asset is missing"):
         validate_repository(project)

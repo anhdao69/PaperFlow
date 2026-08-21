@@ -121,6 +121,12 @@ class PublishingConfig(StrictConfigModel):
 class FigureConfig(StrictConfigModel):
     enabled: bool
     iphone_placeholder: bool
+    extractor: Literal["pdffigures2"] = "pdffigures2"
+    concurrency: int = Field(default=2, ge=1, le=4)
+    extraction_timeout_seconds: int = Field(default=180, ge=10, le=900)
+    download_timeout_seconds: int = Field(default=60, ge=10, le=300)
+    max_long_edge: int = Field(default=1600, ge=320, le=2400)
+    webp_quality: int = Field(default=88, ge=1, le=100)
 
 
 class ObservabilityConfig(StrictConfigModel):

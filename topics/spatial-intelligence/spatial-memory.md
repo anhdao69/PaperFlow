@@ -6,6 +6,8 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Memory
 
-**0 papers total**
+**1 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-21 | [The Role of Grid Cells in Reducing Spatial Aliasing in Hippocampal Place Representations](https://arxiv.org/abs/2608.18569) | Spatial Intelligence: Spatial Memory, Geometry-Aware Models | Grid-cell signals substantially reduce spatial aliasing in BVC-based hippocampal place representations, especially in visually symmetric environments. | 7 | 7 |

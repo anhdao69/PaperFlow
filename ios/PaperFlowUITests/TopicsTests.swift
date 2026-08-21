@@ -12,7 +12,8 @@ final class TopicsTests: XCTestCase {
         app.tabBars.buttons["Topics"].tap()
 
         XCTAssertTrue(app.staticTexts["Total Papers"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["2 papers"].exists)
+        XCTAssertTrue(app.staticTexts["2"].exists)
+        XCTAssertTrue(app.staticTexts["papers in your research library"].exists)
         let worldModels = app.staticTexts["World Models"].firstMatch
         XCTAssertTrue(worldModels.exists)
         attach(app.screenshot(), named: "Phase 19 Topics")
@@ -33,7 +34,9 @@ final class TopicsTests: XCTestCase {
         app.launch()
         XCTAssertTrue(app.buttons["today.swipe"].waitForExistence(timeout: 5))
         app.buttons["today.swipe"].tap()
-        app.buttons["swipe.skip"].tap()
+        let card = app.descendants(matching: .any)["swipe.card.2608.40002"]
+        XCTAssertTrue(card.waitForExistence(timeout: 5))
+        card.swipeLeft()
 
         app.tabBars.buttons["Topics"].tap()
         app.staticTexts["World Models"].firstMatch.tap()

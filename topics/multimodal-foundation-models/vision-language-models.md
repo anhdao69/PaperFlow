@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Models
 
-**32 papers total**
+**33 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-21 | [MR-IQA-2: Faithful Image Quality Reflection via Fine-Grained Credit Assignment](https://arxiv.org/abs/2608.18579) | Multimodal Foundation Models: Vision-Language Models, Multimodal Large Language Models | MR-IQA-2 improves blind image quality assessment by separately supervising reasoning and ratings, using visual editing and judging to make reasoning more faithful. | 5 | 7 |
 | 2026-08-21 | [G-CARL: Grounded Checklist-Aligned Reward Learning for Patient-Oriented Medical Report Interpretation](https://arxiv.org/abs/2608.20331) | Multimodal Foundation Models: Vision-Language Models | G-CARL improves patient-oriented medical report interpretation by jointly optimizing factual accuracy and personalized, accessible communication with grounded checklist-based reinforcement learning. | 6 | 7 |
 | 2026-08-21 | [ID-VTG: Image-Disambiguated Video Temporal Grounding](https://arxiv.org/abs/2608.20127) | Multimodal Foundation Models: Vision-Language Models | ID-VTG grounds actions performed by a specific video entity using a reference image plus text, addressing ambiguity among visually similar instances. | 6 | 6 |
 | 2026-08-21 | [ArmorOCR: Grounded Adversarial Visual Perception via Observation-Transferred Self-Distillation](https://arxiv.org/abs/2608.20122) | Multimodal Foundation Models: Vision-Language Models | ArmorOCR improves LMM robustness to adversarial visual text by training grounded localization and recognition through transformed-observation self-distillation and task-specific reinforcement learning. | 7 | 7 |

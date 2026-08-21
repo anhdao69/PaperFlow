@@ -13,6 +13,7 @@ struct PaperDetailView: View {
     @Environment(\.pfHaptics) private var haptics
     @Query private var personalStates: [PersonalPaperState]
     @State private var showsFullAbstract = false
+    @State private var selectedFigureID: String?
     @State private var noteDraft = ""
     @State private var noteLoaded = false
     @State private var didMarkOpened = false
@@ -21,7 +22,7 @@ struct PaperDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: PFTheme.Spacing.large) {
-                PFFigurePlaceholder(status: paper.figureStatus, height: 210)
+                figureCarousel
                 titleSection
                 scoreSection
                 summarySection
@@ -53,6 +54,53 @@ struct PaperDetailView: View {
             Text(actionError ?? "")
         }
         .accessibilityIdentifier("screen.paper.detail")
+    }
+
+    @ViewBuilder
+    private var figureCarousel: some View {
+        if paper.figureGallery.isEmpty {
+            PFFigureView(
+                relativePath: paper.heroFigure,
+                status: paper.figureStatus,
+                height: 230,
+                contentMode: .fit
+            )
+            .accessibilityIdentifier("detail.figure")
+        } else {
+            VStack(spacing: PFTheme.Spacing.small) {
+                TabView(selection: $selectedFigureID) {
+                    ForEach(paper.figureGallery) { figure in
+                        VStack(spacing: PFTheme.Spacing.small) {
+                            PFFigureView(
+                                relativePath: figure.imagePath,
+                                status: .ready,
+                                height: 220,
+                                contentMode: .fit
+                            )
+                            Text(figure.caption ?? figureLabel(figure))
+                                .font(.caption)
+                                .foregroundStyle(PFTheme.textSecondary)
+                                .lineLimit(2)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .tag(Optional(figure.figureId))
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .always))
+                .frame(height: 286)
+                Text("Swipe figures · \(paper.figureGallery.count) images")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(PFTheme.textTertiary)
+                    .accessibilityIdentifier("detail.figure.count")
+            }
+            .onAppear { selectedFigureID = paper.figureGallery.first?.figureId }
+            .accessibilityIdentifier("detail.figure.carousel")
+        }
+    }
+
+    private func figureLabel(_ figure: PublicFigure) -> String {
+        let number = figure.figureNumber.map { " \($0)" } ?? ""
+        return "\(figure.kind.capitalized)\(number) · page \(figure.page)"
     }
 
     private var titleSection: some View {

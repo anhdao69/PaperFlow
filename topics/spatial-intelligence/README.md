@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**9 papers total**
+**10 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-21 | [The Role of Grid Cells in Reducing Spatial Aliasing in Hippocampal Place Representations](https://arxiv.org/abs/2608.18569) | Spatial Intelligence: Spatial Memory, Geometry-Aware Models | Grid-cell signals substantially reduce spatial aliasing in BVC-based hippocampal place representations, especially in visually symmetric environments. | 7 | 7 |
 | 2026-08-21 | [Gravity-aware partially calibrated absolute pose estimation from affine- or rotation-covariant features](https://arxiv.org/abs/2608.20056) | Spatial Intelligence: Geometry-Aware Models | A gravity-aware approach estimates camera pose and focal length from fewer affine- or orientation-covariant feature correspondences than traditional methods. | 6 | 6 |
 | 2026-08-21 | [RIPE++: Reinforced Keypoint Learning from Positive Pairs Only](https://arxiv.org/abs/2608.19693) | Spatial Intelligence; 3D Vision | RIPE++ learns discriminative keypoints, descriptors, and matchers from positive image pairs alone by using richer geometry-based reinforcement rewards. | 6 | 7 |
 | 2026-08-21 | [Where Grounding Accuracy Lives on the IoU Curve: Label-Free Inference-Time Boundary Refinement](https://arxiv.org/abs/2608.19553) | Multimodal Foundation Models: Vision-Language Models; Spatial Intelligence: Spatial Reasoning | Label-free inference-time refinement improves bounding-box precision by re-grounding selectively cropped regions, without target annotations or model retraining. | 7 | 6 |

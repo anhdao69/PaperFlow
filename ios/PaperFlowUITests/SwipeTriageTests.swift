@@ -22,7 +22,7 @@ final class SwipeTriageTests: XCTestCase {
         app.navigationBars.buttons.element(boundBy: 0).tap()
         XCTAssertTrue(first.waitForExistence(timeout: 5))
 
-        app.buttons["swipe.save"].tap()
+        first.swipeRight()
         let second = app.descendants(matching: .any)["swipe.card.2608.40001"]
         XCTAssertTrue(second.waitForExistence(timeout: 5))
         app.buttons["swipe.undo"].tap()
@@ -30,7 +30,7 @@ final class SwipeTriageTests: XCTestCase {
 
         first.swipeLeft()
         XCTAssertTrue(second.waitForExistence(timeout: 5))
-        app.buttons["swipe.skip"].tap()
+        second.swipeLeft()
 
         let complete = app.descendants(matching: .any)["swipe.complete"]
         XCTAssertTrue(complete.waitForExistence(timeout: 5))

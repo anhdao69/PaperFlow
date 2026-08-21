@@ -22,9 +22,8 @@ struct TodayHomeView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
-            Text("PaperFlow")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(PFTheme.primary)
+            PFBrandMark()
+                .padding(.bottom, PFTheme.Spacing.small)
             Text("Today")
                 .font(.largeTitle.bold())
             Text(model.currentDate.formatted(.dateTime.weekday(.wide).month(.abbreviated).day()))

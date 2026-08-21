@@ -196,12 +196,20 @@ struct PFPaperBrowseCard: View {
         Group {
             if dynamicTypeSize.isAccessibilitySize {
                 VStack(alignment: .leading, spacing: PFTheme.Spacing.medium) {
-                    PFFigurePlaceholder(status: paper.figureStatus, height: 150)
+                    PFFigureView(
+                        relativePath: paper.heroFigure,
+                        status: paper.figureStatus,
+                        height: 150
+                    )
                     paperContent
                 }
             } else {
                 HStack(alignment: .top, spacing: PFTheme.Spacing.medium) {
-                    PFFigurePlaceholder(status: paper.figureStatus, height: 108)
+                    PFFigureView(
+                        relativePath: paper.heroFigure,
+                        status: paper.figureStatus,
+                        height: 108
+                    )
                         .frame(width: 116)
                     paperContent
                 }

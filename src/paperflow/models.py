@@ -5,7 +5,9 @@ from __future__ import annotations
 import re
 from datetime import date, datetime
 from enum import StrEnum
+from pathlib import PurePosixPath
 from typing import Annotated, Literal
+from urllib.parse import urlsplit
 from uuid import UUID
 
 from pydantic import (
@@ -149,6 +151,37 @@ class FigureStatus(StrEnum):
     NOT_IMPLEMENTED = "not_implemented"
     READY = "ready"
     FAILED = "failed"
+
+
+class FigureAsset(DomainModel):
+    """One published scientific figure or table crop."""
+
+    figure_id: NonEmptyText
+    figure_number: str | None = None
+    kind: Literal["figure", "table"]
+    page: int = Field(ge=1)
+    caption: str | None = None
+    image_path: NonEmptyText
+    width: int = Field(gt=0)
+    height: int = Field(gt=0)
+
+    @field_validator("image_path")
+    @classmethod
+    def require_safe_publication_path(cls, value: str) -> str:
+        parsed = urlsplit(value)
+        candidate = PurePosixPath(value)
+        if (
+            candidate.is_absolute()
+            or ".." in candidate.parts
+            or "\\" in value
+            or parsed.scheme
+            or parsed.netloc
+            or parsed.query
+            or parsed.fragment
+            or not candidate.parts
+        ):
+            raise ValueError("figure image_path must be publication-root relative")
+        return value
 
 
 class AnnounceType(StrEnum):
@@ -300,6 +333,7 @@ class SelectedPaper(DomainModel):
     method: NonEmptyText | None = None
     contribution: NonEmptyText | None = None
     hero_figure: str | None = None
+    figures: list[FigureAsset] = Field(default_factory=list)
     figure_status: FigureStatus
     taxonomy_version: int = Field(ge=1)
     taxonomy_hash: Sha256
@@ -337,8 +371,8 @@ class SelectedPaper(DomainModel):
         if self.figure_status == FigureStatus.READY:
             if not self.hero_figure:
                 raise ValueError("ready figure requires hero_figure")
-        elif self.hero_figure is not None:
-            raise ValueError("non-ready figure must not contain hero_figure")
+        elif self.hero_figure is not None or self.figures:
+            raise ValueError("non-ready figure must not contain figure assets")
         return self
 
 

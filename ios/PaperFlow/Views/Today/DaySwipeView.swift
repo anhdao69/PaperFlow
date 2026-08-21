@@ -45,7 +45,12 @@ struct DaySwipeView: View {
         .navigationTitle(collectionTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button("Undo", systemImage: "arrow.uturn.backward") {
+                    if let session { undo(session) }
+                }
+                .disabled(session?.canUndo != true)
+                .accessibilityIdentifier("swipe.undo")
                 Button("Filter", systemImage: "line.3.horizontal.decrease") {
                     showsFilters = true
                 }
@@ -97,12 +102,7 @@ struct DaySwipeView: View {
                     onDecision: { perform($0, session: session) },
                     onOpenDetail: { detailPaper = paper }
                 )
-                PFSwipeActionBar(
-                    canUndo: session.canUndo,
-                    onSkip: { perform(.skip, session: session) },
-                    onUndo: { undo(session) },
-                    onSave: { perform(.save, session: session) }
-                )
+                .frame(maxHeight: .infinity)
             } else {
                 TriageCompleteView(
                     progress: progress,

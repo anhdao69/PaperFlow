@@ -271,6 +271,7 @@ def _public_paper(paper: SelectedPaper, taxonomy: TaxonomyConfig) -> PublicPaper
         bullets=paper.bullets,
         summary_status=paper.summary_status,
         hero_figure=paper.hero_figure,
+        figures=paper.figures,
         figure_status=paper.figure_status,
     )
 

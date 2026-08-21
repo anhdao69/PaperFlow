@@ -9,13 +9,18 @@ struct PFSwipeCard: View {
 
     @State private var offset: CGSize = .zero
     @State private var crossedDecision: SwipeDecision?
+    @State private var isCommitting = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    private let threshold: CGFloat = 105
+    private let threshold: CGFloat = 120
 
     var body: some View {
         VStack(alignment: .leading, spacing: PFTheme.Spacing.medium) {
-            PFFigurePlaceholder(status: paper.figureStatus, height: 210)
+            PFFigureView(
+                relativePath: paper.heroFigure,
+                status: paper.figureStatus,
+                height: dynamicTypeSize.isAccessibilitySize ? 210 : 252
+            )
             Text(paper.title)
                 .font(.title2.bold())
                 .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
@@ -28,14 +33,25 @@ struct PFSwipeCard: View {
             Text(paper.displaySummary)
                 .font(.body)
                 .foregroundStyle(PFTheme.textSecondary)
-                .lineLimit(4)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 6)
+                .lineSpacing(3)
+            if let keyIdea = paper.bullets.first {
+                VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
+                    Text("KEY IDEA")
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(PFTheme.primary)
+                    Text(keyIdea)
+                        .font(.subheadline)
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                }
+            }
             HStack {
                 PFTag(text: "Relevance \(paper.relevance)")
                 PFTag(text: "Novelty \(paper.novelty)")
             }
         }
         .padding(PFTheme.Spacing.standard)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(cardBackground, in: .rect(cornerRadius: PFTheme.Radius.feature))
         .overlay(alignment: offset.width >= 0 ? .topLeading : .topTrailing) {
             decisionOverlay
@@ -47,6 +63,8 @@ struct PFSwipeCard: View {
         .contentShape(.rect)
         .onTapGesture(perform: onOpenDetail)
         .offset(offset)
+        .scaleEffect(isCommitting ? 0.96 : 1)
+        .opacity(isCommitting ? 0.15 : 1)
         .rotationEffect(.degrees(PFMotionPolicy.rotation(
             Double(offset.width / 24).clamped(to: -7 ... 7),
             reduceMotion: reduceMotion
@@ -56,15 +74,17 @@ struct PFSwipeCard: View {
                 .onChanged(handleDrag)
                 .onEnded(handleEnd)
         )
-        .animation(PFMotionPolicy.animation(reduceMotion: reduceMotion), value: offset)
+        .allowsHitTesting(!isCommitting)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("swipe.card.\(paper.arxivId)")
     }
 
-    private var decision: SwipeDecision? {
-        if offset.width >= threshold { return .save }
-        if offset.width <= -threshold { return .skip }
+    private var decision: SwipeDecision? { decision(for: offset.width) }
+
+    private func decision(for width: CGFloat) -> SwipeDecision? {
+        if width >= threshold { return .save }
+        if width <= -threshold { return .skip }
         return nil
     }
 
@@ -97,15 +117,29 @@ struct PFSwipeCard: View {
     }
 
     private func handleEnd(_ value: DragGesture.Value) {
-        guard let decision else {
-            offset = .zero
+        let projected = decision(for: value.predictedEndTranslation.width)
+        guard let decision = decision ?? projected else {
+            withAnimation(PFMotionPolicy.animation(reduceMotion: reduceMotion)) {
+                offset = .zero
+            }
             crossedDecision = nil
             return
         }
-        offset.width = decision == .save ? 700 : -700
-        onDecision(decision)
-        offset = .zero
-        crossedDecision = nil
+        isCommitting = true
+        let duration = reduceMotion ? 0.01 : 0.36
+        withAnimation(.easeIn(duration: duration)) {
+            offset = CGSize(
+                width: decision == .save ? 760 : -760,
+                height: value.translation.height * 0.35
+            )
+        }
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(duration))
+            onDecision(decision)
+            offset = .zero
+            crossedDecision = nil
+            isCommitting = false
+        }
     }
 }
 

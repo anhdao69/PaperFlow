@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**16 papers total**
+**20 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-21 | [World-Model-Grounded LLM Planning for AUV and ASV Navigation Near Offshore Wind Farms](https://arxiv.org/abs/2608.19661) | Embodied AI: Vision-Language Navigation; World Models: World Action Models | A physics-grounded world model enables LLM planners to generate safer, more physically feasible AUV and ASV navigation plans near offshore wind farms. | 8 | 6 |
+| 2026-08-21 | [HiTac-WAM: A Hierarchical Tactile World Action Model for Contact-Rich Robot Manipulation](https://arxiv.org/abs/2608.19574) | Embodied AI: Robot Learning; World Models: World Action Models | HiTac-WAM improves contact-rich robot manipulation by hierarchically forecasting tactile outcomes for candidate actions and using them for planning and corrective replanning. | 9 | 9 |
+| 2026-08-21 | [Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control](https://arxiv.org/abs/2608.19375) | Embodied AI: Robot Learning; World Models: World Action Models | Neural reduced dynamics learns a compact, control-relevant abstraction that enables fast policy training while preserving transfer to high-fidelity robot simulation. | 9 | 8 |
+| 2026-08-21 | [Position: Profiling Game Worlds by Transition Complexity](https://arxiv.org/abs/2608.18079) | World Models: World Action Models | TCP is proposed as a standardized way to measure and report the transition-prediction complexity of game worlds for GWM and RL. | 6 | 7 |
 | 2026-08-21 | [Towards Surgical World-Action Modeling: A Preliminary Joint Visual-Trajectory Forecasting for Surgical Motion Planning](https://arxiv.org/abs/2608.20284) | World Models: World Action Models, Video World Models | A preliminary model jointly forecasts future surgical visuals and instrument trajectories, with chunked autoregressive rollout improving short-horizon prediction but errors accumulating over time. | 8 | 8 |
 | 2026-08-21 | [DECOWAM: Decoupled Whole-Body World-Action Model for Legged Mobile Manipulation](https://arxiv.org/abs/2608.20114) | Embodied AI: Vision-Language-Action, Robot Learning; World Models: Latent Action Models, World Action Models, Video World Models; Video Generation: Video Prediction | DECOWAM factorizes camera, base, and arm effects to enable parameter-efficient world modeling and whole-body control for legged mobile manipulators. | 9 | 8 |
 | 2026-08-21 | [Planning-Oriented End-to-End Autonomous Driving: Architectures, Evaluation, and Emerging Paradigms](https://arxiv.org/abs/2608.20111) | Embodied AI: Vision-Language-Action; World Models: Video World Models; Multimodal Foundation Models: Vision-Language Models | This survey traces autonomous driving’s shift toward planning-oriented end-to-end systems and argues that meaningful progress requires structured planning and realistic, safety-focused evaluation. | 9 | 7 |

@@ -16,7 +16,13 @@ from paperflow.cli.sync_schedule import sync_schedule
 from paperflow.config import ConfigBundle, load_config_bundle
 from paperflow.generated_files import generated_cleanup_candidates, is_generated_file
 from paperflow.llm.structured import PromptRenderer
-from paperflow.models import FilterStatus, RunState, RunStats
+from paperflow.models import (
+    FigureStatus,
+    FilterStatus,
+    RunState,
+    RunStats,
+    SelectedPaper,
+)
 from paperflow.paper_store import load_run_state, load_selected_store
 from paperflow.render.contracts import (
     DailyFeed,
@@ -309,6 +315,7 @@ def validate_repository(root: Path) -> RepositoryValidationReport:
     sync_schedule(root, check=True)
 
     selected = load_selected_store(root / "data/papers.json", taxonomy)
+    _validate_figure_assets(root, selected.papers.values())
     state = load_run_state(root / "data/state.json")
     ledger = ScreeningLedger(root / "data/screening_events")
     events = tuple(ledger.iter_events())
@@ -370,6 +377,26 @@ def validate_repository(root: Path) -> RepositoryValidationReport:
         run_stats_files=len(stats),
         generated_files=len(expected),
     )
+
+
+def _validate_figure_assets(root: Path, papers: Iterable[SelectedPaper]) -> None:
+    """Require every published ready-state figure reference to resolve locally."""
+    for paper in papers:
+        if paper.figure_status != FigureStatus.READY:
+            continue
+        referenced = [paper.hero_figure]
+        referenced.extend(figure.image_path for figure in paper.figures)
+        for relative_path in referenced:
+            if relative_path is None:
+                raise ValueError(
+                    f"ready figure state has no hero image: {paper.arxiv_id}"
+                )
+            asset = (root / relative_path).resolve()
+            if not asset.is_relative_to(root) or not asset.is_file():
+                raise ValueError(
+                    "ready figure asset is missing: "
+                    f"{paper.arxiv_id} -> {relative_path}"
+                )
 
 
 def _load_run_stats(root: Path) -> tuple[RunStats, ...]:

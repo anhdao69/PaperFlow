@@ -72,6 +72,42 @@ final class PaperDetailViewModelTests: XCTestCase {
         )
     }
 
+    func testReadyFigureGalleryPreservesRepresentativeFirstOrder() throws {
+        var paper = detailPaper(
+            summaryStatus: .failed,
+            tldr: nil,
+            bullets: [],
+            figureStatus: .ready,
+            heroFigure: "figures/2608.12345/hero.webp"
+        )
+        paper.figures = [
+            PublicFigure(
+                figureId: "overview",
+                figureNumber: "2",
+                kind: "figure",
+                page: 3,
+                caption: "Architecture overview.",
+                imagePath: "figures/2608.12345/figure-001.webp",
+                width: 1200,
+                height: 700
+            ),
+            PublicFigure(
+                figureId: "results",
+                figureNumber: "5",
+                kind: "figure",
+                page: 8,
+                caption: "Results.",
+                imagePath: "figures/2608.12345/figure-002.webp",
+                width: 1000,
+                height: 700
+            )
+        ]
+
+        let validated = try paper.validated()
+
+        XCTAssertEqual(validated.figureGallery.map(\.figureId), ["overview", "results"])
+    }
+
     private func detailPaper(
         summaryStatus: SummaryStatus,
         tldr: String?,

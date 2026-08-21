@@ -1,5 +1,39 @@
 import SwiftUI
 
+struct PFBrandMark: View {
+    var compact = false
+
+    var body: some View {
+        HStack(spacing: PFTheme.Spacing.medium) {
+            ZStack {
+                RoundedRectangle(cornerRadius: compact ? 10 : 13)
+                    .fill(
+                        LinearGradient(
+                            colors: [PFTheme.primaryStrong, PFTheme.primary.opacity(0.72)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                ForEach(0 ..< 3, id: \.self) { index in
+                    RoundedRectangle(cornerRadius: 2.5)
+                        .fill(.white.opacity(0.42 + Double(index) * 0.2))
+                        .frame(width: compact ? 13 : 17, height: compact ? 18 : 23)
+                        .rotationEffect(.degrees(-8 + Double(index) * 8))
+                        .offset(x: CGFloat(index - 1) * (compact ? 4 : 5))
+                }
+            }
+            .frame(width: compact ? 34 : 44, height: compact ? 34 : 44)
+            .shadow(color: PFTheme.primary.opacity(0.22), radius: 7, y: 3)
+
+            Text("PaperFlow")
+                .font(compact ? .headline.bold() : .title2.bold())
+                .foregroundStyle(PFTheme.textPrimary)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("PaperFlow")
+    }
+}
+
 struct PFSectionHeader: View {
     let title: String
     var count: Int?
@@ -90,6 +124,46 @@ struct PFFigurePlaceholder: View {
     }
 }
 
+struct PFFigureView: View {
+    let relativePath: String?
+    let status: FigureStatus
+    var height: CGFloat = 132
+    var contentMode: ContentMode = .fill
+
+    var body: some View {
+        Group {
+            if status == .ready,
+               let relativePath,
+               let url = PFPublication.figureURL(for: relativePath) {
+                AsyncImage(url: url, transaction: Transaction(animation: .easeIn(duration: 0.2))) { phase in
+                    switch phase {
+                    case let .success(image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: contentMode)
+                            .accessibilityLabel("Scientific figure")
+                    case .empty:
+                        ZStack {
+                            PFTheme.primarySoft
+                            ProgressView().tint(PFTheme.primary)
+                        }
+                    case .failure:
+                        PFFigurePlaceholder(status: .failed, height: height)
+                    @unknown default:
+                        PFFigurePlaceholder(status: status, height: height)
+                    }
+                }
+            } else {
+                PFFigurePlaceholder(status: status, height: height)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: height)
+        .clipped()
+        .clipShape(.rect(cornerRadius: PFTheme.Radius.card))
+    }
+}
+
 struct PFCircularProgress: View {
     let progress: CollectionProgress
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -122,7 +196,10 @@ struct PFPaperListCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: PFTheme.Spacing.medium) {
-            PFFigurePlaceholder(status: paper.figureStatus)
+            PFFigureView(
+                relativePath: paper.heroFigure,
+                status: paper.figureStatus
+            )
             Text(paper.title)
                 .font(.headline)
                 .lineLimit(3)

@@ -14,18 +14,33 @@ struct TopicsHomeView: View {
                     PFErrorBanner(message: message) { Task { await model.refresh() } }
                 }
                 if let index = model.topicsIndex {
-                    VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
-                        Text("Total Papers")
-                            .font(.subheadline)
-                            .foregroundStyle(PFTheme.textSecondary)
+                    HStack(spacing: PFTheme.Spacing.standard) {
+                        Image(systemName: "books.vertical.fill")
+                            .font(.title2)
+                            .foregroundStyle(PFTheme.primary)
+                            .frame(width: 48, height: 48)
+                            .background(PFTheme.primarySoft, in: .circle)
                         let total = TopicsViewModel.uniqueTotal(index)
-                        Text("\(total) \(total == 1 ? "paper" : "papers")")
-                            .font(.title2.bold())
-                            .monospacedDigit()
+                        VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
+                            Text("Total Papers")
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(PFTheme.textSecondary)
+                            Text("\(total)")
+                                .font(.title.bold())
+                                .foregroundStyle(PFTheme.textPrimary)
+                                .monospacedDigit()
+                            Text(total == 1 ? "paper in your research library" : "papers in your research library")
+                                .font(.caption)
+                                .foregroundStyle(PFTheme.textTertiary)
+                        }
                     }
                     .padding(PFTheme.Spacing.standard)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(PFTheme.primarySoft, in: .rect(cornerRadius: PFTheme.Radius.feature))
+                    .background(PFTheme.surface, in: .rect(cornerRadius: PFTheme.Radius.feature))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: PFTheme.Radius.feature)
+                            .stroke(PFTheme.primary.opacity(0.14), lineWidth: 1)
+                    }
                     .accessibilityIdentifier("topics.total")
 
                     LazyVStack(spacing: PFTheme.Spacing.small) {

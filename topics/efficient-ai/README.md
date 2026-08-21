@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**17 papers total**
+**22 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-21 | [Learning how to Forget: Fine-tuning for Long-Context Sparse Attention](https://arxiv.org/abs/2608.19920) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | A fine-tuning approach lets transformer models co-adapt to sparse KV-cache attention, enabling efficient long-context inference on moderate hardware. | 8 | 7 |
+| 2026-08-21 | [LoRA-GA$^2$: Low Rank Adaptation with Multi-step Gradient Adaptive Alignment](https://arxiv.org/abs/2608.19800) | Efficient AI | LoRA-GA² narrows LoRA’s gap with full fine-tuning by using multi-step gradient information for better initialization and rank allocation without added GPU memory. | 5 | 6 |
+| 2026-08-21 | [FlashPrefill V2: Block-Sparse Prefill Attention for Long-Context LLM Serving](https://arxiv.org/abs/2608.19758) | Efficient AI: Efficient Attention | FlashPrefill V2 makes long-context prefill attention practical by combining highly sparse attention with error correction and production-ready GPU optimizations. | 9 | 8 |
+| 2026-08-21 | [The Asymmetric Harms of LLM Compression](https://arxiv.org/abs/2608.19670) | Efficient AI: KV Cache and Memory Efficiency | LLM compression can cause hidden, asymmetric losses in knowledge, confidence calibration, and subgroup bias that aggregate metrics fail to reveal. | 8 | 7 |
+| 2026-08-21 | [ReCache: Efficient KV Cache Reuse and Compression for Tool-Augmented LLM Agents](https://arxiv.org/abs/2608.19662) | Efficient AI: KV Cache and Memory Efficiency | ReCache makes tool-augmented LLM agents faster and more memory-efficient by independently caching reusable tool and skill representations. | 9 | 8 |
 | 2026-08-21 | [Which Eviction Policy Should an LLM Cache Use? A Systematic Study Across Workloads, Capacities, and Encoders](https://arxiv.org/abs/2608.20280) | Efficient AI: KV Cache and Memory Efficiency | Across the evaluated semantic-cache settings, LFU is the strongest simple default, while answer validity and encoder-specific thresholds matter more than fine-grained eviction-policy differences. | 8 | 7 |
 | 2026-08-21 | [Daedalus-150M: A Convolution-Attention Hybrid Designed for CPU Inference](https://arxiv.org/abs/2608.20210) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Daedalus-150M is a CPU-oriented hybrid language model that replaces most attention blocks with short convolutions, achieving similar quality with smaller 4-bit storage and substantially faster long-context decoding. | 8 | 8 |
 | 2026-08-21 | [Ask Self, Ask Others: Relation Is All You Need](https://arxiv.org/abs/2608.20172) | Efficient AI: Efficient Attention | The paper proposes Relation, a token-mixing alternative to attention that explicitly separates self- and cross-token relations before deriving information flow, achieving improved language-modeling loss and efficient implementations across model scales. | 7 | 8 |

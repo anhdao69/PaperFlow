@@ -16,6 +16,7 @@ final class SavedPaperSnapshot {
     var novelty: Int
     var heroFigure: String?
     var figureStatusRawValue: String?
+    var figuresData: Data?
     var topicAssignmentsData: Data?
     var capturedAt: Date
 
@@ -37,6 +38,7 @@ final class SavedPaperSnapshot {
         novelty = paper.novelty
         heroFigure = paper.heroFigure
         figureStatusRawValue = paper.figureStatus.rawValue
+        figuresData = try? JSONEncoder().encode(paper.figureGallery)
         topicAssignmentsData = try? JSONEncoder().encode(paper.topicAssignments)
         self.capturedAt = capturedAt
     }
@@ -55,6 +57,7 @@ final class SavedPaperSnapshot {
         novelty = value.novelty
         heroFigure = value.heroFigure
         figureStatusRawValue = value.figureStatusRawValue
+        figuresData = value.figuresData
         topicAssignmentsData = value.topicAssignmentsData
         capturedAt = value.capturedAt
     }
@@ -72,6 +75,7 @@ final class SavedPaperSnapshot {
         novelty = paper.novelty
         heroFigure = paper.heroFigure
         figureStatusRawValue = paper.figureStatus.rawValue
+        figuresData = try? JSONEncoder().encode(paper.figureGallery)
         topicAssignmentsData = try? JSONEncoder().encode(paper.topicAssignments)
         self.capturedAt = capturedAt
     }
@@ -89,6 +93,7 @@ final class SavedPaperSnapshot {
         novelty = value.novelty
         heroFigure = value.heroFigure
         figureStatusRawValue = value.figureStatusRawValue
+        figuresData = value.figuresData
         topicAssignmentsData = value.topicAssignmentsData
         capturedAt = value.capturedAt
     }
@@ -117,6 +122,9 @@ final class SavedPaperSnapshot {
             bullets: [],
             summaryStatus: savedTLDR == nil ? .failed : .generated,
             heroFigure: heroFigure,
+            figures: figuresData.flatMap {
+                try? JSONDecoder().decode([PublicFigure].self, from: $0)
+            },
             figureStatus: figureStatus
         )
     }

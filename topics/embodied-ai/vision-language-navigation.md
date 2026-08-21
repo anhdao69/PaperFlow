@@ -6,8 +6,9 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**1 papers total**
+**2 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-21 | [World-Model-Grounded LLM Planning for AUV and ASV Navigation Near Offshore Wind Farms](https://arxiv.org/abs/2608.19661) | Embodied AI: Vision-Language Navigation; World Models: World Action Models | A physics-grounded world model enables LLM planners to generate safer, more physically feasible AUV and ASV navigation plans near offshore wind farms. | 8 | 6 |
 | 2026-08-21 | [GrabVG: Graph-Attentive Binding for Visual Grounding in UAV Imagery](https://arxiv.org/abs/2608.18996) | Embodied AI: Vision-Language Navigation; Spatial Intelligence: Spatial Reasoning | GrabVG improves visual grounding in crowded UAV imagery by combining text-filtered object hypotheses with graph-attentive spatial reasoning. | 7 | 7 |

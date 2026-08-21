@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**6 papers total**
+**8 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-21 | [Learning how to Forget: Fine-tuning for Long-Context Sparse Attention](https://arxiv.org/abs/2608.19920) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | A fine-tuning approach lets transformer models co-adapt to sparse KV-cache attention, enabling efficient long-context inference on moderate hardware. | 8 | 7 |
+| 2026-08-21 | [FlashPrefill V2: Block-Sparse Prefill Attention for Long-Context LLM Serving](https://arxiv.org/abs/2608.19758) | Efficient AI: Efficient Attention | FlashPrefill V2 makes long-context prefill attention practical by combining highly sparse attention with error correction and production-ready GPU optimizations. | 9 | 8 |
 | 2026-08-21 | [Daedalus-150M: A Convolution-Attention Hybrid Designed for CPU Inference](https://arxiv.org/abs/2608.20210) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Daedalus-150M is a CPU-oriented hybrid language model that replaces most attention blocks with short convolutions, achieving similar quality with smaller 4-bit storage and substantially faster long-context decoding. | 8 | 8 |
 | 2026-08-21 | [Ask Self, Ask Others: Relation Is All You Need](https://arxiv.org/abs/2608.20172) | Efficient AI: Efficient Attention | The paper proposes Relation, a token-mixing alternative to attention that explicitly separates self- and cross-token relations before deriving information flow, achieving improved language-modeling loss and efficient implementations across model scales. | 7 | 8 |
 | 2026-08-21 | [Core-KAN: Continuous Vision Kernels with Kolmogorov-Arnold Networks](https://arxiv.org/abs/2608.19817) | Efficient AI: Efficient Attention | Core-KAN is an efficient continuous convolution operator that separately adapts to local geometric scale and content, outperforming strong baselines across three vision tasks with minimal overhead. | 6 | 7 |

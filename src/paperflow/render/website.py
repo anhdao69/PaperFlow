@@ -26,6 +26,8 @@ def render_website_files(
         undefined=StrictUndefined,
         autoescape=select_autoescape(enabled_extensions=("html", "j2")),
         keep_trailing_newline=True,
+        trim_blocks=True,
+        lstrip_blocks=True,
         newline_sequence="\n",
     )
     template = environment.get_template("page.html.j2")

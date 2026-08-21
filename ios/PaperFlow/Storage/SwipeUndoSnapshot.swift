@@ -14,6 +14,7 @@ struct SavedPaperSnapshotValue: Equatable, Sendable {
     let novelty: Int
     let heroFigure: String?
     let figureStatusRawValue: String?
+    let figuresData: Data?
     let topicAssignmentsData: Data?
     let capturedAt: Date
 
@@ -31,6 +32,7 @@ struct SavedPaperSnapshotValue: Equatable, Sendable {
         novelty = snapshot.novelty
         heroFigure = snapshot.heroFigure
         figureStatusRawValue = snapshot.figureStatusRawValue
+        figuresData = snapshot.figuresData
         topicAssignmentsData = snapshot.topicAssignmentsData
         capturedAt = snapshot.capturedAt
     }

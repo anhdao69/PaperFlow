@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -25,6 +25,7 @@ from paperflow.llm.summarization import (
 )
 from paperflow.models import (
     CandidatePaper,
+    FigureStatus,
     FilterStatus,
     RawArxivEntry,
     RunState,
@@ -65,11 +66,21 @@ class DailySourceClient(Protocol):
     ) -> list[RawArxivEntry]: ...
 
 
+class FigureProcessor(Protocol):
+    def process(
+        self,
+        papers: dict[str, SelectedPaper],
+        *,
+        publication_root: Path,
+    ) -> dict[str, SelectedPaper]: ...
+
+
 @dataclass(frozen=True)
 class PipelineDependencies:
     source_client: DailySourceClient
     refetcher: MetadataRefetcher
     llm_client_factory: Callable[[], StructuredChatClient]
+    figure_processor: FigureProcessor | None = None
     now: Callable[[], datetime] = lambda: datetime.now(UTC)
     run_id_factory: Callable[[datetime], str] = lambda now: now.isoformat()
 
@@ -212,6 +223,44 @@ def run_pipeline(
     else:
         summarized = SummaryRunResult(papers=papers, outcomes=())
 
+    if bundle.runtime.figures.enabled:
+        structured_event(
+            "figure_production_started",
+            run_id=run_id,
+            papers=len(summarized.papers),
+        )
+        try:
+            figured_papers = (
+                dependencies.figure_processor.process(
+                    dict(summarized.papers), publication_root=root
+                )
+                if dependencies.figure_processor is not None
+                else _fail_unready_figures(summarized.papers)
+            )
+        except Exception as error:
+            structured_event(
+                "figure_production_failed",
+                run_id=run_id,
+                error_type=type(error).__name__,
+            )
+            figured_papers = _fail_unready_figures(summarized.papers)
+        summarized = SummaryRunResult(
+            papers=figured_papers,
+            outcomes=summarized.outcomes,
+        )
+        structured_event(
+            "figure_production_completed",
+            run_id=run_id,
+            ready=sum(
+                paper.figure_status == FigureStatus.READY
+                for paper in figured_papers.values()
+            ),
+            failed=sum(
+                paper.figure_status == FigureStatus.FAILED
+                for paper in figured_papers.values()
+            ),
+        )
+
     successful_dates = _successful_dates(root)
     successful_dates.add(local_now.date())
     projection = build_public_projection(
@@ -302,6 +351,7 @@ def _merge_filter_results(
                         "contribution": prior.contribution,
                         "summary_model": prior.summary_model,
                         "hero_figure": prior.hero_figure,
+                        "figures": prior.figures,
                         "figure_status": prior.figure_status,
                     }
                 )
@@ -325,6 +375,25 @@ def _candidate_from_selected(paper: SelectedPaper) -> CandidatePaper:
         arxiv_url=paper.arxiv_url,
         pdf_url=paper.pdf_url,
     )
+
+
+def _fail_unready_figures(
+    papers: Mapping[str, SelectedPaper],
+) -> dict[str, SelectedPaper]:
+    return {
+        paper_id: (
+            paper
+            if paper.figure_status == FigureStatus.READY
+            else paper.model_copy(
+                update={
+                    "hero_figure": None,
+                    "figures": [],
+                    "figure_status": FigureStatus.FAILED,
+                }
+            )
+        )
+        for paper_id, paper in papers.items()
+    }
 
 
 def _build_stats(

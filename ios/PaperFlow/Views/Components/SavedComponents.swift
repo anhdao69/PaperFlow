@@ -69,12 +69,20 @@ struct PFSavedPaperRow: View {
             Group {
                 if dynamicTypeSize.isAccessibilitySize {
                     VStack(alignment: .leading, spacing: PFTheme.Spacing.medium) {
-                        PFFigurePlaceholder(status: snapshot.figureStatus, height: 140)
+                        PFFigureView(
+                            relativePath: snapshot.heroFigure,
+                            status: snapshot.figureStatus,
+                            height: 140
+                        )
                         content(snapshot)
                     }
                 } else {
                     HStack(alignment: .top, spacing: PFTheme.Spacing.medium) {
-                        PFFigurePlaceholder(status: snapshot.figureStatus, height: 96)
+                        PFFigureView(
+                            relativePath: snapshot.heroFigure,
+                            status: snapshot.figureStatus,
+                            height: 96
+                        )
                             .frame(width: 104)
                         content(snapshot)
                     }

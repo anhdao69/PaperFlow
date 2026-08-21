@@ -18,6 +18,7 @@ from pydantic import (
 
 from paperflow.models import (
     DomainModel,
+    FigureAsset,
     FigureStatus,
     NonEmptyText,
     SummaryStatus,
@@ -89,6 +90,7 @@ class PublicPaper(DomainModel):
     bullets: list[NonEmptyText] = Field(default_factory=list, max_length=5)
     summary_status: SummaryStatus
     hero_figure: RelativePublicationPath | None = None
+    figures: list[FigureAsset] = Field(default_factory=list)
     figure_status: FigureStatus
 
     _validate_arxiv_id = field_validator("arxiv_id")(validate_canonical_arxiv_id)
@@ -131,8 +133,8 @@ class PublicPaper(DomainModel):
         if self.figure_status == FigureStatus.READY:
             if self.hero_figure is None:
                 raise ValueError("ready public figure requires hero_figure")
-        elif self.hero_figure is not None:
-            raise ValueError("non-ready public figure must have hero_figure=null")
+        elif self.hero_figure is not None or self.figures:
+            raise ValueError("non-ready public figure cannot publish figure assets")
         return self
 
     @property
