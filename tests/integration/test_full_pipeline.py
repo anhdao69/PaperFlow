@@ -2,16 +2,20 @@ from __future__ import annotations
 
 import json
 import shutil
+from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
 from threading import Lock
 
 import pytest
+import yaml
 from pydantic import BaseModel
 
 from paperflow.arxiv_client import ArxivSourceError
+from paperflow.cli.sync_schedule import sync_schedule
 from paperflow.config import load_config_bundle
 from paperflow.llm.filtering import FilterBatchEnvelope
+from paperflow.llm.openrouter import OpenRouterSemanticError
 from paperflow.models import (
     AnnounceType,
     CandidatePaper,
@@ -41,12 +45,17 @@ def project_copy(tmp_path: Path) -> Path:
 
 
 class SequencedSource:
-    def __init__(self, runs: list[list[RawArxivEntry]]) -> None:
+    def __init__(
+        self, runs: list[list[RawArxivEntry] | ArxivSourceError]
+    ) -> None:
         self.runs = runs
 
     def fetch_new(self, categories, *, timeout_seconds):
         del categories, timeout_seconds
-        return self.runs.pop(0)
+        result = self.runs.pop(0)
+        if isinstance(result, ArxivSourceError):
+            raise result
+        return result
 
 
 class FailedSource:
@@ -55,10 +64,12 @@ class FailedSource:
         raise ArxivSourceError("deterministic source failure")
 
 
-class NoRefetch:
+class FixtureRefetch:
+    def __init__(self, papers: dict[str, CandidatePaper] | None = None) -> None:
+        self.papers = papers or {}
+
     def refetch(self, arxiv_id: str) -> CandidatePaper | None:
-        del arxiv_id
-        return None
+        return self.papers.get(arxiv_id)
 
 
 class FixturePipelineLLM:
@@ -67,6 +78,7 @@ class FixturePipelineLLM:
         self.filter_responses = filter_responses
         self._lock = Lock()
         self.summary_calls = 0
+        self.summary_counts: defaultdict[str, int] = defaultdict(int)
 
     def structured_chat(
         self,
@@ -87,7 +99,10 @@ class FixturePipelineLLM:
         else:
             with self._lock:
                 self.summary_calls += 1
+                self.summary_counts[request_metadata["arxiv_id"]] += 1
             paper_id = request_metadata["arxiv_id"]
+            if paper_id == "2608.20003" and self.summary_counts[paper_id] <= 2:
+                raise OpenRouterSemanticError("deterministic summary failure")
             parsed = SummaryContent(
                 tldr=f"Summary for {paper_id}.",
                 bullets=["Problem.", "Method.", "Contribution."],
@@ -137,8 +152,15 @@ def raw_fixture() -> tuple[list[RawArxivEntry], dict]:
     return entries, fixture
 
 
-def test_two_full_runs_retry_failure_and_publish_valid_outputs(tmp_path: Path) -> None:
+def test_five_date_core_soak_with_retry_fallback_and_failure_drill(
+    tmp_path: Path,
+) -> None:
     project = project_copy(tmp_path)
+    runtime_path = project / "configs/runtime.yaml"
+    runtime = yaml.safe_load(runtime_path.read_text())
+    runtime["schedule"]["enabled"] = True
+    runtime_path.write_text(yaml.safe_dump(runtime, sort_keys=False))
+    assert sync_schedule(project, check=False) is True
     entries, fixture = raw_fixture()
     recovered = {
         "arxiv_id": "2608.20010",
@@ -178,28 +200,66 @@ def test_two_full_runs_retry_failure_and_publish_valid_outputs(tmp_path: Path) -
     )
     instants = iter(
         [
-            datetime(2026, 8, 20, 23, tzinfo=UTC),
-            datetime(2026, 8, 21, 23, tzinfo=UTC),
-            datetime(2026, 8, 22, 23, tzinfo=UTC),
+            datetime(2026, 8, 21, 1, tzinfo=UTC),
+            datetime(2026, 8, 22, 1, tzinfo=UTC),
+            datetime(2026, 8, 23, 1, tzinfo=UTC),
+            datetime(2026, 8, 23, 2, tzinfo=UTC),
+            datetime(2026, 8, 24, 1, tzinfo=UTC),
+            datetime(2026, 8, 25, 1, tzinfo=UTC),
         ]
     )
+    failed_id = "2608.20010"
+    without_failed = [
+        entry
+        for entry in entries
+        if not entry.source_arxiv_id.startswith(failed_id)
+    ]
+    refetched = CandidatePaper(
+        arxiv_id=failed_id,
+        source_arxiv_id=f"{failed_id}v1",
+        title="Ambiguous Spatial Classifier",
+        abstract=(
+            "A spatial classifier is returned with an intentionally invalid "
+            "taxonomy assignment."
+        ),
+        authors=["Pipeline Fixture"],
+        categories=["cs.AI"],
+        arxiv_url=f"https://arxiv.org/abs/{failed_id}",
+        pdf_url=f"https://arxiv.org/pdf/{failed_id}",
+    )
     dependencies = PipelineDependencies(
-        source_client=SequencedSource([entries, entries]),
-        refetcher=NoRefetch(),
+        source_client=SequencedSource(
+            [
+                entries,
+                without_failed,
+                ArxivSourceError("deterministic soak source failure"),
+                without_failed,
+                without_failed,
+                without_failed,
+            ]
+        ),
+        refetcher=FixtureRefetch({failed_id: refetched}),
         llm_client_factory=lambda: llm,
         now=lambda: next(instants),
-        run_id_factory=lambda now: f"fixture-{now.date().isoformat()}",
+        run_id_factory=lambda now: f"fixture-{now:%Y-%m-%dT%H}",
     )
 
-    first = run_pipeline(project, dependencies, manual=True)
-    second = run_pipeline(project, dependencies, manual=True)
-    third = run_pipeline(
-        project,
-        dependencies,
-        manual=True,
-        manual_override_ids=["2608.20001"],
-        maintenance_only=True,
-    )
+    first = run_pipeline(project, dependencies, manual=False)
+    second = run_pipeline(project, dependencies, manual=False)
+    tracked = [
+        project / "data/papers.json",
+        project / "data/state.json",
+        project / "data/feed_index.json",
+        project / "site/index.html",
+        project / "README.md",
+    ]
+    before_failure = {path: path.read_bytes() for path in tracked}
+    with pytest.raises(ArxivSourceError):
+        run_pipeline(project, dependencies, manual=False)
+    assert {path: path.read_bytes() for path in tracked} == before_failure
+    third = run_pipeline(project, dependencies, manual=False)
+    fourth = run_pipeline(project, dependencies, manual=False)
+    fifth = run_pipeline(project, dependencies, manual=False)
 
     assert first.stats is not None
     assert (first.stats.fetched, first.stats.deduplicated) == (12, 10)
@@ -208,32 +268,41 @@ def test_two_full_runs_retry_failure_and_publish_valid_outputs(tmp_path: Path) -
         6,
         1,
     )
+    assert (first.stats.summary_generated, first.stats.summary_failed) == (2, 1)
     assert second.stats is not None
+    assert second.stats.failed_backlog_added == 1
     assert second.stats.kept == 1
+    assert (second.stats.summary_generated, second.stats.summary_failed) == (2, 0)
     assert third.stats is not None
-    assert (third.stats.fetched, third.stats.deduplicated, third.stats.kept) == (
-        0,
-        0,
-        1,
+    assert fourth.stats is not None
+    assert fifth.stats is not None
+    assert all(
+        result.stats.figure_mode == "placeholder"
+        for result in (first, second, third, fourth, fifth)
+        if result.stats is not None
     )
     taxonomy = load_taxonomy(project / "configs/topics.yaml")
     selected = load_selected_store(project / "data/papers.json", taxonomy)
     assert len(selected.papers) == 4
     assert load_run_state(project / "data/state.json").last_successful_run_id == (
-        "fixture-2026-08-22"
+        "fixture-2026-08-25T01"
     )
     assert RunStats.model_validate_json(
         (project / "data/run_stats/2026-08-20.json").read_text()
     ).source_ok
-    events = [
-        event
-        for event in ScreeningLedger(project / "data/screening_events").iter_events()
-        if event.arxiv_id == "2608.20001"
+    events = tuple(
+        ScreeningLedger(project / "data/screening_events").iter_events()
+    )
+    assert len({event.arxiv_id for event in events}) == 10
+    failed_history = [event for event in events if event.arxiv_id == failed_id]
+    assert [event.filter_status.value for event in failed_history] == [
+        "failed",
+        "kept",
     ]
-    assert len(events) == 2
-    assert events[0].topic_assignments != events[1].topic_assignments
-    assert selected.papers["2608.20001"].first_seen_date.isoformat() == "2026-08-20"
-    assert validate_repository(project).run_stats_files == 3
+    report = validate_repository(project)
+    assert report.run_stats_files == 5
+    assert report.selected_papers == 4
+    assert len(selected.papers) == len(set(selected.papers))
 
 
 def test_source_failure_preserves_canonical_and_public_outputs(tmp_path: Path) -> None:
@@ -248,7 +317,7 @@ def test_source_failure_preserves_canonical_and_public_outputs(tmp_path: Path) -
     before = {path: path.read_bytes() for path in tracked}
     dependencies = PipelineDependencies(
         source_client=FailedSource(),
-        refetcher=NoRefetch(),
+        refetcher=FixtureRefetch(),
         llm_client_factory=lambda: pytest.fail("LLM must not run on source failure"),
         now=lambda: datetime(2026, 8, 20, 23, tzinfo=UTC),
         run_id_factory=lambda now: "fixture-source-failure",
