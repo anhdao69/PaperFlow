@@ -20,7 +20,7 @@ final class AppModelFixtureTests: XCTestCase {
         )
 
         XCTAssertEqual(try feed.validated().topicId, "world-models")
-        XCTAssertEqual(feed.totalPaperCount, 0)
+        XCTAssertEqual(feed.totalPaperCount, 1)
     }
 }
 

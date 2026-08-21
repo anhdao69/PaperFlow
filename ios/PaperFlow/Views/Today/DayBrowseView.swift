@@ -183,7 +183,7 @@ struct DayBrowseView: View {
     }
 }
 
-private struct PFPaperBrowseCard: View {
+struct PFPaperBrowseCard: View {
     let paper: PublicPaper
     let topicLabels: [String]
     let isReviewed: Bool

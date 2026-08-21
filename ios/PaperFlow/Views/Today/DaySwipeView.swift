@@ -2,7 +2,9 @@ import SwiftData
 import SwiftUI
 
 struct DaySwipeView: View {
-    let feed: DailyFeed
+    let collectionID: String
+    let collectionTitle: String
+    let papers: [PublicPaper]
     let topics: TopicsIndex?
     @Environment(\.modelContext) private var modelContext
     @Query private var personalStates: [PersonalPaperState]
@@ -10,6 +12,25 @@ struct DaySwipeView: View {
     @State private var detailPaper: PublicPaper?
     @State private var showsFilters = false
     @State private var actionError: String?
+
+    init(feed: DailyFeed, topics: TopicsIndex?) {
+        collectionID = "day-\(PFDateText.identifier(feed.date))"
+        collectionTitle = PFDateText.long(feed.date)
+        papers = feed.papers
+        self.topics = topics
+    }
+
+    init(
+        collectionID: String,
+        collectionTitle: String,
+        papers: [PublicPaper],
+        topics: TopicsIndex?
+    ) {
+        self.collectionID = collectionID
+        self.collectionTitle = collectionTitle
+        self.papers = papers
+        self.topics = topics
+    }
 
     var body: some View {
         Group {
@@ -21,7 +42,7 @@ struct DaySwipeView: View {
         }
         .padding(PFTheme.Spacing.standard)
         .background(PFTheme.background)
-        .navigationTitle(PFDateText.long(feed.date))
+        .navigationTitle(collectionTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -143,7 +164,7 @@ struct DaySwipeView: View {
     }
 
     private var availableTopics: [PublicTopic] {
-        let ids = Set(feed.papers.flatMap { $0.topicAssignments.map(\.topicId) })
+        let ids = Set(papers.flatMap { $0.topicAssignments.map(\.topicId) })
         return (topics?.topics ?? []).filter { ids.contains($0.id) }
     }
 
@@ -152,9 +173,9 @@ struct DaySwipeView: View {
         let store = SwiftDataPersonalPaperStore(modelContext: modelContext)
         session = SwipeSessionViewModel(
             collection: SwipeCollection(
-                id: "day-\(PFDateText.identifier(feed.date))",
-                title: PFDateText.long(feed.date),
-                papers: feed.papers
+                id: collectionID,
+                title: collectionTitle,
+                papers: papers
             ),
             store: store,
             feedback: UIKitSwipeFeedback()

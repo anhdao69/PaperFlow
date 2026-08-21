@@ -16,6 +16,8 @@ final class AppModel {
     private(set) var topicsIndex: TopicsIndex?
     private(set) var dayFeeds: [Date: DailyFeed] = [:]
     private(set) var dayErrors: [Date: String] = [:]
+    private(set) var topicFeeds: [String: TopicFeed] = [:]
+    private(set) var topicErrors: [String: String] = [:]
     private(set) var lastUpdatedAt: Date?
     private(set) var isShowingCachedData = false
     private let client: any PublicFeedClientProtocol
@@ -67,6 +69,18 @@ final class AppModel {
             dayErrors[day.date] = nil
         } catch {
             dayErrors[day.date] = "This day is unavailable. Try again when a connection is available."
+        }
+    }
+
+    func loadTopicFeed(relativePath: String) async {
+        guard topicFeeds[relativePath] == nil else { return }
+        do {
+            topicFeeds[relativePath] = try await client.fetchTopicFeed(
+                relativePath: relativePath
+            ).validated()
+            topicErrors[relativePath] = nil
+        } catch {
+            topicErrors[relativePath] = "This topic history is unavailable. Try again when connected."
         }
     }
 }

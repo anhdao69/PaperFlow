@@ -12,7 +12,7 @@ struct RootTabView: View {
             .accessibilityIdentifier("tab.today")
 
             NavigationStack {
-                TopicsRootView(model: model)
+                TopicsHomeView(model: model)
             }
             .tabItem { Label("Topics", systemImage: "square.grid.2x2") }
             .accessibilityIdentifier("tab.topics")
@@ -25,53 +25,6 @@ struct RootTabView: View {
         }
         .tint(PFTheme.primary)
         .accessibilityIdentifier("root.tabs")
-    }
-}
-
-private struct TopicsRootView: View {
-    @Bindable var model: AppModel
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: PFTheme.Spacing.large) {
-                Text("Topics")
-                    .font(.largeTitle.bold())
-                if let topics = model.topicsIndex {
-                    LazyVStack(spacing: PFTheme.Spacing.medium) {
-                        ForEach(topics.topics) { topic in
-                            HStack(spacing: PFTheme.Spacing.medium) {
-                                Image(systemName: "square.grid.2x2.fill")
-                                    .foregroundStyle(PFTheme.primary)
-                                    .frame(width: PFTheme.minimumTapTarget)
-                                VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
-                                    Text(topic.name)
-                                        .font(.headline)
-                                    Text("\(topic.paperCount) papers · \(topic.subtopics.count) subtopics")
-                                        .font(.caption)
-                                        .foregroundStyle(PFTheme.textSecondary)
-                                }
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundStyle(PFTheme.textTertiary)
-                            }
-                            .frame(minHeight: PFTheme.minimumTapTarget)
-                            .padding(PFTheme.Spacing.standard)
-                            .background(PFTheme.surface, in: .rect(cornerRadius: PFTheme.Radius.card))
-                            .accessibilityElement(children: .combine)
-                            .accessibilityIdentifier("topic.row.\(topic.id)")
-                        }
-                    }
-                } else if model.loadState == .loading || model.loadState == .idle {
-                    PFLoadingShell()
-                } else {
-                    PFEmptyShell(title: "No topics", message: "Topic data is unavailable.")
-                }
-            }
-            .padding(PFTheme.Spacing.standard)
-        }
-        .background(PFTheme.background)
-        .navigationBarTitleDisplayMode(.inline)
-        .accessibilityIdentifier("screen.topics")
     }
 }
 
