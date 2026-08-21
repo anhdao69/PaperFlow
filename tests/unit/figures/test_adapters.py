@@ -163,13 +163,30 @@ def test_docling_normalizes_bottom_left_bbox_caption_and_image(tmp_path: Path):
                                     },
                                 }
                             ],
-                            "captions": [{"cref": "#/texts/0"}],
+                            "captions": [{"$ref": "#/texts/0"}],
                             "image": {
                                 "uri": "2608.12346_artifacts/picture-1.png"
                             },
                         }
                     ],
-                    "tables": [],
+                    "tables": [
+                        {
+                            "self_ref": "#/tables/0",
+                            "prov": [
+                                {
+                                    "page_no": 1,
+                                    "bbox": {
+                                        "l": 50,
+                                        "t": 300,
+                                        "r": 560,
+                                        "b": 200,
+                                        "coord_origin": "BOTTOMLEFT",
+                                    },
+                                }
+                            ],
+                            "captions": [],
+                        }
+                    ],
                 }
             ),
             encoding="utf-8",
@@ -185,6 +202,7 @@ def test_docling_normalizes_bottom_left_bbox_caption_and_image(tmp_path: Path):
     assert result.figures[0].bbox == BoundingBox(x1=50, y1=92, x2=560, y2=392)
     assert result.figures[0].caption == "Figure 1. Architecture overview."
     assert (result.figures[0].width, result.figures[0].height) == (640, 360)
+    assert len(result.figures) == 1  # Metadata-only tables are not usable crops.
     command = runner.commands[0]
     assert command[:2] == ("docling", "convert")
     assert command[command.index("--image-export-mode") + 1] == "referenced"

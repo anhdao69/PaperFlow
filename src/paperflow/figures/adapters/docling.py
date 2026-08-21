@@ -135,6 +135,11 @@ class DoclingAdapter:
 
         figures: list[ExtractedFigure] = []
         for index, (kind, raw) in enumerate(candidates):
+            # Current Docling exports referenced images for pictures, but table
+            # items can be metadata-only. A missing image means the item was not
+            # extracted as a usable crop; it must not invalidate valid pictures.
+            if not _has_referenced_image(raw):
+                continue
             provenance = raw.get("prov")
             if not isinstance(provenance, list) or not provenance:
                 raise ValueError("Docling item has no provenance")
@@ -224,6 +229,18 @@ def _docling_image_path(raw: dict[str, Any], base_dir: Path) -> Path:
     return path if path.is_absolute() else base_dir / path
 
 
+def _has_referenced_image(raw: dict[str, Any]) -> bool:
+    image = raw.get("image")
+    candidate: object = image
+    if isinstance(image, dict):
+        candidate = image.get("uri", image.get("path"))
+    return (
+        isinstance(candidate, str)
+        and bool(candidate)
+        and not candidate.startswith("data:")
+    )
+
+
 def _caption_text(raw: dict[str, Any], texts: list[object]) -> str | None:
     captions = raw.get("captions", [])
     if not isinstance(captions, list):
@@ -232,7 +249,7 @@ def _caption_text(raw: dict[str, Any], texts: list[object]) -> str | None:
     for caption in captions:
         if not isinstance(caption, dict):
             continue
-        reference = caption.get("cref")
+        reference = caption.get("$ref", caption.get("cref"))
         if not isinstance(reference, str) or not reference.startswith("#/texts/"):
             continue
         item = texts[int(reference.rsplit("/", 1)[1])]
