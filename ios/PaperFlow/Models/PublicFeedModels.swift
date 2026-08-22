@@ -181,6 +181,7 @@ struct PublicSubtopic: Codable, Hashable, Identifiable, Sendable {
 struct PublicTopic: Codable, Hashable, Identifiable, Sendable {
     let id: String
     let name: String
+    var icon: String? = nil
     let paperCount: Int
     let feedUrl: String
     let subtopics: [PublicSubtopic]

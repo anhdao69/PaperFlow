@@ -81,8 +81,8 @@ def projection():
         seen=offset("2026-08-20T21:00:00-04:00"),
         assignments=[
             TopicAssignment(
-                topic_id="spatial-intelligence",
-                subtopic_ids=["spatial-memory"],
+                    topic_id="adaptation-and-memory",
+                    subtopic_ids=["embodied-memory"],
             )
         ],
         summary_status=SummaryStatus.FAILED,
@@ -133,7 +133,7 @@ def test_topics_mirror_config_order_and_unique_total(projection) -> None:
     )
     assert topics.total_paper_count == 3
     assert sum(topic.paper_count for topic in topics.topics) == 4
-    assert topics.topics[-1].id == "efficient-ai"
+    assert topics.topics[-1].id == "language-foundation-models"
     assert topics.topics[-1].paper_count == 0
 
 
@@ -190,7 +190,7 @@ def test_unknown_topic_or_wrong_parent_feed_request_fails(projection) -> None:
     with pytest.raises(KeyError):
         projection.topic_feed("not-configured")
     with pytest.raises(KeyError):
-        projection.topic_feed("world-models", "spatial-memory")
+        projection.topic_feed("world-models", "embodied-memory")
 
 
 def test_projection_rejects_invalid_selected_mapping_key() -> None:

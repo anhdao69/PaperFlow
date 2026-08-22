@@ -80,12 +80,12 @@ def test_projection_membership_and_counts_match_across_every_contract() -> None:
             "world-models", "video-world-models"
         ).model_dump_json()
     )
-    spatial = TopicFeed.model_validate_json(
-        projection.topic_feed("spatial-intelligence").model_dump_json()
+    memory = TopicFeed.model_validate_json(
+        projection.topic_feed("adaptation-and-memory").model_dump_json()
     )
 
     validate_topics_contract(topics, taxonomy)
-    for contract in (world, video, spatial):
+    for contract in (world, video, memory):
         validate_topic_feed_contract(contract, taxonomy)
     assert feed_index.total_paper_count == len(selected) == 2
     assert feed_index.total_paper_count == sum(
@@ -94,12 +94,12 @@ def test_projection_membership_and_counts_match_across_every_contract() -> None:
     assert daily_feeds[date(2026, 8, 20)].paper_count == 2
     assert daily_feeds[date(2026, 8, 19)].paper_count == 0
     assert world.total_paper_count == video.total_paper_count == 1
-    assert spatial.total_paper_count == 1
+    assert memory.total_paper_count == 1
     assert topics.total_paper_count == 2
     topics_by_id = {topic.id: topic for topic in topics.topics}
     assert topics_by_id["world-models"].paper_count == world.total_paper_count
-    assert topics_by_id["spatial-intelligence"].paper_count == (
-        spatial.total_paper_count
+    assert topics_by_id["adaptation-and-memory"].paper_count == (
+        memory.total_paper_count
     )
     world_subtopics = {
         subtopic.id: subtopic for subtopic in topics_by_id["world-models"].subtopics

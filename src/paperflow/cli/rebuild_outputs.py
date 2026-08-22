@@ -14,6 +14,7 @@ from paperflow.render.contracts import FeedIndex
 from paperflow.render.validation import (
     build_output_bundle,
     plan_stale_markdown_cleanup,
+    plan_stale_public_data_cleanup,
     plan_stale_website_cleanup,
     publish_outputs,
     validate_generated_artifacts,
@@ -114,6 +115,7 @@ def _dry_run(
     stale = (
         *plan_stale_markdown_cleanup(root, files),
         *plan_stale_website_cleanup(root, files),
+        *plan_stale_public_data_cleanup(root, files),
     )
     return changed, len(stale)
 

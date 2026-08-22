@@ -31,17 +31,20 @@ def test_seed_taxonomy_loads_in_yaml_order() -> None:
         "embodied-ai",
         "world-models",
         "multimodal-foundation-models",
-        "spatial-intelligence",
         "3d-vision",
-        "video-generation",
+        "video-models",
         "efficient-ai",
+        "adaptation-and-memory",
+        "language-foundation-models",
     )
     assert taxonomy.ordered_subtopic_ids("world-models") == (
         "latent-action-models",
-        "world-action-models",
         "video-world-models",
+        "interactive-world-models",
     )
-    assert taxonomy.subtopic_parent("spatial-memory").id == "spatial-intelligence"
+    assert taxonomy.subtopic_parent("spatial-intelligence").id == (
+        "multimodal-foundation-models"
+    )
 
 
 @pytest.mark.parametrize("fixture", sorted(FIXTURES.glob("invalid_*.yaml")))
@@ -98,8 +101,8 @@ def test_assignment_validation_accepts_parent_only_and_valid_children() -> None:
         [
             TopicAssignment(topic_id="world-models", subtopic_ids=[]),
             TopicAssignment(
-                topic_id="spatial-intelligence",
-                subtopic_ids=["spatial-memory", "geometry-aware-models"],
+                topic_id="adaptation-and-memory",
+                subtopic_ids=["embodied-memory", "test-time-learning"],
             ),
         ],
     )
@@ -109,7 +112,7 @@ def test_assignment_validation_accepts_parent_only_and_valid_children() -> None:
     "assignments",
     [
         [TopicAssignment(topic_id="missing", subtopic_ids=[])],
-        [TopicAssignment(topic_id="world-models", subtopic_ids=["spatial-memory"])],
+        [TopicAssignment(topic_id="world-models", subtopic_ids=["embodied-memory"])],
         [
             TopicAssignment(topic_id="world-models", subtopic_ids=[]),
             TopicAssignment(topic_id="world-models", subtopic_ids=[]),

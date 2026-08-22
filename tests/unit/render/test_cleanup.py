@@ -9,6 +9,7 @@ from paperflow.generated_files import GENERATED_FILE_MARKER
 from paperflow.render.validation import (
     build_output_bundle,
     plan_stale_markdown_cleanup,
+    plan_stale_public_data_cleanup,
     publish_outputs,
     remove_stale_generated_files,
     validate_generated_artifacts,
@@ -84,6 +85,19 @@ def test_cleanup_plan_excludes_desired_and_unmarked_files(tmp_path: Path) -> Non
     )
 
     assert planned == (stale,)
+
+
+def test_publish_removes_orphaned_topic_feed_json(tmp_path: Path) -> None:
+    stale = tmp_path / "data/topic_feeds/removed-topic/all.json"
+    stale.parent.mkdir(parents=True)
+    stale.write_text("{}\n", encoding="utf-8")
+    assert plan_stale_public_data_cleanup(tmp_path, []) == (stale,)
+
+    projection = _empty_projection()
+    taxonomy = load_taxonomy(ROOT / "configs/topics.yaml")
+    publish_outputs(tmp_path, projection, taxonomy, readme_latest_limit=80)
+
+    assert not stale.exists()
 
 
 def test_cleanup_refuses_marked_file_outside_destination(tmp_path: Path) -> None:

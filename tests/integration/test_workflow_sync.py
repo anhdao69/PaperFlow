@@ -21,14 +21,18 @@ def git(root: Path, *arguments: str) -> str:
     ).stdout.strip()
 
 
-def test_disabled_checked_in_workflow_is_synced_and_has_no_paid_cron() -> None:
+def test_enabled_checked_in_workflow_is_synced_and_gates_scheduled_runs() -> None:
     assert sync_schedule(Path("."), check=True) is False
     workflow = Path(".github/workflows/paperflow-daily.yml").read_text()
-    assert "Recurring schedule disabled" in workflow
-    assert "\n  schedule:\n" not in workflow
+    assert "\n  schedule:\n" in workflow
+    assert '    - cron: "0 1 * * *"' in workflow
+    assert '    - cron: "0 2 * * *"' in workflow
     assert "workflow_dispatch:" in workflow
     assert "cancel-in-progress: false" in workflow
     assert "OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}" in workflow
+    assert 'if [ "${{ github.event_name }}" = "workflow_dispatch" ]' in workflow
+    assert "python -m paperflow.main --manual" in workflow
+    assert "python -m paperflow.main\n" in workflow
 
 
 def test_stale_schedule_is_detected_and_sync_is_deterministic(tmp_path: Path) -> None:
@@ -39,15 +43,15 @@ def test_stale_schedule_is_detected_and_sync_is_deterministic(tmp_path: Path) ->
     shutil.copy2(workflow, target)
     runtime_path = tmp_path / "configs/runtime.yaml"
     runtime = yaml.safe_load(runtime_path.read_text())
-    runtime["schedule"]["enabled"] = True
+    runtime["schedule"]["enabled"] = False
     runtime_path.write_text(yaml.safe_dump(runtime, sort_keys=False))
 
     with pytest.raises(ValueError, match=r"python -m paperflow\.cli\.sync_schedule"):
         sync_schedule(tmp_path, check=True)
     assert sync_schedule(tmp_path, check=False) is True
     synchronized = target.read_text()
-    assert '    - cron: "0 1 * * *"' in synchronized
-    assert '    - cron: "0 2 * * *"' in synchronized
+    assert "Recurring schedule disabled" in synchronized
+    assert "\n  schedule:\n" not in synchronized
     assert sync_schedule(tmp_path, check=True) is False
 
 

@@ -35,6 +35,11 @@ def load_selected_store(
     return collection
 
 
+def load_selected_store_unvalidated(path: Path) -> SelectedPaperCollection:
+    """Load canonical records before a taxonomy migration is applied."""
+    return SelectedPaperCollection.model_validate_json(path.read_text(encoding="utf-8"))
+
+
 def save_selected_store(
     path: Path,
     papers: dict[str, SelectedPaper],

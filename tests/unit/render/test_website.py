@@ -136,7 +136,10 @@ def test_figure_states_use_stable_placeholder_or_ready_image() -> None:
 
     assert "Figure preview coming later" in root
     assert "Figure unavailable" in root
-    assert '<img src="../figures/2608.90003/hero.webp"' in root
+    assert (
+        '<img src="https://example.test/PaperFlow/figures/2608.90003/hero.webp"'
+        in root
+    )
 
 
 def test_empty_topic_and_subtopic_pages_are_present() -> None:

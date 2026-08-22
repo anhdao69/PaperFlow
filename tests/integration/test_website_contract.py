@@ -78,8 +78,8 @@ def test_website_memberships_and_counts_match_json_and_markdown(
     video_html = _html_ids(
         tmp_path / "site/topics/world-models/video-world-models.html"
     )
-    spatial_html = _html_ids(
-        tmp_path / "site/topics/spatial-intelligence/index.html"
+    memory_html = _html_ids(
+        tmp_path / "site/topics/adaptation-and-memory/index.html"
     )
     world_json = _feed_ids(
         tmp_path / "data/topic_feeds/world-models/all.json"
@@ -87,14 +87,14 @@ def test_website_memberships_and_counts_match_json_and_markdown(
     video_json = _feed_ids(
         tmp_path / "data/topic_feeds/world-models/video-world-models.json"
     )
-    spatial_json = _feed_ids(
-        tmp_path / "data/topic_feeds/spatial-intelligence/all.json"
+    memory_json = _feed_ids(
+        tmp_path / "data/topic_feeds/adaptation-and-memory/all.json"
     )
 
     assert root_ids == day_ids == set(selected)
     assert world_html == world_json == {generated.arxiv_id}
     assert video_html == video_json == {generated.arxiv_id}
-    assert spatial_html == spatial_json == {fallback.arxiv_id}
+    assert memory_html == memory_json == {fallback.arxiv_id}
     assert set(
         re.findall(
             r"https://arxiv\.org/abs/(\d{4}\.\d{4,5})",

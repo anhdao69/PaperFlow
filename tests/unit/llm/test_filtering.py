@@ -120,7 +120,7 @@ def _result(
                 "topic_id": topic_id,
                 "subtopic_ids": subtopic_ids
                 if subtopic_ids is not None
-                else ["robot-learning"],
+                else ["robot-learning-and-manipulation"],
             }
         ]
     return {
@@ -195,7 +195,10 @@ def test_keep_requires_assignment_and_drop_requires_empty_assignment() -> None:
 def test_duplicate_subtopics_are_rejected_deterministically() -> None:
     data = _result(
         "2608.10001",
-        subtopic_ids=["robot-learning", "robot-learning"],
+        subtopic_ids=[
+            "robot-learning-and-manipulation",
+            "robot-learning-and-manipulation",
+        ],
     )
 
     with pytest.raises(ValidationError, match="unique"):
@@ -213,7 +216,7 @@ def test_taxonomy_rejects_unknown_wrong_parent_and_duplicate_topic() -> None:
             [
                 TopicAssignment(
                     topic_id="embodied-ai",
-                    subtopic_ids=["spatial-memory"],
+                    subtopic_ids=["embodied-memory"],
                 )
             ],
         )
@@ -275,7 +278,7 @@ def test_valid_subset_is_kept_and_only_invalid_sibling_retries(
                     _result(
                         second_id,
                         topic_id="embodied-ai",
-                        subtopic_ids=["spatial-memory"],
+                        subtopic_ids=["embodied-memory"],
                     ),
                 ]
             },
@@ -324,7 +327,7 @@ def test_second_semantic_failure_becomes_failed_never_drop(
     invalid = _result(
         item.paper.arxiv_id,
         topic_id="embodied-ai",
-        subtopic_ids=["spatial-memory"],
+        subtopic_ids=["embodied-memory"],
     )
     client = FakeFilterClient(
         [{"results": [invalid]}, {"results": [invalid]}]

@@ -46,6 +46,7 @@ class TopicProjection:
     name: str
     days: tuple[DayProjection, ...]
     subtopics: tuple[SubtopicProjection, ...]
+    icon: str = "square.grid.2x2.fill"
 
     @property
     def paper_count(self) -> int:
@@ -96,6 +97,7 @@ class PublicProjection:
                 PublicTopic(
                     id=topic.id,
                     name=topic.name,
+                    icon=topic.icon,
                     paper_count=topic.paper_count,
                     feed_url=f"data/topic_feeds/{topic.id}/all.json",
                     subtopics=[
@@ -222,6 +224,7 @@ def build_public_projection(
             TopicProjection(
                 id=configured_topic.id,
                 name=configured_topic.name,
+                icon=configured_topic.icon,
                 days=_group_nonempty_days(topic_papers),
                 subtopics=subtopics,
             )

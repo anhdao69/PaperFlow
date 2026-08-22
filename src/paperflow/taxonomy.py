@@ -11,6 +11,7 @@ from typing import Literal
 
 from pydantic import ConfigDict, Field, model_validator
 
+from paperflow.atomic import atomic_write_text
 from paperflow.config import load_yaml
 from paperflow.models import DomainModel, TopicAssignment, TopicConfig
 
@@ -136,6 +137,25 @@ class TaxonomyConfig(DomainModel):
 def load_taxonomy(path: Path = Path("configs/topics.yaml")) -> TaxonomyConfig:
     """Load and validate one taxonomy YAML file."""
     return TaxonomyConfig.model_validate(load_yaml(path))
+
+
+def load_taxonomy_snapshot(path: Path) -> TaxonomyConfig | None:
+    """Load the last successfully published taxonomy, if one exists."""
+    if not path.exists():
+        return None
+    return TaxonomyConfig.model_validate_json(path.read_text(encoding="utf-8"))
+
+
+def save_taxonomy_snapshot(path: Path, taxonomy: TaxonomyConfig) -> None:
+    """Atomically persist the taxonomy only after publication validation."""
+    content = taxonomy.model_dump_json(indent=2) + "\n"
+    atomic_write_text(
+        path,
+        content,
+        validator=lambda staged: TaxonomyConfig.model_validate_json(
+            staged.read_text(encoding="utf-8")
+        ),
+    )
 
 
 def taxonomy_hash(taxonomy: TaxonomyConfig) -> str:

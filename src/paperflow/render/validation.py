@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import posixpath
 from collections.abc import Iterable, Mapping
+from contextlib import suppress
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
@@ -152,6 +153,7 @@ def publish_outputs(
         *plan_stale_markdown_cleanup(destination_root, paths),
         *plan_stale_website_cleanup(destination_root, paths),
     )
+    stale_public_data = plan_stale_public_data_cleanup(destination_root, paths)
     destination_root.parent.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(
         dir=destination_root.parent, prefix=".paperflow-output-"
@@ -176,6 +178,7 @@ def publish_outputs(
             ),
         )
     remove_stale_generated_files(destination_root, stale)
+    remove_stale_public_data_files(destination_root, stale_public_data)
     return paths
 
 
@@ -205,6 +208,23 @@ def plan_stale_website_cleanup(
     )
 
 
+def plan_stale_public_data_cleanup(
+    destination_root: Path, desired_paths: Iterable[PurePosixPath]
+) -> tuple[Path, ...]:
+    """Find orphaned generated day/topic JSON under the public allowlist."""
+    desired = {destination_root / path for path in desired_paths}
+    candidates: list[Path] = []
+    for relative_root in ("data/daily_feeds", "data/topic_feeds"):
+        root = destination_root / relative_root
+        if root.is_dir():
+            candidates.extend(
+                path
+                for path in root.rglob("*.json")
+                if path.is_file() and path not in desired
+            )
+    return tuple(sorted(candidates))
+
+
 def remove_stale_generated_files(
     destination_root: Path, paths: Iterable[Path]
 ) -> None:
@@ -216,6 +236,34 @@ def remove_stale_generated_files(
         if not is_generated_file(path):
             raise ValueError(f"refusing to remove unmarked file: {path}")
         path.unlink()
+
+
+def remove_stale_public_data_files(
+    destination_root: Path, paths: Iterable[Path]
+) -> None:
+    """Remove only orphaned JSON inside generated public-feed directories."""
+    root = destination_root.resolve()
+    allowed_roots = tuple(
+        (root / relative).resolve()
+        for relative in ("data/daily_feeds", "data/topic_feeds")
+    )
+    for path in paths:
+        resolved = path.resolve()
+        if path.suffix != ".json" or not any(
+            resolved.is_relative_to(allowed) for allowed in allowed_roots
+        ):
+            raise ValueError(f"stale public-data path escapes allowlist: {path}")
+        path.unlink()
+    for allowed in allowed_roots:
+        if not allowed.exists():
+            continue
+        for directory in sorted(
+            (item for item in allowed.rglob("*") if item.is_dir()),
+            key=lambda item: len(item.parts),
+            reverse=True,
+        ):
+            with suppress(OSError):
+                directory.rmdir()
 
 
 def _require_safe_markdown_replacements(
@@ -356,6 +404,9 @@ def validate_repository(root: Path) -> RepositoryValidationReport:
     )
     if stale:
         raise ValueError(f"stale generated artifact remains: {stale[0]}")
+    stale_public_data = plan_stale_public_data_cleanup(root, expected)
+    if stale_public_data:
+        raise ValueError(f"stale public-data artifact remains: {stale_public_data[0]}")
 
     stats = _load_run_stats(root / "data/run_stats")
     if state.last_successful_local_date is not None:

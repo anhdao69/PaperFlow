@@ -2,9 +2,9 @@ name: PaperFlow Daily
 
 on:
   # BEGIN AUTO-GENERATED PAPERFLOW SCHEDULE
-  # Recurring schedule disabled in configs/runtime.yaml.
-  # Inactive candidate: "0 1 * * *"
-  # Inactive candidate: "0 2 * * *"
+  schedule:
+    - cron: "0 1 * * *"
+    - cron: "0 2 * * *"
   # END AUTO-GENERATED PAPERFLOW SCHEDULE
   workflow_dispatch:
 
@@ -42,12 +42,15 @@ jobs:
           cd /tmp/pdffigures2
           /tmp/sbt/bin/sbt -Dsbt.log.noformat=true -batch -no-colors assembly
           echo "PAPERFLOW_PDFFIGURES2_JAR=/tmp/pdffigures2/pdffigures2.jar" >> "$GITHUB_ENV"
-      - name: Confirm manual schedule bypass
-        run: python -m paperflow.schedule --manual
       - name: Run PaperFlow
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-        run: python -m paperflow.main --manual
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python -m paperflow.main --manual
+          else
+            python -m paperflow.main
+          fi
       - name: Validate generated outputs
         run: python -m paperflow.render.validation
       - name: Commit generated content

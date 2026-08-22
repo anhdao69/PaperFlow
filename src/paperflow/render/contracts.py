@@ -215,6 +215,7 @@ class PublicSubtopic(DomainModel):
 class PublicTopic(DomainModel):
     id: TaxonomyId
     name: NonEmptyText
+    icon: NonEmptyText | None = None
     paper_count: int = Field(ge=0)
     feed_url: RelativePublicationPath
     subtopics: list[PublicSubtopic]

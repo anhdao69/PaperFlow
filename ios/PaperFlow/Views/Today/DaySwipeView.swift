@@ -45,12 +45,7 @@ struct DaySwipeView: View {
         .navigationTitle(collectionTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button("Undo", systemImage: "arrow.uturn.backward") {
-                    if let session { undo(session) }
-                }
-                .disabled(session?.canUndo != true)
-                .accessibilityIdentifier("swipe.undo")
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("Filter", systemImage: "line.3.horizontal.decrease") {
                     showsFilters = true
                 }
@@ -85,12 +80,18 @@ struct DaySwipeView: View {
     private func sessionContent(_ session: SwipeSessionViewModel) -> some View {
         VStack(spacing: PFTheme.Spacing.medium) {
             let progress = session.progress
-            PFProgressView(reviewed: progress.reviewed, total: progress.total)
-            Text("\(session.remainingSessionCount) remaining")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(PFTheme.textSecondary)
-                .monospacedDigit()
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                Label(
+                    "\(progress.reviewed)/\(progress.total) reviewed",
+                    systemImage: "checkmark.circle"
+                )
+                Spacer()
+                Text("\(session.remainingSessionCount) left")
+            }
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(PFTheme.textSecondary)
+            .monospacedDigit()
+            .accessibilityIdentifier("swipe.progress.compact")
 
             if let paper = session.currentPaper {
                 PFSwipeCard(
@@ -103,6 +104,12 @@ struct DaySwipeView: View {
                     onOpenDetail: { detailPaper = paper }
                 )
                 .frame(maxHeight: .infinity)
+                PFSwipeActionBar(
+                    canUndo: session.canUndo,
+                    onSkip: { perform(.skip, session: session) },
+                    onUndo: { undo(session) },
+                    onSave: { perform(.save, session: session) }
+                )
             } else {
                 TriageCompleteView(
                     progress: progress,

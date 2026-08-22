@@ -63,6 +63,7 @@ class SubtopicConfig(DomainModel):
 class TopicConfig(DomainModel):
     id: TaxonomyId
     name: NonEmptyText
+    icon: NonEmptyText = "square.grid.2x2.fill"
     short_name: NonEmptyText | None = None
     description: NonEmptyText
     subtopics: list[SubtopicConfig] = Field(default_factory=list)

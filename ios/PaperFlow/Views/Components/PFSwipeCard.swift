@@ -19,7 +19,8 @@ struct PFSwipeCard: View {
             PFFigureView(
                 relativePath: paper.heroFigure,
                 status: paper.figureStatus,
-                height: dynamicTypeSize.isAccessibilitySize ? 210 : 252
+                height: dynamicTypeSize.isAccessibilitySize ? 240 : 292,
+                contentMode: .fit
             )
             Text(paper.title)
                 .font(.title2.bold())
@@ -35,16 +36,6 @@ struct PFSwipeCard: View {
                 .foregroundStyle(PFTheme.textSecondary)
                 .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 6)
                 .lineSpacing(3)
-            if let keyIdea = paper.bullets.first {
-                VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
-                    Text("KEY IDEA")
-                        .font(.caption2.weight(.bold))
-                        .foregroundStyle(PFTheme.primary)
-                    Text(keyIdea)
-                        .font(.subheadline)
-                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
-                }
-            }
             HStack {
                 PFTag(text: "Relevance \(paper.relevance)")
                 PFTag(text: "Novelty \(paper.novelty)")

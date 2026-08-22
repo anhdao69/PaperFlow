@@ -169,7 +169,7 @@ def test_five_date_core_soak_with_retry_fallback_and_failure_drill(
     runtime["schedule"]["enabled"] = True
     runtime["figures"]["enabled"] = False
     runtime_path.write_text(yaml.safe_dump(runtime, sort_keys=False))
-    assert sync_schedule(project, check=False) is True
+    assert sync_schedule(project, check=False) is False
     entries, fixture = raw_fixture()
     recovered = {
         "arxiv_id": "2608.20010",
@@ -178,8 +178,8 @@ def test_five_date_core_soak_with_retry_fallback_and_failure_drill(
         "novelty": 7,
         "assignments": [
             {
-                "topic_id": "spatial-intelligence",
-                "subtopic_ids": ["spatial-memory"],
+                "topic_id": "adaptation-and-memory",
+                "subtopic_ids": ["embodied-memory"],
             }
         ],
         "reason": "Recovered deterministic retry.",
@@ -199,7 +199,7 @@ def test_five_date_core_soak_with_retry_fallback_and_failure_drill(
                     "assignments": [
                         {
                             "topic_id": "embodied-ai",
-                            "subtopic_ids": ["robot-learning"],
+                            "subtopic_ids": ["robot-learning-and-manipulation"],
                         }
                     ],
                     "reason": "Explicit deterministic reclassification.",

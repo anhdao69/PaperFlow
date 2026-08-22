@@ -8,11 +8,18 @@ struct TopicDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: PFTheme.Spacing.large) {
-                VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
-                    Text(topic.name).font(.largeTitle.bold())
-                    Text(paperCountLabel(topic.paperCount))
-                        .foregroundStyle(PFTheme.textSecondary)
-                        .monospacedDigit()
+                HStack(spacing: PFTheme.Spacing.medium) {
+                    Image(systemName: topic.icon ?? "square.grid.2x2.fill")
+                        .font(.title2.bold())
+                        .foregroundStyle(PFTheme.primary)
+                        .frame(width: 56, height: 56)
+                        .background(PFTheme.primarySoft, in: .rect(cornerRadius: PFTheme.Radius.card))
+                    VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
+                        Text(topic.name).font(.largeTitle.bold())
+                        Text(paperCountLabel(topic.paperCount))
+                            .foregroundStyle(PFTheme.textSecondary)
+                            .monospacedDigit()
+                    }
                 }
 
                 NavigationLink {

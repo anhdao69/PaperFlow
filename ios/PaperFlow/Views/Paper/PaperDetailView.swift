@@ -14,6 +14,7 @@ struct PaperDetailView: View {
     @Query private var personalStates: [PersonalPaperState]
     @State private var showsFullAbstract = false
     @State private var selectedFigureID: String?
+    @State private var zoomedFigure: PFZoomFigure?
     @State private var noteDraft = ""
     @State private var noteLoaded = false
     @State private var didMarkOpened = false
@@ -53,6 +54,9 @@ struct PaperDetailView: View {
         } message: {
             Text(actionError ?? "")
         }
+        .fullScreenCover(item: $zoomedFigure) { figure in
+            PFFigureZoomView(figure: figure)
+        }
         .accessibilityIdentifier("screen.paper.detail")
     }
 
@@ -65,6 +69,16 @@ struct PaperDetailView: View {
                 height: 230,
                 contentMode: .fit
             )
+            .contentShape(.rect)
+            .onTapGesture {
+                if let path = paper.heroFigure {
+                    zoomedFigure = PFZoomFigure(
+                        relativePath: path,
+                        caption: "Figure from \(paper.title)"
+                    )
+                }
+            }
+            .accessibilityHint(paper.heroFigure == nil ? "" : "Double-tap to open zoom view")
             .accessibilityIdentifier("detail.figure")
         } else {
             VStack(spacing: PFTheme.Spacing.small) {
@@ -77,6 +91,13 @@ struct PaperDetailView: View {
                                 height: 220,
                                 contentMode: .fit
                             )
+                            .contentShape(.rect)
+                            .onTapGesture {
+                                zoomedFigure = PFZoomFigure(
+                                    relativePath: figure.imagePath,
+                                    caption: figure.caption ?? figureLabel(figure)
+                                )
+                            }
                             Text(figure.caption ?? figureLabel(figure))
                                 .font(.caption)
                                 .foregroundStyle(PFTheme.textSecondary)
@@ -285,7 +306,10 @@ struct PaperDetailView: View {
     private func preparePresentation() {
         noteDraft = currentState?.note ?? ""
         noteLoaded = true
-        perform { try markOpenedIfNeeded() }
+        perform {
+            try actionService.refreshSnapshot(with: paper)
+            try markOpenedIfNeeded()
+        }
     }
 
     private func markOpenedIfNeeded() throws {

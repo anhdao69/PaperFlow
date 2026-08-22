@@ -7,7 +7,7 @@ from pathlib import Path, PurePosixPath
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
-from paperflow.render.contracts import PublicPaper
+from paperflow.render.contracts import PublicPaper, resolve_publication_url
 from paperflow.render.view_models import (
     DayProjection,
     PublicProjection,
@@ -147,7 +147,7 @@ def _render_page(
                 PurePosixPath("site/days", f"{day.date}.html"),
             ),
             "papers": tuple(
-                _paper_context(paper, source_path, taxonomy)
+                _paper_context(paper, projection.base_url, taxonomy)
                 for paper in day.papers
             ),
         }
@@ -169,7 +169,7 @@ def _render_page(
 
 def _paper_context(
     paper: PublicPaper,
-    source_path: PurePosixPath,
+    base_url: str,
     taxonomy: TaxonomyConfig,
 ) -> dict[str, object]:
     return {
@@ -177,7 +177,7 @@ def _paper_context(
         "topic_labels": _topic_labels(paper, taxonomy),
         "uses_fallback": paper.tldr is None,
         "hero_src": (
-            _relative_href(source_path, PurePosixPath(paper.hero_figure))
+            resolve_publication_url(base_url, paper.hero_figure)
             if paper.hero_figure is not None
             else None
         ),

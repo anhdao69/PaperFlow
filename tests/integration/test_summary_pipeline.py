@@ -86,7 +86,7 @@ def _selected(data: dict[str, str]) -> SelectedPaper:
         novelty=7,
         topic_assignments=[
             TopicAssignment(
-                topic_id="embodied-ai", subtopic_ids=["robot-learning"]
+                topic_id="embodied-ai", subtopic_ids=["robot-learning-and-manipulation"]
             )
         ],
         selection_reason="Selected deterministic fixture.",

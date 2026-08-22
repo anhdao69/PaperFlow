@@ -170,6 +170,85 @@ struct PFFigureView: View {
     }
 }
 
+struct PFZoomFigure: Identifiable {
+    let relativePath: String
+    let caption: String
+    var id: String { relativePath }
+}
+
+struct PFFigureZoomView: View {
+    let figure: PFZoomFigure
+    @Environment(\.dismiss) private var dismiss
+    @State private var scale: CGFloat = 1
+    @State private var offset: CGSize = .zero
+    @GestureState private var gestureScale: CGFloat = 1
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                Color.black.ignoresSafeArea()
+                VStack(spacing: PFTheme.Spacing.medium) {
+                    Spacer(minLength: 56)
+                    PFFigureView(
+                        relativePath: figure.relativePath,
+                        status: .ready,
+                        height: geometry.size.height * 0.72,
+                        contentMode: .fit
+                    )
+                    .scaleEffect(scale * gestureScale)
+                    .offset(offset)
+                    .gesture(zoomGesture)
+                    .simultaneousGesture(panGesture)
+                    Text(figure.caption)
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.82))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, PFTheme.Spacing.large)
+                    Text("Pinch to zoom · Double-tap to reset")
+                        .font(.caption2)
+                        .foregroundStyle(.white.opacity(0.58))
+                    Spacer()
+                }
+                .onTapGesture(count: 2) { resetZoom() }
+
+                Button("Close", systemImage: "xmark.circle.fill") { dismiss() }
+                    .labelStyle(.iconOnly)
+                    .font(.title)
+                    .foregroundStyle(.white)
+                    .frame(width: PFTheme.minimumTapTarget, height: PFTheme.minimumTapTarget)
+                    .background(.black.opacity(0.45), in: .circle)
+                    .position(x: geometry.size.width - 34, y: 34)
+                    .accessibilityIdentifier("detail.figure.zoom.close")
+            }
+        }
+        .accessibilityIdentifier("detail.figure.zoom")
+    }
+
+    private var zoomGesture: some Gesture {
+        MagnificationGesture()
+            .updating($gestureScale) { value, state, _ in state = value }
+            .onEnded { value in
+                scale = min(max(scale * value, 1), 5)
+                if scale == 1 { offset = .zero }
+            }
+    }
+
+    private var panGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                guard scale * gestureScale > 1 else { return }
+                offset = value.translation
+            }
+    }
+
+    private func resetZoom() {
+        withAnimation(.easeOut(duration: 0.2)) {
+            scale = 1
+            offset = .zero
+        }
+    }
+}
+
 struct PFCircularProgress: View {
     let progress: CollectionProgress
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize

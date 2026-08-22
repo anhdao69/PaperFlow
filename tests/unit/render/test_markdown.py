@@ -135,11 +135,13 @@ def test_empty_configured_topic_and_subtopic_are_generated() -> None:
         projection, taxonomy, readme_latest_limit=80
     )
 
-    assert Path("topics/efficient-ai/README.md") in files
-    assert Path("topics/efficient-ai/efficient-attention.md") in files
-    assert "0 papers total" in files[Path("topics/efficient-ai/README.md")]
+    topic_root = Path("topics") / topic.id
+    subtopic_path = topic_root / f"{topic.subtopics[0].id}.md"
+    assert topic_root / "README.md" in files
+    assert subtopic_path in files
+    assert "0 papers total" in files[topic_root / "README.md"]
     assert "No matching papers yet" in files[
-        Path("topics/efficient-ai/efficient-attention.md")
+        subtopic_path
     ]
 
 

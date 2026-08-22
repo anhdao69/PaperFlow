@@ -37,8 +37,8 @@ def _paper(**changes: object) -> SelectedPaper:
         "novelty": 8,
         "topic_assignments": [
             TopicAssignment(
-                topic_id="spatial-intelligence",
-                subtopic_ids=["geometry-aware-models"],
+                topic_id="multimodal-foundation-models",
+                subtopic_ids=["spatial-intelligence"],
             )
         ],
         "selection_reason": "Direct use of geometry for navigation.",
@@ -101,7 +101,7 @@ def test_wrong_parent_assignment_cannot_replace_valid_store(tmp_path: Path) -> N
     invalid = _paper(
         topic_assignments=[
             TopicAssignment(
-                topic_id="world-models", subtopic_ids=["geometry-aware-models"]
+                topic_id="world-models", subtopic_ids=["spatial-intelligence"]
             )
         ]
     )

@@ -42,9 +42,10 @@ from paperflow.observability import (
 )
 from paperflow.paper_store import (
     load_run_state,
-    load_selected_store,
+    load_selected_store_unvalidated,
     save_run_state,
     save_selected_store,
+    validate_selected_collection,
 )
 from paperflow.render.contracts import FeedIndex
 from paperflow.render.validation import publish_outputs, validate_repository
@@ -57,7 +58,16 @@ from paperflow.retry_queue import (
 )
 from paperflow.schedule import evaluate_schedule
 from paperflow.screening_ledger import ScreeningLedger
-from paperflow.taxonomy import load_taxonomy, taxonomy_hash
+from paperflow.taxonomy import (
+    load_taxonomy,
+    load_taxonomy_snapshot,
+    save_taxonomy_snapshot,
+    taxonomy_hash,
+)
+from paperflow.taxonomy_migrations import (
+    apply_taxonomy_migrations,
+    plan_taxonomy_migrations,
+)
 
 
 class DailySourceClient(Protocol):
@@ -121,7 +131,32 @@ def run_pipeline(
     structured_event("run_started", run_id=run_id)
     structured_event("config_loaded", run_id=run_id)
     structured_event("taxonomy_validated", run_id=run_id)
-    selected = load_selected_store(root / "data/papers.json", taxonomy)
+    selected = load_selected_store_unvalidated(root / "data/papers.json")
+    previous_taxonomy = (
+        load_taxonomy_snapshot(root / "data/taxonomy_snapshot.json") or taxonomy
+    )
+    assignment_store = {
+        paper_id: paper.topic_assignments
+        for paper_id, paper in selected.papers.items()
+    }
+    migration_plan = plan_taxonomy_migrations(
+        previous_taxonomy, taxonomy, assignment_store
+    )
+    print(migration_plan.render())
+    migrated_assignments = apply_taxonomy_migrations(
+        assignment_store, taxonomy, migration_plan
+    )
+    selected = selected.model_copy(
+        update={
+            "papers": {
+                paper_id: paper.model_copy(
+                    update={"topic_assignments": migrated_assignments[paper_id]}
+                )
+                for paper_id, paper in selected.papers.items()
+            }
+        }
+    )
+    validate_selected_collection(selected, taxonomy)
     ledger = ScreeningLedger(root / "data/screening_events")
     latest = ledger.load_latest()
 
@@ -279,6 +314,7 @@ def run_pipeline(
     )
     structured_event("render_completed", run_id=run_id, files=len(paths))
     save_selected_store(root / "data/papers.json", dict(summarized.papers), taxonomy)
+    save_taxonomy_snapshot(root / "data/taxonomy_snapshot.json", taxonomy)
 
     stats = _build_stats(
         run_id,

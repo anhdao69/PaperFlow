@@ -69,9 +69,11 @@ struct TopicsHomeView: View {
 
     private func topicRow(_ topic: PublicTopic) -> some View {
         HStack(spacing: PFTheme.Spacing.medium) {
-            Image(systemName: "square.grid.2x2.fill")
+            Image(systemName: topic.icon ?? "square.grid.2x2.fill")
+                .font(.headline)
                 .foregroundStyle(PFTheme.primary)
-                .frame(width: PFTheme.minimumTapTarget)
+                .frame(width: PFTheme.minimumTapTarget, height: PFTheme.minimumTapTarget)
+                .background(PFTheme.primarySoft, in: .rect(cornerRadius: PFTheme.Radius.card))
             VStack(alignment: .leading, spacing: PFTheme.Spacing.xSmall) {
                 Text(topic.name).font(.headline)
                 Text(

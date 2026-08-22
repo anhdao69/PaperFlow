@@ -118,7 +118,7 @@ def _paper(
         novelty=8,
         topic_assignments=[
             TopicAssignment(
-                topic_id="embodied-ai", subtopic_ids=["robot-learning"]
+                topic_id="embodied-ai", subtopic_ids=["robot-learning-and-manipulation"]
             )
         ],
         selection_reason="Directly relevant fixture.",
@@ -367,7 +367,7 @@ def test_build_selected_paper_from_keep_starts_pending() -> None:
         novelty=8,
         topic_assignments=[
             TopicAssignment(
-                topic_id="embodied-ai", subtopic_ids=["robot-learning"]
+                topic_id="embodied-ai", subtopic_ids=["robot-learning-and-manipulation"]
             )
         ],
         reason="Directly relevant.",
