@@ -2,7 +2,13 @@
 
 Date: 2026-08-20
 
-Status: **BLOCKED — no extractor selected**
+Status: **SUPERSEDED on 2026-08-21**
+
+This historical checkpoint was resolved when the product owner selected
+PDFFigures2. The accepted production decision is recorded in
+`ADR-0001-figure-extractor.md` and
+`../IMPLEMENTATION_DECISIONS_v1.md#d-006--pdffigures2-is-the-v1-extractor`.
+The blocked status below describes only the state on 2026-08-20.
 
 ## Decision
 

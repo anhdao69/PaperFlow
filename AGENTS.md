@@ -4,15 +4,21 @@
 
 Read before implementing:
 
-1. docs/specification/PaperFlow_Technical_Plan_v3_2.md
-2. docs/ui/PaperFlow_UI_UX_SPEC.md
-3. docs/ui/reference/\*.png
+1. docs/specification/PaperFlow_Technical_Plan_v1.md
+2. docs/architecture/IMPLEMENTATION_DECISIONS_v1.md
+3. docs/ui/PaperFlow_UI_UX_SPEC.md
+4. docs/ui/reference/\*.png
+
+`docs/specification/PaperFlow_Technical_Plan_v3_2.md` is retained as historical
+planning context. It is not authoritative where the V1 as-built plan or
+implementation decisions describe the completed behavior.
 
 Priority when sources conflict:
 
-1. Technical plan for data models, state semantics, pipeline behavior.
-2. UI/UX spec for interaction and presentation.
-3. PNG mockups only for visual reference.
+1. V1 technical plan for data models, state semantics, and pipeline behavior.
+2. V1 implementation decisions for accepted architectural choices.
+3. UI/UX spec for interaction and presentation.
+4. PNG mockups only for visual reference.
 
 Never invent functionality solely because it appears in a generated mockup.
 
