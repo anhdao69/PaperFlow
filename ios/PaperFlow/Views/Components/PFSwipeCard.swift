@@ -19,7 +19,7 @@ struct PFSwipeCard: View {
             PFFigureView(
                 relativePath: paper.heroFigure,
                 status: paper.figureStatus,
-                height: dynamicTypeSize.isAccessibilitySize ? 240 : 292,
+                height: dynamicTypeSize.isAccessibilitySize ? 240 : 320,
                 contentMode: .fit
             )
             Text(paper.title)

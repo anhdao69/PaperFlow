@@ -6,6 +6,7 @@ struct DaySwipeView: View {
     let collectionTitle: String
     let papers: [PublicPaper]
     let topics: TopicsIndex?
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Query private var personalStates: [PersonalPaperState]
     @State private var session: SwipeSessionViewModel?
@@ -44,8 +45,26 @@ struct DaySwipeView: View {
         .background(PFTheme.background)
         .navigationTitle(collectionTitle)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                }
+                .accessibilityLabel("Back")
+                .accessibilityIdentifier("swipe.back")
+            }
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button {
+                    if let session { undo(session) }
+                } label: {
+                    Image(systemName: "arrow.uturn.backward")
+                }
+                .disabled(session?.canUndo != true)
+                .accessibilityLabel("Undo last decision")
+                .accessibilityIdentifier("swipe.undo")
                 Button("Filter", systemImage: "line.3.horizontal.decrease") {
                     showsFilters = true
                 }
@@ -104,12 +123,6 @@ struct DaySwipeView: View {
                     onOpenDetail: { detailPaper = paper }
                 )
                 .frame(maxHeight: .infinity)
-                PFSwipeActionBar(
-                    canUndo: session.canUndo,
-                    onSkip: { perform(.skip, session: session) },
-                    onUndo: { undo(session) },
-                    onSave: { perform(.save, session: session) }
-                )
             } else {
                 TriageCompleteView(
                     progress: progress,
