@@ -159,8 +159,11 @@ The scheduled workflow is `.github/workflows/paperflow-daily.yml`.
     state are validated and written.
 13. The workflow runs repository publication validation, commits only the
     generated allowlist, and pushes it to `main`.
-14. The Pages workflow publishes the public site/feed. The iPhone receives it
-    on the next launch or pull-to-refresh.
+14. Completion of a successful daily workflow triggers the Pages workflow via
+    `workflow_run`, which publishes the public site/feed from the updated
+    `main` branch. Direct qualifying pushes and manual dispatch remain valid
+    deployment paths. The iPhone receives the publication on the next launch
+    or pull-to-refresh.
 
 `workflow_dispatch` runs with `--manual`, bypassing the due-time and
 already-succeeded gates. Workflow concurrency prevents overlapping daily jobs.

@@ -87,6 +87,9 @@ def test_generated_commit_allowlist_success_noop_and_failure_safety(
 
 def test_pages_workflow_stages_only_public_feed_allowlist() -> None:
     workflow = Path(".github/workflows/pages.yml").read_text()
+    assert "workflow_run:" in workflow
+    assert "PaperFlow Daily" in workflow
+    assert "github.event.workflow_run.conclusion == 'success'" in workflow
     assert "data/feed_index.json" in workflow
     assert "data/topics.json" in workflow
     assert "data/topic_feeds" in workflow

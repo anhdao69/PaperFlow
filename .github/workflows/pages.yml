@@ -12,6 +12,11 @@ on:
       - "data/topic_feeds/**"
       - "figures/**"
       - ".github/workflows/pages.yml"
+  workflow_run:
+    workflows:
+      - PaperFlow Daily
+    types:
+      - completed
   workflow_dispatch:
 
 concurrency:
@@ -25,6 +30,9 @@ permissions:
 
 jobs:
   deploy:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -104,7 +104,9 @@ paths after validation.
 canonical files.
 
 **Consequence:** A failed workflow creates no generated commit; the prior Pages
-deployment remains usable.
+deployment remains usable. A successful daily workflow triggers Pages through
+`workflow_run`; publication does not depend on the generated commit's
+`GITHUB_TOKEN` push starting another push-triggered workflow.
 
 ## D-009 — Saved papers carry persistent local snapshots
 
