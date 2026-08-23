@@ -1,6 +1,207 @@
 {
   "days": [
     {
+      "date": "2026-08-22",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "Serving a 235B-parameter Mixture-of-Experts (MoE) model on a single 8 GB GPU is bottlenecked not by compute but by memory bandwidth: decode must stream each token's active experts from whichever tier holds them, and on consumer hardware most experts sit on an SSD far slower than RAM. We quantify this bandwidth wall on Qwen3-235B (Q4_K_M, 134 GB): measured decode is 0.44 tok/s warm, matching a bytes-per-token / bandwidth model, while a batching scheme that should amortize one disk sweep instead collapses at batch 32 from paging thrash. We build llama-moe-trace, a zero-surgery router-telemetry tool, and measure routing on Qwen3-30B: adjacent-token expert reuse is 2.0x chance, 95% of traffic uses 52.5% of experts, and an LRU cache of 13.4% of experts serves 66% of requests. We then ask whether cacheability is trainable: we pre-register training of 137M MoE language models with auxiliary locality and domain router losses, under joint criteria on cache-miss reduction and perplexity. The mechanism works (misses down up to 60%; a 99% static-pin hit rate) but every configuration fails the pre-registered <=1% perplexity gate -- miss reduction and quality are tightly coupled. Concurrent StickyMoE reports the same loss as near-free on single-domain sub-25M models; on multi-domain 137M we find the tax real. Our contribution is this pre-registered, stricter-criterion, multi-domain evaluation plus edge-serving measurements. A 340M rung shows the tax does not shrink with scale (it rises slightly). We further show training-free cache-aware rerouting stacks with trained locality -- together ~80% miss reduction at <=3.4% perplexity at both sizes, far cheaper than either alone -- while domain-primed prefetching does not help. All code, traces, and the pre-registration are released.",
+          "arxiv_id": "2608.18261",
+          "arxiv_url": "https://arxiv.org/abs/2608.18261",
+          "authors": [
+            "Shriniwas Ramesh Suram"
+          ],
+          "bullets": [
+            "Edge serving of a 235B MoE on an 8 GB GPU is dominated by SSD/RAM memory bandwidth rather than compute; batching can trigger paging thrash.",
+            "Qwen3 routing shows exploitable locality: adjacent-token reuse is 2× chance, and caching 13.4% of experts serves 66% of requests.",
+            "Locality-oriented training reduces cache misses by up to 60%, but all tested configurations fail the preregistered 1% perplexity-loss limit.",
+            "The quality tax persists—and rises slightly—at the 340M scale; results differ from reports on smaller single-domain models.",
+            "Training-free cache-aware rerouting combined with trained locality achieves about 80% miss reduction at no more than 3.4% perplexity loss, while domain-primed prefetching does not help."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 6: Complementarity of trained and inference-time locality. Training-free rerouting on the baseline (blue) is cheap only up to ∼30% miss reduction, then diverges. On the locality-trained model the same rerouting (green) stays flat and low, reaching 80% miss reduction at +2.4% perplexity—far beyond training-time alone (squares, max 59%) or training-free alone. The experts’ co-adaptation makes inference-time substitution nearly free.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 299,
+              "image_path": "figures/2608.18261/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 774
+            },
+            {
+              "caption": "Figure 2: The bandwidth wall (left) and the batching collapse (right).",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 295,
+              "image_path": "figures/2608.18261/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 977
+            },
+            {
+              "caption": "Figure 5: Dose-response of the locality loss (200M tokens). Miss reduction (left, blue) and perplexity cost (right, red) rise together. The RQ1 pass region needs miss reduction above 30% and PPL cost below 1%—the curves never satisfy both simultaneously. (Two axes shown only to display the coupling; they are not a dual-scale claim about one series.)",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 276,
+              "image_path": "figures/2608.18261/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 737
+            },
+            {
+              "caption": "Figure 3: Expert-cache hit rate vs. fast-memory budget (Qwen3-30B, layer 24, code). At the 235B’s 13.4% budget (dashed), LRU already achieves 66% and beats static pinning—the signal is temporal, favouring a dynamic resident set.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 283,
+              "image_path": "figures/2608.18261/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 649
+            },
+            {
+              "caption": "Figure 1: An MoE layer. The router activates k=2 of E=128 experts per token (Qwen3 uses top-8). Idle experts (grey) cost storage but not per-token bandwidth—the sparsity that makes edge serving conceivable.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 188,
+              "image_path": "figures/2608.18261/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 568
+            },
+            {
+              "caption": "Figure 4: The sticky-moe objective. Arm A uses only Lbalance; arm B adds λLloc; arm C adds µLdom. The claim under test is the box on the right at no perplexity cost.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 45,
+              "image_path": "figures/2608.18261/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 810
+            },
+            {
+              "caption": "Table 2: Serving measurements, Qwen3-235B-A22B Q4 K M. Aggregate throughput at batch B across concurrent streams. The union-of-experts model predicts aggregate rate should rise with B; it does to B=8 then collapses.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 203,
+              "image_path": "figures/2608.18261/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 536
+            },
+            {
+              "caption": "Table 8: Complete run log. Metrics averaged over prose/code/math.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 337,
+              "image_path": "figures/2608.18261/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 744
+            },
+            {
+              "caption": "Table 9: Hyperparameters (identical across arms; only the router-loss weights λ, µ differ).",
+              "figure_id": "table-9-7",
+              "figure_number": "9",
+              "height": 278,
+              "image_path": "figures/2608.18261/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 786
+            },
+            {
+              "caption": "Table 5: Main results (200M tokens/arm). Metrics averaged over prose/code/math. “hit” is the fraction of expert-loads already resident.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 227,
+              "image_path": "figures/2608.18261/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 710
+            },
+            {
+              "caption": "Table 3: Routing profile of Qwen3-30B-A3B (llama-moe-trace, 8k tokens × 4 domains). Cache hit rates at the 235B’s 13.4% fast-memory budget (layer 24, code domain).",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 202,
+              "image_path": "figures/2608.18261/table-011.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 618
+            },
+            {
+              "caption": "Table 1: Memory hierarchy on the test machine (i9-12900, RTX 3070 8GB, 32GB DDR4, WD SN530 NVMe). The 4-bit 235B model is 134GB; only ∼40GB fits the fast tiers.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 127,
+              "image_path": "figures/2608.18261/table-012.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 802
+            },
+            {
+              "caption": "Table 4: Cross-domain expert-usage similarity (Qwen3-30B-A3B). Code’s expert set is nearly disjoint from the others.",
+              "figure_id": "table-4-14",
+              "figure_number": "4",
+              "height": 153,
+              "image_path": "figures/2608.18261/table-013.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 418
+            },
+            {
+              "caption": "Table 7: Per-domain metrics, baseline (A) vs. locality (λ=0.05), each averaged over 2 seeds. “hit@25%” is LRU; “static@50%” is static-pin.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 212,
+              "image_path": "figures/2608.18261/table-014.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 682
+            },
+            {
+              "caption": "Table 6: Scale rung. Locality tax (arm A baseline vs arm B λ=0.05 at τ=0) and the stacked training-free rerouting point (τ=0.5 on arm B), at 137M and 340M; same 200M-token budget, cap=25% experts, LRU, seed 1. The tax does not shrink with scale; the stacking advantage persists.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 127,
+              "image_path": "figures/2608.18261/table-015.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 460
+            }
+          ],
+          "first_seen_at": "2026-08-22T22:26:55.088271-04:00",
+          "hero_figure": "figures/2608.18261/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.18261",
+          "relevance": 7,
+          "selection_reason": "MoE expert-cache locality and memory-bandwidth optimization for edge LLM serving.",
+          "summary_status": "generated",
+          "title": "Cacheable by Design? Training Mixture-of-Experts Routers for Locality Against the Edge Memory-Bandwidth Wall: A Pre-Registered Negative Result with a Systems Measurement Study",
+          "tldr": "Training MoE routers can substantially improve expert-cache locality, but on multi-domain models this causes a meaningful perplexity cost, while combining learned locality with training-free rerouting offers a better trade-off.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-21",
       "paper_count": 18,
       "papers": [
@@ -3102,5 +3303,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "efficient-ai",
-  "total_paper_count": 18
+  "total_paper_count": 19
 }

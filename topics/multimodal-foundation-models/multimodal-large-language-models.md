@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**16 papers total**
+**18 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-22 | [From Inference to Adaptation: A Unified Optimal Transport View of Vision Language Model](https://arxiv.org/abs/2608.18339) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; Adaptation and Memory: Test-Time Learning | A unified optimal-transport framework improves vision-language model test-time adaptation by generating robust pseudo-labels and aligning inference with fine-grained adaptation objectives. | 7 | 7 |
+| 2026-08-22 | [Evaluating Structured Information Extraction with Open Models in a High Risk Public Sector Application](https://arxiv.org/abs/2608.18289) | Multimodal Foundation Models: Multimodal Large Language Models | A benchmark of open-source OCR, LLM, and VLM pipelines for high-risk student-application processing finds that reliable zero-shot structured extraction remains difficult, with VLMs generally outperforming OCR–LLM systems. | 5 | 5 |
 | 2026-08-21 | [ArmorOCR: Grounded Adversarial Visual Perception via Observation-Transferred Self-Distillation](https://arxiv.org/abs/2608.20122) | Multimodal Foundation Models: Multimodal Large Language Models | ArmorOCR improves multimodal models’ ability to localize and recognize adversarial visual text through self-distillation and task-conditioned reinforcement learning. | 6 | 6 |
 | 2026-08-21 | [V-REX: Efficient Specialist VLM Training for Veterinary X-Rays](https://arxiv.org/abs/2608.20069) | Multimodal Foundation Models: Multimodal Large Language Models | V-REX shows that careful end-to-end VLM design can efficiently produce strong veterinary radiology experts without relying on large generalist foundation models or external data. | 6 | 6 |
 | 2026-08-21 | [Towards Clinically Faithful Medical Image Captioning via Enhanced Vision-Language Alignment](https://arxiv.org/abs/2608.19825) | Multimodal Foundation Models: Multimodal Large Language Models | A medical image captioning framework improves clinical faithfulness by combining complementary visual encoders, concept-level auxiliary learning, inference-time reranking, and clinically guided reinforcement learning. | 6 | 6 |

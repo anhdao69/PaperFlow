@@ -6,9 +6,10 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**2 papers total**
+**3 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-22 | [From Inference to Adaptation: A Unified Optimal Transport View of Vision Language Model](https://arxiv.org/abs/2608.18339) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; Adaptation and Memory: Test-Time Learning | A unified optimal-transport framework improves vision-language model test-time adaptation by generating robust pseudo-labels and aligning inference with fine-grained adaptation objectives. | 7 | 7 |
 | 2026-08-21 | [PETA:Parameter-Efficient Test-Time Adaptation for Virtual Screening](https://arxiv.org/abs/2608.19906) | Adaptation and Memory: Test-Time Learning | PETA improves virtual screening by adapting only LayerNorm parameters at test time to specialize pretrained models for individual protein pockets. | 5 | 6 |
 | 2026-08-21 | [Reliable Neural Collapse Approximation for Open-World Test-Time Adaptation](https://arxiv.org/abs/2608.19890) | Adaptation and Memory: Test-Time Learning | ReNC enables more reliable open-world test-time adaptation by using neural-collapse-based prototypes to filter OOD samples and adapt classifiers safely. | 7 | 7 |

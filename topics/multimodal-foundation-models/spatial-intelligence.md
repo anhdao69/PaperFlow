@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**8 papers total**
+**9 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-22 | [From Inference to Adaptation: A Unified Optimal Transport View of Vision Language Model](https://arxiv.org/abs/2608.18339) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; Adaptation and Memory: Test-Time Learning | A unified optimal-transport framework improves vision-language model test-time adaptation by generating robust pseudo-labels and aligning inference with fine-grained adaptation objectives. | 7 | 7 |
 | 2026-08-21 | [From Street View Imagery to Street Quality Indicators: Vision Language Inference for the Suburban 15-minute City](https://arxiv.org/abs/2608.20026) | Multimodal Foundation Models: Spatial Intelligence | An updated vision-language workflow scales streetscape-quality assessment from Street View imagery, revealing that pedestrian-friendly qualities are limited across Nice’s suburban periphery, especially on residential hills. | 5 | 4 |
 | 2026-08-21 | [Open-Vocabulary 3D Object Detection with Co-Distillation Discovery and Dual Guidance Robust Training](https://arxiv.org/abs/2608.19973) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision | A two-part framework improves open-vocabulary 3D object detection by making novel-object discovery more reliable and training more robust to localization and semantic noise. | 7 | 6 |
 | 2026-08-21 | [Projector Is All You Train](https://arxiv.org/abs/2608.19726) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; 3D Vision: 3D Foundation Models | Training only the projector can effectively adapt an MLLM to 3D input while preserving language-model capabilities and improving training efficiency. | 8 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**18 papers total**
+**19 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-22 | [Cacheable by Design? Training Mixture-of-Experts Routers for Locality Against the Edge Memory-Bandwidth Wall: A Pre-Registered Negative Result with a Systems Measurement Study](https://arxiv.org/abs/2608.18261) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Training MoE routers can substantially improve expert-cache locality, but on multi-domain models this causes a meaningful perplexity cost, while combining learned locality with training-free rerouting offers a better trade-off. | 7 | 7 |
 | 2026-08-21 | [Which Eviction Policy Should an LLM Cache Use? A Systematic Study Across Workloads, Capacities, and Encoders](https://arxiv.org/abs/2608.20280) | Efficient AI: KV Cache and Memory Efficiency | LFU is the strongest simple semantic-cache eviction policy in the tested protocol, but answer validity and encoder-specific thresholds matter far more than small policy differences. | 8 | 7 |
 | 2026-08-21 | [Ask Self, Ask Others: Relation Is All You Need](https://arxiv.org/abs/2608.20172) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Relation-first token mixing separates Self and Exchange relations before deriving information flow, achieving better validation NLL than MHA and strong efficiency across several variants. | 8 | 7 |
 | 2026-08-21 | [Learning how to Forget: Fine-tuning for Long-Context Sparse Attention](https://arxiv.org/abs/2608.19920) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | A hardware-efficient fine-tuning method lets transformer models co-adapt with sparse KV-cache attention policies for long-context inference. | 8 | 7 |

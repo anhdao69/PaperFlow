@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**23 papers total**
+**27 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-22 | [Cacheable by Design? Training Mixture-of-Experts Routers for Locality Against the Edge Memory-Bandwidth Wall: A Pre-Registered Negative Result with a Systems Measurement Study](https://arxiv.org/abs/2608.18261) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Training MoE routers can substantially improve expert-cache locality, but on multi-domain models this causes a meaningful perplexity cost, while combining learned locality with training-free rerouting offers a better trade-off. | 7 | 7 |
+| 2026-08-22 | [Nine Emotion Centroids: A Label-Free Valence Axis That Transfers Across Four Modalities](https://arxiv.org/abs/2608.18090) | Multimodal Foundation Models; Language Foundation Models: Large Language Models | A low-label method identifies a transferable internal valence direction across language, vision, audio, and brain encoders, while showing that its effectiveness is modality- and model-dependent. | 5 | 7 |
+| 2026-08-22 | [Latent Space Refusal Anchoring for Low-Resource African Languages: Mechanistic Safety Recovery Without Retraining](https://arxiv.org/abs/2608.18089) | Language Foundation Models: Large Language Models | A training-free latent-space steering method transfers English refusal behavior to four low-resource African languages, though effectiveness varies by architecture and language. | 6 | 7 |
+| 2026-08-22 | [SuTRA : Structurally-Unified Tokenization with Root Awareness](https://arxiv.org/abs/2608.18087) | Language Foundation Models: Large Language Models | SuTRA is a morphology-aware tokenizer for Indic languages that preserves aksharas and roots, improving morphological alignment, semantic recoverability, and translation quality over BPE. | 6 | 7 |
 | 2026-08-21 | [AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement](https://arxiv.org/abs/2608.20318) | Language Foundation Models: Large Language Models | AI4AI-Bench evaluates whether LLM agents can improve AI training algorithms, finding that current systems make limited progress toward task optima. | 8 | 8 |
 | 2026-08-21 | [Break It Down, Pass It On: Cross-Task Skill Transfer in LLM Agents](https://arxiv.org/abs/2608.20274) | Language Foundation Models: LLM Memory | Subtask-level, text-formatted skills transfer more reliably across tasks than task-level or code-formatted skills, and a pre-execution utility score helps diagnose their usefulness. | 6 | 6 |
 | 2026-08-21 | [Ask Self, Ask Others: Relation Is All You Need](https://arxiv.org/abs/2608.20172) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Relation-first token mixing separates Self and Exchange relations before deriving information flow, achieving better validation NLL than MHA and strong efficiency across several variants. | 8 | 7 |

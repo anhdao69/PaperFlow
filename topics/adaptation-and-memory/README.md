@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**12 papers total**
+**13 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-22 | [From Inference to Adaptation: A Unified Optimal Transport View of Vision Language Model](https://arxiv.org/abs/2608.18339) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; Adaptation and Memory: Test-Time Learning | A unified optimal-transport framework improves vision-language model test-time adaptation by generating robust pseudo-labels and aligning inference with fine-grained adaptation objectives. | 7 | 7 |
 | 2026-08-21 | [Structured Affinity for Unsupervised Visual Class-Incremental Memory in Deep Artificial Immune Networks](https://arxiv.org/abs/2608.20104) | Adaptation and Memory: Continual and Online Learning | Structured, gradient-free Deep Artificial Immune Networks can learn replay-free visual class-incremental memories when they preserve spatial response maps and adapt latent scales. | 7 | 7 |
 | 2026-08-21 | [An Inclusive and Lightweight Approach to Federated Continual Learning for Cultural Heritage](https://arxiv.org/abs/2608.20038) | Adaptation and Memory: Continual and Online Learning | FedCurv-DR is a lightweight federated continual-learning method that reduces forgetting while balancing performance, fairness, and energy use for distributed cultural-heritage data. | 8 | 6 |
 | 2026-08-21 | [PETA:Parameter-Efficient Test-Time Adaptation for Virtual Screening](https://arxiv.org/abs/2608.19906) | Adaptation and Memory: Test-Time Learning | PETA improves virtual screening by adapting only LayerNorm parameters at test time to specialize pretrained models for individual protein pockets. | 5 | 6 |
