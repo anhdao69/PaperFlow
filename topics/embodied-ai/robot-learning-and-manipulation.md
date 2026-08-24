@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**25 papers total**
+**26 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-23 | [MLREF: Efficient Module Reuse for Reward Design in Reinforcement Learning via Large Language Models](https://arxiv.org/abs/2608.18827) | Embodied AI: Robot Learning and Manipulation | MLREF improves LLM-based reward design by evolving and reusing modular reward components instead of rewriting monolithic reward programs. | 6 | 6 |
 | 2026-08-21 | [Video2DoorTraversal: Push Door Traversal via Simulated Door Twins](https://arxiv.org/abs/2608.20251) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | Video2DoorTraversal enables onboard wheel-legged robots to learn push-door opening and traversal from a single real-door video via simulated door twins and simulation-generated demonstrations. | 8 | 8 |
 | 2026-08-21 | [RoMAN-Flow: Taming Autoregressive Normalizing Flows for Offline Reinforcement Learning in Robotic Manipulation](https://arxiv.org/abs/2608.20208) | Embodied AI: Robot Learning and Manipulation | RoMAN-Flow makes autoregressive normalizing-flow policies practical for offline robotic manipulation by avoiding policy sampling during training and distilling them into fast one-step action generators for deployment. | 8 | 7 |
 | 2026-08-21 | [DECOWAM: Decoupled Whole-Body World-Action Model for Legged Mobile Manipulation](https://arxiv.org/abs/2608.20114) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | DECOWAM factorizes camera, base, and arm effects to improve whole-body visual prediction and control for legged mobile manipulators. | 9 | 8 |

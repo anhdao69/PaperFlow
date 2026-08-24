@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**28 papers total**
+**30 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-23 | [DentAgent: Evidence-Centric Multi-Agent Coordination for Multimodal Dental Reasoning](https://arxiv.org/abs/2608.18878) | Multimodal Foundation Models: Multimodal Large Language Models | DentAgent coordinates specialized agents through a shared evidence blackboard to produce more traceable multimodal dental reasoning. | 6 | 5 |
+| 2026-08-23 | [TTSD-FAR: Test-Time Self-Distillation with Fisher-Anchored Restoration for Missing-Modality Emotion Recognition in LVLMs](https://arxiv.org/abs/2608.18386) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | TTSD-FAR enables LVLMs to recognize emotions under arbitrary missing modalities while adapting at test time without accumulating drift. | 8 | 7 |
 | 2026-08-22 | [From Inference to Adaptation: A Unified Optimal Transport View of Vision Language Model](https://arxiv.org/abs/2608.18339) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; Adaptation and Memory: Test-Time Learning | A unified optimal-transport framework improves vision-language model test-time adaptation by generating robust pseudo-labels and aligning inference with fine-grained adaptation objectives. | 7 | 7 |
 | 2026-08-22 | [Evaluating Structured Information Extraction with Open Models in a High Risk Public Sector Application](https://arxiv.org/abs/2608.18289) | Multimodal Foundation Models: Multimodal Large Language Models | A benchmark of open-source OCR, LLM, and VLM pipelines for high-risk student-application processing finds that reliable zero-shot structured extraction remains difficult, with VLMs generally outperforming OCR–LLM systems. | 5 | 5 |
 | 2026-08-22 | [Nine Emotion Centroids: A Label-Free Valence Axis That Transfers Across Four Modalities](https://arxiv.org/abs/2608.18090) | Multimodal Foundation Models; Language Foundation Models: Large Language Models | A low-label method identifies a transferable internal valence direction across language, vision, audio, and brain encoders, while showing that its effectiveness is modality- and model-dependent. | 5 | 7 |

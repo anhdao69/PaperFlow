@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**13 papers total**
+**14 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-23 | [TTSD-FAR: Test-Time Self-Distillation with Fisher-Anchored Restoration for Missing-Modality Emotion Recognition in LVLMs](https://arxiv.org/abs/2608.18386) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | TTSD-FAR enables LVLMs to recognize emotions under arbitrary missing modalities while adapting at test time without accumulating drift. | 8 | 7 |
 | 2026-08-22 | [From Inference to Adaptation: A Unified Optimal Transport View of Vision Language Model](https://arxiv.org/abs/2608.18339) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; Adaptation and Memory: Test-Time Learning | A unified optimal-transport framework improves vision-language model test-time adaptation by generating robust pseudo-labels and aligning inference with fine-grained adaptation objectives. | 7 | 7 |
 | 2026-08-21 | [Structured Affinity for Unsupervised Visual Class-Incremental Memory in Deep Artificial Immune Networks](https://arxiv.org/abs/2608.20104) | Adaptation and Memory: Continual and Online Learning | Structured, gradient-free Deep Artificial Immune Networks can learn replay-free visual class-incremental memories when they preserve spatial response maps and adapt latent scales. | 7 | 7 |
 | 2026-08-21 | [An Inclusive and Lightweight Approach to Federated Continual Learning for Cultural Heritage](https://arxiv.org/abs/2608.20038) | Adaptation and Memory: Continual and Online Learning | FedCurv-DR is a lightweight federated continual-learning method that reduces forgetting while balancing performance, fairness, and energy use for distributed cultural-heritage data. | 8 | 6 |

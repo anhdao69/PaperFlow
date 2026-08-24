@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**38 papers total**
+**39 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-23 | [MLREF: Efficient Module Reuse for Reward Design in Reinforcement Learning via Large Language Models](https://arxiv.org/abs/2608.18827) | Embodied AI: Robot Learning and Manipulation | MLREF improves LLM-based reward design by evolving and reusing modular reward components instead of rewriting monolithic reward programs. | 6 | 6 |
 | 2026-08-21 | [DreamHand: Repurposing Video Diffusion Models for Occlusion-Robust Egocentric 3D Hand Motion Recovery](https://arxiv.org/abs/2608.20308) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | DreamHand repurposes video diffusion models as deterministic geometry encoders to recover metric, continuous bimanual 3D hand motion despite occlusion and out-of-sight gaps. | 7 | 8 |
 | 2026-08-21 | [Video2DoorTraversal: Push Door Traversal via Simulated Door Twins](https://arxiv.org/abs/2608.20251) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | Video2DoorTraversal enables onboard wheel-legged robots to learn push-door opening and traversal from a single real-door video via simulated door twins and simulation-generated demonstrations. | 8 | 8 |
 | 2026-08-21 | [RoMAN-Flow: Taming Autoregressive Normalizing Flows for Offline Reinforcement Learning in Robotic Manipulation](https://arxiv.org/abs/2608.20208) | Embodied AI: Robot Learning and Manipulation | RoMAN-Flow makes autoregressive normalizing-flow policies practical for offline robotic manipulation by avoiding policy sampling during training and distilling them into fast one-step action generators for deployment. | 8 | 7 |

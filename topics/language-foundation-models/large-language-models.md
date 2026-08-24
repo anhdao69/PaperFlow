@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**19 papers total**
+**21 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-23 | [Test-Time Scaling in the Wild: Why Exploitation, Not Exploration, Is the Bottleneck](https://arxiv.org/abs/2608.18931) | Language Foundation Models: Large Language Models | Across open-ended tasks, test-time scaling generates better candidates, but weak selection and synthesis prevent models from turning them into high-quality final answers. | 7 | 6 |
+| 2026-08-23 | [Training-Free Inference-Time Self-Reflection and Cost-Bounded Early Stopping for Large Language Models](https://arxiv.org/abs/2608.18884) | Language Foundation Models: Large Language Models | EvoResearcher enables a frozen LLM to self-critique and revise answers under a compute budget, achieving similar accuracy while early-stopping most tasks after verification. | 7 | 6 |
 | 2026-08-22 | [Cacheable by Design? Training Mixture-of-Experts Routers for Locality Against the Edge Memory-Bandwidth Wall: A Pre-Registered Negative Result with a Systems Measurement Study](https://arxiv.org/abs/2608.18261) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Training MoE routers can substantially improve expert-cache locality, but on multi-domain models this causes a meaningful perplexity cost, while combining learned locality with training-free rerouting offers a better trade-off. | 7 | 7 |
 | 2026-08-22 | [Nine Emotion Centroids: A Label-Free Valence Axis That Transfers Across Four Modalities](https://arxiv.org/abs/2608.18090) | Multimodal Foundation Models; Language Foundation Models: Large Language Models | A low-label method identifies a transferable internal valence direction across language, vision, audio, and brain encoders, while showing that its effectiveness is modality- and model-dependent. | 5 | 7 |
 | 2026-08-22 | [Latent Space Refusal Anchoring for Low-Resource African Languages: Mechanistic Safety Recovery Without Retraining](https://arxiv.org/abs/2608.18089) | Language Foundation Models: Large Language Models | A training-free latent-space steering method transfers English refusal behavior to four low-resource African languages, though effectiveness varies by architecture and language. | 6 | 7 |
