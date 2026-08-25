@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**9 papers total**
+**14 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [NeSAM: Neuro-Symbolic Kinodynamics with Soil Adaptation for Off-Road Mobility](https://arxiv.org/abs/2608.21330) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | NeSAM combines terramechanics, learned residual dynamics, and online soil adaptation to improve long-horizon off-road vehicle motion prediction and navigation. | 8 | 8 |
+| 2026-08-24 | [SRL-MPC: Shape-Aware Reinforcement Learned Model Predictive Control](https://arxiv.org/abs/2608.21175) | Embodied AI: Robot Navigation | SRL-MPC combines shape-aware safety constraints with reinforcement-learned MPC adaptation for real-time navigation among heterogeneous robot shapes and crowds. | 9 | 7 |
+| 2026-08-24 | [FF-MPCC: High-speed Agile Formation Flight with Model Predictive Contouring Control](https://arxiv.org/abs/2608.21056) | Embodied AI: Robot Navigation | FF-MPCC enables UAV formations to follow complex paths at high speed while adapting formation geometry and respecting individual vehicle constraints. | 6 | 6 |
+| 2026-08-24 | [Neural-Primitive: An Efficient End-to-end Local Planner with Primitive-based Imitation Learning for Autonomous Flight](https://arxiv.org/abs/2608.20948) | Embodied AI: Robot Navigation | Neural-Primitive is a lightweight imitation-learning planner that maps sensory inputs directly to smooth, dynamically feasible flight trajectories in milliseconds without backend optimization. | 8 | 6 |
+| 2026-08-24 | [Learning-Based Measurement-Robust Control Barrier Functions for Obstacle Avoidance under State Estimation Error](https://arxiv.org/abs/2608.20467) | Embodied AI: Robot Navigation | Two learned control-barrier-function filters improve obstacle avoidance under state-estimation errors by preserving safety while reducing conservativeness and computation. | 7 | 7 |
 | 2026-08-21 | [Video2DoorTraversal: Push Door Traversal via Simulated Door Twins](https://arxiv.org/abs/2608.20251) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | Video2DoorTraversal enables onboard wheel-legged robots to learn push-door opening and traversal from a single real-door video via simulated door twins and simulation-generated demonstrations. | 8 | 8 |
 | 2026-08-21 | [Multi-Agent Orchestration with the Common-Sense Reasoning Capabilities of LLMs for Autonomous Driving](https://arxiv.org/abs/2608.20129) | Embodied AI: Robot Navigation | A hybrid autonomous-driving framework uses an orchestrator to combine reinforcement learning, PID control, and iterative LLM common-sense reasoning while avoiding direct LLM vehicle control. | 7 | 6 |
 | 2026-08-21 | [Planning-Oriented End-to-End Autonomous Driving: Architectures, Evaluation, and Emerging Paradigms](https://arxiv.org/abs/2608.20111) | Embodied AI: Robot Navigation, Vision-Language-Action; World Models: Interactive World Models | This survey charts the shift toward planning-oriented end-to-end driving and argues that safe, meaningful progress depends as much on benchmark-consistent evaluation as on architecture. | 7 | 6 |

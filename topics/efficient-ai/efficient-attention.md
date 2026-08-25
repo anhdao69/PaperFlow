@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**5 papers total**
+**6 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [GRAFT: Adaptive DLM-Based Draft Tree Construction with Target-Distilled Edge Scoring](https://arxiv.org/abs/2608.20375) | Efficient AI: Efficient Attention | GRAFT improves DLM-based speculative decoding by selecting more target-compatible draft-tree edges and adapting tree size to each decoding state. | 6 | 7 |
 | 2026-08-21 | [Ask Self, Ask Others: Relation Is All You Need](https://arxiv.org/abs/2608.20172) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Relation-first token mixing separates Self and Exchange relations before deriving information flow, achieving better validation NLL than MHA and strong efficiency across several variants. | 8 | 7 |
 | 2026-08-21 | [Learning how to Forget: Fine-tuning for Long-Context Sparse Attention](https://arxiv.org/abs/2608.19920) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | A hardware-efficient fine-tuning method lets transformer models co-adapt with sparse KV-cache attention policies for long-context inference. | 8 | 7 |
 | 2026-08-21 | [FlashPrefill V2: Block-Sparse Prefill Attention for Long-Context LLM Serving](https://arxiv.org/abs/2608.19758) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | FlashPrefill V2 makes long-context prefill attention practical by combining block sparsity, error correction, optimized GPU kernels, and production-serving support. | 8 | 7 |

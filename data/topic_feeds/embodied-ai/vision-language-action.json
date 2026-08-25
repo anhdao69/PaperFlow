@@ -1,6 +1,1371 @@
 {
   "days": [
     {
+      "date": "2026-08-24",
+      "paper_count": 8,
+      "papers": [
+        {
+          "abstract": "Token compression has become a key technique for reducing the inference cost of large foundation models, with approaches such as token pruning and KV-cache reuse widely adopted in vision-language models and recently explored for embodied agents. In embodied agents, tokens not only support perception and semantic understanding but also directly affect latency-sensitive closed-loop robot action prediction. Existing schemes typically guide compression using redundancy or importance cues, such as visual similarity, attention scores, and saliency. However, these cues only indirectly measure the key factor for safe compression: how much a token can change before causing an unacceptable deviation in downstream actions. This receiver-dependent tolerance is closely related to the principle of just noticeable difference (JND). Classical JND characterizes signal tolerance in the human visual system, while machine-oriented JND extends this concept to downstream machine responses. Building on this progression, we introduce Action-JND, which extends JND modeling to embodied perception by defining noticeability through the language-conditioned action response of a vision-language-action (VLA) policy in closed-loop control. A token change is considered admissible only when the induced action deviation remains within a tolerated margin. To realize this concept, we develop a lightweight token-wise JND estimator in deep visual-feature space to predict the maximum tolerable perturbation while preserving policy responses. The resulting action-tolerance score serves as a plug-and-play criterion for VLA compression paradigms, including stale-KV reuse and token pruning, prioritizing action-tolerant tokens for compression. Experiments on the LIBERO benchmark with OpenVLA and OpenVLA-OFT demonstrate that Action-JND consistently improves compression reliability, especially under aggressive compression ratios.",
+          "arxiv_id": "2608.21247",
+          "arxiv_url": "https://arxiv.org/abs/2608.21247",
+          "authors": [
+            "Zhuoyuan Li, Rui Zhao, Jin Wang, Hanwei Zhu, Cong Zhang, Giuseppe Valenzise, Weisi Lin, Kin-Man Lam"
+          ],
+          "bullets": [
+            "Existing compression cues such as visual redundancy, attention, and saliency do not directly measure action safety.",
+            "Action-JND defines token noticeability through language-conditioned action deviations in closed-loop control.",
+            "A lightweight feature-space estimator predicts each token’s maximum tolerable perturbation while preserving policy responses.",
+            "The action-tolerance score plugs into stale-KV reuse and token-pruning methods, prioritizing action-tolerant tokens.",
+            "Experiments with OpenVLA and OpenVLA-OFT on LIBERO show consistently more reliable compression, especially at aggressive ratios."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overall framework of Action-JND-aware token compression. Given a visual observation and a language instruction, the VLA model extracts visual tokens and language tokens for action prediction. A trainable Action-JND estimator predicts token-wise perturbation maps from the projected visual-token features. These maps are converted into action-tolerance scores that quantify the action tolerance of individual tokens. (1) The token-selection module ranks candidate visual tokens according to their JND scores, optionally together with framework-specific compression cues. (2) For KV-cache reuse, action-tolerant tokens reuse their cached key/value states from previous control steps, while action-sensitive tokens are recomputed. (3) For token pruning, highly actiontolerant tokens are removed from subsequent computation, whereas action-sensitive tokens are preserved.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 485,
+              "image_path": "figures/2608.21247/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1019
+            },
+            {
+              "caption": "Fig. 3. Architecture of the Action-JND estimator. For the single-view setting, projected visual tokens are reshaped into a 16× 16 spatial feature map and processed by a lightweight convolutional architecture consisting of a 3×3 spatial convolution, multiple spatial residual blocks, channel-mixing residual blocks, and a 1× 1 output projection. The predicted perturbations are then reshaped back into token space to form a token-wise Action-JND map. For the dual-view setting, primary-view and wrist-view tokens are processed by two independent JND estimators with the same architecture but independent parameters, and their outputs are concatenated to produce the final Action-JND map.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 417,
+              "image_path": "figures/2608.21247/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 904
+            },
+            {
+              "caption": "Fig. 4. Training pipeline of the Action-JND estimator. The VLA policy is frozen, and only the JND estimator is trainable. Given visual tokens and language tokens, the clean branch produces the original robot action, while the perturbed branch injects the predicted Action-JND perturbation into the visualtoken features and produces a perturbed action response. The Action-JND loss encourages action consistency between the clean and perturbed branches while maximizing perturbation magnitude. The figure illustrates the KL-based objective for discrete action-token prediction; for continuous-action policies, the action discrepancy is instantiated using an action-regression distance.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 552,
+              "image_path": "figures/2608.21247/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 499
+            },
+            {
+              "caption": "Fig. 5. Qualitative visualization of different token-compression baselines and Action-JND-aware token compression. The upper and lower rows show representative results for KV-cache reuse and token pruning on LIBERO, respectively. The red overlays indicate visual-token regions selected for stale-KV reuse or physical pruning. The last two columns show the Action-JND compression result and its corresponding JND heatmap. Each heatmap visualizes the tolerance of individual visual tokens to feature perturbations. Color transitions from dark purple/black to red, orange, and bright yellow, where brighter colors indicate higher JND values and stronger action tolerance, making the corresponding tokens more suitable for reuse or pruning. In contrast, darker colors indicate action-sensitive regions that should be preserved or recomputed. The blue boxes in the JND heatmaps indicate the visual-token positions finally selected for stale-KV reuse or pruning. The step count denotes the number of control timesteps required for task execution, together with the final success or failure status.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 509,
+              "image_path": "figures/2608.21247/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1020
+            },
+            {
+              "caption": "Fig. 1. From classical signal-oriented JND to machine-oriented JND for embodied perception. (1) Classical signal coding characterizes the trade-off between mathematical signal fidelity and signal-content change, where compression quality is usually evaluated using signal-level distortion. (2) Humanoriented JND introduces perceptual benefit zones, where signal changes remain unnoticeable to human observers despite measurable signal distortion. (3) Machine-oriented JND extends receiver-dependent tolerance to machine responses, where noticeability is determined by downstream task responses, such as classification and detection. (4) For embodied perception, we further instantiate the machine-oriented JND boundary with respect to action responses in a VLA-based embodied interaction environment, where noticeability is determined by whether changes in visual representations induce a tolerable deviation in the language-conditioned robot action during closed-loop control.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 244,
+              "image_path": "figures/2608.21247/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1064
+            },
+            {
+              "caption": "TABLE I PERFORMANCE OF ACTION-JND AND KV-CACHE BASELINES ON OPENVLA ON THE LIBERO BENCHMARK [50]. VANILLA OPENVLA SERVES AS THE UNCOMPRESSED REFERENCE. FOR EACH REUSE SETTING, SUCCESS RATES (%) ON Spatial, Object, Goal, AND Long AND THEIR MEAN (Acc.) ARE REPORTED. ∆ACC. DENOTES THE ACCURACY DIFFERENCE RELATIVE TO VLA-CACHE [22] UNDER THE SAME SETTING. FLOPS, RELATIVE FLOPS, CUDA LATENCY, LATENCY DIFFERENCE RELATIVE TO VANILLA OPENVLA, AND CONTROL FREQUENCY ARE ALSO REPORTED. BLUE AND RED INDICATE THE BEST AND WORST RESULTS, RESPECTIVELY, WITHIN EACH REUSE SETTING ACCORDING TO THE INDICATED ↑ / ↓ DIRECTION, WHILE PINK ROWS HIGHLIGHT ACTION-JND",
+              "figure_id": "table-I-6",
+              "figure_number": "I",
+              "height": 663,
+              "image_path": "figures/2608.21247/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE II PERFORMANCE OF ACTION-JND AND KV-CACHE BASELINES ON OPENVLA-OFT ON THE LIBERO BENCHMARK [50]. VANILLA OPENVLA-OFT SERVES AS THE UNCOMPRESSED REFERENCE. FOR EACH REUSE SETTING, SUITE-WISE AND AVERAGE SUCCESS RATES ARE REPORTED, WITH ∆ACC. DENOTING THE ACCURACY DIFFERENCE FROM VLA-CACHE [22] UNDER THE SAME SETTING. FLOPS, RELATIVE FLOPS, CUDA LATENCY, LATENCY DIFFERENCE FROM VANILLA OPENVLA-OFT, AND CONTROL FREQUENCY ARE ALSO REPORTED. THE COLOR ANNOTATIONS FOLLOW TABLE I",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 662,
+              "image_path": "figures/2608.21247/table-007.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE III PERFORMANCE OF ACTION-JND AND TOKEN-PRUNING BASELINES ON OPENVLA ON THE LIBERO BENCHMARK [50]. VANILLA OPENVLA SERVES AS THE UNCOMPRESSED REFERENCE. FOR EACH PRUNING SETTING, SUITE-WISE AND AVERAGE SUCCESS RATES ARE REPORTED, WITH ∆ACC. DENOTING THE ACCURACY DIFFERENCE RELATIVE TO THE VLA-CACHE-BASED PRUNING BASELINE [22] UNDER THE SAME SETTING. FLOPS, RELATIVE FLOPS, CUDA LATENCY, LATENCY DIFFERENCE RELATIVE TO VANILLA OPENVLA, AND CONTROL FREQUENCY ARE ALSO REPORTED. THE COLOR ANNOTATIONS FOLLOW TABLE I",
+              "figure_id": "table-III-7",
+              "figure_number": "III",
+              "height": 549,
+              "image_path": "figures/2608.21247/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 1076
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.21247/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2608.21247",
+          "relevance": 9,
+          "selection_reason": "Introduces Action-JND for token compression in VLA models, directly relevant to Embodied AI (Vision-Language-Action) and Efficient AI (Token Pruning).",
+          "summary_status": "generated",
+          "title": "Just Noticeable Difference Modeling for Token Compression in Vision-Language-Action Models",
+          "tldr": "Action-JND compresses VLA tokens according to how much their changes affect downstream robot actions, improving reliability under aggressive compression.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We present PhysCaP, a Physics-Informed Code-as-Policy agent for active perception in robotic manipulation. While vision-language-action policies excel at imitating demonstrations, they rely on passive observation and fail to infer latent physical properties critical for manipulation. PhysCaP augments code-as-policy frameworks with a physics-informed exploration layer that enables explicit information-seeking through interaction. It introduces training-free physical property extraction modules that estimate object mass and stiffness from robot proprioception without additional sensors. To balance exploration costs and the efficiency of information obtained, PhysCaP employs a dual-agent design: a Planner that decides when to explore and when to stop, and a Prioritizer that filters implausible interactions and ranks the remainder using a heuristic priority score, enabling efficient, targeted exploration. We evaluate PhysCaP on real-world tabletop manipulation tasks (searching for hidden objects, detecting empty cans, and finding ripe avocados) and a simulated task in LIBERO. The results show that existing passive and naive interactive baselines either fail when physical properties are hidden or over-explore, whereas PhysCaP achieves comparable performance with fewer interactions and reduced execution time. Ablation studies further validate the effectiveness of the proposed physical property extraction modules. Project page: https://physcap.github.io",
+          "arxiv_id": "2608.21031",
+          "arxiv_url": "https://arxiv.org/abs/2608.21031",
+          "authors": [
+            "Chen-Yu Lin, Jing-Wen Chen, Hsueh-En Chang, Hung-An Chen, Sheng-Hsun Chang, Chi-Pin Huang, Fu-En Yang, Min-Hung Chen, Yi-Ting Chen, Yu-Chiang Frank Wang, Shao-Hua Sun"
+          ],
+          "bullets": [
+            "Addresses failures of vision-language-action policies when manipulation depends on latent properties such as mass or stiffness.",
+            "Adds training-free modules that estimate mass and stiffness from robot proprioception without extra sensors.",
+            "Uses a dual-agent design: a Planner chooses whether to explore, while a Prioritizer filters and ranks candidate interactions.",
+            "Evaluated on real-world tabletop tasks and a simulated LIBERO task, achieving comparable performance with fewer interactions and shorter execution time than passive or naive interactive baselines.",
+            "Ablations support the value of the physical property extraction modules."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of PhysCaP, a Physics-Informed Code-as-Policy agent. Given a task requiring latent physical information, the Planner estimates visual uncertainty and proposes an initial exploration plan. The Prioritizer then refines this plan to improve interaction efficiency by filtering implausible actions and reducing redundant exploration. Finally, a code-generation agent produces executable programs that invoke Physical Property Extraction (PhysX) modules (get mass, get stiffness) to actively measure physical properties and complete the task.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 347,
+              "image_path": "figures/2608.21031/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 820
+            },
+            {
+              "caption": "Figure 18: The 3D CAD model of the customizable button mechanism, featuring integrated slots for springs or rubber bands to modulate resistance. This design facilitates systematic stiffness level benchmarking necessary for tactile perception experiments.",
+              "figure_id": "figure-18-6",
+              "figure_number": "18",
+              "height": 420,
+              "image_path": "figures/2608.21031/figure-002.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 631
+            },
+            {
+              "caption": "Figure 9: Qualitative results for the Find Blue Cube task. The CaP and CaP+PhysX+Planner methods exhaustively explore the scene by lifting all cups, whereas our PhysCaP method efficiently lifts only the visually hinted cups.",
+              "figure_id": "figure-9-13",
+              "figure_number": "9",
+              "height": 261,
+              "image_path": "figures/2608.21031/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 826
+            },
+            {
+              "caption": "Figure 10: Qualitative results for the Identify Empty Can task. CaP drastically under-explores by blindly guessing which can is empty, as it inherently lacks the ability to infer hidden physical properties. The CaP+PhysX+Planner baseline over-explores by lifting and weighing every can in the scene. In contrast, our PhysCaP method efficiently weighs only the cans that present visual cues.",
+              "figure_id": "figure-10-19",
+              "figure_number": "10",
+              "height": 260,
+              "image_path": "figures/2608.21031/figure-004.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Our experiment setup. The ZED 2i stereo camera is mounted directly behind the AgileX PiPER robot arm to provide a perspective that aligns with the robot’s view of the manipulation area. A supplementary Logitech C270 HD is placed to the side to capture external footage for recording purposes.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 631,
+              "image_path": "figures/2608.21031/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 829
+            },
+            {
+              "caption": "Figure 3: PhysCaP measures task-relevant latent physical properties beyond passive visual perception and completes tasks. PhysCaP leverages the physical property extraction modules (get mass and get stiffness) to infer objects’ hidden attributes. Grounded by these physical measurements, the agent then synthesizes an informed code policy to successfully complete the objective, demonstrated here by the physical robot identifying an empty can (top: Identify Empty Can) and selecting a ripe avocado (bottom: Pick Ripe Avocado).",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 327,
+              "image_path": "figures/2608.21031/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 790
+            },
+            {
+              "caption": "Figure 11: Qualitative results for the Pick Ripe Avocado task. The naive CaP baseline cannot detect hidden physical states and instead resorts to blind guessing, placing a random avocado on the tray. CaP+PhysX+Planner over-explores by squeezing every avocado before identifying the ripe one. In contrast, our PhysCaP method efficiently squeezes only the two visually dark avocados, finding the ripe one in the fewest steps.",
+              "figure_id": "figure-11-10",
+              "figure_number": "11",
+              "height": 263,
+              "image_path": "figures/2608.21031/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 826
+            },
+            {
+              "caption": "Figure 13: Qualitative results for the Identify Empty Can task in the LIBERO environment. The results demonstrate that the VLA baseline guesses blindly without physical feedback, while CaP+PhysX+Planner exhaustively over-explores by weighing every container. In contrast, our PhysCaP method efficiently targets and interactively weighs only the most probable candidates, completing the objective with superior accuracy and speed.",
+              "figure_id": "figure-13-4",
+              "figure_number": "13",
+              "height": 332,
+              "image_path": "figures/2608.21031/figure-008.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Quantitative analysis shows the accuracy of the PhysX module. The mass estimation plot (left) shows strong alignment with ground truth and high relative accuracy. Furthermore, stiffness evaluations (right) verify that the system can reliably distinguish varying levels of object rigidity to inform downstream manipulation policies.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 214,
+              "image_path": "figures/2608.21031/figure-009.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 820
+            },
+            {
+              "caption": "Figure 8: Visual progression of avocado ripening. As the fruit matures, its skin transitions from bright green to black. This darkening serves as a primary visual cue to assess whether the avocado is ripe enough to consume.",
+              "figure_id": "figure-8-21",
+              "figure_number": "8",
+              "height": 444,
+              "image_path": "figures/2608.21031/figure-010.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 788
+            },
+            {
+              "caption": "Figure 1: PhysCaP augments Code-as-Policy (CaP) agents with physics-informed exploration, enabling inference of latent object properties (e.g., mass) via physical property extraction modules to solve manipulation tasks requiring hiddenstate estimation, e.g., identifying and removing an empty can.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 286,
+              "image_path": "figures/2608.21031/figure-011.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 394
+            },
+            {
+              "caption": "Figure 7: The workstation setup for the “find blue cube” task, in which the robot actively lifts coffee cups to locate the concealed target.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 586,
+              "image_path": "figures/2608.21031/figure-012.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 631
+            },
+            {
+              "caption": "Figure 14: The object assets used in the Find Blue Cube task. The assets include the target blue cubes, large coffee cups designed to conceal the target, and a smaller cup acting as a visual distractor. This specific arrangement forces the robotic agent to employ interactive perception to successfully locate the hidden item among the containers.",
+              "figure_id": "figure-14-3",
+              "figure_number": "14",
+              "height": 525,
+              "image_path": "figures/2608.21031/figure-013.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 788
+            },
+            {
+              "caption": "Figure 16: The object assets used in the Pick Ripe Avocado task. The assets include two green avocados that are unripe and stiff, one dark avocado that’s not ripe enough and still a bit stiff, and another dark avocado that’s both ripe and soft. This intentional variation in stiffness requires the robotic agent to interactively test the stiffness of the visually hinted fruits to successfully identify the target.",
+              "figure_id": "figure-16-14",
+              "figure_number": "16",
+              "height": 448,
+              "image_path": "figures/2608.21031/figure-014.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 772
+            },
+            {
+              "caption": "Figure 15: The object assets used in the Identify Empty Can task. The assets include two full cans, one half-full can, and the target empty can. This intentional variation in mass requires the robotic agent to interactively weigh the visually hinted containers to successfully identify the target.",
+              "figure_id": "figure-15-17",
+              "figure_number": "15",
+              "height": 424,
+              "image_path": "figures/2608.21031/figure-015.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 788
+            },
+            {
+              "caption": "Figure 17: 3D-printed button (left). The actuation stiffness can be customized by varying the number of rubber bands used. Stiffness evaluation on an avocado (right).",
+              "figure_id": "figure-17-9",
+              "figure_number": "17",
+              "height": 280,
+              "image_path": "figures/2608.21031/figure-016.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 826
+            },
+            {
+              "caption": "Figure 5: We replicate the Identify Empty Can task in the LIBERO environment. The workspace contains four colored cups and a target basket. Because visual observation alone cannot determine which container is empty, the robot physically interacts with the scene by actively lifting each candidate 3 cm to reveal its mass before placing the correct target into the basket.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 186,
+              "image_path": "figures/2608.21031/figure-017.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 783
+            },
+            {
+              "caption": "Table 2: Performance on the simulated Identify Empty Cup task. VLA baselines fail to complete the task due to partial observability, whereas CaPbased architectures succeed by leveraging active physical exploration. Among the active methods, our proposed PhysCaP achieves the optimal balance, maximizing success rate (SR) while keeping object Interactions (OI) minimal.",
+              "figure_id": "table-2-16",
+              "figure_number": "2",
+              "height": 160,
+              "image_path": "figures/2608.21031/table-018.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 431
+            },
+            {
+              "caption": "Figure 12: A quad-view rendering of the custom 3D cup asset utilized in the simulated experiments. The completely opaque design is engineered to reliably conceal target objects, necessitating the interactive exploration behaviors evaluated in our benchmarking tasks.",
+              "figure_id": "figure-12-18",
+              "figure_number": "12",
+              "height": 170,
+              "image_path": "figures/2608.21031/figure-019.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 788
+            },
+            {
+              "caption": "Table 1: Task Performance. PhysCaP achieves the highest overall success rate while requiring the fewest physical interactions and the shortest execution time. Success rate (SR, ↑) denotes the task completion rate; object interactions (OI, ↓) denotes the average number of physical object interactions during exploration; and robot execution time (Time, ↓) reports the total execution time. Note that OI and Time are averaged over successful trials only. Although CaP achieves a faster execution time, it results in a low success rate. Best results among PhysX-accessible methods are bolded.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 152,
+              "image_path": "figures/2608.21031/table-020.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 822
+            },
+            {
+              "caption": "Table 3: Comparison of different VLMs performance on the Identify Empty Cup task. Among three models, Claude Opus 4.8 achieves the optimal balance, maximizing success rate (SR) while keeping object Interactions (OI) minimal.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 96,
+              "image_path": "figures/2608.21031/table-021.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 458
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.21031/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.21031",
+          "relevance": 9,
+          "selection_reason": "Physics-informed code-as-policy agent with active exploration for manipulation, integrating VLA-style reasoning and interaction.",
+          "summary_status": "generated",
+          "title": "PhysCaP: Grounding Code-as-Policy Agent with Physics-Informed Exploration",
+          "tldr": "PhysCaP enables robotic manipulation agents to actively infer hidden physical properties through efficient, targeted interaction rather than passive observation alone.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-Language-Action (VLA) models have emerged as a powerful paradigm for end-to-end autonomous driving by jointly integrating perception, reasoning, and decision making within a unified multimodal framework. However, most existing VLA models formulate end-to-end autonomous driving as a visual question answering task, leading to unreliable and less interpretable decision reasoning. In addition, they fail to establish effective multi-modal interaction across heterogeneous sensors, thereby limiting robust scene perception and reliable driving reasoning in long-tail driving scenarios. To this end, we propose a robust VLA-based end-to-end autonomous driving system that combines multi-modality interaction with multi-trajectory planning and optimization, enabling more reliable, interpretable, and safer driving decisions. Our method comprises three core components: (1) Affinity-Guided Optimal Transport for main-auxiliary modality two-way interaction; (2) Distribution-Consistent Modality Transfer for heterogeneous modality distribution transfer and cross-modal interaction; (3) Multi-modal Multi-Trajectory Planning along with Perception-Oriented Trajectory Refinement for better driving decisions to long-tail driving scenarios. Experimental results in open-loop and closed-loop datasets demonstrate improvements in safety long-horizon driving reasoning and road scene perception over existing driving systems, highlighting the ability of our mutli-modality interaction and multi-trajectory planning and optimization for scalable VLA-based systems.",
+          "arxiv_id": "2608.20890",
+          "arxiv_url": "https://arxiv.org/abs/2608.20890",
+          "authors": [
+            "Jingtao Sun, Xiaohai He, Yike Zhang, Dong Huang, Yaonan Wang, Ajmal Mian, Mike Zheng Shou"
+          ],
+          "bullets": [
+            "Addresses unreliable, poorly interpretable reasoning caused by framing driving as visual question answering.",
+            "Uses Affinity-Guided Optimal Transport for two-way interaction between main and auxiliary modalities.",
+            "Applies Distribution-Consistent Modality Transfer to align heterogeneous sensor distributions and enable cross-modal interaction.",
+            "Combines multimodal multi-trajectory planning with perception-oriented trajectory refinement.",
+            "Experiments on open- and closed-loop datasets show improved safety, long-horizon reasoning, and road-scene perception over existing systems."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Architecture of the proposed multi-modality interaction framework. Our method takes as input a front-view image, LiDAR point cloud, and a natural-language navigation command with a system prompt, and outputs the fused visual, BEV and text tokens. ”Affinity-guided Optimal Transport ” aims to make interactive relations via the similarity computation. ”Distribution-Consistent Modality Transfer” is to transform heterogeneous token distributions into a unified latent Gaussian space for subsequent cross-modal interaction. It consists of two fusion processes: LiDAR & Camera Two-Way Interactive Fusion and Language Navigation Prompts Cross-Modal Interactive Fusion.",
+              "figure_id": "figure-2-21",
+              "figure_number": "2",
+              "height": 619,
+              "image_path": "figures/2608.20890/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1079
+            },
+            {
+              "caption": "Fig. 1. Comparison of different E2E-AD systems. (a) Existing fusion & interaction methods for E2E-AD normally fuse individual per-modality into a single hybrid BEV cue. (b) VLM or VLA model focuses more on answer question manner, they lack interpretability and reliable control decisions. (c) Our method achieves multi-modality interaction via optimal transport and generates optimized tarjectory, enhancing the driver trust in E2E-AD.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 452,
+              "image_path": "figures/2608.20890/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1079
+            },
+            {
+              "caption": "Fig. 3. Overview of our multi-modal multi-trajectory planning and trajectory refinement. Given the visual, BEV, Text and vehicle ego-vehicle state tokens, we first generate a sequence of continuous trajectories with an 8-waypoint, and further optimize each trajectory by building a driving risk cost map (including detection risk cost map & semantic risk cost map), using real-time 3D detection and BEV map segmentation.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 373,
+              "image_path": "figures/2608.20890/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1079
+            },
+            {
+              "caption": "Fig. 4. Visualization comparisons of our method on NAVSIM with different scenes. We conducted a comparison of our method with traditional approach: Goal-Flow and VLA-based approach: WAM-Flow. We use green to represent the ground-truth trajectory.",
+              "figure_id": "figure-4-18",
+              "figure_number": "4",
+              "height": 569,
+              "image_path": "figures/2608.20890/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1016
+            },
+            {
+              "caption": "Fig. 5. Visualization comparisons of both 3D object detection and map segmentation tasks on NuScenes dataset. We conducted a comparison of our method with BEVFusion. In object detection task, we use blue and green to represent the prediction boxes and the ground-truth boxes.",
+              "figure_id": "figure-5-17",
+              "figure_number": "5",
+              "height": 598,
+              "image_path": "figures/2608.20890/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 8. Visualization of confusion matrices for evaluating our multi-modal interaction on the nuScenes dataset for 3D detection and BEV map segmentation, and on the NAVSIM test set for trajectory planning. We compare the full model with its variants without multi-modal interaction.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 637,
+              "image_path": "figures/2608.20890/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1079
+            },
+            {
+              "caption": "Fig. 7. Ablations of performance-speed trade-off on NAVSIM dataset.",
+              "figure_id": "figure-7-16",
+              "figure_number": "7",
+              "height": 394,
+              "image_path": "figures/2608.20890/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 6. Ablation comparisons of trajectory optimization on NAVSIM dataset. We conducted a comparison of our multi-trajectory generation and DFM-based manner along with optimization module.",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 577,
+              "image_path": "figures/2608.20890/figure-008.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 529
+            },
+            {
+              "caption": "TABLE 4 Motion prediction performance on nuScenes benchmark with open-loop metrics. Results are highlighted in bold and underline for the best and second-best performance among VLM/VLA-based methods. All comparison results follow OmniDrive and are from SpaceDrive [39].",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 359,
+              "image_path": "figures/2608.20890/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 1068
+            },
+            {
+              "caption": "TABLE 1 Motion prediction performance on the NAVSIM navtest benchmark with original open-loop metrics: PDMS. Diff., Comf., and Cam denote Diffusion, Comfort and Camera input, respectively. The best and second-best VLA-based results are highlighted in bold and underline.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 378,
+              "image_path": "figures/2608.20890/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 1044
+            },
+            {
+              "caption": "TABLE 3 Motion prediction performance on Bench2Drive benchmark with core metrics and subdivision infraction scores. DS, RC, IS, SR correspond to the Driving Score, Route Completion, Infraction Score, and Success Rate. CP, CV, CL, RL, SS, OR, AB, YEV correspond to the Collision with a Pedestrian, Collision with another Vehicle, Collision with Layout, Red Light infractions, Stop Sign infractions, Off-Road infractions, Agent Blocked, and failure to Yield to Emergency Vehicles infractions. All comparison results are from VLR-Driver [74]. The best and second-best VLM/VLA-based results are highlighted in bold and underline.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 317,
+              "image_path": "figures/2608.20890/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 1040
+            },
+            {
+              "caption": "TABLE 7 Scene perception comparison of BEV segmentation on the nuScenes val set using the mIoU metric. ”L” and ”C” indicate LiDAR and camera.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 255,
+              "image_path": "figures/2608.20890/table-012.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 490
+            },
+            {
+              "caption": "TABLE 8 Scene perception comparison of BEV segmentation on Argoverse 2 dataset. All comparison results are all from CMGFA [88].",
+              "figure_id": "table-8-3",
+              "figure_number": "8",
+              "height": 202,
+              "image_path": "figures/2608.20890/table-013.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 522
+            },
+            {
+              "caption": "TABLE 6 Scene perception performance comparison of 3D object detection on Argoverse 2. All comparison results are all from GeoFormer [81].",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 202,
+              "image_path": "figures/2608.20890/table-014.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 518
+            },
+            {
+              "caption": "TABLE 5 Scene perception performance comparison of 3D object detection on nuScenes test and val set. ”L” and ”C” indicate LiDAR and camera.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 202,
+              "image_path": "figures/2608.20890/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 502
+            },
+            {
+              "caption": "TABLE 11 Ablation study of Perception-Oriented Trajectory Refinement on NAVSIM dataset. ”DRCM” and ”SRCM” denote Detection Risk Cost Map & Semantic Risk Cost Map, respectively.",
+              "figure_id": "table-11-12",
+              "figure_number": "11",
+              "height": 181,
+              "image_path": "figures/2608.20890/table-016.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 536
+            },
+            {
+              "caption": "TABLE 12 Ablation study of different interaction manners on both NAVSIM and nuScenes dataset. Where ”DCMT” denotes Distribution-Consistent Modality Transfer.",
+              "figure_id": "table-12-11",
+              "figure_number": "12",
+              "height": 182,
+              "image_path": "figures/2608.20890/table-017.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 510
+            },
+            {
+              "caption": "TABLE 13 Ablation study of our multi-modality interaction on NAVSIM and nuScenes. ”AGOT” and ”DCMT” denote Affinity-Guided Optimal Transport and Distribution-Consistent Modality Transfer.",
+              "figure_id": "table-13-9",
+              "figure_number": "13",
+              "height": 182,
+              "image_path": "figures/2608.20890/table-018.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 510
+            },
+            {
+              "caption": "TABLE 2 Motion prediction performance on the NAVSIM navtest benchmark with extended open-loop metrics: EPDMS. ”Camera” and ”LiDAR” denote Camera and LiDAR inputs, respectively. The best and second-best results are highlighted in bold and underline.",
+              "figure_id": "table-2-20",
+              "figure_number": "2",
+              "height": 162,
+              "image_path": "figures/2608.20890/table-019.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 1056
+            },
+            {
+              "caption": "TABLE 9 Ablation study of planning losses Lplan on NAVSIM dataset.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 132,
+              "image_path": "figures/2608.20890/table-020.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 522
+            },
+            {
+              "caption": "TABLE 10 Ablation study of different VLA foundations on NAVSIM dataset.",
+              "figure_id": "table-10-14",
+              "figure_number": "10",
+              "height": 130,
+              "image_path": "figures/2608.20890/table-021.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 498
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20890/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.20890",
+          "relevance": 9,
+          "selection_reason": "VLA-based end-to-end autonomous driving directly fits Embodied AI / Vision-Language-Action, with novel multi-modality interaction and multi-trajectory planning.",
+          "summary_status": "generated",
+          "title": "A Collaborative Multi-Modality Interaction for VLA-based End-to-End Autonomous Driving",
+          "tldr": "A VLA autonomous-driving system improves multimodal sensor interaction and trajectory planning to produce safer, more interpretable decisions, particularly in long-tail scenarios.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-Language-Action (VLA) policies are vulnerable to localized physical perturbations, yet existing certified patch defenses target discrete labels and cannot directly certify continuous, temporally correlated actions. We introduce CertVLA, a certified defense for closed-loop VLA control under bounded patch and texture attacks. CertVLA proposes a calibrated region of behaviorally consistent actions, while deterministic covering masks ensure that at least one checked prediction is attack-free. Specifically, CertVLA normalizes action disagreement by the benign variation of each mask pair and accepts a single-mask anchor only when it remains consistent under every second mask. It then calibrates the resulting max-min-max episode score to provide finite-sample clean coverage. Conjoining query-level decisions extends the action certificate to the complete closed-loop rollout. Furthermore, we prove that against any adaptive attacker satisfying the bounded-support threat model, every rollout certified by CertVLA executes only action chunks consistent with attack-erased clean predictions. Under dual-mask rollout correctness, this consistency certificate further guarantees task success. The certificate is independent of patch content, generation method, and physical transformation. Experiments in simulation and the real world demonstrate the empirical and certified effectiveness of CertVLA against patch attacks, with additional simulation validation on texture attacks.",
+          "arxiv_id": "2608.20791",
+          "arxiv_url": "https://arxiv.org/abs/2608.20791",
+          "authors": [
+            "Hui Lu, Zhijie Peng, Yuqi Lin, Zaijia Yang, Jiaming He, Shuhan Ye, Yi Yu, Hanwei Zhu, Bingquan Shen, Alex Kot, Xudong Jiang"
+          ],
+          "bullets": [
+            "Addresses the challenge of certifying continuous, temporally correlated actions, which existing discrete-label patch defenses cannot handle.",
+            "Uses deterministic covering masks, calibrated behavior-consistency regions, and normalized action disagreement to identify attack-free anchor predictions.",
+            "Combines query-level certificates across a rollout to certify complete closed-loop behavior under an adaptive bounded-support attacker.",
+            "Provides theoretical guarantees that certified rollouts use actions consistent with attack-erased clean predictions; under dual-mask correctness, this implies task success.",
+            "Simulation and real-world experiments demonstrate empirical and certified effectiveness against patch attacks, with additional simulation validation for texture attacks."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: CertVLA framework. Top: clean single- and dual-mask predictions estimate the position-scale matrix Q and calibrate threshold τ . Bottom: at each query, CertVLA returns a single-mask anchor only if it is consistent with every second-mask prediction, then composes query flags into an episode certificate distinct from empirical task success.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 390,
+              "image_path": "figures/2608.20791/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 892
+            },
+            {
+              "caption": "Figure 2: Real-robot rollouts across successive policy queries. The bottom row is diagnostic: it visualizes the dual-mask candidate with the smallest normalized score z at each query. The white outline identifies the anchor mask of the accepted row.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 312,
+              "image_path": "figures/2608.20791/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 903
+            },
+            {
+              "caption": "Figure 3: Sensitivity to mask-set size, certified patch size, mask size, pair-scale quantile β, and conformal level α (left to right). Blue and orange report Defense and Certified task success; green reports the corresponding auxiliary quantity on the right axis.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 200,
+              "image_path": "figures/2608.20791/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 905
+            },
+            {
+              "caption": "Table 1: Defense and certified task success rates (%) against physical patch and adversarial object texture attacks on LIBERO. Average denotes the mean performance across the four LIBERO suites. † denotes our dual-mask fine-tuned model, and finetuning details are provided in Appendix ??.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 249,
+              "image_path": "figures/2608.20791/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1052
+            },
+            {
+              "caption": "Table 2: Results for physical patch attacks on the real robot.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 67,
+              "image_path": "figures/2608.20791/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 452
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20791/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.20791",
+          "relevance": 9,
+          "selection_reason": "Certified defense for VLA policies against physical attacks; directly fits vision-language-action.",
+          "summary_status": "generated",
+          "title": "CertVLA: Certified Defense against Physical Visual Attacks for Vision-Language-Action Models",
+          "tldr": "CertVLA certifies the robustness of closed-loop vision-language-action policies against bounded physical patch and texture attacks by ensuring rollout actions remain consistent with attack-free predictions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear probes and activation steering have uncovered that vision-language models (VLMs) internally represent mental states such as agents' beliefs, knowledge, and intentions. However, it is unclear whether and how these representations are used by downstream predictions along these axes. To close this gap, we introduce Cross-Axis Routing Diagnostic (CARD), which steers activations along one axis while measuring the response of a different axis's prediction. Applied to open-weight VLMs on Relay Chain -- a new cooperative grid-world benchmark we propose -- we diagnose a critical routing failure: models fail to incorporate belief representations into their next action prediction, effectively leaving valuable information about their partners unused.",
+          "arxiv_id": "2608.20763",
+          "arxiv_url": "https://arxiv.org/abs/2608.20763",
+          "authors": [
+            "Souptik Kumar Majumdar, Fabian K\\\"ogel, Andreas Bulling"
+          ],
+          "bullets": [
+            "Motivation: Existing analyses show VLMs encode beliefs, knowledge, and intentions, but do not establish whether these representations guide predictions.",
+            "Method: Cross-Axis Routing Diagnostic (CARD) steers activations along one mental-state axis and measures effects on predictions along another.",
+            "Evaluation: CARD is applied to open-weight VLMs using Relay Chain, a new cooperative grid-world benchmark.",
+            "Finding: Models largely fail to route belief information into next-action predictions, leaving partner-related information unused."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of CARD. For each axis a ∈ {belief, intent, knowledge} a linear probe on paired True-Belief / False-Belief activations at layer L yields a unit-norm direction va. At inference time, we hook the residual stream at the same layer and add αva (steering axis a, α ∈ {−10,+10}), then read out the answer head for a different question axis b ̸= a. A causally-routed feature moves the cross-axis read-out; an encoded-but-unread feature does not. Within-axis cells (a = b, diagonal) serve as positive controls.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 269,
+              "image_path": "figures/2608.20763/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 915
+            },
+            {
+              "caption": "Figure 3: Steering improves accuracy on the belief and knowledge predictions, but never on the intent answer prediction, averaged across the three protagonists (a1, a2, a3). For each (VLM, question axis) we report the mean TB/FB accuracy with no steering (α=0, grey) and with the best-case steering (α ∈ {−10,+10} across all probe directions, in VLM color). ∆ on top is best−baseline. Belief and knowledge improve by +2.7 to +10.6 pp; the intent ∆ is essentially 0 on every VLM. The identical intent baseline (∼ 66%) across VLMs reflects the constantprior signature. Per-protagonist breakdown in Figure 6 in the Appendix.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 503,
+              "image_path": "figures/2608.20763/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 744
+            },
+            {
+              "caption": "Figure 2: Relay Chain four-tuple discrimination layout. Panel elements: protagonist a1 (red, lever-operator) with field-of-view disk (radius 5); partner a2 (blue, lever-operator); traveller a3 (green); gates (green when open, dark-red when closed); levers L; goal G. Top row: success (event occurs). Bottom row: counter (lever-operator never releases; gate stays closed). Left column: True-Belief (TB) – a1’s lever close enough to perceive the crossing. Right column: False-Belief (FB) – lever beyond a1’s view.",
+              "figure_id": "figure-2-25",
+              "figure_number": "2",
+              "height": 453,
+              "image_path": "figures/2608.20763/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 740
+            },
+            {
+              "caption": "Figure 11: T-A prompt-resistance test. Each row is one of 12 prompt rewrites we tried (cost framing, chain-ofthought, perception-first, rule-based, 1/2-shot examples. Each column is one (VLM, protagonist) cell. Cell colour encodes the TB−FB accuracy gap – warm = model is more accurate when the protagonist can see the event, cold = the reverse. A star marks cells that cleared our pre-registered bar for “genuinely belief-conditional” (lever-holder, TB and FB accuracy both above 50%). Only 5 cells star out of 192, and only one points the right way (TB>FB), with a margin an order of magnitude smaller than the same models’ gap on the canonical belief question – no prompt rewrite recovers belief-conditional action.",
+              "figure_id": "figure-11-4",
+              "figure_number": "11",
+              "height": 506,
+              "image_path": "figures/2608.20763/figure-004.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 930
+            },
+            {
+              "caption": "Figure 5: Relay Chain scenario layouts for each protagonist condition (rows: a1 and a2 lever-holders, a3 traveller) under True-Belief and False-Belief layouts (columns). The protagonist is highlighted with a red outline; the shaded disk shows their field of view (radius 5 cells; anything outside is fog of war and not perceptible). In TB the protagonist stands next to its gate-controlling lever or just before the gate ahead; in FB it stands at the far lever or in a corner, so the field-of-view disk shifts with it and the cooperative event falls outside. All panels show the success block (both gates open) so the contrast is purely perceptual.",
+              "figure_id": "figure-5-14",
+              "figure_number": "5",
+              "height": 787,
+              "image_path": "figures/2608.20763/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 878
+            },
+            {
+              "caption": "Figure 4: CARD intent column on lever-operator a1 is uniformly null (red box) across four VLMs. Rows: probe axis being steered. Columns: question axis being asked. Cell value: |gap(α=+ 10)− gap(α=− 10)| in pp, mean ± std across three seeds. Non-intent columns shift by tens of pp under the same probe; the intent column does not move. Same steering hook, same scenarios, same protagonist – only the intent prediction fails to read from the belief direction.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 232,
+              "image_path": "figures/2608.20763/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 744
+            },
+            {
+              "caption": "Figure 8: Gemma-4-E4B – full CARD heatmap per protagonist. Red box = intent column.",
+              "figure_id": "figure-8-21",
+              "figure_number": "8",
+              "height": 346,
+              "image_path": "figures/2608.20763/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 879
+            },
+            {
+              "caption": "Figure 9: LLaVA-NeXT-Video-7B – full CARD heatmap per protagonist. Red box = intent column.",
+              "figure_id": "figure-9-23",
+              "figure_number": "9",
+              "height": 345,
+              "image_path": "figures/2608.20763/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 879
+            },
+            {
+              "caption": "Figure 7: Qwen2-VL-7B – full CARD heatmap per protagonist. Red box = intent column.",
+              "figure_id": "figure-7-22",
+              "figure_number": "7",
+              "height": 346,
+              "image_path": "figures/2608.20763/figure-009.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 872
+            },
+            {
+              "caption": "Figure 10: InternVL2.5-8B – full CARD heatmap per protagonist. Red box = intent column.",
+              "figure_id": "figure-10-5",
+              "figure_number": "10",
+              "height": 345,
+              "image_path": "figures/2608.20763/figure-010.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 872
+            },
+            {
+              "caption": "Figure 6: Per-protagonist breakdown of Figure 3. 4 × 3 grid: rows are VLMs, columns are protagonists (a1, a2 lever-holders; a3 traveller). Each cell shows mean TB/FB accuracy at α=0 (grey) vs the best α ∈ {−10,+10} across probe directions (VLM color); ∆ on top is best−baseline. The intent column ∆ is essentially 0 in every (VLM, protagonist) cell (12/12), while sibling answer heads (belief, knowledge) move on the protagonists that have headroom. The routing failure is therefore not protagonist-specific.",
+              "figure_id": "figure-6-17",
+              "figure_number": "6",
+              "height": 942,
+              "image_path": "figures/2608.20763/figure-011.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 931
+            },
+            {
+              "caption": "Figure 13: CS-CARD-T on Qwen2-VL: intent |∆acc| vs steering target position, one line per probe source. All nine (source, position) entries sit at ≤ 0.3 pp.",
+              "figure_id": "figure-13-11",
+              "figure_number": "13",
+              "height": 234,
+              "image_path": "figures/2608.20763/figure-012.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 420
+            },
+            {
+              "caption": "Figure 12: Projection-removal α sweep. x-axis: α ∈ {0.5, 1, 2, 5}σ removal of the belief direction from the residual stream. y-axis: intent TB−FB gap. Three lines per VLM: a1, a2, a3. The intent gap is constant across α on every VLM and every protagonist.",
+              "figure_id": "figure-12-10",
+              "figure_number": "12",
+              "height": 186,
+              "image_path": "figures/2608.20763/figure-013.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 443
+            },
+            {
+              "caption": "Table 2: Per-scenario flip rate on a1: of 144 scenarios, the fraction whose answer differs between α=+10 and α=−10 steering (i.e., whether steering moves the model at all, before changes average out). In the intent column (middle), 9 of 12 (VLM, probe) entries are exactly 0; only three are above zero (Gemma-4 and InternVL2.5 on the belief probe, InternVL2.5 on the knowledge probe; ≤15.3%), with direction-balanced flips that cancel in net accuracy (Table 7 in the Appendix). The belief and knowledge columns flip many scenarios under the same hook.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 465,
+              "image_path": "figures/2608.20763/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 473
+            },
+            {
+              "caption": "Table 9: Text-decoder architecture specs and empirical rigidity ordering of the four VLMs. Rigidity = resistance of the intent constant prior to prompt perturbation in the T-A sweep: Qwen2-VL is hardest (no V0–V11 cell breaks 30/100 on a1); LLaVA-NeXT is intermediate; Gemma-4 is softest (V2 cost-explicit breaks the prior on a2 to 70/86, though not toward belief-conditional behaviour). The ordering matches loosely with head dimensionality (Gemma’s 320 vs. 128 for the others), but the dataset (4 vendors) is too small to draw architectural conclusions; a quantitative regression of rigidity against pretraining mix and RLHF intensity is left to future work.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 108,
+              "image_path": "figures/2608.20763/table-015.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 569
+            },
+            {
+              "caption": "Table 5: The 12 T-A prompt variants used to evaluate prompt-resistance. Each variant prepends a prefix to the canonical intent question; in-context variants additionally include worked examples.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 321,
+              "image_path": "figures/2608.20763/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 837
+            },
+            {
+              "caption": "Table 7: Best-α intent accuracy gain (pp) over the no-steering baseline (α=0) for every (VLM, protagonist, probe direction) cell, reported as mean ± std across three seeds (seeds {42, 43, 44}; the ± is dropped when the std rounds to 0.0). Most cells are exactly 0 on every seed; across the full multi-seed sweep, 95/108 cells are exactly 0 and the largest gain anywhere is +12.00%. Compare with belief and knowledge accuracies, which improve by +2.7 to +10.6 pp on the across-protagonist mean under the same hooks (Figure 3): the intent prediction does not use the belief direction usefully on any cell.",
+              "figure_id": "table-7-18",
+              "figure_number": "7",
+              "height": 334,
+              "image_path": "figures/2608.20763/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 633
+            },
+            {
+              "caption": "Table 1: Positive control: linear-probe accuracy (mean ± std across three seeds; chance = 50%) and behavioural TB/FB accuracy on the belief question.",
+              "figure_id": "table-1-24",
+              "figure_number": "1",
+              "height": 133,
+              "image_path": "figures/2608.20763/table-018.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 416
+            },
+            {
+              "caption": "Table 10: CARD positive control on CLEVR (single image, 100 scenarios per axis, seed 43). “Baseline” = mean accuracy at α=0 on the corresponding within-axis cell; each probe column = best-α ∈ ±10 accuracy gain. Bold = the largest non-zero ∆acc per (VLM, question). At least one cross-axis cell shows ≥ +14 pp gain on every VLM that has headroom (Qwen and InternVL are at ≥ 96% on shape/colour; Gemma and LLaVA are well below ceiling on every axis and steering produces +6 to +60 pp gains). The steering hook is functional; the Relay Chain intent null in F3 is not a hook-broken artefact.",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 340,
+              "image_path": "figures/2608.20763/table-019.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 675
+            },
+            {
+              "caption": "Table 6: Full D2 four-tuple discrimination matrix (success-TB / success-FB / counter-TB / counter-FB) for every (VLM, axis, protagonist).",
+              "figure_id": "table-6-19",
+              "figure_number": "6",
+              "height": 277,
+              "image_path": "figures/2608.20763/table-020.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 669
+            },
+            {
+              "caption": "Table 8: CARD per-cell breakdown on lever-holder a1, reporting both the gap shift ∆gap = gapB(α=+10) − gapB(α=−10) and the mean-accuracy shift ∆acc = accB(α=+10)− accB(α=−10), where accB = 1 2 (TBB + FBB). Bold rows are the intent-question column: 9 of the 12 cells are 0.00 on both metrics across the four VLMs (Qwen2-VL and LLaVA-NeXT all three probes; Gemma-4 and InternVL2.5 under intent and knowledge probes), and the remaining three (Gemma-4 and InternVL2.5 under belief steering, InternVL2.5 under knowledge steering) shift by at most |∆gap|=25.0 pp / |∆acc|=13.9 pp, ruling out both belief-conditional modulation (∆gap) and any uniform answer-flip (∆acc). Sibling columns (belief, knowledge) show non-trivial shifts under the same probe directions.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 831,
+              "image_path": "figures/2608.20763/table-021.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 508
+            },
+            {
+              "caption": "Table 3: Relay Chain dataset breakdown by protagonist and world-state outcome. All three axes (belief, intent, knowledge) share the same scenario base; each entry is a multi-frame trajectory with 4–8 keyframes.",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 144,
+              "image_path": "figures/2608.20763/table-022.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 517
+            },
+            {
+              "caption": "Table 11: Random-label probe control (Hewitt and Liang, 2019). For each (VLM, axis), we retrain logisticregression probes on the same paired activations with randomly permuted labels and report mean held-out accuracy across the sampled (layer, head) cells. True-label probes attain 91.6–100%; random-label probes are at chance (47.4–52.0%), giving selectivity≥ 43.0 pp on every axis and every VLM. The top single-cell random-label accuracy across all sampled cells is 56.0%, well below the true-label minimum of 91.6%.",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 214,
+              "image_path": "figures/2608.20763/table-023.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 723
+            },
+            {
+              "caption": "Table 4: Linear-probe held-out accuracy (%) as a function of trajectory fraction t on Qwen2-VL, for the three cooperative-ToM axes (belief, intent, knowledge). “Peak” = best (layer, head) probe; the remaining columns are means across all (layer, head) cells. The peak is saturated at 100% from t=0.25 onward. Mean accuracy decreases very slightly (∼ 1 pp) with t: while the best head remains perfectly recoverable, fewer heads on average carry a clean axis-specific signal as later tokens accumulate downstream context. The relevant headline is the saturated peak: the feature is present from early in the trajectory.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 88,
+              "image_path": "figures/2608.20763/table-024.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 458
+            },
+            {
+              "caption": "Table 12: D1 polarity-flip diagnostic. Original and flipped question polarity TB−FB gap on the canonical 148 hold-out. An oracle-reasoning model preserves the sign and magnitude under flip; a constant-prior model collapses to a smaller or sign-flipped gap.",
+              "figure_id": "table-12-20",
+              "figure_number": "12",
+              "height": 111,
+              "image_path": "figures/2608.20763/table-025.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 575
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20763/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20763",
+          "relevance": 7,
+          "selection_reason": "Diagnoses belief-to-action routing in VLMs for grid-world action prediction; fits VLA.",
+          "summary_status": "generated",
+          "title": "CARD: Diagnosing Belief to Action Routing Failures in Vision Language Models",
+          "tldr": "CARD reveals that vision-language models often represent agents’ beliefs but fail to use them when predicting their next actions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Manipulating moving objects requires a policy to anticipate contact events, yet vision-language-action (VLA) policies are commonly fine-tuned from the current observation alone. World action models (WAMs) learn predictive dynamics, but running a video-scale teacher or explicitly imagining future frames at deployment is costly. We introduce ForeTime-VLA, a dense pi0.5 policy that distills a future-aware, action-equivalent representation from a frozen Fast-WAM-derived teacher while remaining causal at inference. Offline, current and future video latents are compressed into a whitened 64-D target. Online, an eight-frame history encoder predicts this target together with manipulation phase and normalized time-to-transition. Four future tokens and one phase token condition the VLM prefix, while the predicted future and transition horizon condition the action expert. Training retains the original flow-matching action target and adds cosine, relational geometry, phase, time-to-transition, and action-equivalence objectives. On a deduplicated conveyor-belt dataset, we compare 40k-step checkpoints on 768 matched windows per split. Test MAE decreases from 0.134119 to 0.130593 (2.63%; paired-bootstrap 95% CI: 0.82-4.48% improvement), and test L2 decreases by 3.02%, at a 2.46-2.93% latency cost. In quantitative real-robot evaluation, ForeTime-VLA achieves 81.1% stationary and 58.9% slow-moving grasp success, exceeding the next-best reference by 12.2 and 22.2 percentage points, respectively. Across three belt speeds, it completes 44/90 grasps versus 23/90 for pi0.5, including 11/30 versus 2/30 at fast speed. The agreement between offline orientation gains and reduced real-robot contact-pose failures supports causal future-token distillation as an effective way to improve dynamic manipulation without deploying the world-model teacher.",
+          "arxiv_id": "2608.20735",
+          "arxiv_url": "https://arxiv.org/abs/2608.20735",
+          "authors": [
+            "Siyuan Ma, Yutian Zhang, Boshi Zhang, Qinglian Wu, Jiaqi Zhai, Dong Wei, Xiaojin Huang"
+          ],
+          "bullets": [
+            "Motivation: Current-observation-only VLA policies struggle to anticipate contact with moving objects, while online world-model prediction is expensive.",
+            "Method: A causal eight-frame history encoder predicts four future tokens, manipulation phase, and time-to-transition from compressed teacher-derived video latents.",
+            "Training adds future-representation, relational, phase, timing, and action-equivalence objectives while retaining flow-matching action learning.",
+            "Results: Test MAE and L2 improve by 2.63% and 3.02%, with only a 2.46–2.93% latency increase; real-robot grasp success reaches 81.1% for stationary and 58.9% for slow-moving objects.",
+            "Across belt speeds, the method completes 44/90 grasps versus 23/90 for pi0.5, including 11/30 versus 2/30 at fast speed."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. ForeTime-VLA overview. Left: the offline teacher encodes the current observation and sampled future frames with a frozen video VAE, then maps them to a compact action-equivalent target. Center: the deployable student uses eight causal observations to predict future, phase, and transition horizon variables. These predictions condition both the slow π0.5 VLM prefix and the fast action-expert suffix, while the original noisy-action and target-flow construction is retained. Right: training combines action flow, future alignment, relational geometry, transition, phase, and auxiliary action-reconstruction losses. Future frames and the WAM are absent at test time.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 360,
+              "image_path": "figures/2608.20735/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1032
+            },
+            {
+              "caption": "Fig. 2. Offline action-equivalent future teacher. The frozen latent pipeline extracts current and future features (ct, ft), and the adapter also receives robot state st. The privileged encoder uses (ct, ft, st), whereas the causal branch uses (ct, st). Both codes share an action decoder; the teacher additionally reconstructs the future feature difference. Teacher– causal alignment, variance/covariance regularization, and pairwise action geometry prevent collapse and retain action relevance. The selected 64-D teacher code is whitened and cached as zTt .",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 662,
+              "image_path": "figures/2608.20735/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 504
+            },
+            {
+              "caption": "Fig. 3. Dataset structure and realized coverage. Left: the collection taxonomy spans stationary grasp, mobile tracking, navigate-then-grasp, and concurrentgrasp settings; outer labels give canonical episode counts. Upper right: episode and aligned-frame coverage by scene. Lower right: object composition, the duplicate-free split, and the recorded multimodal contract. Aggregate statistics exclude 28 exact duplicate files; the remaining 458 episodes contain 96,512 aligned frames and are split 402/31/25 for train/validation/test.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 558,
+              "image_path": "figures/2608.20735/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1029
+            },
+            {
+              "caption": "Fig. 5. Qualitative real-robot grasp and phase prediction. Top: grasp of the moving target. Bottom: causal phase probabilities; at 9.8 s, grasp has 87.3% confidence before transport rises after acquisition.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 376,
+              "image_path": "figures/2608.20735/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 4. Real-robot grasp completions across belt speeds. Successful grasps out of 30 trials; labels give completed/total trials.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 263,
+              "image_path": "figures/2608.20735/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 425
+            },
+            {
+              "caption": "TABLE IV REAL-ROBOT OUTCOMES FOR STATIONARY AND SLOW-SPEED MOVING GRASP TASKS. ALL ENTRIES ARE PERCENTAGES; HIGHER SUCCESS AND LOWER FAILURE ARE BETTER.",
+              "figure_id": "table-IV-2",
+              "figure_number": "IV",
+              "height": 330,
+              "image_path": "figures/2608.20735/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 412
+            },
+            {
+              "caption": "TABLE II POOLED ACTION-GROUP MAE. PARENTHESES SHOW RELATIVE IMPROVEMENT.",
+              "figure_id": "table-II-3",
+              "figure_number": "II",
+              "height": 267,
+              "image_path": "figures/2608.20735/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 427
+            },
+            {
+              "caption": "TABLE III OFFLINE INFERENCE-TIME COMPONENT ABLATION. OVERALL METRICS USE 96 MATCHED TEST WINDOWS; TRANSITION METRICS USE 48 MATCHED PHASE-1 WINDOWS. LOWER IS BETTER. ALL FORETIME-VLA VARIANTS SHARE WEIGHTS AND DIFFER ONLY BY COMPONENT MASKING AT INFERENCE.",
+              "figure_id": "table-III-1",
+              "figure_number": "III",
+              "height": 158,
+              "image_path": "figures/2608.20735/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 492
+            },
+            {
+              "caption": "TABLE I OFFLINE MSE, MAE, AND L2 OVER 768 MATCHED WINDOWS PER SPLIT. LOWER IS BETTER. THE LOWER PANEL REPORTS PAIRED RELATIVE IMPROVEMENT AND 95% CIS FOR FORETIME-VLA VERSUS THE π0.5 BASELINE.",
+              "figure_id": "table-I-8",
+              "figure_number": "I",
+              "height": 314,
+              "image_path": "figures/2608.20735/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 344
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20735/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.20735",
+          "relevance": 9,
+          "selection_reason": "VLA policy for dynamic manipulation with future-token distillation from a world action model; directly fits embodied AI.",
+          "summary_status": "generated",
+          "title": "ForeTime-VLA: Causal Future-Token Distillation from a World Action Model for Conveyor-Belt Manipulation",
+          "tldr": "ForeTime-VLA distills future-aware representations from a world action model into a causal VLA policy, improving conveyor-belt manipulation without deploying the costly teacher.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language-action (VLA) models can follow natural-language (NL) task instructions, but such instructions may not precisely specify safety-critical or spatiotemporal requirements on the resulting behavior. We introduce Logic-VLA, a formal-requirement-aware VLA that conditions on Signal Temporal Logic (STL) specifications supplied at inference time. Logic-VLA uses a syntax-graph-based STL encoder pre-trained to capture temporal logic semantics. Policy adaptation proceeds in two stages: STL-conditioned supervised fine-tuning on satisfying demonstrations is followed by trajectory-level preference optimization over matched satisfying-violating rollout pairs using a flow-matching surrogate for Identity Preference Optimization. This formulation improves formal requirement satisfaction while preserving the nominal NL task. We evaluate Logic-VLA in closed-loop quadcopter navigation simulation across randomized photorealistic environments and test generalization to STL formulas unseen during training. Across the evaluation benchmarks, Logic-VLA improves STL satisfaction rate over an STL-blind base policy by 24.8 to 40.7 percentage points (pp) while reducing nominal NL task success by at most 1.8 pp, showing that a single VLA can adapt its behavior to varying formal requirements without requiring a separate policy for each specification.",
+          "arxiv_id": "2608.20556",
+          "arxiv_url": "https://arxiv.org/abs/2608.20556",
+          "authors": [
+            "Celina Shiyu Wang, Yiqi Zhao, Junjie Ye, Yue Wang, Jyotirmoy V. Deshmukh"
+          ],
+          "bullets": [
+            "Addresses the imprecision of natural-language instructions for safety-critical and spatiotemporal behavior.",
+            "Encodes STL specifications with a syntax-graph encoder pretrained on temporal-logic semantics.",
+            "Uses satisfying demonstrations for supervised fine-tuning, then preference optimization over satisfying versus violating trajectories.",
+            "Evaluated in closed-loop quadcopter navigation with randomized photorealistic environments and unseen STL formulas.",
+            "Improves STL satisfaction by 24.8–40.7 percentage points while reducing nominal NL task success by at most 1.8 points."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.LO",
+            "cs.SY",
+            "eess.SY"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1: Overview of Logic-VLA. Logic-VLA augments a pre-trained VLA with a structured logic conditioning pathway so that the policy jointly follows a natural-language task and a formal temporal logic requirement. The logic encoder is pretrained from trajectory-formula pairs using robust semantics supervision (Section IV-B). We integrate the encoder with a VLA in a post-training procedure (Section IV-C) including 1) supervised fine-tuning using logic satisfying demonstrations and 2) trajectory-level preference optimization using matched satisfying-violating trajectory pairs.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 293,
+              "image_path": "figures/2608.20556/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 771
+            },
+            {
+              "caption": "Fig. 2: Visualization of the six natural-language navigation tasks. For each task, we show several example demonstration trajectories from the dataset D in one of the ten randomized warehouse environments used in our experiments.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 281,
+              "image_path": "figures/2608.20556/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 964
+            },
+            {
+              "caption": "Fig. 3: Ablation Results. (a) Semantic pre-training vs. random encoder initialization. (b) Syntax-graph encoding vs. textual prompting. Results are shown on Seen and Unseen Parameter settings for STL satisfaction and NL task success.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 245,
+              "image_path": "figures/2608.20556/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 836
+            },
+            {
+              "caption": "TABLE I. Evaluation Results. Comparison of Results across the baselines in Seen, Unseen Parameter, and Unseen Structure.",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 123,
+              "image_path": "figures/2608.20556/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1076
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20556/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.20556",
+          "relevance": 9,
+          "selection_reason": "VLA model conditioned on temporal logic specifications for closed-loop robot navigation, improving formal requirement satisfaction.",
+          "summary_status": "generated",
+          "title": "Logic-VLA: A Temporal Logic Conditioned Vision-Language-Action Model",
+          "tldr": "Logic-VLA conditions a vision-language-action policy on Signal Temporal Logic requirements to improve safety and spatiotemporal constraint satisfaction with minimal loss of nominal task performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Routine gastrointestinal endoscopy is intrinsically bidirectional: the instrument is advanced to reach target anatomy and later withdrawn or retroflexed for inspection, while an external cue may require earlier reversal. When the requested phase changes before the visual scene does, nearly identical observations can require opposite axial actions. We identify and formalize this ambiguity in bidirectional endoscopic control as intent aliasing. We propose EndoLIFT (Endoscopic Language-Instruction Flow with Trajectory Latents), a vision-language-action policy that combines explicit language-based intent conditioning with a latent-conditioned rectified-flow action expert. The policy receives RGB, a language instruction, and the previous-action state; a 32-D variational trajectory latent stochastically conditions continuous action-chunk generation. Controlled same-observation instruction swaps establish that language selects the axial mode, independently of whether the trajectory latent is present. Relative to the matched model without latent conditioning, EndoLIFT improves navigation-direction accuracy by 11.1 percentage points and reduces wrong-direction advance by 83\\%. An architecture-controlled 1-bit mode-flag reference exhibits weaker canonical-anchor switching, while EndoLIFT retains 82.8\\% intent-following accuracy across 44 held-out linguistic variants. In closed-loop evaluation, EndoLIFT improves overall success by 30 percentage points over EndoLIFT w/o VTL on both the seen colon phantom and the unseen lung and stomach phantoms, and completes 10/10 ex-vivo porcine-trachea trials. These results separate language-based intent selection from the trajectory latent's contribution to directional correctness and robust retraction.",
+          "arxiv_id": "2608.20478",
+          "arxiv_url": "https://arxiv.org/abs/2608.20478",
+          "authors": [
+            "Chi Kit Ng, Yidong Zhang, Lui Siu Hing, Jinsong Lin, Tianchun Wu, Ho Yin Chim, Zhiqing Tang, Tao Yang, Huxin Gao, Trevor Yeung, Raymond Shing-Yan Tang, Hongliang Ren"
+          ],
+          "bullets": [
+            "Addresses intent aliasing: nearly identical visual scenes may require advancing or withdrawing depending on the requested phase.",
+            "Uses RGB observations, language instructions, previous-action state, and a 32-D variational trajectory latent to generate continuous action chunks.",
+            "Controlled instruction swaps show that language selects the axial mode, while the trajectory latent supports directional correctness and robust retraction.",
+            "Improves navigation-direction accuracy by 11.1 percentage points and reduces wrong-direction advance by 83% versus the matched model without latent conditioning.",
+            "Achieves 82.8% intent-following across 44 held-out linguistic variants, improves closed-loop success by 30 percentage points, and completes 10/10 ex-vivo porcine-trachea trials."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 7. Instruction-stratified validation transition structure for forward navigation (left) and urgent retraction (right), with the common bidirectional task illustrated centrally. Black arrows denote majority transitions, gray arrows all observed transitions, and dashed blue/orange arrows the monitor/speech interfaces.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 429,
+              "image_path": "figures/2608.20478/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1052
+            },
+            {
+              "caption": "Fig. 8. Domain-stratified closed-loop action transitions for the unseen lung, seen colon, and unseen stomach phantoms (left to right). Edges aggregate 0.5-s executed-action windows; black arrows show majority transitions, gray arrows all observed transitions, and dashed arrows the monitor/speech interfaces.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 314,
+              "image_path": "figures/2608.20478/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1060
+            },
+            {
+              "caption": "Fig. 6. Frozen-test action-chunk comparison for (a) Qwen3-VL + MLP, (b) Qwen3-VL + GR00T, (c) EndoLIFT w/o VTL, and (d) EndoLIFT (ours). Within each panel, the top and bottom rows show forward navigation and urgent retraction, respectively; the columns show axial movement, vertical bending, and horizontal bending. Blue solid curves are human targets, and orange dashed curves are open-loop predictions.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 229,
+              "image_path": "figures/2608.20478/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1074
+            },
+            {
+              "caption": "Fig. 5. Wrong-direction advance on held-out true-retraction targets under the correct instruction; lower is better. Points indicate the observed rates, and error bars denote 95% confidence intervals. EndoLIFT w/o VTL is the matched ablation without trajectory-latent conditioning.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 320,
+              "image_path": "figures/2608.20478/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 513
+            },
+            {
+              "caption": "TABLE II ARCHITECTURE-CONTROLLED MODEFLAG REFERENCE VERSUS CANONICAL-TEXT INTERVENTION ON 40 FROZEN FRAMES. IMAGE, PREVIOUS ACTION, AND PER-FRAME FLOW-NOISE SEED ARE IDENTICAL. IFA AND CANONICAL PAIRED FLIP ARE PERCENTAGES; SEPARATION IS NORMALIZED LONGITUDINAL ACTION.",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 130,
+              "image_path": "figures/2608.20478/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 529
+            },
+            {
+              "caption": "TABLE V DIRECTIONAL PERFORMANCE ON THE HELD-OUT TEST SET. NAVIGATION DIRECTION ACCURACY AND WRONG-DIRECTION ADVANCE ARE REPORTED WITH 95% EPISODE-BOOTSTRAP CONFIDENCE INTERVALS. THE LAST TWO COLUMNS REPORT THE DIFFERENCE BETWEEN ENDOLIFT (OURS) AND ENDOLIFT W/O VTL.",
+              "figure_id": "table-V-9",
+              "figure_number": "V",
+              "height": 381,
+              "image_path": "figures/2608.20478/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE III INSTRUCTION-FOLLOWING ACCURACY (IFA, %) ON THE FROZEN 40-FRAME POOL. “ALL UNSEEN” AGGREGATES 44 HELD-OUT COMMANDS. MULTI-INSTRUCTION FLIP IS COMPUTED OVER THE MULTI-STRING INSTRUCTION POOL USED IN THIS TABLE; IT IS DISTINCT FROM THE TWO-ANCHOR CANONICAL PAIRED FLIP IN TABLE II AND THE TEST-SET INSTRUCTION-SWAP FLIP IN TABLE IV. THE MODEFLAG ROW USES LITERAL BITS AND THEREFORE HAS NO LANGUAGE-CATEGORY OR MULTI-INSTRUCTION VALUE (“–” DENOTES N/A). THE ENDOLIFT (OURS) CANONICAL CELL AVERAGES THREE SEEN CANONICAL STRINGS.",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 198,
+              "image_path": "figures/2608.20478/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE VII QUANTITATIVE EX-VIVO PORCINE-TRACHEA VALIDATION OF ENDOLIFT OVER TEN HUMAN-TRIGGERED RETRACTION TRIALS.",
+              "figure_id": "table-VII-3",
+              "figure_number": "VII",
+              "height": 183,
+              "image_path": "figures/2608.20478/table-008.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 529
+            },
+            {
+              "caption": "TABLE I INSTRUCTION COMPOSITION OF THE BASE IMITATION DATASET. THE FOUR SURFACE FORMS CORRESPOND TO TWO AXIAL CONTROL MODES; THE CANONICAL DEPLOYMENT INSTRUCTIONS ARE DEFINED IN THE TEXT.",
+              "figure_id": "table-I-11",
+              "figure_number": "I",
+              "height": 171,
+              "image_path": "figures/2608.20478/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 498
+            },
+            {
+              "caption": "TABLE VI CLOSED-LOOP PILOT ON THE SEEN COLON PHANTOM. ENTRIES ARE SUCCESS RATE IN PERCENT [EXACT 95% CI]; n = 10 PER MODE AND n = 20 OVERALL.",
+              "figure_id": "table-VI-5",
+              "figure_number": "VI",
+              "height": 136,
+              "image_path": "figures/2608.20478/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 529
+            },
+            {
+              "caption": "TABLE IV TEST-SET INSTRUCTION-SWAP DIAGNOSTIC WITH IMAGE AND PREVIOUS-ACTION STATE FIXED. SHIFT IS THE AXIAL-OUTPUT CHANGE [95% CI] IN RAW MOTOR UNITS; CSF IS CORRECT-SIGN FRACTION AND TEST-SWAP FLIP IS THE TEST-SET INSTRUCTION-SWAP FLIP RATE. THESE SENSITIVITY DIAGNOSTICS ARE INTERPRETED SEPARATELY FROM TASK-PERFORMANCE METRICS.",
+              "figure_id": "table-IV-7",
+              "figure_number": "IV",
+              "height": 131,
+              "image_path": "figures/2608.20478/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 529
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20478/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.20478",
+          "relevance": 8,
+          "selection_reason": "Vision-language-action policy for endoscopic control, fits embodied AI and VLA.",
+          "summary_status": "generated",
+          "title": "EndoLIFT: Language-Disambiguated Latent-Conditioned Rectified Flow for Bidirectional Endoscopic Control",
+          "tldr": "EndoLIFT resolves ambiguous bidirectional endoscopic control by combining language-based intent conditioning with a latent-conditioned rectified-flow policy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-21",
       "paper_count": 6,
       "papers": [
@@ -1273,5 +2638,5 @@
   "schema_version": 1,
   "subtopic_id": "vision-language-action",
   "topic_id": "embodied-ai",
-  "total_paper_count": 6
+  "total_paper_count": 14
 }

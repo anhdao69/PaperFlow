@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**9 papers total**
+**11 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [WA-JEPA: Rethinking the Video JEPA Paradigm for World-Action Modeling in Autonomous Driving](https://arxiv.org/abs/2608.20974) | World Models: Video World Models, Interactive World Models | WA-JEPA adapts V-JEPA into an action-conditioned world model that predicts plausible future scenes and ego trajectories for autonomous-driving planning. | 9 | 8 |
+| 2026-08-24 | [Graph-Operator World Models for Morphology-Parameter Generalization in Continuous Control](https://arxiv.org/abs/2608.20936) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | GraphOp-WM is a structured graph-based world model designed to generalize continuous-control planning across unseen robot morphologies by separating reusable dynamics from morphology-dependent effects. | 8 | 8 |
 | 2026-08-21 | [Towards Surgical World-Action Modeling: A Preliminary Joint Visual-Trajectory Forecasting for Surgical Motion Planning](https://arxiv.org/abs/2608.20284) | World Models: Video World Models, Interactive World Models | A preliminary model jointly forecasts future surgical video states and instrument trajectories, with chunked autoregressive rollout improving short-horizon visual and motion prediction but degrading over longer horizons. | 7 | 7 |
 | 2026-08-21 | [DECOWAM: Decoupled Whole-Body World-Action Model for Legged Mobile Manipulation](https://arxiv.org/abs/2608.20114) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | DECOWAM factorizes camera, base, and arm effects to improve whole-body visual prediction and control for legged mobile manipulators. | 9 | 8 |
 | 2026-08-21 | [Planning-Oriented End-to-End Autonomous Driving: Architectures, Evaluation, and Emerging Paradigms](https://arxiv.org/abs/2608.20111) | Embodied AI: Robot Navigation, Vision-Language-Action; World Models: Interactive World Models | This survey charts the shift toward planning-oriented end-to-end driving and argues that safe, meaningful progress depends as much on benchmark-consistent evaluation as on architecture. | 7 | 6 |

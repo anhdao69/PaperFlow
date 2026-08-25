@@ -6,8 +6,10 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**1 papers total**
+**3 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [MentorPulse: Refreshing Cross-Model Latent Guidance for Long-Form Generation](https://arxiv.org/abs/2608.20927) | Language Foundation Models: LLM Memory, Long-Context Models | MentorPulse refreshes compressed mentor guidance during generation, improving long-form student performance without resetting its KV cache. | 8 | 7 |
+| 2026-08-24 | [MGAL: A Multilingual Granularity-Aware Long-Context Benchmark](https://arxiv.org/abs/2608.20853) | Language Foundation Models: Long-Context Models | MGAL is a multilingual benchmark for diagnosing long-context LLM comprehension across linguistic granularities and document positions. | 6 | 6 |
 | 2026-08-21 | [Beyond Teacher Likelihood: Group-Calibrated On-Policy Distillation for Long-Context Reasoning](https://arxiv.org/abs/2608.19181) | Language Foundation Models: Long-Context Models | GC-OPD improves long-context reasoning by calibrating dense teacher guidance against group-relative verifier feedback and assigning the resulting correction to tokens. | 9 | 8 |

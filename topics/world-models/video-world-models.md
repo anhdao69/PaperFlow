@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**4 papers total**
+**7 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [Human-JEPA: A Human-Centric Vision Model that Perceives and Anticipates](https://arxiv.org/abs/2608.21160) | World Models: Video World Models | Human-JEPA is a video-trained human-centric vision model that preserves strong present-state perception while enabling future anticipation with fewer parameters. | 8 | 8 |
+| 2026-08-24 | [CIVA: Critic-Induced Value-Subspace Attacks on Visual World-Model Agents](https://arxiv.org/abs/2608.21114) | World Models: Video World Models | CIVA attacks visual world-model agents by learning and optimizing a low-dimensional critic-induced value subspace, producing temporally coherent perturbations that substantially reduce rewards. | 6 | 7 |
+| 2026-08-24 | [WA-JEPA: Rethinking the Video JEPA Paradigm for World-Action Modeling in Autonomous Driving](https://arxiv.org/abs/2608.20974) | World Models: Video World Models, Interactive World Models | WA-JEPA adapts V-JEPA into an action-conditioned world model that predicts plausible future scenes and ego trajectories for autonomous-driving planning. | 9 | 8 |
 | 2026-08-21 | [Towards Surgical World-Action Modeling: A Preliminary Joint Visual-Trajectory Forecasting for Surgical Motion Planning](https://arxiv.org/abs/2608.20284) | World Models: Video World Models, Interactive World Models | A preliminary model jointly forecasts future surgical video states and instrument trajectories, with chunked autoregressive rollout improving short-horizon visual and motion prediction but degrading over longer horizons. | 7 | 7 |
 | 2026-08-21 | [Stream4D: 4D-Consistency for Streaming Autoregressive Diffusion Video Models](https://arxiv.org/abs/2608.19556) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Stream4D improves long-horizon streaming video generation by rewarding dynamic 4D consistency and natural motion instead of static 3D reconstruction. | 8 | 8 |
 | 2026-08-21 | [DA-WAM: Decision-Aligned Future Latents for Driving World Models](https://arxiv.org/abs/2608.19085) | World Models: Video World Models, Interactive World Models | DA-WAM aligns action-conditioned future prediction with trajectory scoring so driving world models produce future representations that directly improve planning decisions. | 8 | 7 |

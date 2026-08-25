@@ -1,6 +1,970 @@
 {
   "days": [
     {
+      "date": "2026-08-24",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Cross-model latent guidance lets a frozen large mentor encode an input once and a frozen small student generate from the resulting signal. Existing methods keep this signal fixed, assuming it stays useful as the output grows; we show this fails in long-form generation. On multi-turn instruction following, static guidance pushes a 4B student's constraint satisfaction 2.5 points below its no-guidance baseline; a training-free refresh every 16 tokens changes only the memory content and restores a 2.0-point gain over that baseline. We propose MentorPulse to keep guidance fresh at practical cost: it compresses mentor states into a capped slot memory, incrementally processes newly generated tokens, and updates the memory that the student reads through gated cross-attention without resetting the student's KV cache. Windowed Refresh Training exposes the bridge to prefix-conditioned memory. Across thirteen datasets, MentorPulse closes 52.2% of the mentor-student gap on macro average, outperforming C2C, T2T, and equal-budget LoRA, with the largest gains on long outputs. It performs best on all eleven mentor-student pairs from three model families, with margins that narrow as the capability gap grows, and a lightweight read-pattern check predicts the gain before deployment. Measured costs identify refresh intervals that dominate text guidance on long outputs.",
+          "arxiv_id": "2608.20927",
+          "arxiv_url": "https://arxiv.org/abs/2608.20927",
+          "authors": [
+            "Ziwu Liu, Guozhong Li, Chen Qiu, Weiyang Kong, Panos Kalnis"
+          ],
+          "bullets": [
+            "Static cross-model guidance degrades as outputs lengthen and can underperform no guidance.",
+            "MentorPulse incrementally updates capped mentor-state memory through gated cross-attention while preserving the student’s KV cache.",
+            "Windowed Refresh Training adapts the guidance bridge to prefix-conditioned memory.",
+            "Across 13 datasets and 11 mentor–student pairs, it closes 52.2% of the mentor–student gap and performs best across tested pairs.",
+            "Refresh intervals can be selected by measured cost, with the largest benefits on long outputs."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: The thirteen datasets in one length coordinate system; color is each panel’s recovery rate, clipped to [−20, 100], red marking harm. Coordinates are spread orderpreservingly for readability (distances not to scale); point positions are identical in both panels.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 231,
+              "image_path": "figures/2608.20927/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 488
+            },
+            {
+              "caption": "Figure 3: MentorPulse data flow. The frozen mentor (blue) prefills, the SMC compresses its states into slot guidance, and the frozen student (orange) reads the slots through the gated bridge; every R tokens an incremental prefill refreshes the memory in place (steps ①–⑦ in the text). Purple components are trained; saturation encodes freshness.",
+              "figure_id": "figure-3-32",
+              "figure_number": "3",
+              "height": 346,
+              "image_path": "figures/2608.20927/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1049
+            },
+            {
+              "caption": "Figure 4: Results on the thirteen datasets for A2; MP uses R=16, and rT2T refreshes the T2T guidance text on the same schedule (Appendix C.2). Dotted/dashed lines are the M-only/S-only anchors; error bars are standard deviations over three seeds; each y-axis is clipped to its anchor range.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 309,
+              "image_path": "figures/2608.20927/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1039
+            },
+            {
+              "caption": "Figure 7: Refresh-interval sweep at inference. (a) Macroaverage recovery for all eleven pairs (exclusion rule of Section 5.1); the dotted line marks R=16. (b) A2 with its crossdataset band, and change relative to R=1 in points.",
+              "figure_id": "figure-7-13",
+              "figure_number": "7",
+              "height": 462,
+              "image_path": "figures/2608.20927/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 484
+            },
+            {
+              "caption": "Figure 2: Staleness diagnosis on Multi-IF. (a) Effect: constraint satisfaction (fraction of verifiable constraints satisfied) by generation segment. (b) Mechanism: probe read accuracy for upcoming-window properties; the shaded wedge is StaleGap(t).",
+              "figure_id": "figure-2-22",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2608.20927/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 491
+            },
+            {
+              "caption": "Figure 6: Read-distribution varianceV64 against MP recovery (values as in Table 2); marker and color encode the mentor group. Only the rank correlation is reported.",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 263,
+              "image_path": "figures/2608.20927/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 468
+            },
+            {
+              "caption": "Figure 8: Cost–quality dominance against T2T on A2. Purple: MP dominates; hatched: neither. Cell numbers give the per-request saving CostT2T − CostMP in 10−3 dollars; the dotted line marks R=16. rT2T is omitted, cost-dominated at every evaluated R (Table 27).",
+              "figure_id": "figure-8-31",
+              "figure_number": "8",
+              "height": 221,
+              "image_path": "figures/2608.20927/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 495
+            },
+            {
+              "caption": "Figure 1: One-shot guidance fixes the memory before decoding and quality decays over long generation (top); MentorPulse refreshes it from the generated prefix every R tokens (bottom).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 185,
+              "image_path": "figures/2608.20927/figure-008.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 490
+            },
+            {
+              "caption": "Figure 9: Per-dataset recovery for all eleven pairs (rows, grouped by mentor group) on all thirteen datasets (columns) under the four methods; color is recovery clipped to [−20, 100] as in Figure 5, red marking harm. × marks the two capability-limited B1 cells registered in Appendix F.2. Numbers behind every cell are in Tables 8 and 10–14.",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 259,
+              "image_path": "figures/2608.20927/figure-009.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 981
+            },
+            {
+              "caption": "Figure 12: Two illustrative cases (more in the full logs, to be released). Top: on long instruction following, static guidance points the student back to a satisfied constraint (gray underline and arrow) and a later constraint is missed (red); with R=16 the refreshed memory reflects the text written so far and the remaining constraint is completed (purple). Bottom: on a capabilitylimited coding task both conditions produce the same flawed algorithm — fresh guidance does not create missing capability.",
+              "figure_id": "figure-12-9",
+              "figure_number": "12",
+              "height": 458,
+              "image_path": "figures/2608.20927/figure-010.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 10: StaleGap probe on D-IF (enlarged version of Figure 2b; linear readout on frozen mentor states, independent of the bridge). Top: fresh and stale probe readability over generation position; the shaded wedge is StaleGap(t) and the bracket marks the 0.32 decay depth. Bottom: StaleGap(t) values (fresh − stale, Table 22).",
+              "figure_id": "figure-10-8",
+              "figure_number": "10",
+              "height": 283,
+              "image_path": "figures/2608.20927/figure-011.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 470
+            },
+            {
+              "caption": "Figure 11: Stage-2 outlook (illustrative pilot; no quantitative claim). Background: density of offline refresh-value labels (CE difference between decoding under stale and fresh memory). Bars: where the learned trigger fires at the R=16 equal budget; the dashed line is the uniform schedule. Firing concentrates at constraint switches; the inset shows the event-aligned rate on the R=16 window scale.",
+              "figure_id": "figure-11-5",
+              "figure_number": "11",
+              "height": 188,
+              "image_path": "figures/2608.20927/figure-012.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 521
+            },
+            {
+              "caption": "Table 7: Training pipeline and hyperparameter summary.",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 300,
+              "image_path": "figures/2608.20927/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 533
+            },
+            {
+              "caption": "Table 2: Macro-average recovery (%) over the thirteen datasets by mentor group; best per row in bold. NM/NS is the parameter ratio; MP uses R=16; averages follow Section 5.1; standard deviations in Appendix F; model names in Figure 6.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 304,
+              "image_path": "figures/2608.20927/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 404
+            },
+            {
+              "caption": "Table 3: The thirteen evaluation datasets. Letter codes are fixed throughout the paper; the last column marks the long-generation suite (inclusion rule in the text; length profiles in Table 4).",
+              "figure_id": "table-3-30",
+              "figure_number": "3",
+              "height": 346,
+              "image_path": "figures/2608.20927/table-015.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 827
+            },
+            {
+              "caption": "Table 5: All experimental conditions. “Mentor decodes” refers to inference time only; offline label generation is excluded. OneShot and the ablation row MP−refresh are the same condition under two names (static bridge, R→∞).",
+              "figure_id": "table-5-20",
+              "figure_number": "5",
+              "height": 400,
+              "image_path": "figures/2608.20927/table-016.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1006
+            },
+            {
+              "caption": "Table 6: Property comparison with the closest cross-model interfaces and speculative decoding. Refresh means updating transferred guidance from the generated prefix; dashes mark properties that do not apply.",
+              "figure_id": "table-6-21",
+              "figure_number": "6",
+              "height": 139,
+              "image_path": "figures/2608.20927/table-017.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 474
+            },
+            {
+              "caption": "Table 10: Full per-dataset results, pairs A1 and A3 (datasets by letter code, Table 3); mean±sd over three seeds.",
+              "figure_id": "table-10-37",
+              "figure_number": "10",
+              "height": 346,
+              "image_path": "figures/2608.20927/table-018.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 1050
+            },
+            {
+              "caption": "Table 9: Raw scores with standard deviations for the twelve ablation rows of Table 1 (A2, R=16; two long-output sets G, K and two short-answer controls A, J). “Reused” rows are copied from their registered source, not re-evaluated.",
+              "figure_id": "table-9-36",
+              "figure_number": "9",
+              "height": 379,
+              "image_path": "figures/2608.20927/table-019.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 844
+            },
+            {
+              "caption": "Table 8: Full results for the main pair A2 (Qwen3.5-27B→ Qwen3.5-4B), mean±sd over three seeds; MP@16 throughout. The macro-recovery row uses the definition of Appendix A.4.",
+              "figure_id": "table-8-35",
+              "figure_number": "8",
+              "height": 379,
+              "image_path": "figures/2608.20927/table-020.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 736
+            },
+            {
+              "caption": "Table 12: Full per-dataset results, pairs C2 and C3.",
+              "figure_id": "table-12-25",
+              "figure_number": "12",
+              "height": 346,
+              "image_path": "figures/2608.20927/table-021.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 1050
+            },
+            {
+              "caption": "Table 13: Full per-dataset results, pairs D1 and D2.",
+              "figure_id": "table-13-24",
+              "figure_number": "13",
+              "height": 346,
+              "image_path": "figures/2608.20927/table-022.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 1050
+            },
+            {
+              "caption": "Table 11: Full per-dataset results, pairs B1 and C1 (see the B1 capability-limited note in Appendix F.2).",
+              "figure_id": "table-11-23",
+              "figure_number": "11",
+              "height": 345,
+              "image_path": "figures/2608.20927/table-023.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 1050
+            },
+            {
+              "caption": "Table 14: Full per-dataset results, pairs D3 and E1.",
+              "figure_id": "table-14-34",
+              "figure_number": "14",
+              "height": 346,
+              "image_path": "figures/2608.20927/table-024.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 1050
+            },
+            {
+              "caption": "Table 15: Inference-time refresh-interval sweep on A2 (mean±sd). ∗ marks cells where the output ends before the first refresh boundary, so the condition is the static bridge exactly.",
+              "figure_id": "table-15-33",
+              "figure_number": "15",
+              "height": 331,
+              "image_path": "figures/2608.20927/table-025.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 690
+            },
+            {
+              "caption": "Table 17: rT2T full quality sweep on A2 (replace-style; mean±sd). Bold marks the per-task best L′ g at R=16, the configuration entering Figure 4. Short-answer sets (A, C, I, J) trigger no refresh and equal T2T cell by cell, as does the R→∞ limit (double identity, hard-verified).",
+              "figure_id": "table-17-12",
+              "figure_number": "17",
+              "height": 419,
+              "image_path": "figures/2608.20927/table-026.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 632
+            },
+            {
+              "caption": "Table 4: Length profiles (median token counts). Outputs are measured from M-only generations; the tokenizer is Qwen3.5’s (cross-family deviation <4%).",
+              "figure_id": "table-4-29",
+              "figure_number": "4",
+              "height": 344,
+              "image_path": "figures/2608.20927/table-027.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 481
+            },
+            {
+              "caption": "Table 1: Ablations on A2 at R=16, on two long-output sets (G, K) and two short-answer controls (A, J); ∆Rec. is the change in mean recovery over the four sets relative to row 1. Rows 4 and 11 should stay close to row 1, whereas row 7 must reproduce S-only; standard deviations in Appendix F.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 379,
+              "image_path": "figures/2608.20927/table-028.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 410
+            },
+            {
+              "caption": "Table 16: Macro-average recovery (%) against R for all eleven pairs. †The A2 row is derived from Table 15 and crosschecked against the registered sweep table by the derivation script.",
+              "figure_id": "table-16-39",
+              "figure_number": "16",
+              "height": 300,
+              "image_path": "figures/2608.20927/table-029.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 444
+            },
+            {
+              "caption": "Table 18: Read-distribution diagnostics for the eleven pairs: variance version V64, entropy version H64, and MP@16 macro recovery. Spearman ρ(V64, rec.) = 0.78, p = 0.004.",
+              "figure_id": "table-18-11",
+              "figure_number": "18",
+              "height": 300,
+              "image_path": "figures/2608.20927/table-030.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 406
+            },
+            {
+              "caption": "Table 20: Diagnostic condition matrix on A2 (mean±sd). OneShot-mismatch is collected only on D-MCQ (content canary); on triggering tasks attribution is carried by OracleSwap-mis@16.",
+              "figure_id": "table-20-18",
+              "figure_number": "20",
+              "height": 142,
+              "image_path": "figures/2608.20927/table-031.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 470
+            },
+            {
+              "caption": "Table 23: Transfer accounting at R=16 for A2 (dt=2560; 150 Mbps cross-site link, 18 ms RTT). The k=16 row is the deployed configuration (ablation row 11).",
+              "figure_id": "table-23-26",
+              "figure_number": "23",
+              "height": 173,
+              "image_path": "figures/2608.20927/table-032.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 460
+            },
+            {
+              "caption": "Table 25: GPU rental prices used in the cost model.",
+              "figure_id": "table-25-27",
+              "figure_number": "25",
+              "height": 96,
+              "image_path": "figures/2608.20927/table-033.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 484
+            },
+            {
+              "caption": "Table 19: The diagnostic suite (D suite): disjoint from the benchmarks A–M and from fuse_v3, selected by prior staleness sensitivity.",
+              "figure_id": "table-19-17",
+              "figure_number": "19",
+              "height": 162,
+              "image_path": "figures/2608.20927/table-034.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 888
+            },
+            {
+              "caption": "Table 21: Position-segment quality (PosQ) on D-IF; the aggregate column equals Table 20.",
+              "figure_id": "table-21-16",
+              "figure_number": "21",
+              "height": 117,
+              "image_path": "figures/2608.20927/table-035.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 494
+            },
+            {
+              "caption": "Table 22: StaleGap probe readability on D-IF (linear readout, independent of the bridge). StaleGap(t) is the fresh−stale difference.",
+              "figure_id": "table-22-19",
+              "figure_number": "22",
+              "height": 116,
+              "image_path": "figures/2608.20927/table-036.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 466
+            },
+            {
+              "caption": "Table 26: Per-request cost (10−3 dollars, blocking accounting) for the four representative tasks of Figure 8.",
+              "figure_id": "table-26-38",
+              "figure_number": "26",
+              "height": 108,
+              "image_path": "figures/2608.20927/table-037.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 496
+            },
+            {
+              "caption": "Table 27: rT2T per-request cost (10−3 dollars, replace-style, blocking; analytically computed from Eq. 6 and the measured inputs). Bold marks each task’s quality-best configuration (Table 17). At∞, nsync=0 and rT2T equals T2T identically, as on the short-answer tasks (which therefore carry no rows).",
+              "figure_id": "table-27-6",
+              "figure_number": "27",
+              "height": 125,
+              "image_path": "figures/2608.20927/table-038.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 622
+            },
+            {
+              "caption": "Table 24: Measured serving throughput (vLLM 0.19.1, bf16, batch size 1, 8K context). Db is decoding with the bridge attached.",
+              "figure_id": "table-24-28",
+              "figure_number": "24",
+              "height": 85,
+              "image_path": "figures/2608.20927/table-039.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 418
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20927/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20927",
+          "relevance": 8,
+          "selection_reason": "Cross-model latent guidance with memory refresh for long-form generation, directly relevant to LLM memory and long-context processing.",
+          "summary_status": "generated",
+          "title": "MentorPulse: Refreshing Cross-Model Latent Guidance for Long-Form Generation",
+          "tldr": "MentorPulse refreshes compressed mentor guidance during generation, improving long-form student performance without resetting its KV cache.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Evaluation of long-context Large Language Models (LLMs) has advanced rapidly. However, most existing benchmarks are limited to the document level and focus mainly on high-resource languages, leaving many fine-grained challenges insufficiently evaluated. To address this gap, we present MGAL, the first multilingual, granularity- and position-aware long-context benchmark. MGAL is constructed from United Nations (UN) reports spanning 8K to 128K tokens across the six official UN languages. It covers four coherent levels of linguistic granularity (word, sentence, paragraph, and document) and further stratifies entries by their position within the document (begin, middle, and end), indexed at both the document and paragraph levels. This design enables systematic diagnosis of multilingual long-context comprehension across different granularities. Through extensive experiments and analyses, we find that: (1) LLMs perform well at word-level tasks but struggle with coarser-grained ones; and (2) Closed-source models retain a clear performance advantage in lower-resource languages. We further identify two new challenges: (1) Under local semantic crowding, where neighboring sentences share topics and entities, models tend to follow surface cues (e.g., connectives like ``however'' or repeated entities) rather than the discourse role of the sentence in surrounding context (e.g., background, outcome); and (2) A gap between fluency and consistency in generated outputs, where models produce text that reads smoothly but drifts from the source facts. In addition, we observe several patterns in line with prior studies, including reliance on nearby evidence and reuse of options under uncertainty.",
+          "arxiv_id": "2608.20853",
+          "arxiv_url": "https://arxiv.org/abs/2608.20853",
+          "authors": [
+            "Chunhan Li, Chenglin Xu, Zongyang Zhang, Jiale Liu, Zhuoxi Rao, Xudong Jia, Junxiu He, Menglin Yang, Wenjuan Gong, Zhengzhe Liu, Chengwei Qin"
+          ],
+          "bullets": [
+            "Covers 8K–128K-token UN reports in all six official UN languages.",
+            "Evaluates word-, sentence-, paragraph-, and document-level understanding across beginning, middle, and end positions.",
+            "Finds strong word-level performance but weaker comprehension at coarser granularities.",
+            "Reports a persistent closed-source model advantage in lower-resource languages.",
+            "Identifies surface-cue reliance under semantic crowding and fluent but factually inconsistent generation."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. Overview of MGAL. From (a) aligned multilingual UN long-context documents, we construct (b) a multi-task benchmark covering QA, cloze, paragraph filling, summarization, and translation. These tasks are organized by (c) linguistic granularity and evaluated through (d) diagnostic analyses over granularity, position, and language.",
+              "figure_id": "figure-1-23",
+              "figure_number": "1",
+              "height": 451,
+              "image_path": "figures/2608.20853/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1013
+            },
+            {
+              "caption": "Figure 3. MGAL data generation and human verification pipeline. For each granularity level, candidate instances are generated from aligned UN reports and then checked by human annotators for grounding, semantic consistency, positional correctness, and cross-lingual alignment.",
+              "figure_id": "figure-3-48",
+              "figure_number": "3",
+              "height": 296,
+              "image_path": "figures/2608.20853/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 943
+            },
+            {
+              "caption": "Figure 4. Performance of our evaluated models on MGAL. (a) shows LLM performance across different tasks, (b) presents multilingual performance, and (c) reports task performance across the six official UN languages. GPT-5 achieves the top average across granularity tasks, whereas Gemini-2.5-Flash excels across languages. And models achieve strong results on word-level tasks but exhibit weaker performance at coarser granularities.",
+              "figure_id": "figure-4-30",
+              "figure_number": "4",
+              "height": 321,
+              "image_path": "figures/2608.20853/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1006
+            },
+            {
+              "caption": "Figure 6. Ablation studies: (a) Accuracy rises as instruction moves nearby to the blank. (b) Accuracy drops when high-confusion distractors are positioned earlier.",
+              "figure_id": "figure-6-43",
+              "figure_number": "6",
+              "height": 338,
+              "image_path": "figures/2608.20853/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 928
+            },
+            {
+              "caption": "Figure 5. Position Performance on MGAL. Performance dips in the middle for word and paragraph tasks but peaks there for sentence-level tasks.",
+              "figure_id": "figure-5-31",
+              "figure_number": "5",
+              "height": 328,
+              "image_path": "figures/2608.20853/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 839
+            },
+            {
+              "caption": "Figure 7. Prompt template for the Numerical type question generation.",
+              "figure_id": "figure-7-21",
+              "figure_number": "7",
+              "height": 360,
+              "image_path": "figures/2608.20853/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 879
+            },
+            {
+              "caption": "Figure 8. Prompt template for the Reference type question generation.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 383,
+              "image_path": "figures/2608.20853/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 879
+            },
+            {
+              "caption": "Figure 9. Prompt template for the Classification type question generation.",
+              "figure_id": "figure-9-8",
+              "figure_number": "9",
+              "height": 354,
+              "image_path": "figures/2608.20853/figure-008.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 879
+            },
+            {
+              "caption": "Figure 10. Prompt template for the Synthesis type question generation.",
+              "figure_id": "figure-10-49",
+              "figure_number": "10",
+              "height": 423,
+              "image_path": "figures/2608.20853/figure-009.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 879
+            },
+            {
+              "caption": "Figure 11. Prompt template for the Retrieval type question generation.",
+              "figure_id": "figure-11-38",
+              "figure_number": "11",
+              "height": 562,
+              "image_path": "figures/2608.20853/figure-010.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 879
+            },
+            {
+              "caption": "Figure 12. Prompt template for the Comparision type question generation.",
+              "figure_id": "figure-12-37",
+              "figure_number": "12",
+              "height": 425,
+              "image_path": "figures/2608.20853/figure-011.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 879
+            },
+            {
+              "caption": "Figure 25. Blank omissions heatmap by position across models.",
+              "figure_id": "figure-25-6",
+              "figure_number": "25",
+              "height": 600,
+              "image_path": "figures/2608.20853/figure-012.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 804
+            },
+            {
+              "caption": "Figure 26. Position choices heatmap with the ground truth and model predictions.",
+              "figure_id": "figure-26-39",
+              "figure_number": "26",
+              "height": 583,
+              "image_path": "figures/2608.20853/figure-013.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 804
+            },
+            {
+              "caption": "Figure 2. MGAL dataset instantiation at each granularity.",
+              "figure_id": "figure-2-32",
+              "figure_number": "2",
+              "height": 781,
+              "image_path": "figures/2608.20853/figure-014.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 506
+            },
+            {
+              "caption": "Figure 14. Classification Type Sample Question.",
+              "figure_id": "figure-14-26",
+              "figure_number": "14",
+              "height": 444,
+              "image_path": "figures/2608.20853/figure-015.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 619
+            },
+            {
+              "caption": "Figure 13. Numerical Type Sample Question.",
+              "figure_id": "figure-13-27",
+              "figure_number": "13",
+              "height": 339,
+              "image_path": "figures/2608.20853/figure-016.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 613
+            },
+            {
+              "caption": "Figure 16. Comparision Type Sample Question.",
+              "figure_id": "figure-16-36",
+              "figure_number": "16",
+              "height": 421,
+              "image_path": "figures/2608.20853/figure-017.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 565
+            },
+            {
+              "caption": "Figure 15. Reference Type Sample Question.",
+              "figure_id": "figure-15-35",
+              "figure_number": "15",
+              "height": 400,
+              "image_path": "figures/2608.20853/figure-018.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 559
+            },
+            {
+              "caption": "Figure 18. Retrieval Type Sample Question.",
+              "figure_id": "figure-18-46",
+              "figure_number": "18",
+              "height": 425,
+              "image_path": "figures/2608.20853/figure-019.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 502
+            },
+            {
+              "caption": "Figure 17. Synthesis Type Sample Question.",
+              "figure_id": "figure-17-47",
+              "figure_number": "17",
+              "height": 406,
+              "image_path": "figures/2608.20853/figure-020.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 502
+            },
+            {
+              "caption": "Figure 19. The prompt for LLM-as-a-judge.",
+              "figure_id": "figure-19-28",
+              "figure_number": "19",
+              "height": 422,
+              "image_path": "figures/2608.20853/figure-021.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 595
+            },
+            {
+              "caption": "Figure 23. An example prompt for the Translation task.",
+              "figure_id": "figure-23-2",
+              "figure_number": "23",
+              "height": 356,
+              "image_path": "figures/2608.20853/figure-022.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 671
+            },
+            {
+              "caption": "Figure 28. Sentence analysis results heatmap.",
+              "figure_id": "figure-28-12",
+              "figure_number": "28",
+              "height": 434,
+              "image_path": "figures/2608.20853/figure-023.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 893
+            },
+            {
+              "caption": "Figure 27. Repetition letter distribution.",
+              "figure_id": "figure-27-29",
+              "figure_number": "27",
+              "height": 455,
+              "image_path": "figures/2608.20853/figure-024.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 744
+            },
+            {
+              "caption": "Figure 20. An example prompt for the QA task.",
+              "figure_id": "figure-20-41",
+              "figure_number": "20",
+              "height": 300,
+              "image_path": "figures/2608.20853/figure-025.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 595
+            },
+            {
+              "caption": "Figure 22. An example prompt for the Paragraph filling task.",
+              "figure_id": "figure-22-40",
+              "figure_number": "22",
+              "height": 298,
+              "image_path": "figures/2608.20853/figure-026.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 595
+            },
+            {
+              "caption": "Figure 21. An example prompt for the Cloze task.",
+              "figure_id": "figure-21-42",
+              "figure_number": "21",
+              "height": 221,
+              "image_path": "figures/2608.20853/figure-027.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 595
+            },
+            {
+              "caption": "Figure 24. An example prompt for the Summarization task.",
+              "figure_id": "figure-24-1",
+              "figure_number": "24",
+              "height": 268,
+              "image_path": "figures/2608.20853/figure-028.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 717
+            },
+            {
+              "caption": "Table 1. Overview of MGAL task design across four levels of granularity in six UN official languages.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 232,
+              "image_path": "figures/2608.20853/table-029.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 458
+            },
+            {
+              "caption": "Table 3. Results on word, sentence, paragraph and document tasks. Open-source and proprietary models are separated with a divider, and the top-performing LLM is highlighted in bold, second best are underlined.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 433,
+              "image_path": "figures/2608.20853/table-030.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1006
+            },
+            {
+              "caption": "Table 11. Performance of various models on different types of word-level question-answering tasks.On word-level question-answering tasks, GPT-5 achieves the highest scores in Numerical, Reference, and Synthesis. Gemini-2.5-flash leads in Classification, Qwen3-30BA3B excels in Comparison, and Kimi-K2 delivers the best performance in Retrieval.Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-11-33",
+              "figure_number": "11",
+              "height": 427,
+              "image_path": "figures/2608.20853/table-031.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 1017
+            },
+            {
+              "caption": "Table 12. Model performance across different metrics based on llm-as-a-judge in six UN languages. Headers are abbreviated as follows: Topic Fid. (Topic Fidelity), Local Coh. (Local Coherence), Entity Cons. (Entity Consistency), Instr. Foll. (Instruction Following), and Format Comp. (Format Compliance).Across various performance metrics, Gemini-2.5-flash achieves the highest overall score, also leading in Entity Consistency and Instruction Following. Grok-4 delivers the best Topic Fidelity, while Qwen3-235B-A22B is the strongest in Local Coherence.Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-12-34",
+              "figure_number": "12",
+              "height": 317,
+              "image_path": "figures/2608.20853/table-032.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 850
+            },
+            {
+              "caption": "Table 13. Model performance across different metrics based on human evaluation in Chinese and English. Headers are abbreviated as follows: Topic Fid. (Topic Fidelity), Local Coh. (Local Coherence), Entity Cons. (Entity Consistency), Instr. Foll. (Instruction Following), and Format Comp. (Format Compliance).Across various performance metrics, DeepSeek V3.1 achieves the highest overall score, also leading in Instruction Following. Qwen3-235B-A22B delivers the best Topic Fidelity, Local Coherence and Entity Consistency, while GPT-5 also lead in Entity Consistency and Qwen3-30B-A3B also delivers the best Local Coherence. Grok-4 and Mistral-Small-3.2-24B are the strongest in Local Coherence. Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-13-44",
+              "figure_number": "13",
+              "height": 316,
+              "image_path": "figures/2608.20853/table-033.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 850
+            },
+            {
+              "caption": "Table 2. Comparison to existing long-context benchmarks. “En”, “Zh”, “Es”, “Fr”, “Ru”, and “Ar” refer to tasks in English, Chinese, Spanish, French, Russian, and Arabic,“Pos-Par.” and “Pos-Doc.” indicate positional evaluation at the paragraph and document level. “Gran.” refers to Granularity.",
+              "figure_id": "table-2-22",
+              "figure_number": "2",
+              "height": 236,
+              "image_path": "figures/2608.20853/table-034.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 945
+            },
+            {
+              "caption": "Table 4. Qualitative examples of sentence selection errors in long-context modeling.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 1131,
+              "image_path": "figures/2608.20853/table-035.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 1008
+            },
+            {
+              "caption": "Table 6. Model Performance Across All Tasks and Languages",
+              "figure_id": "table-6-24",
+              "figure_number": "6",
+              "height": 1138,
+              "image_path": "figures/2608.20853/table-036.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 587
+            },
+            {
+              "caption": "Table 9. Model performance on the Cloze task, evaluated by hierarchical position. We measure performance at the beginning (Begin), middle (Middle), and end (End) of the document, and for each of these sections, we further evaluate at the beginning, middle, and end of the target paragraph. Scores are reported in accuracy.Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-9-25",
+              "figure_number": "9",
+              "height": 845,
+              "image_path": "figures/2608.20853/table-037.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 587
+            },
+            {
+              "caption": "Table 8. Model Performance in Single-QA Task at Document-Level.Accuracy on the Single-QA task, categorized by the position (Begin, Middle, End) of the single answer-bearing paragraph.",
+              "figure_id": "table-8-20",
+              "figure_number": "8",
+              "height": 813,
+              "image_path": "figures/2608.20853/table-038.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 563
+            },
+            {
+              "caption": "Table 5. Error breakdown for the sentence-cloze task. Omission denotes failing to fill the blank with any correct sentence; Position Error denotes selecting a correct sentence from the wrong document position; Distractor denotes selecting an incorrect distractor option.",
+              "figure_id": "table-5-45",
+              "figure_number": "5",
+              "height": 390,
+              "image_path": "figures/2608.20853/table-039.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 807
+            },
+            {
+              "caption": "Table 7. Model Performance on Multi-QA Task at Document-Level.Rows indicate the position of the first paragraph and columns indicate the position of the second, with each cell representing the performance for the corresponding positional pair (e.g., ’Begin-Middle’).",
+              "figure_id": "table-7-19",
+              "figure_number": "7",
+              "height": 295,
+              "image_path": "figures/2608.20853/table-040.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 502
+            },
+            {
+              "caption": "Table 24. Translation tasks on Russian to Other languages. Ru-En means Russian translate to English.For the Russian translation tasks, Grok-4 achieves the highest scores for English (Ru-En). DeepSeek V3.1 leads in Arabic (Ru-Ar), while Gemini-2.5-flash performs best in Chinese (RuZh), Spanish (Ru-Es) and French (Ru-Fr).Best results are marked in bold, second best results are underlined.",
+              "figure_id": "table-24-18",
+              "figure_number": "24",
+              "height": 215,
+              "image_path": "figures/2608.20853/table-041.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 414
+            },
+            {
+              "caption": "Table 20. Translation tasks on English to Other languages. En-Ch means English translate to Chinese.In translation tasks, Gemini-2.5-flash delivers the best performance for English to Chinese, Spanish, French, and Russian, while Grok-4 achieves the highest score for English to Arabic.Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-20-15",
+              "figure_number": "20",
+              "height": 215,
+              "image_path": "figures/2608.20853/table-042.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 410
+            },
+            {
+              "caption": "Table 21. Translation tasks on Chinese to Other languages. Zh-En means Chinese translate to English.In Chinese to other language translations, Grok-4 achieves the highest scores for English (Zh-En) and Arabic (Zh-Ar). Gemini-2.5-flash leads in translations to Spanish (Zh-Es) and Russian (Zh-Ru), while GPT-5 delivers the best performance for French (Zh-Fr).Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-21-14",
+              "figure_number": "21",
+              "height": 214,
+              "image_path": "figures/2608.20853/table-043.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 410
+            },
+            {
+              "caption": "Table 25. Translation tasks on Arabic to Other languages. Ar-En means Arabic translate to English.On Arabic translation tasks, GPT-5 leads in translations to English (Ar-En), while Gemini2.5-flash achieves the highest scores for Chinese (Ar-Zh), Spanish (Ar-Es), French (Ar-Fr), and Russian (Ar-Ru).Best results are marked in bold, second best results are underlined.",
+              "figure_id": "table-25-16",
+              "figure_number": "25",
+              "height": 215,
+              "image_path": "figures/2608.20853/table-044.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 406
+            },
+            {
+              "caption": "Table 22. Translation tasks on Spanish to Other languages. Es-En means Spanish translate to English.For Spanish to other language translations, DeepSeek V3.1 is the top performer for French (Es-Fr). Gemini-2.5-flash leads in translations to Chineses (Es-Zh) and Russian (Es-Ru), while Grok-4 achieves the best score for English (Es-En) and Arabic (Es-AR).Best results are marked in bold, second best results are underlined.",
+              "figure_id": "table-22-17",
+              "figure_number": "22",
+              "height": 215,
+              "image_path": "figures/2608.20853/table-045.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 402
+            },
+            {
+              "caption": "Table 23. Translation tasks on French to Other languages. Fr-En means French translate to English.Based on the provided table for French translation tasks, Grok-4 achieves the highest score for English (Fr-En). Gemini-2.5-flash is the top performer for Chinese (Fr-Zh), Spanish (Fr-Es) and Russian (Fr-Ru), while DeepSeek V3.1 delivers the best results for Arabic (Fr-Ar).Best results are marked in bold, second best results are underlined.",
+              "figure_id": "table-23-13",
+              "figure_number": "23",
+              "height": 215,
+              "image_path": "figures/2608.20853/table-046.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 400
+            },
+            {
+              "caption": "Table 15. Translation tasks on Chinese to Other languages. Zh-En means Chinese translate to English.In Chinese to other language translations, Grok-4 achieves the highest scores for English (Zh-En) and Arabic (Zh-Ar). Gemini-2.5-flash leads in translations to Spanish (Zh-Es) and Russian (Zh-Ru), while GPT-5 delivers the best performance for French (Zh-Fr).Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-15-3",
+              "figure_number": "15",
+              "height": 215,
+              "image_path": "figures/2608.20853/table-047.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 360
+            },
+            {
+              "caption": "Table 19. Translation tasks on Arabic to Other languages. Ar-En means Arabic translate to English.On Arabic translation tasks, GPT-5 leads in translations to English (Ar-En) and Spanish (Ar-Es), while Gemini-2.5-flash achieves the highest scores for Chinese (Ar-Zh), French (Ar-Fr), and Russian (Ar-Ru).Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-19-4",
+              "figure_number": "19",
+              "height": 214,
+              "image_path": "figures/2608.20853/table-048.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 356
+            },
+            {
+              "caption": "Table 17. Translation tasks on French to Other languages. Fr-En means French translate to English.Based on the provided table* for French translation tasks, Grok-4 achieves the highest score for English (Fr-En) and GPT-5 leads for Spanish (Fr-Es). Gemini-2.5-flash is the top performer for Chinese (Fr-Zh) and Russian (Fr-Ru), while DeepSeek V3.1 delivers the best results for Arabic (Fr-Ar).Best results are marked inbold, second best results are underlined.",
+              "figure_id": "table-17-5",
+              "figure_number": "17",
+              "height": 216,
+              "image_path": "figures/2608.20853/table-049.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 352
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20853/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2608.20853",
+          "relevance": 6,
+          "selection_reason": "Multilingual long-context benchmark directly evaluates long-context LLM comprehension across granularities and positions.",
+          "summary_status": "generated",
+          "title": "MGAL: A Multilingual Granularity-Aware Long-Context Benchmark",
+          "tldr": "MGAL is a multilingual benchmark for diagnosing long-context LLM comprehension across linguistic granularities and document positions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-21",
       "paper_count": 1,
       "papers": [
@@ -180,5 +1144,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 1
+  "total_paper_count": 3
 }

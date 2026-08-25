@@ -1,6 +1,1712 @@
 {
   "days": [
     {
+      "date": "2026-08-24",
+      "paper_count": 10,
+      "papers": [
+        {
+          "abstract": "Deep-learning models of anatomy can be numerically plausible yet anatomically impossible, and they generalize poorly when data are scarce. We introduce Anatomy-Informed Neural Networks (AINN), in which soft anatomic priors enter as penalty terms in the loss (e.g., a branching penalty that treats a renal transplant artery off the iliac instead of the aorta as unexpected rather than impossible), in direct analogy to a physics-informed neural network, and hard anatomic priors (e.g., continuity of the vessel) are built into the architecture and state representation, making such invalid predictions impossible by construction wherever the prior admits architectural enforcement. We develop it on a clinical test case with limited data: how the aortoiliac tree deforms when a stiff wire is introduced endoluminally. This is important to contemporary aortic surgery and will matter to autonomous endovascular navigation. We lift the vessel centerline and the wire path from R^3 to curves of frames in the Lie group SE(3), and couple a Cosserat-rod wire to a tortuosity-modulated, anatomically anchored vessel through a unilateral lumen-contact inequality. The prediction is a constrained minimizer of the coupled elastic energy, with contact forces as its Lagrange multipliers. Supervision is a Wasserstein-2 optimal-transport loss between the predicted projection through the C-arm geometry and the observed angiogram, so a 2D angiogram can train a 3D prediction. The kinematics, loss and projection are verified against known ground truth; the mechanics solver only against its own optimality conditions, and predicted displacement is not yet mesh-converged. Here, no network is trained. Future work will transfer this in silico model to real CT scans and test whether it improves predictive accuracy and reduces the training data required.",
+          "arxiv_id": "2608.21332",
+          "arxiv_url": "https://arxiv.org/abs/2608.21332",
+          "authors": [
+            "David P. Stonko"
+          ],
+          "bullets": [
+            "Motivation: Anatomically implausible predictions and limited clinical data constrain deep-learning models of anatomy.",
+            "Method: Encode soft priors as loss penalties and enforce architectural priors, such as vessel continuity, by construction when possible.",
+            "Application: Model guidewire-induced aortoiliac deformation by coupling a Cosserat-rod wire with an anatomically anchored vessel and unilateral lumen contact.",
+            "Training objective: Use a Wasserstein-2 loss between projected 3D predictions and observed 2D angiograms.",
+            "Scope and limitations: Kinematics, loss, and projection were checked against ground truth; the mechanics solver was checked only through optimality conditions, displacement is not mesh-converged, and no network was trained."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CV",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The AINN conceptual model. A neural network maps an input anatomy (I, preoperative State 1) to an output prediction (O, intraoperative State 2), and anatomy enters in two ways. Hard priors are built into the representation and architecture, so every frame is a point in SE(3) and every predicted frame is a valid rigid-body configuration. That per-frame guarantee does not by itself exclude every anatomically invalid configuration, as §4 sets out. Soft priors enter through the training loss, which adds an anatomy error to the data-fit error, and the lower right panel shows the general form such an anatomy term can take. In the vascular worked example the anatomic content is carried almost entirely by hard priors and the soft Lanatomy slot is specified but not exercised, the Wasserstein-2 machinery there serving the data term that compares predicted projection to observed angiogram. ANN, artificial neural network. SE(3), special Euclidean group.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 546,
+              "image_path": "figures/2608.21332/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 976
+            },
+            {
+              "caption": "Figure 2: Aortoiliac deformation under stiff-wire loading, State 1 → State 2 (schematic; not patient imaging). (A) Preoperative anatomy, with native tortuosity in the iliac arteries and the aorta and no instruments in place. (B) The intraoperative configuration after bilateral stiff guidewires are advanced from femoral access. Each wire is a single smooth, near-chord curve rather than a copy of the vessel centerline, because it is by far the stiffest member of the system. Orange arrows mark the contact force of the wire on the wall and gray arrows the resulting ostial displacement. The dashed black line traces the State 1 aortic contour and the dashed gray outline the State 1 iliac contour, each reproduced from panel A for comparison. The wires converge and cross at the aortic bifurcation and then run parallel up the aorta. The worked example (§4–§10) models the single dominant wire and its bowstring contact (Figure 4), of which panel B is the clinical superposition.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 584,
+              "image_path": "figures/2608.21332/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 976
+            },
+            {
+              "caption": "Figure 5: End-to-end AINN architecture for the worked example. Preoperative CT feeds a 3D preprocessing pipeline producing the State 1 representation and the patient-specific physical parameters. The §6 physics simulator gives a deterministic forward prediction by minimizing the total energy under the lumen-contact constraint, and an SE(3)-equivariant residual network adds a small Lie-algebra-valued correction composed through the matrix exponential. The result is projected to 2D and supervised against the angiogram through the optimal-transport loss, with gradients flowing to the network weights and calibration parameters by differentiable simulation. Note that the loss box is labeled Lie-Wasserstein in the schematic; as §7.2 sets out, the loss actually used for training acts on projected positions with a Euclidean ground cost, and the group-intrinsic cost becomes operative only where three-dimensional ground truth exists.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 404,
+              "image_path": "figures/2608.21332/figure-003.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 979
+            },
+            {
+              "caption": "Figure 3: Lifting a vessel centerline from R3 into SE(3). Attaching an orthonormal frame at each centerline point makes position plus orientation one element g(s) of SE(3), with the incremental twist between adjacent frames and the exponential map that inverts it shown for one step.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 497,
+              "image_path": "figures/2608.21332/figure-004.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 976
+            },
+            {
+              "caption": "Figure 4: The unilateral lumen contact constraint, or bowstring effect. The wire’s offset from the centerline cannot exceed Rlumen(s)−rw, shown here with the resulting chord-taking path and the apex contacts where the constraint binds.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 362,
+              "image_path": "figures/2608.21332/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 610
+            },
+            {
+              "caption": "Figure 10: C-arm projection. (A) Three-dimensional scene with lumen wall, centerline, equilibrium wire, wall-contact forces, and the beam axis. (B) Synthetic anteroposterior angiogram and (C) synthetic 30◦ oblique angiogram of the Phase 2 toy, with the wire rendered radio-opaque against the projected centerline.",
+              "figure_id": "figure-10-5",
+              "figure_number": "10",
+              "height": 602,
+              "image_path": "figures/2608.21332/figure-006.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 979
+            },
+            {
+              "caption": "Figure 7: Phase 2 three-dimensional synthetic toy at equilibrium, a Lunderquist wire in a helical iliac. (A) State 1 geometry, lumen-wall tube and centerline. (B) State 1 → State 2 overlay with equilibrium wire and active contacts, the State 1 lumen translucent behind the deformed State 2 lumen. (C) Contact line load along arc length. (D) Energy budget.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 558,
+              "image_path": "figures/2608.21332/figure-007.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 979
+            },
+            {
+              "caption": "Figure 6: Phase 1 planar toy at equilibrium. (A) State 1 geometry, lumen wall and centerline. (B) State 1 → State 2 overlay with the equilibrium wire and the active wall contacts. (C) Contact line load λ (s) = T κ(s) over the active set. The shaded trace is median-filtered over three nodes for display, because a single node’s discrete curvature can spike at an active-set boundary where the local Voronoi length collapses; the peak and integral in the panel title are the raw solver values. (D) Energy budget. The inextensibility term is identically zero by construction (§10.1).",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 522,
+              "image_path": "figures/2608.21332/figure-008.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 976
+            },
+            {
+              "caption": "Figure 8: Sensitivity of the planar (Phase 1) equilibrium to wire bending stiffness. The swept interval spans the effective stiffness commonly assumed for a Lunderquist through the nominal solid-rod value implied by Eπr4 w/4. (A) Peak vessel displacement. (B) Composition of the energy budget.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 435,
+              "image_path": "figures/2608.21332/figure-009.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 979
+            },
+            {
+              "caption": "Table 1: Parameter families of the forward model. Ttort is listed separately because §6.2 demotes it from a model parameter to a per-case reporting covariate.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 398,
+              "image_path": "figures/2608.21332/table-010.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 952
+            },
+            {
+              "caption": "Table 2: Canonical parameters for the two toy models. Phase 2 parameters are reported explicitly, since the two models share mechanics but not geometry. Here EIv denotes the isotropic scalar reduction of the stiffness tensor Cv(s) of §6.2 used in the toys, and kfat the uniform toy value of the field kHU of §6.3.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 328,
+              "image_path": "figures/2608.21332/table-011.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 956
+            },
+            {
+              "caption": "Table 3: Wire-stiffness sweep. Energy shares are percentages of Jtotal. The extravascular term is absent from the planar toy by construction.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 321,
+              "image_path": "figures/2608.21332/table-012.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 756
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.21332/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.21332",
+          "relevance": 5,
+          "selection_reason": "SE(3)-aware neural network with anatomic and geometric priors for 3D vessel deformation; transferable to geometry-aware 3D perception and modeling.",
+          "summary_status": "generated",
+          "title": "Anatomy-Informed Neural Networks: Encoding Anatomic Priors in Loss and Architecture, with an SE(3) Formulation of Guidewire-Induced Aortoiliac Deformation",
+          "tldr": "AINN combines soft and hard anatomic priors with an SE(3)-based vessel–guidewire mechanics model to predict aortoiliac deformation from 2D angiograms, but this work is currently an in-silico formulation without a trained neural network.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Recently, open-vocabulary zero-shot 3D scene understanding using vision foundation models has emerged as a promising alternative to data-intensive supervised methods. However, deploying these models in real-world scenarios is severely hindered by their inability to efficiently handle streaming RGB-D inputs and their inherent vulnerability to noise 2D segmentation masks. To address these critical limitations, we propose Stream3Dv2, a novel training-free framework designed for robust streaming 3D perception. Stream3Dv2 processes sequential data through an original nested local-to-historical architecture, capturing multi-view consistency while circumventing the high computational overhead so as to support timely responses. At its core, we introduce a comprehensive geometric-semantic fusion mechanism that resolves geometric noise and semantic ambiguity by explicitly utilizing semantic guidance and formulating 3D segmentation as solving point-and-set merging and partitioning problems. Furthermore, we present an innovative manifold-distance-based point cloud refinement strategy. This approach leverages local manifold graphs for point-to-manifold optimization that mitigates the boundary delineation failures caused by Euclidean-distance metrics, and employs geometric bounding boxes to dynamically activate and update historical instances for achieving rapid manifold-to-manifold refinement. Extensive experiments on public datasets demonstrate that Stream3Dv2 consistently outperforms existing baselines in foundational open-vocabulary streaming 3D segmentation and detection. Finally, we show that integrating our framework with an LLM-based agent enables advanced language-driven 3D scene understanding, underscoring its potential for open-world embodied intelligence. Code will be updated at https://github.com/SubmissionsIn/Stream3D.",
+          "arxiv_id": "2608.21136",
+          "arxiv_url": "https://arxiv.org/abs/2608.21136",
+          "authors": [
+            "Jie Xu, Na Zhao"
+          ],
+          "bullets": [
+            "Addresses the computational cost of streaming inputs and noise in 2D segmentation masks.",
+            "Uses a nested local-to-historical architecture to capture multi-view consistency with timely processing.",
+            "Fuses geometric and semantic cues by modeling 3D segmentation as point-and-set merging and partitioning.",
+            "Refines point clouds with manifold-distance optimization and dynamically updated geometric instances.",
+            "Experiments on public datasets report consistent improvements over existing baselines for streaming 3D segmentation and detection; LLM integration enables language-driven scene understanding."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 7. Our method obtains robust 3D segmentation by mitigating 2D noise masks from VFMs, in cases such as dynamically inconsistent masks, class-agnostic fine-grained masks, semantically error masks.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 537,
+              "image_path": "figures/2608.21136/figure-001.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 516
+            },
+            {
+              "caption": "Fig. 6. Examples of downstream tasks by Stream3Dv2 equipped with LLM agent. Top: 3D instance grounding, reasoning, and navigation. Bottom: open-vocabulary queries with indirect semantic descriptions.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 581,
+              "image_path": "figures/2608.21136/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 520
+            },
+            {
+              "caption": "Fig. 5. Visualization of 3D object detection comparison between our Stream3Dv2 and Ground truth on ScanNet200 benchmark.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 312,
+              "image_path": "figures/2608.21136/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 519
+            },
+            {
+              "caption": "Fig. 10. More 3D object detection cases on ScanNet200 benchmark.",
+              "figure_id": "figure-10-11",
+              "figure_number": "10",
+              "height": 314,
+              "image_path": "figures/2608.21136/figure-004.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 1072
+            },
+            {
+              "caption": "Fig. 8. The process of our streaming zero-shot 3D instance segmentation on Top: room-level cases and Bottom: large building-level cases.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 271,
+              "image_path": "figures/2608.21136/figure-005.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1074
+            },
+            {
+              "caption": "Fig. 9. Parameter analysis on (a) window size k, (b) key point rate γ, (c) geometry distance δ, and (d) overlap threshold α.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 246,
+              "image_path": "figures/2608.21136/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1052
+            },
+            {
+              "caption": "Fig. 12. Parameter analysis of the manifold distance δ.",
+              "figure_id": "figure-12-17",
+              "figure_number": "12",
+              "height": 292,
+              "image_path": "figures/2608.21136/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 652
+            },
+            {
+              "caption": "Fig. 13. Parameter analysis of the overlap threshold α.",
+              "figure_id": "figure-13-18",
+              "figure_number": "13",
+              "height": 291,
+              "image_path": "figures/2608.21136/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 652
+            },
+            {
+              "caption": "Fig. 11. Parameter analysis of the number of local frames k.",
+              "figure_id": "figure-11-19",
+              "figure_number": "11",
+              "height": 285,
+              "image_path": "figures/2608.21136/figure-009.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 652
+            },
+            {
+              "caption": "TABLE I OPEN-VOCABULARY 3D INSTANCE SEGMENTATION ON SCANNET200, SCANNET++, AND MATTERPORT3D BENCHMARKS, EVALUATED BY CLASS-AGNOSTIC AND SEMANTIC SEGMENTATION PERFORMANCE. ST ✓: STREAMING METHOD. ZS ✓: ZERO-SHOT METHOD.",
+              "figure_id": "table-I-7",
+              "figure_number": "I",
+              "height": 451,
+              "image_path": "figures/2608.21136/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1066
+            },
+            {
+              "caption": "TABLE III CLASS-AGNOSTIC STREAMING 3D INSTANCE SEGMENTATION ON SCANNET200 BENCHMARK. ST ✓: STREAMING METHOD. ZS ✓: ZERO-SHOT METHOD. FPS: FRAMES PER SECOND.",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 175,
+              "image_path": "figures/2608.21136/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 492
+            },
+            {
+              "caption": "TABLE IV OPEN-VOCABULARY 3D OBJECT DETECTION ON SCANNET200 BENCHMARK. ST ✓: STREAMING METHOD. ZS ✓: ZERO-SHOT METHOD.",
+              "figure_id": "table-IV-16",
+              "figure_number": "IV",
+              "height": 171,
+              "image_path": "figures/2608.21136/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 408
+            },
+            {
+              "caption": "TABLE V ABLATION STUDY ON THE MAIN METHODOLOGIES IN STREAM3DV2 PARADIGM. MVF DENOTES THE MULTI-VIEW NOISE MASK FILTERING. SDS IS THE SEMANTIC-DRIVEN FINE-GRAINED 3D SEGMENTATION. PMR IS THE POINT CLOUD MANIFOLD REFINEMENT.",
+              "figure_id": "table-V-3",
+              "figure_number": "V",
+              "height": 256,
+              "image_path": "figures/2608.21136/table-013.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE II PER-CLASS SEGMENTATION PERFORMANCE COMPARISON (SEMANTIC AP50 ACROSS THE FIRST 20 CLASSES) ON SCANNET200 BENCHMARK.",
+              "figure_id": "table-II-8",
+              "figure_number": "II",
+              "height": 188,
+              "image_path": "figures/2608.21136/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1064
+            },
+            {
+              "caption": "TABLE IX PER-CLASS SEGMENTATION PERFORMANCE COMPARISON (SEMANTIC AP50 ACROSS THE FIRST 20 CLASSES) ON SCANNET++ BENCHMARK.",
+              "figure_id": "table-IX-9",
+              "figure_number": "IX",
+              "height": 243,
+              "image_path": "figures/2608.21136/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE X PER-CLASS SEGMENTATION PERFORMANCE COMPARISON (SEMANTIC AP50 ACROSS THE FIRST 20 CLASSES) ON MATTERPORT3D BENCHMARK.",
+              "figure_id": "table-X-10",
+              "figure_number": "X",
+              "height": 225,
+              "image_path": "figures/2608.21136/table-016.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 1101
+            },
+            {
+              "caption": "TABLE VI TIME LATENCY DURING LONG SEQUENCE SEGMENTATION ON MATTERPORT3D BENCHMARK (SCENE ID: GXDOQLR6RWA).",
+              "figure_id": "table-VI-2",
+              "figure_number": "VI",
+              "height": 101,
+              "image_path": "figures/2608.21136/table-017.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 492
+            },
+            {
+              "caption": "TABLE VII ABLATION STUDY ON TWO KINDS OF 2D IMAGE SEGMENTATION PROMPTS IN LOCAL MULTI-VIEW COARSE-GRAINED 3D SEGMENTATION.",
+              "figure_id": "table-VII-12",
+              "figure_number": "VII",
+              "height": 151,
+              "image_path": "figures/2608.21136/table-018.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 1062
+            },
+            {
+              "caption": "TABLE VIII ABLATION STUDY ON MASK LOCALIZATION STRATEGIES (MLS) IN LOCAL-TO-HISTORICAL STREAMING SEGMENTATION. THE REPORTED RESULTS ARE AVERAGE TIME COST FOR EACH RGB-D FRAME (MS).",
+              "figure_id": "table-VIII-13",
+              "figure_number": "VIII",
+              "height": 81,
+              "image_path": "figures/2608.21136/table-019.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 516
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.21136/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.21136",
+          "relevance": 9,
+          "selection_reason": "Streaming 3D scene understanding framework for embodied intelligence, fitting both Embodied AI and 3D Vision topics.",
+          "summary_status": "generated",
+          "title": "Stream3Dv2: Geometric-Semantic Fusion Enhanced Streaming Zero-Shot 3D Scene Understanding",
+          "tldr": "Stream3Dv2 is a training-free framework for efficient and robust open-vocabulary 3D scene understanding from streaming RGB-D data.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Deep learning-based Multi-View Stereo (MVS) has advanced significantly but often generalizes poorly to unseen scenes, particularly in occluded areas or regions with limited view overlap. To mitigate this, recent approaches integrate Depth Foundation Models (DFMs) into MVS pipelines to provide monocular depth priors. However, existing methods typically rely on a static, one-way fusion scheme, which fails to fully exploit the complementary strengths of both modalities. We propose a novel framework that overcomes this limitation by tightly coupling a DFM with a cascade MVS pipeline through a bidirectional mutual refinement strategy. Our method leverages MVS depth to resolve the scale ambiguity in monocular predictions, while the monocular depth, in turn, enhances the structural completeness and fine-grained detail of the MVS estimate. Furthermore, we introduce a prior-guided cost volume refinement mechanism that effectively integrates multi-view and monocular information via attention-based fusion and discretized depth bins, thereby promoting local geometric consistency. Extensive experiments demonstrate that our method outperforms state-of-the-art MVS approaches on standard benchmarks, producing more complete and generalizable depth maps with sharp boundaries. Furthermore, although not explicitly designed for sparse-view settings, our framework generalizes remarkably well, competing favorably with even dedicated sparse-view methods while maintaining a superior accuracy-efficiency trade-off.",
+          "arxiv_id": "2608.20788",
+          "arxiv_url": "https://arxiv.org/abs/2608.20788",
+          "authors": [
+            "Byeonggwon Lee, Sanggi Lee, Siwoo Lee, Khang Truong Giang, Soohwan Song"
+          ],
+          "bullets": [
+            "Addresses poor MVS generalization in unseen, occluded, and low-overlap regions.",
+            "Uses MVS depth to resolve monocular scale ambiguity, while monocular depth improves MVS completeness and fine detail.",
+            "Introduces attention-based prior-guided cost-volume refinement with discretized depth bins for local geometric consistency.",
+            "Outperforms state-of-the-art MVS methods on standard benchmarks, with sharp boundaries and favorable accuracy-efficiency trade-offs.",
+            "Also performs competitively in sparse-view settings despite not being specifically designed for them."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 7: Qualitative comparison of two-view reconstruction. Compared to MonoMVSNet, which produces outliers, and MVSAnywhere, which suffers from scale ambiguity, our method generates complete and aligned surfaces.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 230,
+              "image_path": "figures/2608.20788/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 493
+            },
+            {
+              "caption": "Fig. 12: Qualitative comparison of sparse-view 3D reconstruction using only two input images. The top row for each scene displays the estimated depth maps, and the bottom row shows the fused point clouds. MonoMVSNet [1] fails to find reliable correspondences due to limited overlap, resulting in severe noise and missing structures. MVSAnywhere [2] generates smooth depth maps but suffers from scale ambiguity, leading to misaligned geometries. In contrast, Ours produces highly complete and geometrically accurate reconstructions.",
+              "figure_id": "figure-12-4",
+              "figure_number": "12",
+              "height": 418,
+              "image_path": "figures/2608.20788/figure-002.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 527
+            },
+            {
+              "caption": "Fig. 8: Illustration of scale alignment of depth maps. (a) The monocular depth map Dmono is rescaled to fit within a predefined depth hypothesis range. However, due to the presence of a few outliers, the resulting scale often fails to align accurately with the ground truth. (b) The Median Absolute Deviation (MAD) method removes statistical outliers, resulting in a refined depth map Dmad. This normalization and rescaling of Dmad leads to more accurate and consistent scale alignment with the ground-truth depth.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 100,
+              "image_path": "figures/2608.20788/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 524
+            },
+            {
+              "caption": "TABLE II: Quantitative F-score results on the TNT benchmark. Our method achieves the highest mean F-scores on both test sets.",
+              "figure_id": "table-II-8",
+              "figure_number": "II",
+              "height": 215,
+              "image_path": "figures/2608.20788/table-004.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1070
+            },
+            {
+              "caption": "TABLE IV: Sparse-view results under the SparseRecon protocol (3 unfavorable views), evaluated using Chamfer Distance (CD) on the five DTU test scenes. All methods are evaluated at an input resolution of 576× 768, and runtime (s) and GPU memory (GiB) are reported under the same setting.",
+              "figure_id": "table-IV-7",
+              "figure_number": "IV",
+              "height": 252,
+              "image_path": "figures/2608.20788/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 529
+            },
+            {
+              "caption": "TABLE V: Ablation study on the components of our method on the DTU dataset: Cost-Crafter (CC), Monocular Volume Fusion (MV), Bin Mask-based Refinement (BM), Mutual Depth Refinement (MDR), Mutual Refinement Loss (Mut), and Order-preserving Loss (Ord). We also report Mean Absolute Error (MAE) in mm, and average GPU memory (GiB) and runtime (seconds).",
+              "figure_id": "table-V-10",
+              "figure_number": "V",
+              "height": 154,
+              "image_path": "figures/2608.20788/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 529
+            },
+            {
+              "caption": "TABLE VI: Quantitative results for the baseline and our method with varying numbers of source views N on the DTU test set. 3D reconstruction errors are reported using Accuracy, Completeness, and Overall scores (lower is better). Depth errors are measured by the percentage of pixels deviating more than 2mm (e2) or 4mm (e4). Values in parentheses indicate the relative performance change compared to the default setting (N = 5). GPU memory usage and inference time are also reported.",
+              "figure_id": "table-VI-5",
+              "figure_number": "VI",
+              "height": 202,
+              "image_path": "figures/2608.20788/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 1068
+            },
+            {
+              "caption": "TABLE III: Quantitative results on the RobustMVD benchmark, reported using Absolute Relative Error (rel) and Inlier Ratio (τ ).",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 204,
+              "image_path": "figures/2608.20788/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 529
+            },
+            {
+              "caption": "TABLE I: Quantitative results on the DTU evaluation set measured by point-cloud distance metrics (Acc., Comp., and Overall) in millimeters, along with runtime and GPU memory usage.",
+              "figure_id": "table-I-2",
+              "figure_number": "I",
+              "height": 202,
+              "image_path": "figures/2608.20788/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 523
+            },
+            {
+              "caption": "TABLE VII: Effect of the MDR iteration setting K on reconstruction accuracy and efficiency on the DTU dataset.",
+              "figure_id": "table-VII-3",
+              "figure_number": "VII",
+              "height": 138,
+              "image_path": "figures/2608.20788/table-010.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 490
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20788/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20788",
+          "relevance": 8,
+          "selection_reason": "Unifies monocular depth foundation priors with multi-view stereo, advancing 3D depth estimation.",
+          "summary_status": "generated",
+          "title": "M2Depth: Unifying Monocular Depth Foundation Priors with Multi-View Stereo",
+          "tldr": "M2Depth tightly couples monocular depth priors with cascade MVS through bidirectional refinement to produce more complete, generalizable, and detailed depth maps.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Single-image 3D human reconstruction often suffers from over-smoothed textures and geometric inconsistencies. While diffusion models improve generative quality, their reliance on multi-view synthesis prior to 3D reconstruction is computationally expensive and prone to view inconsistency. We propose DiGS-Avatar, which reformulates this task as an efficient, diffusion-based UV-latent completion task, ensuring 3D consistency by design. To capture accurate spatial structure, we introduce a teacher-student framework where a multi-view teacher provides geometrically aligned pseudo-ground-truth latents to supervise a single-view diffusion student. Treating this inferred latent as a robust structural skeleton, our method injects high-level semantic features to accurately recover fine textural details without disrupting spatial integrity. The refined representation is then decoded into 3D Gaussian primitives. Extensive experiments demonstrate that DiGS-Avatar achieves state-of-the-art or highly competitive visual fidelity and zero-shot generalization, while reconstructing a fully animatable 3D avatar in just 0.71 seconds. Code is available at https://github.com/KLMAV-CUC/DiGS-Avatar.",
+          "arxiv_id": "2608.20759",
+          "arxiv_url": "https://arxiv.org/abs/2608.20759",
+          "authors": [
+            "Jiakun Li, Li Fang, Hao Zhu, Fei Hu, Long Ye, Yuan Zhang, Jinyao Yan"
+          ],
+          "bullets": [
+            "Addresses over-smoothed textures and geometric inconsistencies in single-image 3D human reconstruction.",
+            "Avoids costly, potentially inconsistent multi-view synthesis by performing diffusion-based completion directly in UV-latent space.",
+            "Uses a multi-view teacher to provide geometrically aligned pseudo-ground-truth latents for a single-view diffusion student.",
+            "Injects semantic features to recover fine textures while preserving spatial structure, then decodes the result into 3D Gaussian primitives.",
+            "Reports state-of-the-art or competitive visual fidelity, zero-shot generalization, and 0.71-second reconstruction."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of the proposed DiGS-Avatar framework. Given a single input image, the student network extracts VAE and appearance features. The VAE features are mapped to the canonical UV space via SMPL-X-based inverse texture mapping, forming a partial UV latent that is completed by a diffusion model under teacher supervision. The completed UV latent is enriched by GASA with appearance features, producing an aggregated UV feature map that is decoded into 3D Gaussian primitives for rendering and animation. During training, the multi-view teacher network provides geometrically consistent UV latents as supervision for the student.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 240,
+              "image_path": "figures/2608.20759/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 3: Qualitative comparison on datasets (top-down): HuGe100K, THuman 2.1, 2K2K, and SIZER. Deterministic baselines over-smooth unseen regions, while multiview diffusion methods exhibit geometric inconsistencies. In contrast, DiGS-Avatar produces sharp, 3D-consistent details. Notably, on the out-of-distribution SIZER dataset (bottom), our method uniquely preserves the complex geometry of loose clothing.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 358,
+              "image_path": "figures/2608.20759/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 4: Zero-shot reconstruction on in-the-wild images from DeepFashion [19] and the Internet. Using Multi-HMR [3] for SMPL-X estimation, our model successfully handles complex real-world illumination, diverse poses, and layered casual clothing.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 356,
+              "image_path": "figures/2608.20759/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 1: Comparison of paradigms for single-image 3D human reconstruction. (a) Feedforward methods (e.g., IDOL [51]) directly regress 3D representations, enable fast inference but struggle with unseen regions and texture diversity. (b) Diffusion-based methods (e.g., Human3Diffusion [44]) synthesize multi-view images before reconstruction, incurring high cost and view inconsistency. (c) Our DiGS-Avatar performs diffusionbased UV-latent completion in a canonical, surface-aligned space, achieving both photorealistic and geometrically consistent 3D avatars with efficient inference.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 210,
+              "image_path": "figures/2608.20759/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 5: Animation results. Reconstructed avatars are directly driven by LBS and preserve coherent texture attachment under novel poses.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 398,
+              "image_path": "figures/2608.20759/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 6: Ablation and Robustness Analysis. Left: Qualitative ablation of key components. Right: Robustness to challenging in-the-wild inputs.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 198,
+              "image_path": "figures/2608.20759/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 725
+            },
+            {
+              "caption": "Table 1: Quantitative comparison on in-distribution datasets. “Ours” refers to the diffusion-based student network used during inference. The best result is highlighted in bold and the second best is underlined. * denotes animatable representations.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 211,
+              "image_path": "figures/2608.20759/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 714
+            },
+            {
+              "caption": "Table 2: Zero-shot generalization on SIZER and computational efficiency. DiGSAvatar achieves competitive zero-shot quality while requiring substantially lower inference and training cost.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 227,
+              "image_path": "figures/2608.20759/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 712
+            },
+            {
+              "caption": "Table 3: Quantitative ablation of key components on HuGe100K. “Ours” refers to the diffusion-based student network used during inference.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 148,
+              "image_path": "figures/2608.20759/table-009.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 706
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20759/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20759",
+          "relevance": 8,
+          "selection_reason": "Single-image 3D human reconstruction using diffusion, a core 3D vision task.",
+          "summary_status": "generated",
+          "title": "DiGS-Avatar: Single-Image Animatable 3D Human Reconstruction via UV-Space Diffusion",
+          "tldr": "DiGS-Avatar reconstructs a fully animatable, texture-rich 3D human avatar from one image by completing a consistent UV-space latent with diffusion.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "The Visual Geometry Grounded Transformer (VGGT) enables unified feed-forward 3D reconstruction from multi-view images. However, deploying such a high-performance model may expose critical security vulnerabilities. Traditional adversarial perturbations require costly per-scene optimization, while Universal Adversarial Perturbations (UAPs) rely on a single static pattern and fail to effectively attack VGGT. To address these limitations, we propose \\textbf{MVAP-G}, a multi-view adversarial perturbation generator that produces imperceptible consistent perturbations across multiple views in a single feed-forward pass. To ensure perturbation consistency across diverse scenes, we design a cross-view adversarial alignment mechanism to process multi-view images. Experiments demonstrate that MVAP-G significantly degrades VGGT performance without iterative optimization during inference. This work pioneers multi-view adversarial attacks on 3D foundation models, uncovering severe vulnerabilities and underscoring the urgent need for robust 3D vision systems. The code is available at https://github.com/qsong2001/mvap-g.",
+          "arxiv_id": "2608.20748",
+          "arxiv_url": "https://arxiv.org/abs/2608.20748",
+          "authors": [
+            "Qi Song, Ziyuan Luo, Haoliang Han, Renjie Wan"
+          ],
+          "bullets": [
+            "VGGT’s strong multi-view 3D reconstruction capabilities create security risks against adversarial inputs.",
+            "Existing per-scene optimization is costly, while static universal perturbations are ineffective against VGGT.",
+            "MVAP-G uses cross-view adversarial alignment to generate scene-consistent perturbations across multiple views.",
+            "Experiments show that MVAP-G attacks VGGT without iterative optimization at inference time.",
+            "The work highlights vulnerabilities in 3D foundation models and the need for robust 3D vision systems."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of the Multi-view Adversarial Perturbation Generator (MVAP-G). The generator G takes a multi-view image sequence S and produces perturbations δt for each frame in a single feed-forward pass. The perturbed images Ît = It+δt are then fed into the pre-trained VGGT model F to produce adversarial 3D point clouds P̂ . The generator is built on a transformer architecture with cross-view adversarial alignment (CAA) and a DPT head for generating cross-view pixel-level perturbations.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 285,
+              "image_path": "figures/2608.20748/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 719
+            },
+            {
+              "caption": "Fig. 3: 3D point cloud reconstruction under adversarial attacks for VGGT. (a) Singleview (v=1): clean input and its ground truth; reconstructions from five adversarial perturbations, including Gaussian, UAP [43], AP with iter=10 and iter=20 [39], and our MVAP-G. (b) Multi-views (v=8): comparison between reconstructions from AP (iter=20) and our MVAP-G, demonstrating our method’s superior effectiveness in a practical setting. Our MVAP-G causes severe degradation with a single pass. More results can be found in the supplemental material.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 389,
+              "image_path": "figures/2608.20748/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 698
+            },
+            {
+              "caption": "Fig. 1: Different adversarial examples against VGGT. Although traditional (a) adversarial perturbation (AP) [39] can achieve effective attack performance, it must be optimized for each scene with significant computational cost. (b) Universal adversarial perturbation [43] (UAP) is optimized on multi-view scenes data, yet it lacks attack effectiveness. (c) Our proposed MVAP-G is trained on multi-view data and can generate multi-view perturbations (Multi-view APs) against VGGT in real-time.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 355,
+              "image_path": "figures/2608.20748/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 6: Adversarial examples and visualized ×20 perturbation.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 144,
+              "image_path": "figures/2608.20748/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 502
+            },
+            {
+              "caption": "Fig. 7: Impacts of CAA when input 32 view images. Without CAA, perturbations allow VGGT to partially recover geometry results, yielding fragmented but recognizable structures.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 286,
+              "image_path": "figures/2608.20748/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 690
+            },
+            {
+              "caption": "Fig. 9: Statistics under Ladv. (Left) The point cloud collapses to the origin (0, 0, 0) via supervision of adversarial loss Ladv. (Right) The CD distance between the reconstructed point cloud and the original increases in steps.",
+              "figure_id": "figure-9-5",
+              "figure_number": "9",
+              "height": 202,
+              "image_path": "figures/2608.20748/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 616
+            },
+            {
+              "caption": "Fig. 4: MVAP-G achieves real-time, memory-efficient, and high-quality multi-view attacks with a single feed-forward pass. (a) Inference time demonstrates that Naive AP requires over 25–200s per scene, while MVAP-G achieves millisecond-level attack in 50–500ms across multi-views input in a single forward pass. (b) Loss convergence shows that Naive AP needs more than 25 steps to reach a loss of 0.008, whereas MVAPG matches this performance in one step. (c) Memory efficiency demonstrates that MVAP-G uses less than 14 GB of GPU memory, compared to 30 GB for Naive AP.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 157,
+              "image_path": "figures/2608.20748/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 717
+            },
+            {
+              "caption": "Fig. 5: (a) Cross-view adversarial alignment (CAA). Attack strength remains steady even with more input views. Yet, w/o CAA faces inadequate attack performance against VGGT, especially in multi-view inputs. (b) Adversarial loss. The adversarial loss Ladv converges slowly with oscillations, aligning with the training process of generative adversarial networks [1]. (c) Regularization loss. The convergence of Lreg indicates effective control over perturbation magnitude, ensuring visual imperceptibility while the adversarial loss remains low, thus achieving a balance between stealth and attack efficacy.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 157,
+              "image_path": "figures/2608.20748/figure-008.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 711
+            },
+            {
+              "caption": "Fig. 8: (left) Impacts on depth. (right) Impacts on camera pose. Camera pose under attack (CO3D v=8, avg. 100 scenes) (please zoom in for best review).",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 157,
+              "image_path": "figures/2608.20748/figure-009.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 717
+            },
+            {
+              "caption": "Table 1: Attack impacts on VGGT via different perturbation methods. We report Shifted CD distances between the reconstructed 3D point clouds from the clear and perturbed samples. Higher CD values denote a greater shifted distance and indicate better attack performance. MVAP-G achieves superior attack performance with only a single feed-forward iteration.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 156,
+              "image_path": "figures/2608.20748/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 714
+            },
+            {
+              "caption": "Table 2: Ablation study on key components of MVAP-G. Pre-training provides the largest boost in attack strength. The DPT outperforms the naive decoder, as it captures more features for pixel-level adversarial perturbations [46]. CAA enables multi-view performance (more in Fig. 5 (a)). Lreg minimize the size of perturbation and ensures perturbation invisibility.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 152,
+              "image_path": "figures/2608.20748/table-011.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 356
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20748/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.20748",
+          "relevance": 8,
+          "selection_reason": "Presents multi-view adversarial attacks on a 3D reconstruction foundation model, directly relevant to 3D vision and foundation model robustness.",
+          "summary_status": "generated",
+          "title": "Generating Multi-view Adversarial Examples for Visual Geometry Grounded Transformer",
+          "tldr": "MVAP-G generates consistent, imperceptible multi-view adversarial perturbations in one feed-forward pass, substantially degrading VGGT’s 3D reconstruction performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "State-of-the-art 3D reconstruction models, whether from visual, range, or both, tend to underperform on thin objects. This is partially due to the small amount of space such objects occupy in RGB images and in 3D point clouds. To test the extent of their errors, we collected the first thin object dataset comprising of synchronized RGB images, depth maps, and tactile response maps, where each frame is associated with inertial measurements, camera pose and calibration, and groundtruth depth and segmentation maps obtained from laser scanning of thin objects. We hypothesize that tactile data can aid in the reconstruction of thin objects as their response maps provide local shape and deformation information. Our dataset, termed VisTa3D, comprises of 387 scenes covering 70 thin objects over 17 environments. We benchmarked current 3D reconstruction models on VisTa3D and found that, indeed, they exhibit low fidelity on thin objects. To test if tactile data can help, we introduce the first visual-range-tactile 3D reconstruction model as a baseline. Code and data: https://huggingface.co/datasets/shaniaguo/VisTa3D.",
+          "arxiv_id": "2608.20740",
+          "arxiv_url": "https://arxiv.org/abs/2608.20740",
+          "authors": [
+            "Shania Guo, Yeongsik Seo, Andrew Fu, Mei Hao, Iris Xia, Jiwon Jenny Lee, Xinyi Mary Xie, Hyoungseob Park, Aaron Dollar, Alex Wong"
+          ],
+          "bullets": [
+            "Thin objects are difficult to reconstruct because they occupy little space in RGB images and 3D point clouds.",
+            "The dataset synchronizes RGB, depth, tactile response maps, inertial measurements, camera pose, calibration, and laser-scanned ground truth.",
+            "VisTa3D contains 387 scenes featuring 70 thin objects across 17 environments.",
+            "Benchmarks reveal low reconstruction fidelity from current 3D reconstruction models.",
+            "The authors provide a visual-range-tactile reconstruction baseline to evaluate whether tactile information improves results."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 7: Results on VisTa3D. Methods struggle on thin objects. Best viewed in 5×.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 977,
+              "image_path": "figures/2608.20740/figure-001.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 640
+            },
+            {
+              "caption": "Fig. 1: VisTa3D comprises synchronized RGB images, depth maps, tactile response maps, and inertial measurements with camera poses, and ground truth depth maps and segmentation masks derived from 3D scanned object point clouds and meshes.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 340,
+              "image_path": "figures/2608.20740/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 8: Comparison between OmniDC and our Tactile-DC. Tactile-DC produces more accurate depth estimates, especially around thin-object areas.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 410,
+              "image_path": "figures/2608.20740/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 640
+            },
+            {
+              "caption": "Fig. 3: Segmentation masks. Reprojected point clouds are overlaid as masks onto RGB images. This demonstrates the result of our highly accurate point cloud registration.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 221,
+              "image_path": "figures/2608.20740/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 4: Ground-truth depth map and object segmentation masks. Each object is scanned and inserted into an aggregated and refined point cloud to yield ground truth.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 219,
+              "image_path": "figures/2608.20740/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 2: 3D scans of representative thin objects from our real-world dataset.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 208,
+              "image_path": "figures/2608.20740/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 718
+            },
+            {
+              "caption": "Fig. 6: Tactile-DC. Each input is encoded separately. RGB and sparse depth feature maps are first fused together. Tactile responses are encoded and projected onto the image plane based on contact coordinates, camera intrinsic and extrinsic calibration.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 229,
+              "image_path": "figures/2608.20740/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 610
+            },
+            {
+              "caption": "Fig. 5: The synthetic dataset. Examples of RGB images, depth maps, and object masks.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 202,
+              "image_path": "figures/2608.20740/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 725
+            },
+            {
+              "caption": "Table 1: Evaluation metrics across models and protocols on the test set.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 977,
+              "image_path": "figures/2608.20740/table-009.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 604
+            },
+            {
+              "caption": "Table 2: Novel view synthesis performance on the test set.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 108,
+              "image_path": "figures/2608.20740/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 386
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20740/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20740",
+          "relevance": 6,
+          "selection_reason": "Introduces a dataset for thin object reconstruction using vision, tactile, and 3D data, relevant to 3D vision and embodied perception.",
+          "summary_status": "generated",
+          "title": "VisTa3D: A Dataset and Benchmark for Thin Object Reconstruction from Vision, Tactile, and 3D Point Clouds",
+          "tldr": "VisTa3D introduces a multimodal benchmark showing that existing 3D reconstruction methods struggle with thin objects and providing tactile data as a potential remedy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "3D Gaussian Splatting has achieved remarkable success in novel view synthesis. However, extracting high-fidelity surfaces directly from 3DGS remains challenging due to its discrete and unstructured nature. Existing 3DGS-based reconstruction methods typically rely on multi-view geometric consistency or local constraints. Without an explicit structured geometric prior during optimization, these methods often struggle to resolve structural ambiguities, leading to artifacts and floaters, particularly in textureless or occluded regions. To address this limitation, we propose TopoSurfel, a novel framework that closes the loop between Gaussian surfels and continuous meshes. Unlike recent methods that incorporate mesh extraction into the differentiable pipeline by introducing auxiliary neural networks or extra per-Gaussian parameters, we dynamically extract a continuous proxy mesh via a non-trainable differentiable iso-surfacing process. Leveraging this differentiable connection, we introduce a mesh-guided surfel evolution strategy, including normal alignment and geometry-aware density control, to effectively suppress floaters and fill surface holes. Furthermore, to address the initialization challenges in large-scale environments, we propose a spatially aware hybrid re-initialization strategy that ensures robust reconstruction across complex scenes. Extensive experiments demonstrate that TopoSurfel achieves competitive geometric reconstruction accuracy while maintaining high-quality mesh-based novel view synthesis. The code for our method is available at https://github.com/Fan-Treasure/TopoSurfel.",
+          "arxiv_id": "2608.20687",
+          "arxiv_url": "https://arxiv.org/abs/2608.20687",
+          "authors": [
+            "Chuanjin Fan, Wenjie Chang, Bohao Liao, Yujia Chen, Wenfei Yang, Tianzhu Zhang"
+          ],
+          "bullets": [
+            "Addresses structural ambiguities, floaters, and surface holes in textureless or occluded regions.",
+            "Dynamically extracts a continuous proxy mesh through non-trainable differentiable iso-surfacing.",
+            "Uses mesh-guided normal alignment and geometry-aware density control to refine surfels.",
+            "Introduces spatially aware hybrid re-initialization for robust reconstruction in large-scale scenes.",
+            "Reports competitive geometric accuracy and high-quality mesh-based novel view synthesis."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.GR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of the TopoSurfel Pipeline. (Left) Warm-up: We initialize Gaussian surfels from SfM points and obtain an initial mesh via TSDF fusion. (Right) Closed-Loop Optimization: In addition to the surfel training pipeline, we extract a weighted oriented point cloud from surfels, and then reconstruct the Differentiable Proxy Mesh from it using DPSR and DiffMC. Both the proxy mesh and the surfels are rendered to compute geometry consistency losses.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 447,
+              "image_path": "figures/2608.20687/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 953
+            },
+            {
+              "caption": "Fig. 4. Qualitative comparison of surface reconstruction on the DTU dataset. In heavily occluded regions and areas with few viewpoints, our method recovers more complete geometry and smoother surfaces with fewer artifacts, whereas other methods often produce over-smoothed or noisy surfaces.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 415,
+              "image_path": "figures/2608.20687/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1064
+            },
+            {
+              "caption": "Fig. 5. Qualitative results on the TNT dataset. Our method excels in large-scale real-world scenes, producing cleaner surfaces and more accurate structures. While methods like MILo and QGS struggle with holes or floating noise in complex areas, TopoSurfel maintains high geometric fidelity.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 388,
+              "image_path": "figures/2608.20687/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1064
+            },
+            {
+              "caption": "Fig. 6. Novel view synthesis results on the Mip-NeRF 360 dataset. TopoSurfel achieves comparable visual quality to existing methods.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 300,
+              "image_path": "figures/2608.20687/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1064
+            },
+            {
+              "caption": "Fig. 14. Visualization of Our Reconstructed Meshes on the DTU Dataset.",
+              "figure_id": "figure-14-10",
+              "figure_number": "14",
+              "height": 568,
+              "image_path": "figures/2608.20687/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 976
+            },
+            {
+              "caption": "Fig. 11. Ablation study on geometry-aware density control. (a) Gaussian point clouds colored by depth and (b) final reconstructed meshes. Within each subfigure, the left side uses only gradient-guided density control, whereas the right side incorporates our geometry-aware density control.",
+              "figure_id": "figure-11-9",
+              "figure_number": "11",
+              "height": 398,
+              "image_path": "figures/2608.20687/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 15. Visualization of Our Reconstructed Meshes and trained UV map on the NeRF-Synthetic Dataset.",
+              "figure_id": "figure-15-5",
+              "figure_number": "15",
+              "height": 564,
+              "image_path": "figures/2608.20687/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1020
+            },
+            {
+              "caption": "Fig. 10. Ablation study on hybrid re-initialization for large-scale scenes. (a) Without hybrid re-initialization. (b) With hybrid re-initialization. From left to right, we show the rendered RGB images, normal maps, and depth maps.",
+              "figure_id": "figure-10-22",
+              "figure_number": "10",
+              "height": 242,
+              "image_path": "figures/2608.20687/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 3. Illustration of Our Mesh-Guided Normal Alignment and GeometryAware Density Control",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 222,
+              "image_path": "figures/2608.20687/figure-009.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 9. Ablation study onmesh-guided normal alignment. (a) Gaussian point clouds colored by surfel normals and (b) extracted proxy meshes. For both (a) and (b), we compare the baseline using only view statistics (left) against our full strategy with mesh-guided normal alignment (right).",
+              "figure_id": "figure-9-21",
+              "figure_number": "9",
+              "height": 164,
+              "image_path": "figures/2608.20687/figure-010.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 8. Ablation study on the warm-up stage. (a) Gaussian point clouds colored by depth and (b) extracted proxy meshes. In each subfigure, the left side shows the result without warm-up, while the right side shows the result with our warm-up initialization.",
+              "figure_id": "figure-8-20",
+              "figure_number": "8",
+              "height": 161,
+              "image_path": "figures/2608.20687/figure-011.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 510
+            },
+            {
+              "caption": "Fig. 18. Comprehensive visualization of results on multiple Mip-NeRF 360 scenes, including ground-truth images, our rendered images, reconstructed meshes, Surfel normals, and mesh normals.",
+              "figure_id": "figure-18-17",
+              "figure_number": "18",
+              "height": 1265,
+              "image_path": "figures/2608.20687/figure-012.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1061
+            },
+            {
+              "caption": "Fig. 12. Ablation of final mesh extraction with DPSR and FlexiCubes. (a) Mesh extracted with DPSR. (b) Mesh extracted with FlexiCubes. (c) Mesh extracted with TSDF fusion.",
+              "figure_id": "figure-12-13",
+              "figure_number": "12",
+              "height": 198,
+              "image_path": "figures/2608.20687/figure-013.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 17. Failure case on the Materials scene of NeRF-Synthetic.",
+              "figure_id": "figure-17-24",
+              "figure_number": "17",
+              "height": 204,
+              "image_path": "figures/2608.20687/figure-014.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 483
+            },
+            {
+              "caption": "Fig. 16. Evolution of the differentiable proxy mesh during closed-loop optimization. The proxy mesh is used as a training-time geometric prior. Iterations are counted from the beginning of the mesh-guided stage.",
+              "figure_id": "figure-16-23",
+              "figure_number": "16",
+              "height": 177,
+              "image_path": "figures/2608.20687/figure-015.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 508
+            },
+            {
+              "caption": "Table 1. Quantitative geometry comparison on the DTU scenes. Our method achieves the lowest Chamfer Distance without monocular depth priors, while maintaining competitive efficiency. denotes the best, second best, third best, respectively. † indicates the use of an additional monocular depth prior.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 350,
+              "image_path": "figures/2608.20687/table-016.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1064
+            },
+            {
+              "caption": "Table 5. Comparison of training resources, rendering performance, and output mesh size across methods, where #GS denotes the number of Gaussians (in millions), GPU Mem denotes peak GPU memory usage (GB), Time denotes training time, FPS denotes frames per second, #Vertices denotes the number of mesh vertices, and Size denotes mesh file size (MB).",
+              "figure_id": "table-5-14",
+              "figure_number": "5",
+              "height": 194,
+              "image_path": "figures/2608.20687/table-017.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 510
+            },
+            {
+              "caption": "Table 10. Quantitative evaluation of novel view synthesis on each scene of the NeRF-Synthetic dataset.",
+              "figure_id": "table-10-4",
+              "figure_number": "10",
+              "height": 381,
+              "image_path": "figures/2608.20687/table-018.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 1058
+            },
+            {
+              "caption": "Table 3. Quantitative comparison of NVS on the Mip-NeRF 360 dataset.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 302,
+              "image_path": "figures/2608.20687/table-019.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 510
+            },
+            {
+              "caption": "Table 2. Quantitative geometry comparison on the TNT dataset.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 193,
+              "image_path": "figures/2608.20687/table-020.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 510
+            },
+            {
+              "caption": "Table 7. Ablation study on the TNT dataset.",
+              "figure_id": "table-7-19",
+              "figure_number": "7",
+              "height": 218,
+              "image_path": "figures/2608.20687/table-021.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 448
+            },
+            {
+              "caption": "Table 6. Memory stress test under different DPSR grid resolutions on an RTX 3090 GPU with 24 GB memory. We report peak memory, training time, Chamfer distance on DTU (↓), and F1-score on TNT (↑).",
+              "figure_id": "table-6-15",
+              "figure_number": "6",
+              "height": 193,
+              "image_path": "figures/2608.20687/table-022.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 452
+            },
+            {
+              "caption": "Table 8. Hyperparameters used in our implementation.",
+              "figure_id": "table-8-18",
+              "figure_number": "8",
+              "height": 579,
+              "image_path": "figures/2608.20687/table-023.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 458
+            },
+            {
+              "caption": "Table 9. Additional ablation studies on the TNT dataset.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 665,
+              "image_path": "figures/2608.20687/table-024.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 510
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20687/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20687",
+          "relevance": 6,
+          "selection_reason": "Presents a method for surface reconstruction from 3D Gaussian splatting, relevant to 3D vision and potentially 3D foundation models.",
+          "summary_status": "generated",
+          "title": "TopoSurfel: Closing the Loop between Gaussian Surfels and Meshes for Surface Reconstruction",
+          "tldr": "TopoSurfel improves 3D Gaussian Splatting surface reconstruction by using a differentiable proxy mesh to guide Gaussian surfel optimization.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Methods that transfer predictions from two-dimensional foundation models into three-dimensional segmentation are commonly grouped by task or representation. Those groupings obscure the decisions that determine whether a system remains coherent across views: where image evidence is grounded, when observations become one identity, how semantic and granularity conflicts are handled, which information is fused, and what state survives for later queries. We introduce \\textbf{Lift, Associate, and Fuse (LAF)}, a decision-centric framework that represents a transfer system as five operators: \\textbf{Generate, Associate, Reconcile, Fuse, and Persist/Query}. LAF defines an explicit contract for the persistent carrier---its spatial support, semantic state, identity state, uncertainty, provenance, and supported operations---and identifies the first stage at which discarded evidence becomes unrecoverable. We operationalize the framework as a structured audit protocol and apply it to 161 systems available through 7 August 2026, spanning point-, field-, Gaussian-, object-, graph-, and memory-based carriers. Representation, temporal, relational, and feed-forward stress tests required no additional analytical stage after the final confirmation pass. The resulting decision traces expose four recurring properties: association does not establish identity; carrier design fixes both the query interface and correction boundary; rendered-view, native-3D, and proposal-level evaluations are not interchangeable; and qualifiers such as \\emph{training-free}, \\emph{real-time}, \\emph{open-vocabulary}, and \\emph{generalizable} are meaningful only when attached to a stage and a complete cost ledger. LAF therefore supplies a representation-neutral method for comparing existing systems, diagnosing irreversible failures, and specifying revisable 3D perception for future agents.",
+          "arxiv_id": "2608.20659",
+          "arxiv_url": "https://arxiv.org/abs/2608.20659",
+          "authors": [
+            "Wentao Sun, Yiping Chen, John S. Zelek, Jonathan Li"
+          ],
+          "bullets": [
+            "Motivation: Existing task- or representation-based groupings obscure key decisions about grounding, identity, conflict handling, fusion, and retained state.",
+            "Method: Models transfer systems as five operators—Generate, Associate, Reconcile, Fuse, and Persist/Query—with an explicit contract for the persistent carrier.",
+            "Application: A structured audit protocol was applied to 161 systems spanning point-, field-, Gaussian-, object-, graph-, and memory-based carriers.",
+            "Findings: Association alone does not establish identity; carrier design determines query and correction boundaries; and rendered-view, native-3D, and proposal-level evaluations are not interchangeable.",
+            "Scope: Claims such as “training-free,” “real-time,” “open-vocabulary,” and “generalizable” require stage-specific definitions and complete cost accounting."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Decision-centric LAF framework for 2D-to-3D foundation-model transfer. A system is represented by five operators—Generate, Associate, Reconcile, Fuse, and Persist/Query—that expose where image evidence is grounded in 3D, where cross-view identity, semantic disagreement, and granularity are resolved, and what persistent carrier is constructed. The feedback path represents online updates and active observation, while the lower row shows representative irreversible error propagation.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 541,
+              "image_path": "figures/2608.20659/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 960
+            },
+            {
+              "caption": "Figure 3: Four realizations of 2D-to-3D association and their characteristic failure boundaries. Hard projection uses calibrated depth and an explicit visibility rule; neural fields distribute evidence through volumetric weights; Gaussian renderers use alpha-compositing contributions over explicit primitives; and learned or temporary correspondence introduces a predicted or reconstructed intermediary. Each mechanism locates evidence on candidate 3D support, but identity, semantic agreement, and granularity still require reconciliation.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 397,
+              "image_path": "figures/2608.20659/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 958
+            },
+            {
+              "caption": "Figure 4: Why rendered-view, native-3D, proposal-level, and downstream evaluations are not interchangeable. Rendered pixels can hide disconnected or incomplete 3D support; native-3D metrics expose geometry and topology; proposal metrics depend on instance generation and matching; and agent-level success additionally depends on the query and action policy. Cross-method comparison is valid only when geometry, views, prompts, conversions, and oracle access are controlled.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 495,
+              "image_path": "figures/2608.20659/figure-003.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 945
+            },
+            {
+              "caption": "Figure 5: Failure propagation, irreversible commitment, and recovery operations in LAF. Red paths show how upstream errors can alter persistent state and downstream behavior; gray paths denote discarded evidence; and blue paths denote recovery operations supported when sufficient uncertainty and provenance remain. The first irreversible loss is system- and query-dependent and may occur at any operator where evidence needed for a later correction is discarded.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 472,
+              "image_path": "figures/2608.20659/figure-004.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 960
+            },
+            {
+              "caption": "Figure 2: Formal LAF decision trace and persistent-carrier contract. Each operator transforms or constrains the hypotheses available to the next stage. The carrier is specified by spatial support S, semantic state Z, identity and topology I, uncertainty U , provenance P, and supported operations O. The lower band depicts progressive loss of recoverable alternatives, while the feedback path represents correction or additional observation.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 266,
+              "image_path": "figures/2608.20659/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 960
+            },
+            {
+              "caption": "Figure 6: From passive segmentation to agentic 3D perception. A versioned carrier retains geometry, identities, semantic state, uncertainty, provenance, and relations while observations, queries, actions, and corrections form a closed loop. In this schematic, Update memory combines the Fuse and Persist operations. Uncertainty may trigger an active viewpoint, human correction, or retrieval of additional image evidence, while explicit revision operations prevent persistent identity from degenerating into an immutable mask.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 508,
+              "image_path": "figures/2608.20659/figure-006.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 956
+            },
+            {
+              "caption": "Table 1: Mechanism-first audit of the five transfer stages. The stages describe decisions, not mandatory software modules; one model may implement several jointly.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 44,
+              "image_path": "figures/2608.20659/table-007.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 977
+            },
+            {
+              "caption": "Table 2: Terminology crosswalk used to operationalize decision traces. Terms grouped in one row are common neighbors or aliases, but the boundary column records why they cannot be treated as exact synonyms.",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 44,
+              "image_path": "figures/2608.20659/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 977
+            },
+            {
+              "caption": "Table 4: Evaluation families that should remain separate unless the same conversion and oracle protocol is applied to every method.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 44,
+              "image_path": "figures/2608.20659/table-009.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 977
+            },
+            {
+              "caption": "Table 3: Persistent carrier families and their query and correction contracts. “Natural output” denotes the representation returned without an additional conversion protocol.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 41,
+              "image_path": "figures/2608.20659/table-010.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 977
+            },
+            {
+              "caption": "Table 5: Full cost ledger for separating one-time construction, persistent storage, and marginal query cost. NR should be reported when a component is not measured.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 113,
+              "image_path": "figures/2608.20659/table-011.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 977
+            },
+            {
+              "caption": "Table 7. Framework-derived empirical findings. The middle column identifies the operators and audits that expose each finding; the final column states the condition under which it applies.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 40,
+              "image_path": "figures/2608.20659/table-012.webp",
+              "kind": "table",
+              "page": 43,
+              "width": 977
+            },
+            {
+              "caption": "Table 6: Failure sources, their propagation paths, and diagnostics that identify the first irreversible information loss.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 40,
+              "image_path": "figures/2608.20659/table-013.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 977
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20659/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.20659",
+          "relevance": 7,
+          "selection_reason": "Presents a decision-centric framework for transferring 2D foundation models to 3D segmentation, relevant to 3D foundation models and spatial intelligence.",
+          "summary_status": "generated",
+          "title": "Lift, Associate, and Fuse: A Decision-Centric Framework for 2D-to-3D Foundation Model Transfer",
+          "tldr": "LAF provides a decision-centric framework for analyzing how 2D foundation-model predictions are transferred into coherent, revisable 3D segmentation systems.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Multi-View Pedestrian Detection (MVPD) aims to detect pedestrians in the form of a bird's eye view map from multi-view images. Recent MVPD methods adopt a unified framework that projects 2D image features into a 3D world space and aggregates them into a single feature. Although they are effective, they struggle to generalize to unseen camera configurations during training due to two main issues. First, they are difficult to capture accurate visual geometry across views in unseen camera configurations. Second, they make detection models highly dependent on distortion patterns during training arising from their image feature projection. To address these, we leverage a visual geometric foundation model and propose MV2GF. This foundation model has exhibited strong generalization in capturing visual geometry across views and predicting accurate 3D attributes in diverse camera configurations. MV2GF fuses task-specific features with general-purpose geometric features extracted by the foundation model to effectively capture the visual geometry even in unseen camera configurations. Furthermore, MV2GF projects each pixel in the image features to an appropriate 3D location using 3D pointmaps predicted by the foundation model, preventing the detection model from depending on distortion patterns during training. Our experiments demonstrate the effectiveness of leveraging a visual geometric foundation model for MVPD and that MV2GF generalizes better than existing methods.",
+          "arxiv_id": "2608.20639",
+          "arxiv_url": "https://arxiv.org/abs/2608.20639",
+          "authors": [
+            "Taiga Yamane, Satoshi Suzuki, Ryo Masumura, Shota Orihashi, Tomohiro Tanaka, Mana Ihori, Naoki Makishima"
+          ],
+          "bullets": [
+            "Targets MVPD systems that struggle to generalize beyond camera configurations seen during training.",
+            "Fuses task-specific image features with general-purpose geometric features from a visual geometric foundation model.",
+            "Uses foundation-model-predicted 3D pointmaps to project each image pixel to an appropriate 3D location.",
+            "Experiments show improved generalization over existing MVPD methods, without reported quantitative details in the abstract."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: (a) Overview of MV2GF. It consists of (b) TGF and (c) FPA. We set the red blocks to be trainable, and the gray blocks do not have trainable parameters.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 367,
+              "image_path": "figures/2608.20639/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 708
+            },
+            {
+              "caption": "Fig. 1: (a) Previous MVPD methods. (b) Our MV2GF leverages a pretrained visual geometric foundation model. The red blocks are trainable, and the blue block is frozen.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 267,
+              "image_path": "figures/2608.20639/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 708
+            },
+            {
+              "caption": "Fig. 6: Visualization of 3D pointmaps predicted by DA3 [28] on GMVD.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 256,
+              "image_path": "figures/2608.20639/figure-003.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 624
+            },
+            {
+              "caption": "Table 1: Comparison with previous methods under settings where camera configurations during testing are different from those during training. All models are trained on GMVD-D training split.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 202,
+              "image_path": "figures/2608.20639/table-004.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 700
+            },
+            {
+              "caption": "Table 2: Comparison with previous methods under settings where camera configurations during testing are identical to those during training. All models are trained on the training split of the same dataset used for testing.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 202,
+              "image_path": "figures/2608.20639/table-005.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 700
+            },
+            {
+              "caption": "Table 3: (a) Effect of TGF and FPA. (b) Effect of using features from ResNet and DA3 in TGF. (c) Effect of using features from multiple transformer blocks in DA3. (d) Effect of θz in FPA. (e) Effect of using features from a visual geometric foundation model. (f) Effect of the visual geometric foundation model choice. Default settings in",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 382,
+              "image_path": "figures/2608.20639/table-006.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 654
+            },
+            {
+              "caption": "Table 8: Comparison with previous methods under the setting where models are trained on MultiviewX and tested on Wildtrack.",
+              "figure_id": "table-8-3",
+              "figure_number": "8",
+              "height": 169,
+              "image_path": "figures/2608.20639/table-007.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 329
+            },
+            {
+              "caption": "Table 4: Effect of the number of input views N for MSMVD [50] and our MV2GF. Both models are trained on GMVD-D training split and tested on data comprising 6 views in GMVD-D testing split.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 149,
+              "image_path": "figures/2608.20639/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 488
+            },
+            {
+              "caption": "Table 6: (a) Effect of the offset prediction. (b) Effect of auxiliary loss Ln view. (c) Effect of ResNet size in TGF. (d) Effect of the pooling choice in FPA. (e) Effect of using features from a trainable ResNet. (f) Effect of loss weighting. Default settings in",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 300,
+              "image_path": "figures/2608.20639/table-009.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 692
+            },
+            {
+              "caption": "Table 7: Effect of MSMVD’s multi-scale BEV design on GMVD-S. All models are trained on GMVD-S training split and tested on GMVD-S testing split. Camera configurations during training are identical to those during testing. Default settings in",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 88,
+              "image_path": "figures/2608.20639/table-010.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 569
+            },
+            {
+              "caption": "Table 5: Comparison of inference speed. These inference speeds are measured on data comprising 6 views in GMVD-D testing split using an Nvidia 80GB A100 GPU.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 211,
+              "image_path": "figures/2608.20639/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 198
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20639/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20639",
+          "relevance": 8,
+          "selection_reason": "Leverages a visual geometric foundation model for multi-view pedestrian detection, directly relevant to 3D foundation models and spatial intelligence.",
+          "summary_status": "generated",
+          "title": "MV2GF: Multi-view Pedestrian Detection with a Visual Geometric Foundation Model",
+          "tldr": "MV2GF improves multi-view pedestrian detection in unseen camera configurations by using a visual geometric foundation model to provide robust cross-view geometry and accurate 3D feature projection.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Advances in multimodal large language models (MLLMs) are extending radiological artificial intelligence (AI) beyond task-specific image analysis toward multimodal understanding and reasoning. Volumetric radiology, however, presents a fundamental representational mismatch: clinical interpretation often requires full-volume spatial context and acquisition-dependent quantitative information, whereas current MLLMs are commonly conditioned on selected two-dimensional (2D) images, compressed visual representations, or report-derived text. Reliable volumetric radiology AI therefore requires representations that preserve task-relevant three-dimensional (3D) information and systems that can access, verify, and integrate this information across clinical workflows. In this Review, we examine more than 200 publications through July 2026. We organize the literature around volumetric representation and multimodal understanding at the model level, agentic orchestration at the system level, and their links to clinical applications and evaluation. We review volumetric foundation models, language alignment and compression strategies, and agentic systems that extend MLLMs through planning, tools, memory, and workflow interaction. We distinguish settings in which selected 2D views or report-mediated reasoning may suffice from those that warrant native volumetric modeling. We also introduce a Claim-Design-Validation framework to assess whether technical, workflow, and clinical claims are matched by appropriate design and validation. Across the literature, native volumetric modeling and agentic capabilities depend on the spatial, quantitative, contextual, and workflow requirements of the intended task. Clinical credibility requires faithful volumetric representation, traceable system behavior, claim-aligned validation, and clearly defined human oversight in realistic workflows.",
+          "arxiv_id": "2608.20549",
+          "arxiv_url": "https://arxiv.org/abs/2608.20549",
+          "authors": [
+            "Zanting Ye, Shengyuan Liu, Xin Liu, Chenhui Wang, Zhisong Wang, Jiashuai Liu, Zipei Wang, Cheng Wang, Wentao Pan, Mengjie Fang, Di Dong, Mohammad Salmanpour, Arman Rahmim, Yu Gu, Yong Xia, Hongming Shan, Yixuan Yuan, Yefeng Zheng, Lijun Lu"
+          ],
+          "bullets": [
+            "Identifies a mismatch between full-volume, quantitative radiology interpretation and MLLMs based on selected 2D images, compressed representations, or reports.",
+            "Organizes prior work around volumetric representations and multimodal understanding, agentic orchestration, clinical applications, and evaluation.",
+            "Reviews volumetric foundation models, language-alignment and compression methods, and agents using planning, tools, memory, and workflow interaction.",
+            "Distinguishes tasks where 2D views or report-mediated reasoning may suffice from those requiring native volumetric modeling.",
+            "Proposes a Claim-Design-Validation framework and emphasizes traceability, realistic workflow testing, and clearly defined human oversight."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: The Claim–Design–Validation alignment framework. The framework evaluates the alignment among a study’s stated claim, technical design, and validation setting. The claim defines the intended capability or clinical use; the design specifies how the necessary evidence is represented and used; and the validation setting determines the strength and scope of the conclusions that can be supported.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 561,
+              "image_path": "figures/2608.20549/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 928
+            },
+            {
+              "caption": "Figure 4: Technical scope of this review. The reviewed literature spans volumetric self-supervised pre-training, vision–language alignment, volumetric radiology MLLMs across 2D-native or selected-view, slice-sequence, hybrid 2D/3D, and native 3D designs, agentic radiology systems, and clinical applications and evaluation. Representative methods and resources are organized according to the corresponding sections and tables.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 1040,
+              "image_path": "figures/2608.20549/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 850
+            },
+            {
+              "caption": "Figure 1: Co-development of model-level approaches and agentic systems in volumetric radiology AI. The figure presents two complementary research directions. Model-level approaches, shown in green, include medical MLLMs, volumetric foundation models, and volumetric radiology MLLMs that learn or expose reusable spatial and vision–language representations. Agentic systems, shown in magenta, coordinate these representations through iterative planning, specialized tools, context management, and workflow interaction.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 512,
+              "image_path": "figures/2608.20549/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 936
+            },
+            {
+              "caption": "Figure 2: Organization of this review. The review connects model-level volumetric representation and multimodal interpretation with system-level agentic orchestration, and relates both to clinical applications and evaluation. Volumetric foundation models determine what anatomical, quantitative, and clinical information is represented. MLLMs and agentic systems determine how that information is queried, supplemented, verified, and used within clinical and technical workflows. Clinical applications define the intended claims, evidence requirements, and evaluation conditions under which these capabilities should be interpreted.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 905,
+              "image_path": "figures/2608.20549/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 913
+            },
+            {
+              "caption": "Figure 5: Model-level foundation and MLLM components for volumetric radiology. The model landscape is organized into three linked functional stages. Volumetric self-supervised representation learning acquires anatomyaware priors from unlabeled scans through masked, restorative, deformation-based, and contrastive objectives. Vision–language alignment makes these representations addressable through clinical language at global, lesionaware, region-grounded, and knowledge-enhanced levels. MLLM-based interpretation couples vision encoders, vision–language interfaces, generative backbones, and training curricula.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 467,
+              "image_path": "figures/2608.20549/figure-005.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 927
+            },
+            {
+              "caption": "Figure 8: Core-corpus landscape of volumetric radiology AI. The figure summarizes the deduplicated core corpus of volumetric-radiology publications and resources included in the quantitative landscape analysis. Each work is assigned once to one of four primary review roles: foundation models/vision–language pre-training, volumetric radiology MLLMs, agentic systems, or clinical resources/evaluation. The right panel cross-tabulates the same assignments by dominant modality. General AI, review articles, and 2D-only background references are excluded.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 279,
+              "image_path": "figures/2608.20549/figure-006.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 921
+            },
+            {
+              "caption": "Figure 9: A research agenda for volumetric radiology intelligence. The top panel illustrates the field’s transition from isolated, 2D-adapted task models toward reusable 3D foundations, multimodal interpretation, and supervised agentic workflows. To drive this evolution, the bottom panel outlines a research agenda structured across four core pillars of intelligence: (1) volumetric and acquisition-aware, (2) workflow-centric clinical, (3) self-evolving and embodied, and (4) traceable and clinical-grade, contrasting current limitations with future directions.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 529,
+              "image_path": "figures/2608.20549/figure-007.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 896
+            },
+            {
+              "caption": "Figure 7: Clinical applications and evaluation for volumetric radiology. The figure maps four application families to their claim types, validation demands, benchmark protocols, and metric evidence, emphasizing that evaluation standards should follow the clinical claim and intended output.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 725,
+              "image_path": "figures/2608.20549/figure-008.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 902
+            },
+            {
+              "caption": "Figure 6: Agentic workflow and modules for volumetric radiology analysis. The four capability families correspond to the main operations required for volumetric analysis: selecting and sequencing evidence, converting clinical intent into spatial or quantitative actions, retaining context across analysis steps and examinations, and coordinating intermediate outputs within supervised workflows. Solid arrows denote workflow progression, dashed arrows denote feedback, and red tags indicate supervision or operational constraints.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 690,
+              "image_path": "figures/2608.20549/figure-009.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 854
+            },
+            {
+              "caption": "Table 1: Representative medical MLLMs relevant to volumetric radiology (continued).",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 242,
+              "image_path": "figures/2608.20549/table-010.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 950
+            },
+            {
+              "caption": "Table 5: Clinical application families and validation requirements in volumetric radiology AI. Representative systems and evaluation resources are summarized by clinical claim, task scope, commonly reported evidence, and principal validation gap. Dataset-level details are provided separately in Table 6. AUC, area under the curve; AUPRC, area under the precision–recall curve; AUROC, area under the receiver operating characteristic curve; C-index, concordance index; DVH, dose–volume histogram; FROC, free-response receiver operating characteristic; HD95, 95th percentile Hausdorff distance; IoU, intersection over union; PE, pulmonary embolism.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 61,
+              "image_path": "figures/2608.20549/table-011.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 950
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20549/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2608.20549",
+          "relevance": 6,
+          "selection_reason": "Review of volumetric radiology AI with MLLMs, addressing spatial and 3D representation in multimodal models.",
+          "summary_status": "generated",
+          "title": "Volumetric Radiology AI in the Era of Multimodal Large Language Models",
+          "tldr": "This review surveys how MLLMs can support volumetric radiology, emphasizing faithful 3D representation, agentic workflow integration, and claim-aligned clinical validation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-21",
       "paper_count": 9,
       "papers": [
@@ -1320,5 +3026,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "3d-vision",
-  "total_paper_count": 9
+  "total_paper_count": 19
 }

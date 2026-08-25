@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**10 papers total**
+**13 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [SPARCL: Spectral Partitioned Analytic Continual Learning](https://arxiv.org/abs/2608.21307) | Adaptation and Memory: Continual and Online Learning | SPARCL reduces forgetting in analytic continual learning by isolating high-energy feature directions and updating only a residual subspace. | 8 | 7 |
+| 2026-08-24 | [Beyond Imitation: Self-Improving Robot Policies via Off-Policy Q-Planning](https://arxiv.org/abs/2608.21204) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | Q-Planning enables large robot behavior-cloning policies to self-improve from failed and successful rollouts by training only a small off-policy Q-function. | 9 | 8 |
+| 2026-08-24 | [Socialized Division and Collaboration: Rethinking Class-Incremental Learning under Optimization Conflicts](https://arxiv.org/abs/2608.21044) | Adaptation and Memory: Continual and Online Learning | SDC reframes class-incremental learning as collaborative specialization across multiple models, using energy-based compatibility to allocate sessions and reduce conflicts that cause forgetting. | 7 | 7 |
 | 2026-08-21 | [Structured Affinity for Unsupervised Visual Class-Incremental Memory in Deep Artificial Immune Networks](https://arxiv.org/abs/2608.20104) | Adaptation and Memory: Continual and Online Learning | Structured, gradient-free Deep Artificial Immune Networks can learn replay-free visual class-incremental memories when they preserve spatial response maps and adapt latent scales. | 7 | 7 |
 | 2026-08-21 | [An Inclusive and Lightweight Approach to Federated Continual Learning for Cultural Heritage](https://arxiv.org/abs/2608.20038) | Adaptation and Memory: Continual and Online Learning | FedCurv-DR is a lightweight federated continual-learning method that reduces forgetting while balancing performance, fairness, and energy use for distributed cultural-heritage data. | 8 | 6 |
 | 2026-08-21 | [Evidence Before Expansion: Reuse, Spawn, or Defer in Lifelong Expert Pools](https://arxiv.org/abs/2608.19888) | Adaptation and Memory: Continual and Online Learning | A statistically valid decision layer determines when lifelong expert pools should reuse an expert, spawn one, or defer, while preserving anytime guarantees under recency and unlimited expert creation. | 6 | 7 |

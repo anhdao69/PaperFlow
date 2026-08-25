@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**3 papers total**
+**8 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [M2Depth: Unifying Monocular Depth Foundation Priors with Multi-View Stereo](https://arxiv.org/abs/2608.20788) | 3D Vision: 3D Foundation Models | M2Depth tightly couples monocular depth priors with cascade MVS through bidirectional refinement to produce more complete, generalizable, and detailed depth maps. | 8 | 7 |
+| 2026-08-24 | [Generating Multi-view Adversarial Examples for Visual Geometry Grounded Transformer](https://arxiv.org/abs/2608.20748) | 3D Vision: 3D Foundation Models | MVAP-G generates consistent, imperceptible multi-view adversarial perturbations in one feed-forward pass, substantially degrading VGGT’s 3D reconstruction performance. | 8 | 8 |
+| 2026-08-24 | [Lift, Associate, and Fuse: A Decision-Centric Framework for 2D-to-3D Foundation Model Transfer](https://arxiv.org/abs/2608.20659) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | LAF provides a decision-centric framework for analyzing how 2D foundation-model predictions are transferred into coherent, revisable 3D segmentation systems. | 7 | 8 |
+| 2026-08-24 | [MV2GF: Multi-view Pedestrian Detection with a Visual Geometric Foundation Model](https://arxiv.org/abs/2608.20639) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | MV2GF improves multi-view pedestrian detection in unseen camera configurations by using a visual geometric foundation model to provide robust cross-view geometry and accurate 3D feature projection. | 8 | 7 |
+| 2026-08-24 | [Volumetric Radiology AI in the Era of Multimodal Large Language Models](https://arxiv.org/abs/2608.20549) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | This review surveys how MLLMs can support volumetric radiology, emphasizing faithful 3D representation, agentic workflow integration, and claim-aligned clinical validation. | 6 | 5 |
 | 2026-08-21 | [Projector Is All You Train](https://arxiv.org/abs/2608.19726) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; 3D Vision: 3D Foundation Models | Training only the projector can effectively adapt an MLLM to 3D input while preserving language-model capabilities and improving training efficiency. | 8 | 7 |
 | 2026-08-21 | [Block3D: Efficient Text-to-3D Generation via Block-Wise Diffusion](https://arxiv.org/abs/2608.19567) | 3D Vision: 3D Foundation Models | Block3D accelerates text-to-3D generation by jointly diffusing shape-token blocks and correcting uncertain tokens, achieving a 5.15× speedup without reducing geometric fidelity. | 7 | 7 |
 | 2026-08-21 | [CVSD-Reg: Cross-Modal Visual Semantic Prior Distillation for Robust LiDAR Registration](https://arxiv.org/abs/2608.19536) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | CVSD-Reg distills visual semantic knowledge into LiDAR features to achieve robust, camera-free global registration across varying densities, viewpoints, and sensors. | 7 | 7 |

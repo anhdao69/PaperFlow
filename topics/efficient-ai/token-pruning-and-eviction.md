@@ -6,9 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**2 papers total**
+**4 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [Just Noticeable Difference Modeling for Token Compression in Vision-Language-Action Models](https://arxiv.org/abs/2608.21247) | Embodied AI: Vision-Language-Action; Efficient AI: Token Pruning and Eviction | Action-JND compresses VLA tokens according to how much their changes affect downstream robot actions, improving reliability under aggressive compression. | 9 | 9 |
+| 2026-08-24 | [Sparse Token Routing in Efficient Transformers](https://arxiv.org/abs/2608.20632) | Efficient AI: Token Pruning and Eviction | SEWN shows that adaptive token routing can reduce computation without hurting accuracy, but meaningful token-importance signals require contextual learning. | 9 | 7 |
 | 2026-08-21 | [From Retrieved Context to Runtime Control: Adaptive Compression for Edge-based RAG](https://arxiv.org/abs/2608.19535) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | Telemetry-informed, runtime-adaptive context compression can substantially reduce edge RAG energy while preserving answer quality, unlike fixed compression budgets. | 8 | 6 |
 | 2026-08-21 | [Clustering and Token Denoising for Faster and More Robust VLMs](https://arxiv.org/abs/2608.19285) | Efficient AI: Token Pruning and Eviction | ClustRS is a training-free token clustering and denoising method that makes VLMs faster and more robust under visual noise with far fewer image tokens. | 9 | 8 |

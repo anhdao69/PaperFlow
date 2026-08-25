@@ -1,6 +1,130 @@
 {
   "days": [
     {
+      "date": "2026-08-24",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "Tree-based speculative decoding raises the mean accepted tokens of standard speculative decoding by verifying multiple draft paths, and existing tree builders typically construct these paths through parent-conditioned expansion, where each child token is generated conditioned on its parent path. This construction is incompatible with diffusion language model (DLM) drafters such as DFlash, which produces all future-position distributions in a single forward pass. DDTree bridges this gap by treating high-probability tokens from each future-position distribution as candidate nodes and selecting edges between consecutive positions under a fixed node budget. However, its edge selection relies on token probability alone without modeling parent--child compatibility, so target-compatible tokens can be attached to wrong parents; moreover, its fixed budget ignores that the throughput-optimal tree size varies with the decoding state. We propose GRAFT, a draft-tree construction framework for DLM-based speculative decoding. GRAFT introduces Target-Distilled Edge Scoring (TDES), which distills parent--child preferences from target-model traces to select target-compatible edges, and State-Aware Budget Allocation (SABA), which sets the per-round tree budget by balancing expected draft gain against verification cost. Across multiple models and tasks, GRAFT achieves $2.13\\times$--$6.36\\times$ end-to-end speedup over autoregressive decoding while adding less than $0.5$\\,ms of overhead per round, approximately $1.4\\%$ of the target-model verification latency.",
+          "arxiv_id": "2608.20375",
+          "arxiv_url": "https://arxiv.org/abs/2608.20375",
+          "authors": [
+            "Xuming Ye, Zeming Ma, Runjie Yu, Yuan Liu, Tianle Li, Shuhan Bai, Jian Zhou, Fei Wu"
+          ],
+          "bullets": [
+            "Addresses DDTree’s inability to model parent–child compatibility and its fixed tree-budget limitation.",
+            "Uses Target-Distilled Edge Scoring (TDES) to learn edge preferences from target-model traces.",
+            "Uses State-Aware Budget Allocation (SABA) to balance expected draft gains against verification cost.",
+            "Achieves 2.13×–6.36× end-to-end speedup over autoregressive decoding across models and tasks.",
+            "Adds less than 0.5 ms overhead per round, about 1.4% of target-model verification latency."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: GRAFT overview. Given the one-pass outputs of DFlash and the current decoding state, TDES and SABA produce parent-conditional edge scores STDES(v) and a per-round tree budget Bt, respectively. The GRAFT Tree Builder uses the edge scores to rank candidate prefixes and Bt to terminate heap expansion before passing the resulting draft tree to the target model.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 404,
+              "image_path": "figures/2608.20375/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 838
+            },
+            {
+              "caption": "Figure 1: Architectural comparison and empirical analysis of DLM-based tree construction. (a) DDTree assembles draft trees from position-wise DFlash marginals, so a target-compatible child can be selected under the wrong parent. Here DDTree keeps the edge of→is and discards the target-compatible edge fruits→is, whereas GRAFT prefer target-compatible edges and accepts three more tokens than DDTree. (b) Parent–child mismatch occurs across various tasks, and GRAFT consistently reduces the mismatch rate over DDTree (Qwen3-8B). (c) The throughput-optimal tree budget B∗ depends on the decoding state.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 569,
+              "image_path": "figures/2608.20375/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 6: Same-prefix oracle tracking of SABA. A randomly selected GSM8K prompt is decoded once by GRAFT to form the reference trajectory. Each round is replayed with budgets {32, 48, 64, 80, 96, 128} while keeping the prefix, KV cache, and DFlash outputs unchanged. The curve reports retained oracle throughput TPSt(Bt)/TPSt(B ⋆ t ).",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 283,
+              "image_path": "figures/2608.20375/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 495
+            },
+            {
+              "caption": "Figure 5: Cross-task generalization of TDES. GRAFTGSM8K uses a scorer trained only on GSM8K traces. GRAFTFull uses the scorer from the main experiments. Both variants enable SABA. Bars report parent–child mismatch reduction, while lines report TPS normalized by DDTree.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 290,
+              "image_path": "figures/2608.20375/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 467
+            },
+            {
+              "caption": "Figure 2: Parent-conditioned and parent-agnostic draft-tree construction.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 200,
+              "image_path": "figures/2608.20375/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 496
+            },
+            {
+              "caption": "Table 1: Main results with mean accepted tokens and wall-time speedup. Sp. denotes TPS normalized by autoregressive decoding on the same model and dataset. Bold values mark the best MAT/Sp. within each model–dataset group.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 501,
+              "image_path": "figures/2608.20375/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1054
+            },
+            {
+              "caption": "Table 3: Sensitivity to the residual scale β on GSM8K. All rows use the same SABA controller. β = 0 corresponds to DDTree edge scoring with SABA. Mismatch Red. is computed relative to β = 0.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 163,
+              "image_path": "figures/2608.20375/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 406
+            },
+            {
+              "caption": "Table 2: Component analysis on Qwen3-8B. Results are averaged over the nine evaluation datasets. +TDES replaces the DDTree edge score with TDES while keeping the fixed DDTree budget. +SABA keeps the DDTree edge score and selects the tree budget with SABA. GRAFT enables both components. Avg. Nodes denotes the average number of drafttree nodes per round.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 132,
+              "image_path": "figures/2608.20375/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 502
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20375/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20375",
+          "relevance": 6,
+          "selection_reason": "Tree-based speculative decoding with adaptive budget allocation improves inference efficiency, relevant to efficient attention and decoding.",
+          "summary_status": "generated",
+          "title": "GRAFT: Adaptive DLM-Based Draft Tree Construction with Target-Distilled Edge Scoring",
+          "tldr": "GRAFT improves DLM-based speculative decoding by selecting more target-compatible draft-tree edges and adapting tree size to each decoding state.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-21",
       "paper_count": 5,
       "papers": [
@@ -995,5 +1119,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 5
+  "total_paper_count": 6
 }

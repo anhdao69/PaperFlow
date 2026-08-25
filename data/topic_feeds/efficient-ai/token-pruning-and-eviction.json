@@ -1,6 +1,315 @@
 {
   "days": [
     {
+      "date": "2026-08-24",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Token compression has become a key technique for reducing the inference cost of large foundation models, with approaches such as token pruning and KV-cache reuse widely adopted in vision-language models and recently explored for embodied agents. In embodied agents, tokens not only support perception and semantic understanding but also directly affect latency-sensitive closed-loop robot action prediction. Existing schemes typically guide compression using redundancy or importance cues, such as visual similarity, attention scores, and saliency. However, these cues only indirectly measure the key factor for safe compression: how much a token can change before causing an unacceptable deviation in downstream actions. This receiver-dependent tolerance is closely related to the principle of just noticeable difference (JND). Classical JND characterizes signal tolerance in the human visual system, while machine-oriented JND extends this concept to downstream machine responses. Building on this progression, we introduce Action-JND, which extends JND modeling to embodied perception by defining noticeability through the language-conditioned action response of a vision-language-action (VLA) policy in closed-loop control. A token change is considered admissible only when the induced action deviation remains within a tolerated margin. To realize this concept, we develop a lightweight token-wise JND estimator in deep visual-feature space to predict the maximum tolerable perturbation while preserving policy responses. The resulting action-tolerance score serves as a plug-and-play criterion for VLA compression paradigms, including stale-KV reuse and token pruning, prioritizing action-tolerant tokens for compression. Experiments on the LIBERO benchmark with OpenVLA and OpenVLA-OFT demonstrate that Action-JND consistently improves compression reliability, especially under aggressive compression ratios.",
+          "arxiv_id": "2608.21247",
+          "arxiv_url": "https://arxiv.org/abs/2608.21247",
+          "authors": [
+            "Zhuoyuan Li, Rui Zhao, Jin Wang, Hanwei Zhu, Cong Zhang, Giuseppe Valenzise, Weisi Lin, Kin-Man Lam"
+          ],
+          "bullets": [
+            "Existing compression cues such as visual redundancy, attention, and saliency do not directly measure action safety.",
+            "Action-JND defines token noticeability through language-conditioned action deviations in closed-loop control.",
+            "A lightweight feature-space estimator predicts each token’s maximum tolerable perturbation while preserving policy responses.",
+            "The action-tolerance score plugs into stale-KV reuse and token-pruning methods, prioritizing action-tolerant tokens.",
+            "Experiments with OpenVLA and OpenVLA-OFT on LIBERO show consistently more reliable compression, especially at aggressive ratios."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overall framework of Action-JND-aware token compression. Given a visual observation and a language instruction, the VLA model extracts visual tokens and language tokens for action prediction. A trainable Action-JND estimator predicts token-wise perturbation maps from the projected visual-token features. These maps are converted into action-tolerance scores that quantify the action tolerance of individual tokens. (1) The token-selection module ranks candidate visual tokens according to their JND scores, optionally together with framework-specific compression cues. (2) For KV-cache reuse, action-tolerant tokens reuse their cached key/value states from previous control steps, while action-sensitive tokens are recomputed. (3) For token pruning, highly actiontolerant tokens are removed from subsequent computation, whereas action-sensitive tokens are preserved.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 485,
+              "image_path": "figures/2608.21247/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1019
+            },
+            {
+              "caption": "Fig. 3. Architecture of the Action-JND estimator. For the single-view setting, projected visual tokens are reshaped into a 16× 16 spatial feature map and processed by a lightweight convolutional architecture consisting of a 3×3 spatial convolution, multiple spatial residual blocks, channel-mixing residual blocks, and a 1× 1 output projection. The predicted perturbations are then reshaped back into token space to form a token-wise Action-JND map. For the dual-view setting, primary-view and wrist-view tokens are processed by two independent JND estimators with the same architecture but independent parameters, and their outputs are concatenated to produce the final Action-JND map.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 417,
+              "image_path": "figures/2608.21247/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 904
+            },
+            {
+              "caption": "Fig. 4. Training pipeline of the Action-JND estimator. The VLA policy is frozen, and only the JND estimator is trainable. Given visual tokens and language tokens, the clean branch produces the original robot action, while the perturbed branch injects the predicted Action-JND perturbation into the visualtoken features and produces a perturbed action response. The Action-JND loss encourages action consistency between the clean and perturbed branches while maximizing perturbation magnitude. The figure illustrates the KL-based objective for discrete action-token prediction; for continuous-action policies, the action discrepancy is instantiated using an action-regression distance.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 552,
+              "image_path": "figures/2608.21247/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 499
+            },
+            {
+              "caption": "Fig. 5. Qualitative visualization of different token-compression baselines and Action-JND-aware token compression. The upper and lower rows show representative results for KV-cache reuse and token pruning on LIBERO, respectively. The red overlays indicate visual-token regions selected for stale-KV reuse or physical pruning. The last two columns show the Action-JND compression result and its corresponding JND heatmap. Each heatmap visualizes the tolerance of individual visual tokens to feature perturbations. Color transitions from dark purple/black to red, orange, and bright yellow, where brighter colors indicate higher JND values and stronger action tolerance, making the corresponding tokens more suitable for reuse or pruning. In contrast, darker colors indicate action-sensitive regions that should be preserved or recomputed. The blue boxes in the JND heatmaps indicate the visual-token positions finally selected for stale-KV reuse or pruning. The step count denotes the number of control timesteps required for task execution, together with the final success or failure status.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 509,
+              "image_path": "figures/2608.21247/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1020
+            },
+            {
+              "caption": "Fig. 1. From classical signal-oriented JND to machine-oriented JND for embodied perception. (1) Classical signal coding characterizes the trade-off between mathematical signal fidelity and signal-content change, where compression quality is usually evaluated using signal-level distortion. (2) Humanoriented JND introduces perceptual benefit zones, where signal changes remain unnoticeable to human observers despite measurable signal distortion. (3) Machine-oriented JND extends receiver-dependent tolerance to machine responses, where noticeability is determined by downstream task responses, such as classification and detection. (4) For embodied perception, we further instantiate the machine-oriented JND boundary with respect to action responses in a VLA-based embodied interaction environment, where noticeability is determined by whether changes in visual representations induce a tolerable deviation in the language-conditioned robot action during closed-loop control.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 244,
+              "image_path": "figures/2608.21247/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1064
+            },
+            {
+              "caption": "TABLE I PERFORMANCE OF ACTION-JND AND KV-CACHE BASELINES ON OPENVLA ON THE LIBERO BENCHMARK [50]. VANILLA OPENVLA SERVES AS THE UNCOMPRESSED REFERENCE. FOR EACH REUSE SETTING, SUCCESS RATES (%) ON Spatial, Object, Goal, AND Long AND THEIR MEAN (Acc.) ARE REPORTED. ∆ACC. DENOTES THE ACCURACY DIFFERENCE RELATIVE TO VLA-CACHE [22] UNDER THE SAME SETTING. FLOPS, RELATIVE FLOPS, CUDA LATENCY, LATENCY DIFFERENCE RELATIVE TO VANILLA OPENVLA, AND CONTROL FREQUENCY ARE ALSO REPORTED. BLUE AND RED INDICATE THE BEST AND WORST RESULTS, RESPECTIVELY, WITHIN EACH REUSE SETTING ACCORDING TO THE INDICATED ↑ / ↓ DIRECTION, WHILE PINK ROWS HIGHLIGHT ACTION-JND",
+              "figure_id": "table-I-6",
+              "figure_number": "I",
+              "height": 663,
+              "image_path": "figures/2608.21247/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE II PERFORMANCE OF ACTION-JND AND KV-CACHE BASELINES ON OPENVLA-OFT ON THE LIBERO BENCHMARK [50]. VANILLA OPENVLA-OFT SERVES AS THE UNCOMPRESSED REFERENCE. FOR EACH REUSE SETTING, SUITE-WISE AND AVERAGE SUCCESS RATES ARE REPORTED, WITH ∆ACC. DENOTING THE ACCURACY DIFFERENCE FROM VLA-CACHE [22] UNDER THE SAME SETTING. FLOPS, RELATIVE FLOPS, CUDA LATENCY, LATENCY DIFFERENCE FROM VANILLA OPENVLA-OFT, AND CONTROL FREQUENCY ARE ALSO REPORTED. THE COLOR ANNOTATIONS FOLLOW TABLE I",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 662,
+              "image_path": "figures/2608.21247/table-007.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE III PERFORMANCE OF ACTION-JND AND TOKEN-PRUNING BASELINES ON OPENVLA ON THE LIBERO BENCHMARK [50]. VANILLA OPENVLA SERVES AS THE UNCOMPRESSED REFERENCE. FOR EACH PRUNING SETTING, SUITE-WISE AND AVERAGE SUCCESS RATES ARE REPORTED, WITH ∆ACC. DENOTING THE ACCURACY DIFFERENCE RELATIVE TO THE VLA-CACHE-BASED PRUNING BASELINE [22] UNDER THE SAME SETTING. FLOPS, RELATIVE FLOPS, CUDA LATENCY, LATENCY DIFFERENCE RELATIVE TO VANILLA OPENVLA, AND CONTROL FREQUENCY ARE ALSO REPORTED. THE COLOR ANNOTATIONS FOLLOW TABLE I",
+              "figure_id": "table-III-7",
+              "figure_number": "III",
+              "height": 549,
+              "image_path": "figures/2608.21247/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 1076
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.21247/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2608.21247",
+          "relevance": 9,
+          "selection_reason": "Introduces Action-JND for token compression in VLA models, directly relevant to Embodied AI (Vision-Language-Action) and Efficient AI (Token Pruning).",
+          "summary_status": "generated",
+          "title": "Just Noticeable Difference Modeling for Token Compression in Vision-Language-Action Models",
+          "tldr": "Action-JND compresses VLA tokens according to how much their changes affect downstream robot actions, improving reliability under aggressive compression.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Efficient-transformer research often motivates token pruning and adaptive computation with the claim that not all tokens require equal computational effort. We test this claim end to end using SEWN, a two-stream Transformer that routes tokens through either lightweight or full-capacity processing using a learned gate. Across our experiments, routing introduces negligible accuracy change relative to parameter-matched baselines, while the gate's token-importance signal depends critically on how it is learned. A static lexicon-seeded prior fails a counterfactual faithfulness test on BoolQ, whereas a fully contextual gate achieves highly significant separation ($p<10^{-10}$) on both evaluated tasks without changing task accuracy.",
+          "arxiv_id": "2608.20632",
+          "arxiv_url": "https://arxiv.org/abs/2608.20632",
+          "authors": [
+            "Sai Krishna Arthanari, JaeHyeong Chang, Chengzhe Sun, Siwei Lyu"
+          ],
+          "bullets": [
+            "Tests whether all tokens need equal computational effort in efficient Transformers.",
+            "Introduces SEWN, a two-stream Transformer with a learned gate routing tokens to lightweight or full-capacity processing.",
+            "Routing causes negligible accuracy change versus parameter-matched baselines.",
+            "A static lexicon-based prior fails counterfactual faithfulness on BoolQ.",
+            "A fully contextual gate separates token importance significantly on both evaluated tasks without changing accuracy."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. SEWN core architecture. The gate score g splits each token’s embedding between the cheap function-word stream and the expensive, BERTinitialized content stream before fusion.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 296,
+              "image_path": "figures/2608.20632/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 430
+            },
+            {
+              "caption": "Fig. 6. Top/random/bottom-drop, all four Table X methods. SEWN-randomtopk’s bars are jumbled (null result); Mixture-of-Depths clearly separates top from the other two but doesn’t order bottom below random.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 245,
+              "image_path": "figures/2608.20632/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 486
+            },
+            {
+              "caption": "Fig. 4. Accuracy vs. throughput, PubMedQA (Table V). SEWN-sparse trades the most accuracy for the largest throughput gain; no model is above and to the right of another.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 341,
+              "image_path": "figures/2608.20632/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 476
+            },
+            {
+              "caption": "Fig. 5. Faithfulness vs. extra inference cost, PubMedQA (Table VII). SEWNsparse sits in the upper-left corner: highest faithfulness, lowest cost.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 350,
+              "image_path": "figures/2608.20632/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 479
+            },
+            {
+              "caption": "Fig. 3. RoBERTa/BoolQ counterfactual faithfulness across the entire staticprior size range, including the no-prior contextual gate (leftmost). No size passes; there is no trend to exploit.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 237,
+              "image_path": "figures/2608.20632/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 486
+            },
+            {
+              "caption": "Fig. 2. SEWN-sparse token selection. Shaded tokens are selected by the gate and reach the content stream; all tokens (selected or not) still reach the cheap function stream.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 217,
+              "image_path": "figures/2608.20632/figure-006.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 450
+            },
+            {
+              "caption": "TABLE IV BOOLQ k-SWEEP, 3 SEEDS, LATENCY AT SEQUENCE LENGTH 384, BATCH 16. SPEEDUP IS RELATIVE TO BERT-BASE (33.35MS); SEWN-CONTEXTUAL-GATE (DENSE, NO PRUNING) MEASURES 14.97MS AT THE SAME SETTING, I.E. 2.23× OVER BERT-BASE FROM ARCHITECTURE ALONE, BEFORE ANY PRUNING.",
+              "figure_id": "table-IV-12",
+              "figure_number": "IV",
+              "height": 123,
+              "image_path": "figures/2608.20632/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 454
+            },
+            {
+              "caption": "TABLE VII FAITHFULNESS AND COST, PUBMEDQA (n = 200 FOR FAITHFULNESS; COST MEASURED AT BATCH SIZE 16, SEQUENCE LENGTH 512).",
+              "figure_id": "table-VII-2",
+              "figure_number": "VII",
+              "height": 201,
+              "image_path": "figures/2608.20632/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "TABLE VIII CONSOLIDATED EFFICIENCY AND SPEEDUP COMPARISON ACROSS EVALUATED DATASETS (BATCH 16, RTX 4090).",
+              "figure_id": "table-VIII-3",
+              "figure_number": "VIII",
+              "height": 150,
+              "image_path": "figures/2608.20632/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 840
+            },
+            {
+              "caption": "TABLE IX FIVE TASK CATEGORIES, 3 SEEDS EACH (WINOGRANDE/IMDB/RACE) OR AS NOTED.",
+              "figure_id": "table-IX-4",
+              "figure_number": "IX",
+              "height": 157,
+              "image_path": "figures/2608.20632/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 744
+            },
+            {
+              "caption": "TABLE III COUNTERFACTUAL MASKING TEST, BOOLQ / SWAG (n = 200, 20% OF TOKENS MASKED).",
+              "figure_id": "table-III-11",
+              "figure_number": "III",
+              "height": 121,
+              "image_path": "figures/2608.20632/table-011.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 840
+            },
+            {
+              "caption": "TABLE XI SEWN-LEAN, BEFORE AND AFTER DISTILLATION FROM A SEWN-CONTEXTUAL-GATE TEACHER.",
+              "figure_id": "table-XI-9",
+              "figure_number": "XI",
+              "height": 123,
+              "image_path": "figures/2608.20632/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 768
+            },
+            {
+              "caption": "TABLE V PUBMEDQA, 3 SEEDS, SEQUENCE LENGTH 512, BATCH 16.",
+              "figure_id": "table-V-14",
+              "figure_number": "V",
+              "height": 120,
+              "image_path": "figures/2608.20632/table-013.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 492
+            },
+            {
+              "caption": "TABLE VI COUNTERFACTUAL TEST, PUBMEDQA.",
+              "figure_id": "table-VI-13",
+              "figure_number": "VI",
+              "height": 83,
+              "image_path": "figures/2608.20632/table-014.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 557
+            }
+          ],
+          "first_seen_at": "2026-08-24T22:21:25.041581-04:00",
+          "hero_figure": "figures/2608.20632/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.20632",
+          "relevance": 9,
+          "selection_reason": "Directly addresses token routing and pruning in transformers, matching the token pruning subtopic.",
+          "summary_status": "generated",
+          "title": "Sparse Token Routing in Efficient Transformers",
+          "tldr": "SEWN shows that adaptive token routing can reduce computation without hurting accuracy, but meaningful token-importance signals require contextual learning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-21",
       "paper_count": 2,
       "papers": [
@@ -342,5 +651,5 @@
   "schema_version": 1,
   "subtopic_id": "token-pruning-and-eviction",
   "topic_id": "efficient-ai",
-  "total_paper_count": 2
+  "total_paper_count": 4
 }

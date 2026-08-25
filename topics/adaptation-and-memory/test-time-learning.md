@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**4 papers total**
+**6 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [Rethinking Expressivity and Efficiency in Test-Time Training](https://arxiv.org/abs/2608.21308) | Adaptation and Memory: Test-Time Learning | E²-TTT preserves the expressive per-token dynamics of test-time training while enabling efficient parallel chunk-wise computation. | 9 | 8 |
+| 2026-08-24 | [Latent Ordinal Evidence, Misaligned Outputs: Inference-Time Ordinal Lens Alignment for Multimodal LLMs](https://arxiv.org/abs/2608.20999) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | Ordinal evidence is strong in MLLM hidden states but poorly expressed as digit tokens, so Ordinal Lens Alignment improves ordinal predictions at inference time without updating the backbone. | 7 | 7 |
 | 2026-08-23 | [TTSD-FAR: Test-Time Self-Distillation with Fisher-Anchored Restoration for Missing-Modality Emotion Recognition in LVLMs](https://arxiv.org/abs/2608.18386) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | TTSD-FAR enables LVLMs to recognize emotions under arbitrary missing modalities while adapting at test time without accumulating drift. | 8 | 7 |
 | 2026-08-22 | [From Inference to Adaptation: A Unified Optimal Transport View of Vision Language Model](https://arxiv.org/abs/2608.18339) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; Adaptation and Memory: Test-Time Learning | A unified optimal-transport framework improves vision-language model test-time adaptation by generating robust pseudo-labels and aligning inference with fine-grained adaptation objectives. | 7 | 7 |
 | 2026-08-21 | [PETA:Parameter-Efficient Test-Time Adaptation for Virtual Screening](https://arxiv.org/abs/2608.19906) | Adaptation and Memory: Test-Time Learning | PETA improves virtual screening by adapting only LayerNorm parameters at test time to specialize pretrained models for individual protein pockets. | 5 | 6 |

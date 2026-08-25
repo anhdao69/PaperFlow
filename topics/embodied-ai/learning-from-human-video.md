@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**3 papers total**
+**7 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-24 | [ViTacPhys: Physical Property-Aware Grasping from Human Visual-Tactile Demonstrations](https://arxiv.org/abs/2608.21355) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | ViTacPhys estimates object physical properties from human visual-tactile demonstrations and uses them to enable adaptive robot grasping. | 9 | 8 |
+| 2026-08-24 | [Demonstration-Guided Humanoid Stand-Up on an Emulated Deformable Surface](https://arxiv.org/abs/2608.20852) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | A reference-guided reinforcement-learning policy adapts a humanoid’s demonstrated stand-up motion to soft, deformable ground while preserving the recovery pattern. | 8 | 7 |
+| 2026-08-24 | [AffordAny: Open-World 3D Affordance Grounding from Monocular RGB Images via Vision-Language-Guided Geometric Reasoning](https://arxiv.org/abs/2608.20720) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; Multimodal Foundation Models: Spatial Intelligence | AffordAny enables open-world 3D affordance grounding from a single monocular RGB image by combining vision-language features, geometric reasoning, and pseudo-label self-training. | 8 | 8 |
+| 2026-08-24 | [Identity-Aware Human-Object Interaction Motion Captioning](https://arxiv.org/abs/2608.20690) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | ID-HOINet generates human-object interaction motion captions that identify the acting subject rather than referring to them generically. | 5 | 6 |
 | 2026-08-21 | [DreamHand: Repurposing Video Diffusion Models for Occlusion-Robust Egocentric 3D Hand Motion Recovery](https://arxiv.org/abs/2608.20308) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | DreamHand repurposes video diffusion models as deterministic geometry encoders to recover metric, continuous bimanual 3D hand motion despite occlusion and out-of-sight gaps. | 7 | 8 |
 | 2026-08-21 | [G3Ego: Gaze-Guided Graphs for Egocentric Action Understanding](https://arxiv.org/abs/2608.20157) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | G3Ego uses gaze-guided scene graphs to focus egocentric action recognition and anticipation on the few entities involved in hand-object interactions. | 7 | 7 |
 | 2026-08-21 | [Towards Professional Tennis Styles for Humanoid Robots with Adaptive Motion Planning and Tracking](https://arxiv.org/abs/2608.20087) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | AdaPT enables humanoid robots to perform more professional tennis serves and rallies by combining style-aware motion planning with adaptive real-world tracking. | 8 | 7 |
