@@ -29,6 +29,7 @@ def test_enabled_checked_in_workflow_is_synced_and_gates_scheduled_runs() -> Non
     assert '    - cron: "0 2 * * *"' in workflow
     assert "workflow_dispatch:" in workflow
     assert "cancel-in-progress: false" in workflow
+    assert "ref: main" in workflow
     assert "OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}" in workflow
     assert 'if [ "${{ github.event_name }}" = "workflow_dispatch" ]' in workflow
     assert "python -m paperflow.main --manual" in workflow

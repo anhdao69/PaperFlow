@@ -2,7 +2,7 @@
 
 - Status: as-built product contract
 - Product version: V1
-- Updated: 2026-08-22
+- Updated: 2026-08-25
 - Supersedes for implementation: `PaperFlow_Technical_Plan_v3_2.md`
 - Decisions: `../architecture/IMPLEMENTATION_DECISIONS_v1.md`
 - UI contract: `../ui/PaperFlow_UI_UX_SPEC.md`
@@ -133,33 +133,36 @@ The scheduled workflow is `.github/workflows/paperflow-daily.yml`.
 
 1. GitHub starts one of two UTC cron candidates, 01:00 or 02:00 UTC. Both are
    required because New York changes between daylight and standard time.
-2. The application-level due gate converts the trigger to
+2. After acquiring the serialized workflow slot, the job explicitly checks out
+   the latest `main`. This prevents a queued cron event from reading the stale
+   run state captured before an earlier trigger published.
+3. The application-level due gate converts the trigger to
    `America/New_York`. It runs only at or after 9:00 PM local time and only if
    that local date has not already succeeded.
-3. Configuration, prompts, taxonomy, and prior run state are loaded and
+4. Configuration, prompts, taxonomy, and prior run state are loaded and
    validated.
-4. Taxonomy changes are planned and applied in memory. Ambiguous or unsafe
+5. Taxonomy changes are planned and applied in memory. Ambiguous or unsafe
    migrations stop the run before publication.
-5. New arXiv entries are fetched, normalized, replacement entries excluded,
+6. New arXiv entries are fetched, normalized, replacement entries excluded,
    and duplicates merged by versionless arXiv ID.
-6. Terminal prior screening decisions are reused. Eligible failed items enter
+7. Terminal prior screening decisions are reused. Eligible failed items enter
    the bounded retry backlog.
-7. The filter LLM assigns KEEP/DROP/FAILED, scores relevance and novelty, and
+8. The filter LLM assigns KEEP/DROP/FAILED, scores relevance and novelty, and
    returns topic assignments under the current taxonomy.
-8. Every kept paper without a valid cached summary receives a structured
+9. Every kept paper without a valid cached summary receives a structured
    summary. Valid unchanged summaries are reused.
-9. PDFs are downloaded and processed by the pinned PDFFigures2 revision.
+10. PDFs are downloaded and processed by the pinned PDFFigures2 revision.
    Crops are normalized to WebP, a deterministic hero is selected, and all
    usable crops are retained for the detail carousel.
-10. Day feeds, topic feeds, indexes, Markdown, and website files are rendered
+11. Day feeds, topic feeds, indexes, Markdown, and website files are rendered
     into a staging area and validated against typed public contracts.
-11. Valid staged files replace their destinations atomically. Marker-confirmed
+12. Valid staged files replace their destinations atomically. Marker-confirmed
     stale generated topic/day files are removed only after validation.
-12. Canonical papers, taxonomy snapshot, run statistics, and successful run
+13. Canonical papers, taxonomy snapshot, run statistics, and successful run
     state are validated and written.
-13. The workflow runs repository publication validation, commits only the
+14. The workflow runs repository publication validation, commits only the
     generated allowlist, and pushes it to `main`.
-14. Completion of a successful daily workflow triggers the Pages workflow via
+15. Completion of a successful daily workflow triggers the Pages workflow via
     `workflow_run`, which publishes the public site/feed from the updated
     `main` branch. Direct qualifying pushes and manual dispatch remain valid
     deployment paths. The iPhone receives the publication on the next launch
