@@ -6,6 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**0 papers total**
+**8 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-25 | [OptiSight: Bridging Semantic Reasoning and Geometric Control for Embodied Navigation](https://arxiv.org/abs/2608.23354) | Embodied AI: Vision-Language Navigation | OptiSight combines sparse vision-language reasoning with deterministic visual servoing for zero-shot indoor navigation without dense mapping. | 8 | 7 |
+| 2026-08-25 | [SuperMap: A Spatio-Temporal SLAM System for Visual-Language Navigation](https://arxiv.org/abs/2608.22896) | Embodied AI: Vision-Language Navigation, Robot Navigation | SuperMap enables language-guided robot navigation by maintaining stable, queryable 4D semantic maps despite intermittent perception and changing environments. | 9 | 7 |
+| 2026-08-25 | [Minimal Local Simulation Foundations for LLM- and VLM-Driven Agents in 2D and 3D Environments](https://arxiv.org/abs/2608.22833) | Embodied AI: Vision-Language Navigation | Two minimal, locally runnable simulation foundations enable education and rapid prototyping of LLM- and VLM-driven agents in 2D and 3D environments. | 6 | 5 |
+| 2026-08-25 | [RACO: Reliability-Aware Coarse-Goal Optimization for Inspection-Oriented UAV Vision-Language Navigation](https://arxiv.org/abs/2608.22678) | Embodied AI: Vision-Language Navigation | RACO improves inspection-oriented UAV navigation by treating coarse goals as uncertain hypotheses and correcting them with object-level evidence before final verification. | 8 | 6 |
+| 2026-08-25 | [EndoNav: Semantic-to-Geometric Grounding for Language-Guided Robotic Endoscopic Examination](https://arxiv.org/abs/2608.22093) | Embodied AI: Vision-Language Navigation | EndoNav translates spoken, high-level anatomical commands into patient-specific, geometry-constrained robotic endoscope behaviors for autonomous sinus examination. | 8 | 7 |
+| 2026-08-25 | [ViSMoE: Visual-Aware Sparse Mixture-of-Experts for Embodied Referring Expression Grounding](https://arxiv.org/abs/2608.21878) | Embodied AI: Vision-Language Navigation | ViSMoE improves embodied referring expression grounding by using visual-aware sparse mixture-of-experts to separately represent navigation views and target objects. | 9 | 7 |
+| 2026-08-25 | [ExploreAI: Agentic Exploration Knowledge Bases for Reproducible Observable-Regression Testing of Black-Box VR and 3D Applications](https://arxiv.org/abs/2608.21628) | Embodied AI: Vision-Language Navigation | ExploreAI uses an LLM-guided exploration agent to create reusable knowledge bases that make black-box VR and 3D regression failures easier to reproduce. | 6 | 7 |
+| 2026-08-25 | [ODG-NoMaD: Overhead-Camera Direction-Guided NoMaD](https://arxiv.org/abs/2608.21395) | Embodied AI: Vision-Language Navigation, Robot Navigation | ODG-NoMaD guides NoMaD’s unguided exploration toward globally planned directions using a one-time overhead map and onboard obstacle refinement, without retraining the policy. | 8 | 7 |

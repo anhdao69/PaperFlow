@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**6 papers total**
+**11 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-25 | [Sigmoid Attention as a Better Substrate for Learned KV Cache Eviction](https://arxiv.org/abs/2608.23296) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Sigmoid attention makes learned soft KV-cache gates transfer more effectively to hard token eviction, preserving language-model quality better than softmax gates in matched cache settings. | 8 | 7 |
+| 2026-08-25 | [RS$^3$-Prune: Read-Sparse, Store-Sparse Token Pruning for Video Object Segmentation](https://arxiv.org/abs/2608.22526) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | RS$^3$-Prune is a training-free, plug-in token-pruning method that makes video object segmentation faster and more memory-efficient while maintaining competitive accuracy. | 8 | 7 |
+| 2026-08-25 | [DiD It in 87 Minutes: A Label-Free Softmax-to-Linear Adaptation of Vision Transformers for Object Detection](https://arxiv.org/abs/2608.22368) | Efficient AI: Efficient Attention | DiD converts trained Softmax-attention ViT detectors to efficient linear-attention models without labels by preserving detector-facing feature interfaces. | 9 | 8 |
+| 2026-08-25 | [Mamba-based Selective State Space Modeling Improves the Accuracy-Complexity Tradeoff of SmolVLA Vision-Language-Action Experts](https://arxiv.org/abs/2608.21407) | Embodied AI: Vision-Language-Action; Efficient AI: Efficient Attention | Replacing causal self-attention with Mamba in SmolVLA’s action expert improves the accuracy–compute tradeoff, especially when executing long action horizons. | 9 | 7 |
+| 2026-08-25 | [BF1: A Causal Dyadic Sparse-Attention Retrofit for Efficient Long-Context Transformers](https://arxiv.org/abs/2608.20427) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | BF1 retrofits pretrained transformers with deterministic dyadic sparse causal attention, reducing long-context attention cost while preserving competitive language-modeling quality and improving latency. | 9 | 8 |
 | 2026-08-24 | [GRAFT: Adaptive DLM-Based Draft Tree Construction with Target-Distilled Edge Scoring](https://arxiv.org/abs/2608.20375) | Efficient AI: Efficient Attention | GRAFT improves DLM-based speculative decoding by selecting more target-compatible draft-tree edges and adapting tree size to each decoding state. | 6 | 7 |
 | 2026-08-21 | [Ask Self, Ask Others: Relation Is All You Need](https://arxiv.org/abs/2608.20172) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Relation-first token mixing separates Self and Exchange relations before deriving information flow, achieving better validation NLL than MHA and strong efficiency across several variants. | 8 | 7 |
 | 2026-08-21 | [Learning how to Forget: Fine-tuning for Long-Context Sparse Attention](https://arxiv.org/abs/2608.19920) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | A hardware-efficient fine-tuning method lets transformer models co-adapt with sparse KV-cache attention policies for long-context inference. | 8 | 7 |

@@ -1,6 +1,1308 @@
 {
   "days": [
     {
+      "date": "2026-08-25",
+      "paper_count": 7,
+      "papers": [
+        {
+          "abstract": "An interactive world model must follow the user's actions, remember the places it has shown, and stream in real time. The tension is structural: control wants a short horizon, memory wants an unbounded one. ReWorld separates the two during training and bounds them at inference. Mixed per-head attention windows confine most heads to the recent past while a small set of global heads attends over the entire history, and random head routing keeps either capability from binding to particular heads; random chunk dropping makes sparse histories in-distribution. At inference the whole past lives under a fixed budget: a bounded KV cache backed by a pose-indexed landmark bank, from which the model retrieves the landmarks nearest the current pose. A metric-scale-aligned data engine places eight sources -- Unreal-rendered fly-throughs, game roaming, and real-world footage -- on one physical action scale, so the same key press moves the camera the same distance in every source, and palindrome trajectories supply the revisit evidence that memory training needs. Distribution-matching distillation confined to a LoRA adapter then compresses sampling to four steps: one backbone serves both a high-fidelity multi-step mode and a real-time interactive one, streaming 704x1280 video across photorealistic, game-style, and stylized worlds. Under a three-axis protocol covering action following, long-horizon recall, and video quality, against six recent interactive world models it attains the best control fidelity ($11.95^\\circ$ rotation error and the best camera-motion consistency) and the best generation quality; and on minute-long out-and-back rollouts ($64$\\,s, $384$ latents), its fixed 12-chunk cache still regenerates the starting view -- at rollout lengths where a sliding window has long evicted the evidence and full-KV attention runs out of memory.",
+          "arxiv_id": "2608.23565",
+          "arxiv_url": "https://arxiv.org/abs/2608.23565",
+          "authors": [
+            "Zhifei Chen, Luozhou Wang, Guibao Shen, Dongyu Yan, Shuai Yang, Tianshuo Xu, Yihua Du, Wei Wang, Tianyi Gui, Lianghua Huang, Yingcong Chen"
+          ],
+          "bullets": [
+            "Separates short-horizon control from long-horizon memory using mixed local/global attention, random head routing, and sparse-history training.",
+            "Uses a bounded KV cache plus a pose-indexed landmark bank to retrieve relevant past observations during interaction.",
+            "Trains on metric-scale-aligned synthetic and real video sources, with palindrome trajectories enabling revisit-based memory learning.",
+            "Distills generation into four steps with a LoRA adapter, supporting both high-fidelity multi-step and real-time interactive modes.",
+            "Reports strong control fidelity and video quality, while retaining the ability to regenerate starting views in minute-long out-and-back rollouts with a fixed cache."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2 Overview of ReWorld. Left: a metric-aligned data pipeline places UE-rendered, real-world, and game footage on a single physical action scale, and palindrome routes—the camera retracing its own path—supply revisit supervision (Sec. 3). Middle: teacher-forcing training turns the bidirectional backbone into a streaming world model, with a DMD LoRA trained alongside for few-step real-time inference (Secs. 2.2 and 2.4); control (action injection, local short-window heads) and memory (MRoPE pose-indexed attention, global long-window heads) are decoupled, and the partition into global and local heads is switched every step through a fixed pool of random partitions so that neither capability binds to particular heads (Sec. 2.2); chunk-drop training masks random parts of the history, matching the sparse cache the model will read at inference (Sec. 2.3). Right: at inference, a fixed cache budget holds a sink chunk, pose-retrieved landmarks, and a recent window next to the chunk being generated; chunks aging out of the recent window are consolidated into a bounded landmark bank and retrieved by pose proximity upon revisits, so spatial memory persists over unbounded rollouts at constant cost (Sec. 2.3).",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 492,
+              "image_path": "figures/2608.23565/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 986
+            },
+            {
+              "caption": "Figure 6 The four-stage data pipeline. Eight UE, real-world, and game sources; an automated UE service renders 337 environments with NavMesh-based trajectory planning (the control pattern anchors each path at two points of interest and fills the segment between them with direction-balanced random motion); a curation funnel filters each pool and evens out on-screen speed by dropping too-fast and too-slow clips; unification then rescales the pose numbers to one shared metric scale — the same action moves the camera the same distance — before clip-level sampling.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 363,
+              "image_path": "figures/2608.23565/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 986
+            },
+            {
+              "caption": "Figure 8 Qualitative memory comparison on a strafe-and-return rollout. All methods start from the same input frame and execute the same lateral palindrome—the camera strafes left, then retraces the same line back to the start, without ever turning—so the last column should reproduce the first: the same landmarks, in the same places. Columns are latents 0/8/28/48/72/94 of a k=96 rollout; each baseline is driven through its native control interface. ReWorld (top row; bounded cache B=12 with the landmark bank, four-step distilled) returns to the input view with the layout intact, whereas the baselines either drift off the commanded path or regenerate the revisited region with altered geometry.",
+              "figure_id": "figure-8-11",
+              "figure_number": "8",
+              "height": 550,
+              "image_path": "figures/2608.23565/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 970
+            },
+            {
+              "caption": "Figure 4 Memory consolidation under a fixed KV budget. Left: at inference the cache holds one sink, six poseretrieved landmarks, and five recent chunks (B=12); a chunk aging out of the recent window is consolidated into the bounded landmark bank—kept sparse and diverse—and re-enters the cache when the camera returns nearby (a full bank evicts its most redundant member). Right: chunk-drop training randomly masks past chunks at every step, so such sparse caches are in-distribution.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 306,
+              "image_path": "figures/2608.23565/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 986
+            },
+            {
+              "caption": "Figure 3 Mixed per-head attention windows, routed from a pattern pool. Left: local heads attend to the last w=12 frames (reactive control); global heads attend to the full causal history (long-range memory). Right: each optimizer step switches to the next of |P|=12 random head partitions, so neither ability binds to particular heads.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 258,
+              "image_path": "figures/2608.23565/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 986
+            },
+            {
+              "caption": "Figure 5 Real-time distillation. A captiondomain DMD LoRA plugs into the frozen backbone; the control path carries no LoRA.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 331,
+              "image_path": "figures/2608.23565/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 417
+            },
+            {
+              "caption": "Figure 7 Constructed palindrome trajectories. The camera moves out (blue) and retraces its path (orange), so the needle view at t=0 must be regenerated at t=k−1; scored mirror pairs (t, k−1−t) span at least half the rollout.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 229,
+              "image_path": "figures/2608.23565/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 940
+            },
+            {
+              "caption": "Table 4 Long-horizon memory against the six interactive world-model baselines on the palindromic revisit bench: absolute revisit-similarity scores (SSIM, LPIPS, DINO, ORB) at rollout lengths k=48 and k=96 latents, alongside the executed path length (accumulated median optical flow of the outbound half, px). Every method receives the same action commands, but how far it actually travels differs, and a shorter path generally yields higher revisit scores. k=48 is a sanity length that several baselines can solve from context alone; k=96 forces recall from beyond every bounded window. Best per column in bold, second best underlined; path length is descriptive, not ranked.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 254,
+              "image_path": "figures/2608.23565/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 986
+            },
+            {
+              "caption": "Table 3 Camera controllability on the 40-image × 6-trajectory benchmark (240 clips per method). Overall RotErr, TransErr, and CamMC (↓) averaged over all trajectories, followed by per-trajectory RotErr (◦, ↓) after Sim(3) and global orientation alignment. Best per column in bold.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 226,
+              "image_path": "figures/2608.23565/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 986
+            },
+            {
+              "caption": "Table 2 The eight-source joint training corpus. #Clips are counts after per-source filtering (Sec. 3.4); Duration is the per-clip length; Pose gives the camera-trajectory provenance; Caption gives the text-annotation provenance.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 285,
+              "image_path": "figures/2608.23565/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 960
+            },
+            {
+              "caption": "Table 6 Revisit SSIM↑ on the long-rollout memory test (Sec. 4.3) at four rollout lengths k. Upper block: the training recipe is varied with the inference arm fixed to our consolidation. Lower block: the inference cache policy is varied on the final recipe; full-KV is the unbounded upper bound (OOM beyond k=192).",
+              "figure_id": "table-6-6",
+              "figure_number": "6",
+              "height": 286,
+              "image_path": "figures/2608.23565/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 460
+            },
+            {
+              "caption": "Table 1 Pose conditioning in attention: design comparison. Two-pass designs such as HY-World 1.5 add a camera-aware attention pass next to the temporal-RoPE pass and fuse the outputs; E-PRoPE trims the second pass to spatially reduced tokens; MRoPE folds pose into the same pass, leaving the attention kernel, mask layout, and per-head windows unchanged.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 102,
+              "image_path": "figures/2608.23565/table-012.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1002
+            },
+            {
+              "caption": "Table 7 Control–memory decoupling study: control metrics on the long-rollout memory test (Sec. 4.3) for the three fusion variants.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 92,
+              "image_path": "figures/2608.23565/table-013.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 494
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.23565/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.23565",
+          "relevance": 9,
+          "selection_reason": "Interactive world model with long-horizon memory and video generation.",
+          "summary_status": "generated",
+          "title": "ReWorld: An Interactive World Model with Long-Horizon Memory",
+          "tldr": "ReWorld is an interactive world model that combines precise action control with long-horizon spatial memory under a fixed inference budget.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "World models can predict video without learning dynamics that they reliably preserve. We test whether a frozen DreamerV3 trained only on pendulum video learns a scalar that its own latent transition treats as approximately conserved. A label-free search recovers the same energy-like invariant across independently trained conservative models, while the same procedure finds no comparable invariant in matched damped models. During autonomous rollouts, this quantity drifts. Projecting the latent state back toward its initial level set reduces rollout error in all three conservative models, whereas matched random constraints usually increase it. These results distinguish a dynamically meaningful invariant from a merely decodable correlate and reveal a concrete failure mode: a world model can learn a physical constraint from pixels yet violate that constraint when it imagines forward.",
+          "arxiv_id": "2608.23526",
+          "arxiv_url": "https://arxiv.org/abs/2608.23526",
+          "authors": [
+            "Richard Bao"
+          ],
+          "bullets": [
+            "Frozen DreamerV3 models trained on pendulum video learn an approximately conserved scalar despite no explicit labels.",
+            "A label-free search recovers the same invariant across independently trained conservative models, but not matched damped models.",
+            "The invariant drifts during imagined rollouts, revealing a violation of learned physical dynamics.",
+            "Projecting latent states toward the initial invariant level set reduces rollout error in all three conservative models.",
+            "Random constraints generally increase rollout error, supporting the invariant’s dynamical significance."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Each point is one of the 12 extracted directions, ranked within its own model; the dotted line marks equal ranks. (a) Variance rank against damage rank at a 40-step horizon. (b) Damage rank against the magnitude of the invariant correction along that direction.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 443,
+              "image_path": "figures/2608.23526/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 970
+            },
+            {
+              "caption": "Figure 1: Each point represents one model. (a) The three trained conservative models recover energy correlations between 0.967 and 0.975, while six untrained models span 0.17–0.91. (b) The recovered scalar changes very little within observation-conditioned trajectories for conservative models and much more for damped models. (c) Rollout error as a function of projection strength α, relative to no edit. Enforcing the recovered constraint lowers error; enforcing a matched random polynomial constraint usually raises it; applying the recovered constraint to a damped model changes little.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 327,
+              "image_path": "figures/2608.23526/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 972
+            },
+            {
+              "caption": "Figure 2: Each row compares one model with its own null distribution. The 20 small marks are norm-matched random degree-4 constraints, using the same draws across models; the diamond is that model’s recovered constraint. Labels count the random constraints with a better dose-response slope than the recovered one.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 300,
+              "image_path": "figures/2608.23526/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 502
+            },
+            {
+              "caption": "Figure 5: (a) Energy-probe R2 for the top six principal directions against directions 7–12, per model. (b) Fraction of latent flow and pairing residual carried by each group, medians over three models.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 219,
+              "image_path": "figures/2608.23526/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 563
+            },
+            {
+              "caption": "Figure 4: Energy recovery and pairing residual against extraction dimension. Lines are medians over the three models; points are individual models. Both quantities are dimensionless.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 218,
+              "image_path": "figures/2608.23526/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 350
+            },
+            {
+              "caption": "Table 1: The same extraction pipeline applied to conservative and damped models. Each range covers three seeds. No conservative seed overlaps any damped seed on any row.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 140,
+              "image_path": "figures/2608.23526/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 636
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.23526/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.23526",
+          "relevance": 8,
+          "selection_reason": "Focuses on world models and video prediction, specifically correcting physical invariants in rollouts.",
+          "summary_status": "generated",
+          "title": "Correcting a learned physical invariant improves world-model rollouts",
+          "tldr": "Correcting a learned energy-like invariant substantially improves autonomous rollouts of conservative pendulum world models.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Despite their critical importance for policy and research, high-resolution poverty data remain limited across much of Africa. Machine learning (ML) with earth observation (EO) imagery has recently emerged as a way to supplement these data by predicting (i.e., estimating) poverty where it has not been directly measured. Yet to be used reliably, decision-makers and analysts need assurances that they will not be misled by the errors in these predictions. To meet this need, we develop an uncertainty-aware EO-ML method for poverty mapping based on simultaneous quantile regression and a novel form of conformal prediction. Using a spatiotemporal transformer trained on sequences of Landsat and nighttime-light images, we produce prediction intervals for neighborhood-level International Wealth Index estimates across Africa which are statistically guaranteed to achieve their desired coverage rates. While our method's point-prediction performance matches the state of the art, its prediction intervals are wider than might be expected given its high $R^2$ of $0.75$. However, other models of similar accuracy likely suffer from comparable uncertainty, pointing to an inherent limitation: even with its remarkably high explanatory power, EO-ML cannot naively be relied upon for policy-making, such as when designing poverty-targeting programs. To handle this challenge, we develop a procedure to efficiently allocate aid using both ground-truth surveys and model predictions while provably ensuring the risk of excluding eligible neighborhoods remains below a prespecified level. In simulations, this approach delivers substantially more aid per eligible recipient than other strategies, thereby demonstrating that EO-ML can indeed be a reliable supplement to traditional data sources---as long as methods",
+          "arxiv_id": "2608.23322",
+          "arxiv_url": "https://arxiv.org/abs/2608.23322",
+          "authors": [
+            "Markus B. Pettersson, James Bailie, Mohammad Kakooei, Eagon Meng, Adel Daoud"
+          ],
+          "bullets": [
+            "Addresses the limited availability of high-resolution poverty data across Africa.",
+            "Uses simultaneous quantile regression and conformal prediction with a spatiotemporal transformer trained on Landsat and nighttime-light sequences.",
+            "Produces neighborhood-level International Wealth Index prediction intervals with statistically guaranteed coverage rates.",
+            "Matches state-of-the-art point-prediction performance with an R² of 0.75, but reveals substantial residual uncertainty.",
+            "A risk-controlled allocation procedure combining surveys and predictions delivers more aid per eligible recipient in simulations while limiting exclusion risk."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Pipeline for Conformalized Thresholding (CT). (A) The simultaneous quantile-regression model maps Landsat and nighttime-light imagery to an initial prediction interval. These model-based intervals adapt to the input location but have no finite-sample coverage guarantee before calibration. (B) Using a held-out, labeled calibration set, CT measures one-sided errors relative to the policy threshold β separately for neighborhoods with Yi ≤ β and for neighborhoods with Yi > β. (C) From each set of errors, CT selects the conformal quantile associated with the target coverage rate α and uses it to adjust the corresponding interval bound, producing a calibrated thresholding interval for a new neighborhood. (D) If the calibrated interval lies entirely above β, the neighborhood is classified as “Above”; if it lies entirely below β, it is classified as “Below”; and if it overlaps β, CT abstains and returns “Indeterminate.” Under exchangeability, both the probability of misclassifying a neighborhood with Y ≤ β as “Above” and the probability of misclassifying a neighborhood with Y > β as “Below” are at most 1− α.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 610,
+              "image_path": "figures/2608.23322/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 712
+            },
+            {
+              "caption": "Figure 2: Strong aggregate predictive performance coexists with substantial local uncertainty. The main panel shows the distribution of 90% CQR prediction-interval widths across held-out DHS neighborhoods. Although the inset shows strong aggregate agreement between observed IWI and the median predictions (R2 = 0.753), matching reported values in prior works, the median interval is still 28.7 IWI points wide (orange). When centered on the mean observed IWI, an interval of this width contains 39.7% of the observations in the full dataset, illustrating how limited the model’s local precision remains despite its strong aggregate performance.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 490,
+              "image_path": "figures/2608.23322/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 720
+            },
+            {
+              "caption": "Figure 3: Neighborhood-level maps of predicted asset wealth (left) and uncertainty (right), measured as the width of the 90% prediction interval given by conformal quantile regression. Predicted wealth is highest in North Africa, along the Nile valley, in South Africa, and around cities and transport corridors, while most of the sub-Saharan interior shows low predicted IWI. There are clear spatial patterns for uncertainty as well, but they are not clearly correlated with wealth. For example, most of the relatively wealthy North Africa have wide prediction intervals, while Egypt does not.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 377,
+              "image_path": "figures/2608.23322/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 720
+            },
+            {
+              "caption": "Figure 5: Spatial allocation decisions produced by SAFE. SAFE is applied to populated raster cells in countries with DHS surveys completed after 2020, using the most recent national survey as the calibration set. Bar height is proportional to cell population, while color indicates whether aid is given directly, withheld, or preceded by a follow-up survey. In general, aid tends to be allocated directly to poorer rural areas, withheld from dense urban centers, and directed through surveys in more ambiguous areas, including many smaller cities. These patterns vary locally: panel D, for example, shows sparsely populated rural cells in the relatively wealthier South-East Nigeria being assigned surveys rather than direct aid.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 527,
+              "image_path": "figures/2608.23322/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 718
+            },
+            {
+              "caption": "Figure 4: Aid-allocation frontiers under varying exclusion tolerance. Curves show the mean aid delivered per eligible recipient across 17 countries as the maximum permitted share of eligible neighborhoods left without aid varies from 0 to 0.30. Shaded regions span the lowest- and highest-performing countries. SAFE achieves the highest return among the implementable strategies throughout and approaches the unattainable “Oracle” benchmark as the permitted exclusion rate increases.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 368,
+              "image_path": "figures/2608.23322/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 542
+            },
+            {
+              "caption": "Table 1: Results on using the different methods for threshold classification when the threshold β is 20 IWI and the target coverage α is 0.95. Our “Conformalized thresholding” (CT) method achieves the highest decision coverage of all methods respecting the α coverage. Red entries mark error rates that exceed the 5% targets; struck-out values are displayed for completeness but are not valid comparators, since the method attains them only by violating the error constraints. We use the total number of samples, not just the number of predictions, in the denominator when calculating Accuracy and Error Rate.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 175,
+              "image_path": "figures/2608.23322/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 764
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.23322/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.23322",
+          "relevance": 7,
+          "selection_reason": "Uses a spatiotemporal transformer to predict poverty levels with uncertainty quantification. This fits World Models (predicting environment dynamics) and Multimodal Foundation Models (spatial reasoning).",
+          "summary_status": "generated",
+          "title": "Beyond Point Predictions: Uncertainty-Aware Satellite Poverty Mapping for Public Policy",
+          "tldr": "An uncertainty-aware satellite ML framework makes poverty maps more policy-reliable by providing calibrated prediction intervals and risk-controlled aid allocation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "With the rapid progress of diffusion models and large-scale video generation, generative world models are increasingly expected to replace traditional simulators, including physics engines, game engines, and reinforcement-learning environments. Yet the remaining distance from generation to simulation lacks a systematic assessment. We present a capability-based study using an external yardstick: eight capabilities of a traditional simulator, namely asset construction, physics engine, interaction, controllability, stability, state feedback, diversity, and evaluation metrics. We trace three main technical routes--latent dynamics, video generation, and joint-embedding prediction--and map exactly 200 representative works published from 2018 to June 2026 onto these capabilities. Our analysis shows that world models have achieved functional substitution in interaction and controllability for specific scenarios, but remain short of traditional simulators in formal guarantees of physical laws, structured state feedback, and reproducible long-horizon evolution. State feedback is the most neglected cross-route shortcoming: only 6 of 163 implementation papers expose a runtime interface for querying entity states or physical parameters. We identify six research directions: formalized physics, a unified action interface, first-class state feedback, long-horizon stability, downstream-utility evaluation, and cross-route hybridization. Project page: https://github.com/AtongWang/world-model-simulators",
+          "arxiv_id": "2608.23070",
+          "arxiv_url": "https://arxiv.org/abs/2608.23070",
+          "authors": [
+            "Tong Wang, Huan Deng, Mucheng Yang, Yang He, Xiaohui Kuang, Gang Zhao"
+          ],
+          "bullets": [
+            "Assesses the gap between generative world models and traditional simulators across eight capabilities, including physics, interaction, controllability, stability, and state feedback.",
+            "Maps 200 representative works from 2018 to June 2026 across three approaches: latent dynamics, video generation, and joint-embedding prediction.",
+            "Finds functional substitution in interaction and controllability for specific scenarios.",
+            "Identifies state feedback as the most neglected capability: only 6 of 163 implementation papers provide runtime access to entity states or physical parameters.",
+            "Proposes six directions, including formalized physics, unified action interfaces, stronger state feedback, long-horizon stability, downstream-utility evaluation, and hybrid approaches."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Overview of the survey. Centred on “world model as simulator”, the eight capabilities of a traditional simulator are arranged around it: asset construction, physics engine, interaction, controllability, stability, state feedback, diversity, and evaluation metrics. Each capability panel reports its coverage as a principal contribution across the 200-paper corpus, a status tag (strength / structural gap / neutral), and representative works. Controllability (62.5%), interaction (40%), and stability (40%) are tagged as strengths; asset construction (19%), the physics engine (17%), and state feedback (22.5%) as cross-route structural gaps; and diversity (23%) and evaluation metrics (25.5%) remain neutral.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 721,
+              "image_path": "figures/2608.23070/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1079
+            },
+            {
+              "caption": "Fig. 3. Three principal routes to world modelling, distinguished by prediction space. A latent-dynamics model encodes observations into a compact state and rolls that state forward for decoding and control; a video-generative model predicts future observations directly in pixel or token space through diffusion or autoregressive generation; and a joint-embedding predictive model predicts a future representation against a target embedding without reconstructing pixels. The routes therefore expose different simulator interfaces: compact state for imagination and control, rendered observations for direct inspection, and abstract embeddings for efficient downstream prediction and planning.",
+              "figure_id": "figure-3-25",
+              "figure_number": "3",
+              "height": 644,
+              "image_path": "figures/2608.23070/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 4. Structured assets as conditional input to a world model. BEV road layouts, HD maps, and 3D bounding boxes specify the geometry and traffic configuration supplied to a video-diffusion world model, which produces a temporally evolving, multi-view street-scene rollout consistent with those conditions.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 476,
+              "image_path": "figures/2608.23070/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 884
+            },
+            {
+              "caption": "Fig. 5. Generation of a navigable 3D/4D world from sparse input. A single image or text description conditions a world model that constructs an environment with spatial extent and renders consistent observations along a user-controlled camera path.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 455,
+              "image_path": "figures/2608.23070/figure-004.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 884
+            },
+            {
+              "caption": "Fig. 6. A unified platform for persistent and editable world assets. Terrain, buildings, vegetation, roads, and dynamic agents are maintained as separable layers; instance-level edits update the persistent scene before the world model generates a recomposed rollout.",
+              "figure_id": "figure-6-21",
+              "figure_number": "6",
+              "height": 454,
+              "image_path": "figures/2608.23070/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 7. A world model with an explicit differentiable physics core. Object-centric position, velocity, and force states are advanced under actions with gradients propagated through the dynamics; a state-guided neural renderer then converts the physical trajectory into observed frames.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 427,
+              "image_path": "figures/2608.23070/figure-006.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 2. Research attention across the eight simulator capabilities and the corpus composition, 2018–2026. (a) Cumulative papers contributing each capability, drawn as nested year slices (to 2020/2022/2024/2026); the radial value is the number of papers for which that capability is a principal contribution, and the number at each vertex is its 2026 total. Controllability, interaction, and stability dominate, while asset construction, the physics engine, and state feedback stay low. (b) The 200-paper corpus by publication year, split into published (72) and preprint / other (128); the corpus is increasingly preprint-dominated in 2025–2026.",
+              "figure_id": "figure-2-17",
+              "figure_number": "2",
+              "height": 498,
+              "image_path": "figures/2608.23070/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1060
+            },
+            {
+              "caption": "Fig. 8. Soft physical constraints in a generative world model. A pretrained geometry or physics model supplies a dense scene-flow or 4D-correspondence prior as a training constraint, while the conditioned video-diffusion model remains responsible for generating the evolving observations.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 411,
+              "image_path": "figures/2608.23070/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 10. Camera-level interaction in a real-time world model. Controller inputs such as movement, turning, and zoom update the model state and produce the next observation, forming an action-in–frame-out loop for interactive viewpoint navigation.",
+              "figure_id": "figure-10-19",
+              "figure_number": "10",
+              "height": 435,
+              "image_path": "figures/2608.23070/figure-009.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 12. A world model as a programmable environment. A policy interacts through an API carrying actions, observations, rewards, reset, random seed, and state queries, thereby closing the rollout and policy-update loop required for reinforcement-learning training.",
+              "figure_id": "figure-12-18",
+              "figure_number": "12",
+              "height": 465,
+              "image_path": "figures/2608.23070/figure-010.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 13. Controllability of world models across action-representation levels. Explicit signals such as keyboard input, camera pose, and 3D trajectories provide precise control but transfer poorly; language and multimodal conditions express human-readable intent while leaving physical execution ambiguous; and latent actions can be learned from passive video and transferred across environments, but are not directly interpretable. Moving from explicit to latent control therefore trades physical precision for abstraction and generality, making cross-level action mapping an open problem.",
+              "figure_id": "figure-13-24",
+              "figure_number": "13",
+              "height": 450,
+              "image_path": "figures/2608.23070/figure-011.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 885
+            },
+            {
+              "caption": "Fig. 17. Structured feedback through multi-task auxiliary outputs. Parallel prediction heads decode a shared temporal representation into aligned RGB, depth, semantic segmentation, occupancy, and LiDAR outputs, providing downstream systems with complementary views of the same simulated state.",
+              "figure_id": "figure-17-4",
+              "figure_number": "17",
+              "height": 397,
+              "image_path": "figures/2608.23070/figure-012.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 1080
+            },
+            {
+              "caption": "Fig. 14. Self-forcing training against autoregressive drift. Training only on clean history creates a train–test mismatch under which errors compound during rollout; conditioning on the model’s own past outputs teaches recovery from imperfect context and improves long-horizon geometric consistency.",
+              "figure_id": "figure-14-12",
+              "figure_number": "14",
+              "height": 467,
+              "image_path": "figures/2608.23070/figure-013.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 886
+            },
+            {
+              "caption": "Fig. 9. Physics evaluation through paired causal intervention. A baseline and an intervened rollout share the scene and action sequence but differ in one physical variable, such as object mass; evaluation asks whether the resulting difference follows the expected physical consequence.",
+              "figure_id": "figure-9-26",
+              "figure_number": "9",
+              "height": 423,
+              "image_path": "figures/2608.23070/figure-014.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 16. Causal consistency under viewpoint change. After an object is moved and the camera turns away, a model without persistent state may place the object back at its former location; a consistent world model retains the intervened state when the object is observed again.",
+              "figure_id": "figure-16-2",
+              "figure_number": "16",
+              "height": 478,
+              "image_path": "figures/2608.23070/figure-015.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 884
+            },
+            {
+              "caption": "Fig. 20. Scale-driven diversity in a world foundation model. Heterogeneous data across environments, conditions, and embodiments are compressed into a pretrained model that produces diverse evolving rollouts, including zero-shot coverage beyond the scene types emphasized during training.",
+              "figure_id": "figure-20-8",
+              "figure_number": "20",
+              "height": 473,
+              "image_path": "figures/2608.23070/figure-016.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 11. Object-level interaction with persistent state. An object action updates the world state, and the modified state must remain valid across subsequent viewpoint changes; in the illustrated sequence, the door remains open after the camera turns away and returns.",
+              "figure_id": "figure-11-11",
+              "figure_number": "11",
+              "height": 458,
+              "image_path": "figures/2608.23070/figure-017.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 884
+            },
+            {
+              "caption": "Fig. 21. Compositional diversity through language. A language parser decomposes instructions into reusable primitives whose new combinations condition a world model to generate novel or rare rollouts, including long-tail interaction and accident scenarios.",
+              "figure_id": "figure-21-6",
+              "figure_number": "21",
+              "height": 419,
+              "image_path": "figures/2608.23070/figure-018.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 884
+            },
+            {
+              "caption": "Fig. 22. Parametrically controllable diversity. Independent controls over appearance, camera pose, and scene layout allow a world model to sweep one factor while keeping the others fixed, separating purposeful variation from unconstrained stochastic generation.",
+              "figure_id": "figure-22-5",
+              "figure_number": "22",
+              "height": 411,
+              "image_path": "figures/2608.23070/figure-019.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 19. Latent representation as machine-facing state feedback. The world model predicts a compact latent trajectory rather than reconstructing pixels, and a policy or planner selects actions by optimizing directly in that representation space; efficiency is gained at the cost of interpretability.",
+              "figure_id": "figure-19-13",
+              "figure_number": "19",
+              "height": 406,
+              "image_path": "figures/2608.23070/figure-020.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 23. Three complementary lenses for evaluating world models as simulators. Generation-quality evaluation measures visual fidelity, temporal consistency, and action following, but remains predominantly open loop. Closed-loop embodied evaluation tests multi-step interaction, task success, and policy transfer. Physical-plausibility evaluation uses causal interventions to assess whether rollouts preserve physical response and state over time. Together, these lenses shift the target from surface similarity toward downstream simulator utility.",
+              "figure_id": "figure-23-20",
+              "figure_number": "23",
+              "height": 388,
+              "image_path": "figures/2608.23070/figure-021.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 15. Implicit versus explicit memory for consistent world rollouts. Implicit memory retrieves view-relevant internal states but may fade with horizon length; explicit 3D memory stores observations in a persistent geometric map and retrieves them when the camera revisits a location.",
+              "figure_id": "figure-15-22",
+              "figure_number": "15",
+              "height": 463,
+              "image_path": "figures/2608.23070/figure-022.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 18. Structured state derived from physical simulation. An explicit object-centric trajectory exposes position, velocity, force, and mass over time, from which a controller can directly consume quantities such as contact force and per-pixel 3D pointmaps.",
+              "figure_id": "figure-18-14",
+              "figure_number": "18",
+              "height": 485,
+              "image_path": "figures/2608.23070/figure-023.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 882
+            },
+            {
+              "caption": "TABLE 1 Representative simulator-capable world models, grouped by their primary simulator capability. Each work is marked on every capability it substantively contributes (C1–C8), with a Category following the taxonomy of Section 4 and a one-line Highlight. For C8 we list representative evaluation benchmarks. Routes: Latent (latent dynamics), AR (autoregressive), Diff. (diffusion), 3D/4D, Occ. (occupancy), Bench. (benchmark); arXiv venues are preprints as of the search cutoff.",
+              "figure_id": "table-1-16",
+              "figure_number": "1",
+              "height": 1348,
+              "image_path": "figures/2608.23070/table-024.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1092
+            },
+            {
+              "caption": "TABLE 2 Model-family × principal-topic counts for the 163 implementation papers. Columns denote C1 asset construction, C2 physics engine, C3 interaction, C4 controllability, C5 stability, C6 state feedback, C7 diversity, and C8 evaluation metrics. Each cell reports n/N , where N is the complete family denominator and n is the number carrying that principal-topic label. Counts measure research attention, not capability attainment.",
+              "figure_id": "table-2-23",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2608.23070/table-025.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 926
+            },
+            {
+              "caption": "TABLE 3 State-interface audit for all 163 implementation papers. “Present”, “absent”, and “unresolved” are reported separately; each row sums to 163. B4 requires a runtime, queryable entity/physics annotation interface and excludes sensor-space estimates, latent vectors, and training-only labels. B5 is a cross-cutting closed-loop attribute.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 36,
+              "image_path": "figures/2608.23070/table-026.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 1080
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.23070/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2608.23070",
+          "relevance": 8,
+          "selection_reason": "Systematic capability-based study of generative world models as simulators, covering video generation, interaction, and controllability routes.",
+          "summary_status": "generated",
+          "title": "From Generation to Simulation: How Far Are World Models from Being True Simulators?",
+          "tldr": "World models can simulate some interactive scenarios, but they still fall well short of traditional simulators in physical guarantees, state access, and reliable long-horizon behavior.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Object-centric world models forecast future videos by evolving a set of entity slots, but the variables receiving dynamics supervision are often unconstrained visual features. We introduce \\method{}, a mask-grounded soft-Hamiltonian world model that makes its position-like state explicitly depend on slot-owned image support. A frozen video-slot encoder produces slots and masks; spatial moments of mask-owned support form a canonical state $Q$, temporal differences form $P$, and a learned energy supplies a soft directional bias to a bounded learned increment. Decoder-relevant appearance and identity are stored separately in a causal visual context. A gated composer and bounded residual then combine this context with the propagated phase state to reconstruct decoder-compatible slots. On OBJ3D, given six observed frames and evaluated over the following 30 frames, \\method{} reduces LPIPS by 25.0\\% and spatial MSE by 33.7\\% relative to the strongest object-centric baseline. On CLEVRER, given six observed frames and evaluated over the following ten frames, the corresponding reductions are 14.5\\% and 18.7\\%. Horizon-resolved visual and object-state measurements show that the complete model accumulates error more slowly throughout the 30-frame closed-loop rollout. Project page:https://github.com/moshwm-anon/-moshwm-anon.github.io.",
+          "arxiv_id": "2608.22750",
+          "arxiv_url": "https://arxiv.org/abs/2608.22750",
+          "authors": [
+            "Zhekai Wang, Haoxiang Huang, Xiang Liu, Zhikang Chen, Yueqing Sun, Qi Gu, Shiji Zhou, Miao Liu, Sen Cui"
+          ],
+          "bullets": [
+            "Uses frozen video-slot encodings to obtain object slots and masks, with mask-owned spatial moments defining position-like state Q and temporal differences defining momentum-like state P.",
+            "Learns an energy-based directional bias for bounded state updates, while separately preserving appearance and identity in a causal visual context.",
+            "A gated composer and bounded residual merge propagated phase state with visual context to produce decoder-compatible slots.",
+            "Across OBJ3D and CLEVRER, it lowers LPIPS and spatial MSE versus the strongest object-centric baseline over 30- and 10-frame forecasts, respectively.",
+            "The complete model accumulates visual and object-state error more slowly during closed-loop rollouts, according to horizon-resolved evaluations."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: MOSH-WM pipeline. A frozen SAVi interface supplies visual slots and decoded masks. Mask-owned pooling extracts Q, raw temporal differences provide P , and causal slots provide C. The SoftHamiltonian update propagates (Q,P ); a gated composer and bounded spatiotemporal residual return to decoder-compatible slot space. Dashed arrows denote direct state propagation and autoregressive context update.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 585,
+              "image_path": "figures/2608.22750/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 3: Long-sequence prediction on OBJ3D. Two observation frames and six future frames are shown at a larger scale than a full-frame strip. All rows use the same six-frame context and independently exported 30-frame closed-loop predictions. Under repeated feedback, MOSH-WM better retains object identity, color, and relative layout.",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 435,
+              "image_path": "figures/2608.22750/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1032
+            },
+            {
+              "caption": "Figure 4: SlotPi-style scene decomposition by the frozen SAVi observer on OBJ3D. Each row is one observation time. The mask uses a black background and mutually exclusive colors; slots 1–6 are independently decoded RGB components on near-white backgrounds. Fixed columns expose temporal slot consistency and the support used to construct Q.",
+              "figure_id": "figure-4-18",
+              "figure_number": "4",
+              "height": 413,
+              "image_path": "figures/2608.22750/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 500
+            },
+            {
+              "caption": "Figure 6: Physion transfer through frozen STEVE. Slot MSE remains lowest for the complete model throughout the 35- step closed-loop rollout.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 339,
+              "image_path": "figures/2608.22750/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 486
+            },
+            {
+              "caption": "Figure 10: Physion slot error over the prediction horizon. The complete model remains lowest throughout the rollout.",
+              "figure_id": "figure-10-11",
+              "figure_number": "10",
+              "height": 292,
+              "image_path": "figures/2608.22750/figure-005.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 418
+            },
+            {
+              "caption": "Figure 5: OBJ3D closed-loop error accumulation. (a) Mean LPIPS over increasing horizons. (b) Per-frame centroid error. (c) Per-frame pairwise-distance error. All curves use the same six observations.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 651,
+              "image_path": "figures/2608.22750/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 470
+            },
+            {
+              "caption": "Figure 1: Mask grounding and long-horizon prediction on OBJ3D. Owned masks expose object support. SlotFormer matches the immediate future but drifts over closed-loop rollout; MOSH-WM better preserves object identity and scene layout.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 406,
+              "image_path": "figures/2608.22750/figure-007.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 481
+            },
+            {
+              "caption": "Figure 7: Validation Slot@30 during the main OBJ3D training run. The curve is used for checkpoint selection.",
+              "figure_id": "figure-7-17",
+              "figure_number": "7",
+              "height": 324,
+              "image_path": "figures/2608.22750/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 489
+            },
+            {
+              "caption": "Figure 8: Additional OBJ3D 6-to-30 rollout on test video 125. Columns show future horizons and rows compare ground truth with three predictors under the same closed-loop protocol.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 229,
+              "image_path": "figures/2608.22750/figure-009.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 500
+            },
+            {
+              "caption": "Figure 9: Compact OBJ3D ablation summary. The plot shows relative error increases when the physical, context, or residual pathway is removed.",
+              "figure_id": "figure-9-10",
+              "figure_number": "9",
+              "height": 136,
+              "image_path": "figures/2608.22750/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 336
+            },
+            {
+              "caption": "Figure 11: Physion qualitative transfer. Ground truth, MOSH prediction, and absolute reconstruction error are shown at horizons 1, 10, 20, and 30. Pixel quality is limited by the frozen STEVE decoder; the experiment is primarily a slotdynamics transfer test.",
+              "figure_id": "figure-11-16",
+              "figure_number": "11",
+              "height": 298,
+              "image_path": "figures/2608.22750/figure-011.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 460
+            },
+            {
+              "caption": "Table 2: Primary results under shared protocols. Bold denotes the best result in each dataset block. OBJ3D uses 6-to-30 prediction and CLEVRER uses 6-to-10 prediction. Object-state metrics use the shared frozen observer.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 294,
+              "image_path": "figures/2608.22750/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1012
+            },
+            {
+              "caption": "Table 5: Capacity sensitivity under the shared short-budget protocol.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 225,
+              "image_path": "figures/2608.22750/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 362
+            },
+            {
+              "caption": "Table 4: OBJ3D component and mixing-coefficient ablation. All entries use the same six-input, 30-prediction evaluator. Bold identifies each column minimum.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 192,
+              "image_path": "figures/2608.22750/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 412
+            },
+            {
+              "caption": "Table 6: Notation and tensor roles used in the implementation.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 192,
+              "image_path": "figures/2608.22750/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 358
+            },
+            {
+              "caption": "Table 9: Reproducibility checklist.",
+              "figure_id": "table-9-15",
+              "figure_number": "9",
+              "height": 173,
+              "image_path": "figures/2608.22750/table-016.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 331
+            },
+            {
+              "caption": "Table 1: OBJ3D reconstruction quality before rollout. The phase-to-slot composer remains close to the frozen-interface upper bound.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 88,
+              "image_path": "figures/2608.22750/table-017.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 472
+            },
+            {
+              "caption": "Table 7: Physion test slot MSE over the closed-loop rollout.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 108,
+              "image_path": "figures/2608.22750/table-018.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 472
+            },
+            {
+              "caption": "Table 3: OBJ3D mean LPIPS up to increasing horizons and LPIPS at the final predicted frame.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 108,
+              "image_path": "figures/2608.22750/table-019.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 366
+            },
+            {
+              "caption": "Table 8: Scenario-level Physion slot MSE at horizon 30.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 212,
+              "image_path": "figures/2608.22750/table-020.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 162
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.22750/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.22750",
+          "relevance": 8,
+          "selection_reason": "Object-centric world model for future video prediction with improved long-horizon accuracy.",
+          "summary_status": "generated",
+          "title": "MOSH-WM: Mask-Grounded Soft-Hamiltonian Dynamics for Object-Centric World Models",
+          "tldr": "MOSH-WM improves long-horizon object-centric video prediction by grounding slot dynamics in mask-derived spatial states and soft-Hamiltonian motion.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Modern driving action models are increasingly improved in a self-improvement loop, where a learned world simulator imagines future observations and the resulting data is fed back to refine the action model. However, the bottleneck of this loop lies in the simulators' inability to generate behaviorally plausible responses by surrounding agents, making generated data both unrealistic in interaction and imbalanced in distribution. We introduce BehaviorWorldGen, a framework that closes the loop between action models and world simulators through controllable behavior-aware structured world generation. Its core component is BehaviorFlow, a meta-action-conditioned traffic-flow model that injects interpretable behavior controls and jointly generates multi-agent rollouts. BehaviorFlow realizes the specified agent behaviors while allowing surrounding vehicles to respond to the ego and to one another. The resulting rollouts are rendered by a world simulator into realistic multi-view observations, which are paired with corrected interaction-aware trajectories for action-model refinement. Since BehaviorWorldGen uses structured trajectories as the interface between its modules, it is compatible with diverse action models and world simulators. Experiments on world generation, scene extrapolation, and policy refinement demonstrate consistent improvements, with the largest benefits concentrated on difficult interactive scenarios.",
+          "arxiv_id": "2608.22187",
+          "arxiv_url": "https://arxiv.org/abs/2608.22187",
+          "authors": [
+            "Jiaqi Wang, Zhuo Zhang, Haining Guan, Tingguang Zhou, Haowen Cui, Zhongyang Zhu, Yulong Zheng, ChuanYe Wang, Xuefeng Chen, Zhen Yang, Tianchen Deng, Feiyang Tan, Hangning Zhou, Bo Dai, Lixia Shen, Xiwu Chen, Xiyang Wang, Jiajun Zhu"
+          ],
+          "bullets": [
+            "Addresses unrealistic surrounding-agent behavior and distribution imbalance in simulator-generated self-improvement data.",
+            "Introduces BehaviorFlow, a meta-action-conditioned traffic-flow model with interpretable behavior controls.",
+            "Generates joint multi-agent rollouts where surrounding vehicles respond to the ego vehicle and one another.",
+            "Renders trajectories into realistic multi-view observations and pairs them with corrected interaction-aware trajectories for action-model refinement.",
+            "Experiments show consistent gains in world generation, scene extrapolation, and policy refinement, especially in difficult interactive scenarios."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The overview of our framework.",
+              "figure_id": "figure-1-16",
+              "figure_number": "1",
+              "height": 429,
+              "image_path": "figures/2608.22187/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 822
+            },
+            {
+              "caption": "Figure 2: The overview of our DiT-based action-conditioned world model.",
+              "figure_id": "figure-2-22",
+              "figure_number": "2",
+              "height": 404,
+              "image_path": "figures/2608.22187/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 822
+            },
+            {
+              "caption": "Figure 3: Four training stages of the action-conditioned world model.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 525,
+              "image_path": "figures/2608.22187/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 812
+            },
+            {
+              "caption": "Figure 7: Animal scene generation results of our action-conditioned world model.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 462,
+              "image_path": "figures/2608.22187/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 816
+            },
+            {
+              "caption": "Figure 4: The 93-frame generation results of our action-conditioned world model. Top: RGB. Bottom: RGB with HD-map overlaid.",
+              "figure_id": "figure-4-20",
+              "figure_number": "4",
+              "height": 1321,
+              "image_path": "figures/2608.22187/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 816
+            },
+            {
+              "caption": "Figure 9: Weather style transfer results of our action-conditioned world model.",
+              "figure_id": "figure-9-23",
+              "figure_number": "9",
+              "height": 477,
+              "image_path": "figures/2608.22187/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 822
+            },
+            {
+              "caption": "Figure 5: The 30-second generation results of our action-conditioned world model. Top: RGB. Bottom: RGB with HD-map overlaid.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 1321,
+              "image_path": "figures/2608.22187/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 816
+            },
+            {
+              "caption": "Figure 6: The LiDAR generation results of our action-conditioned world model.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 775,
+              "image_path": "figures/2608.22187/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 826
+            },
+            {
+              "caption": "Figure 8: Fog density control results of our action-conditioned world model.",
+              "figure_id": "figure-8-3",
+              "figure_number": "8",
+              "height": 1259,
+              "image_path": "figures/2608.22187/figure-009.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 810
+            },
+            {
+              "caption": "Figure 10: Lane-change trajectory editing results.",
+              "figure_id": "figure-10-24",
+              "figure_number": "10",
+              "height": 559,
+              "image_path": "figures/2608.22187/figure-010.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 824
+            },
+            {
+              "caption": "Figure 11: Overtaking trajectory editing results.",
+              "figure_id": "figure-11-19",
+              "figure_number": "11",
+              "height": 558,
+              "image_path": "figures/2608.22187/figure-011.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 824
+            },
+            {
+              "caption": "Figure 12: Straight-to-turn trajectory editing results.",
+              "figure_id": "figure-12-18",
+              "figure_number": "12",
+              "height": 558,
+              "image_path": "figures/2608.22187/figure-012.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 824
+            },
+            {
+              "caption": "Figure 13: Turn-to-straight trajectory editing results.",
+              "figure_id": "figure-13-13",
+              "figure_number": "13",
+              "height": 558,
+              "image_path": "figures/2608.22187/figure-013.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 827
+            },
+            {
+              "caption": "Figure 14: Reconstruction results on extrapolated trajectory.",
+              "figure_id": "figure-14-12",
+              "figure_number": "14",
+              "height": 432,
+              "image_path": "figures/2608.22187/figure-014.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 821
+            },
+            {
+              "caption": "Figure 15: Qualitative results on a straight-driving scene of BehaviorFlow under behavior editing.",
+              "figure_id": "figure-15-8",
+              "figure_number": "15",
+              "height": 551,
+              "image_path": "figures/2608.22187/figure-015.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 822
+            },
+            {
+              "caption": "Figure 16: Qualitative results on a left-turn scene of BehaviorFlow under behavior editing.",
+              "figure_id": "figure-16-9",
+              "figure_number": "16",
+              "height": 379,
+              "image_path": "figures/2608.22187/figure-016.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 818
+            },
+            {
+              "caption": "Figure 19: Overall scene reconstruction results. Elevated panoramic novel views and reconstructed seven-camera views are shown for diverse driving environments.",
+              "figure_id": "figure-19-6",
+              "figure_number": "19",
+              "height": 540,
+              "image_path": "figures/2608.22187/figure-017.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 810
+            },
+            {
+              "caption": "Figure 17: Road reconstruction under lateral viewpoint shifts.",
+              "figure_id": "figure-17-14",
+              "figure_number": "17",
+              "height": 394,
+              "image_path": "figures/2608.22187/figure-018.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 671
+            },
+            {
+              "caption": "Figure 18: Representative object-centric vehicle reconstructions. The reconstructed assets cover diverse vehicle categories, shapes, and appearances.",
+              "figure_id": "figure-18-7",
+              "figure_number": "18",
+              "height": 302,
+              "image_path": "figures/2608.22187/figure-019.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 829
+            },
+            {
+              "caption": "Table 2: Comparison of results on the NAVSIM benchmark. The best and second-best results are denoted by bold and underline, respectively.",
+              "figure_id": "table-2-17",
+              "figure_number": "2",
+              "height": 333,
+              "image_path": "figures/2608.22187/table-020.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 808
+            },
+            {
+              "caption": "Table 1: Generation speed and quality of the bidirectional model and the causal model.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 161,
+              "image_path": "figures/2608.22187/table-021.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 783
+            },
+            {
+              "caption": "Table 3: Comparison on the NAVSIM benchmark. The best and second-best results are denoted by bold and underline, respectively.",
+              "figure_id": "table-3-21",
+              "figure_number": "3",
+              "height": 327,
+              "image_path": "figures/2608.22187/table-022.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 810
+            },
+            {
+              "caption": "Table 4: Comparison on the NAVSIM benchmark. The best and second-best results are denoted by bold and underline, respectively.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 294,
+              "image_path": "figures/2608.22187/table-023.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 810
+            },
+            {
+              "caption": "Table 5: Comparison with DiffusionDrive on low-PDMS scenarios.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 235,
+              "image_path": "figures/2608.22187/table-024.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 736
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.22187/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.22187",
+          "relevance": 9,
+          "selection_reason": "Closes loop between action models and world simulators via behavior-aware structured world generation; directly relevant to interactive world models and embodied action-model refinement.",
+          "summary_status": "generated",
+          "title": "BehaviorWorldGen: Closing the Loop between Action Models and World Simulators via Controllable Behavior-Aware Structured World Generation",
+          "tldr": "BehaviorWorldGen links action models and world simulators through controllable, behavior-aware multi-agent trajectory generation to produce more realistic interactive training data.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "World action models (WAMs) jointly denoise future video frames and robot actions, and the video prior is expected to generalize their control. Camera viewpoint change remains one of their hardest perturbation axes. We study a question specific to this model class: when training with same-state cross-view image pairs, on which output coordinates should a consistency loss be imposed? The WAM denoising target mixes view-covariant coordinates, namely the predicted future scene, with view-invariant coordinates, namely the action chunk, future proprioception, and value. We show that consistency applied to the covariant block is provably harmful, shrinking legitimate view-specific content to a fraction $1/(1+4\\lambda)$ of its true value, and we verify this shrinkage law in controlled experiments. Selective cross-view consistency (SCVC) therefore constrains only the invariant block, requires no camera labels, extrinsics, depth, or view synthesis at training or test time, and leaves the deployment interface unchanged. We introduce a carve-and-hold-out evaluation protocol on the LIBERO-Plus camera track that separates a distribution-matched ceiling from genuine interpolation and extrapolation to held-out viewpoints, with a matched pair-trained control isolating the effect of the consistency term from pair exposure. On held-out orbital viewpoints beyond the training envelope, SCVC improves closed-loop success over the matched control by 12.2 points (95% CI [7.4, 17.0]; +15.5, CI [11.7, 19.4], under an independent second seed) -- an effect two further camera axes replicate -- while interpolation within the envelope shows no gain in either seed (-1.2 and -4.3 points) and in-distribution competence is preserved (-0.6, -0.2). We also report a cross-backbone audit showing that published camera-robustness numbers are confounded by wrist-camera pose stability.",
+          "arxiv_id": "2608.21402",
+          "arxiv_url": "https://arxiv.org/abs/2608.21402",
+          "authors": [
+            "Bingqi Huang, Bingchuan Wei, Yingkai Cai, Zhaokui Wang"
+          ],
+          "bullets": [
+            "Problem: Camera viewpoint changes remain a major challenge for world action models, and applying consistency indiscriminately can suppress legitimate view-specific predictions.",
+            "Method: SCVC applies same-state cross-view consistency only to invariant outputs—actions, future proprioception, and value—not to predicted future scenes.",
+            "Finding: On held-out viewpoints beyond the training range, SCVC improves closed-loop success by 12.2 points over a matched control, with replication across seeds and camera axes.",
+            "Scope: SCVC shows no gain for interpolation within the training viewpoint envelope, while preserving in-distribution competence.",
+            "Additional result: A cross-backbone audit finds that reported camera robustness can be confounded by wrist-camera pose stability."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. SCVC and the carve-and-hold-out protocol. (a) A world action model denoises a joint target that mixes coordinates fixed by a camera change—the action chunk a1:K , future proprioception q′, and value V (invariant block YI, blue)—with the predicted future scene ô′, which must track the camera (covariant block YC, orange). SCVC renders the same state under two cameras, passes both through the shared denoiser under a shared noise draw (σ, n), and penalizes cross-view disagreement only on YI; the future scene keeps its per-view target, since forcing agreement there provably ghosts the prediction (Proposition 1). (b) Training pairs cover each benchmark camera axis except held-out regions. Dense axes are carved: an interpolation hole inside the trained range, extrapolation beyond it. Sparse axes are flipped: training uses only off-benchmark values (endpoint {±3,±5,±7}; elevation 8), so every official value is held out (endpoint interp {±4,±6}, extrap {±8,±10}; elevation extrap 15). Official tasks are bucketed by their camera parameters into in-distribution, interpolation, and extrapolation buckets.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 294,
+              "image_path": "figures/2608.21402/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 990
+            },
+            {
+              "caption": "Fig. 2. Wrong-coordinate consistency ghosts the predicted future scene (2B model, both arms at 2k steps, shared noise draw). For three held-out pairs we decode the future-scene prediction under two cameras. On the near-nominal view A both arms track the ground-truth future; on the offnominal view B the wrong-coordinate arm collapses its prediction toward a view-averaged, ghosted image, whereas the selective run preserves the view-specific future.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 242,
+              "image_path": "figures/2608.21402/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 491
+            },
+            {
+              "caption": "Fig. 4. Fidelity-control dissociation on the scene-only reference. On the orbital axis (C2) the predicted future scene retains its fidelity while closedloop success collapses; on the dolly axis (C1) both degrade together; in-place reorientation (C3) stays near baseline fidelity. Each marker is one severity level (L1–L5); the dashed line is zero relative excess-FID (fidelity matched to the oracle floor).",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 348,
+              "image_path": "figures/2608.21402/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 470
+            },
+            {
+              "caption": "Fig. 3. Masking audit of the released wrist-enabled Cosmos policy on the camera-perturbed track (1,200 rollouts per condition; error bars are Wilson 95% CIs). Removing the scene camera—the sensor the benchmark perturbs—leaves two-thirds of tasks solvable; removing the wrist collapses success to near zero. The camera score is therefore carried by the posestable wrist view.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 322,
+              "image_path": "figures/2608.21402/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 459
+            },
+            {
+              "caption": "TABLE II HELD-OUT VIEWPOINT EVALUATION. BOTH MODELS ARE TRAINED ON THE IDENTICAL CARVED PAIR MANIFEST FROM THE SAME BASE CHECKPOINT; THE ONLY DIFFERENCE IS THE CONSISTENCY WEIGHT. SUCCESS RATES IN %, TEN TRIALS PER TASK; ∆ IS THE PAIRED TASK-BOOTSTRAP DIFFERENCE WITH 95% CI. PRIMARY ENDPOINTS IN BOLD. IN-DISTRIBUTION BUCKETS ARE A DISTRIBUTION-MATCHED CEILING, NOT AN OOD CLAIM. NUMBERS ARE THE FIRST TRAINING SEED; THE SECOND SEED’S TWELVE-BUCKET TABLE IS REPORTED IN THE TEXT AND RELEASED WITH THE CODE.",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 246,
+              "image_path": "figures/2608.21402/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 512
+            },
+            {
+              "caption": "TABLE I CONSEQUENCE OF THE WRIST CONFOUND ON LIBERO-PLUS. ID AND CAMERA ARE SUCCESS RATES IN %; DROP IS THEIR DIFFERENCE. BETWEEN THE WRIST-ENABLED RELEASE AND OUR MATCHED SCENE-ONLY REFERENCE, ID DIFFERS BY FIVE POINTS BUT THE CAMERA DROP DIFFERS BY NEARLY FIFTY. OFT NUMBERS (WRIST / NO-WRIST) ARE FROM THE OFFICIAL LEADERBOARD [4].",
+              "figure_id": "table-I-2",
+              "figure_number": "I",
+              "height": 110,
+              "image_path": "figures/2608.21402/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 402
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.21402/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.21402",
+          "relevance": 8,
+          "selection_reason": "World action models jointly denoise future video and robot actions; selective cross-view consistency with a provable shrinkage law directly targets action-conditioned world model robustness.",
+          "summary_status": "generated",
+          "title": "Selective Cross-View Consistency for World Action Models: Held-Out Viewpoint Robustness Without Test-Time Camera Information",
+          "tldr": "Selective cross-view consistency improves world action model robustness to unseen camera viewpoints by regularizing only view-invariant outputs, without requiring camera information at training or test time.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-24",
       "paper_count": 3,
       "papers": [
@@ -936,5 +2238,5 @@
   "schema_version": 1,
   "subtopic_id": "video-world-models",
   "topic_id": "world-models",
-  "total_paper_count": 7
+  "total_paper_count": 14
 }

@@ -6,6 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**0 papers total**
+**4 papers total**
 
-_No matching papers yet._
+| Date | Paper | Topics | TL;DR | Rel. | Nov. |
+|---|---|---|---|---:|---:|
+| 2026-08-25 | [MomADv2: Reliable Temporal Memory for End-to-End Autonomous Driving](https://arxiv.org/abs/2608.23405) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | MomADv2 improves long-horizon autonomous-driving planning by selectively retaining command-consistent temporal memory and refining trajectory residuals, reducing average collision rate by 15.6% versus MomAD in 6-second planning. | 8 | 7 |
+| 2026-08-25 | [MediSkill-Evo: Process-Constrained Self-Evolution for Evidence-Grounded Clinical Interaction](https://arxiv.org/abs/2608.23397) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | MediSkill-Evo improves evidence-grounded clinical-agent safety and diagnostic performance by self-evolving validated process knowledge without fine-tuning the backbone. | 6 | 7 |
+| 2026-08-25 | [UniMem: Unifying Multimodal Memory and Control for Vision-Language-Action Models](https://arxiv.org/abs/2608.22869) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | UniMem unifies multimodal memory and low-level control in one VLA backbone, improving memory-dependent task performance while reducing inference overhead. | 9 | 8 |
+| 2026-08-25 | [GOLEM: Modular Humanoid Autonomy Towards Electric Vehicle Battery Disassembly](https://arxiv.org/abs/2608.21550) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | GOLEM is an open-source, modular humanoid robotics architecture that enables systematic development and evaluation of EV battery disassembly from simulation to reality. | 8 | 7 |

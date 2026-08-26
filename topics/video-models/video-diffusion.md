@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**4 papers total**
+**5 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-25 | [Loopy: Seamless Video Loop Generation via Anchored Looping Shift of Positional Embedding](https://arxiv.org/abs/2608.23090) | Video Generation and Understanding: Video Diffusion | Loopy generates seamless, coherent looping videos by transforming DiT’s temporal position perception from a line into a circle through anchored, layer-specific positional embedding shifts. | 7 | 7 |
 | 2026-08-24 | [Identity-Preserving Text-to-Video Generation via Agentic Enhancement and Semantic Repair](https://arxiv.org/abs/2608.20749) | Video Generation and Understanding: Video Diffusion | AESR improves identity-preserving text-to-video generation from black-box models through agentic prompt enhancement, targeted semantic repair, and output selection. | 8 | 7 |
 | 2026-08-24 | [Bridging Language and Spherical Space: Object-Centric Control for Text-to-Panorama Generation](https://arxiv.org/abs/2608.20691) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | PanoCtrl improves text-to-panorama generation by translating directional language into object-level spherical controls for better spatial alignment and image quality. | 6 | 7 |
 | 2026-08-21 | [AvatarDynamizer: From Static to Dynamic Human Avatars via Generative Dynamic Textures](https://arxiv.org/abs/2608.19900) | Video Generation and Understanding: Video Diffusion | AvatarDynamizer turns static 3D avatars into realistic, controllable, multi-view-consistent dynamic avatars by generating pose-dependent surface textures. | 6 | 7 |

@@ -1,6 +1,364 @@
 {
   "days": [
     {
+      "date": "2026-08-25",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Joint-embedding predictive architectures (JEPAs) learn latent dynamics for planning and avoid representation collapse by matching features to maximum-entropy distributions such as isotropic Gaussians, yielding dense representations. However, it is unclear whether dense representations are the most favorable geometry for modeling dynamics. In this work, we ask whether a different geometry, sparse representations, can make action-conditioned latent dynamics easier to model, and what dynamical structure emerges from such representations. We first show that nonlinear Lipschitz dynamics can be approximated arbitrarily well by action-conditioned linear dynamics in a sufficiently high-dimensional one-hot latent space, with rollout error vanishing as the dimension grows. This motivates distributed sparse representations as a practical relaxation of one-hot sparsity. We introduce LpWorldModel (LpWM), a JEPA model regularized with Rectified Distribution Matching Regularization (RDMReg) to match encoder features to a Rectified Generalized Gaussian distribution, yielding non-negative sparse codes. Empirically, sparsity lowers the predictor complexity required for successful planning: on PushT, sparse LpWM outperforms dense LeWM by up to 57% in planning success at intermediate predictor capacities. This advantage also extends beyond Gaussian distribution matching, with LpWM outperforming dense VICReg representations across multiple predictor families. We further find that the learned sparse representations are mode-factored, with support encoding discrete dynamical regimes and feature magnitudes capturing continuous within-regime state. Together, these results suggest that sparse representations can reduce the predictor complexity required for control while revealing interpretable structure.",
+          "arxiv_id": "2608.22764",
+          "arxiv_url": "https://arxiv.org/abs/2608.22764",
+          "authors": [
+            "Yilun Kuang, Yash Dagade, Quentin Le Lidec, Lucas Maes, Randall Balestriero, Yann LeCun"
+          ],
+          "bullets": [
+            "JEPA world models typically use dense, Gaussian-like latent features, but the best geometry for dynamics modeling is unclear.",
+            "Theoretical analysis shows nonlinear Lipschitz dynamics can be approximated by action-conditioned linear dynamics in sufficiently high-dimensional one-hot spaces.",
+            "LpWM uses Rectified Distribution Matching Regularization to produce non-negative, sparse latent codes.",
+            "On PushT, sparse LpWM improves planning success by up to 57% over dense LeWM at intermediate predictor capacities, and also outperforms dense VICReg representations across predictor families.",
+            "Sparse representations become mode-factored: feature support captures discrete dynamical regimes, while magnitudes encode continuous state within each regime."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Linear predictor is sufficient for the wall environment regardless of dense or sparse embeddings, and LpWM outperforms VICReg-based JEPA across predictor settings in PushT. (a) We plot the planning success rate of the linear LTI(1) predictor against the nonlinear DeepAdaLN(k), where each dot denotes one setting of method and feature dimension. For simplicity, we use µ = ∗ to denote LpWM with the target distribution parameter µ. We show the open-loop evaluation on top and closed-loop results at bottom. Both are ran using CEM planner. We observe that the closed-loop success rate for LTI(1) predictor using SIGReg is already approaching 100%, indicating that the wall environment can already be described well by a linear dynamics model in the latent space. (b) We have already shown LeWM vs. LpWM in Figure 1b. Here we compare LpWM with a variant of LeWM where we replaced SIGReg with VICReg in the PushT environment across predictor settings. As oppposed to SIGReg, we observe consistent improvement from LpWM over VICReg even for the Deep-AdaLN(k) predictor, and the gap between sparse LpWM and dense methods (i.e. VICReg here) continues to hold for MLP◦LTV(k) and MLP◦LTI(k) predictors. See full hyperparameter sweeps in Appendix H.2.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 393,
+              "image_path": "figures/2608.22764/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 802
+            },
+            {
+              "caption": "Figure 1: LpWorldModel: a JEPA model with sparse representations. (a) An encoder f maps observation ot to non-negative, sparse latents zt via a terminal (Rep)ReLU function. The predictor g takes inputs zt and actions at to predict ẑt+1, compared against the encoded target zt+1 = f(ot+1). RDMReg [Kuang et al., 2026b] matches per-timestep latent marginals to a Rectified Generalized Gaussian, preventing collapse and inducing sparsity. (b). Arrows indicate the success-rate difference between LpWM and LeWM: ↑ denotes higher performance for LpWM, while ↓ denotes lower performance. LpWM outperforms LeWM with more linear predictor variants (MLP◦LTV(k), MLP◦LTI(k), and LTI(k). See full specifications in Table 1) by up to 57% in success rate, while performing on par with LeWM using the high-capacity DiT predictors. This suggests that sparse representations induce a latent space with simpler dynamics to learn compared to their dense counterparts.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 410,
+              "image_path": "figures/2608.22764/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 818
+            },
+            {
+              "caption": "Figure 2: The sparse support recovers the piecewise structure of the dynamics. (a) Support Jaccard heatmap over a 20× 20 grid: the Jaccard index of each cell’s support with a fixed reference cell (white +) is high within the reference zone and drops across zone boundaries (dashed), for a model trained with rendered zones (top) and one with no visual cues (bottom). (b) The binary support decodes the ground-truth zone identity as accurately as the full embedding, while agent position is decoded better from the magnitudes than from the support. (c) Planning success vs. horizon (closed-loop, 3-seed mean±std). Goal locations of the dot agent are sampled randomly. Both sparse variants beat dense LeWM at every horizon.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 293,
+              "image_path": "figures/2608.22764/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 821
+            },
+            {
+              "caption": "Figure 4: Temporal-Jaccard (TJ) makes the cube support track contact, not effector motion. (a) As TJ strength increases, support-instability correlation with effector motion drops (0.87→0.40) while cube-motion (0.26→0.80) and gripper-contact (0.05→0.61) rise—at no change in planning success. (b) One example episode: without TJ (top) support instability tracks effector displacement (reff=0.86); with TJ (bottom) it tracks cube displacement (rcube=0.80), spiking inside the shaded contact windows. (c) Support raster: without TJ the support rapidly transitions across frame; with TJ it is smoothly varying in time, reorganizing almost during the shaded contact window.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 315,
+              "image_path": "figures/2608.22764/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 820
+            },
+            {
+              "caption": "Figure 12: Deep-AdaLN(k) Predictor. Hyperparameter Sweeps for VICReg-based JEPA models in the PushT Environment.",
+              "figure_id": "figure-12-4",
+              "figure_number": "12",
+              "height": 1153,
+              "image_path": "figures/2608.22764/figure-005.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 773
+            },
+            {
+              "caption": "Figure 14: MLP◦LTI(k) Predictor. Hyperparameter Sweeps for VICReg-based JEPA models in the PushT Environment.",
+              "figure_id": "figure-14-12",
+              "figure_number": "14",
+              "height": 1153,
+              "image_path": "figures/2608.22764/figure-006.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 773
+            },
+            {
+              "caption": "Figure 13: MLP◦LTV(k) Predictor. Hyperparameter Sweeps for VICReg-based JEPA models in the PushT Environment.",
+              "figure_id": "figure-13-16",
+              "figure_number": "13",
+              "height": 841,
+              "image_path": "figures/2608.22764/figure-007.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 773
+            },
+            {
+              "caption": "Figure 6: Deep-AdaLN(k) Predictor. Hyperparameter Sweeps for the PushT Environment.",
+              "figure_id": "figure-6-18",
+              "figure_number": "6",
+              "height": 762,
+              "image_path": "figures/2608.22764/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 772
+            },
+            {
+              "caption": "Figure 7: Shallow-AdaLN(k) Predictor. Hyperparameter Sweeps for the PushT Environment.",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 762,
+              "image_path": "figures/2608.22764/figure-009.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 772
+            },
+            {
+              "caption": "Figure 8: MLP◦LTV(k) Predictor. Hyperparameter Sweeps for the PushT Environment.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 762,
+              "image_path": "figures/2608.22764/figure-010.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 772
+            },
+            {
+              "caption": "Figure 9: MLP◦LTI(k) Predictor. Hyperparameter Sweeps for the PushT Environment.",
+              "figure_id": "figure-9-11",
+              "figure_number": "9",
+              "height": 762,
+              "image_path": "figures/2608.22764/figure-011.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 772
+            },
+            {
+              "caption": "Figure 10: LTI(1) Predictor. Hyperparameter Sweeps for the PushT Environment.",
+              "figure_id": "figure-10-17",
+              "figure_number": "10",
+              "height": 757,
+              "image_path": "figures/2608.22764/figure-012.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 772
+            },
+            {
+              "caption": "Figure 11: LTI(k) Predictor. Hyperparameter Sweeps for the PushT Environment.",
+              "figure_id": "figure-11-3",
+              "figure_number": "11",
+              "height": 757,
+              "image_path": "figures/2608.22764/figure-013.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 772
+            },
+            {
+              "caption": "Figure 5: Environments. (a) Wall: 2D navigation through a doorway (red agent). (b) PushT: push a T-shaped block to a target pose (green). (c) Piecewise: an open room partitioned into force-field zones (colored) with a known ground-truth segmentation. (d) OGBench-Cube: a robot arm manipulating a cube.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 232,
+              "image_path": "figures/2608.22764/figure-014.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Predictors with Different Levels of Complexity. ẑt+1 is the predicted latent, zt−i past latents, and at the action. AdaLN predictors are Transformer-based models with Adaptive Layer Normalization for action conditioning, i.e. DiT architecture [Peebles and Xie, 2023]. The DeepAdaLN(k) predictor is the one used in LeWM [Maes et al., 2026b]. LTI denotes a linear time-invariant predictor with fixed operators Ai,B, while LTV denotes a linear time-varying predictor with statedependent operators Ai(zt),B(zt). We use MLP◦ to denote one extra nonlinear transform. The history k denotes context length, with 1 the single-frame case. The output link is σ = identity for dense LeWM and σ = RepReLU for sparse LpWM. See Appendix B for details.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 312,
+              "image_path": "figures/2608.22764/table-015.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Table 5: Experimental configurations for Section 3 and Section 4. We list out the experimental pipelines in the following table.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 370,
+              "image_path": "figures/2608.22764/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 840
+            },
+            {
+              "caption": "Table 4: Success Rate (%) over 50 Test Samples in the Piecewise Environments with Varying Numbers of Zones. Piecewise (n × n) denotes the environment with varying numbers of zones. Goal images are either sampled from the evaluation dataset or randomly sampled from all possible locations of the dot agent. H denotes the horizon and R represents the receding-horizon. Results are shown as mean±std over 3 seeds. Bold denotes the best performance.",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 326,
+              "image_path": "figures/2608.22764/table-017.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 820
+            },
+            {
+              "caption": "Table 2: Predictor parameter counts across latent dimensions D. Counts are for the predictor alone for each D used in our experiments. LTI, MLP◦LTI, and MLP◦LTV are attention-free and far smaller than the AdaLN Transformers.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 186,
+              "image_path": "figures/2608.22764/table-018.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 682
+            },
+            {
+              "caption": "Table 3: Sparsity of the LpWM encoder representations across predictor types and latent dimensions. Each entry is the fraction of non-zero coordinates E[∥z∥0]/D in the sparse code for the target distribution with {µ = 0, σ = √ 1/2, p = 1}, measured on the validation set at the tuned-best cell for the LpWM run paired with each predictor at latent dimension D. Dense LeWM has active fraction 1.0 by construction. The learned code stays ∼ 30–65% active regardless of predictor or dimension, confirming the codes underlying the planning comparison are genuinely sparse.",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 152,
+              "image_path": "figures/2608.22764/table-019.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 790
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.22764/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.22764",
+          "relevance": 8,
+          "selection_reason": "Sparse latent dynamics for action-conditioned world models, improving planning and revealing structure.",
+          "summary_status": "generated",
+          "title": "LpWM: A Case for Sparse Representations in World Models",
+          "tldr": "Sparse latent representations can make world-model dynamics easier to predict and support more effective planning than dense representations.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-based whole-body loco-manipulation on humanoid robots is challenging due to partial observability, contact-rich dynamics, and the difficulty of learning long-horizon behaviors from high-dimensional visual inputs. We present \\href{https://github.com/DreamMimic/DreamMimic}{DreamMimic}, a framework that distills privileged teacher policies into vision-based humanoid controllers via world-model-assisted distillation. Instead of using a Dreamer-style RSSM for planning, we repurpose it to learn predictive latent dynamics that serve as both a representation space and an action-conditioned multi-step supervision signal, while exposing compact predictive features to the student policy to reduce long-term drift. Beyond standard reconstruction objectives for proprioceptive and visual observations, we add auxiliary prediction heads for privileged state, contact, object state, and reward estimation. These heads provide additional supervision related to agent--object interaction and task progress, encouraging the latent representation to retain signals that are useful for contact-rich loco-manipulation. We further introduce Performance-Conditioned Guidance (PCG), a reward-driven adaptive distillation schedule that computes performance scores for both teacher and student to dynamically balance guidance and exploration. PCG prevents both premature teacher annealing and excessive teacher interference in challenging visual settings. Experiments on OMOMO and BEHAVE show improved tracking-based loco-manipulation performance over strong vision-based baselines, without exposing online privileged interaction states to the student at deployment. Qualitative simulations further examine morphology and simulator changes. These results suggest that world models can provide a useful mechanism for stabilizing visual policy distillation in contact-rich humanoid behaviors.",
+          "arxiv_id": "2608.22278",
+          "arxiv_url": "https://arxiv.org/abs/2608.22278",
+          "authors": [
+            "Jie Yin, Xingyu Lai"
+          ],
+          "bullets": [
+            "Targets partial observability, contact-rich dynamics, and long-horizon learning from high-dimensional vision.",
+            "Learns predictive latent dynamics that provide compact representations and action-conditioned multi-step supervision.",
+            "Adds auxiliary predictions for privileged state, contact, object state, and reward to preserve interaction-relevant information.",
+            "Introduces Performance-Conditioned Guidance, which adaptively balances teacher guidance and student exploration based on performance.",
+            "Improves tracking-based loco-manipulation over strong vision-based baselines in OMOMO and BEHAVE; simulations also assess morphology and simulator changes."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3: Overview of the world model framework. A Dreamer-style world model jointly learns predictive latent dynamics from visual and proprioceptive observations and provides action-conditioned multi-step latent targets to stabilize policy learning.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 381,
+              "image_path": "figures/2608.22278/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 803
+            },
+            {
+              "caption": "Fig. 1: Overview of the DreamMimic framework: Multiple specialist teachers trained with privileged simulation observations are consolidated into a unified privileged teacher, which guides a vision-based student via PerformanceConditioned Guidance (PCG). PCG adaptively balances teacher supervision and student exploration according to their relative performance. The student operates on non-privileged proprioception, a compact goal condition, and world-model features inferred from depth and segmentation. The goal condition jointly describes the target object pose and shorthorizon robot trajectory cues, while the world model supplies predictive interaction features and action-conditioned multistep latent supervision. This design enables the policy to exploit both task-level goals and inferred interaction cues while reducing long-horizon drift.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 291,
+              "image_path": "figures/2608.22278/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 572
+            },
+            {
+              "caption": "Fig. 2: DreamMimic supports vision-based humanoid loco-manipulation through world-model-assisted policy distillation. Distilling privileged specialist teachers into a visual student enables whole-body interaction under partial observability (top left) and diverse behaviors (top right). The same framework transfers across morphologies, including SMPL-X and Unitree G1 (bottom left), and sustains long-horizon contact-rich loco-manipulation (bottom right).",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 256,
+              "image_path": "figures/2608.22278/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 882
+            },
+            {
+              "caption": "Fig. 4: Qualitative comparison on contact-rich locomanipulation. DreamMimic maintains stable interaction and balance over long horizons, while the baseline often fails to sustain contact and collapses.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 306,
+              "image_path": "figures/2608.22278/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 437
+            },
+            {
+              "caption": "Fig. 6: Qualitative test in Isaac Sim. DreamMimic performs stable whole-body interactions with a wooden chair and a large table.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 183,
+              "image_path": "figures/2608.22278/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 454
+            },
+            {
+              "caption": "Fig. 5: Qualitative comparison on the Unitree G1 humanoid in Isaac Gym. DreamMimic generates stable pushing behavior with consistent balance and object interaction, whereas the Dreamer baseline becomes unstable during contact and falls.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 156,
+              "image_path": "figures/2608.22278/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 462
+            },
+            {
+              "caption": "TABLE I: Comparison of visuomotor policies on SMPL-X in OMOMO dataset.",
+              "figure_id": "table-I-2",
+              "figure_number": "I",
+              "height": 237,
+              "image_path": "figures/2608.22278/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 510
+            },
+            {
+              "caption": "TABLE II: Comparison of visuomotor policies on SMPL-X in BEHAVE dataset.",
+              "figure_id": "table-II-3",
+              "figure_number": "II",
+              "height": 110,
+              "image_path": "figures/2608.22278/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 510
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.22278/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.22278",
+          "relevance": 9,
+          "selection_reason": "Uses world model for latent dynamics and distillation in humanoid loco-manipulation.",
+          "summary_status": "generated",
+          "title": "DreamMimic: Learning Visuomotor Whole-Body Loco-Manipulation via World Model",
+          "tldr": "DreamMimic uses world-model-assisted distillation to train vision-based humanoid controllers for challenging whole-body loco-manipulation without privileged states at deployment.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-21",
       "paper_count": 3,
       "papers": [
@@ -546,5 +904,5 @@
   "schema_version": 1,
   "subtopic_id": "latent-action-models",
   "topic_id": "world-models",
-  "total_paper_count": 3
+  "total_paper_count": 5
 }

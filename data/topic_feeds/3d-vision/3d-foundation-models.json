@@ -1,6 +1,1166 @@
 {
   "days": [
     {
+      "date": "2026-08-25",
+      "paper_count": 8,
+      "papers": [
+        {
+          "abstract": "Rendering views using 3D scene representations such as Gaussian Splatting (3DGS), Neural Radiance Fields (NeRF), meshes, or even point clouds produces artifacts when input views are sparse or target views lie far from the input. Recent work mitigates these artifacts using diffusion-based generative priors, but is specialized to individual representations and require custom architectures or extensive retraining. We present FixAnything, a single model for fixing a wide range of rendering artifacts. It does so by repurposing a pretrained video generative model, leveraging its implicit multi-view priors with only minimal modification and lightweight finetuning. Our key insight is that even noisily-rendered sequences preserve camera motion and coarse scene structure, allowing cleanup to be formulated as video-to-video translation. To control what scene structure should be preserved, we introduce a binary mask denoting the clean pixels, enabling the model to anchor its output to high-quality inputs (e.g. training views) while refining the rest. To encourage FixAnything to produce 3D-consistent renderings that support downstream reconstruction, we use camera pose accuracy (recovered via structure-from-motion) as a reward signal for direct preference optimization (DPO). Across four distinct 3D representations, FixAnything consistently improves rendering quality with lightweight finetuning, demonstrating that a single generalist video prior can replace multiple specialist refinement pipelines. The simplicity of the framework enables immediate adoption of stronger future video models without architectural redesign.",
+          "arxiv_id": "2608.23549",
+          "arxiv_url": "https://arxiv.org/abs/2608.23549",
+          "authors": [
+            "Khiem Vuong, Deva Ramanan, Srinivasa Narasimhan"
+          ],
+          "bullets": [
+            "Addresses rendering artifacts from sparse input views or difficult target viewpoints in 3DGS, NeRFs, meshes, and point clouds.",
+            "Reformulates refinement as video-to-video translation using the rendered view sequence and the video model’s implicit multi-view prior.",
+            "Uses a binary clean-pixel mask to preserve reliable inputs while refining corrupted regions.",
+            "Applies camera-pose accuracy from structure-from-motion as a reward for direct preference optimization, promoting 3D-consistent outputs.",
+            "Reports consistent quality improvements across four 3D representations with lightweight finetuning, without representation-specific architectures."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of FixAnything. Given a rendered video from any 3D representation (3DGS, NeRF, mesh, sparse point cloud) and a binary mask indicating clean frames (e.g., training views), FixAnything produces a cleaned video that preserves scene content and camera trajectory. Top: the rendered video is encoded into latent space via a frozen VAE, which is channel-concatenated with the binary mask and noise. These inputs are denoised with a Wan2.1 DiT, adapted only through LoRA [10], without any architectural modification. Bottom: after supervised finetuning (SFT), we further optimize the model by generating multiple candidate outputs per video with different random seeds and evaluate their geometric consistency by using COLMAP to recover camera poses. The resulting pose accuracy is used to construct preference pairs for Flow-DPO, which steers the model toward outputs that are geometrically consistent.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 510,
+              "image_path": "figures/2608.23549/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 4: Effect of mask-aware conditioning in cleaning up 3DGS inputs. The input video (row 1) has clean frames at positions 0 and 30. Without the mask (row 2, m30=0), the model treats frame 30 as degraded and hallucinates over it: objects like the wet floor sign disappear (red arrows). This corruption propagates to nearby frames, causing frame 40 to lose content that should be preserved. With the mask (row 3, m30=1), the model preserves frame 30 and uses it as context for neighboring ones: the wet floor sign and details are retained (green arrows), matching ground truth (row 4).",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 393,
+              "image_path": "figures/2608.23549/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 714
+            },
+            {
+              "caption": "Fig. 5: Why geometric-aware preference optimization helps. The SFT-only model (row 2) hallucinates structures (red boxes) that shift across frames, causing SfM to recover wrong poses. After Flow-DPO (row 3), the model avoids such hallucinations and closely matches the ground truth (row 4), improving pose AUC@5◦ by 7.2%.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 356,
+              "image_path": "figures/2608.23549/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 712
+            },
+            {
+              "caption": "Fig. 6: FixAnything generalizes across input representations. The same model cleans up sparse COLMAP point clouds (top) and meshes (bottom), producing photorealistic output despite minimal visual input except for the clean first and last views.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 463,
+              "image_path": "figures/2608.23549/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 714
+            },
+            {
+              "caption": "Fig. 3: Different types of degraded renderings from the same scene, paired with ground truth (last row). First and last columns are clean training views, while intermediate frames show artifacts of varying severity. NeRF produces blur and fog (row 1), 3DGS produces floaters (row 2), meshes have holes at ambiguous depth regions (row 3), and sparse point clouds render as scattered patches at detected keypoints (row 4). Despite their visual differences, all representations preserve the underlying camera trajectory and coarse scene layout, and FixAnything trains on all four types jointly.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 487,
+              "image_path": "figures/2608.23549/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 683
+            },
+            {
+              "caption": "Fig. 8: Uncertainty estimation. Uncertainty maps of mesh rendering cleanup correlates well with reconstruction error and with unobserved (black) input regions.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 394,
+              "image_path": "figures/2608.23549/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 652
+            },
+            {
+              "caption": "Fig. 7: Qualitative comparison with Difix3D and Difix3D+ [35]. Difix3D enhances each frame independently using the nearest training view then distills results into 3DGS, introducing inconsistencies. Difix3D+ applies an additional enhancement step at render time, sharpening details but amplifying these inconsistencies. By processing the full video at once, FixAnything produces temporally coherent output.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 187,
+              "image_path": "figures/2608.23549/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 723
+            },
+            {
+              "caption": "Table 1: Quantitative comparison on DL3DV. FixAnything uses a single model to clean up renderings from four different input representations (NeRF, 3DGS, mesh, sparse SfM points), achieving comparable quality across all four. Notably, sparse SfM point renderings perform on par with or better than 3DGS and NeRF inputs, despite providing only scattered keypoints and the sole dense visual information comes from the few clean training views that the trajectory passes through. We color each cell as",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 462,
+              "image_path": "figures/2608.23549/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 719
+            },
+            {
+              "caption": "Table 5: Inference denoising steps vs. runtime. Quality remains comparable even at 5 denoising steps, enabling a significant speedup.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 140,
+              "image_path": "figures/2608.23549/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 333
+            },
+            {
+              "caption": "Table 4: Training data volume. As few as 20 paired training videos produce effective 3DGS rendering cleanup, with diminishing returns beyond 100 videos.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 140,
+              "image_path": "figures/2608.23549/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 327
+            },
+            {
+              "caption": "Table 2: Effect of Flow-DPO. Finetuning with Flow-DPO improves geometric consistency at no extra inference cost.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 94,
+              "image_path": "figures/2608.23549/table-011.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 379
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.23549/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.23549",
+          "relevance": 8,
+          "selection_reason": "The paper addresses 3D rendering artifacts across multiple representations (Gaussian Splatting, NeRF, etc.) using a unified video generative prior, which aligns with 3D Foundation Models. It also utilizes video-to-video translation and DPO, relevant to Video Generation.",
+          "summary_status": "generated",
+          "title": "FixAnything: 3D-Consistent Rendering Refinement via Video Generative Priors",
+          "tldr": "FixAnything uses a lightly fine-tuned pretrained video model to refine artifacts across diverse 3D scene representations while preserving 3D consistency.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "3D brain MRI generation has made significant advances in medical imaging, simulation, and controllable anatomical analysis. However, existing generative models typically synthesize 3D volumes monolithically, often overlooking regional anatomical structures and limiting local controllability. To address these limitations, we introduce AnaDiffusion, an anatomically compositional latent diffusion framework that factorizes the generation process into distinct, anatomically meaningful regions, followed by part-to-whole assembly and global refinement. Our approach first trains part diffusion models to capture local structural priors. We then inject an assembled anatomical composite of the parts into the whole-brain latent representation and continue denoising. This mechanism enables the model to resolve global context while preserving the injected anatomy. As a result, AnaDiffusion produces both explicit part assets and a globally coherent volume, thereby enabling controllable part editing without requiring subject-specific dense segmentation maps at inference time while maintaining consistent part-to-whole brain structure. On the subject-disjoint ADNI test split, AnaDiffusion achieves the lowest FID across the whole brain, left and right hemispheres, cerebellar-brainstem complex, and seam regions. It also achieves the best cerebellar and second-best ventricular and brainstem absolute Cohen's d values among the evaluated methods. In localized editing experiments, paired MS-SSIM demonstrates high target transfer and off-target preservation, supporting controllable part replacement with minimal unintended anatomical alterations.",
+          "arxiv_id": "2608.23014",
+          "arxiv_url": "https://arxiv.org/abs/2608.23014",
+          "authors": [
+            "Huiwen Han, Lulin Liu, Bangya Liu, Yuanhao Cai, Nuo Chen, Xiaoqing Wang, Ziqian Xie, Chenyu You, Shuiwang Ji, Degui Zhi, Zhiwen Fan"
+          ],
+          "bullets": [
+            "Addresses monolithic 3D MRI generation, which limits regional anatomical control.",
+            "Trains diffusion models for meaningful anatomical parts, assembles them, and injects the composite into whole-brain latent denoising.",
+            "Produces both editable part assets and globally coherent brain volumes without requiring dense subject-specific segmentations at inference.",
+            "On a subject-disjoint ADNI test split, reports the lowest FID across evaluated brain regions and seam areas.",
+            "Localized editing shows strong target transfer and preservation of non-target anatomy, with minimal unintended changes."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1 AnaDiffusion for anatomically compositional 3D brainMRI generation. Unlike monolithic baselines (left) that may suffer from left-right inconsistency, inter-part discontinuity, and boundary collapse, AnaDiffusion generates part-specific anatomical assets and refines their assembled scaffold into a coherent whole-brain volume. The resulting model generates better regional and global anatomy across FID and SynthSeg-based metrics.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 550,
+              "image_path": "figures/2608.23014/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 917
+            },
+            {
+              "caption": "Figure 3 Qualitative comparison of 3D brainMRI generation. This figure visualizes the visual quality of various generative models. From left to right, the columns display: Real, LDM, ControlNet LDM, Grid-based LDM, Segmentation cLDM, MorphLDM, and Ours (AnaDiffusion). Existing models that synthesize 3D volumes monolithically often overlook fine-scale anatomical structures or suffer from localized artifacts. In contrast, AnaDiffusion leverages part-specific diffusion models and an auxiliary latent anchoring objective to ensure part-to-whole anatomical coherence. As a result, our approach achieves superior local anatomical fidelity and enhanced boundary coherence.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 331,
+              "image_path": "figures/2608.23014/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 886
+            },
+            {
+              "caption": "Figure 4 Localized part editing. We evaluate whether part replacement edits are both effective and spatially localized. (a) AnaDiffusion and the SDEdit-style Segm. cLDM baseline are evaluated on the same N = 100 donor-recipient edits from 48 subjects per region. Values are mean paired MS-SSIM with 95% confidence intervals from 5,000 subject-cluster bootstrap replicates. Target transfer measures similarity between the edited target region and the inserted donor part, while off-target preservation measures similarity outside the edited region before and after editing. Contrast metrics further summarize the transfer gain and locality contrast. (b) A donor part asset is substituted into a generated recipient brain and refined into an edited whole-brain sample.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 483,
+              "image_path": "figures/2608.23014/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 986
+            },
+            {
+              "caption": "Figure 2 AnaDiffusion performs anatomically compositional 3D brain MRI generation by first synthesizing high-fidelity regional parts and assembling them into a whole-brain scaffold. The scaffold is re-encoded into the whole-brain latent space and injected during denoising, enabling local anatomical detail and globally coherent whole-brain synthesis.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 247,
+              "image_path": "figures/2608.23014/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 818
+            },
+            {
+              "caption": "Figure 5 Additional AnaDiffusion samples. Representative generated 3D brain MRI samples showing axial, sagittal, coronal, and surface views.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 938,
+              "image_path": "figures/2608.23014/figure-005.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 926
+            },
+            {
+              "caption": "Table 2 Ablation study on ADNI. We evaluate the effects of compositional design, latent injection strength, and injection timing on generation quality. Values are MedicalNet FID ×104 for the whole brain (WB), left/right hemispheres, cerebellar-brainstem complex (CB), and seam region. Best results for each metric are bold; second-best results are underlined. Lower is better.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 300,
+              "image_path": "figures/2608.23014/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 988
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.23014/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.23014",
+          "relevance": 8,
+          "selection_reason": "Compositional latent diffusion for 3D brain MRI generation; fits 3D foundation models.",
+          "summary_status": "generated",
+          "title": "AnaDiffusion: Anatomically CompositionalLatent Diffusion for Controllable 3D Brain MRI Generation",
+          "tldr": "AnaDiffusion generates coherent 3D brain MRIs by composing controllable anatomical parts and refining them within a whole-brain latent representation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent monocular 3D Gaussian Splatting (3DGS) streaming reconstruction methods have achieved impressive performance by balancing reconstruction quality and efficiency. However, extending these frameworks to underwater scenes remains challenging due to severe visual degradation, such as light attenuation and scattering, which degrades camera pose tracking and distorts scene geometry. To address these challenges, we propose AquaFlow, a monocular Gaussian Splatting streaming reconstruction framework for efficient and high-fidelity underwater reconstruction. Specifically, AquaFlow fine-tunes a 3D vision foundation model on large-scale underwater data for robust pose and pointmap estimation, and introduces a medium-guided incremental Gaussian initialization strategy for streaming mapping. Furthermore, we develop a streaming-compatible hybrid scene representation that integrates structured, distance-conditioned neural Gaussians with a physics-inspired optical model to compensate for underwater image formation effects, enabling accurate scene reconstruction. We evaluate AquaFlow on a comprehensive dataset of 62 diverse underwater trajectories, collected from both public benchmarks and in-the-wild web videos across various scales. Extensive experiments demonstrate that AquaFlow achieves state-of-the-art tracking and rendering performance, reducing average localization error by 13.2% and improving PSNR by 4.74 dB compared to WaterSplat-SLAM.",
+          "arxiv_id": "2608.22906",
+          "arxiv_url": "https://arxiv.org/abs/2608.22906",
+          "authors": [
+            "Yingxiang Xu, Kerui Ren, Wenqi Guo, Changjian Jiang, Tao Lu, Linning Xu, Mulin Yu"
+          ],
+          "bullets": [
+            "Addresses underwater light attenuation and scattering that impair camera tracking and distort reconstructed geometry.",
+            "Fine-tunes a 3D vision foundation model for robust underwater pose and pointmap estimation.",
+            "Uses medium-guided incremental Gaussian initialization for streaming map construction.",
+            "Combines distance-conditioned neural Gaussians with a physics-inspired optical model to compensate for underwater image formation.",
+            "Across 62 underwater trajectories, reduces average localization error by 13.2% and improves PSNR by 4.74 dB over WaterSplat-SLAM."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 4. Qualitative comparisons of AquaFlow against baselines [16]–[18], [33], [34]. The top three rows highlight AquaFlow’s superior modeling capability for distant underwater scenes and intricate seafloor details (e.g., ground markings and discarded vehicle textures). The bottom three rows demonstrate our strength in recovering complex subsea structural topologies (e.g., underwater caves, shipwreck ruins and canyons), where domain-adapted 3D geometric priors and appearance representations effectively preserve sharp object boundaries and detailed structures compared to baseline methods.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 579,
+              "image_path": "figures/2608.22906/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1072
+            },
+            {
+              "caption": "Fig. 5. Qualitative ablation comparison on rendered color and depth maps. Compared to baseline variants lacking specific modules (e.g., medium initialization, underwater fine-tuning, distance encoding, or LGPD), disabling any component introduces structural geometric errors or scene blurring. In contrast, our full model faithfully recovers both accurate 3D geometry and realistic underwater appearance.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 153,
+              "image_path": "figures/2608.22906/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 529
+            },
+            {
+              "caption": "TABLE II QUANTITATIVE RECONSTRUCTION RESULTS ON REAL-WORLD UNDERWATER DATASETS. WE REPORT PSNR, SSIM, AND LPIPS. HIGHER PSNR/SSIM AND LOWER LPIPS INDICATE BETTER PERFORMANCE. THE BEST AND SECOND-BEST RESULTS ARE IN BOLD AND UNDERLINE.",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 221,
+              "image_path": "figures/2608.22906/table-003.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1064
+            },
+            {
+              "caption": "TABLE IV QUANTITATIVE LOCALIZATION (TRAJECTORY) RESULTS ON UNDERWATER DATASETS. WE REPORT ATE RMSE (M) ↓. THE BEST AND SECOND-BEST RESULTS ARE IN BOLD AND UNDERLINE, RESPECTIVELY.",
+              "figure_id": "table-IV-5",
+              "figure_number": "IV",
+              "height": 188,
+              "image_path": "figures/2608.22906/table-004.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 516
+            },
+            {
+              "caption": "TABLE I COMPOSITION OF UNDERWATER TRAINING IMAGE PAIRS. THE DATASETS COVER DIVERSE SYNTHETIC AND REAL UNDERWATER SCENES.",
+              "figure_id": "table-I-1",
+              "figure_number": "I",
+              "height": 181,
+              "image_path": "figures/2608.22906/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 529
+            },
+            {
+              "caption": "TABLE V ABLATION STUDY ON THE FLSEA-CANYONS DATASET. WE REPORT PSNR, SSIM, AND LPIPS. HIGHER PSNR/SSIM AND LOWER LPIPS INDICATE BETTER RECONSTRUCTION QUALITY.",
+              "figure_id": "table-V-6",
+              "figure_number": "V",
+              "height": 131,
+              "image_path": "figures/2608.22906/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 438
+            },
+            {
+              "caption": "TABLE III QUANTITATIVE EFFICIENCY AND GAUSSIAN NUMBER COMPARISON. WE REPORT SCENE TRAINING TIME (TIME (S) ↓), TRAINING THROUGHPUT (FPS ↑), AND GAUSSIAN COUNT (#GS (K) ↓). THE BEST AND SECOND-BEST RESULTS ARE IN BOLD AND UNDERLINE, RESPECTIVELY.",
+              "figure_id": "table-III-4",
+              "figure_number": "III",
+              "height": 154,
+              "image_path": "figures/2608.22906/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1064
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.22906/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2608.22906",
+          "relevance": 7,
+          "selection_reason": "Presents a monocular Gaussian Splatting SLAM for underwater streaming reconstruction, within 3D vision.",
+          "summary_status": "generated",
+          "title": "AquaFlow: A Monocular Gaussian Splatting SLAM for Underwater Streaming Reconstruction",
+          "tldr": "AquaFlow enables accurate, efficient monocular Gaussian Splatting SLAM for underwater streaming reconstruction despite severe visual degradation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Reconstructing photorealistic scenes in unconstrained underwater environments remains challenging due to severe media-induced light scattering and unpredictable dynamic objects. Recent feed-forward visual foundation models have demonstrated remarkable capabilities in generalized novel view synthesis and tracking. However, when directly applied to aquatic videos, optical attenuation and motion interference fatally corrupt their feature aggregation, leading to severe tracking and reconstruction failures. To overcome these limitations, we present NemoSplat, the first feed-forward 4D Gaussian Splatting framework tailored for media-aware dynamic reconstruction directly from uncalibrated marine videos. Beyond providing robust estimations of camera poses and dense scene depth, we devise a Promptable Dynamic Disentangler that utilizes a confidence-aware fusion strategy of learned dynamic probabilities and optional semantic text priors, effectively isolating massive transient entities. Furthermore, to counteract visual degradation, a Media-Aware Gaussian Predictor is formulated to jointly estimate intrinsic 3D Gaussian attributes alongside physical media parameters, rendering pristine scene appearance in a single forward pass. Additionally, we introduce a large-scale underwater dataset with massive dynamic elements to facilitate training and evaluation. Extensive experiments on our dataset demonstrate that NemoSplat achieves state-of-the-art tracking accuracy and high-fidelity rendering. Homepage: https://nemosplat.hkustvgd.com",
+          "arxiv_id": "2608.22888",
+          "arxiv_url": "https://arxiv.org/abs/2608.22888",
+          "authors": [
+            "Xiaopeng Guo, Wai Chung Tse, Yipeng Zhu, Hanwen Zhang, Huajian Huang, Sai-Kit Yeung"
+          ],
+          "bullets": [
+            "Targets failures of existing visual foundation models caused by underwater degradation and motion interference.",
+            "Uses a Promptable Dynamic Disentangler to separate transient objects via confidence-aware dynamic and optional text-semantic cues.",
+            "Introduces a Media-Aware Gaussian Predictor that jointly estimates 3D Gaussian properties and physical media parameters.",
+            "Provides camera-pose and dense-depth estimation in a single feed-forward framework.",
+            "Experiments on a newly introduced large-scale dynamic underwater dataset show state-of-the-art tracking and high-fidelity rendering."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of our NemoSplat framework. It leverages the Visual Geometry Transformer to extract robust spatiotemporal features from uncalibrated underwater sequences. Subsequently, a shared feature encoder feeds these representations into specialized decoders to jointly estimate camera poses, depth, dynamic semantic masks (optionally refined via grounded text prompts), water backscatter and attenuation parameters, and intrinsic 4D Gaussians.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 514,
+              "image_path": "figures/2608.22888/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1010
+            },
+            {
+              "caption": "Fig. 7. Reconstruction results on real-world aquatic sequences. Our method disentangles static Gaussian models from dynamic underwater scenes, providing comprehensive outputs including RGB rendering images, depth maps and dynamic masks.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 1239,
+              "image_path": "figures/2608.22888/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1010
+            },
+            {
+              "caption": "Fig. 4. Examples sequences of our proposed evaluation dataset. It includes synthetic scenes with precise ground-truth annotations and diverse in-the-wild underwater sequences for comprehensive evaluation.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 304,
+              "image_path": "figures/2608.22888/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1064
+            },
+            {
+              "caption": "Fig. 3. Dynamic-Semantic Mask Generation. The Promptable Dynamic Disentangler (𝐹𝑀 ) refines the predicted dynamic mask via logit adjustment using an optional text prompt-guided semantic map, effectively revising a highly accurate mask for downstream 4D modeling.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 244,
+              "image_path": "figures/2608.22888/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 510
+            },
+            {
+              "caption": "Fig. 6. Qualitative comparison of novel view synthesis on highly degraded real-world aquatic sequences. While conventional feed-forward modules and SLAM-based baselines suffer from severe ghosting, topological blurring, and visual artifacts caused by unconstrained dynamic entities (e.g., schools of swimming fish), NemoSplat explicitly decouples transient motion from the static topology. This disentanglement enables the synthesis of crisp, temporally consistent, and artifact-free novel views.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 1169,
+              "image_path": "figures/2608.22888/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1002
+            },
+            {
+              "caption": "Fig. 5. Restored images on SeaThru-NeRF [Levy et al. 2023] dataset. Our approach recovers more natural colors while preserving clearer details in distant regions.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 240,
+              "image_path": "figures/2608.22888/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 483
+            },
+            {
+              "caption": "Table 1. Quantitative evaluation on synthetic sequences. Best results are bold , second best are underlined. “-” indicates that the method does not support rendering, and “×” denotes failure due to out of memory. ATE is reported in meters.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 210,
+              "image_path": "figures/2608.22888/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 952
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.22888/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.22888",
+          "relevance": 7,
+          "selection_reason": "Proposes a feed-forward 4D Gaussian splatting framework for underwater dynamic reconstruction, fitting 3D vision.",
+          "summary_status": "generated",
+          "title": "NemoSplat: Feed-Forward 4D Gaussian Splatting for Media-Aware Underwater Reconstruction",
+          "tldr": "NemoSplat enables feed-forward 4D Gaussian Splatting for reconstructing dynamic underwater scenes from uncalibrated videos despite scattering, attenuation, and moving objects.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Generalizable 3D Gaussian Splatting (G-3DGS) has emerged as a promising approach for novel view synthesis undersparse-view settings. However, existing frameworks remain restricted by pixel-aligned Gaussian estimation, whichstruggles in partially observed or occluded regions and often leads to incomplete surfaces or structural collapse. Toaddress these challenges, we propose SeeU (Seeing the Unseen), a novel G-3DGS framework. We frame its core design asSemantic-in-Gaussian: semantic-conditioned refinement in Gaussian space. Specifically, we introduce a Cross-viewEntropy-Aware (CEA) module that aggregates multi-view semantic and geometric cues into compact embeddings. Theseembeddings guide the Conditional Gaussian Transformer, which applies residual updates to coarse Gaussians, helpingrecover under-constrained regions of partially observed structures while preserving surface consistency. Comprehensiveexperiments on multiple benchmarks demonstrate that SeeU consistently improves rendering quality and structuralcompleteness while retaining efficient feed-forward inference. Especially under challenging extrapolation settings,SeeU achieves an average improvement of 2.44 dB in PSNR compared to recent SOTA G-3DGS methods.",
+          "arxiv_id": "2608.22740",
+          "arxiv_url": "https://arxiv.org/abs/2608.22740",
+          "authors": [
+            "Zeyang Bai, Yunpeng Wang, Yunbiao Wang, Jun Xiao"
+          ],
+          "bullets": [
+            "Addresses incomplete surfaces and structural collapse caused by pixel-aligned Gaussian estimation in partially observed or occluded regions.",
+            "Introduces Semantic-in-Gaussian refinement, combining multi-view semantic and geometric cues in Gaussian space.",
+            "Uses a Cross-view Entropy-Aware module to create compact embeddings for a Conditional Gaussian Transformer.",
+            "The transformer applies residual updates to coarse Gaussians while preserving surface consistency.",
+            "Experiments on multiple benchmarks show improved rendering quality and structural completeness, including a reported 2.44 dB average PSNR gain under extrapolation settings, with efficient feed-forward inference."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of SeeU. Given sparse input views, our framework first constructs an initial set of latent 3D Gaussians through the multi-view Gaussian encoder. In parallel, a frozen single-view ViT extracts per-view class embeddings, which are fused by the proposed Cross-view Entropy-Aware (CEA) module to produce a unified multiview semantic embedding. This embedding guides the DiT-based Conditional Gaussian Transformer to perform residual refinement on the latent Gaussians, followed by an upsampling decoder that restores them to the original spatial resolution. The refined 3D Gaussians are rendered to synthesize novel views, and the entire model is optimized end-to-end using photometric loss.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 452,
+              "image_path": "figures/2608.22740/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 716
+            },
+            {
+              "caption": "Fig. 4: Qualitative results for extrapolated NVS on RealEstate10K. Extrapolated target views lie outside the input trajectory where novel pixels lack reference correspondences from input views. Baseline methods exhibit voids and distorted geometry within these unseen regions while SeeU reduces missing-geometry artifacts and preserves boundary structures.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 481,
+              "image_path": "figures/2608.22740/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 5: Zero-shot qualitative comparison on DTU. All models are trained on RealEstate10K and evaluated on DTU without fine-tuning. The lower-right three panels visualize residuals between the rendered novel views and ground truth.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 366,
+              "image_path": "figures/2608.22740/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 568
+            },
+            {
+              "caption": "Fig. 7: Qualitative ablations of various embeddings. The second row displays error maps that indicate differences from the ground truth. Models using class embeddings exhibit artifacts near boundaries. Models conditioned on CLIP and BLIP embeddings exhibit errors along fine structures such as sofa contours. The model utilizing the CEA embedding produces sharper edges and exhibits fewer geometric errors.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 288,
+              "image_path": "figures/2608.22740/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 3: Qualitative comparison of interpolated NVS. The first two columns show sparse input views, while the third column presents the ground truth for the target interpolated view between them. SeeU better reconstructs fine details and occluded regions (highlighted in red) in both indoor (RealEstate10K, top two rows) and outdoor (ACID, bottom two rows) settings.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 425,
+              "image_path": "figures/2608.22740/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 6: Qualitative ablations of Gaussian refinement. The second row displays residual maps between rendered images and the ground truth. Removing Gaussian refinement (w/o Refinement) leads to structural distortions and incomplete geometry, while replacing the Conditional Gaussian Transformer with a 2D UNet produces blurry edges. The full model produces sharper, more complete reconstructions with improved geometric consistency.",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 252,
+              "image_path": "figures/2608.22740/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 506
+            },
+            {
+              "caption": "Fig. 9: More comparisons on RealEstate10K. Qualitative comparison of novel view synthesis results across different methods. Red boxes highlight challenging regions where baseline methods exhibit artifacts or texture loss. In contrast, SeeU produces sharper and more structurally consistent renderings, refining object contours and details (e.g., furniture edges, patterned bedspreads).",
+              "figure_id": "figure-9-16",
+              "figure_number": "9",
+              "height": 636,
+              "image_path": "figures/2608.22740/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 8: Zero-shot qualitative comparison on ACID. All models are trained on RealEstate10K and evaluated on ACID without fine-tuning.",
+              "figure_id": "figure-8-12",
+              "figure_number": "8",
+              "height": 269,
+              "image_path": "figures/2608.22740/figure-008.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 508
+            },
+            {
+              "caption": "Table 1: Comparison of interpolated NVS. We evaluate performance on the RealEstate10K and ACID datasets by rendering three novel interpolation views from two reference viewpoints, averaging across all scenes. The dataset’s training and testing split follows the identical protocol established by pixelSplat. Note that 3DGS-based methods render extremely fast (∼ 500FPS).",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 245,
+              "image_path": "figures/2608.22740/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 719
+            },
+            {
+              "caption": "Table 2: Comparison of extrapolated NVS on RealEstate10K. We evaluate model performance on RealEstate10K by rendering three novel extrapolated views from two reference views, averaging across all scenes under identical training settings.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 177,
+              "image_path": "figures/2608.22740/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 574
+            },
+            {
+              "caption": "Table 7: Zero-shot evaluation on ACID. All methods are trained on RealEstate10K and evaluated on ACID without fine-tuning.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 150,
+              "image_path": "figures/2608.22740/table-011.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 352
+            },
+            {
+              "caption": "Table 4: Ablations of Gaussian refinement. Models trained on RealEstate10K with two input views. w/o Refinement renders directly from the initial Gaussians, while w/ UNet Backbone replaces the Conditional Gaussian Transformer with a 2D UNet. Green indicates drops relative to the full model.",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 87,
+              "image_path": "figures/2608.22740/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 498
+            },
+            {
+              "caption": "Table 5: Ablations on conditional embeddings. Models trained on RealEstate10K with two input views. CEA outperforms DINOv3, CLIP, and BLIP-2 under identical conditioning interfaces and training settings. Green indicates drops relative to the best model (CEA).",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 161,
+              "image_path": "figures/2608.22740/table-013.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 687
+            },
+            {
+              "caption": "Table 6: Ablations on extrapolation training range. We vary the sampling range of extrapolated target views during training on RealEstate10K with two input views. w/ no ext. disables extrapolated-view sampling, whereas ext. N frames samples targets within N frames before and after the input-view range. Green indicates drops relative to the 45-frame setting.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 87,
+              "image_path": "figures/2608.22740/table-014.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 498
+            },
+            {
+              "caption": "Table 8: Quantitative comparison of 3-view cross-dataset generalization.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 104,
+              "image_path": "figures/2608.22740/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 427
+            },
+            {
+              "caption": "Table 3: Zero-shot evaluation on DTU. All methods are trained on RealEstate10K and evaluated on DTU without fine-tuning.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 56,
+              "image_path": "figures/2608.22740/table-016.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 593
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.22740/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.22740",
+          "relevance": 8,
+          "selection_reason": "Generalizable 3D Gaussian Splatting with semantic refinement for sparse-view novel view synthesis; fits 3D vision and generalist 3D models.",
+          "summary_status": "generated",
+          "title": "Seeing the Unseen: Semantic-in-Gaussian for Sparse-View 3D Generalization",
+          "tldr": "SeeU improves sparse-view 3D reconstruction by using semantic-conditioned refinement to recover unseen regions and produce more complete, consistent novel views.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "This article presents a novel 3D reconstruction and mapping of the interior of the International Space Station (ISS) using 3D Gaussian Splatting (3DGS). Using existing grayscale images from the Astrobee free-flying robot dataset, we construct a full 3D splat of the ISS' Kib\\=o or Japanese Experiment Module (JEM). 3DGS has in recent years shown promise in providing novel view synthesis of scenes captured from many images or videos, this article applies this approach to human spaceflight systems. We compare our 3DGS architecture to existing methods such as Nerfacto and TensoRF and show that reconstruction improves the state-of-the-art in both scene quality and rendering speed. We show that with as little as 500 in-situ images, a high-fidelity map can be constructed using Astrobee's Navigation Camera (NavCam) during free-flight in the JEM. These reconstructions could enable free-flyers to rapidly create and update interior maps for intra-vehicular habitats like the ISS.",
+          "arxiv_id": "2608.21685",
+          "arxiv_url": "https://arxiv.org/abs/2608.21685",
+          "authors": [
+            "Hudson Kim, Ryan Soussan, Brian Coltin, Jordan Kam"
+          ],
+          "bullets": [
+            "Reconstructs the ISS Kibo/JEM interior from grayscale Astrobee Navigation Camera images.",
+            "Demonstrates high-fidelity mapping with as few as 500 in-situ images.",
+            "Compares 3DGS with Nerfacto and TensoRF for scene reconstruction.",
+            "Reports improved scene quality and rendering speed over the compared methods.",
+            "Targets rapid map creation and updates for intra-vehicular space habitats."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3. Four novel views of the ISS Module corridor, Airlock hatch, Crew workstation, and Cargo stowage and their depth map from our 3DGS model.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 402,
+              "image_path": "figures/2608.21685/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1052
+            },
+            {
+              "caption": "Fig. 2. Pipeline Diagram. Five Astrobee survey flights are filtered to 5,000 frames. COLMAP takes these images and identifies features. GLOMAP uses these features to simultaneously recover cameras poses and a 3D point cloud. The SfM data is then used as priors for the 3DGS map to be created while adaptive density control ensures that the correct number of Gaussians are used and a learned appearance embedding accounts for lighting differences.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 291,
+              "image_path": "figures/2608.21685/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1052
+            },
+            {
+              "caption": "Fig. 1. Astrobee inside the ISS JEM Module with grayscale images and depth renders from in-situ NavCam images [4], [6].",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 349,
+              "image_path": "figures/2608.21685/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 4. Comparison with Splatfacto, Nerfacto, Instant-NGP, and TensoRF.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2608.21685/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "TABLE II EVALUATION OF THE EFFECT THE NUMBER OF TRAINING ITERATIONS HAS ON RECONSTRUCTION QUALITY AND TRAINING TIME.",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 205,
+              "image_path": "figures/2608.21685/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 491
+            },
+            {
+              "caption": "TABLE I EVALUATION OF THE EFFECT THE NUMBER OF IMAGES HAS ON RECONSTRUCTION QUALITY AND OVERALL TIMING.",
+              "figure_id": "table-I-1",
+              "figure_number": "I",
+              "height": 158,
+              "image_path": "figures/2608.21685/table-006.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 442
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.21685/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2608.21685",
+          "relevance": 7,
+          "selection_reason": "Applies 3D Gaussian Splatting for in-situ 3D reconstruction of an environment, relevant to 3D vision and mapping for embodied agents.",
+          "summary_status": "generated",
+          "title": "In-Situ Reconstruction of the International Space Station Using 3D Gaussian Splatting and Astrobee",
+          "tldr": "The study uses 3D Gaussian Splatting with Astrobee imagery to rapidly build high-fidelity 3D maps of the ISS’s Japanese Experiment Module.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Structured-language models such as SceneScript reconstruct a scene as a short program of parametric commands, an inherently editable and semantically explicit representation. We ask three questions that stand between such models and their most compelling application, automated ingestion of existing buildings into BIM tools, studied here on synthetic scans: \\emph{what} is the scene made of, \\emph{how fast} can it be produced, and \\emph{exactly where} is each element. BIMScript answers all three within one grammar. First, we extend the layout language with per-element \\emph{material} and \\emph{condition} attributes, supervised by a vision-language-model material-passport corpus we build over 100k synthetic scenes (1.9M pseudo-labeled elements), and route image appearance to the material tokens through a lifted-feature point encoder. Second, we show that autoregressive decoding of these programs is dominated not by compute but by kernel-launch and host-synchronization overhead, and remove it with an output-exact CUDA-graph decoder (1.9 vs 6.4\\,ms/step, $3.4\\times$) plus a grammar-parallel, tolerance-verified draft-and-verify scheme that exploits the deterministic entity schema. Third, we address the model's 5cm token-grid granularity with training-free geometric snapping and a hybrid discrete--continuous decoder head that regresses a sub-bin offset, and measure how much of the residual error each recovers. Because each command maps one-to-one onto a native Revit object, we validate direct ingestion into a BIM authoring tool end to end with a working add-in and its IFC4 export, and the same program's language form is designed to support LLM-driven, sustainability-aware reasoning over the built asset.",
+          "arxiv_id": "2608.21447",
+          "arxiv_url": "https://arxiv.org/abs/2608.21447",
+          "authors": [
+            "Prakash Kondibhau Naikade, Thomas B. Moeslund, Andreas M{\\o}gelmose"
+          ],
+          "bullets": [
+            "Adds per-element material and condition attributes using a vision-language-model material-passport corpus spanning 100k synthetic scenes and 1.9M pseudo-labeled elements.",
+            "Uses a lifted-feature point encoder to connect image appearance with material tokens in a unified scene-program grammar.",
+            "Reduces decoding overhead with an output-exact CUDA-graph decoder and grammar-parallel draft-and-verify decoding; the former reaches 1.9 vs. 6.4 ms per step.",
+            "Improves the 5 cm token-grid localization through training-free geometric snapping and a hybrid discrete–continuous sub-bin regression head.",
+            "Demonstrates end-to-end ingestion into Revit via a working add-in and IFC4 export, while retaining a language form suitable for LLM-based asset reasoning."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: BIMScript overview. A lifted-feature encoder routes image appearance into the point encoder, so the decoder can condition each material and condition token on the element’s own geometry tokens. Decoding is accelerated by GraphStep and SchemaDraft and refined below the token grid by SubBin (Fig. 4), and every emitted command maps one-to-one onto a native Revit/IFC object.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 110,
+              "image_path": "figures/2608.21447/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 6: Material-passport extraction on one scene. Surface points are associated to elements, the observing keyframes are projected onto each element to cut per-element crops, and the fused per-element label is written back as a material- and conditionannotated floor plan. The crops are what the vision-language model actually sees, which is why occlusion filtering (Sec. 4.3) matters: an unfiltered crop can show the wrong surface entirely.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 514,
+              "image_path": "figures/2608.21447/figure-002.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 710
+            },
+            {
+              "caption": "Fig. 5: A decoded BIMScript program ingested into Autodesk Revit by our pyRevit add-in. The imported plan consists of native Revit walls, here an instance of the autocreated type BIMScript - concrete, and every element carries its predicted material, condition, and source id as shared parameters.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 323,
+              "image_path": "figures/2608.21447/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 710
+            },
+            {
+              "caption": "Fig. 3: A decoded BIMScript program over the input point cloud, wall faces colored by predicted material and openings by role. On this 18-element, three-room validation scene every ground-truth element is recovered (coverage 1.0, F1@5cm 0.944), and 16 of 18 carry the correct material, at 0.944 condition accuracy. The one visible attribute error, the tile wall at the rear predicted wallpaper, is the frequent-class collapse that Tab. 4 quantifies at corpus scale.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 282,
+              "image_path": "figures/2608.21447/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 698
+            },
+            {
+              "caption": "Fig. 7: Validation F1@5cm over training for the two language grids (in-run 64-scene slice, identical data, recipe, and step count). The 3.2× finer grid starts slower, since each coordinate needs more optimization, and then overtakes once the model’s residual token error shrinks to a few bins, which is exactly where grid pitch decides whether that error passes or fails the 5cm test. The two curves end within the slice’s own evalto-eval noise, consistent with the small margin in Tab. 1.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 222,
+              "image_path": "figures/2608.21447/figure-005.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 405
+            },
+            {
+              "caption": "Fig. 4: The three FastBIMScript mechanisms. GraphStep collapses a decode step whose cost is kernel-launch and host-synchronization overhead into a single captured CUDA graph, emitting identical tokens. SchemaDraft exploits the fact that a command token fixes the types of all remaining parameter slots: it drafts them in one forward pass with a learned [INFILL] embedding ([I]) and accepts the longest verified prefix. SubBin keeps the coarse token for structure and adds a bounded within-bin offset, so a coordinate is no longer pinned to the 5cm grid.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 184,
+              "image_path": "figures/2608.21447/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 699
+            },
+            {
+              "caption": "Fig. 9: Decoded programs rendered in 3D over the input point cloud. Geometry tracks the ground truth closely, and openings are placed on the correct host walls. The materials show both regimes behind the numbers in Tabs. 3 and 4: scene 1 recovers exactly the five materials present in its ground truth, whereas scene 2 collapses tile and wood paneling into the corpus-frequent wallpaper, which is what a material accuracy of 0.63 alongside a macro-F1 of 0.29 looks like element by element. Door and window materials (composite, aluminum) are recovered essentially always, since they are neardeterministic given the element class.",
+              "figure_id": "figure-9-11",
+              "figure_number": "9",
+              "height": 902,
+              "image_path": "figures/2608.21447/figure-007.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 603
+            },
+            {
+              "caption": "Fig. 8: Qualitative layout results on the first three validation scenes: ground truth, BIMScript prediction, and a zoomed corner inset (GT solid, prediction dashed); doors are drawn as swing arcs, windows as blue sill glyphs. Rows 1–2 show typical centimeterlevel corner agreement; row 3 shows a residual corner offset, and row 1 a missed wall segment, the failure modes behind the strict-F1 numbers in Tab. 1.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 639,
+              "image_path": "figures/2608.21447/figure-008.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 681
+            },
+            {
+              "caption": "Table 1: Reproducing the SceneScript point-only encoder–decoder from public artifacts for layout estimation. Top: 1,000 held-out test scenes, same evaluator, one greedy decode per model, so F1@5cm and both AvgF1 columns come from a single set of predictions. “Local-FSS” is our reimplementation of Fast SceneScript’s 20-threshold average (Sec. 3.3); parameters are measured from the instantiated models. Bottom: numbers as published, on each paper’s own split and evaluator, neither of them public.",
+              "figure_id": "table-1-15",
+              "figure_number": "1",
+              "height": 166,
+              "image_path": "figures/2608.21447/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 696
+            },
+            {
+              "caption": "Table 4: The full BIMScript grammar against its reproduction anchor, on the 1,000- scene test split. Public ckpt (anchor) emits layout only, so its attribute cells are empty by construction. BIMScript+ continues the 40k model for 20k steps with the SchemaDraft and SubBin objectives (Sec. 5, Sec. 6). Layout is scored over all groundtruth elements, attributes only over elements matched within 10 cm (Sec. 7). Latency is batch 1 with the GraphStep decoder on one L40S, the production path; all other metrics come from one greedy decode per scene at batch 4. (∗Scene latency tracks emitted program length: the public checkpoint’s batch-1 decode emits ∼3× more tokens per scene than BIMScript on the same scenes, while per token its 4-layer decoder is about 2× faster than our 8-layer one.)",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 85,
+              "image_path": "figures/2608.21447/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 721
+            },
+            {
+              "caption": "Table 2: Decode acceleration, all measured on A100, batch 1, real scenes. Left : perstep decode cost; per-step time is flat in sequence length, so the eager→graph gap is overhead, not compute. Right : whole-scene wall-clock factors (64 scenes, greedy), smaller than per-step factors because sequence assembly and grammar bookkeeping run outside the graph.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 118,
+              "image_path": "figures/2608.21447/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 656
+            },
+            {
+              "caption": "Table 3: Appearance-source ablation for material and condition. All six arms share one 2,250-scene training subset, one 20k-step budget, and the same 250 validation scenes, so the comparison isolates the appearance source. Condition macro-F1 is over the three classes every arm’s matched population realizes (good, new, worn). Single-seed throughout, so we read the ordering as evidence rather than a settled ranking.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 168,
+              "image_path": "figures/2608.21447/table-012.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 719
+            },
+            {
+              "caption": "Table 6: The BIMScript dataset and material-passport corpus extracted from ASE dataset. Cross-cue agreement indicates label uncertainty (Sec. 4.2).",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 254,
+              "image_path": "figures/2608.21447/table-013.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 579
+            },
+            {
+              "caption": "Table 5: BIMScript-to-BIM mapping. Both Revit add-in (Fig. 5), and the IFC exporter through Revit’s own IFC4 exporter, whose output we validate independently for element classes, hosting relations, and the BIMScript property set on the evaluated scenes.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 104,
+              "image_path": "figures/2608.21447/table-014.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 635
+            },
+            {
+              "caption": "Table 7: Sub-bin refinement, conditional on correct detection (64 scenes, shared detections, matched elements). Per-type coordinate MAE (cm) and mean F1 at tight thresholds.",
+              "figure_id": "table-7-3",
+              "figure_number": "7",
+              "height": 118,
+              "image_path": "figures/2608.21447/table-015.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 556
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.21447/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.21447",
+          "relevance": 6,
+          "selection_reason": "Structured scene programs for BIM ingestion with VLM material supervision and autoregressive decoding; relevant to 3D foundation models and spatial multimodal reasoning.",
+          "summary_status": "generated",
+          "title": "BIMScript: Material-Aware Structured Scene Programs for BIM Ingestion",
+          "tldr": "BIMScript extends structured scene programs for BIM by jointly predicting materials, accelerating decoding, and improving element localization for direct Revit and IFC4 ingestion.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "With the increased adoption of robotic agents operating in human environments by scanning and sharing 3D representations (e.g., for fleet learning, cloud-based planning, or collaborative mapping), collected point clouds reveal not just the objects in a scene but also sensitive spatial context, such as room function or information that occupants never consented to disclose. Traditional point cloud encoders offer no principled control over this: either all is preserved, or none. Hence, we introduce RoboShape, an information theory guided compression head following the frozen {\\tt Sonata} encoder. We project voxel-level embeddings using the Donsker-Varadhan formulation of mutual information (MI). Specifically, we maximize the MI between embeddings and object-level understanding while minimizing it for private attributes. RoboShape leads to 87.5\\% smaller embeddings that retain 98.7\\% of object classification utility while collapsing sensitive attribute predictions by 39.3\\% across the three real-world indoor LiDAR datasets. Its privacy-preserving embeddings are cheaper to transmit over the network or to train a model for any downstream tasks. We release the RoboShape codebase to give the robotics community a practical, encoder-agnostic tool for building perception pipelines that are compact, privacy-aware, and deployment-ready.",
+          "arxiv_id": "2608.21380",
+          "arxiv_url": "https://arxiv.org/abs/2608.21380",
+          "authors": [
+            "Oguzhan Baser, Mirac Sozen, Kaan Kale, Sandeep Chinchali, Sriram Vishwanath"
+          ],
+          "bullets": [
+            "Addresses privacy risks in shared 3D point clouds from robots operating in human environments.",
+            "Adds an information-theoretic compression head after a frozen Sonata encoder.",
+            "Maximizes mutual information with object-level understanding while minimizing it for private attributes.",
+            "Produces 87.5% smaller embeddings, retains 98.7% of object-classification utility, and reduces sensitive-attribute prediction by 39.3% across three real-world indoor LiDAR datasets.",
+            "Provides an encoder-agnostic, deployment-oriented codebase for compact and privacy-aware robotic perception."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.AI",
+            "cs.CV",
+            "cs.IT",
+            "math.IT"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: How does RoboShape learn privacy-aware 3D representations? Our framework first voxelizes a raw point cloud and extracts per-voxel embeddings xk ∈ R512 using a frozen, pre-trained Sonata encoder (green). These embeddings, which encode both task-relevant object features and sensitive room-type information, are passed through the RoboShape projection layer ϕΘ (orange) to produce compressed embeddings zk ∈ R64. During training, an information-theoretic evaluator (blue) computes three Donsker-Varadhan MI estimates: between zk and the original embedding, the object label L(vk), and the room-type label S(vk). These serve as differentiable loss terms to maximize task utility while minimizing privacy leakage. At inference, only the frozen encoder and trained projection layer are retained; the MI estimator is discarded. The resulting pipeline compresses each voxel embedding by 87.5%. These embeddings can be fed to any downstream tasks.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 404,
+              "image_path": "figures/2608.21380/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 622
+            },
+            {
+              "caption": "Figure 5: Does a PPO policy exploit private information when acting on RoboShape embeddings? Average successes per environment over 50 PPO epochs across 52 Isaac Gym environments. Left (Utility): wall-seeking navigation, where RoboShape (orange) retains meaningful task performance relative to original Sonata embeddings (blue). Right (Privacy): bedroom-conditional navigation, where original embeddings enable rapid room-type exploitation (∼52 train successes) while RoboShape reduces this by 63% to ∼19. This confirms that MI-based shaping transfers from static classification to closed-loop embodied control.",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 359,
+              "image_path": "figures/2608.21380/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 829
+            },
+            {
+              "caption": "Figure 4: What happens to the geometry of the embedding space after information shaping? t-SNE visualizations of per-voxel embeddings colored by furniture type (left) and room type (right), before (top) and after (bottom) applying RoboShape. In the original Sonata embeddings, voxels form distinct clusters under both coloring schemes, confirming that the pre-trained encoder encodes task-relevant and sensitive attributes alike. After RoboShape, furniture-based clusters remain clearly separable, consistent with the 98.7% AUROC retention in Fig. 2, while room-type clusters dissolve into an overlapping distribution, qualitatively confirming Fig. 3. The projection layer reshapes the embedding geometry to preserve task-relevant structure while erasing the sensitive spatial signal.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 306,
+              "image_path": "figures/2608.21380/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 829
+            },
+            {
+              "caption": "Figure 3: How does MI loss disentangle task-relevant and sensitive information in point clouds? Evolution of utility MI I(ϕΘ(x);L(x)) (blue) and privacy MI I(ϕΘ(x);S(x)) (yellow) over 20 training epochs. Utility MI rises steadily from 0.293 to 0.535 nats while privacy MI drops from 0.247 to 0.123 nats, a 50% reduction. The two curves diverge monotonically without oscillation. The weighted objective in Eq. 2 successfully steers the projection layer to concentrate object-level structure into the compressed embedding while progressively filtering out room-type information.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 250,
+              "image_path": "figures/2608.21380/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 829
+            },
+            {
+              "caption": "Figure 6: A ScanNet sample colored by Sonata predictions",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 342,
+              "image_path": "figures/2608.21380/figure-005.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 706
+            },
+            {
+              "caption": "Figure 9: Furniture distribution by room type. Strong furniture–room correlations make privacyutility disentanglement challenging.",
+              "figure_id": "figure-9-16",
+              "figure_number": "9",
+              "height": 412,
+              "image_path": "figures/2608.21380/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 706
+            },
+            {
+              "caption": "Figure 8: Voxel count per ScanNet scene for a given label after voxelization. Wide variation motivates the voxel-level independence assumption for tractable MI estimation.",
+              "figure_id": "figure-8-15",
+              "figure_number": "8",
+              "height": 369,
+              "image_path": "figures/2608.21380/figure-007.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 582
+            },
+            {
+              "caption": "Figure 2: Can a robot recognize every object in a room without learning what room it is in? ROC curves and AUROC scores for classifiers trained on four embedding types to predict a task-relevant furniture label (left) and a sensitive room-type label (right). For the task-relevant label, RoboShape (orange, AUROC 0.978) nearly matches the original Sonata embeddings (blue, AUROC 0.990), retaining 98.7% of classification utility despite 8× compression. For the sensitive label, RoboShape collapses the AUROC from 0.9998 to 0.607 while both the Noisy baseline (green, AUROC 0.930) and Random (red dashed, AUROC 0.943) leak substantially more private information. RoboShape simultaneously achieves high task utility and low sensitive leakage.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 621,
+              "image_path": "figures/2608.21380/figure-008.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 582
+            },
+            {
+              "caption": "Figure 7: Furniture category frequency across ScanNet scenes.",
+              "figure_id": "figure-7-4",
+              "figure_number": "7",
+              "height": 275,
+              "image_path": "figures/2608.21380/figure-009.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 706
+            },
+            {
+              "caption": "Figure 10: Distinct furniture labels per voxel after Sonata encoding. Majority voting resolves multilabel voxels.",
+              "figure_id": "figure-10-13",
+              "figure_number": "10",
+              "height": 292,
+              "image_path": "figures/2608.21380/figure-010.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 582
+            },
+            {
+              "caption": "Figure 11: Match ratio between Sonata’s predicted segmentation and ScanNet ground-truth labels.",
+              "figure_id": "figure-11-12",
+              "figure_number": "11",
+              "height": 200,
+              "image_path": "figures/2608.21380/figure-011.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 706
+            },
+            {
+              "caption": "Table 5: Repository structure.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 265,
+              "image_path": "figures/2608.21380/table-012.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 794
+            },
+            {
+              "caption": "Table 1: Classification AUROC across all datasets and methods. Public = task-relevant label (furniture), Private = sensitive label (room type). Best privacy result (lowest private AUROC) per dataset in bold. RoboShape is the only method that simultaneously achieves high public AUROC and near-chance private AUROC.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 173,
+              "image_path": "figures/2608.21380/table-013.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 632
+            },
+            {
+              "caption": "Table 4: Isaac Gym PPO configuration.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 277,
+              "image_path": "figures/2608.21380/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 714
+            },
+            {
+              "caption": "Table 2: Converged MI values (nats) after 20 training epochs. Utility MI is maximized (higher is better); privacy MI is minimized (lower is better). Privacy MI drops by 50–60% across all datasets.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 93,
+              "image_path": "figures/2608.21380/table-015.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 577
+            },
+            {
+              "caption": "Table 3: Dataset statistics. ScanNet provides controlled single-room scans; Matterport3D tests generalization to building-scale environments; ARKitScenes introduces mobile LiDAR noise representative of real robotic deployment.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 162,
+              "image_path": "figures/2608.21380/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 702
+            }
+          ],
+          "first_seen_at": "2026-08-25T22:28:04.461190-04:00",
+          "hero_figure": "figures/2608.21380/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2608.21380",
+          "relevance": 6,
+          "selection_reason": "Privacy-aware point cloud representation learning built on a frozen 3D encoder (Sonata); fits 3D perception and foundation-model-based representation learning.",
+          "summary_status": "generated",
+          "title": "RoboShape: Information-Theoretic Point Cloud Representations for Privacy-Aware Robot Perception",
+          "tldr": "RoboShape compresses point-cloud embeddings to preserve object recognition while reducing leakage of sensitive spatial information.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-24",
       "paper_count": 5,
       "papers": [
@@ -1284,5 +2444,5 @@
   "schema_version": 1,
   "subtopic_id": "3d-foundation-models",
   "topic_id": "3d-vision",
-  "total_paper_count": 8
+  "total_paper_count": 16
 }
