@@ -25,11 +25,14 @@ def test_enabled_checked_in_workflow_is_synced_and_gates_scheduled_runs() -> Non
     assert sync_schedule(Path("."), check=True) is False
     workflow = Path(".github/workflows/paperflow-daily.yml").read_text()
     assert "\n  schedule:\n" in workflow
-    assert '    - cron: "0 1 * * *"' in workflow
-    assert '    - cron: "0 2 * * *"' in workflow
+    assert '    - cron: "17 1 * * *"' in workflow
+    assert '    - cron: "17 5 * * *"' in workflow
     assert "workflow_dispatch:" in workflow
     assert "cancel-in-progress: false" in workflow
     assert "ref: main" in workflow
+    assert "python -m paperflow.schedule" in workflow
+    assert "--github-output \"$GITHUB_OUTPUT\"" in workflow
+    assert "if: steps.schedule.outputs.due == 'true'" in workflow
     assert "OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}" in workflow
     assert 'if [ "${{ github.event_name }}" = "workflow_dispatch" ]' in workflow
     assert "python -m paperflow.main --manual" in workflow

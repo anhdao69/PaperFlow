@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
+from zoneinfo import ZoneInfo
 
 import pytest
 
@@ -36,8 +37,29 @@ def decision(
 
 
 def test_cron_candidates_cover_est_and_edt_deterministically() -> None:
-    assert cron_candidates(runtime()) == ("0 1 * * *", "0 2 * * *")
+    assert cron_candidates(runtime()) == (
+        "17 1 * * *",
+        "17 2 * * *",
+        "17 3 * * *",
+        "17 4 * * *",
+        "17 5 * * *",
+    )
     assert cron_candidates(runtime()) == cron_candidates(runtime())
+
+
+def successful_state(local_date: date) -> RunState:
+    return RunState(
+        last_successful_run_id=f"run-{local_date.isoformat()}",
+        last_successful_at=datetime.combine(
+            local_date,
+            runtime().schedule.run_at_local,
+            ZoneInfo(runtime().timezone),
+        ),
+        last_successful_local_date=local_date,
+        runtime_config_hash="a" * 64,
+        model_config_hash="b" * 64,
+        taxonomy_hash="c" * 64,
+    )
 
 
 @pytest.mark.parametrize(
@@ -90,6 +112,37 @@ def test_same_day_catchup_and_manual_bypass() -> None:
     assert decision(late, schedule=no_catchup).reason == "catchup_disabled"
     disabled = base.schedule.model_copy(update={"enabled": False})
     assert decision(late, schedule=disabled, manual=True).reason == "manual_bypass"
+
+
+def test_delayed_trigger_catches_oldest_missed_publication_date() -> None:
+    delayed = datetime(2026, 8, 29, 8, 27, tzinfo=UTC)
+
+    first = decision(delayed, state=successful_state(date(2026, 8, 25)))
+    second = decision(delayed, state=successful_state(date(2026, 8, 26)))
+    third = decision(delayed, state=successful_state(date(2026, 8, 27)))
+    caught_up = decision(delayed, state=successful_state(date(2026, 8, 28)))
+
+    assert first.due and first.local_date == date(2026, 8, 26)
+    assert second.due and second.local_date == date(2026, 8, 27)
+    assert third.due and third.local_date == date(2026, 8, 28)
+    assert caught_up.reason == "already_succeeded"
+    assert first.scheduled_for == datetime(
+        2026,
+        8,
+        26,
+        21,
+        tzinfo=ZoneInfo("America/New_York"),
+    )
+
+
+def test_failed_delayed_run_remains_due_for_the_same_publication_date() -> None:
+    state = successful_state(date(2026, 8, 25))
+
+    first_attempt = decision(datetime(2026, 8, 27, 11, 6, tzinfo=UTC), state=state)
+    retry_attempt = decision(datetime(2026, 8, 27, 12, 11, tzinfo=UTC), state=state)
+
+    assert first_attempt.due and retry_attempt.due
+    assert first_attempt.local_date == retry_attempt.local_date == date(2026, 8, 26)
 
 
 def test_naive_timestamp_is_rejected() -> None:

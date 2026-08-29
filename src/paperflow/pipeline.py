@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Protocol
-from zoneinfo import ZoneInfo
 
 from paperflow.arxiv_client import ArxivSourceError, save_raw_snapshot
 from paperflow.config import load_config_bundle
@@ -121,14 +120,25 @@ def run_pipeline(
     instant = dependencies.now()
     if instant.tzinfo is None or instant.utcoffset() is None:
         raise ValueError("pipeline clock must return a timezone-aware timestamp")
-    local_now = instant.astimezone(ZoneInfo(bundle.runtime.timezone))
     decision = evaluate_schedule(bundle.runtime, state, now=instant, manual=manual)
     if not decision.due:
-        structured_event("run_skipped", reason=decision.reason)
+        structured_event(
+            "run_skipped",
+            local_date=decision.local_date.isoformat(),
+            reason=decision.reason,
+        )
         return PipelineRunResult(False, None, None, decision.reason)
 
+    # A delayed GitHub cron trigger belongs to its missed publication date, not
+    # to the wall-clock date on which GitHub eventually delivered it.
+    local_now = decision.scheduled_for
     run_id = dependencies.run_id_factory(instant)
-    structured_event("run_started", run_id=run_id)
+    structured_event(
+        "run_started",
+        run_id=run_id,
+        publication_date=decision.local_date.isoformat(),
+        triggered_at=instant.isoformat(),
+    )
     structured_event("config_loaded", run_id=run_id)
     structured_event("taxonomy_validated", run_id=run_id)
     selected = load_selected_store_unvalidated(root / "data/papers.json")

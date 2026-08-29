@@ -3,9 +3,10 @@ from __future__ import annotations
 import json
 import shutil
 from collections import defaultdict
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 from threading import Lock
+from zoneinfo import ZoneInfo
 
 import pytest
 import yaml
@@ -341,3 +342,48 @@ def test_source_failure_preserves_canonical_and_public_outputs(tmp_path: Path) -
     )
     assert failed.source_ok is False
     assert failed.fetched == 0
+
+
+def test_delayed_trigger_publishes_the_missed_date_not_delivery_date(
+    tmp_path: Path,
+) -> None:
+    project = project_copy(tmp_path)
+    runtime_path = project / "configs/runtime.yaml"
+    runtime = yaml.safe_load(runtime_path.read_text())
+    runtime["figures"]["enabled"] = False
+    runtime_path.write_text(yaml.safe_dump(runtime, sort_keys=False))
+    previous_date = date(2026, 8, 25)
+    previous_state = RunState(
+        last_successful_run_id="previous",
+        last_successful_at=datetime(
+            2026,
+            8,
+            25,
+            21,
+            tzinfo=ZoneInfo("America/New_York"),
+        ),
+        last_successful_local_date=previous_date,
+        runtime_config_hash="a" * 64,
+        model_config_hash="b" * 64,
+        taxonomy_hash="c" * 64,
+    )
+    (project / "data/state.json").write_text(
+        previous_state.model_dump_json(indent=2) + "\n"
+    )
+    dependencies = PipelineDependencies(
+        source_client=SequencedSource([[]]),
+        refetcher=FixtureRefetch(),
+        llm_client_factory=lambda: pytest.fail("empty source must not call the LLM"),
+        now=lambda: datetime(2026, 8, 27, 11, 6, tzinfo=UTC),
+        run_id_factory=lambda now: "delayed-run",
+    )
+
+    result = run_pipeline(project, dependencies, manual=False)
+
+    assert result.ran
+    assert load_run_state(project / "data/state.json").last_successful_local_date == (
+        date(2026, 8, 26)
+    )
+    assert (project / "data/daily_feeds/2026-08-26.json").exists()
+    assert not (project / "data/daily_feeds/2026-08-27.json").exists()
+    assert (project / "data/run_stats/2026-08-26.json").exists()
