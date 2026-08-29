@@ -1,7 +1,7 @@
 # PaperFlow V1 Implementation Decisions
 
 - Status: accepted, as built
-- Updated: 2026-08-25
+- Updated: 2026-08-29
 - Technical contract: `../specification/PaperFlow_Technical_Plan_v1.md`
 
 This file records decisions that materially shape the production system. It is
@@ -43,18 +43,21 @@ because a new feed was generated.
 
 ## D-004 — Daily execution is 9:00 PM New York time
 
-**Decision:** Configure `21:00` in `America/New_York`, generate both possible UTC
-cron candidates, serialize them, explicitly check out the latest `main` after
-the concurrency wait, and enforce an application-level due/already-succeeded
-gate against that current state.
+**Decision:** Configure `21:00` in `America/New_York`, generate off-the-hour UTC
+retry candidates covering four post-due windows in both DST offsets, serialize
+them, explicitly check out the latest `main` after the concurrency wait, and
+enforce an application-level missed-date/already-succeeded gate against that
+current state before expensive figure setup.
 
 **Reason:** GitHub cron is UTC and cannot itself preserve a local wall-clock
 time across daylight-saving transitions.
 
-**Consequence:** Both 01:00 and 02:00 UTC triggers exist, but at most one normal
-run succeeds per New York local date. A queued trigger cannot repeat work from
-its stale event SHA after the preceding trigger publishes. Manual dispatch
-bypasses the due gate.
+**Consequence:** UTC triggers from 01:17 through 05:17 provide automatic retries,
+but at most one normal run succeeds per New York local date. A trigger delayed
+across midnight publishes the oldest missed feed date instead of being skipped
+as too early for the delivery date. A queued trigger cannot repeat work from its
+stale event SHA after the preceding trigger publishes. Manual dispatch bypasses
+the due gate.
 
 ## D-005 — OpenRouter is the only LLM boundary
 

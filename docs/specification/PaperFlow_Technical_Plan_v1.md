@@ -2,7 +2,7 @@
 
 - Status: as-built product contract
 - Product version: V1
-- Updated: 2026-08-25
+- Updated: 2026-08-29
 - Supersedes for implementation: `PaperFlow_Technical_Plan_v3_2.md`
 - Decisions: `../architecture/IMPLEMENTATION_DECISIONS_v1.md`
 - UI contract: `../ui/PaperFlow_UI_UX_SPEC.md`
@@ -131,14 +131,18 @@ content, source control, logs, or the iOS binary.
 
 The scheduled workflow is `.github/workflows/paperflow-daily.yml`.
 
-1. GitHub starts one of two UTC cron candidates, 01:00 or 02:00 UTC. Both are
-   required because New York changes between daylight and standard time.
+1. GitHub starts off-the-hour UTC retry candidates from 01:17 through 05:17.
+   Their union covers four retry windows beginning shortly after 9:00 PM in
+   both daylight and standard time, while avoiding GitHub's top-of-hour load.
 2. After acquiring the serialized workflow slot, the job explicitly checks out
    the latest `main`. This prevents a queued cron event from reading the stale
    run state captured before an earlier trigger published.
-3. The application-level due gate converts the trigger to
-   `America/New_York`. It runs only at or after 9:00 PM local time and only if
-   that local date has not already succeeded.
+3. A lightweight application gate runs before Java and figure-extractor setup.
+   It converts the trigger to `America/New_York` and selects the oldest missed
+   configured publication date no later than the current due date. This lets a
+   GitHub trigger delayed across midnight retain its intended feed date. A
+   successful date is never repeated; a failed date remains due for the next
+   retry window.
 4. Configuration, prompts, taxonomy, and prior run state are loaded and
    validated.
 5. Taxonomy changes are planned and applied in memory. Ambiguous or unsafe
