@@ -28,6 +28,8 @@ def test_enabled_checked_in_workflow_is_synced_and_gates_scheduled_runs() -> Non
     assert '    - cron: "17 1 * * *"' in workflow
     assert '    - cron: "17 5 * * *"' in workflow
     assert "workflow_dispatch:" in workflow
+    assert "catch_up:" in workflow
+    assert 'inputs.catch_up }}" != "true"' in workflow
     assert "cancel-in-progress: false" in workflow
     assert "ref: main" in workflow
     assert "python -m paperflow.schedule" in workflow

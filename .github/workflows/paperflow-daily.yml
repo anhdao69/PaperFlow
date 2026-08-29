@@ -10,6 +10,12 @@ on:
     - cron: "17 5 * * *"
   # END AUTO-GENERATED PAPERFLOW SCHEDULE
   workflow_dispatch:
+    inputs:
+      catch_up:
+        description: Run the oldest missed scheduled publication date
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: paperflow-daily
@@ -36,7 +42,8 @@ jobs:
       - name: Check publication schedule
         id: schedule
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+             [ "${{ inputs.catch_up }}" != "true" ]; then
             python -m paperflow.schedule \
               --manual \
               --github-output "$GITHUB_OUTPUT"
@@ -66,7 +73,8 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+             [ "${{ inputs.catch_up }}" != "true" ]; then
             python -m paperflow.main --manual
           else
             python -m paperflow.main
