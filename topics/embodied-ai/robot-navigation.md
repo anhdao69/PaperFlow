@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**36 papers total**
+**39 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [4DSynth: Controllable Procedural World Synthesis for Dynamic Embodied Simulation](https://arxiv.org/abs/2608.26947) | Embodied AI: Robot Navigation | 4DSynth generates editable, physically interactive 4D environments from text, blueprints, or images and uses them to create scalable embodied-agent benchmarks. | 7 | 7 |
+| 2026-08-26 | [CGS-SLAM: Collaborative Gaussian Splatting based SLAM for Multi-Agent Reconstruction](https://arxiv.org/abs/2608.26868) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | CGS-SLAM enables collaborative 3D Gaussian Splatting SLAM for multiple agents using only RGB and inertial data, with accurate alignment and high-quality reconstruction in GNSS-denied environments. | 9 | 8 |
+| 2026-08-26 | [Roadside-Cooperative Autonomous Driving: From Data Platform to Vision-Language End-to-End Reasoning](https://arxiv.org/abs/2608.21032) | Embodied AI: Robot Navigation, Vision-Language-Action | This work introduces a benchmark, dataset, and VLM-based framework for cooperative autonomous driving that uses roadside sensing to improve closed-loop performance in heavily occluded scenarios. | 8 | 7 |
 | 2026-08-25 | [GeoWAM: Visual Geometry World Action Models for Autonomous Driving](https://arxiv.org/abs/2608.23486) | Embodied AI: Robot Navigation; World Models: Interactive World Models | GeoWAM models future 3D scene geometry instead of pixels to learn stronger autonomous-driving policies and ego trajectories. | 9 | 8 |
 | 2026-08-25 | [Reward-Free Continual Adaptation for Resilient Space Robots](https://arxiv.org/abs/2608.23452) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models; Adaptation and Memory: Continual and Online Learning | A latent-world-model framework enables space robots to continually adapt to severe hardware failures without receiving rewards during deployment. | 9 | 8 |
 | 2026-08-25 | [MomADv2: Reliable Temporal Memory for End-to-End Autonomous Driving](https://arxiv.org/abs/2608.23405) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | MomADv2 improves long-horizon autonomous-driving planning by selectively retaining command-consistent temporal memory and refining trajectory residuals, reducing average collision rate by 15.6% versus MomAD in 6-second planning. | 8 | 7 |

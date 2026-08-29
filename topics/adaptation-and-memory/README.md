@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**52 papers total**
+**55 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [Geo-LoRA: Geometry-Aware Subspace Evolution for Low-Rank Adaptation in Continual Learning](https://arxiv.org/abs/2608.26960) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | Geo-LoRA stabilizes rehearsal-free continual learning by geometrically controlling how shared and task-specific LoRA subspaces evolve across tasks. | 8 | 9 |
+| 2026-08-26 | [Parameter Efficient Continual Learning for Sparse Event-Based Transformers](https://arxiv.org/abs/2608.26720) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | sLoTh enables rehearsal-free continual learning in sparse event-based vision transformers by updating under 1% of parameters for energy-efficient adaptation. | 8 | 7 |
+| 2026-08-26 | [Learning Prostate Anatomy at Test Time for Cancer Detection in Micro-Ultrasound](https://arxiv.org/abs/2608.20557) | Adaptation and Memory: Test-Time Learning | ANT adapts prostate cancer detection models to new micro-ultrasound domains by learning target-domain prostate anatomy at test time, improving detection performance over no adaptation and existing TTA baselines. | 6 | 6 |
 | 2026-08-25 | [Prime Agent: A Self-Improving RLM Harness](https://arxiv.org/abs/2608.23552) | Adaptation and Memory: Continual and Online Learning | Prime Agent is an open-source harness that enables self-improving, long-horizon agents through persistent context, recursive subagents, and standardized execution workflows. | 7 | 6 |
 | 2026-08-25 | [Adapter-Based Few-Shot Continual Learning for Malicious Packet Recognition](https://arxiv.org/abs/2608.23536) | Adaptation and Memory: Continual and Online Learning | An adapter-based framework enables malware packet classifiers to learn new classes from few examples while reducing catastrophic forgetting. | 7 | 6 |
 | 2026-08-25 | [Diversity-Based Active Learning: An Evaluation of Metric Spaces for Active Learning Selection](https://arxiv.org/abs/2608.23461) | Adaptation and Memory: Continual and Online Learning | Evaluating Greedy K-center active learning across metric spaces, the study finds entropy-weighted predictive probability spaces often select better samples than raw features or LDA spaces. | 6 | 6 |

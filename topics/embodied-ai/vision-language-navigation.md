@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**8 papers total**
+**10 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City](https://arxiv.org/abs/2608.27456) | Embodied AI: Vision-Language Navigation | UrbanGround evaluates whether multimodal agents can turn local street-view perception into reliable, sustained navigation in a realistic 3D city. | 9 | 8 |
+| 2026-08-26 | [RTNav: Towards Real-Time Zero-Shot Object Navigation](https://arxiv.org/abs/2608.26496) | Embodied AI: Vision-Language Navigation | RTNav improves zero-shot object navigation in real-time settings by explicitly accounting for inference latency, asynchronous execution, and limited compute. | 9 | 8 |
 | 2026-08-25 | [OptiSight: Bridging Semantic Reasoning and Geometric Control for Embodied Navigation](https://arxiv.org/abs/2608.23354) | Embodied AI: Vision-Language Navigation | OptiSight combines sparse vision-language reasoning with deterministic visual servoing for zero-shot indoor navigation without dense mapping. | 8 | 7 |
 | 2026-08-25 | [SuperMap: A Spatio-Temporal SLAM System for Visual-Language Navigation](https://arxiv.org/abs/2608.22896) | Embodied AI: Vision-Language Navigation, Robot Navigation | SuperMap enables language-guided robot navigation by maintaining stable, queryable 4D semantic maps despite intermittent perception and changing environments. | 9 | 7 |
 | 2026-08-25 | [Minimal Local Simulation Foundations for LLM- and VLM-Driven Agents in 2D and 3D Environments](https://arxiv.org/abs/2608.22833) | Embodied AI: Vision-Language Navigation | Two minimal, locally runnable simulation foundations enable education and rapid prototyping of LLM- and VLM-driven agents in 2D and 3D environments. | 6 | 5 |

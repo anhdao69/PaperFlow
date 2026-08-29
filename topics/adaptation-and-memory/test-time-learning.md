@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**16 papers total**
+**17 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [Learning Prostate Anatomy at Test Time for Cancer Detection in Micro-Ultrasound](https://arxiv.org/abs/2608.20557) | Adaptation and Memory: Test-Time Learning | ANT adapts prostate cancer detection models to new micro-ultrasound domains by learning target-domain prostate anatomy at test time, improving detection performance over no adaptation and existing TTA baselines. | 6 | 6 |
 | 2026-08-25 | [Test-Time Adaptation for ECG Classification via SQI-Gated Self-Training and Beat-Rhythm Consistency](https://arxiv.org/abs/2608.23347) | Adaptation and Memory: Test-Time Learning | BeatRhythm-TTA improves ECG classification under domain shift by filtering noisy signals and preserving beat–rhythm structure during unlabeled test-time adaptation. | 8 | 8 |
 | 2026-08-25 | [ST$^2$U: Stateful Test-Time Unlearning via Restricted Knowledge Boundary Control](https://arxiv.org/abs/2608.23034) | Adaptation and Memory: Test-Time Learning | ST$^2$U performs persistent test-time unlearning by controlling restricted-knowledge boundaries across the entire generation trajectory rather than correcting isolated activations. | 9 | 9 |
 | 2026-08-25 | [Large-Small Model Collaboration for Zero-Shot Surgical Phase Recognition](https://arxiv.org/abs/2608.22879) | Multimodal Foundation Models; Adaptation and Memory: Test-Time Learning | LaST enables zero-shot surgical phase recognition in unseen clinical domains by combining a transferable foundation model with a temporally capable lightweight model through iterative self-refinement. | 8 | 8 |

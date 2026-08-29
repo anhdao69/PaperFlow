@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**63 papers total**
+**65 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [Procedura: Agentic 3D Modeling with Procedural Control](https://arxiv.org/abs/2608.26238) | 3D Vision; Language Foundation Models: Large Language Models | Procedura turns text prompts into editable, parametric 3D assemblies by combining LLM-generated code with machine-checked mates and visual refinement. | 9 | 9 |
+| 2026-08-26 | [CARE: Causally-Aligned Reasoning Exploration for Medical Large Language Models](https://arxiv.org/abs/2608.26147) | Language Foundation Models: Large Language Models | CARE improves medical LLM reasoning by filtering training experiences for causal validity and learnability, reducing spurious reasoning and stabilizing reinforcement learning. | 7 | 7 |
 | 2026-08-25 | [ConvergeFlow: Language Flow with Provable Convergence to Token Embeddings](https://arxiv.org/abs/2608.23551) | Language Foundation Models: Large Language Models | ConvergeFlow is a flow-based language model that provably ends at valid token embeddings without a cross-entropy-trained decoder. | 8 | 8 |
 | 2026-08-25 | [Mitigating Reasoning-Induced Misalignment via Safety-Direction Penalty](https://arxiv.org/abs/2608.23497) | Language Foundation Models: Large Language Models | Safety-Direction Penalty reduces reasoning-induced harmful behavior by constraining safety-relevant representation shifts during reasoning fine-tuning. | 6 | 7 |
 | 2026-08-25 | [SRPO: Self-Reflective Policy Optimization for Long-Horizon Reasoning](https://arxiv.org/abs/2608.23493) | Embodied AI: Robot Learning and Manipulation; Language Foundation Models: Large Language Models | SRPO uses self-generated reflection patches and teacher scores to turn sparse outcome feedback into dense token-level signals for efficient long-horizon LLM reasoning. | 7 | 7 |

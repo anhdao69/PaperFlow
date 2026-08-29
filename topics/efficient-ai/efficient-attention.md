@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**11 papers total**
+**12 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [ClusterAttention: A training-free speedup of bidirectional attention](https://arxiv.org/abs/2608.26965) | Efficient AI: Efficient Attention | ClusterAttention is a training-free, geometry-adaptive sparse-attention method that delivers substantial speedups while closely preserving dense-attention accuracy. | 8 | 7 |
 | 2026-08-25 | [Sigmoid Attention as a Better Substrate for Learned KV Cache Eviction](https://arxiv.org/abs/2608.23296) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Sigmoid attention makes learned soft KV-cache gates transfer more effectively to hard token eviction, preserving language-model quality better than softmax gates in matched cache settings. | 8 | 7 |
 | 2026-08-25 | [RS$^3$-Prune: Read-Sparse, Store-Sparse Token Pruning for Video Object Segmentation](https://arxiv.org/abs/2608.22526) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | RS$^3$-Prune is a training-free, plug-in token-pruning method that makes video object segmentation faster and more memory-efficient while maintaining competitive accuracy. | 8 | 7 |
 | 2026-08-25 | [DiD It in 87 Minutes: A Label-Free Softmax-to-Linear Adaptation of Vision Transformers for Object Detection](https://arxiv.org/abs/2608.22368) | Efficient AI: Efficient Attention | DiD converts trained Softmax-attention ViT detectors to efficient linear-attention models without labels by preserving detector-facing feature interfaces. | 9 | 8 |

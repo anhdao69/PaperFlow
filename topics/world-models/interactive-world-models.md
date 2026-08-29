@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**26 papers total**
+**30 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators](https://arxiv.org/abs/2608.27406) | World Models: Latent Action Models, Video World Models, Interactive World Models | CLAP learns cross-embodiment action-conditioned video world models from heterogeneous human and robot videos, enabling zero-shot physical simulation and deployment across robot platforms. | 9 | 9 |
+| 2026-08-26 | [R2M-Bench: Evaluating Revisit Memory via Relative Consistency in Interactive Video World Models](https://arxiv.org/abs/2608.27328) | World Models: Video World Models, Interactive World Models | R2M-Bench evaluates whether video world models truly remember revisited scenes by comparing revisit consistency against matched temporal controls. | 8 | 8 |
+| 2026-08-26 | [Magpie: Real-Time World Renderer for Interactive Games](https://arxiv.org/abs/2608.27168) | World Models: Interactive World Models | Magpie combines a conventional game engine for deterministic gameplay with a generative rendering server to produce real-time visuals without requiring complete art assets. | 7 | 7 |
+| 2026-08-26 | [GameWAM: A World Action Model for Video Games](https://arxiv.org/abs/2608.26200) | World Models: Interactive World Models | GameWAM unifies visual world modeling and executable control for closed-loop video-game and GUI interaction. | 9 | 9 |
 | 2026-08-25 | [ReWorld: An Interactive World Model with Long-Horizon Memory](https://arxiv.org/abs/2608.23565) | World Models: Video World Models, Interactive World Models | ReWorld is an interactive world model that combines precise action control with long-horizon spatial memory under a fixed inference budget. | 9 | 8 |
 | 2026-08-25 | [GeoWAM: Visual Geometry World Action Models for Autonomous Driving](https://arxiv.org/abs/2608.23486) | Embodied AI: Robot Navigation; World Models: Interactive World Models | GeoWAM models future 3D scene geometry instead of pixels to learn stronger autonomous-driving policies and ego trajectories. | 9 | 8 |
 | 2026-08-25 | [Long-Horizon Audio-Visual Generation for Persistent Stories and Interactive Worlds](https://arxiv.org/abs/2608.23383) | World Models: Interactive World Models | JoyAI-Echo-1.5 enables long-horizon audio-visual storytelling and interactive-world generation by combining persistent memory, geometric camera control, and rollout-aware causal training. | 9 | 8 |

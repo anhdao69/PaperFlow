@@ -6,8 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**1 papers total**
+**4 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [Tether the Subject, Release the Scene: Query-Aware Memory Routing for Long-Horizon Autoregressive Video Generation](https://arxiv.org/abs/2608.26902) | Video Generation and Understanding: Autoregressive Video Models, Video Understanding | TetherMem improves long-horizon autoregressive video generation by preserving subject identity while allowing scenes, backgrounds, and viewpoints to progress. | 9 | 9 |
+| 2026-08-26 | [Ring Forcing: Towards Precise Long-Term Memory for Autoregressive Video Diffusion](https://arxiv.org/abs/2608.26794) | World Models: Video World Models; Video Generation and Understanding: Autoregressive Video Models | Ring Forcing improves minutes-long autoregressive video generation by combining precise object permanence with expanded long-term memory. | 9 | 8 |
+| 2026-08-26 | [RECAP-Forcing: Retaining Content Appearances for Long Video Generation](https://arxiv.org/abs/2608.26671) | Video Generation and Understanding: Autoregressive Video Models | RECAP-Forcing improves long-video consistency by retaining memory based on newly appearing content rather than frame recency. | 8 | 7 |
 | 2026-08-21 | [Stream4D: 4D-Consistency for Streaming Autoregressive Diffusion Video Models](https://arxiv.org/abs/2608.19556) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Stream4D improves long-horizon streaming video generation by rewarding dynamic 4D consistency and natural motion instead of static 3D reconstruction. | 8 | 8 |

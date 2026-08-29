@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**32 papers total**
+**34 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [TrapVLA: Trapping Vision-Language-Action Models in Configured Failure Modes](https://arxiv.org/abs/2608.26578) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | TrapVLA enables stealthy text-triggered backdoors in vision-language-action models that make robots fail in attacker-specified ways while preserving normal clean-task behavior. | 8 | 7 |
+| 2026-08-26 | [Roadside-Cooperative Autonomous Driving: From Data Platform to Vision-Language End-to-End Reasoning](https://arxiv.org/abs/2608.21032) | Embodied AI: Robot Navigation, Vision-Language-Action | This work introduces a benchmark, dataset, and VLM-based framework for cooperative autonomous driving that uses roadside sensing to improve closed-loop performance in heavily occluded scenarios. | 8 | 7 |
 | 2026-08-25 | [Act with Intent: Distilling Behavior Intent for Vision-Language-Action Models](https://arxiv.org/abs/2608.23478) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Intention Distillation helps vision-language-action models generate better robot actions by explicitly modeling the semantic objective behind demonstrated behavior. | 9 | 8 |
 | 2026-08-25 | [ROS2SmolVLA: Enabling Small Vision-Language-Action Models for Integration into Industrial-Grade Lightweight Robots](https://arxiv.org/abs/2608.23320) | Embodied AI: Vision-Language-Action | ROS2SmolVLA brings a small, on-premise Vision-Language-Action model to ROS 2 and Universal Robots, enabling more adaptable industrial automation. | 8 | 6 |
 | 2026-08-25 | [Think Only When Needed: Prompt-Authority Control for Selective Slow-Path Intervention in Vision-Language-Action Manipulation](https://arxiv.org/abs/2608.23224) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | TOWN-VLA safely enables retrieval-based prompting for frozen vision-language-action policies by allowing prompt changes only when a compatibility rule authorizes them. | 9 | 8 |

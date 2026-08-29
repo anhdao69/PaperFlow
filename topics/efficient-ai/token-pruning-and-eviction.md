@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**14 papers total**
+**18 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |
+| 2026-08-26 | [PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference](https://arxiv.org/abs/2608.27206) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | PACE is a training-free framework that speeds up VLM inference by adaptively reducing visual inputs before encoding and selectively extracting important tokens afterward. | 8 | 7 |
+| 2026-08-26 | [Multi-Image Visual Token Pruning in Large Visual Language Models](https://arxiv.org/abs/2608.26806) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | AVTP is a training-free, architecture-flexible method that adaptively prunes visual tokens across multiple images to reduce LVLM inference cost while largely preserving accuracy. | 8 | 7 |
+| 2026-08-26 | [Aggregating Visual Information with Optimal Transport for VideoLM Token Compression](https://arxiv.org/abs/2608.20473) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | AVIOT compresses video tokens with question- and region-aware optimal transport while preserving task-relevant information across frames. | 7 | 7 |
 | 2026-08-25 | [E2S-Pruner: Progressive Two-Stage Evidence Fusion for Visual Token Pruning in Vision-Language Models](https://arxiv.org/abs/2608.23253) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | E2S-Pruner uses progressive evidence fusion and spatial diversity to prune visual tokens without training, reducing VLM inference costs while preserving performance. | 8 | 7 |
 | 2026-08-25 | [Accelerating Diffusion Language Models via Structured Suffix Modeling](https://arxiv.org/abs/2608.23167) | Efficient AI: Token Pruning and Eviction | A training-free structured suffix strategy accelerates diffusion language model inference by modeling different suffix regions differently and reusing information across decoding steps. | 7 | 7 |
 | 2026-08-25 | [How Merge-Tolerant Are Vision Transformers for Wheat Phenotyping?](https://arxiv.org/abs/2608.23142) | Efficient AI: Token Pruning and Eviction | Token merging is highly effective for wheat growth-stage classification but less reliable for detection and segmentation, with deployment benefits depending on the target runtime. | 8 | 6 |

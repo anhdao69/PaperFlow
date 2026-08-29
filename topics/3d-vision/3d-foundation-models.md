@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**16 papers total**
+**22 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [Reconstructing Humans and Objects in Interaction using Large Reconstruction Models](https://arxiv.org/abs/2608.27407) | 3D Vision: 3D Foundation Models | MILO reconstructs detailed 3D human-object interactions from a single image by interpreting meshes produced by Large Reconstruction Models. | 8 | 7 |
+| 2026-08-26 | [DINOcular: Self-Supervised Visuospatial Representations](https://arxiv.org/abs/2608.27226) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | DINOcular learns self-supervised RGB-D representations that combine visual appearance with depth-based geometry for stronger 3D awareness while retaining semantic transfer. | 7 | 7 |
+| 2026-08-26 | [Unsupervised Adaptation of 3D CT Foundation Models for 3D CBCT Segmentation](https://arxiv.org/abs/2608.27190) | 3D Vision: 3D Foundation Models | An unsupervised feature-alignment framework adapts 3D CT foundation models to segment CBCT without target annotations or inference-time adaptation. | 7 | 6 |
+| 2026-08-26 | [Per-View Gaussian Predictions Enable Training-Free Distractor Filtering in Feed-Forward 3DGS](https://arxiv.org/abs/2608.26951) | 3D Vision: 3D Foundation Models | A training-free, render-and-verify filter removes transient-view distractors from feed-forward 3D Gaussian Splatting while largely preserving clean-scene reconstructions. | 8 | 8 |
+| 2026-08-26 | [KISS-GS: 3D Gaussian Splatting Compression Kept Simple](https://arxiv.org/abs/2608.26948) | 3D Vision: 3D Foundation Models | KISS-GS provides a modular, training-independent pipeline that compresses 3D Gaussian Splatting scenes by 85×–319× using simple pruning, image-based encoding, and optional fine-tuning. | 8 | 8 |
+| 2026-08-26 | [CGS-SLAM: Collaborative Gaussian Splatting based SLAM for Multi-Agent Reconstruction](https://arxiv.org/abs/2608.26868) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | CGS-SLAM enables collaborative 3D Gaussian Splatting SLAM for multiple agents using only RGB and inertial data, with accurate alignment and high-quality reconstruction in GNSS-denied environments. | 9 | 8 |
 | 2026-08-25 | [FixAnything: 3D-Consistent Rendering Refinement via Video Generative Priors](https://arxiv.org/abs/2608.23549) | 3D Vision: 3D Foundation Models | FixAnything uses a lightly fine-tuned pretrained video model to refine artifacts across diverse 3D scene representations while preserving 3D consistency. | 8 | 7 |
 | 2026-08-25 | [AnaDiffusion: Anatomically CompositionalLatent Diffusion for Controllable 3D Brain MRI Generation](https://arxiv.org/abs/2608.23014) | 3D Vision: 3D Foundation Models | AnaDiffusion generates coherent 3D brain MRIs by composing controllable anatomical parts and refining them within a whole-brain latent representation. | 8 | 8 |
 | 2026-08-25 | [AquaFlow: A Monocular Gaussian Splatting SLAM for Underwater Streaming Reconstruction](https://arxiv.org/abs/2608.22906) | 3D Vision: 3D Foundation Models | AquaFlow enables accurate, efficient monocular Gaussian Splatting SLAM for underwater streaming reconstruction despite severe visual degradation. | 7 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**26 papers total**
+**27 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [LiveVVT: High-Fidelity Video Virtual Try-On in Real Time](https://arxiv.org/abs/2608.26714) | Efficient AI: KV Cache and Memory Efficiency | LiveVVT enables high-fidelity, real-time video virtual try-on by adapting bidirectional diffusion to efficient causal streaming generation. | 7 | 8 |
 | 2026-08-25 | [Sigmoid Attention as a Better Substrate for Learned KV Cache Eviction](https://arxiv.org/abs/2608.23296) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Sigmoid attention makes learned soft KV-cache gates transfer more effectively to hard token eviction, preserving language-model quality better than softmax gates in matched cache settings. | 8 | 7 |
 | 2026-08-25 | [CacheRouter: A Dual-Path Tool Routing Architecture with Cache-Preserving Main-Model Isolation for Long-Tail Tool Discovery](https://arxiv.org/abs/2608.22708) | Efficient AI: KV Cache and Memory Efficiency | CacheRouter preserves prompt-cacheable main-model requests by routing long-tail tool discovery and execution through a separate channel. | 5 | 5 |
 | 2026-08-25 | [WnW: Waxing-and-Waning KV Cache for Long-Form Speech LLMs](https://arxiv.org/abs/2608.22704) | Efficient AI: KV Cache and Memory Efficiency | WnW dynamically recalls relevant audio KV-cache chunks from CPU during decoding, preserving near-full-cache accuracy while keeping only 20% of audio tokens on GPU. | 9 | 8 |

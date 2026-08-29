@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**9 papers total**
+**10 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-26 | [Grounded-Exo2Ego: Structured Semantic Grounding for Robust Exocentric-to-Egocentric Video Generation](https://arxiv.org/abs/2608.20534) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Diffusion | Grounded-Exo2Ego generates more robust egocentric video from exocentric footage by combining geometric reconstruction with object-level semantic grounding and improved camera alignment. | 6 | 7 |
 | 2026-08-25 | [Results of the 1st Asynchronous CASTLE Challenge at the Joint Egocentric Vision Workshop in Conjunction with CVPR 2026](https://arxiv.org/abs/2608.22914) | Embodied AI: Learning from Human Videos | A report summarizing submissions and results from the inaugural Asynchronous CASTLE Challenge at the Joint Egocentric Vision Workshop. | 6 | 4 |
 | 2026-08-25 | [The Imitator Game: Benchmarking Robot Imitative Ability Beyond Action Prediction](https://arxiv.org/abs/2608.22301) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | The Imitator Game shows that robots can replay demonstrated actions but still struggle to infer and achieve the same intent using different objects, layouts, or affordances. | 9 | 8 |
 | 2026-08-24 | [ViTacPhys: Physical Property-Aware Grasping from Human Visual-Tactile Demonstrations](https://arxiv.org/abs/2608.21355) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | ViTacPhys estimates object physical properties from human visual-tactile demonstrations and uses them to enable adaptive robot grasping. | 9 | 8 |
