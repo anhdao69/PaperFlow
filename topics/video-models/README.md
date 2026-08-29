@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**50 papers total**
+**53 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-27 | [Aligning Human Sense: Calibrated Distributional Reward Learning for Video Generation](https://arxiv.org/abs/2608.21425) | Video Generation and Understanding: Video Diffusion | A unified framework improves video-generation alignment by filtering noisy preferences, modeling multidimensional reward uncertainty, and optimizing against their global distribution. | 8 | 8 |
+| 2026-08-27 | [EditStream: A Unified Autoregressive Framework for Interactive Video Generation and Editing](https://arxiv.org/abs/2608.21424) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | EditStream unifies diverse video generation and editing tasks in a fast, few-step autoregressive DiT framework designed for interactive creative workflows. | 8 | 7 |
+| 2026-08-27 | [WildFin: An In-the-Wild Dataset for Fish Behavioral Recognition](https://arxiv.org/abs/2608.21281) | Video Generation and Understanding: Video Understanding | WildFin is an ecologist-annotated benchmark designed to evaluate fish behavior recognition in challenging, real-world underwater videos. | 6 | 6 |
 | 2026-08-26 | [EditaLive! Unified Character Video Editing for Live Streaming](https://arxiv.org/abs/2608.27123) | Video Generation and Understanding: Video Diffusion | EditaLive enables low-latency, real-time editing of human-centric live-stream videos while preserving facial expressions. | 6 | 6 |
 | 2026-08-26 | [SpatialCrafter: Single Image World Modeling with Generative 3D Proxies](https://arxiv.org/abs/2608.27073) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | SpatialCrafter generates explorable 3D scenes from a single image by first building a globally consistent 3D proxy, then refining it with photorealistic appearance details. | 8 | 8 |
 | 2026-08-26 | [Video-OPSD: Exploiting Privileged Visual Evidence for On-Policy Self-Distillation in Video Large Language Models](https://arxiv.org/abs/2608.27065) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Video-OPSD improves Video-LLM post-training by using evidence frames as privileged visual supervision for more focused self-distillation. | 8 | 7 |

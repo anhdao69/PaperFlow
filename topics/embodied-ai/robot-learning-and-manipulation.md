@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**80 papers total**
+**81 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-27 | [Retrieval-grounded robot program generation and simulation-based correction via Model Context Protocol](https://arxiv.org/abs/2608.21417) | Embodied AI: Robot Learning and Manipulation | A retrieval-grounded language-model workflow generates ABB RAPID programs and iteratively corrects them using RobotStudio simulation feedback. | 6 | 6 |
 | 2026-08-26 | [A Geometry-Driven, Framework-Agnostic Optimization for Object Pose Estimation](https://arxiv.org/abs/2608.26859) | Embodied AI: Robot Learning and Manipulation | A geometry-driven, dataset-level rotation representation improves object pose estimation across existing models without changing their architectures. | 8 | 8 |
 | 2026-08-26 | [Parameter Efficient Continual Learning for Sparse Event-Based Transformers](https://arxiv.org/abs/2608.26720) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | sLoTh enables rehearsal-free continual learning in sparse event-based vision transformers by updating under 1% of parameters for energy-efficient adaptation. | 8 | 7 |
 | 2026-08-26 | [TrapVLA: Trapping Vision-Language-Action Models in Configured Failure Modes](https://arxiv.org/abs/2608.26578) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | TrapVLA enables stealthy text-triggered backdoors in vision-language-action models that make robots fail in attacker-specified ways while preserving normal clean-task behavior. | 8 | 7 |

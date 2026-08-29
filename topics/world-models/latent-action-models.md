@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**6 papers total**
+**7 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-27 | [RiskWorld: Object-Centric Latent World Modeling for Autonomous Driving Risk Identification](https://arxiv.org/abs/2608.21414) | World Models: Latent Action Models, Video World Models | RiskWorld identifies autonomous-driving risk sources by forecasting how each object’s relation to the ego vehicle evolves in a latent world model. | 8 | 7 |
 | 2026-08-26 | [CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators](https://arxiv.org/abs/2608.27406) | World Models: Latent Action Models, Video World Models, Interactive World Models | CLAP learns cross-embodiment action-conditioned video world models from heterogeneous human and robot videos, enabling zero-shot physical simulation and deployment across robot platforms. | 9 | 9 |
 | 2026-08-25 | [LpWM: A Case for Sparse Representations in World Models](https://arxiv.org/abs/2608.22764) | World Models: Latent Action Models | Sparse latent representations can make world-model dynamics easier to predict and support more effective planning than dense representations. | 8 | 7 |
 | 2026-08-25 | [DreamMimic: Learning Visuomotor Whole-Body Loco-Manipulation via World Model](https://arxiv.org/abs/2608.22278) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | DreamMimic uses world-model-assisted distillation to train vision-based humanoid controllers for challenging whole-body loco-manipulation without privileged states at deployment. | 9 | 8 |

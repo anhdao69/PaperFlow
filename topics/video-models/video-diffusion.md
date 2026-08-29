@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**11 papers total**
+**13 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-27 | [Aligning Human Sense: Calibrated Distributional Reward Learning for Video Generation](https://arxiv.org/abs/2608.21425) | Video Generation and Understanding: Video Diffusion | A unified framework improves video-generation alignment by filtering noisy preferences, modeling multidimensional reward uncertainty, and optimizing against their global distribution. | 8 | 8 |
+| 2026-08-27 | [EditStream: A Unified Autoregressive Framework for Interactive Video Generation and Editing](https://arxiv.org/abs/2608.21424) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | EditStream unifies diverse video generation and editing tasks in a fast, few-step autoregressive DiT framework designed for interactive creative workflows. | 8 | 7 |
 | 2026-08-26 | [EditaLive! Unified Character Video Editing for Live Streaming](https://arxiv.org/abs/2608.27123) | Video Generation and Understanding: Video Diffusion | EditaLive enables low-latency, real-time editing of human-centric live-stream videos while preserving facial expressions. | 6 | 6 |
 | 2026-08-26 | [SpatialCrafter: Single Image World Modeling with Generative 3D Proxies](https://arxiv.org/abs/2608.27073) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | SpatialCrafter generates explorable 3D scenes from a single image by first building a globally consistent 3D proxy, then refining it with photorealistic appearance details. | 8 | 8 |
 | 2026-08-26 | [Self-OPD: On-Policy Distillation for Flow Matching Models without Teacher](https://arxiv.org/abs/2608.26872) | Video Generation and Understanding: Video Diffusion | Self-OPD enables teacher-free on-policy distillation for flow matching models by using stochastic self-exploration and reward-based updates to improve multi-objective alignment. | 7 | 8 |

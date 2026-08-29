@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**158 papers total**
+**160 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-27 | [Agentic AI for Safety-critical Multi-drone Systems: Challenges and Opportunities](https://arxiv.org/abs/2608.21444) | Embodied AI: Robot Navigation | Agentic AI for safety-critical multi-drone missions must be designed as a human-centered socio-technical system, not merely an autonomous control capability. | 6 | 5 |
+| 2026-08-27 | [Retrieval-grounded robot program generation and simulation-based correction via Model Context Protocol](https://arxiv.org/abs/2608.21417) | Embodied AI: Robot Learning and Manipulation | A retrieval-grounded language-model workflow generates ABB RAPID programs and iteratively corrects them using RobotStudio simulation feedback. | 6 | 6 |
 | 2026-08-26 | [UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City](https://arxiv.org/abs/2608.27456) | Embodied AI: Vision-Language Navigation | UrbanGround evaluates whether multimodal agents can turn local street-view perception into reliable, sustained navigation in a realistic 3D city. | 9 | 8 |
 | 2026-08-26 | [4DSynth: Controllable Procedural World Synthesis for Dynamic Embodied Simulation](https://arxiv.org/abs/2608.26947) | Embodied AI: Robot Navigation | 4DSynth generates editable, physically interactive 4D environments from text, blueprints, or images and uses them to create scalable embodied-agent benchmarks. | 7 | 7 |
 | 2026-08-26 | [CGS-SLAM: Collaborative Gaussian Splatting based SLAM for Multi-Agent Reconstruction](https://arxiv.org/abs/2608.26868) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | CGS-SLAM enables collaborative 3D Gaussian Splatting SLAM for multiple agents using only RGB and inertial data, with accurate alignment and high-quality reconstruction in GNSS-denied environments. | 9 | 8 |

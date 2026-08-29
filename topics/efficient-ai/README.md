@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**92 papers total**
+**93 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-27 | [COEC: Calibrated Orthogonal-Equivalence Compensation for Structured Pruning of Large Language Models](https://arxiv.org/abs/2608.21142) | Efficient AI | COEC is a training-free post-pruning method that uses calibrated orthogonal rotations and singular-value rescaling to recover LLM performance lost when weight columns are removed. | 8 | 7 |
 | 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |
 | 2026-08-26 | [Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models](https://arxiv.org/abs/2608.27367) | World Models: Video World Models; Efficient AI | Successive Capacity Growth adaptively expands JEPA Vision Transformer encoders in width or depth as task complexity demands, improving efficiency while preserving predictive function. | 7 | 7 |
 | 2026-08-26 | [PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference](https://arxiv.org/abs/2608.27206) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | PACE is a training-free framework that speeds up VLM inference by adaptively reducing visual inputs before encoding and selectively extracting important tokens afterward. | 8 | 7 |

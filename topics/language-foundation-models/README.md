@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**113 papers total**
+**114 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-27 | [Utility Under Attack: Agent Memory Poisoning and the Limits of Content Screening and Provenance Ranking](https://arxiv.org/abs/2608.21230) | Language Foundation Models: LLM Memory | Even a small amount of plainly worded false content can severely damage persistent-memory agents, while content screening and provenance ranking face fundamental trade-offs. | 7 | 7 |
 | 2026-08-26 | [Procedura: Agentic 3D Modeling with Procedural Control](https://arxiv.org/abs/2608.26238) | 3D Vision; Language Foundation Models: Large Language Models | Procedura turns text prompts into editable, parametric 3D assemblies by combining LLM-generated code with machine-checked mates and visual refinement. | 9 | 9 |
 | 2026-08-26 | [CARE: Causally-Aligned Reasoning Exploration for Medical Large Language Models](https://arxiv.org/abs/2608.26147) | Language Foundation Models: Large Language Models | CARE improves medical LLM reasoning by filtering training experiences for causal validity and learnability, reducing spurious reasoning and stabilizing reinforcement learning. | 7 | 7 |
 | 2026-08-25 | [ConvergeFlow: Language Flow with Provable Convergence to Token Embeddings](https://arxiv.org/abs/2608.23551) | Language Foundation Models: Large Language Models | ConvergeFlow is a flow-based language model that provably ends at valid token embeddings without a cross-entropy-trained decoder. | 8 | 8 |
