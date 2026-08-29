@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**56 papers total**
+**58 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-28 | [StreamAV-Bench: A Comprehensive Benchmark for Streaming Audio-Video Generation](https://arxiv.org/abs/2608.26336) | World Models: Interactive World Models | StreamAV-Bench evaluates streaming audio-video generators on progressive stability and interactive responsiveness, revealing temporal drift and control bottlenecks in current systems. | 8 | 7 |
+| 2026-08-28 | [Gauss--Hermite Quadrature for Gaussian-Mixture Entropy with an Action-Space Hermite Surrogate](https://arxiv.org/abs/2608.21467) | World Models: Latent Action Models | A Gauss–Hermite quadrature method estimates Gaussian-mixture entropy, with an action-space Hermite surrogate improving optimization accuracy in a radar-pointing benchmark. | 6 | 7 |
 | 2026-08-27 | [RiskWorld: Object-Centric Latent World Modeling for Autonomous Driving Risk Identification](https://arxiv.org/abs/2608.21414) | World Models: Latent Action Models, Video World Models | RiskWorld identifies autonomous-driving risk sources by forecasting how each object’s relation to the ego vehicle evolves in a latent world model. | 8 | 7 |
 | 2026-08-26 | [CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators](https://arxiv.org/abs/2608.27406) | World Models: Latent Action Models, Video World Models, Interactive World Models | CLAP learns cross-embodiment action-conditioned video world models from heterogeneous human and robot videos, enabling zero-shot physical simulation and deployment across robot platforms. | 9 | 9 |
 | 2026-08-26 | [Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models](https://arxiv.org/abs/2608.27367) | World Models: Video World Models; Efficient AI | Successive Capacity Growth adaptively expands JEPA Vision Transformer encoders in width or depth as task complexity demands, improving efficiency while preserving predictive function. | 7 | 7 |

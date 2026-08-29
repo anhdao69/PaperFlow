@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**37 papers total**
+**38 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-28 | [Semantic Slots for Video Object-Centric Learning](https://arxiv.org/abs/2608.21636) | Video Generation and Understanding: Video Understanding | SemanticSlots reframes video object-centric learning around a context-aware decoder, enabling position-invariant slots from one frame to track and decompose subsequent frames without temporal predictors. | 6 | 7 |
 | 2026-08-27 | [WildFin: An In-the-Wild Dataset for Fish Behavioral Recognition](https://arxiv.org/abs/2608.21281) | Video Generation and Understanding: Video Understanding | WildFin is an ecologist-annotated benchmark designed to evaluate fish behavior recognition in challenging, real-world underwater videos. | 6 | 6 |
 | 2026-08-26 | [Video-OPSD: Exploiting Privileged Visual Evidence for On-Policy Self-Distillation in Video Large Language Models](https://arxiv.org/abs/2608.27065) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Video-OPSD improves Video-LLM post-training by using evidence frames as privileged visual supervision for more focused self-distillation. | 8 | 7 |
 | 2026-08-26 | [Anatomy-Guided Foundation Model Adaptation with Within-Case Prototype Supervision for Standard Plane Detection in Fetal Ultrasound Blind Sweeps](https://arxiv.org/abs/2608.27051) | Video Generation and Understanding: Video Understanding | AnatoProto adapts a frozen BiomedCLIP with anatomy-aware pooling, within-case prototypes, and sequence refinement to improve fetal abdominal standard-plane detection in highly imbalanced blind ultrasound sweeps. | 4 | 6 |

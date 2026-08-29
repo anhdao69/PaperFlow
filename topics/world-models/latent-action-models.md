@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**7 papers total**
+**8 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-28 | [Gauss--Hermite Quadrature for Gaussian-Mixture Entropy with an Action-Space Hermite Surrogate](https://arxiv.org/abs/2608.21467) | World Models: Latent Action Models | A Gauss–Hermite quadrature method estimates Gaussian-mixture entropy, with an action-space Hermite surrogate improving optimization accuracy in a radar-pointing benchmark. | 6 | 7 |
 | 2026-08-27 | [RiskWorld: Object-Centric Latent World Modeling for Autonomous Driving Risk Identification](https://arxiv.org/abs/2608.21414) | World Models: Latent Action Models, Video World Models | RiskWorld identifies autonomous-driving risk sources by forecasting how each object’s relation to the ego vehicle evolves in a latent world model. | 8 | 7 |
 | 2026-08-26 | [CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators](https://arxiv.org/abs/2608.27406) | World Models: Latent Action Models, Video World Models, Interactive World Models | CLAP learns cross-embodiment action-conditioned video world models from heterogeneous human and robot videos, enabling zero-shot physical simulation and deployment across robot platforms. | 9 | 9 |
 | 2026-08-25 | [LpWM: A Case for Sparse Representations in World Models](https://arxiv.org/abs/2608.22764) | World Models: Latent Action Models | Sparse latent representations can make world-model dynamics easier to predict and support more effective planning than dense representations. | 8 | 7 |

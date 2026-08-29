@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**53 papers total**
+**54 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-28 | [Semantic Slots for Video Object-Centric Learning](https://arxiv.org/abs/2608.21636) | Video Generation and Understanding: Video Understanding | SemanticSlots reframes video object-centric learning around a context-aware decoder, enabling position-invariant slots from one frame to track and decompose subsequent frames without temporal predictors. | 6 | 7 |
 | 2026-08-27 | [Aligning Human Sense: Calibrated Distributional Reward Learning for Video Generation](https://arxiv.org/abs/2608.21425) | Video Generation and Understanding: Video Diffusion | A unified framework improves video-generation alignment by filtering noisy preferences, modeling multidimensional reward uncertainty, and optimizing against their global distribution. | 8 | 8 |
 | 2026-08-27 | [EditStream: A Unified Autoregressive Framework for Interactive Video Generation and Editing](https://arxiv.org/abs/2608.21424) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | EditStream unifies diverse video generation and editing tasks in a fast, few-step autoregressive DiT framework designed for interactive creative workflows. | 8 | 7 |
 | 2026-08-27 | [WildFin: An In-the-Wild Dataset for Fish Behavioral Recognition](https://arxiv.org/abs/2608.21281) | Video Generation and Understanding: Video Understanding | WildFin is an ecologist-annotated benchmark designed to evaluate fish behavior recognition in challenging, real-world underwater videos. | 6 | 6 |

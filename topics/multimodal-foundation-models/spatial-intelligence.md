@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**39 papers total**
+**40 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-28 | [Reliability- and Anatomy-Consistency-Aware Multimodal Learning for Robust Fracture Classification from Bangladeshi Radiographs](https://arxiv.org/abs/2608.21482) | Multimodal Foundation Models: Spatial Intelligence | A reliability- and anatomy-aware multimodal model improves fracture classification while reducing sensitivity to missing or mismatched metadata in Bangladeshi radiographs. | 6 | 7 |
 | 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |
 | 2026-08-26 | [DINOcular: Self-Supervised Visuospatial Representations](https://arxiv.org/abs/2608.27226) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | DINOcular learns self-supervised RGB-D representations that combine visual appearance with depth-based geometry for stronger 3D awareness while retaining semantic transfer. | 7 | 7 |
 | 2026-08-26 | [AraMS-28k: The Largest Publicly Released Line-Level Dataset of Historical Arabic Manuscripts with Margin and Insertion-Anchor Annotations](https://arxiv.org/abs/2608.26921) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | AraMS-28k is a 28.6k-line public dataset of historical Arabic manuscripts with main-text, margin, and insertion-anchor annotations for studying recognition, layout, and reading order. | 7 | 8 |

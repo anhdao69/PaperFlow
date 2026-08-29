@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**30 papers total**
+**31 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-28 | [StreamAV-Bench: A Comprehensive Benchmark for Streaming Audio-Video Generation](https://arxiv.org/abs/2608.26336) | World Models: Interactive World Models | StreamAV-Bench evaluates streaming audio-video generators on progressive stability and interactive responsiveness, revealing temporal drift and control bottlenecks in current systems. | 8 | 7 |
 | 2026-08-26 | [CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators](https://arxiv.org/abs/2608.27406) | World Models: Latent Action Models, Video World Models, Interactive World Models | CLAP learns cross-embodiment action-conditioned video world models from heterogeneous human and robot videos, enabling zero-shot physical simulation and deployment across robot platforms. | 9 | 9 |
 | 2026-08-26 | [R2M-Bench: Evaluating Revisit Memory via Relative Consistency in Interactive Video World Models](https://arxiv.org/abs/2608.27328) | World Models: Video World Models, Interactive World Models | R2M-Bench evaluates whether video world models truly remember revisited scenes by comparing revisit consistency against matched temporal controls. | 8 | 8 |
 | 2026-08-26 | [Magpie: Real-Time World Renderer for Interactive Games](https://arxiv.org/abs/2608.27168) | World Models: Interactive World Models | Magpie combines a conventional game engine for deterministic gameplay with a generative rendering server to produce real-time visuals without requiring complete art assets. | 7 | 7 |
