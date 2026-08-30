@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**27 papers total**
+**28 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [Benchmarking Composable Compression Techniques in Mixture-of-Experts LLMs](https://arxiv.org/abs/2608.21693) | Efficient AI: KV Cache and Memory Efficiency | MoEXBench systematically evaluates how expert pruning, weight quantization, and KV-cache compression interact when deploying MoE LLMs on commodity hardware. | 8 | 7 |
 | 2026-08-26 | [LiveVVT: High-Fidelity Video Virtual Try-On in Real Time](https://arxiv.org/abs/2608.26714) | Efficient AI: KV Cache and Memory Efficiency | LiveVVT enables high-fidelity, real-time video virtual try-on by adapting bidirectional diffusion to efficient causal streaming generation. | 7 | 8 |
 | 2026-08-25 | [Sigmoid Attention as a Better Substrate for Learned KV Cache Eviction](https://arxiv.org/abs/2608.23296) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Sigmoid attention makes learned soft KV-cache gates transfer more effectively to hard token eviction, preserving language-model quality better than softmax gates in matched cache settings. | 8 | 7 |
 | 2026-08-25 | [CacheRouter: A Dual-Path Tool Routing Architecture with Cache-Preserving Main-Model Isolation for Long-Tail Tool Discovery](https://arxiv.org/abs/2608.22708) | Efficient AI: KV Cache and Memory Efficiency | CacheRouter preserves prompt-cacheable main-model requests by routing long-tail tool discovery and execution through a separate channel. | 5 | 5 |

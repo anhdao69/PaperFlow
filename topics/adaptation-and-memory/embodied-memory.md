@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**4 papers total**
+**6 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [ECHO: A Cognitively Inspired, Auditable Memory Plane for Long-Horizon Agents](https://arxiv.org/abs/2608.21755) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | ECHO is an auditable memory architecture for long-horizon agents, but its reported retrieval gains are development measurements limited by post-hoc query-expansion leakage and mixed comparative results. | 8 | 7 |
+| 2026-08-29 | [Forgotten in Weights, Recovered by Tools: Agentic Tool Unlearning for LLM Agents](https://arxiv.org/abs/2608.21544) | Adaptation and Memory: Embodied Memory; Language Foundation Models: Large Language Models | ATU makes LLM-agent unlearning more robust by suppressing both direct model recall and recovery of forgotten information through tools. | 8 | 8 |
 | 2026-08-25 | [MomADv2: Reliable Temporal Memory for End-to-End Autonomous Driving](https://arxiv.org/abs/2608.23405) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | MomADv2 improves long-horizon autonomous-driving planning by selectively retaining command-consistent temporal memory and refining trajectory residuals, reducing average collision rate by 15.6% versus MomAD in 6-second planning. | 8 | 7 |
 | 2026-08-25 | [MediSkill-Evo: Process-Constrained Self-Evolution for Evidence-Grounded Clinical Interaction](https://arxiv.org/abs/2608.23397) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | MediSkill-Evo improves evidence-grounded clinical-agent safety and diagnostic performance by self-evolving validated process knowledge without fine-tuning the backbone. | 6 | 7 |
 | 2026-08-25 | [UniMem: Unifying Multimodal Memory and Control for Vision-Language-Action Models](https://arxiv.org/abs/2608.22869) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | UniMem unifies multimodal memory and low-level control in one VLA backbone, improving memory-dependent task performance while reducing inference overhead. | 9 | 8 |

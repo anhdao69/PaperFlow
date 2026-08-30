@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**108 papers total**
+**109 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [LëtzCross: A Cross-Lingual Page-Level Benchmark for Multimodal Retrieval over Luxembourgish Documents](https://arxiv.org/abs/2608.21714) | Multimodal Foundation Models: Multimodal Large Language Models | LëtzCross benchmarks cross-lingual multimodal retrieval over Luxembourgish PDF pages and shows that page-image retrievers outperform OCR-based text retrievers, with multilingual fine-tuning that includes Luxembourgish providing the strongest Luxembourgish-query results. | 7 | 7 |
 | 2026-08-26 | [Retrieval Heads Meet Vision: Uncovering How VLMs Locate and Extract Visual Information](https://arxiv.org/abs/2608.27417) | Multimodal Foundation Models: Multimodal Large Language Models | VLMs use a small, identifiable set of Visual Retrieval Heads (VRHs) to causally ground text descriptions in image regions. | 8 | 8 |
 | 2026-08-26 | [PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference](https://arxiv.org/abs/2608.27206) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | PACE is a training-free framework that speeds up VLM inference by adaptively reducing visual inputs before encoding and selectively extracting important tokens afterward. | 8 | 7 |
 | 2026-08-26 | [Ancient-Bench: A Comprehensive Multi-millennial, Multi-medium, and Multi-script Benchmark for Ancient Chinese Artifact Text Recognition](https://arxiv.org/abs/2608.27169) | Multimodal Foundation Models: Multimodal Large Language Models | Ancient-Bench is a 2,700-image benchmark showing that recognizing ancient Chinese artifact text across historical periods, media, and scripts remains an open challenge. | 5 | 5 |

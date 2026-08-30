@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**93 papers total**
+**95 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [Benchmarking Composable Compression Techniques in Mixture-of-Experts LLMs](https://arxiv.org/abs/2608.21693) | Efficient AI: KV Cache and Memory Efficiency | MoEXBench systematically evaluates how expert pruning, weight quantization, and KV-cache compression interact when deploying MoE LLMs on commodity hardware. | 8 | 7 |
+| 2026-08-29 | [FrugalSOT - Frugal Search Over the Models](https://arxiv.org/abs/2608.21621) | Efficient AI: Token Pruning and Eviction | FrugalSOT adaptively routes each NLP request to the simplest model likely to meet a relevance threshold, reducing on-device inference cost while preserving output quality. | 8 | 7 |
 | 2026-08-27 | [COEC: Calibrated Orthogonal-Equivalence Compensation for Structured Pruning of Large Language Models](https://arxiv.org/abs/2608.21142) | Efficient AI | COEC is a training-free post-pruning method that uses calibrated orthogonal rotations and singular-value rescaling to recover LLM performance lost when weight columns are removed. | 8 | 7 |
 | 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |
 | 2026-08-26 | [Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models](https://arxiv.org/abs/2608.27367) | World Models: Video World Models; Efficient AI | Successive Capacity Growth adaptively expands JEPA Vision Transformer encoders in width or depth as task complexity demands, improving efficiency while preserving predictive function. | 7 | 7 |

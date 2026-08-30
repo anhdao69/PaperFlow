@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**160 papers total**
+**161 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [CounterAlign: Counterfactual Supervision for Vision-Language-Action Models](https://arxiv.org/abs/2608.21740) | Embodied AI: Vision-Language-Action | CounterAlign turns successful demonstrations into counterfactual negative supervision for offline RL, improving VLA robustness without extra rollouts or annotations. | 9 | 8 |
 | 2026-08-27 | [Agentic AI for Safety-critical Multi-drone Systems: Challenges and Opportunities](https://arxiv.org/abs/2608.21444) | Embodied AI: Robot Navigation | Agentic AI for safety-critical multi-drone missions must be designed as a human-centered socio-technical system, not merely an autonomous control capability. | 6 | 5 |
 | 2026-08-27 | [Retrieval-grounded robot program generation and simulation-based correction via Model Context Protocol](https://arxiv.org/abs/2608.21417) | Embodied AI: Robot Learning and Manipulation | A retrieval-grounded language-model workflow generates ABB RAPID programs and iteratively corrects them using RobotStudio simulation feedback. | 6 | 6 |
 | 2026-08-26 | [UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City](https://arxiv.org/abs/2608.27456) | Embodied AI: Vision-Language Navigation | UrbanGround evaluates whether multimodal agents can turn local street-view perception into reliable, sustained navigation in a realistic 3D city. | 9 | 8 |

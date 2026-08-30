@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**18 papers total**
+**19 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [FrugalSOT - Frugal Search Over the Models](https://arxiv.org/abs/2608.21621) | Efficient AI: Token Pruning and Eviction | FrugalSOT adaptively routes each NLP request to the simplest model likely to meet a relevance threshold, reducing on-device inference cost while preserving output quality. | 8 | 7 |
 | 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |
 | 2026-08-26 | [PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference](https://arxiv.org/abs/2608.27206) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | PACE is a training-free framework that speeds up VLM inference by adaptively reducing visual inputs before encoding and selectively extracting important tokens afterward. | 8 | 7 |
 | 2026-08-26 | [Multi-Image Visual Token Pruning in Large Visual Language Models](https://arxiv.org/abs/2608.26806) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | AVTP is a training-free, architecture-flexible method that adaptively prunes visual tokens across multiple images to reduce LVLM inference cost while largely preserving accuracy. | 8 | 7 |

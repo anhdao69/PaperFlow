@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**156 papers total**
+**158 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [LëtzCross: A Cross-Lingual Page-Level Benchmark for Multimodal Retrieval over Luxembourgish Documents](https://arxiv.org/abs/2608.21714) | Multimodal Foundation Models: Multimodal Large Language Models | LëtzCross benchmarks cross-lingual multimodal retrieval over Luxembourgish PDF pages and shows that page-image retrievers outperform OCR-based text retrievers, with multilingual fine-tuning that includes Luxembourgish providing the strongest Luxembourgish-query results. | 7 | 7 |
+| 2026-08-29 | [presto: Efficient, Training-free, and Open-world Object Placement via Imaginary Search](https://arxiv.org/abs/2608.21543) | Multimodal Foundation Models: Spatial Intelligence | presto uses zero-shot MLLM-guided imaginary search to place novel objects coherently in unseen scenes without training. | 8 | 7 |
 | 2026-08-28 | [Reliability- and Anatomy-Consistency-Aware Multimodal Learning for Robust Fracture Classification from Bangladeshi Radiographs](https://arxiv.org/abs/2608.21482) | Multimodal Foundation Models: Spatial Intelligence | A reliability- and anatomy-aware multimodal model improves fracture classification while reducing sensitivity to missing or mismatched metadata in Bangladeshi radiographs. | 6 | 7 |
 | 2026-08-26 | [Retrieval Heads Meet Vision: Uncovering How VLMs Locate and Extract Visual Information](https://arxiv.org/abs/2608.27417) | Multimodal Foundation Models: Multimodal Large Language Models | VLMs use a small, identifiable set of Visual Retrieval Heads (VRHs) to causally ground text descriptions in image regions. | 8 | 8 |
 | 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |

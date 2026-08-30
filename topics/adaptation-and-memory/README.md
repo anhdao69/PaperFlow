@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**55 papers total**
+**57 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [ECHO: A Cognitively Inspired, Auditable Memory Plane for Long-Horizon Agents](https://arxiv.org/abs/2608.21755) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | ECHO is an auditable memory architecture for long-horizon agents, but its reported retrieval gains are development measurements limited by post-hoc query-expansion leakage and mixed comparative results. | 8 | 7 |
+| 2026-08-29 | [Forgotten in Weights, Recovered by Tools: Agentic Tool Unlearning for LLM Agents](https://arxiv.org/abs/2608.21544) | Adaptation and Memory: Embodied Memory; Language Foundation Models: Large Language Models | ATU makes LLM-agent unlearning more robust by suppressing both direct model recall and recovery of forgotten information through tools. | 8 | 8 |
 | 2026-08-26 | [Geo-LoRA: Geometry-Aware Subspace Evolution for Low-Rank Adaptation in Continual Learning](https://arxiv.org/abs/2608.26960) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | Geo-LoRA stabilizes rehearsal-free continual learning by geometrically controlling how shared and task-specific LoRA subspaces evolve across tasks. | 8 | 9 |
 | 2026-08-26 | [Parameter Efficient Continual Learning for Sparse Event-Based Transformers](https://arxiv.org/abs/2608.26720) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | sLoTh enables rehearsal-free continual learning in sparse event-based vision transformers by updating under 1% of parameters for energy-efficient adaptation. | 8 | 7 |
 | 2026-08-26 | [Learning Prostate Anatomy at Test Time for Cancer Detection in Micro-Ultrasound](https://arxiv.org/abs/2608.20557) | Adaptation and Memory: Test-Time Learning | ANT adapts prostate cancer detection models to new micro-ultrasound domains by learning target-domain prostate anatomy at test time, improving detection performance over no adaptation and existing TTA baselines. | 6 | 6 |

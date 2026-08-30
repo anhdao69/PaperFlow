@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**65 papers total**
+**70 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [FCPRAG: Fusion-Controller Parametric Retrieval-Augmented Generation for Stable Multi-Passage LoRA Injection](https://arxiv.org/abs/2608.21750) | Language Foundation Models: Large Language Models | FCPRAG improves parametric RAG by adaptively controlling how multiple retrieved passage adapters are fused, yielding more stable evidence integration and higher F1. | 7 | 7 |
+| 2026-08-29 | [Adaptive Multilevel Twisted Sequential Monte Carlo for Rare Events Estimation in Language Models](https://arxiv.org/abs/2608.21736) | Language Foundation Models: Large Language Models | Adaptive Multilevel Twisted SMC improves estimation of extremely rare unsafe behaviors in language models by learning guidance through progressively rarer intermediate events. | 7 | 8 |
+| 2026-08-29 | [Forgotten in Weights, Recovered by Tools: Agentic Tool Unlearning for LLM Agents](https://arxiv.org/abs/2608.21544) | Adaptation and Memory: Embodied Memory; Language Foundation Models: Large Language Models | ATU makes LLM-agent unlearning more robust by suppressing both direct model recall and recovery of forgotten information through tools. | 8 | 8 |
+| 2026-08-29 | [Let Credit Follow Computation: Architecture-Aware Credit Transport for Large Language Model Reinforcement Learning](https://arxiv.org/abs/2608.21501) | Language Foundation Models: Large Language Models | CompPO improves LLM reinforcement learning by transporting credit according to the Transformer’s own computation patterns, yielding higher accuracy and more stable training than tuned GRPO in the reported experiments. | 9 | 8 |
+| 2026-08-29 | [SecOPD: Mitigating Adaptive Prompt Injections by On-Policy Distillation](https://arxiv.org/abs/2608.21500) | Language Foundation Models: Large Language Models | SecOPD uses token-level on-policy distillation to substantially reduce adaptive prompt-injection success in defended LLMs. | 8 | 7 |
 | 2026-08-26 | [Procedura: Agentic 3D Modeling with Procedural Control](https://arxiv.org/abs/2608.26238) | 3D Vision; Language Foundation Models: Large Language Models | Procedura turns text prompts into editable, parametric 3D assemblies by combining LLM-generated code with machine-checked mates and visual refinement. | 9 | 9 |
 | 2026-08-26 | [CARE: Causally-Aligned Reasoning Exploration for Medical Large Language Models](https://arxiv.org/abs/2608.26147) | Language Foundation Models: Large Language Models | CARE improves medical LLM reasoning by filtering training experiences for causal validity and learnability, reducing spurious reasoning and stabilizing reinforcement learning. | 7 | 7 |
 | 2026-08-25 | [ConvergeFlow: Language Flow with Provable Convergence to Token Embeddings](https://arxiv.org/abs/2608.23551) | Language Foundation Models: Large Language Models | ConvergeFlow is a flow-based language model that provably ends at valid token embeddings without a cross-entropy-trained decoder. | 8 | 8 |

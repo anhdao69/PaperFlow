@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**39 papers total**
+**40 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-29 | [ECHO: A Cognitively Inspired, Auditable Memory Plane for Long-Horizon Agents](https://arxiv.org/abs/2608.21755) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | ECHO is an auditable memory architecture for long-horizon agents, but its reported retrieval gains are development measurements limited by post-hoc query-expansion leakage and mixed comparative results. | 8 | 7 |
 | 2026-08-27 | [Utility Under Attack: Agent Memory Poisoning and the Limits of Content Screening and Provenance Ranking](https://arxiv.org/abs/2608.21230) | Language Foundation Models: LLM Memory | Even a small amount of plainly worded false content can severely damage persistent-memory agents, while content screening and provenance ranking face fundamental trade-offs. | 7 | 7 |
 | 2026-08-25 | [InjecMEM: Memory Injection Attack on LLM Agent Memory Systems](https://arxiv.org/abs/2608.23471) | Language Foundation Models: LLM Memory | InjecMEM shows that a single crafted interaction can poison LLM agent memory and steer future topic-related responses without direct memory-store access. | 7 | 8 |
 | 2026-08-25 | [Dual-Grained Agent Memory and Shapley Context Attribution for Multimodal Agentic Learner](https://arxiv.org/abs/2608.23268) | Language Foundation Models: LLM Memory | DG-Mem boosts multimodal scientific and mathematical reasoning by adding dual-grained external memory and Shapley-based rule attribution to frozen MLLMs without gradient updates. | 9 | 8 |
