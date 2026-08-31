@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**41 papers total**
+**46 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [Focus Where It Counts: A Salience-Driven Vision-Language Model for Low Vision Assistance](https://arxiv.org/abs/2608.28218) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | A salience-aware vision-language model prioritizes and describes scene elements in the order most relevant to people with low vision. | 7 | 7 |
+| 2026-08-30 | [Do Medical Vision Models Reason About Anatomy? Probing the Spatial Inductive Biases of Learned Visual Representations](https://arxiv.org/abs/2608.28092) | Multimodal Foundation Models: Spatial Intelligence | Medical vision encoders often memorize canonical organ locations but struggle to reason about patient-specific spatial relationships in abdominal CT. | 6 | 7 |
+| 2026-08-30 | [GAAT: Geometry-Aware Alignment Transformer for Multimodal UAV Perception](https://arxiv.org/abs/2608.27971) | Multimodal Foundation Models: Spatial Intelligence | GAAT improves multimodal UAV perception by estimating local geometric reliability before sparsely fusing RGB, IR, SAR, and depth information. | 8 | 7 |
+| 2026-08-30 | [From Perspective to Fisheye Depth Estimation and Open-Vocabulary Segmentation](https://arxiv.org/abs/2608.27860) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | DEX adapts perspective-trained vision foundation models to fisheye imagery by aligning distorted-image embeddings with perspective-image representations. | 8 | 7 |
+| 2026-08-30 | [Beyond Relative Geometry: Metric-Aware Geometry Perception for Robotics](https://arxiv.org/abs/2608.27497) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | MAGP reconstructs geometry in a consistent real-world metric scale, improving robotic manipulation across varied sensing configurations. | 7 | 7 |
 | 2026-08-29 | [presto: Efficient, Training-free, and Open-world Object Placement via Imaginary Search](https://arxiv.org/abs/2608.21543) | Multimodal Foundation Models: Spatial Intelligence | presto uses zero-shot MLLM-guided imaginary search to place novel objects coherently in unseen scenes without training. | 8 | 7 |
 | 2026-08-28 | [Reliability- and Anatomy-Consistency-Aware Multimodal Learning for Robust Fracture Classification from Bangladeshi Radiographs](https://arxiv.org/abs/2608.21482) | Multimodal Foundation Models: Spatial Intelligence | A reliability- and anatomy-aware multimodal model improves fracture classification while reducing sensitivity to missing or mismatched metadata in Bangladeshi radiographs. | 6 | 7 |
 | 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |

@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**28 papers total**
+**33 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [A Probabilistic Interpretation of KV Cache Eviction](https://arxiv.org/abs/2608.28293) | Efficient AI: KV Cache and Memory Efficiency | This paper formalizes KV-cache eviction probabilistically, enabling sampling-based eviction and decoding corrections that improve robustness without sacrificing competitive compression performance. | 9 | 8 |
+| 2026-08-30 | [Parser States Already Know: Structure-Conditioned KV Persistence for Structured Generation](https://arxiv.org/abs/2608.28276) | Efficient AI: KV Cache and Memory Efficiency | PASK uses parser-state structure to selectively preserve KV-cache entries, improving structured-generation reliability and serving efficiency under tight memory budgets. | 9 | 8 |
+| 2026-08-30 | [HyQuant: Hybrid-Precision Quantization for LLM Attention](https://arxiv.org/abs/2608.27875) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | HyQuant improves low-bit LLM attention quantization by keeping a small set of accuracy-critical tokens and local states in high precision while quantizing the rest. | 8 | 7 |
+| 2026-08-30 | [DAMP: Decay-Aware Mixed-Precision Recurrent-State Quantization](https://arxiv.org/abs/2608.27513) | Efficient AI: KV Cache and Memory Efficiency | DAMP preserves recurrent-state accuracy while substantially reducing memory use and decoding latency through decay- and error-aware mixed-precision quantization. | 9 | 8 |
+| 2026-08-30 | [Quantization-Triggered Backdoors in Language Models: Cross-Quantizer Transferability and the Validation--Deployment Gap](https://arxiv.org/abs/2608.27512) | Efficient AI: KV Cache and Memory Efficiency | Post-training quantization can activate hidden backdoors that remain undetected in full-precision audits, so deployed quantized models require separate behavioral certification. | 7 | 7 |
 | 2026-08-29 | [Benchmarking Composable Compression Techniques in Mixture-of-Experts LLMs](https://arxiv.org/abs/2608.21693) | Efficient AI: KV Cache and Memory Efficiency | MoEXBench systematically evaluates how expert pruning, weight quantization, and KV-cache compression interact when deploying MoE LLMs on commodity hardware. | 8 | 7 |
 | 2026-08-26 | [LiveVVT: High-Fidelity Video Virtual Try-On in Real Time](https://arxiv.org/abs/2608.26714) | Efficient AI: KV Cache and Memory Efficiency | LiveVVT enables high-fidelity, real-time video virtual try-on by adapting bidirectional diffusion to efficient causal streaming generation. | 7 | 8 |
 | 2026-08-25 | [Sigmoid Attention as a Better Substrate for Learned KV Cache Eviction](https://arxiv.org/abs/2608.23296) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Sigmoid attention makes learned soft KV-cache gates transfer more effectively to hard token eviction, preserving language-model quality better than softmax gates in matched cache settings. | 8 | 7 |

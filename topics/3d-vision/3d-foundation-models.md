@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**22 papers total**
+**26 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [InstructMesh: Selective Refinement of Generative 3D Models for Fabrication](https://arxiv.org/abs/2608.28534) | 3D Vision: 3D Foundation Models | InstructMesh lets non-experts selectively repair fabrication-critical flaws in AI-generated 3D models using region selection, natural-language prompts, and sliders. | 6 | 7 |
+| 2026-08-30 | [From Perspective to Fisheye Depth Estimation and Open-Vocabulary Segmentation](https://arxiv.org/abs/2608.27860) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | DEX adapts perspective-trained vision foundation models to fisheye imagery by aligning distorted-image embeddings with perspective-image representations. | 8 | 7 |
+| 2026-08-30 | [Revisiting Local Context for Long-Horizon Streaming 3D Reconstruction](https://arxiv.org/abs/2608.27529) | 3D Vision: 3D Foundation Models | ABot-Recon achieves stable long-horizon streaming 3D reconstruction using only local temporal context and sequential pose composition. | 7 | 6 |
+| 2026-08-30 | [Learning Implicit Constitutive Laws for Dynamic 3D Gaussian Splatting from Monocular Videos](https://arxiv.org/abs/2608.22102) | 3D Vision: 3D Foundation Models | GCA learns physically interpretable implicit deformation laws for dynamic 3D Gaussian Splatting from a single fixed-view video, using geometric alignment and soft constitutive priors. | 6 | 8 |
 | 2026-08-26 | [Reconstructing Humans and Objects in Interaction using Large Reconstruction Models](https://arxiv.org/abs/2608.27407) | 3D Vision: 3D Foundation Models | MILO reconstructs detailed 3D human-object interactions from a single image by interpreting meshes produced by Large Reconstruction Models. | 8 | 7 |
 | 2026-08-26 | [DINOcular: Self-Supervised Visuospatial Representations](https://arxiv.org/abs/2608.27226) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | DINOcular learns self-supervised RGB-D representations that combine visual appearance with depth-based geometry for stronger 3D awareness while retaining semantic transfer. | 7 | 7 |
 | 2026-08-26 | [Unsupervised Adaptation of 3D CT Foundation Models for 3D CBCT Segmentation](https://arxiv.org/abs/2608.27190) | 3D Vision: 3D Foundation Models | An unsupervised feature-alignment framework adapts 3D CT foundation models to segment CBCT without target annotations or inference-time adaptation. | 7 | 6 |

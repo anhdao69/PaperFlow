@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**12 papers total**
+**16 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [Sliding-window beats linear attention](https://arxiv.org/abs/2608.28444) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | Sliding Window Attention with sinks is a simpler, cheaper alternative that matches or outperforms post-trained Linear Attention, especially on long-context tasks. | 8 | 5 |
+| 2026-08-30 | [Semantic Head Specialization Guides Hybrid ViT Attention for Multimodal LLMs](https://arxiv.org/abs/2608.28383) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Efficient Attention | Semantic Head Specialization reveals why some ViT attention patterns work better and guides Ariadne Attention, which matches full attention across 22 image/video tasks with 6.5× lower attention compute. | 9 | 8 |
+| 2026-08-30 | [HyQuant: Hybrid-Precision Quantization for LLM Attention](https://arxiv.org/abs/2608.27875) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | HyQuant improves low-bit LLM attention quantization by keeping a small set of accuracy-critical tokens and local states in high precision while quantizing the rest. | 8 | 7 |
+| 2026-08-30 | [Accelerating LLM Inference via Vector Index Based Output Embeddings](https://arxiv.org/abs/2608.27460) | Efficient AI: Efficient Attention | An HNSW vector index replaces dense LLM output projections to reduce decoding bottlenecks and substantially improve CPU batch-size-one throughput while preserving generation quality. | 7 | 7 |
 | 2026-08-26 | [ClusterAttention: A training-free speedup of bidirectional attention](https://arxiv.org/abs/2608.26965) | Efficient AI: Efficient Attention | ClusterAttention is a training-free, geometry-adaptive sparse-attention method that delivers substantial speedups while closely preserving dense-attention accuracy. | 8 | 7 |
 | 2026-08-25 | [Sigmoid Attention as a Better Substrate for Learned KV Cache Eviction](https://arxiv.org/abs/2608.23296) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Sigmoid attention makes learned soft KV-cache gates transfer more effectively to hard token eviction, preserving language-model quality better than softmax gates in matched cache settings. | 8 | 7 |
 | 2026-08-25 | [RS$^3$-Prune: Read-Sparse, Store-Sparse Token Pruning for Video Object Segmentation](https://arxiv.org/abs/2608.22526) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | RS$^3$-Prune is a training-free, plug-in token-pruning method that makes video object segmentation faster and more memory-efficient while maintaining competitive accuracy. | 8 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**9 papers total**
+**10 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [ContextPilot: Teaching Agents for Proactive Context Management via Fine-grained RL](https://arxiv.org/abs/2608.28476) | Language Foundation Models: LLM Memory, Long-Context Models | ContextPilot improves long-horizon agent reasoning by giving agents richer context-management tools and fine-grained RL credit assignment, yielding stronger performance with more compact working contexts. | 8 | 7 |
 | 2026-08-25 | [The Laws of Context Allocation: Causal Measurement and Closed-Loop Orchestration in Generative Search](https://arxiv.org/abs/2608.23252) | Language Foundation Models: Long-Context Models | A causal evidence-use probe and closed-loop context scheduler improve generative search by allocating context across sequential generations rather than widening one monolithic prompt. | 8 | 8 |
 | 2026-08-25 | [Beyond Factual Knowledge: Benchmarking and Learning Step-Level Procedural Rule Reasoning in Large Language Models](https://arxiv.org/abs/2608.22753) | Language Foundation Models: LLM Memory, Long-Context Models | RuleWorld benchmarks step-level procedural rule reasoning, while DynaRule improves LLMs’ ability to dynamically retrieve and apply relevant rules during multi-step inference. | 7 | 7 |
 | 2026-08-25 | [SANE: State Anomaly Neutralization for Stable Extreme-Context Delta-Rule Models](https://arxiv.org/abs/2608.22354) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | SANE stabilizes delta-rule recurrent models over extreme contexts by compressing anomalously large state values while preserving short-context reasoning and long-context functionality. | 7 | 7 |

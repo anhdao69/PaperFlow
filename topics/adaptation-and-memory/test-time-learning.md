@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**17 papers total**
+**20 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [RECAST: Recent & Context-Aware Sampling for Test-Time Adaptation in Streaming Biosignals](https://arxiv.org/abs/2608.28271) | Adaptation and Memory: Test-Time Learning | RECAST improves streaming biosignal test-time adaptation by selecting recent, contextually relevant, and reliable samples for each update. | 7 | 6 |
+| 2026-08-30 | [Temporal Memory-Aware Online Test-Time Adaptation on Dynamic Graphs](https://arxiv.org/abs/2608.27948) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | DGOTTA adapts dynamic graph neural networks at test time by modeling temporal changes and preserving memory under distribution shifts. | 8 | 7 |
+| 2026-08-30 | [Claim-Level Confidence Calibration for Reliable Decision Making with Large Language Models](https://arxiv.org/abs/2608.22483) | Adaptation and Memory: Test-Time Learning | Claim-level confidence calibration makes LLM uncertainty more actionable by estimating reliability for individual claims rather than entire responses. | 8 | 8 |
 | 2026-08-26 | [Learning Prostate Anatomy at Test Time for Cancer Detection in Micro-Ultrasound](https://arxiv.org/abs/2608.20557) | Adaptation and Memory: Test-Time Learning | ANT adapts prostate cancer detection models to new micro-ultrasound domains by learning target-domain prostate anatomy at test time, improving detection performance over no adaptation and existing TTA baselines. | 6 | 6 |
 | 2026-08-25 | [Test-Time Adaptation for ECG Classification via SQI-Gated Self-Training and Beat-Rhythm Consistency](https://arxiv.org/abs/2608.23347) | Adaptation and Memory: Test-Time Learning | BeatRhythm-TTA improves ECG classification under domain shift by filtering noisy signals and preserving beat–rhythm structure during unlabeled test-time adaptation. | 8 | 8 |
 | 2026-08-25 | [ST$^2$U: Stateful Test-Time Unlearning via Restricted Knowledge Boundary Control](https://arxiv.org/abs/2608.23034) | Adaptation and Memory: Test-Time Learning | ST$^2$U performs persistent test-time unlearning by controlling restricted-knowledge boundaries across the entire generation trajectory rather than correcting isolated activations. | 9 | 9 |

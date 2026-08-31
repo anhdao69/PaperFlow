@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**10 papers total**
+**13 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [STEGNav: Spatio-Temporal Event Graph Reasoning for Multimodal Lifelong Object Navigation](https://arxiv.org/abs/2608.28279) | Embodied AI: Vision-Language Navigation | STEGNav improves lifelong multimodal object navigation by combining spatially grounded event graphs with trajectory-aware temporal memory for target selection and exploration. | 10 | 9 |
+| 2026-08-30 | [Spatial-Semantic Reasoning using Large Language Models for Efficient UAV Search Operations](https://arxiv.org/abs/2608.28270) | Embodied AI: Vision-Language Navigation, Robot Navigation | An LLM-guided UAV navigation framework uses spatial-semantic reasoning to search for target objects more efficiently in real time. | 8 | 7 |
+| 2026-08-30 | [CAVE-NAV: VLM-Based Autonomous 3D Navigation in Underwater Cave Environments](https://arxiv.org/abs/2608.27793) | Embodied AI: Vision-Language Navigation, Robot Navigation | CAVE-NAV uses VLM-based multimodal reasoning to enable collision-free autonomous 3D navigation through visually degraded underwater caves. | 7 | 7 |
 | 2026-08-26 | [UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City](https://arxiv.org/abs/2608.27456) | Embodied AI: Vision-Language Navigation | UrbanGround evaluates whether multimodal agents can turn local street-view perception into reliable, sustained navigation in a realistic 3D city. | 9 | 8 |
 | 2026-08-26 | [RTNav: Towards Real-Time Zero-Shot Object Navigation](https://arxiv.org/abs/2608.26496) | Embodied AI: Vision-Language Navigation | RTNav improves zero-shot object navigation in real-time settings by explicitly accounting for inference latency, asynchronous execution, and limited compute. | 9 | 8 |
 | 2026-08-25 | [OptiSight: Bridging Semantic Reasoning and Geometric Control for Embodied Navigation](https://arxiv.org/abs/2608.23354) | Embodied AI: Vision-Language Navigation | OptiSight combines sparse vision-language reasoning with deterministic visual servoing for zero-shot indoor navigation without dense mapping. | 8 | 7 |

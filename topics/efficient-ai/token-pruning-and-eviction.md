@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**19 papers total**
+**21 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [Token-Budget Distillation: Transferring Full-Token Semantics to Compressed Video Vision-Language Models](https://arxiv.org/abs/2608.28138) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | Token-Budget Distillation efficiently adapts video VLMs to heavily compressed visual tokens while preserving most of their full-token semantic performance. | 8 | 7 |
+| 2026-08-30 | [Visual Token Coding for Video Multimodal Large Language Models](https://arxiv.org/abs/2608.28008) | Efficient AI: Token Pruning and Eviction | VTC compresses video tokens for multimodal large language models by coding frame redundancy, preserving near-full understanding performance with substantially fewer tokens. | 8 | 7 |
 | 2026-08-29 | [FrugalSOT - Frugal Search Over the Models](https://arxiv.org/abs/2608.21621) | Efficient AI: Token Pruning and Eviction | FrugalSOT adaptively routes each NLP request to the simplest model likely to meet a relevance threshold, reducing on-device inference cost while preserving output quality. | 8 | 7 |
 | 2026-08-26 | [LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics](https://arxiv.org/abs/2608.27395) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | LeVJEPA enables efficient, collapse-free video representation pretraining with a simple single-encoder design and substantially lower compute. | 8 | 8 |
 | 2026-08-26 | [PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference](https://arxiv.org/abs/2608.27206) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | PACE is a training-free framework that speeds up VLM inference by adaptively reducing visual inputs before encoding and selectively extracting important tokens afterward. | 8 | 7 |

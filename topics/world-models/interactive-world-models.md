@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**31 papers total**
+**35 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [An Enclosed Mode Is a Gauge Choice: Topology Relative to Reach in Certified Code World Models](https://arxiv.org/abs/2608.28541) | World Models: Interactive World Models | Certified code world models can be exactly correct within reachable observations yet dangerously wrong about unreachable topology, with mitigation requiring sensors and certificates matched to the error’s dimension and direction. | 9 | 8 |
+| 2026-08-30 | [Code as Worlds: Agentic Discovery of Executable World Representations for Physical Reasoning](https://arxiv.org/abs/2608.27549) | World Models: Interactive World Models | Code-as-World represents physical environments as executable programs, discovered and refined by agents, to enable more reliable quantitative physical reasoning. | 8 | 8 |
+| 2026-08-30 | [EchoWM: Open and Enterable Omnimodal World Models](https://arxiv.org/abs/2608.23189) | World Models: Interactive World Models | EchoWM is an interactive omnimodal world model that generates navigable 720p video with synchronized environmental sound, music, and speech from camera-motion commands. | 9 | 9 |
+| 2026-08-30 | [LD4WAM: Learning Latent Dynamics from Human Videos for World Action Models](https://arxiv.org/abs/2608.22403) | World Models: Interactive World Models | LD4WAM bridges human-video learning and robot control by aligning visual dynamics with embodiment-agnostic latent motion representations. | 9 | 9 |
 | 2026-08-28 | [StreamAV-Bench: A Comprehensive Benchmark for Streaming Audio-Video Generation](https://arxiv.org/abs/2608.26336) | World Models: Interactive World Models | StreamAV-Bench evaluates streaming audio-video generators on progressive stability and interactive responsiveness, revealing temporal drift and control bottlenecks in current systems. | 8 | 7 |
 | 2026-08-26 | [CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators](https://arxiv.org/abs/2608.27406) | World Models: Latent Action Models, Video World Models, Interactive World Models | CLAP learns cross-embodiment action-conditioned video world models from heterogeneous human and robot videos, enabling zero-shot physical simulation and deployment across robot platforms. | 9 | 9 |
 | 2026-08-26 | [R2M-Bench: Evaluating Revisit Memory via Relative Consistency in Interactive Video World Models](https://arxiv.org/abs/2608.27328) | World Models: Video World Models, Interactive World Models | R2M-Bench evaluates whether video world models truly remember revisited scenes by comparing revisit consistency against matched temporal controls. | 8 | 8 |

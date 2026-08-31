@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**22 papers total**
+**24 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [AcrossVAM1.0: Particle World Modeling for Text-Assisted Robot Video Prediction](https://arxiv.org/abs/2608.28491) | World Models: Video World Models | AcrossVAM1.0 predicts robot videos by separately modeling particle-based motion and last-frame appearance, improving trajectory and frame reconstruction while leaving language grounding and perceptual quality unresolved. | 8 | 7 |
+| 2026-08-30 | [Manifold4D: Denoising on Point Cloud Rendered Manifolds for Video Re-shooting](https://arxiv.org/abs/2608.28174) | World Models: Video World Models; Video Generation and Understanding | MANIFOLD4D improves video re-shooting by encoding the target-view render into the initial diffusion noise instead of using it as a competing conditioning stream. | 9 | 8 |
 | 2026-08-27 | [RiskWorld: Object-Centric Latent World Modeling for Autonomous Driving Risk Identification](https://arxiv.org/abs/2608.21414) | World Models: Latent Action Models, Video World Models | RiskWorld identifies autonomous-driving risk sources by forecasting how each object’s relation to the ego vehicle evolves in a latent world model. | 8 | 7 |
 | 2026-08-26 | [CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators](https://arxiv.org/abs/2608.27406) | World Models: Latent Action Models, Video World Models, Interactive World Models | CLAP learns cross-embodiment action-conditioned video world models from heterogeneous human and robot videos, enabling zero-shot physical simulation and deployment across robot platforms. | 9 | 9 |
 | 2026-08-26 | [Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models](https://arxiv.org/abs/2608.27367) | World Models: Video World Models; Efficient AI | Successive Capacity Growth adaptively expands JEPA Vision Transformer encoders in width or depth as task complexity demands, improving efficiency while preserving predictive function. | 7 | 7 |

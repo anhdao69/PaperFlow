@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**40 papers total**
+**43 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-30 | [Spatial-Semantic Reasoning using Large Language Models for Efficient UAV Search Operations](https://arxiv.org/abs/2608.28270) | Embodied AI: Vision-Language Navigation, Robot Navigation | An LLM-guided UAV navigation framework uses spatial-semantic reasoning to search for target objects more efficiently in real time. | 8 | 7 |
+| 2026-08-30 | [CAVE-NAV: VLM-Based Autonomous 3D Navigation in Underwater Cave Environments](https://arxiv.org/abs/2608.27793) | Embodied AI: Vision-Language Navigation, Robot Navigation | CAVE-NAV uses VLM-based multimodal reasoning to enable collision-free autonomous 3D navigation through visually degraded underwater caves. | 7 | 7 |
+| 2026-08-30 | [One year in a forest: Analyzing the challenges of autonomous navigation in subarctic environments](https://arxiv.org/abs/2608.27628) | Embodied AI: Robot Navigation | A year-long forest deployment shows that seasonal change and repetitive subarctic terrain make autonomous localization and mapping fragile, with lidar generally more reliable across seasons than visual or radar methods. | 6 | 6 |
 | 2026-08-27 | [Agentic AI for Safety-critical Multi-drone Systems: Challenges and Opportunities](https://arxiv.org/abs/2608.21444) | Embodied AI: Robot Navigation | Agentic AI for safety-critical multi-drone missions must be designed as a human-centered socio-technical system, not merely an autonomous control capability. | 6 | 5 |
 | 2026-08-26 | [4DSynth: Controllable Procedural World Synthesis for Dynamic Embodied Simulation](https://arxiv.org/abs/2608.26947) | Embodied AI: Robot Navigation | 4DSynth generates editable, physically interactive 4D environments from text, blueprints, or images and uses them to create scalable embodied-agent benchmarks. | 7 | 7 |
 | 2026-08-26 | [CGS-SLAM: Collaborative Gaussian Splatting based SLAM for Multi-Agent Reconstruction](https://arxiv.org/abs/2608.26868) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | CGS-SLAM enables collaborative 3D Gaussian Splatting SLAM for multiple agents using only RGB and inertial data, with accurate alignment and high-quality reconstruction in GNSS-denied environments. | 9 | 8 |
