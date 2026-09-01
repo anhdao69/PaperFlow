@@ -1,6 +1,1517 @@
 {
   "days": [
     {
+      "date": "2026-08-31",
+      "paper_count": 10,
+      "papers": [
+        {
+          "abstract": "Composable scene modeling aims to recover a real indoor scene as complete, editable object assets arranged as observed, giving robot simulation and embodied AI a simulation-ready replica of the real environment whose objects can be manipulated individually. Existing pipelines decompose the task into three steps---parse the observations into instances, generate an asset for each, and place each asset back---but every step presumes an input that a cluttered capture rarely provides: accurate instance geometry, unoccluded views, and assets that accurately match the observations. We propose Lucida, which keeps this order but redistributes the requirements, so each step consumes only what a real capture reliably provides and precision is reached at the end of the pipeline rather than demanded at its start. Lucida parses the video into a scene graph whose nodes carry per-instance multi-view evidence, generates a complete asset for each instance from its evidence, and places assets with GizmoAct, a VLM policy that casts placement as multi-turn GUI interaction, manipulating the object's gizmo in a closed loop and deciding itself when alignment is reached. Across scene-level 3D object detection, object pose estimation, and scene reconstruction, Lucida improves mAP over Boxer by 69% on R2S-Scene, raises ADD-SB@0.05 from 57.8% to 83.4% on CA-1M, and increases scene F-Score from 0.794 for SAM3D to 0.924.",
+          "arxiv_id": "2608.30821",
+          "arxiv_url": "https://arxiv.org/abs/2608.30821",
+          "authors": [
+            "Minghan Qin, Yuang Wang, Xiuyu Yang, Yushi Long, Yujian Zhang, Ruihuan Wang, Kai Ye, Yangang Zhang, Hang Li"
+          ],
+          "bullets": [
+            "Targets cluttered real-world captures where accurate geometry, unoccluded views, and perfectly matched assets are unavailable.",
+            "Builds a scene graph with per-instance multi-view evidence, then generates a complete asset for each object.",
+            "Uses GizmoAct, a VLM-driven multi-turn GUI policy, to manipulate object gizmos until alignment is reached.",
+            "Reports gains in detection, pose estimation, and reconstruction: 69% higher mAP than Boxer, ADD-SB@0.05 of 83.4%, and scene F-Score of 0.924."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2 Overview of our method. Given posed scene observations, the parsing stage constructs an object-centric scene graph with per-object multi-view evidence and coarse 3D estimates. For each object, the multi-view evidence is used to synthesize a complete object-centric image, which is then lifted into a 3D asset. GizmoAct places the asset through closed-loop 9-DoF gizmo manipulation, iteratively refining rotation, translation, and anisotropic scale until it decides that alignment is reached. The placed assets form an editable reconstruction of the captured scene.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 354,
+              "image_path": "figures/2608.30821/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 986
+            },
+            {
+              "caption": "Figure 1 Teaser. Given posed multi-view observations of a real indoor scene, our method constructs object-centric multi-view evidence, generates complete 3D assets, and places them into a composable reconstruction. The insets illustrate closed-loop rotation, translation, and scale refinement of object models against the observed scene geometry.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 400,
+              "image_path": "figures/2608.30821/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 986
+            },
+            {
+              "caption": "Figure 3 GizmoAct graphical observation and interaction trajectory. (a) The observation at one turn. The instruction block specifies the adjustment target and the referring cue; the main views pair the raw input image with renderings that overlay the asset, its yellow 3D box, and the gizmo showing the object’s local frame (red/green/blue axes), in which all edits are expressed. Semi-transparent green marks the model surface occluded by the scene point cloud. Auxiliary views add multi-view evidence, and orthographic views along the local axes support fine refinement. (b) A rollout in which the policy issues a flawed edit (red cross) and recovers from the resulting state (green checks). During SFT data construction, we simulate such cases through error injection and supervise only the recovery actions.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 683,
+              "image_path": "figures/2608.30821/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 948
+            },
+            {
+              "caption": "Figure 6 Qualitative comparison of object pose estimation on CA-1M, R2S-Object, and ADT. The leftmost column shows the scene image and a close-up with the target instance boxed. Blue renders the ground-truth model at the ground-truth pose; each method’s model, posed by its prediction, is rendered jointly with this blue reference, so their mutual occlusion—together with the three axis-aligned close-ups—reveals the pose accuracy, and the GT column shows the reference alone. Lucida aligns the generated assets more closely with the observed instances across categories, shape complexity, and viewpoints.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 1148,
+              "image_path": "figures/2608.30821/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 867
+            },
+            {
+              "caption": "Figure 10 Additional qualitative comparison of object pose estimation on CA-1M, R2S-Object, and ADT. Same layout and reading protocol as Figure 6: each method’s posed model is rendered jointly with the ground-truth posed model (blue), from a main view and three axis-aligned close-ups.",
+              "figure_id": "figure-10-4",
+              "figure_number": "10",
+              "height": 1196,
+              "image_path": "figures/2608.30821/figure-005.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 940
+            },
+            {
+              "caption": "Figure 4 Extended actions for coarse rotation. When the initial rotation error is large (step 1), the policy first issues switch_obs, which changes only the rendering mode: the next observation (step 2, enlarged in the bottom panel) shows the original-view pair together with six orthographic renderings of the asset along its signed local axes, exposing the sides the main views hide. From these views the policy predicts a single permute_axis action, which selects one of the 24 axis-aligned reorientations and removes the dominant rotation residual in one step. The remaining error is repaired by update_pose (step 3) before the policy predicts stop (step 4). The dashed arrow marks the alternative of predicting the whole correction with a single regular update_pose, skipping the permutation, which is less accurate.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 557,
+              "image_path": "figures/2608.30821/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 836
+            },
+            {
+              "caption": "Figure 8 Qualitative scene-level comparison. For each scene, we show the multi-view capture, a scanned reference view, the selected evaluation instances, and reconstructions rendered from the main, side, and top viewpoints. SceneGen and SAM 3D receive the same reference image and instance masks, whereas Lucida uses per-instance multi-view evidence. The asterisk marks our reconstruction restricted to the object instances included in the comparison.",
+              "figure_id": "figure-8-15",
+              "figure_number": "8",
+              "height": 512,
+              "image_path": "figures/2608.30821/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 986
+            },
+            {
+              "caption": "Figure 5 Gallery of composed scenes. Four real captures reconstructed by Lucida, annotated with the number of captured frames and the room extent. For each scene, the left panel shows the composed object-centric scene with the capture trajectory and camera frusta overlaid; the right panels pair captured frames (top row) with renderings of the reconstructed scene from the same camera poses (bottom row). Every object is an individual complete asset, so the composed scenes are directly editable and simulation-ready.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 710,
+              "image_path": "figures/2608.30821/figure-008.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 806
+            },
+            {
+              "caption": "Figure 9 Qualitative comparison of GizmoAct training strategies on two difficult examples. Each row shows the closed-loop rollout of the SFT, SFT (no context), or RL policy from the same initialization, evaluated as in Table 7; notation follows Figure 7. The SFT policies stop early with residual rotation errors or drift without converging, whereas RL keeps correcting the remaining rotation before stopping.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 687,
+              "image_path": "figures/2608.30821/figure-009.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 942
+            },
+            {
+              "caption": "Figure 7 GizmoAct pose-refinement trajectories under different initializations. For each dataset we show a reference image with the target instance boxed, and closed-loop rollouts of the same policy initialized by Boxer, Any6D*, and SAM 3D. Each cell shows the observation at that step (main views on top, orthographic views below); arrow labels denote the predicted action: an axis permutation (P) or the rotation (R), translation (T), and scale (S) components of update_pose. The final stop action is not shown. Any6D* uses only the depth-and-mask pose initialization from Any6D, without FoundationPose prediction or refinement. Across object categories and geometries, GizmoAct consistently refines each initialization to an accurate pose, outperforming the baseline estimates.",
+              "figure_id": "figure-7-18",
+              "figure_number": "7",
+              "height": 1121,
+              "image_path": "figures/2608.30821/figure-010.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 926
+            },
+            {
+              "caption": "Figure 11 Additional GizmoAct trajectory examples on CA-1M, R2S-Object, and ADT. Same layout and notation as Figure 7: a reference image per dataset, followed by closed-loop rollouts from Boxer, Any6D*, and SAM 3D initializations.",
+              "figure_id": "figure-11-9",
+              "figure_number": "11",
+              "height": 1135,
+              "image_path": "figures/2608.30821/figure-011.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 940
+            },
+            {
+              "caption": "Figure 12 Further GizmoAct trajectory examples on CA-1M, R2S-Object, and ADT. Same layout and notation as Figure 7: a reference image per dataset, followed by closed-loop rollouts from Boxer, Any6D*, and SAM 3D initializations.",
+              "figure_id": "figure-12-17",
+              "figure_number": "12",
+              "height": 1135,
+              "image_path": "figures/2608.30821/figure-012.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 940
+            },
+            {
+              "caption": "Table 1 Scene-level 3D object detection on CA-1M and R2S-Scene. Per-scene entries report class-agnostic mAP, and Mean averages across scenes. Prompt frames all/key denotes prompts on all annotated frames or selected keyframes; _all/_filter denotes evaluation on all annotations or only objects recovered by at least one method. A dash denotes no valid prediction. Best mean in bold.",
+              "figure_id": "table-1-16",
+              "figure_number": "1",
+              "height": 703,
+              "image_path": "figures/2608.30821/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 986
+            },
+            {
+              "caption": "Table 5 Ablation of the scene-parsing components on R2S-Scene. Each variant replaces geometry-aware keyframe selection with temporal uniform sampling or disables object-centric full-sequence evidence consolidation or relation-aware scene refinement. We report scene-level 3D object detection on R2S-Scene and scene reconstruction on an R2S-Scene subset after the same downstream generation and grounding pipeline. Best in bold.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 155,
+              "image_path": "figures/2608.30821/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 986
+            },
+            {
+              "caption": "Table 3 Robustness to pose initialization. All rows evaluate the same GizmoAct policy, trained with randomly perturbed initial poses, using at most four views and 12 refinement steps; only the initial pose differs. Any6D* denotes the depth-and-mask initialization from Any6D without FoundationPose prediction or refinement. Boxer initialization works best with the estimated depth of R2S-Object and CA-1M, whereas the exact geometry of ADT favors the Any6D* and SAM 3D initializers.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 117,
+              "image_path": "figures/2608.30821/table-015.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 986
+            },
+            {
+              "caption": "Table 4 Scene reconstruction on R2S-Scene. Scene CD uses squared Euclidean distances in metric scene coordinates and is reported in m2; total CD is the sum of the two directed terms. Object CD is computed after per-object normalization and is dimensionless. Best in bold, second best underlined.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 144,
+              "image_path": "figures/2608.30821/table-016.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 986
+            },
+            {
+              "caption": "Table 6 Effect of the RL training pose distribution. The two rows differ only in the initial-pose distribution used during RL training: poses produced by Boxer versus random perturbations. Both policies are evaluated from Boxer initialization, and matching the training distribution to the test-time initializer improves every reported metric. @0.05 denotes the ADD-SB success rate at that threshold; best per dataset in bold.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 103,
+              "image_path": "figures/2608.30821/table-017.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 906
+            },
+            {
+              "caption": "Table 7 Comparison of GizmoAct training strategies on the hard subset. SFT (no context) is trained with single-step supervision and no interaction history; all three policies are evaluated in the same closed-loop setting with at most 12 steps. RL improves every metric, with the largest gains on rotation accuracy. Evaluated on a hard subset of 110 asymmetric objects with large Any6D* initialization errors; best in bold.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 113,
+              "image_path": "figures/2608.30821/table-018.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 904
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.30821/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.30821",
+          "relevance": 8,
+          "selection_reason": "Real-to-sim scene modeling for robot simulation and embodied AI, with VLM-driven placement; directly relevant to embodied AI, 3D scene modeling, and spatial VLM reasoning.",
+          "summary_status": "generated",
+          "title": "Lucida: Parse, Generate, and Place for Composable Real-to-Sim Scene Modeling",
+          "tldr": "Lucida creates editable, simulation-ready indoor scenes by jointly parsing observations, generating complete object assets, and interactively placing them with closed-loop VLM control.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models",
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Point cloud video representation learning is crucial for 3D dynamic scene understanding. In this paper, we propose MoSaiC, a novel Motion-Saliency Complementary masked modeling framework for self-supervised point cloud video representation learning. MoSaiC couples three components: Curriculum Motion-Saliency Masking (CMSM), which guides the masking process toward motion-salient tokens under a curriculum schedule; Normal-Flow Motion (NFM) modeling, which supervises the local rigid rotation of each token in the Lie algebra so(3) as an explicit geometric motion target; and Cross-view Token Consistency Prediction (CTCP), which enforces consistency between two complementary masked views at the token level. Together, these components allow MoSaiC to effectively capture both appearance and motion dynamics. Extensive experiments on multiple downstream tasks, including action recognition, temporal action segmentation, and point-level semantic segmentation, demonstrate the effectiveness of our approach.",
+          "arxiv_id": "2608.30279",
+          "arxiv_url": "https://arxiv.org/abs/2608.30279",
+          "authors": [
+            "Wei Wang, Yiding Sun, Yuyan Wang, Zhuoyue Zhang, Zhengqiao Li, Dongfu Yin, Chen Li"
+          ],
+          "bullets": [
+            "Addresses self-supervised representation learning for dynamic 3D point cloud scenes.",
+            "Uses curriculum motion-saliency masking to prioritize motion-relevant tokens.",
+            "Models local rigid rotation explicitly in the Lie algebra so(3) via Normal-Flow Motion.",
+            "Enforces token-level consistency between two complementary masked views.",
+            "Demonstrates effectiveness across action recognition, temporal action segmentation, and point-level semantic segmentation."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the MoSaiC pre-training pipeline. CMSM produces two complementary masked views from motion-saliency scores. A shared encoder–decoder reconstructs masked tokens under appearance, NFM, and TDD losses. CTCP aligns the decoded feature of a token hidden in one view with its encoded feature when visible in the other. Only the encoder is retained for downstream tasks.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 299,
+              "image_path": "figures/2608.30279/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 720
+            },
+            {
+              "caption": "Figure 1: Motivation of MoSaiC. Existing point cloud video SSL methods suffer from motionagnostic masking, coarse or implicit motion modeling, and single-view reconstruction. MoSaiC addresses them with Curriculum Motion-Saliency Masking (CMSM), Normal-Flow Motion (NFM) modeling, and Cross-view Token Consistency Prediction (CTCP).",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 171,
+              "image_path": "figures/2608.30279/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 345
+            },
+            {
+              "caption": "Figure 3: Structure of Curriculum Motion-Saliency Masking (CMSM). Each token’s per-frame SHOT descriptors give a motion-saliency score, which a temperature softmax converts into psal. Curriculum mixing combines psal with the uniform distribution puni under the schedule weight α to obtain pmix, from which View A is masked directly and View B is masked from View A’s visible tokens through complementary sampling.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 143,
+              "image_path": "figures/2608.30279/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 347
+            },
+            {
+              "caption": "Figure 6: t-SNE visualization of the encoder features (each color denotes an action category). Left, training from scratch. Right, MoSaiC pre-training.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 383,
+              "image_path": "figures/2608.30279/figure-004.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 718
+            },
+            {
+              "caption": "Figure 4: Qualitative comparison of frame-level action segmentation on a representative ∼150-frame HOI4D clip. From top to bottom, Ground Truth, the P4Transformer baseline, and MoSaiC. The horizontal axis is the frame index, and each color denotes a distinct action class, so a correct prediction requires both the colorblock boundaries to align with those of Ground Truth (accurate temporal localization) and the color identity to match (correct class prediction).",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2608.30279/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 646
+            },
+            {
+              "caption": "Figure 5: Qualitative visualization of complementary masking and reconstruction. For each sample we show the input, the two complementary masked views (Mask-A / Mask-B), and the corresponding reconstructions (Recon-A / Recon-B).",
+              "figure_id": "figure-5-14",
+              "figure_number": "5",
+              "height": 232,
+              "image_path": "figures/2608.30279/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 346
+            },
+            {
+              "caption": "Table 1: Action recognition results (Top-1 accuracy, %) on MSR-Action3D, SHREC’17, and NvGesture. All self-supervised methods, including MoSaiC, use the P4Transformer backbone, whose supervised fromscratch result serves as the common no-pre-training reference.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 310,
+              "image_path": "figures/2608.30279/table-007.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 720
+            },
+            {
+              "caption": "Table 2: Temporal action segmentation results on HOI4D. Methods are grouped by backbone, and MoSaiC is instantiated on both PPTr and P4Transformer (its default backbone) to verify that its gains generalize across backbones. Baseline numbers for STRL, VideoMAE, C2P, and M2PSC are as reported in their respective papers.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 310,
+              "image_path": "figures/2608.30279/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 720
+            },
+            {
+              "caption": "Table 4: Semantic segmentation results (mIoU, %) on HOI4D. Methods are grouped by backbone, and MoSaiC is instantiated on both PPTr and P4Transformer (its default backbone) to verify that its gains generalize across backbones. Baseline numbers for STRL, VideoMAE, C2P, and M2PSC are as reported in their respective papers.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 310,
+              "image_path": "figures/2608.30279/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 720
+            },
+            {
+              "caption": "Table 12: Robustness of the NFM contribution under input degradation. w/o NFM denotes CMSM + TDD + CTCP without the NFM loss, Full denotes MoSaiC. ∆ is the F1@10 gain attributable to adding NFM under each condition.",
+              "figure_id": "table-12-15",
+              "figure_number": "12",
+              "height": 296,
+              "image_path": "figures/2608.30279/table-010.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 720
+            },
+            {
+              "caption": "Table 3: Per-class F1@50 on HOI4D temporal action segmentation, showing the four classes with the largest MoSaiC gain over MaST-Pre and the three with the smallest. The overall row is the class-wise mean reported in Table 2, the 12 classes omitted here have gains between +4.8 and +16.9 and average +13.2.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 271,
+              "image_path": "figures/2608.30279/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 720
+            },
+            {
+              "caption": "Table 6: Cross-dataset transfer for action recognition (Top-1 accuracy, %). Models are pre-trained on the source and fine-tuned on each target.",
+              "figure_id": "table-6-17",
+              "figure_number": "6",
+              "height": 125,
+              "image_path": "figures/2608.30279/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 720
+            },
+            {
+              "caption": "Table 11: Ablation on CTCP design. Action Rec., MSR-Action3D Top-1 accuracy, Action Seg., HOI4D F1@10, Sem. Seg., HOI4D mIoU.",
+              "figure_id": "table-11-12",
+              "figure_number": "11",
+              "height": 228,
+              "image_path": "figures/2608.30279/table-013.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 720
+            },
+            {
+              "caption": "Table 5: Label-efficiency and linear-probing results for action recognition on MSR-Action3D (Top-1 accuracy, %). FT denotes fine-tuning with the indicated fraction of labels. LP denotes linear probing. The FT (100%) column repeats the fully-supervised results of Table 1.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 150,
+              "image_path": "figures/2608.30279/table-014.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 720
+            },
+            {
+              "caption": "Table 7: Efficiency comparison. Params (M) and FLOPs (G) are measured on the encoder used for downstream inference, Pre-train is the wall-clock pre-training time in hours.",
+              "figure_id": "table-7-16",
+              "figure_number": "7",
+              "height": 125,
+              "image_path": "figures/2608.30279/table-015.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 720
+            },
+            {
+              "caption": "Table 10: Ablation on motion reconstruction targets. Action Seg., HOI4D F1@10, Sem. Seg., HOI4D mIoU.",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 150,
+              "image_path": "figures/2608.30279/table-016.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 720
+            },
+            {
+              "caption": "Table 9: Ablation on masking strategies. Action Seg., HOI4D F1@10, Sem. Seg., HOI4D mIoU.",
+              "figure_id": "table-9-8",
+              "figure_number": "9",
+              "height": 125,
+              "image_path": "figures/2608.30279/table-017.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 720
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.30279/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.30279",
+          "relevance": 6,
+          "selection_reason": "Self-supervised point cloud video representation learning; fits video understanding and 3D pretraining.",
+          "summary_status": "generated",
+          "title": "Motion-Saliency Complementary Masked Modeling for Point Cloud Video Understanding",
+          "tldr": "MoSaiC learns point cloud video representations by combining motion-focused masking, geometric motion modeling, and cross-view consistency.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Vehicle attribute recognition is an important task in intelligent transportation systems, particularly when Automatic License Plate Recognition (ALPR) is unavailable or unreliable. Although vision foundation models have shown strong transferability across domains, their effectiveness for fine-grained vehicle classification remains underexplored. Moreover, given the inherently three-dimensional structure of vehicles, it is unclear whether emerging 3D-aware foundation models offer advantages over standard 2D architectures. This paper presents an empirical benchmark of 14 state-of-the-art 2D and 3D-aware vision foundation models. Using the challenging real-world UFPR-VeSV dataset, we evaluate these models as frozen feature extractors via linear probing for vehicle type, make, and model recognition. We further stress-test the best-performing models under few-shot learning and Out-of-Distribution (OOD) domain shifts. Our results show that standard 2D self-supervised models, particularly DINOv3, substantially outperform 3D-aware models in fine-grained tasks, achieving over 93% Macro-Accuracy for make and model recognition. However, the 3D-aware Depth Anything v2 exhibits stronger invariance to viewing angles in vehicle type classification. These findings motivate hybrid approaches that combine 2D and 3D priors for robust vehicle recognition. Our code is publicly available at https://github.com/UFPR-IPASPPR/3D-Vision-Benchmark/.",
+          "arxiv_id": "2608.29929",
+          "arxiv_url": "https://arxiv.org/abs/2608.29929",
+          "authors": [
+            "Alexandre V. Delazeri, Gabriel E. Lima, Eduil Nascimento Jr, Rayson Laroca, David Menotti"
+          ],
+          "bullets": [
+            "Evaluates frozen 2D and 3D-aware foundation models with linear probing on vehicle type, make, and model recognition.",
+            "Tests robustness under few-shot learning and out-of-distribution domain shifts using the UFPR-VeSV dataset.",
+            "DINOv3 and other 2D self-supervised models achieve over 93% Macro-Accuracy for make and model recognition.",
+            "Depth Anything v2 shows stronger viewing-angle invariance for vehicle type classification.",
+            "Results support hybrid methods combining 2D and 3D visual priors."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3. Samples from the curated Out-of-Distribution (OOD) set. These images introduce a distinct domain shift from the UFPR-VeSV dataset by presenting unseen vehicle models that map directly to its original type classes.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 211,
+              "image_path": "figures/2608.29929/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 474
+            },
+            {
+              "caption": "Fig. 2. Examples of adverse capturing surveillance conditions present in the UFPR-VeSV dataset [13]. Image adapted from [13].",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 345,
+              "image_path": "figures/2608.29929/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 474
+            },
+            {
+              "caption": "Fig. 4. Few-shot efficiency evaluation of DINOv3 and Depth Anything v2, trained using linear-probing on different proportions of the UFPR-VeSV dataset.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 272,
+              "image_path": "figures/2608.29929/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 448
+            },
+            {
+              "caption": "Fig. 1. Illustration of the cross-view completion objective. The network receives a reference image alongside a masked target image from a different viewpoint. By mapping structural correspondences from the reference image to reconstruct the missing target patches, the network naturally learns viewpointinvariant representations and 3D geometry.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 218,
+              "image_path": "figures/2608.29929/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 454
+            },
+            {
+              "caption": "TABLE I Overview of the evaluated 2D and 3D-aware vision foundation models. The table details their respective backbones, pre-training tasks, and feature extraction strategies.",
+              "figure_id": "table-I-4",
+              "figure_number": "I",
+              "height": 270,
+              "image_path": "figures/2608.29929/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 956
+            },
+            {
+              "caption": "TABLE II Linear probe results (%) for vehicle type, make, and model recognition on UFPR-VeSV. Results are averaged over 10 runs using the official dataset splits, with standard deviations in parentheses.",
+              "figure_id": "table-II-5",
+              "figure_number": "II",
+              "height": 331,
+              "image_path": "figures/2608.29929/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "TABLE III Non-linear probe results (%) on UFPR-VeSV. Results show the average and standard deviation (in parentheses) across 10 splits for the best 2D and 3D-aware vision foundation models.",
+              "figure_id": "table-III-3",
+              "figure_number": "III",
+              "height": 133,
+              "image_path": "figures/2608.29929/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "TABLE IV Out-of-Distribution (OOD) classification accuracy for vehicle type recognition on unseen vehicle data.",
+              "figure_id": "table-IV-7",
+              "figure_number": "IV",
+              "height": 84,
+              "image_path": "figures/2608.29929/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 350
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.29929/hero.webp",
+          "novelty": 4,
+          "pdf_url": "https://arxiv.org/pdf/2608.29929",
+          "relevance": 4,
+          "selection_reason": "Benchmark of 2D vs 3D-aware vision foundation models for fine-grained vehicle recognition; relevant to 3D foundation model evaluation.",
+          "summary_status": "generated",
+          "title": "Evaluating 2D and 3D-Aware Vision Foundation Models for Vehicle Attribute Recognition",
+          "tldr": "A benchmark of 14 vision foundation models finds that 2D self-supervised models outperform 3D-aware models for fine-grained vehicle recognition, while 3D-aware features better handle viewpoint variation in vehicle type classification.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Reliable semantic representations derived from city-scale 3D models are increasingly important for urban analysis, infrastructure monitoring, autonomous systems, and heritage conservation. However, urban scenes of large spatial extent captured through aerial surveying differ substantially from the indoor, object-level, and self-driving LiDAR data used to pretrain most 3D self-supervised models. We introduce Polis, to our knowledge the first application of Sketched Isotropic Gaussian Regularization (SIGReg) as an objective for a native point cloud encoder, and evaluate it through a frozen-feature benchmark spanning fourteen city- and building-scale corpora. Polis combines geometrically matched cosine invariance, SIGReg, and VICReg-style anti-collapse terms with a 12.8k-scene outdoor pretraining mixture and gravity-preserving spatial view sampling. Controlled ablations show that this objective outperforms student--teacher architecture alternatives, as well as Polis versions without anti-collapse terms, on the same representative outdoor corpus. On three pretraining-disjoint city datasets, Polis reaches $23.8\\%$ mean mIoU versus $16.3\\%$ for the next-best encoder under high-capacity frozen probing, and $17.3\\%$ versus $16.1\\%$ at a matched point and voxel budget. The same city-scale lead holds on datasets whose training sets were seen in pretraining. On localized terrestrial captures with fine-grained facade and streetscape labels, the ranking reverses. Our results show that distributionally-regularized joint embedding architectures can be successful on challenging city-scale 3D scenes, and that transfer improves when self-supervision is designed for the capture geometry and spatial context of this domain while also revealing the limits of this specialization.",
+          "arxiv_id": "2608.29426",
+          "arxiv_url": "https://arxiv.org/abs/2608.29426",
+          "authors": [
+            "Alexander Rusnak, Sophia Kovalenko, Jingru Wang, Ismail Moudden, Xiru Wang, Fr\\'ed\\'eric Kaplan"
+          ],
+          "bullets": [
+            "Targets the domain gap between city-scale aerial 3D models and the indoor, object-level, or driving LiDAR data used by most pretrained 3D models.",
+            "Combines geometrically matched cosine invariance, SIGReg, VICReg-style anti-collapse terms, and gravity-preserving spatial view sampling.",
+            "Pretrains on a 12.8k-scene outdoor mixture and evaluates frozen features across fourteen city- and building-scale corpora.",
+            "Achieves 23.8% mean mIoU versus 16.3% for the next-best encoder on three pretraining-disjoint city datasets under high-capacity probing.",
+            "Performance reverses on localized terrestrial captures with fine-grained facade and streetscape labels, indicating specialization limits."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Frozen-backbone feature PCA on a Zurich scene from Swiss3DCities, shown from a matched oblique view. Top: RGB and Polis (ours). Bottom: Sonata, Concerto, and Utonia. All models use their high-budget point/voxel capacity. Polis produces more semantically and spatially coherent outdoor feature structure in this example, while the baselines exhibit weaker separation or visible spatial artifacts.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 496,
+              "image_path": "figures/2608.29426/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1035
+            },
+            {
+              "caption": "Figure 6. Radial mIoU and geometric structure of frozen features. (a) Locked high-capacity one-shot test mIoU vs. XY-radius ring (macro-averaged over DALES, Swiss3DCities, SUM). (b) Feature variance explained by z, zrel, and rxy . (c) Ridge mIoU before/after residualizing height cues. (d) Shared building/vegetation apex-minus-body direction. Polis encodes stronger gravity-aligned structure, but its city advantage does not reduce to these measured directions.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 506,
+              "image_path": "figures/2608.29426/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 954
+            },
+            {
+              "caption": "Figure 1. High-capacity frozen-probe mIoU on the three pretraining-disjoint city-scale datasets (UNS-Geo, HRHD-HK, and WHU-Urban3D) versus median whole-scene occupied-voxel capacity. Matched-budget scores and the remaining eleven corpora are in Sec. 4.3. Polis combines the strongest held-out city transfer with the largest typical capacity.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 398,
+              "image_path": "figures/2608.29426/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1044
+            },
+            {
+              "caption": "Figure 4. High-cap frozen-probe mIoU across 14 corpora (dark gray: cross-dataset mean; light gray: pretraining-disjoint held-out sets; top rule: building-scale corpora, the rest city-scale). Caps: Polis 1.5M/1M, Sonata 1.0M/655k, Concerto 600k/393k, Utonia 800k/524k. Polis leads on broad city-scale scenes; Utonia retains the building-scale edge.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 374,
+              "image_path": "figures/2608.29426/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1012
+            },
+            {
+              "caption": "Figure 3. Polis training stack. An area crop from a sampled outdoor scene (or a persistent spatial chunk of a large scene) yields one global and two local spatial views (origin coordinates retained for matching), which receive independent gravity-preserving geometric and chromatic augmentations (differential yaw/tilt, elastic distortion, cuboid and color dropout, jitter/scale, and flips) before a shared LitePT-L encoder. Training combines matched cosine invariance Linv over origin-coordinate nearest-neighbor pairs with SIGReg and VICReg-style variance/covariance terms on the global and concatenated-local feature packs (Eq. (1)).",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 315,
+              "image_path": "figures/2608.29426/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1035
+            },
+            {
+              "caption": "Figure 5. Top-down frozen-backbone feature PCA on a Zug scene from Swiss3DCities under the same max-fill qualitative encode protocol as Fig. 2 using k=32 feature smoothing and 1-NN color fill for unsampled points. Labels use saturated categorical colors as a per-scene key, not a cross-model encoding. Sonata shows center color bias; Utonia shows axis-aligned patches. These visual artifacts, along with the clear height direction artifacts present in Fig. 2 for Utonia and Polis, motivate testing spatial layout and gravity-related cues as shortcuts in Sec. 4.5.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 173,
+              "image_path": "figures/2608.29426/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1035
+            },
+            {
+              "caption": "Figure 7. Frozen-feature density sweep on four scenes from each of our corpora. Left: linear CKA vs. the 400k-point encoding. Right: closed-form ridge probe mIoU. Polis moves more under decimation than Sonata / Concerto / Utonia while remaining competitive on ridge mIoU. Polis is more sensitive to decimation, yet demonstrates competitive transfer at practical point budgets.",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 257,
+              "image_path": "figures/2608.29426/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 498
+            },
+            {
+              "caption": "Table 5. High-capacity, native-preprocessing mIoU (%) with model-specific one-shot caps (10 probe epochs, best validation Acc. when available, otherwise best training Acc.). A superscript † marks a pretraining-disjoint held-out dataset; SensatUrban is validation-only because public test labels are unavailable.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 415,
+              "image_path": "figures/2608.29426/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 495
+            },
+            {
+              "caption": "Table 3. Matched-budget, native-preprocessing mIoU (%) at 400k points / 262k voxels (10 probe epochs, best validation Acc. when available, otherwise best training Acc.). A superscript † marks a pretraining-disjoint held-out dataset; SensatUrban is validationonly because public test labels are unavailable.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 415,
+              "image_path": "figures/2608.29426/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 495
+            },
+            {
+              "caption": "Table 2. Small-corpus ablations over three seeds (mean±std test mIoU, %). City-4: DALES, Swiss3DCities, Turin3D, YTU3D; All-6 adds ArCH and UnderOneFacade for building-scale evaluation. Dagger: losses matched to the headline Polis recipe. The ℓ2 (MSE) invariance row retains SIGReg and the anti-collapse terms, changing only the matched-token loss. The EMA-teacher style uses those losses without temperature scaling or centering; Sonata-style replicates the full self-distillation training style, including the objectives.",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 204,
+              "image_path": "figures/2608.29426/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 498
+            },
+            {
+              "caption": "Table 6. Hyperparameters for Polis pretraining and frozen probing. The probe checkpoint, data sampling, objective weights, and resource settings are reported to make the training and evaluation protocol reproducible.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 321,
+              "image_path": "figures/2608.29426/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 454
+            },
+            {
+              "caption": "Table 4. Matched-budget frozen-probe mIoU (%). Random-init is an untrained LitePT-L; Polis is the headline pretrained checkpoint. A superscript † marks a pretraining-disjoint held-out dataset; SensatUrban is validation mIoU because public test labels are unavailable.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 465,
+              "image_path": "figures/2608.29426/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 327
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.29426/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.29426",
+          "relevance": 9,
+          "selection_reason": "Introduces Polis, a self-supervised pretraining method for city-scale 3D point clouds using Sketched Isotropic Gaussian Regularization. This fits the '3D Foundation Models' subtopic.",
+          "summary_status": "generated",
+          "title": "Polis: 3D Self-Supervision at City Scale",
+          "tldr": "Polis adapts 3D self-supervised learning to city-scale aerial point clouds, improving frozen-feature semantic transfer on urban datasets while showing weaker transfer to localized terrestrial scenes.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-Language Models align point clouds with image and text embeddings, enabling zero-shot recognition, retrieval, and open-vocabulary understanding of 3D shapes. Existing multimodal 3D pre-training methods produce fixed-dimensional embeddings, requiring separate models for different computational budgets. We propose 3D Matryoshka Representation Learning (3D-MRL), a multimodal 3D pre-training framework based on Matryoshka Representation Learning. 3D-MRL learns nested 3D representations by aligning point clouds with frozen CLIP image and text embeddings while applying contrastive supervision across multiple embedding dimensions. The Matryoshka objective is applied only to the 3D encoder, allowing a single model to produce representations at different dimensionalities without retraining. Experiments on the Objaverse-LVIS, ModelNet40, and ScanNet datasets show that 3D-MRL achieves competitive performance on zero-shot and few-shot 3D recognition tasks. In addition, the learned representations support retrieval across different embedding dimensions within a single model. On Objaverse-LVIS, 3D-MRL improves Top-1 accuracy from 46.8% to 50.9%. Retrieval experiments further show that different embedding dimensions yield varying levels of semantic and geometric specificity.",
+          "arxiv_id": "2608.29285",
+          "arxiv_url": "https://arxiv.org/abs/2608.29285",
+          "authors": [
+            "M\\'arcus Lobo, Vitor Matias, Jeov\\'a Farias, Moacir Ponti"
+          ],
+          "bullets": [
+            "Fixed-dimensional 3D embeddings require separate models for different computational budgets.",
+            "The method aligns point-cloud features with frozen CLIP image and text embeddings using contrastive supervision across dimensions.",
+            "Applying the Matryoshka objective only to the 3D encoder produces representations usable at multiple dimensionalities within one model.",
+            "It achieves competitive zero-shot and few-shot recognition across Objaverse-LVIS, ModelNet40, and ScanNet, improving Objaverse-LVIS Top-1 accuracy from 46.8% to 50.9%.",
+            "Different embedding dimensions provide varying semantic and geometric specificity for cross-dimensional retrieval."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of 3D-MRL. 3D-MRL is a framework that aligns nested 3D embeddings with multiple dimensionalities with multimodal image and text for 3D representation learning. 3D-MRL shows competitive performance on a wide range of benchmarks.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 570,
+              "image_path": "figures/2608.29285/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 400
+            },
+            {
+              "caption": "Figure 2: Zero-shot 3D shape classification on the ObjaverseLVIS [8] (1,156 categories) and ModelNet40 [35].",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 493,
+              "image_path": "figures/2608.29285/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 258
+            },
+            {
+              "caption": "Figure 4: Semantic-vs-instance retrieval across embedding dimensions on Objaverse-LVIS.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2608.29285/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 348
+            },
+            {
+              "caption": "Table 4: Few-shot linear probing classification results on ModelNet40. We report the average accuracy and standard deviation of 10 independent experiments. Our 3D-MRL remains competitive across few-shot settings and improves over OpenShape in three of four Ensembled configurations.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 224,
+              "image_path": "figures/2608.29285/table-004.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 720
+            },
+            {
+              "caption": "Table 6: Effect of weight-tying: Efficient vs. Non-Efficient mode. We compare the parameter-free geometric truncation (True) against the use of independent scale-specific linear projection heads (False). In bold, we display the best performance per column.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 104,
+              "image_path": "figures/2608.29285/table-005.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 546
+            },
+            {
+              "caption": "Table 3: FAISS retrieval efficiency. QPS means queries per second.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 106,
+              "image_path": "figures/2608.29285/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 308
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.29285/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.29285",
+          "relevance": 9,
+          "selection_reason": "Proposes a multimodal 3D representation learning framework with Matryoshka embeddings, fitting 3D vision and multimodal foundation models.",
+          "summary_status": "generated",
+          "title": "3D-MRL: Nested Multimodal 3D Representations via Matryoshka Representation Learning",
+          "tldr": "3D-MRL enables one multimodal 3D model to generate nested representations at multiple embedding dimensions, supporting flexible recognition and retrieval without retraining.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "The integration of novel view synthesis (NVS) and open-vocabulary segmentation (OVS) has recently yielded powerful feed-forward 3D foundation models. However, their inherent reliance on static-scene assumptions leads to severe misalignment of spatial features in unconstrained dynamic environments. To bridge this critical gap, we propose SPAR, a novel joint semantic-geometric encoding architecture that explicitly isolates transient dynamic noise prior to latent space aggregation. Furthermore, we introduce a dynamic-region-aware end-to-end training paradigm that structurally couples motion estimation with multi-view visual and semantic learning. This unified approach enables the network to inherently resolve motion conflicts and distill multi-view consistent, temporally stable scene representations from dynamic inputs. Extensive experiments on the challenging D-RE10K benchmark demonstrate that SPAR achieves state-of-the-art performance. Our end-to-end approach achieves exceptional novel view synthesis quality, yielding a PSNR of 22.15 dB and 23.33 dB given only 3 and 4 input views respectively. Despite being trained in a self-supervised manner, our model achieves an mIoU of 88.5% for motion mask prediction. Furthermore, our analysis reveals a strong inter-task synergy between photometric scene reconstruction and semantic understanding, where semantic synthesis learning consistently enhances photometric fidelity in novel view rendering. Code will be available at https://github.com/dmucby/SPAR.",
+          "arxiv_id": "2608.29177",
+          "arxiv_url": "https://arxiv.org/abs/2608.29177",
+          "authors": [
+            "Boyu Cai, Li Yang, Yan Xu, Wei Liu, Nian Liu, Sikui Zhang, Yan Wang, Chunfeng Yuan, Weiming Hu"
+          ],
+          "bullets": [
+            "Addresses feature misalignment caused by static-scene assumptions in dynamic 3D understanding.",
+            "Isolates transient motion before semantic-geometric latent aggregation.",
+            "Uses dynamic-region-aware end-to-end training to couple motion estimation with multi-view photometric and semantic learning.",
+            "On D-RE10K, reports PSNR of 22.15 dB with 3 views and 23.33 dB with 4 views, plus 88.5% mIoU for self-supervised motion-mask prediction.",
+            "Finds that semantic synthesis learning improves photometric fidelity in novel-view rendering."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of SPAR. Our unified encoder-decoder jointly performs novel view synthesis and open-vocabulary scene understanding from unposed dynamic views. The pipeline first estimates camera poses to build pose-conditioned photometric and semantic tokens. A dynamic region predictor masks moving foregrounds to isolate static geometry. A scene encoder aggregates filtered tokens into a compact latent scene representation, which a dual-head decoder uses to render the target image and semantic features.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 267,
+              "image_path": "figures/2608.29177/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 721
+            },
+            {
+              "caption": "Fig. 1: Comparison under dynamic, unposed settings. Baselines such as LSM [9] struggle with moving objects, producing ghosting artifacts and inconsistent semantics (left top). By masking dynamic regions prior to latent encoding, our SPAR generates clean, ghost-free photometric and semantic renderings in a single forward pass (left bottom).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 306,
+              "image_path": "figures/2608.29177/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 720
+            },
+            {
+              "caption": "Fig. 4: Qualitative results of our Dynamic Region Predictor (DRP) on diverse multiview sequences.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 296,
+              "image_path": "figures/2608.29177/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 721
+            },
+            {
+              "caption": "Fig. 5: Qualitative Results of novel view synthesis and dynamic region prediction on unbounded scenes.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 238,
+              "image_path": "figures/2608.29177/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 708
+            },
+            {
+              "caption": "Table 2: Dynamic Region quality. Comparison of supervised and self-supervised motion segmentation methods under view settings (n = 2, 3, 8). w/ Refine denotes the use of SAM2 to refine the original motion masks.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 288,
+              "image_path": "figures/2608.29177/table-005.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 714
+            },
+            {
+              "caption": "Table 1: Performance comparison on D-RE10K under view settings (n = 2, 3, 4).",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 433,
+              "image_path": "figures/2608.29177/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 712
+            },
+            {
+              "caption": "Table 3: Quantitative comparison on the semantically rich ScanNet [8] dataset.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 257,
+              "image_path": "figures/2608.29177/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 600
+            },
+            {
+              "caption": "Table 6: Ablation of Auxiliary Components. We ablate pre-training, copy-paste augmentation (CPA), and SAM2 refinement.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 137,
+              "image_path": "figures/2608.29177/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 477
+            },
+            {
+              "caption": "Table 4: Ablation of Optimization Strategies. Quantitative comparison of novel view synthesis performance under severe dynamic interference.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 96,
+              "image_path": "figures/2608.29177/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 714
+            },
+            {
+              "caption": "Table 5: Effectiveness of Semantic Branch. Quantitative comparison demonstrating the performance gains after incorporating the semantic branch.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 92,
+              "image_path": "figures/2608.29177/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 702
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.29177/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2608.29177",
+          "relevance": 8,
+          "selection_reason": "Proposes a joint semantic-geometric encoding for open-vocabulary 3D scene understanding in dynamic environments, directly relevant to 3D foundation models.",
+          "summary_status": "generated",
+          "title": "Dynamic-Robust Photometric-Semantic Reconstruction for Open-Vocabulary 3D Scene Understanding",
+          "tldr": "SPAR jointly models geometry, appearance, semantics, and motion to produce stable 3D scene representations for novel-view synthesis and open-vocabulary segmentation in dynamic environments.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "We introduce ReconSplat, a feed-forward model for 3D scene reconstruction that aims to address the longstanding trade-off between plausible view generation for unobserved regions and geometric consistency, providing both geometrically aligned novel views and sharp depth estimates. Our approach builds on 3D Gaussian splatting (3DGS) as an intermediate differentiable scene representation and integrates it with a multi-view latent diffusion model (MV-LDM) trained to act simultaneously as a refiner and an inpainter for appearance and scene geometry. We enforce geometric consistency by guiding the diffusion process with variational 3D latent features for appearance and geometry, encoded by the feed-forward 3DGS representation and rasterized to 2D latent space. ReconSplat produces both photorealistic novel views and accurate depth maps on real-world benchmarks, RealEstate10K and DL3DV-10K, outperforming existing methods in challenging extrapolation setups. Notably, ReconSplat allows the extrapolation of unseen and challenging viewpoints jointly with coherent and precise scene geometry.",
+          "arxiv_id": "2608.28895",
+          "arxiv_url": "https://arxiv.org/abs/2608.28895",
+          "authors": [
+            "Giuseppe Stracquadanio, Kevin Raj, Julia Grabinski, Stefan Roth"
+          ],
+          "bullets": [
+            "Targets the trade-off between plausible extrapolated views and geometric consistency in unobserved regions.",
+            "Uses 3D Gaussian splatting as a differentiable intermediate scene representation.",
+            "Combines a multi-view latent diffusion model for appearance refinement and geometric inpainting.",
+            "Guides diffusion with variational 3D latent features rasterized into 2D latent space.",
+            "Shows photorealistic novel views and accurate depth on RealEstate10K and DL3DV-10K, outperforming prior methods in challenging extrapolation settings."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1: Qualitative comparison of ReconSplat, our feed-forward 3D scene reconstruction model, to previous work. Previous methods need to trade-off plausible generation in unobserved regions and geometric consistency. While [16, 84] produce plausible appearance for unobserved views, they suffer from texture inconsistencies and fail to capture the true scene geometry, resulting in noisy and fragmented depth maps. [86] produces clean depth estimates, but fails to synthesize appearance and geometry in unobserved regions. In contrast, our ReconSplat achieves both consistent appearance and accurate depth across views by learning a diffusion prior guided by multi-view-consistent variational latents for RGB and depth.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 282,
+              "image_path": "figures/2608.28895/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 722
+            },
+            {
+              "caption": "Fig. 2: Overview of ReconSplat. From sparse context views Ic, we regress a 3DGS representation G encoding variational appearance and geometry 3D latent fields. Given target viewpoints P⊙, we rasterize the variational distributions from 3D into 2D, allowing us to sample preliminary 2D latents Z̃⊙, i.e., Z̃⊙ ∼ R(G | P⊙). These are projected via ϕ and refined by a multi-view diffusion model into target latents Z⊙, encoding high-quality novel views and depth maps, conditioning on context views Ic.",
+              "figure_id": "figure-2-24",
+              "figure_number": "2",
+              "height": 229,
+              "image_path": "figures/2608.28895/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 716
+            },
+            {
+              "caption": "Fig. 5: Qualitative comparison on DL3DV-10K [49]. ReconSplat predicts highquality novel views and sharp depth estimates for unobserved viewpoints compared to prior work for the challenging wide-baseline setup on DL3DV-10K given only four context views.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 440,
+              "image_path": "figures/2608.28895/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 720
+            },
+            {
+              "caption": "Fig. 4: Qualitative comparison on RE10K [100] for the challenging extrapolation setting. ReconSplat predicts high-quality novel views and sharp depth estimates for unobserved viewpoints given only two context views, clearly surpassing prior work.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 275,
+              "image_path": "figures/2608.28895/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 7: Qualitative comparison with LVSM [107].",
+              "figure_id": "figure-7-20",
+              "figure_number": "7",
+              "height": 404,
+              "image_path": "figures/2608.28895/figure-005.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 687
+            },
+            {
+              "caption": "Fig. 3: U-Net block. We add two camera-conditioned branches: 3D self-attention for cross-view communication and optional 3D convolutions for smooth nearbyview transitions.",
+              "figure_id": "figure-3-21",
+              "figure_number": "3",
+              "height": 219,
+              "image_path": "figures/2608.28895/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 242
+            },
+            {
+              "caption": "Fig. 6: Dense point clouds. Given a set of N context views (cyan), ReconSplat predicts M novel views and their geometry (red), for both observed and unobserved regions, as demonstrated by unprojecting depth and appearance into dense point clouds for DL3DV-10K (left, center) and for RE10K (right).",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 194,
+              "image_path": "figures/2608.28895/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 11: Extensive qualitative comparisons on DL3DV-10K. Given N = 4 context views (top row), ReconSplat predicts high-quality novel views (odd rows, second column) and accurate depth predictions (even rows, second column) for unobserved viewpoints compared to prior work for the challenging wide-baseline setup of DL3DV10K. For each target viewpoint, we show the corresponding ground-truth image (first column), followed by predictions from ReconSplat and other generative baselines.",
+              "figure_id": "figure-11-14",
+              "figure_number": "11",
+              "height": 933,
+              "image_path": "figures/2608.28895/figure-008.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 658
+            },
+            {
+              "caption": "Fig. 12: Extensive qualitative comparisons on DL3DV-10K. Given N = 4 context views (top row), ReconSplat predicts high-quality novel views (odd rows, second column) and accurate depth predictions (even rows, second column) for unobserved viewpoints compared to prior work for the challenging wide-baseline setup of DL3DV10K. For each target viewpoint, we show the corresponding ground-truth image (first column), followed by predictions from ReconSplat and other generative baselines.",
+              "figure_id": "figure-12-16",
+              "figure_number": "12",
+              "height": 933,
+              "image_path": "figures/2608.28895/figure-009.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 658
+            },
+            {
+              "caption": "Fig. 13: Extensive qualitative comparisons on DL3DV-10K. Given N = 4 context views (top row), ReconSplat predicts high-quality novel views (odd rows, second column) and accurate depth predictions (even rows, second column) for unobserved viewpoints compared to prior work for the challenging wide-baseline setup of DL3DV10K. For each target viewpoint, we show the corresponding ground-truth image (first column), followed by predictions from ReconSplat and other generative baselines.",
+              "figure_id": "figure-13-22",
+              "figure_number": "13",
+              "height": 933,
+              "image_path": "figures/2608.28895/figure-010.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 658
+            },
+            {
+              "caption": "Fig. 14: Extensive qualitative comparisons on DL3DV-10K. Given N = 4 context views (top row), ReconSplat predicts high-quality novel views (odd rows, second column) and accurate depth predictions (even rows, second column) for unobserved viewpoints compared to prior work for the challenging wide-baseline setup of DL3DV10K. For each target viewpoint, we show the corresponding ground-truth image (first column), followed by predictions from ReconSplat and other generative baselines.",
+              "figure_id": "figure-14-4",
+              "figure_number": "14",
+              "height": 933,
+              "image_path": "figures/2608.28895/figure-011.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 658
+            },
+            {
+              "caption": "Fig. 15: Extensive qualitative comparisons on DL3DV-10K. Given N = 4 context views (top row), ReconSplat predicts high-quality novel views (odd rows, second column) and accurate depth predictions (even rows, second column) for unobserved viewpoints compared to prior work for the challenging wide-baseline setup of DL3DV10K. For each target viewpoint, we show the corresponding ground-truth image (first column), followed by predictions from ReconSplat and other generative baselines.",
+              "figure_id": "figure-15-7",
+              "figure_number": "15",
+              "height": 933,
+              "image_path": "figures/2608.28895/figure-012.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 658
+            },
+            {
+              "caption": "Fig. 10: Extensive qualitative comparisons on RE10K. Given N = 2 context views (leftmost column), our ReconSplat predicts extrapolated novel views and consistent depth (third and fourth columns) for unobserved viewpoints. We show the corresponding ground-truth image for each target viewpoint (second column). We compare our predictions with MVSplat360 [16] and latentSplat [84] (fifth to eighth columns).",
+              "figure_id": "figure-10-8",
+              "figure_number": "10",
+              "height": 813,
+              "image_path": "figures/2608.28895/figure-013.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 8: Influence of classifier-free guidance. Metrics over different choices of γCFG for DL3DV-10K [49] (n = 150) and RealEstate10K [100] (Extrapolation). Fixing γCFG = 3 yields improvements across all metrics and datasets.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 221,
+              "image_path": "figures/2608.28895/figure-014.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 711
+            },
+            {
+              "caption": "Fig. 9: Influence of sampling budget. Distortion and perceptual metrics given different sampling budgets for DL3DV-10K.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 168,
+              "image_path": "figures/2608.28895/figure-015.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 715
+            },
+            {
+              "caption": "Table 1: Novel-view synthesis on RE10K. ReconSplat outperforms both regression-based and generative-based prior methods, often substantially, in the challenging extrapolation setting (except in SSIM), demonstrating the generalizability of our approach. ReconSplat also outperforms generative approaches (bottom) in the interpolation setting across all metrics (except SSIM, where all gen. methods are close).",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 196,
+              "image_path": "figures/2608.28895/table-016.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 725
+            },
+            {
+              "caption": "Table 2: Novel-view synthesis on DL3DV-10K. ReconSplat outperforms both regression-based and generative-based methods on reconstruction, perceptual, and FID metrics, demonstrating its generalizability. Note: DepthSplat* is trained on the full DL3DV-10K dataset (∼5× more data), making direct comparison less meaningful.",
+              "figure_id": "table-2-19",
+              "figure_number": "2",
+              "height": 196,
+              "image_path": "figures/2608.28895/table-017.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 725
+            },
+            {
+              "caption": "Table 9: Stage 2 configuration. (a) Shared optimization, diffusion-training, and inference settings. (b) Checkpoint-specific configurations for RE10K and DL3DV. † The encoder’s patch shim requires both image dimensions to be multiples of 64 (patch size 16 × downscale 4). DL3DV inputs are therefore center-cropped from 256× 480 to 256× 448, with intrinsics rescaled accordingly. ‡ “Only T ” denotes fine-tuning only the 3D convolution blocks, with all remaining parameters frozen.",
+              "figure_id": "table-9-23",
+              "figure_number": "9",
+              "height": 740,
+              "image_path": "figures/2608.28895/table-018.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 725
+            },
+            {
+              "caption": "Table 8: Stage 1 training configuration. (a) Training setup for RE10K and DL3DV, including initialization, output resolution, number of context and target views, batch size, and optimization settings. (b) Loss terms and corresponding weights for the auxiliary Gaussian rendering Laux, appearance La, geometry Lg, and latentregularization objectives. † The encoder’s patch shim requires both image dimensions to be multiples of 64 (patch size 16 × downscale 4). DL3DV inputs are therefore centercropped from 256× 480 to 256× 448, with intrinsics rescaled accordingly. ‡ We set the KL weight to 10−6, following Stable Diffusion / LDM f = 8 autoencoder [60].",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 737,
+              "image_path": "figures/2608.28895/table-019.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 725
+            },
+            {
+              "caption": "Table 5: Increased number of context views. On DL3DV-10K, ReconSplat consistently outperforms generative baselines when given additional inputs (N↑ = 6, 8), despite being trained with NDL3DV = 4. OOM denotes “out of memory”.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 110,
+              "image_path": "figures/2608.28895/table-020.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 725
+            },
+            {
+              "caption": "Table 3: Novel-view depth synthesis on ScanNet++ [90], with DL3DV models. Our generative depth prior yields more accurate depth estimates than baselines.",
+              "figure_id": "table-3-18",
+              "figure_number": "3",
+              "height": 86,
+              "image_path": "figures/2608.28895/table-021.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 424
+            },
+            {
+              "caption": "Table 6: Ablations on RE10K. We ablate conditioning on 3DGS features (G), learning a generative depth prior (D), and multi-resolution noise (ϵmr), before finetuning (ft) on 2× upsampled inputs.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 112,
+              "image_path": "figures/2608.28895/table-022.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 350
+            },
+            {
+              "caption": "Table 7: Effect of 3D convolutions. With the same 100K-step fine-tuning budget on sequences S (NS = 12), training only T blocks matches or slightly outperforms full model fine-tuning, with far fewer updated parameters.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 76,
+              "image_path": "figures/2608.28895/table-023.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 343
+            },
+            {
+              "caption": "Table 4: Cross-dataset generalization. ReconSplat outperforms generative baselines when generalizing from RE10K to DL3DV-10K.",
+              "figure_id": "table-4-17",
+              "figure_number": "4",
+              "height": 86,
+              "image_path": "figures/2608.28895/table-024.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 324
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.28895/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.28895",
+          "relevance": 8,
+          "selection_reason": "Feed-forward 3D scene reconstruction with 3D Gaussian splatting and diffusion, fitting the 3D Vision topic and its 3D Foundation Models subtopic.",
+          "summary_status": "generated",
+          "title": "ReconSplat: Generalizable 3D Scene Reconstruction Beyond Observed Views",
+          "tldr": "ReconSplat uses feed-forward 3D Gaussian splatting and multi-view diffusion to generate realistic unseen views while preserving coherent geometry and accurate depth.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Deformable 3D Gaussian Splatting (D-3DGS) reconstructs dynamic scenes by deforming a canonical set of 3D Gaussians through a deformation field of frame time. Replacing its MLP with a stack of Closed-form Continuous-time (CfC) cells-a Liquid Neural Network that solves the Liquid Timeconstant ODE in closed form-gives the field continuous-time behaviour at feed-forward cost. That closed form, however, is only the deterministic limit of a noise-driven system, and drops the stochastic term usually credited for the robustness of liquid networks. We put it back: a small Gaussian perturbation is added to the time gate of every CfC cell, turning the deterministic field into a simple stochastic (SDE) one. The noise is used only during training, needs no solver, and reduces exactly to the CfC when switched off. On the synthetic D-NeRF scenes the stochastic field is on par with the deterministic CfC and beats the MLP baseline on most scenes; on the real-world NeRF-DS scenes the deterministic limit is already best and adding noise does not help. The study thus gives both a clean way to read the CfC field as an SDE and an honest account of when a plain noise term helps and when it does not.",
+          "arxiv_id": "2608.28702",
+          "arxiv_url": "https://arxiv.org/abs/2608.28702",
+          "authors": [
+            "Mingzhao Li, Arghya Pal"
+          ],
+          "bullets": [
+            "Problem: Deterministic CfC deformation fields omit the noise component associated with liquid-network robustness.",
+            "Method: Perturb each CfC cell’s time gate with small Gaussian noise during training, without requiring an SDE solver.",
+            "The stochastic model reduces exactly to the deterministic CfC when noise is disabled.",
+            "Results: On synthetic D-NeRF scenes, it matches deterministic CfC and generally outperforms the MLP baseline.",
+            "Scope: On real-world NeRF-DS scenes, deterministic CfC performs best and added noise provides no benefit."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Stochastic liquid cell. A shared backbone ϕ([u;h]) → z feeds four heads: g, hcand form two candidate states, while Waz,Wbz form the affine elapsed-time term. The time gate is the only path through which τ enters the cell; we add a Gaussian diffusion increment λε to its pre-activation (στ = σ(Waz τ +Wbz + λε) ), an Euler–Maruyama step of the SDE whose drift is the deterministic gate. Noise is active in training only.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 539,
+              "image_path": "figures/2608.28702/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1069
+            },
+            {
+              "caption": "Fig. 2. Qualitative comparison on D-NeRF. The three scenes with the largest PSNR gain over the MLP (Table I). Each row is one scene; within a row, left to right: ground truth, D-3DGS (MLP), Ours (SDE-LNN). Look at the fast-moving limb in each scene, where the MLP smears or ghosts the motion.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 1338,
+              "image_path": "figures/2608.28702/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 896
+            },
+            {
+              "caption": "TABLE I PER-SCENE COMPARISON ON THE EIGHT D-NERF SYNTHETIC SCENES. PSNR (↑), SSIM (↑) AND LPIPS (↓) AT 800×800 TEST IMAGES. D-NERF AND TINEUVOX NUMBERS ARE QUOTED FROM [2]; D-3DGS (MLP) AND OURS (SDE-LNN, λ=0.05) ARE RETRAINED UNDER AN IDENTICAL PROTOCOL",
+              "figure_id": "table-I-2",
+              "figure_number": "I",
+              "height": 321,
+              "image_path": "figures/2608.28702/table-003.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 941
+            },
+            {
+              "caption": "TABLE II PER-SCENE COMPARISON ON THE SEVEN NERF-DS REAL-WORLD SCENES. NERF-DS AND TINEUVOX NUMBERS ARE QUOTED FROM [2]; D-3DGS (MLP) AND OURS (SDE-LNN, λ=0.05) ARE RETRAINED UNDER AN IDENTICAL PROTOCOL. COLOURING AS IN TABLE I.",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 272,
+              "image_path": "figures/2608.28702/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 941
+            },
+            {
+              "caption": "TABLE IV NOISE-LEVEL STUDY: DATASET-MEAN METRICS AS A FUNCTION OF λ.",
+              "figure_id": "table-IV-3",
+              "figure_number": "IV",
+              "height": 186,
+              "image_path": "figures/2608.28702/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 417
+            },
+            {
+              "caption": "TABLE III DEFORMATION-FIELD PARAMETER COUNTS, MEASURED WITH PTFLOPS [17] ON THE EXACT CONFIGURATIONS USED. THE DETERMINISTIC CFC AND SDE-LNN ARE ARCHITECTURALLY IDENTICAL—THE TRAINING-TIME NOISE ADDS NO PARAMETERS AND IS DISABLED AT INFERENCE—SO THEY SHARE A ROW. THE MLP COUNT IS THE D-3DGS DEFORMATION FIELD [2].",
+              "figure_id": "table-III-1",
+              "figure_number": "III",
+              "height": 102,
+              "image_path": "figures/2608.28702/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 494
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.28702/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.28702",
+          "relevance": 8,
+          "selection_reason": "Extends Dynamic 3D Gaussian Splatting with Stochastic Liquid Deformation Fields (SDEs). This provides a technically meaningful generalization for modeling dynamic 3D scenes, relevant to 3D vision and video world models.",
+          "summary_status": "generated",
+          "title": "Stochastic Liquid Deformation Fields: An SDE Generalisation of Closed-Form Continuous-Time Cells for Dynamic 3D Gaussian Splatting",
+          "tldr": "Adds training-time Gaussian noise to CfC-based deformation fields, yielding an SDE formulation for dynamic 3D Gaussian Splatting that helps on synthetic scenes but not real-world ones.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent generative approaches to geometry estimation adapt pretrained image diffusion models and treat the task as image-conditioned generation. Leveraging off-the-shelf image diffusion models, they either (i) train task-specific geometry models (for depth and surface normal estimation) independently, losing the opportunity of exploring the intrinsic correlation of these geometric targets, or (ii) jointly fine-tune modified image diffusion backbones (e.g., altered self-attention), which typically demands substantial labeled data. To overcome these limitations in a principled fashion, we repurpose pretrained video generative models as a unified and data-efficient framework for geometry estimation, formulated innovatively as a next-frames prediction task. Our method, GeoNeXt, inherits naturally structured knowledge and richer priors from the video model, while further adapting them for joint modeling of images and geometry targets (image geometry), enabling more data efficient and effective learning of geometry. Extensive experiments validate our method for zero-shot monocular depth and surface normal estimation across diverse datasets, outperforming both previous task-specific and unified generative competitors while using substantially less training data. Notably, our method rivals discriminative state-of-the-art approaches trained on over 100x more data and even standouts on several benchmarks.",
+          "arxiv_id": "2608.28549",
+          "arxiv_url": "https://arxiv.org/abs/2608.28549",
+          "authors": [
+            "Haosen Yang, Jifei Song, Zhensong Zhang, Xiatian Zhu, Jiankang Deng"
+          ],
+          "bullets": [
+            "Existing methods either model depth and normals separately or require substantial labeled data to jointly adapt image diffusion models.",
+            "GeoNeXt formulates geometry estimation as next-frame prediction over images and their geometric targets.",
+            "The approach jointly models image geometry while leveraging structured priors from pretrained video models.",
+            "Experiments show strong zero-shot depth and surface-normal performance across diverse datasets with substantially less training data.",
+            "It rivals discriminative state-of-the-art methods trained on over 100× more data and excels on several benchmarks."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of the GeoNeXt fine-tuning protocol. (a) We start from the pretrained Stable Video Diffusion model and encode the RGB image x, depth d, and surface normal n into the latent space using the frozen Stable Diffusion VAE. (b) Noise is sampled and added to the latent z. The image latent is replicated across the geometry slots (depth and normal), and further conditioned by concatenating the geometry latents. (c) We fine-tune only the GeoNeXt U-Net. (d) The model is optimized with the standard diffusion objective over image, depth, and normal latents to ensure fine-grained alignment and consistency between image and geometry.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 285,
+              "image_path": "figures/2608.28549/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 715
+            },
+            {
+              "caption": "Table 3: Ablation on the generative formulation, model architecture, and joint estimation. Upper block: Models trained for unified geometry estimation; Lower block: Mfiodels trained for depth or surface normal estimation individually.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 257,
+              "image_path": "figures/2608.28549/table-002.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 725
+            },
+            {
+              "caption": "Table 1: Quantitative comparison on zero-shot affine-invariant depth estimation. We compare GeoNeXt with representative discriminative and generative methods across five datasets. The upper block lists large-scale discriminative approaches, the middle block reports generative methods trained for depth estimation only, and the lower block presents unified geometry estimation methods, which serve as our main comparison focus. * indicates results reproduced by us. Bold marks the best performance.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 396,
+              "image_path": "figures/2608.28549/table-003.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 721
+            },
+            {
+              "caption": "Table 5: Cost-effectiveness analysis. Upper: models trained on geometric targets; we report combined depth and normal inference time and parameter count. Lower: unified geometry estimation variants. NFEs: number of function evaluations required to obtain a prediction, defined as diffusion steps × ensemble size for diffusion models.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 306,
+              "image_path": "figures/2608.28549/table-004.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 668
+            },
+            {
+              "caption": "Table 4: Ablation on reconstruction order. We compare two configurations that assign depth and normal to different frames. The results are nearly identical, demonstrating the robustness of the model to reconstruction order.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 128,
+              "image_path": "figures/2608.28549/table-005.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 636
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.28549/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.28549",
+          "relevance": 8,
+          "selection_reason": "Repurposes video generative models for unified depth and surface-normal estimation, directly relevant to 3D geometry learning and spatial intelligence.",
+          "summary_status": "generated",
+          "title": "Video Generative Models as Geometry Learner",
+          "tldr": "GeoNeXt repurposes pretrained video generative models for unified, data-efficient monocular depth and surface-normal estimation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Dynamic 3D Gaussian Splatting (3DGS) achieves photorealistic reconstruction of time-varying scenes, and recent physics-aware extensions improve extrapolation by explicitly predicting velocity fields. However, these extensions merely fit vector fields to visual deformations without satisfying Lagrangian mechanics, leading to three major issues: (i) physically inconsistent trajectories, (ii) lack of time-reversibility, and (iii) geometric collapse during long-term extrapolation. In this paper, we propose LagrangeGS, which formulates dynamic 3DGS as a non-conservative Lagrangian system. While this Lagrangian formulation fundamentally solves (i), a direct application of general LNNs to dynamic 3DGS requires a large velocity-Hessian inversion for millions of Gaussian particles. To overcome this computational bottleneck, we approximate the velocity-Hessian as an identity matrix, decoupling particle dynamics for computational tractability. For (ii), we restrict the non-conservative forces to be explicitly time independent, enabling consistent backward integration. Finally, to address (iii), we introduce local rigid alignment that regularizes particle trajectories. Extensive evaluations on dynamic scene benchmarks demonstrate that LagrangeGS enables stable long-term extrapolation, consistent time reversal, and counterfactual physics-based editing without retraining.",
+          "arxiv_id": "2608.22773",
+          "arxiv_url": "https://arxiv.org/abs/2608.22773",
+          "authors": [
+            "Shogo Sato",
+            "Takuhiro Kaneko",
+            "Shoichiro Takeda",
+            "Tomoyasu Shimada",
+            "Riku Inoue",
+            "Kazuhiko Murasaki",
+            "Ryuichi Tanida"
+          ],
+          "bullets": [
+            "Addresses inconsistent trajectories, poor time reversibility, and geometric collapse in physics-aware dynamic 3DGS.",
+            "Approximates the velocity-Hessian as the identity to avoid costly inversion across millions of Gaussian particles.",
+            "Constrains non-conservative forces to be explicitly time independent, enabling consistent backward integration.",
+            "Uses local rigid alignment to regularize particle trajectories and preserve geometry during extrapolation.",
+            "Evaluations show stable long-term extrapolation, time reversal, and counterfactual physics-based editing without retraining."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Table 1: Short-term extrapolation performance on dynamic scene benchmarks. LagrangeGS improves the extrapolation performance of DefGS. Conversely, when applied to FreeGave, photometric metrics exhibit a marginal drop. This is a plausible consequence of strict physical regularization: by satisfying Lagrangian mechanics across all particles, LagrangeGS deliberately prunes non-physical visual artifacts such as shadows.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 313,
+              "image_path": "figures/2608.22773/table-001.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 646
+            },
+            {
+              "caption": "Table 3: Ablation study. The Stage 2 (TD-LNN) and Stage 3 (Gaussian parameter) finetuning contribute to visual scores. While LRA is essential for preventing geometric collapse, its absence marginally inflates PSNR in the Indoor dataset; this merely reflects unconstrained particles overfitting to non-rigid visual phenomena like moving shadows. Furthermore, because the Indoor scenes exhibit strictly conservative motions, the non-conservative force Q is redundant, meaning its removal avoids over-parameterization and slightly benefits PSNR.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 190,
+              "image_path": "figures/2608.22773/table-002.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 642
+            }
+          ],
+          "first_seen_at": "2026-08-31T21:00:00-04:00",
+          "hero_figure": "figures/2608.22773/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2608.22773",
+          "relevance": 8,
+          "selection_reason": "Introduces LagrangeGS, a physics-aware foundation model for dynamic 3D Gaussian Splatting that enforces Lagrangian mechanics for stable long-term extrapolation.",
+          "summary_status": "generated",
+          "title": "LagrangeGS: Non-Conservative Lagrangian System on Dynamic 3D Gaussian Splatting",
+          "tldr": "LagrangeGS models dynamic 3D Gaussian Splatting with a tractable non-conservative Lagrangian system for more physically consistent, reversible, and stable long-term scene prediction.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-30",
       "paper_count": 4,
       "papers": [
@@ -4158,5 +5669,5 @@
   "schema_version": 1,
   "subtopic_id": "3d-foundation-models",
   "topic_id": "3d-vision",
-  "total_paper_count": 26
+  "total_paper_count": 36
 }

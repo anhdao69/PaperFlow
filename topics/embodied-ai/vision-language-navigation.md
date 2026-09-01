@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**13 papers total**
+**15 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-31 | [LightNav-0: Eliciting VLM Spatial Intelligence for Generalist Embodied Navigation](https://arxiv.org/abs/2608.30935) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | LightNav-0 turns a compact pretrained VLM into a unified, transferable controller for diverse embodied-navigation tasks and robot embodiments. | 10 | 9 |
+| 2026-08-31 | [CGFM-Nav: Cognitive Graph-Field Memory for Semantic-Guided Lifelong Multimodal Embodied Navigation](https://arxiv.org/abs/2608.29114) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | CGFM-Nav combines persistent multimodal scene-graph memory with semantic-guided frontier exploration to improve lifelong vision-and-language navigation. | 9 | 8 |
 | 2026-08-30 | [STEGNav: Spatio-Temporal Event Graph Reasoning for Multimodal Lifelong Object Navigation](https://arxiv.org/abs/2608.28279) | Embodied AI: Vision-Language Navigation | STEGNav improves lifelong multimodal object navigation by combining spatially grounded event graphs with trajectory-aware temporal memory for target selection and exploration. | 10 | 9 |
 | 2026-08-30 | [Spatial-Semantic Reasoning using Large Language Models for Efficient UAV Search Operations](https://arxiv.org/abs/2608.28270) | Embodied AI: Vision-Language Navigation, Robot Navigation | An LLM-guided UAV navigation framework uses spatial-semantic reasoning to search for target objects more efficiently in real time. | 8 | 7 |
 | 2026-08-30 | [CAVE-NAV: VLM-Based Autonomous 3D Navigation in Underwater Cave Environments](https://arxiv.org/abs/2608.27793) | Embodied AI: Vision-Language Navigation, Robot Navigation | CAVE-NAV uses VLM-based multimodal reasoning to enable collision-free autonomous 3D navigation through visually degraded underwater caves. | 7 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**5 papers total**
+**6 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-08-31 | [LayerRecall: A State-Conditioned Memory Router for Long-Horizon Consistency in Video Generation](https://arxiv.org/abs/2608.28460) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | LayerRecall improves long-video consistency by routing relevant historical memory to the layers best suited to use it, while preserving local continuity. | 8 | 8 |
 | 2026-08-27 | [EditStream: A Unified Autoregressive Framework for Interactive Video Generation and Editing](https://arxiv.org/abs/2608.21424) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | EditStream unifies diverse video generation and editing tasks in a fast, few-step autoregressive DiT framework designed for interactive creative workflows. | 8 | 7 |
 | 2026-08-26 | [Tether the Subject, Release the Scene: Query-Aware Memory Routing for Long-Horizon Autoregressive Video Generation](https://arxiv.org/abs/2608.26902) | Video Generation and Understanding: Autoregressive Video Models, Video Understanding | TetherMem improves long-horizon autoregressive video generation by preserving subject identity while allowing scenes, backgrounds, and viewpoints to progress. | 9 | 9 |
 | 2026-08-26 | [Ring Forcing: Towards Precise Long-Term Memory for Autoregressive Video Diffusion](https://arxiv.org/abs/2608.26794) | World Models: Video World Models; Video Generation and Understanding: Autoregressive Video Models | Ring Forcing improves minutes-long autoregressive video generation by combining precise object permanence with expanded long-term memory. | 9 | 8 |
