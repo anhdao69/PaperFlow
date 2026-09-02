@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**47 papers total**
+**53 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [H3-World: Turning Language Understanding into World Control](https://arxiv.org/abs/2609.01560) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion | H3-World efficiently converts a pretrained 33B video generator’s language-based controls into precise, temporally grounded interactive world control. | 9 | 8 |
+| 2026-09-01 | [NashDreamer: Model-Based Reinforcement Learning for Zero-Sum Imperfect-Information Games](https://arxiv.org/abs/2609.01549) | World Models: Interactive World Models | NashDreamer is a centralized model-based reinforcement learning framework that improves early sample efficiency in two-player zero-sum imperfect-information games while exposing posterior collapse as a limitation in stochastic settings. | 6 | 7 |
+| 2026-09-01 | [Risk-Aware Decision-Making for Autonomous Overtaking: A World Model-Based Mixture-of-Experts Framework](https://arxiv.org/abs/2609.00385) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Interactive World Models | WM-RMoE uses learned world-model rollouts and dynamically selected experts to produce safer, more foresighted autonomous overtaking decisions. | 9 | 8 |
+| 2026-09-01 | [IMPACT: Attention Is the Interaction Map for Scalable Interaction-Aware World Model Training](https://arxiv.org/abs/2609.00161) | World Models: Video World Models, Interactive World Models | IMPACT improves interaction-aware world model training by reallocating denoising supervision toward dynamic object regions using attention-derived interaction maps. | 8 | 8 |
+| 2026-09-01 | [GUI-CC: Benchmarking Contextual Consistency of GUI World Models as Agent Environments](https://arxiv.org/abs/2609.00048) | World Models: Interactive World Models | GUI-CC benchmarks whether GUI world models remain contextually consistent and usable across multi-step agent interactions, not just whether they predict plausible next screens. | 7 | 6 |
+| 2026-09-01 | [HyperWorld: Hypergraph-Structured State Serialization Improves Learned Textual World Models](https://arxiv.org/abs/2609.00002) | World Models: Interactive World Models | Hyperedge-based state serialization improves textual world-model planning, especially for smaller models and under distribution shift. | 9 | 7 |
 | 2026-08-31 | [WebWorld: The Browser as a World Model for Self-Improving Web Code](https://arxiv.org/abs/2608.30530) | World Models: Interactive World Models | WebWorld uses the browser as an executable verifier and world model to make VLM-driven web-code self-improvement reliable. | 8 | 8 |
 | 2026-08-31 | [Motus2: A Self-Evolving General World Model for Dexterous Manipulation](https://arxiv.org/abs/2608.30237) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | Motus2 is a unified, self-improving world model that combines action generation, visual simulation, and outcome evaluation for dexterous manipulation. | 9 | 8 |
 | 2026-08-31 | [The Intervention Gap in Latent World Models](https://arxiv.org/abs/2608.29998) | World Models: Interactive World Models | Learned world models can predict rewards well yet fail to reproduce how real interventions change task variables, so intervention fidelity requires direct, capture-first auditing. | 8 | 8 |

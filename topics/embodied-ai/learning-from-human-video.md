@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**17 papers total**
+**19 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [Seeing the World and the Self from Egocentric Video](https://arxiv.org/abs/2609.01276) | Embodied AI: Learning from Human Videos; 3D Vision | RESELF jointly reconstructs the surrounding 3D scene and the wearer’s full-body motion from egocentric video in a shared metric frame. | 8 | 8 |
+| 2026-09-01 | [FoldingAgent: Inferring Parametric Origami Procedures from Demonstration Videos](https://arxiv.org/abs/2609.00377) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | FoldingAgent converts origami demonstration videos into executable, physically plausible parametric folding programs using a tool-augmented vision-language agent. | 8 | 7 |
 | 2026-08-31 | [See the Change, Keep the Flow: Unsupervised Action Segmentation via Spectral-Temporal Representation Learning](https://arxiv.org/abs/2608.29611) | Embodied AI: Learning from Human Videos | SpecT-OT improves unsupervised action segmentation by learning representations that capture both sharp action changes and smooth temporal progression for more reliable optimal-transport pseudo-labels. | 7 | 8 |
 | 2026-08-31 | [$\\mathcal{N}_0$-Foundation: Towards the Age of Tactile Intelligence](https://arxiv.org/abs/2608.29601) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | $mathcal{N}_0$-Foundation builds an open infrastructure, large-scale dataset, transferable representation, and benchmark to advance tactile-enabled robotic manipulation. | 8 | 7 |
 | 2026-08-31 | [AnyWorld: Factorized Egocentric World Models for Cross-Embodiment Generalization](https://arxiv.org/abs/2608.29242) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Video World Models, Interactive World Models | AnyWorld factorizes human interactions into action, camera, and embodiment to generate diverse robot-native experiences that improve cross-embodiment manipulation learning. | 9 | 9 |

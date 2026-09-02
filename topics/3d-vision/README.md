@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**115 papers total**
+**119 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [Revisiting Cross-View Completion: Self-Supervised Pre-Training via Reconstruction Error Comparison](https://arxiv.org/abs/2609.01530) | 3D Vision: 3D Foundation Models | Gekko improves cross-view self-supervised pre-training by using reconstruction-error differences to learn co-visibility and stronger 3D vision features without 3D annotations. | 9 | 8 |
+| 2026-09-01 | [Seeing the World and the Self from Egocentric Video](https://arxiv.org/abs/2609.01276) | Embodied AI: Learning from Human Videos; 3D Vision | RESELF jointly reconstructs the surrounding 3D scene and the wearer’s full-body motion from egocentric video in a shared metric frame. | 8 | 8 |
+| 2026-09-01 | [Monocular Depth Estimation from a Single Image: Progress and Opportunities](https://arxiv.org/abs/2609.01172) | 3D Vision: 3D Foundation Models | This survey reviews monocular depth estimation from early learning-based techniques to foundation-model approaches, covering formulations, data, applications, benchmarks, and open challenges. | 7 | 5 |
+| 2026-09-01 | [VOIM: Training-Free Open-Vocabulary 3D Instance Mapping for RGB-D and Monocular SLAM](https://arxiv.org/abs/2609.00775) | 3D Vision | VOIM builds open-vocabulary 3D instance maps without training by accumulating voxel-level evidence before committing to object identities, improving online RGB-D mapping and extending unchanged to monocular RGB. | 7 | 7 |
 | 2026-08-31 | [BRF-GS: Hyperspectral Bidirectional Reflectance Factor Modeling and Image Generation Based on 3D Gaussian Splatting](https://arxiv.org/abs/2608.31159) | 3D Vision | BRF-GS enables efficient multi-angle hyperspectral reflectance modeling and image generation by extending 3D Gaussian Splatting with BRDF-aware representations and staged training. | 5 | 6 |
 | 2026-08-31 | [BLARM: Animating 3D Objects from Video via Blending Latent Rigid Motion Primitives](https://arxiv.org/abs/2608.31113) | 3D Vision | BLARM animates a static 3D mesh from monocular video by blending learned rigid motion primitives for compact, temporally coherent deformation. | 7 | 8 |
 | 2026-08-31 | [DARP: A Calibrated Dual-Arm RGB-D-IR Dataset for Multi-View Robotic Perception](https://arxiv.org/abs/2608.31002) | Embodied AI: Robot Learning and Manipulation; 3D Vision | DARP is a calibrated dual-arm RGB-D-IR dataset designed to support multi-view robotic perception and object reconstruction from complementary viewpoints. | 5 | 5 |

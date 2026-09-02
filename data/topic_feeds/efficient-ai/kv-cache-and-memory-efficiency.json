@@ -1,6 +1,1667 @@
 {
   "days": [
     {
+      "date": "2026-09-01",
+      "paper_count": 10,
+      "papers": [
+        {
+          "abstract": "Post-training quantization (PTQ) is widely used to reduce the cost of serving large language models (LLMs), but its accuracy cost is uneven and is often tuned per model. We study where quantization damage occurs and how to allocate a small additional precision budget. Using causal mixed-precision intervention as ground truth (raise each layer to 8-bit in turn and measure the accuracy it recovers) across 9 open-weight models in 4 architecture families, we test 3 intuitive hypotheses: that quantization damage lives in task circuits, where the model computes, or in weight statistics. None of them predicts which layers benefit from restored precision. Recovery is instead diffuse: for 8 of 9 models, recovering 75% of the gap takes roughly half the layers; the lone exception, Qwen3-8B, is sharply concentrated. At a matched precision budget, spending it globally on finer quantization granularity beats locally repairing the most recoverable layers for all 8 group-128-compatible models (all but OpenLLaMA, whose width rules out group-128), by 21-52 points, including the concentrated Qwen3-8B. We report 2 secondary findings: the residual is budget-limited (8-bit is near-lossless in our evaluation across RTN, GPTQ, and AWQ), and the location of peak recovery correlates with architecture within a family, though not across families. Within this budget setting, global granularity is a better default than selectively protecting critical layers. More broadly, cheap signals that correlate with quantization damage do not necessarily identify where restoring precision improves accuracy; this must be tested with causal intervention.",
+          "arxiv_id": "2609.01587",
+          "arxiv_url": "https://arxiv.org/abs/2609.01587",
+          "authors": [
+            "Jundong Hu, Shekar Ramachandran"
+          ],
+          "bullets": [
+            "Causal interventions across 9 open-weight models and 4 architecture families show that intuitive damage signals—task circuits, computation location, and weight statistics—do not reliably identify recoverable layers.",
+            "For 8 of 9 models, recovering 75% of the accuracy gap requires restoring precision in roughly half the layers; Qwen3-8B is the main concentrated exception.",
+            "At matched precision budgets, globally finer quantization granularity outperforms local layer repair by 21–52 points for all 8 group-128-compatible models.",
+            "Eight-bit quantization is near-lossless in the evaluation across RTN, GPTQ, and AWQ, suggesting the remaining error is primarily budget-limited.",
+            "Recovery patterns correlate with architecture within model families but not across families, favoring causal testing over cheap proxy signals."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Cumulative CORE as the top-k most-recoverable layers are restored to 8-bit (rest at 4-bit), against each model’s 4-bit (floor) and 8-bit (ceiling) bands. Layers are ranked by their own protect-one recovery, an oracle ordering, not a deployable selector. Curves are absolute CORE on the finite 200-sample subset, so cross-model levels track fp16 baselines (Qwen3-8B’s level sits marginally below Qwen3-1.7B’s here, a small-sample ordering, not a model defect); all claims are within-model recovery. Color=family, marker/linestyle=size.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 284,
+              "image_path": "figures/2609.01587/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 706
+            },
+            {
+              "caption": "Figure 4: Per-model CORE across the ladder (per-row RTN → g128 RTN → GPTQ → AWQ → 8-bit RTN → fp16). Qwen3-8B’s GPTQ spike above fp16 is the noted 200-sample outlier.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 412,
+              "image_path": "figures/2609.01587/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 748
+            },
+            {
+              "caption": "Figure 2: Circuit drift vs. damage. (a) Pooled scatter of drift against damage across 198 (task, model) pairs, with the raw regression line. (b) Partial correlation between drift and damage as controls are added left-to-right (TOST ±0.2 equivalence band shaded), ending with model and task category held jointly constant.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 157,
+              "image_path": "figures/2609.01587/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 834
+            },
+            {
+              "caption": "Figure 1: Three hypotheses, one causal test. Three hypotheses for where quantization damage lives (H1–H3, left) are each refuted by mixed-precision intervention (center, ×); the resulting pattern is shown at right (✓).",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 160,
+              "image_path": "figures/2609.01587/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 602
+            },
+            {
+              "caption": "Table 6: Per-model 4-bit ladder. gran∆ = per-row→g128 RTN (granularity); the last column is the GPTQ / AWQ gain over g128-RTN (method). ⋄Qwen3-8B GPTQ exceeds fp16 (200-sample noise + regularization); this model is excluded from both method means for consistency. †open_llama: dim 8640 is not a multiple of 128, so g128 is not run; per-row RTN and fp16 only.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 255,
+              "image_path": "figures/2609.01587/table-005.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 826
+            },
+            {
+              "caption": "Table 3: Partial Pearson r between directional drift and damage under increasing controls (198 task–model pairs); each row adds the controls named at left.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 561,
+              "image_path": "figures/2609.01587/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 829
+            },
+            {
+              "caption": "Table 7: Mean CORE gains over the 8 group-128-compatible models, per lever, at the 4-bit and 8-bit tiers. Both the GPTQ and AWQ means exclude Qwen3-8B (its GPTQ value exceeds fp16, a 200-sample outlier; dropped from both method columns for consistency); including it, GPTQ is +0.032 and AWQ +0.016.",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 141,
+              "image_path": "figures/2609.01587/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 498
+            },
+            {
+              "caption": "Table 1: Global (g128) vs. matched local 8-bit repair at +0.146 eff. bits/weight (8 group-128compatible models; OpenLLaMA’s dim 8640 ∤ 128, so g128 is undefined). Recovery = % of the per-row RTN4→RTN8 CORE gap; “top-1 conc.” = single-best-layer recovery.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 230,
+              "image_path": "figures/2609.01587/table-008.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 572
+            },
+            {
+              "caption": "Table 8: Full 8-bit ladder (CORE @200), for the 8 models with an 8-bit run. Last column: fp16 − per-row RTN8. †open_llama was not run at 8-bit (per-row 4-bit and fp16 only; Table 6).",
+              "figure_id": "table-8-1",
+              "figure_number": "8",
+              "height": 232,
+              "image_path": "figures/2609.01587/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 764
+            },
+            {
+              "caption": "Table 5: Best single-layer (protect-one) and best tested-pair (E1) recovery, % of the RTN4→RTN8 gap. Residual = 100 − max(best single, best pair). ∗Qwen3-8B’s tested pairs missed its sweep peak L4; we report the protect-one L4 recovery (3-seed mean 39.7±3%; per seed 38.1/44.2/36.7%). †open_llama gap 0.043 (near-noise).",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 256,
+              "image_path": "figures/2609.01587/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 594
+            },
+            {
+              "caption": "Table 2: The 5 data-driven task groups (recurring across the 9 models; coqa co-clusters in 7/9, with 2 further variable tasks discussed in the text).",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 162,
+              "image_path": "figures/2609.01587/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 841
+            },
+            {
+              "caption": "Table 4: E1 fragile-pair recovery vs. the true protect-one sweep peak; “found?” marks whether the weight-std pair coincides with the sweep peak.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 187,
+              "image_path": "figures/2609.01587/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 786
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.01587/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.01587",
+          "relevance": 7,
+          "selection_reason": "Analyzes quantization damage and precision allocation for memory-efficient LLM inference.",
+          "summary_status": "generated",
+          "title": "The Structure of Quantization Damage in LLMs: Why the Next Bit Should Be Spent Globally",
+          "tldr": "Quantization damage in LLMs is usually spread across many layers, so globally finer quantization is generally more effective than selectively protecting supposedly critical layers.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "On-device mobile Large Language Model (LLM) inference is gaining significant attention. However, mobile devices operate in highly dynamic multitasking environments where users frequently switch between applications. This creates memory pressure, forcing LLM memory (model weights and KV cache) to be evicted by the operating system. When a new inference request arrives, the inference system must restore the evicted memory through slow storage reads or recompute the entire KV cache, severely degrading responsiveness. To address this, we present mzCache, an on-device LLM inference system with specialized memory management for multitasking environments. Under unpredictable memory pressure, mzCache elastically evicts LLM memory and leverages the unified memory of mobile SoCs to enable zero-wait inference on the GPU with concurrent CPU-side restoration. mzCache realizes this through restoration-oriented memory management: LLM memory is partitioned into fine-grained shared buffers to enable partial eviction and restoration with concurrent cross-processor access, while hybrid swap and backward-out eviction policies ensure low-latency restoration from any eviction state. Implemented on llama.cpp and deployed as an Android application, mzCache achieves 2.1-5.5$\\times$ reduction in Time-to-First-Token compared to storage-backed partial offload and demonstrates its effectiveness in real multitasking scenarios.",
+          "arxiv_id": "2609.01338",
+          "arxiv_url": "https://arxiv.org/abs/2609.01338",
+          "authors": [
+            "Hongseung Yu, Minsung Kim, Jongseok Park, Kyunghan Lee"
+          ],
+          "bullets": [
+            "Addresses memory pressure that evicts model weights and KV cache, causing slow storage reads or KV-cache recomputation.",
+            "Uses unified mobile SoC memory for concurrent GPU inference and CPU-side restoration.",
+            "Partitions LLM memory into fine-grained shared buffers, enabling partial eviction and restoration with cross-processor access.",
+            "Combines hybrid swap and backward-out eviction policies to reduce restoration latency across eviction states.",
+            "Implemented in llama.cpp as an Android application, reducing Time-to-First-Token by 2.1–5.5× versus storage-backed partial offload."
+          ],
+          "categories": [
+            "cs.OS",
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: System Overview of mzCache",
+              "figure_id": "figure-5-18",
+              "figure_number": "5",
+              "height": 322,
+              "image_path": "figures/2609.01338/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 488
+            },
+            {
+              "caption": "Figure 6: Overview of GPU-CPU cooperation on the mobile SoC’s unified memory during mzCache restoration.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 181,
+              "image_path": "figures/2609.01338/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 498
+            },
+            {
+              "caption": "Figure 9: TTFT across different remaining-memory levels. The red dashed line marks full eviction under OS Paging, which still retains non-negligible memory due to poor KV cache compression. mzCache consistently achieves lower TTFT than baselines across all conditions.",
+              "figure_id": "figure-9-9",
+              "figure_number": "9",
+              "height": 484,
+              "image_path": "figures/2609.01338/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1038
+            },
+            {
+              "caption": "Figure 2: System and LLM process memory traces under multitasking, collected on a Galaxy S25+ using Perfetto [4]. As memory pressure increases, the LowMemory Killer terminates the LLM process.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 139,
+              "image_path": "figures/2609.01338/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 486
+            },
+            {
+              "caption": "Figure 7: Four eviction stages in mzCache. (a) KVonly: evict KV chunks to both swap spaces. (b) KVandW: drop weights while evicting KV. (c) Wonly: drop only weights. (d) CompKV: compressed KV may be evicted to storage under further pressure.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 284,
+              "image_path": "figures/2609.01338/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 493
+            },
+            {
+              "caption": "Figure 1:Multitasking onmobile devices: the user interacts with an on-device LLM service, switches to other apps, and later returns. Memory pressure from concurrent apps evicts LLM memory, increasing the response time from 0.8s to 16s.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 260,
+              "image_path": "figures/2609.01338/figure-006.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 506
+            },
+            {
+              "caption": "Figure 8: Backward-out eviction and restoration overlap in mzCache. (a) Eviction proceeds from the last layer backward. (b) Timeline of GPU prefill overlapping with CPU restoration of evicted layers.",
+              "figure_id": "figure-8-12",
+              "figure_number": "8",
+              "height": 206,
+              "image_path": "figures/2609.01338/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 489
+            },
+            {
+              "caption": "Figure 3: TTFT under full eviction (Galaxy S25+, Qwen3-0.6B, 8 input tokens), normalized to the allin-memory case. mzCache keeps TTFT close to the in-memory case. Note that zRAM still leaves memory pressure largely unrelieved (Table 2).",
+              "figure_id": "figure-3-14",
+              "figure_number": "3",
+              "height": 193,
+              "image_path": "figures/2609.01338/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 486
+            },
+            {
+              "caption": "Figure 11: TTFT with different (a) overlapping strategies and (b) eviction policies. mz_NO: no overlap, mz_AR: Allocation-Reload overlap, mz_RP: ReloadPrefill overlap, mzCache: Allocation-Reload-Prefill overlap.",
+              "figure_id": "figure-11-5",
+              "figure_number": "11",
+              "height": 213,
+              "image_path": "figures/2609.01338/figure-009.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 492
+            },
+            {
+              "caption": "Figure 12: Sequential vs. parallel restoration time at different remaining memory levels. Sequential bars show stacked in-memory and storage restoration times.",
+              "figure_id": "figure-12-3",
+              "figure_number": "12",
+              "height": 190,
+              "image_path": "figures/2609.01338/figure-010.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 490
+            },
+            {
+              "caption": "Figure 10: Latency breakdown for (a) allocation, (b) reload, and (c) prefill. Partial Offload vs. mzCache without overlap (mz_NO).",
+              "figure_id": "figure-10-6",
+              "figure_number": "10",
+              "height": 185,
+              "image_path": "figures/2609.01338/figure-011.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 484
+            },
+            {
+              "caption": "Figure 13: Power consumption during restoration and prefill. The shaded area under each curve indicates total energy consumption. Due to the reduced TTFT, mzCache consumes significantly less energy than Partial Offload despite its higher peak power.",
+              "figure_id": "figure-13-4",
+              "figure_number": "13",
+              "height": 183,
+              "image_path": "figures/2609.01338/figure-012.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 486
+            },
+            {
+              "caption": "Figure 14: Comparison of 8-bit quantization and CacheGen: space savings, TTFT at different remaining memory levels, and F1 score relative to FP16.",
+              "figure_id": "figure-14-16",
+              "figure_number": "14",
+              "height": 175,
+              "image_path": "figures/2609.01338/figure-013.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 490
+            },
+            {
+              "caption": "Figure 15: Total memory trace of an LLM application under real-world multitasking, comparing OS Paging (zRAM) with mzCache evicting approximately 15 pp and 25 pp of LLM memory under pressure. OS Paging is terminated by the LMK in every round, whereas mzCache (25 pp) survives the entire session.",
+              "figure_id": "figure-15-15",
+              "figure_number": "15",
+              "height": 168,
+              "image_path": "figures/2609.01338/figure-014.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 488
+            },
+            {
+              "caption": "Figure 4: TTFT breakdownwhen loading entireweights and KV cache from flash storage and executing inference on GPU (OnePlus 12, Qwen3-0.6B, 8 input tokens), showing time spent on allocation, storage reads, and prefill across different context lengths.",
+              "figure_id": "figure-4-13",
+              "figure_number": "4",
+              "height": 140,
+              "image_path": "figures/2609.01338/figure-015.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 492
+            },
+            {
+              "caption": "Table 3: Evaluation testbed specifications",
+              "figure_id": "table-3-17",
+              "figure_number": "3",
+              "height": 255,
+              "image_path": "figures/2609.01338/table-016.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 498
+            },
+            {
+              "caption": "Table 1: Memory footprint of representative LLMs used in mobile and edge environments. All models listed here have fewer than 3 billion parameters.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 142,
+              "image_path": "figures/2609.01338/table-017.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 498
+            },
+            {
+              "caption": "Table 2: KV cache space savings under lz4 and zstd at an 8k-token WikiText context. These zRAM algorithms achieve only 0.2–9.3% space savings, indicating KV cache compresses poorly under zRAM.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 94,
+              "image_path": "figures/2609.01338/table-018.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 498
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.01338/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.01338",
+          "relevance": 9,
+          "selection_reason": "Paper directly addresses on-device LLM memory management, specifically KV cache eviction and restoration, fitting Efficient AI's KV Cache and Memory Efficiency subtopic.",
+          "summary_status": "generated",
+          "title": "mzCache: On-Device LLM Memory Management under Multitasking",
+          "tldr": "mzCache manages evicted LLM memory on mobile devices to maintain responsive inference during multitasking.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Scaling Transformers has driven large gains in language modeling, but transplanting this to behavior-sequence modeling in production ranking is challenging: recommendation differs in signal quality, where behavior sequences are noisy, temporally irregular, and sparsely supervised, and in computation asymmetry, where each request scores many candidates against one shared user history under tight latency budgets. We propose ReST, a recommendation-native Transformer scaling framework. For signal quality, it introduces a sequence encoder with dual-gated attention, rotary positional and temporal embedding, stabilized residual normalization, and training-only auxiliary objectives. For computation asymmetry, it factorizes ranking into a heavy reusable encoder and a lightweight cross decoder with projection-free KV attention and token-specific parameterization, coupling user-level shared-prefix training with shared-prefix serving for compute-once, decode-many-times ranking. Across industrial and public benchmarks, ReST achieves higher accuracy and scales more consistently along sequence length, depth, and width, where LLM-style Transformer blocks saturate. A one-week online A/B test on a production advertising platform improves online AUC by 1.31% and lifts a core revenue metric by 11.93% within a 50 ms P99 budget; ReST has since been fully deployed in production, showing that behavior-sequence scaling remains a promising, under-exploited axis for production ranking.",
+          "arxiv_id": "2609.01240",
+          "arxiv_url": "https://arxiv.org/abs/2609.01240",
+          "authors": [
+            "Jie Chen, Xiangqian Yu, Yanchao Lian, Tan Lu, Run Yang, Zhengchun Shang, Xing Wang, Cheng Chen, Ke Hu, Qiang Li, Tianjiu Yin, Xiaobing Liu"
+          ],
+          "bullets": [
+            "Addresses noisy, irregular, sparsely supervised behavior sequences and the cost of scoring many candidates per request.",
+            "Uses dual-gated attention, rotary positional/temporal embeddings, stabilized residual normalization, and training-only auxiliary objectives.",
+            "Separates ranking into a reusable heavy user-history encoder and a lightweight cross decoder for compute-once, decode-many-times serving.",
+            "Outperforms standard LLM-style Transformer blocks across industrial and public benchmarks, scaling more consistently with sequence length, depth, and width.",
+            "In a one-week production A/B test, improved online AUC by 1.31% and a core revenue metric by 11.93% within a 50 ms P99 budget."
+          ],
+          "categories": [
+            "cs.IR",
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: ReST architecture: a compute-heavy sequence encoder 𝑇 and a lightweight cross decoder 𝐶.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 276,
+              "image_path": "figures/2609.01240/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 922
+            },
+            {
+              "caption": "Figure 4: Scaling behavior along three axes: (a) sequence length, (b) model depth, and (c) hidden dimension. ReST consistently outperforms competing sequence models across the explored budgets.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 281,
+              "image_path": "figures/2609.01240/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1046
+            },
+            {
+              "caption": "Figure 3: Accuracy vs FLOPs on the internal dataset. ReST achieves favorable accuracy-FLOPs scaling.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 297,
+              "image_path": "figures/2609.01240/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 463
+            },
+            {
+              "caption": "Figure 5: Dual-Gated Attention is more robust as token noise increases, supporting its value-side filtering and output-side modulation design.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 279,
+              "image_path": "figures/2609.01240/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 438
+            },
+            {
+              "caption": "Figure 2: Gradient norm of sequence-encoder parameters with and without auxiliary sequence CVR supervision.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 239,
+              "image_path": "figures/2609.01240/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 364
+            },
+            {
+              "caption": "Table 3: Ablation: architecture and rec-native block designs.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 427,
+              "image_path": "figures/2609.01240/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 498
+            },
+            {
+              "caption": "Table 2: Public benchmarks on ML-1M, ML-20M, and Amazon-Books.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2609.01240/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 586
+            },
+            {
+              "caption": "Table 1: Comparison with the production DLRM baseline on the large-scale industrial dataset.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 191,
+              "image_path": "figures/2609.01240/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 606
+            },
+            {
+              "caption": "Table 4: Ablation: auxiliary objectives.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 150,
+              "image_path": "figures/2609.01240/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 402
+            },
+            {
+              "caption": "Table 6: Public dataset overview.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 109,
+              "image_path": "figures/2609.01240/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 322
+            },
+            {
+              "caption": "Table 5: Online A/B results.",
+              "figure_id": "table-5-9",
+              "figure_number": "5",
+              "height": 67,
+              "image_path": "figures/2609.01240/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 232
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.01240/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.01240",
+          "relevance": 6,
+          "selection_reason": "Transformer scaling for recommendation ranking with efficient shared-prefix KV attention; fits efficient attention and KV-cache efficiency, plus LLM-style architecture scaling.",
+          "summary_status": "generated",
+          "title": "From Language to Behavior: Scaling Sequence Transformers for Industrial Recommendation Ranking with Rec-Native Designs",
+          "tldr": "ReST is a recommendation-native Transformer framework that scales behavior-sequence ranking while meeting strict production latency constraints.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Sharing context between LLMs in a multi-model system requires the receiving model to prefill the shared prefix because KV caches are model-specific. Recent closed-form cross-model KV transfer, hereafter Full-Head Mapping, avoids this replay by fitting a training-free affine mapper from source to target caches. However, its full-head design maps each target KV head from every source KV head in the selected layers, making transfer quality sensitive to architectural differences and causing mapper storage and application cost to grow with layer support. To this end, we introduce CacheBridge, which co-designs architecture-indexed mapper support, attention-aligned calibration, and bounded mapper construction while retaining a closed-form affine interface for online deployment. CacheBridge restricts each target head to a matched source head, weights reconstruction errors by causal attention sensitivity, and uses a fused GPU kernel to construct weighted sufficient statistics without materializing full observation tensors. Across three transfer directions, CacheBridge recovers the two Ministral 3 transfer directions where Full-Head Mapping loses substantial accuracy while preserving 99.83\\% mean target retention on Qwen3. On Qwen3 $14\\mathrm{B}\\to32\\mathrm{B}$, it reduces mapper storage by $8\\times$, accelerates application by up to $3.0\\times$, matches \\fullhead with one tenth of the calibration data, and reduces 500-sequence construction from 92.63 to 8.63 seconds ($10.7\\times$).",
+          "arxiv_id": "2609.00891",
+          "arxiv_url": "https://arxiv.org/abs/2609.00891",
+          "authors": [
+            "Xingyu Qu, Siyuan Lu, Zhiyu Chen, Sheng Wang, Tao Lin"
+          ],
+          "bullets": [
+            "Addresses the need to replay shared prefixes because KV caches are model-specific across LLMs.",
+            "Matches each target attention head to one source head and weights calibration by causal attention sensitivity.",
+            "Uses fused GPU kernels to build weighted sufficient statistics without materializing full observation tensors.",
+            "Retains 99.83% mean target performance on Qwen3 and recovers two Ministral 3 transfer directions where Full-Head Mapping loses accuracy.",
+            "For Qwen3 14B→32B, cuts mapper storage 8×, speeds application up to 3.0×, uses one-tenth the calibration data, and reduces construction time 10.7×."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3. Architecture contrast for the three evaluated denseattention transfer directions. Residual-stream bars are scaled by model width; the lower panels show the exposed KV interface and the full-head fan-in used to predict one target head. The shared KV-head count hides different residual-stream scaling paths across model families.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 311,
+              "image_path": "figures/2609.00891/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 466
+            },
+            {
+              "caption": "Figure 2. Cross-model KV transfer pipeline. Offline fitting constructs a reusable affine mapper from aligned source and target K/V traces; online handoff applies the mapper to materialize a decode-ready target KV cache. The deployment boundary separates one-time calibration work from per-handoff computation.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 275,
+              "image_path": "figures/2609.00891/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 988
+            },
+            {
+              "caption": "Figure 5. Capacity-matched cyclic head-assignment ablation on Qwen3 14B → 32B. The vertical axis reports the HellaSwag target-retention change, and shift 0 denotes the aligned head assignment. All non-identity shifts degrade retention, supporting the architecture-indexed head correspondence.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 268,
+              "image_path": "figures/2609.00891/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 462
+            },
+            {
+              "caption": "Figure 1. Four observations motivating CACHEBRIDGE. (a) With 500 calibration sequences, the same FULL-HEAD MAPPING estimator preserves Qwen3 accuracy but collapses on the two Ministral 3 transfer directions. (b) Equal-norm KV residuals can induce different attention-output drift under different receiver queries. (c) On Ministral 3 3B → 14B, FULL-HEAD MAPPING application latency grows with selected-layer support and approaches target re-prefill. (d) Generic top-k fitting materializes scattered, centered, and weighted tensors, whereas fused panels stream bounded sufficient-statistics construction.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 515,
+              "image_path": "figures/2609.00891/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 991
+            },
+            {
+              "caption": "Figure 4. CACHEBRIDGE mapper construction and deployment. HEAD-LOCAL fixes receiver-aligned mapper support, ATTN-REPAIR derives query-conditioned calibration weights, and FUSED-FIT constructs weighted sufficient statistics with bounded fused panels. Online handoff applies only the compact affine mapper, so the added calibration logic does not introduce extra inference stages.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 343,
+              "image_path": "figures/2609.00891/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 988
+            },
+            {
+              "caption": "Figure 6. Mapper storage and application latency on Qwen3 14B → 32B. Panel (a) reports serialized mapper size, and panel (b) reports mapper-application latency across prefix lengths. The one-head fan-in reduces the deployed coefficient payload and yields larger latency gains at longer prefixes.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 277,
+              "image_path": "figures/2609.00891/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 965
+            },
+            {
+              "caption": "Figure 7. Mapper-construction time for Qwen3 14B → 32B on four H800s. CACHEBRIDGE markers show medians with min– max ranges, and the vertical axis is logarithmic. CacheBridge’s fused construction path preserves the fitted mapper while reducing 500-sequence construction time by 10.7×.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 291,
+              "image_path": "figures/2609.00891/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 462
+            },
+            {
+              "caption": "Table 1. Task-wise target retention across three transfer directions. Each value is transfer accuracy divided by native-target accuracy and reported as a percentage. FULL-HEAD MAPPING is the baseline of Heo et al. (2026); CACHEBRIDGE is our method. Bold marks the better transferred result within each pair. CACHEBRIDGE repairs both Ministral 3 failures while preserving Qwen3 mean retention.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 189,
+              "image_path": "figures/2609.00891/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1017
+            },
+            {
+              "caption": "Table 2. Attribution study on Qwen3 14B → 32B with 500 calibration sequences. The first three rows are controls or ablations, and CACHEBRIDGE is the final selected configuration. Primary retention is HellaSwag-500 accuracy divided by native-target accuracy. The cyclic mean averages non-identity shifts 1–7. ∆ is measured relative to HEAD-LOCAL-only. The aligned support accounts for most of the gain, while attention weighting further improves retention and NLL.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 127,
+              "image_path": "figures/2609.00891/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1017
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.00891/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.00891",
+          "relevance": 8,
+          "selection_reason": "Cross-model KV cache transfer with reduced mapper storage and faster application; directly targets inference cache efficiency.",
+          "summary_status": "generated",
+          "title": "CacheBridge: Efficient Cross-Model KV Cache Transfer",
+          "tldr": "CacheBridge enables efficient cross-model KV-cache transfer by using architecture-matched, attention-aware affine mappings with substantially lower storage and construction cost.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-horizon large language model (LLM) agents require context assembly: the runtime must decide what to include in each prompt, in what order, and when to compact history under a hard context-window budget and a byte-sensitive prompt cache. In production agentic systems, this logic is scattered across prompt builders, ad hoc compaction routines, cache-break workarounds, and per-provider shims. We argue that context assembly is structurally isomorphic to query execution in a relational database: both execute under a hard budget, exploit a tiered cache, and leverage statistics. We adopt this discipline in ContextPipe: a five-phase pipeline (Plan Bind Optimize Execute Feedback) backed by a structured data-source catalog, a deterministic cache-aware optimizer, and an EXPLAIN ANALYZE trace. We show that context in ContextPipe is auditable, replayable, and failure-isolated. A preliminary evaluation using the SWE-bench Pro Qutebrowser subset shows that, compared with the append-only context construction policy, ContextPipe reduces total token volume by 31%, LLM calls by 23%, and response time by 9%, at the cost of a lower KV cache-hit ratio.",
+          "arxiv_id": "2609.00749",
+          "arxiv_url": "https://arxiv.org/abs/2609.00749",
+          "authors": [
+            "Peng Xu, Zuyu Zhang, Yuze Sun, Feng Tian, Long Wang, Chen Zhang"
+          ],
+          "bullets": [
+            "Targets fragmented context construction, compaction, caching, and provider-specific logic under hard context and prompt-cache budgets.",
+            "Uses a five-phase Plan–Bind–Optimize–Execute–Feedback pipeline with a structured data-source catalog.",
+            "Provides deterministic cache-aware optimization plus EXPLAIN ANALYZE traces for replayability and auditing.",
+            "In a preliminary SWE-bench Pro Qutebrowser evaluation, it reduced token volume, LLM calls, and response time versus append-only construction, while lowering KV cache-hit ratio."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.DB"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: ContextPipe routes every LLM call through one auditable five-phase assembly path. Plan is pure; Bind is the only phase that performs external I/O; Execute is the only phase that contacts the model. Feedback populates emergent context for the next turn.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 352,
+              "image_path": "figures/2609.00749/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 490
+            },
+            {
+              "caption": "Figure 2: EXPLAIN ANALYZE exposes both planning decisions and post-execution cache behavior for one turn. EXPLAIN is the pre-execution trace; ANALYZE is the post-execution feedback joined back in. Region tags: G=Global, S=Session, -=None.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 566,
+              "image_path": "figures/2609.00749/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 536
+            },
+            {
+              "caption": "Table 5: Real EXPLAIN ANALYZE trace excerpt (Structured, highest-pressure instance, repeat 1; per-call cachehit from post-response feedback).",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 209,
+              "image_path": "figures/2609.00749/table-003.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 394
+            },
+            {
+              "caption": "Table 4: Context optimizer on SWE-bench Pro Qutebrowser (DeepSeek-V4-Pro; 3 instances × 3 repeats per condition, interleaved matched pairs; per-cell means). Changes is (Flat− Structured)/Flat.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 146,
+              "image_path": "figures/2609.00749/table-004.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 464
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.00749/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.00749",
+          "relevance": 7,
+          "selection_reason": "Context assembly under hard context-window budget with cache-aware optimization; directly relevant to long-context processing and KV-cache efficiency.",
+          "summary_status": "generated",
+          "title": "ContextPipe: Database-Inspired Context Assembly for Long-Horizon Agents",
+          "tldr": "ContextPipe applies database-style query planning and optimization to assemble auditable, cache-aware context for long-horizon LLM agents.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Many automobile and mobility companies deploy learned driving policies on embedded computers with limited memory and power. Pruning, knowledge distillation, and quantization are the standard methods to reduce the size and the inference cost of these policies. However, these methods are commonly assessed by aggregate numerical scores, and such scores may not reflect the ability of the policy to drive safely when interacting with other road users. In this study, we propose a stage-wise closed-loop evaluation approach to follow a driving policy through a compression pipeline. We formulate the driving task as a partially observable Markov decision process (POMDP) and train a belief-state policy with proximal policy optimization (PPO) in Gym-Duckietown. We then extract the actor, compress it one stage at a time, and evaluate it on five driving curricula. We show that structured pruning is the stage at which the driving capability is first lost. Meanwhile, distillation improves the pruned actor, but the improvement is limited by its rehearsal data. Integer quantization of the improved actor loses some of the curricula that require the vehicle to stop and then resume. Interestingly, the same procedure on the unpruned actor preserves all five curricula. Our study thus provides an empirical analysis aiming to answer the currently active discussions on how to accept a compressed driving policy, so as to achieve a safe and statistically reliable deployment of automated driving functions.",
+          "arxiv_id": "2609.00718",
+          "arxiv_url": "https://arxiv.org/abs/2609.00718",
+          "authors": [
+            "Ahmad Alfan Alfian Irfan, Nur Ahmad Khatim, Mansur Arief"
+          ],
+          "bullets": [
+            "Aggregate compression metrics may miss safety-relevant failures during interaction with other road users.",
+            "The study models driving as a POMDP, trains a belief-state policy with PPO, and compresses its actor sequentially.",
+            "Evaluation uses five driving curricula in Gym-Duckietown to track capability through pruning, distillation, and quantization.",
+            "Structured pruning first causes capability loss; distillation partly recovers it but is limited by rehearsal data.",
+            "Integer quantization removes some stop-and-resume curricula after pruning, while preserving all five when applied to the unpruned actor."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of the study. Top: the driving policy is built in Gym-Duckietown, where YOLO and MobileNetV3-small measurements are fused by EKF-based belief updaters into a belief state, and a Belief-PPO actor-critic is trained through the five curricula. Bottom: the extracted actor moves through structured pruning, two distillation branches that differ only in rehearsal data, and three precision routes from the same checkpoint.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 554,
+              "image_path": "figures/2609.00718/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1070
+            },
+            {
+              "caption": "Fig. 3. Cross-curriculum decisions across the compression pipeline.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 374,
+              "image_path": "figures/2609.00718/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 511
+            },
+            {
+              "caption": "Fig. 4. The two quantized branches fail the stop curriculum from opposite sides. Top: camera frames from the A6 episode itself. Below: commanded velocity and stop-line distance per step from the telemetry.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 577,
+              "image_path": "figures/2609.00718/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 511
+            },
+            {
+              "caption": "Fig. 5. (a) Task decisions for the FP32 source, its FP16 cast, and its INT8 PTQ conversion. (b) Spearman correlation of the yaw-rate channel against the original actor. (c) Median single-thread actor latency and logical parameter memory.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 276,
+              "image_path": "figures/2609.00718/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1057
+            },
+            {
+              "caption": "TABLE III EVALUATED PIPELINE CANDIDATES.",
+              "figure_id": "table-III-1",
+              "figure_number": "III",
+              "height": 233,
+              "image_path": "figures/2609.00718/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 508
+            },
+            {
+              "caption": "TABLE II THE COMPONENTS OF THE BELIEF-STATE VECTOR bt .",
+              "figure_id": "table-II-7",
+              "figure_number": "II",
+              "height": 404,
+              "image_path": "figures/2609.00718/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1072
+            },
+            {
+              "caption": "TABLE IV STATE AND ACTION AT THE FIRST FAILURE. A DASH IN THE STOP-LINE COLUMN MEANS NO STOP LINE INVOLVED. STOP VIOLATIONS HIGHLIGHTED.",
+              "figure_id": "table-IV-5",
+              "figure_number": "IV",
+              "height": 441,
+              "image_path": "figures/2609.00718/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 956
+            },
+            {
+              "caption": "TABLE I THE DRIVING CURRICULA FOR BOTH TRAINING AND EVALUATION.",
+              "figure_id": "table-I-4",
+              "figure_number": "I",
+              "height": 129,
+              "image_path": "figures/2609.00718/table-008.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 516
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.00718/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.00718",
+          "relevance": 7,
+          "selection_reason": "Learned driving policies compressed via pruning/distillation/quantization and evaluated in closed-loop; relevant to learned navigation policies and model compression.",
+          "summary_status": "generated",
+          "title": "A Closed-Loop Evaluation of Capability Loss and Recovery in Compressed Driving Policies",
+          "tldr": "A closed-loop, stage-wise evaluation reveals where compression harms driving behavior and shows that capability loss depends on both the compression stage and the actor being compressed.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Edge-AI model selection is commonly driven by one isolated metric - accuracy, latency, memory, energy, or safety, even though a deployable language model must balance all five. Our work focuses on answering the question whether na- tively trained small language models (SLMs) or large language models (LLMs) compressed through post-training quantization offer the more sustainable edge- deployment trade-off. We introduce a reproducible Holistic Sustainability Score (HSS) organized around the triple bottom line: an economic pillar for capability and systems efficiency, an environmental pillar for operational GPU energy and a social pillar for harmful-prompt robustness. Five BF16 SLMs and five LLMs under different quantization approaches - BF16, INT8, NF4 4-bit, GPTQ 4-bit, and GGUF Q4 produce 30 measured configurations. Capability is assessed on five zero-shot benchmarks; efficiency uses latency, throughput, peak VRAM and energy; and safety is approximated by attack success rate on five harmful prompts. Qwen3-30B-A3B/GGUF Q4 ranks first in the combined pool (93.38), followed by Mistral-Small-24B/GGUF Q4 (92.40), while Phi-4-mini/BF16 is the highest- ranked SLM in that pool (89.49). Thus, the hypothesis that native SLMs must be the most sustainable edge choice is not supported universally; optimized quantized LLMs can win overall, while SLMs remain competitive through lower resource demand. Quantization is a systems-level choice rather than a monotonic precision- efficiency trade-off and HSS remains relative to its comparison pool and proxy definitions.",
+          "arxiv_id": "2609.00665",
+          "arxiv_url": "https://arxiv.org/abs/2609.00665",
+          "authors": [
+            "Jainil Dharmil Shah"
+          ],
+          "bullets": [
+            "Evaluates sustainability across capability, efficiency, energy use, and harmful-prompt robustness rather than a single metric.",
+            "Introduces a reproducible Holistic Sustainability Score (HSS) spanning economic, environmental, and social pillars.",
+            "Compares 30 configurations comprising five BF16 SLMs and five LLMs across multiple quantization formats.",
+            "Qwen3-30B-A3B/GGUF Q4 ranks highest overall, while Phi-4-mini/BF16 is the top-ranked SLM.",
+            "HSS is relative to the comparison pool and depends on proxy definitions; quantization does not yield a monotonic precision–efficiency trade-off."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Measured metrics. Capability, systems efficiency, operational energy and refusal behavior are retained separately before aggregation.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 354,
+              "image_path": "figures/2609.00665/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 764
+            },
+            {
+              "caption": "Figure 1: Experimental design. Five BF16 SLMs are compared with five LLM families, each evaluated under five precision/backend cases. Every LLM-to-quantization connection denotes one measured configuration.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 490,
+              "image_path": "figures/2609.00665/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 782
+            },
+            {
+              "caption": "Figure 3: HSS composition. Equal top-level weights prevent the larger number of efficiency metrics from automatically dominating environmental and social considerations.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 392,
+              "image_path": "figures/2609.00665/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 732
+            },
+            {
+              "caption": "Table 6: Within-quantization LLM rankings. Each quantization block is normalized independently over its five models.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 582,
+              "image_path": "figures/2609.00665/table-004.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 698
+            },
+            {
+              "caption": "Table 1: Key results. HSS values are valid only for the named normalization pool.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 275,
+              "image_path": "figures/2609.00665/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 827
+            },
+            {
+              "caption": "Table 4: SLM-only HSS ranking by normalized pillar score (five BF16 models).",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 154,
+              "image_path": "figures/2609.00665/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 522
+            },
+            {
+              "caption": "Table 3: Raw measurements underlying the global 25-case LLM ranking. Cap. is mean capability, VRAM is GB and energy is joules per output token.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 581,
+              "image_path": "figures/2609.00665/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 652
+            },
+            {
+              "caption": "Table 5: Global 25-case LLM HSS ranking by normalized pillar score.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 581,
+              "image_path": "figures/2609.00665/table-008.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 627
+            },
+            {
+              "caption": "Table 7: Combined 30-case SLM+LLM HSS ranking after global renormalization.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 687,
+              "image_path": "figures/2609.00665/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 686
+            },
+            {
+              "caption": "Table 2: Raw measurements underlying the SLM-only ranking. Cap. is mean capability, Lat. is seconds, VRAM is GB and energy is joules per output token.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 176,
+              "image_path": "figures/2609.00665/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 833
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.00665/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2609.00665",
+          "relevance": 6,
+          "selection_reason": "Compares SLMs vs quantized LLMs for edge deployment, directly addressing model memory reduction and efficiency trade-offs.",
+          "summary_status": "generated",
+          "title": "Triple-Bottom-Line Sustainability of Language Models for Edge AI: A Comparison Between SLMs and Quantized LLMs",
+          "tldr": "A holistic comparison finds that optimized quantized LLMs can be more sustainable for edge deployment overall, while native SLMs remain competitive through lower resource demands.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Block Quantization (BQ) is a promising approach for efficient deployment of large language models (LLMs), enabling low-precision computation with controlled accuracy degradation. Compared to scalar weight-only quantization (WoQ), BQ quantizes both weight and activation, offering higher hardware efficiency and end-to-end inference on a unified datapath, but its design space, spanning bit-width, block size, scaling, and numeric formats, remains underexplored. We provide hardware/benchmark results through design space exploration (DSE). We find that increasing block size improves hardware efficiency by amortizing dequantization and accumulation costs, but degrades accuracy. This trade-off limits conventional BQ methods. Motivated by this insight, we propose Hierarchical Block Quantization (HBQ). Unlike prior methods [1], [2], which use small blocks and conventional Power-of-Two (PoT) or integer-based scaling, HBQ uses large blocks to maximize efficiency and introduces low-overhead significand (SIG) scaling for second-level quantization. By allocating quantization levels effectively and accounting for distinct activation and weight distributions, SIG scaling compensates for large-block errors more effectively than prior PoT and INT schemes. HBQ-A (accurate) achieves W4A16-level accuracy using only W4A5 while requiring less silicon area than NVFP4. HBQ-E (efficient) further reduces hardware cost by 17% while maintaining higher accuracy than all existing BQ methods. We implemented a 28nm ASIC accelerator applying HBQ to weights, activations, and KV cache, and integrated a novel partial-sum BQ scheme to further reduce EMA energy. Compared to state-of-the-art WoQ, HBQ delivers $2.3\\times$/$4.6\\times$ higher area/energy efficiency at the same accuracy level; $1.6$--$3.3\\times$ system energy reduction and $1.5$--$3.0\\times$ speedup over prior BQ methods while providing best accuracy.",
+          "arxiv_id": "2609.00450",
+          "arxiv_url": "https://arxiv.org/abs/2609.00450",
+          "authors": [
+            "Chun-Ting Chen, Dongmin Han, Hangyeol Mun, Jake Hyun, Arnab Raha, Amit Agarwal, Mark Anders, Mohamed Abdelfattah, Jae-sun Seo"
+          ],
+          "bullets": [
+            "Block quantization offers unified weight–activation computation but faces an accuracy–hardware-efficiency trade-off as block size grows.",
+            "HBQ combines large blocks with low-overhead significand scaling to compensate for large-block quantization errors.",
+            "HBQ-A reaches W4A16-level accuracy with W4A5 and uses less silicon area than NVFP4; HBQ-E cuts hardware cost by 17% while retaining higher accuracy than prior BQ methods.",
+            "A 28nm ASIC implementation applies HBQ to weights, activations, and KV cache, with partial-sum quantization to reduce energy.",
+            "Compared with state-of-the-art weight-only quantization, HBQ achieves 2.3×/4.6× higher area/energy efficiency at matched accuracy, plus lower system energy and higher speed than prior BQ methods."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.AR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 16. System energy breakdown across different models and architectures. Perplexity is measured with KV cache quantization enabled.",
+              "figure_id": "figure-16-6",
+              "figure_number": "16",
+              "height": 318,
+              "image_path": "figures/2609.00450/figure-001.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 523
+            },
+            {
+              "caption": "Fig. 18. Iso-area speedup of different architecture under near-equivalent PPL.",
+              "figure_id": "figure-18-17",
+              "figure_number": "18",
+              "height": 260,
+              "image_path": "figures/2609.00450/figure-002.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1068
+            },
+            {
+              "caption": "Fig. 17. (a) Area and (b) efficiency trends across frequencies. Activation precision for MXFP and NVFP is increased to match PPL. For the “-PL” configurations, an extra pipeline stage is added after multiplication to match HBQ’s latency.",
+              "figure_id": "figure-17-27",
+              "figure_number": "17",
+              "height": 254,
+              "image_path": "figures/2609.00450/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 524
+            },
+            {
+              "caption": "Fig. 9. (a) Quantization process of HBQ, using FP4 element format and 2-bit SIG2 L2 scheme as an example. (b) MAC operation for HBQ. Building upon the baseline PE in Fig. 2, an additional L2 dequantization module is introduced.",
+              "figure_id": "figure-9-8",
+              "figure_number": "9",
+              "height": 290,
+              "image_path": "figures/2609.00450/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 959
+            },
+            {
+              "caption": "Fig. 19. Weight significand scaling scheme selection ratio in different models.",
+              "figure_id": "figure-19-16",
+              "figure_number": "19",
+              "height": 203,
+              "image_path": "figures/2609.00450/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 491
+            },
+            {
+              "caption": "Fig. 8. (a) Error distribution shift as block size increases from 16 to 128. (b) Quantization levels under different L2 scaling schemes with a 2-bit L2 scaling factor α and the resulting error distributions when applied with L1 B=128 (aligned x-axis with (a)). (c) MSE summary for (b). The proposed significand scaling recovers error to B16-level or lower.",
+              "figure_id": "figure-8-3",
+              "figure_number": "8",
+              "height": 754,
+              "image_path": "figures/2609.00450/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 4. Comparison between different FP8 (E5M2 to E2M5) and INT8 across block size (B) of 4, 8, 16, 32, 64, and 128. (a) Representable levels in different 8-bit activation format, Llama3-8B data distribution is shown in gray curve. (b) Area and W4A8 perplexity trade-off between different formats.",
+              "figure_id": "figure-4-22",
+              "figure_number": "4",
+              "height": 639,
+              "image_path": "figures/2609.00450/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 6. Trade-off between Llama3-8B perplexity (PPL↓) and (a) area per MAC, (b) energy per MAC, and (c) weight effective bit-width (wgt-EBW) across different block sizes and activation precisions (weight format is fixed to FP4). All activation formats use a 2-bit exponent.",
+              "figure_id": "figure-6-30",
+              "figure_number": "6",
+              "height": 285,
+              "image_path": "figures/2609.00450/figure-008.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 1. LLM inference accuracy-efficiency trade-off for WoQ, BQ, and HBQ. Values are shown relatively; see Fig. 6 and Section VII for exact results and evaluation details.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 311,
+              "image_path": "figures/2609.00450/figure-009.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 506
+            },
+            {
+              "caption": "Fig. 11. Perplexity–area trade-off for HBQ. Squares represent the BQ design points identified from our design space exploration in Fig. 6. MicroExponent only achieves 9.4/7.8 PPL under W4A4/5, which falls outside the displayed range.",
+              "figure_id": "figure-11-7",
+              "figure_number": "11",
+              "height": 287,
+              "image_path": "figures/2609.00450/figure-010.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 13. Dataflow illustration for HBQ accelerator.",
+              "figure_id": "figure-13-20",
+              "figure_number": "13",
+              "height": 276,
+              "image_path": "figures/2609.00450/figure-011.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 503
+            },
+            {
+              "caption": "Fig. 12. Proposed HBQ accelerator. Each PE implements the HBQ MAC operation shown in Fig. 9(b) using the W4A5 HBQ-E configuration.",
+              "figure_id": "figure-12-18",
+              "figure_number": "12",
+              "height": 264,
+              "image_path": "figures/2609.00450/figure-012.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 524
+            },
+            {
+              "caption": "Fig. 5. Area–perplexity trade-off across block sizes and activation formats under W4A5 quantization.",
+              "figure_id": "figure-5-23",
+              "figure_number": "5",
+              "height": 221,
+              "image_path": "figures/2609.00450/figure-013.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 3. Comparison of PoT-scale and FP8-scale schemes across different block sizes (B). The bar chart reports the normalized area per MAC, while the line plot shows the corresponding Llama-3-8B perplexity (↓) with FP W4A4 setting. (PoT-floor: Original MX implementation; PoT-round: The rounding scheme described in Section II-B1)",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 198,
+              "image_path": "figures/2609.00450/figure-014.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 522
+            },
+            {
+              "caption": "Fig. 10. Micro-block (µB) size ablation study.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 181,
+              "image_path": "figures/2609.00450/figure-015.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 501
+            },
+            {
+              "caption": "Fig. 14. Normalized area and energy breakdown per MAC. MXFP results shown with W4A8 setting to align accuracy.",
+              "figure_id": "figure-14-5",
+              "figure_number": "14",
+              "height": 256,
+              "image_path": "figures/2609.00450/figure-016.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 462
+            },
+            {
+              "caption": "Fig. 15. Implementation results of the HBQ accelerator: (a) complete layout and (b) area/power breakdown.",
+              "figure_id": "figure-15-4",
+              "figure_number": "15",
+              "height": 252,
+              "image_path": "figures/2609.00450/figure-017.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 425
+            },
+            {
+              "caption": "Fig. 2. Baseline design for block quantization PE with block size B. (FP2FX: floating point to fixed point converter)",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 129,
+              "image_path": "figures/2609.00450/figure-018.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 513
+            },
+            {
+              "caption": "Fig. 7. QSNR analysis for different activation precisions and block sizes.",
+              "figure_id": "figure-7-32",
+              "figure_number": "7",
+              "height": 107,
+              "image_path": "figures/2609.00450/figure-019.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 493
+            },
+            {
+              "caption": "TABLE III ACCURACY IMPROVEMENT ACROSS ACTIVATION BIT-WIDTHS. EXPERIMENTS PERFORMED ON LLAMA3 (L3), QWEN2.5 (Q2.5), AND MIXTRAL-8X7B (M-8X7B) MODELS WITH BLOCK SIZE OF 64.",
+              "figure_id": "table-III-24",
+              "figure_number": "III",
+              "height": 237,
+              "image_path": "figures/2609.00450/table-020.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 470
+            },
+            {
+              "caption": "TABLE I HBQ VS. TRENDING QUANTIZATION METHODS. HBQ ACHIEVES WOQ-LEVEL ACCURACY WHILE ENABLING EFFICIENT END-TO-END LOW-PRECISION INFERENCE BY QUANTIZING ALL W/A/KV/PSUM.",
+              "figure_id": "table-I-1",
+              "figure_number": "I",
+              "height": 123,
+              "image_path": "figures/2609.00450/table-021.webp",
+              "kind": "table",
+              "page": 1,
+              "width": 470
+            },
+            {
+              "caption": "TABLE XIII PROGRESSIVE OPTIMIZATION TRADE-OFF OF PROPOSED METHODS IN HBQ. RESULT EVALUATED WITH TOKEN LENGTH 2,048.",
+              "figure_id": "table-XIII-26",
+              "figure_number": "XIII",
+              "height": 113,
+              "image_path": "figures/2609.00450/table-022.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 516
+            },
+            {
+              "caption": "TABLE IX QUANTIZATION RESULTS EVALUATED ON WIKITEXT-2 (PPL ↓) AND AVERAGE ZERO-SHOT ACCURACY (↑) ON WINOGRANDE AND PIQA.",
+              "figure_id": "table-IX-12",
+              "figure_number": "IX",
+              "height": 249,
+              "image_path": "figures/2609.00450/table-023.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 1064
+            },
+            {
+              "caption": "TABLE XI REASONING TASK ACCURACY↑ EVALUATION.",
+              "figure_id": "table-XI-11",
+              "figure_number": "XI",
+              "height": 190,
+              "image_path": "figures/2609.00450/table-024.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 520
+            },
+            {
+              "caption": "TABLE X WIKITEXT-2 PERPLEXITY↓ WITH KV CACHE QUANTIZATION.",
+              "figure_id": "table-X-10",
+              "figure_number": "X",
+              "height": 181,
+              "image_path": "figures/2609.00450/table-025.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 496
+            },
+            {
+              "caption": "TABLE VII QUANTITATIVE RESULTS USING DIFFERENT ACCUMULATION KERNELS.",
+              "figure_id": "table-VII-28",
+              "figure_number": "VII",
+              "height": 181,
+              "image_path": "figures/2609.00450/table-026.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 479
+            },
+            {
+              "caption": "TABLE V COMPARISON ON DIFFERENT TWO-LEVEL QUANTIZATION SCHEMES (BDR [2] REPRESENTATION IN PARENTHESIS).",
+              "figure_id": "table-V-21",
+              "figure_number": "V",
+              "height": 144,
+              "image_path": "figures/2609.00450/table-027.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 466
+            },
+            {
+              "caption": "TABLE II COMPARISON AMONG DIFFERENT FP8-SCALE FORMAT. RESULTS ARE USING W4A4B16 CONFIGURATION ON WIKITEXT-2.",
+              "figure_id": "table-II-14",
+              "figure_number": "II",
+              "height": 132,
+              "image_path": "figures/2609.00450/table-028.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 468
+            },
+            {
+              "caption": "TABLE VI L2 SCALE SCHEME ABLATION STUDY ON WIKITEXT-2 PERPLEXITY↓ (SETTING: W4A5, B=128/µB=32).",
+              "figure_id": "table-VI-19",
+              "figure_number": "VI",
+              "height": 90,
+              "image_path": "figures/2609.00450/table-029.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 520
+            },
+            {
+              "caption": "TABLE XII DEEPSEEK-DISTILL-LLAMA-8B ISO-ACCURACY AND ISO-AREA MATH REASONING LONG-GENERATION CASE STUDY.",
+              "figure_id": "table-XII-25",
+              "figure_number": "XII",
+              "height": 117,
+              "image_path": "figures/2609.00450/table-030.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 520
+            },
+            {
+              "caption": "TABLE VIII QUANTIZER OVERHEAD IN A 4096-MAC ACCELERATOR.",
+              "figure_id": "table-VIII-29",
+              "figure_number": "VIII",
+              "height": 68,
+              "image_path": "figures/2609.00450/table-031.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 466
+            },
+            {
+              "caption": "TABLE IV KV BLOCK SIZE TRADE-OFF WITH W/A FIXED TO NVFP4.",
+              "figure_id": "table-IV-31",
+              "figure_number": "IV",
+              "height": 58,
+              "image_path": "figures/2609.00450/table-032.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 462
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.00450/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.00450",
+          "relevance": 8,
+          "selection_reason": "Proposes Hierarchical Block Quantization (HBQ) for efficient LLM inference, directly addressing 'KV Cache and Memory Efficiency'.",
+          "summary_status": "generated",
+          "title": "HBQ: Hierarchical Scaling Block Quantization with Hardware-Efficiency-Aware Design for Accurate LLM Inference",
+          "tldr": "HBQ improves LLM inference efficiency by using large quantization blocks with hierarchical significand scaling to preserve accuracy at low precision.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Autoregressive video diffusion models enable streaming generation through sliding-window attention, but each generated block is conditioned on previously generated content, causing appearance and motion errors to propagate recursively over time. Historical key-value (KV) memory preserves earlier subject and scene states and helps maintain long-horizon consistency. However, retaining every generated state creates a historical archive that grows continuously with the rollout, while recurrent states repeatedly add redundant coverage. To address this problem, we propose DensityKV, a training-free historical KV bank management strategy. DensityKV maintains a separate token-level KV bank for each attention head and measures local redundancy among the post-RoPE keys that directly parameterize attention routing using Soft-Riesz density. By constraining neighborhood-density growth after states enter the bank, DensityKV limits repeated historical accumulation while preserving coherent states from each completed generation block. Experiments across three autoregressive video generation backbones and multiple generation lengths show that, at the same upper bound on historical KV capacity, DensityKV improves long-horizon consistency and generation stability while keeping persistent historical storage bounded independently of rollout length.",
+          "arxiv_id": "2608.27922",
+          "arxiv_url": "https://arxiv.org/abs/2608.27922",
+          "authors": [
+            "Wenqu Zhao",
+            "Xuemin Chi",
+            "Xin Zhang",
+            "Guoqing Ma",
+            "Baorun Li",
+            "Jianjie Fang",
+            "Peizhi Tang",
+            "Chen Gao",
+            "Wei Wu"
+          ],
+          "bullets": [
+            "Autoregressive video generation can accumulate appearance and motion errors over long rollouts, while storing all historical KV states grows continuously.",
+            "DensityKV maintains a separate token-level KV bank for each attention head.",
+            "It measures local redundancy among post-RoPE keys using Soft-Riesz density to limit repeated historical states.",
+            "The method preserves coherent states from completed generation blocks while constraining historical KV capacity.",
+            "Experiments across three backbones and varied generation lengths show improved consistency and stability at the same capacity limit."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of historical-memory construction and use. Left: sliding-window generation discards states outside the active context; LongLive-RAG stores discarded history and retrieves selected blocks; DensityKV instead maintains a bounded token-level history that is attended together with the local window. Right: at every Transformer layer, clean historical K/V states update independent per-head banks. Admission and rejection are determined by Soft-Riesz density over post-RoPE keys, while each value remains exactly paired with its original key. Current queries access the retained history through the backbone’s native attention.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 393,
+              "image_path": "figures/2608.27922/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 925
+            },
+            {
+              "caption": "Figure 3: Qualitative comparison on two matched backbone–prompt pairs, each generated for 120 seconds. The upper group uses LongLive on MovieGenBench #097, the wig-and-sunglasses transformation; the lower group uses Causal-Forcing on MovieGenBench #012, the disco-dancing kangaroo.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 594,
+              "image_path": "figures/2608.27922/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1010
+            },
+            {
+              "caption": "Figure 6: Extended qualitative comparison. Causal-Forcing on MovieGenBench prompts #028, #048, #095, #109, and #110. Rows: Native, LongLive-RAG, and post-RoPE K-only DensityKV. Columns: 1, 10, 20, 30, 60, and 120 seconds from matched trajectories.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 1275,
+              "image_path": "figures/2608.27922/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 840
+            },
+            {
+              "caption": "Figure 4: Persistent temporal-state storage versus generation length. LongLive-RAG grows linearly, whereas Deep Forcing and DensityKV remain bounded.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 260,
+              "image_path": "figures/2608.27922/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 424
+            },
+            {
+              "caption": "Figure 5: Single-metric wins under the matched LongLiveRAG protocol at 30, 60, and 120 seconds.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 187,
+              "image_path": "figures/2608.27922/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 454
+            },
+            {
+              "caption": "Figure 7: Self-Forcing on MovieGenBench prompts #104, #068, #040, #009, and #004. Rows: Native, LongLive-RAG, and DensityKV. Columns: 1, 10, 20, 30, 60, and 120 seconds.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 1314,
+              "image_path": "figures/2608.27922/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 886
+            },
+            {
+              "caption": "Figure 8: LongLive on MovieGenBench prompts #006, #007, #010, #032, and #063. Rows: Native, LongLive-RAG, and DensityKV. Columns: 1, 10, 20, 30, 60, and 120 seconds.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 1314,
+              "image_path": "figures/2608.27922/figure-007.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 886
+            },
+            {
+              "caption": "Figure 9: Admission analysis for the Causal-Forcing panda-guitar diagnostic (seed 13). (a) Orange intensity gives the number of layer–head banks that admit each spatial token, on a logarithmic scale. (b) Admission counts aggregated by layer and source time. (c) Fractions of possible layer–head entries and unique spatial positions admitted from each source frame. The gray region in (b)–(c) marks initial bank construction from source frames 1–6, whose timestamps span 0–1.25 seconds at 4 fps.",
+              "figure_id": "figure-9-8",
+              "figure_number": "9",
+              "height": 960,
+              "image_path": "figures/2608.27922/figure-008.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1054
+            },
+            {
+              "caption": "Table 2: Parameter sensitivity and policy ablations. Bold/underline mark best/second-best displayed values within each ablation group.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 472,
+              "image_path": "figures/2608.27922/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1052
+            },
+            {
+              "caption": "Table 1: Comparison across backbones. Bold/underline mark best/second-best values; Avg. Rank is averaged over the six metrics.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 952,
+              "image_path": "figures/2608.27922/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 894
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2608.27922/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2608.27922",
+          "relevance": 8,
+          "selection_reason": "Density-guided KV cache compression for long video generation; fits efficient memory and video diffusion.",
+          "summary_status": "generated",
+          "title": "DensityKV: Density-Guided KV Cache Compression for Long Video Generation",
+          "tldr": "DensityKV is a training-free, density-guided KV-cache compression method that preserves long-horizon consistency in autoregressive video generation while keeping historical storage bounded.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "The quadratic growth of attention computation and key-value (KV) cache with respect to sequence length is a central bottleneck for ultra-long-context language models and high-resolution generative models. We propose ProxyFormer, a general dual-stream architecture built upon proxy tokens. In each layer, fine-grained local features are compressed bottom-up into a small set of proxy states; expensive global interactions are performed only in the compressed proxy space; the globally contextualized proxies are then decompressed and injected top-down back into the local stream. Because the local stream persists across layers, fine-grained information that is not captured by one compression step remains accessible for later refinement, alleviating the irreversible information loss of conventional one-shot compression. We further introduce factorized multi-level compression/decompression, layer-wise dynamic compression ratios, asymmetric dual embeddings, and a proxy-only KV-cache inference scheme. On a 16GB GPU with batch size 1, a standard decoder-only model can train sequences of only about 20K tokens, whereas ProxyFormer with a compression ratio of 64 extends the trainable sequence length to about 0.7M. A model trained with a 64K window retains 92%-95% retrieval accuracy on a multi-needle retrieval task with 1,048,576 tokens, and a model trained with an 8K window exceeds 94% accuracy when extrapolated to 256K tokens. Preliminary image-generation experiments demonstrate the feasibility of ProxyFormer for both pixel-space and latent-space flow matching.",
+          "arxiv_id": "2608.23463",
+          "arxiv_url": "https://arxiv.org/abs/2608.23463",
+          "authors": [
+            "Zhongpan Tang"
+          ],
+          "bullets": [
+            "Addresses the quadratic attention and KV-cache costs that limit long-context language models and high-resolution generators.",
+            "Uses a dual-stream design: bottom-up local-to-proxy compression, proxy-space global interaction, and top-down proxy-to-local information injection.",
+            "Adds multi-level compression/decompression, dynamic layer-wise compression, asymmetric embeddings, and proxy-only KV caching.",
+            "On a 16GB GPU, extends trainable sequence length from about 20K to about 0.7M tokens at a 64× compression ratio.",
+            "Retains 92–95% retrieval accuracy at 1,048,576 tokens with 64K training windows; image-generation tests are preliminary."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Local stream and proxy stream dual-stream architecture. Fine-grained local features update proxy states through ”micro guiding macro”; after proxy states complete global interaction, they are injected into the local stream through ”macro guiding micro”.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 301,
+              "image_path": "figures/2608.23463/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 783
+            },
+            {
+              "caption": "Figure 3: Language model based on proxy features. Long history is compressed into an extremely small proxy KV cache; during decoding, the generation region only performs gated cross-attention with the proxy cache.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 369,
+              "image_path": "figures/2608.23463/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 859
+            },
+            {
+              "caption": "Figure 2: Multi-level cascaded factorized compression and symmetric decompression. P =∏M j=1 kj , and intermediate features exist only on shorter sequences with narrower channels.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 388,
+              "image_path": "figures/2608.23463/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 831
+            },
+            {
+              "caption": "Figure 4: ProxyFormer in text-to-image and diffusion conditional generation. Global conditions undergo cross-modal cross-attention only in the compressed image proxy space.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 341,
+              "image_path": "figures/2608.23463/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 869
+            },
+            {
+              "caption": "Figure 5: Multi-needle in a haystack heatmap. The horizontal axis is context length (tokens), the vertical axis is the depth interval of the needle, and the values are retrieval accuracy.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 324,
+              "image_path": "figures/2608.23463/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 950
+            },
+            {
+              "caption": "Table 1: Perplexity on WikiText-103-v1 (NoPE).",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 142,
+              "image_path": "figures/2608.23463/table-006.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 415
+            },
+            {
+              "caption": "Table 3: Image Generation Evaluation (Lower FID is better, higher IS is better).",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 142,
+              "image_path": "figures/2608.23463/table-007.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 479
+            },
+            {
+              "caption": "Table 2: VRAM and training speed comparison under a 16GB GPU with batch size 1.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 152,
+              "image_path": "figures/2608.23463/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 791
+            }
+          ],
+          "first_seen_at": "2026-09-01T21:00:00-04:00",
+          "hero_figure": "figures/2608.23463/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2608.23463",
+          "relevance": 9,
+          "selection_reason": "Proxy-based dual-stream architecture reduces attention and KV cache complexity for ultra-long context and high-resolution generation.",
+          "summary_status": "generated",
+          "title": "ProxyFormer: A Dual-Stream Proxy Architecture for Ultra-Long Context and High-Resolution Generation",
+          "tldr": "ProxyFormer enables ultra-long-context processing and high-resolution generation by compressing local features into proxy tokens for efficient global attention while preserving fine-grained information through a persistent local stream.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-08-31",
       "paper_count": 18,
       "papers": [
@@ -8789,5 +10450,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 51
+  "total_paper_count": 61
 }

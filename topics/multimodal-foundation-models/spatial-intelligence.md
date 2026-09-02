@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**69 papers total**
+**74 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [SpatialGuard: Harness-Guided Verifiable Spatial Reasoning for Text-to-Image Generation](https://arxiv.org/abs/2609.01582) | Multimodal Foundation Models: Spatial Intelligence | SpatialGuard makes complex 3D text-to-image generation more spatially reliable by planning, checking, and repairing an editable 3D layout before and during image synthesis. | 9 | 8 |
+| 2026-09-01 | [MeRoPE: Metric Rotary Position Embedding for Camera-Controlled Video Generation](https://arxiv.org/abs/2609.01252) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding | MeRoPE stabilizes camera-controlled video generation across real-world metric camera trajectories by using norm-preserving, scale-robust positional encoding. | 7 | 8 |
+| 2026-09-01 | [Separating perception from reasoning in vision-language models: a model-free render ceiling for crystal structures](https://arxiv.org/abs/2609.00663) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | The render ceiling separates image-reading errors from reasoning errors in vision-language models without using a second model. | 7 | 8 |
+| 2026-09-01 | [Teaching Vision-Language Models to Use the Scale They Are Given: Label-Free Equivariance Training for Metric Physical Reasoning](https://arxiv.org/abs/2609.00658) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | EquiSD uses scale-equivariance as label-free supervision to improve vision-language models’ ability to convert visual measurements into correctly scaled physical quantities. | 8 | 8 |
+| 2026-09-01 | [SlideBank: A Persistent Hierarchical Evidence Bank for Consistent Whole-Slide Reasoning](https://arxiv.org/abs/2609.00342) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | SlideBank is a training-free, persistent evidence bank that enables consistent, spatially grounded reasoning over gigapixel whole-slide images. | 8 | 7 |
 | 2026-08-31 | [LOCI: A Locator-Critic with Refinement Loop](https://arxiv.org/abs/2608.30959) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | LOCI improves VLM visual reasoning by iteratively locating and critically verifying the image evidence needed to answer a question. | 7 | 7 |
 | 2026-08-31 | [LightNav-0: Eliciting VLM Spatial Intelligence for Generalist Embodied Navigation](https://arxiv.org/abs/2608.30935) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | LightNav-0 turns a compact pretrained VLM into a unified, transferable controller for diverse embodied-navigation tasks and robot embodiments. | 10 | 9 |
 | 2026-08-31 | [GAFT: Geo-Anchored Fine-Tuning for Hazard Identification from Rare Failures](https://arxiv.org/abs/2608.30858) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | GAFT uses geometry-guided, parameter-efficient fine-tuning to improve hazard identification from rare off-road failures and generalize across scenarios. | 7 | 6 |

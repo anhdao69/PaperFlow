@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**10 papers total**
+**11 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [REFACTOR-VLA: Unsupervised Library Learning of Typed Motor Programs](https://arxiv.org/abs/2609.01215) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | REFACTOR-VLA learns reusable, typed motor programs by clustering behaviorally equivalent actions with a learned world model and generating them through a library-conditioned decoder. | 8 | 8 |
 | 2026-08-31 | [Does Latent Planning Survive Point Clouds? Action-Conditioned JEPA World Models for Geometric Observations](https://arxiv.org/abs/2608.29434) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Interactive World Models | Action-conditioned JEPA world models can support robust latent planning from sparse, unordered point clouds, with geometry enabling target-based goals without goal observations. | 8 | 8 |
 | 2026-08-31 | [Hydra: A Navigation World Action Model with Discrete Latent Planning and Continuous Flow-Matching Execution](https://arxiv.org/abs/2608.28995) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Interactive World Models | Hydra enables real-time robot navigation by planning over discrete latent intents and converting them into smooth continuous trajectories without decoding candidate futures into pixels. | 9 | 9 |
 | 2026-08-28 | [Gauss--Hermite Quadrature for Gaussian-Mixture Entropy with an Action-Space Hermite Surrogate](https://arxiv.org/abs/2608.21467) | World Models: Latent Action Models | A Gauss–Hermite quadrature method estimates Gaussian-mixture entropy, with an action-space Hermite surrogate improving optimization accuracy in a radar-pointing benchmark. | 6 | 7 |

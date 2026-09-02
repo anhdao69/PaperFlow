@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**36 papers total**
+**38 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [Revisiting Cross-View Completion: Self-Supervised Pre-Training via Reconstruction Error Comparison](https://arxiv.org/abs/2609.01530) | 3D Vision: 3D Foundation Models | Gekko improves cross-view self-supervised pre-training by using reconstruction-error differences to learn co-visibility and stronger 3D vision features without 3D annotations. | 9 | 8 |
+| 2026-09-01 | [Monocular Depth Estimation from a Single Image: Progress and Opportunities](https://arxiv.org/abs/2609.01172) | 3D Vision: 3D Foundation Models | This survey reviews monocular depth estimation from early learning-based techniques to foundation-model approaches, covering formulations, data, applications, benchmarks, and open challenges. | 7 | 5 |
 | 2026-08-31 | [Lucida: Parse, Generate, and Place for Composable Real-to-Sim Scene Modeling](https://arxiv.org/abs/2608.30821) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; 3D Vision: 3D Foundation Models | Lucida creates editable, simulation-ready indoor scenes by jointly parsing observations, generating complete object assets, and interactively placing them with closed-loop VLM control. | 8 | 8 |
 | 2026-08-31 | [Motion-Saliency Complementary Masked Modeling for Point Cloud Video Understanding](https://arxiv.org/abs/2608.30279) | 3D Vision: 3D Foundation Models; Video Generation and Understanding: Video Understanding | MoSaiC learns point cloud video representations by combining motion-focused masking, geometric motion modeling, and cross-view consistency. | 6 | 7 |
 | 2026-08-31 | [Evaluating 2D and 3D-Aware Vision Foundation Models for Vehicle Attribute Recognition](https://arxiv.org/abs/2608.29929) | 3D Vision: 3D Foundation Models | A benchmark of 14 vision foundation models finds that 2D self-supervised models outperform 3D-aware models for fine-grained vehicle recognition, while 3D-aware features better handle viewpoint variation in vehicle type classification. | 4 | 4 |

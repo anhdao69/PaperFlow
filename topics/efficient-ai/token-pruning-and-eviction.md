@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**34 papers total**
+**39 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [S$^2$Prune: Spatially Structured Visual Token Pruning for Multimodal Large Language Models](https://arxiv.org/abs/2609.01224) | Efficient AI: Token Pruning and Eviction | S²Prune is a training-free visual-token pruning method that preserves broad spatial coverage while allocating more tokens to structurally rich image regions. | 8 | 7 |
+| 2026-09-01 | [SinkPruner: Sink-Free Visual Token Pruning for Multimodal Large Language Models](https://arxiv.org/abs/2609.01004) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | SinkPruner is a training-free, coarse-to-fine method that removes redundant high-norm visual tokens before text-guided pruning, enabling efficient MLLM inference with substantial token reduction. | 9 | 8 |
+| 2026-09-01 | [From Saliency to Discriminability: Rank-Preserving Visual Token Pruning for VLM Rerankers](https://arxiv.org/abs/2609.00667) | Efficient AI: Token Pruning and Eviction | RaDiCal enables efficient VLM reranking by pruning visual tokens according to when attention saliency reliably reflects ranking relevance. | 8 | 7 |
+| 2026-09-01 | [Neurosymbolics for Data Engineering: Achieving Long Context Token Reduction Without Finetuning](https://arxiv.org/abs/2609.00367) | Efficient AI: Token Pruning and Eviction | A drop-in neurosymbolic layer improves finetuning-free reasoning for data engineering while compressing long contexts to reduce inference cost. | 7 | 6 |
+| 2026-09-01 | [DensityKV: Density-Guided KV Cache Compression for Long Video Generation](https://arxiv.org/abs/2608.27922) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | DensityKV is a training-free, density-guided KV-cache compression method that preserves long-horizon consistency in autoregressive video generation while keeping historical storage bounded. | 8 | 8 |
 | 2026-08-31 | [Token-Efficient Data Reasoning Agents via Adaptive Structuring of Unstructured Data](https://arxiv.org/abs/2608.31082) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory | Agentic data cracking adaptively converts unstructured documents into reusable structured knowledge during reasoning, reducing future LLM-agent costs while preserving accuracy. | 7 | 8 |
 | 2026-08-31 | [Every Token Leaves a Ripple in the Stream of Thought: Eliciting Model-Internal Token Saliency for Chain-of-Thought Compression](https://arxiv.org/abs/2608.31066) | Efficient AI: Token Pruning and Eviction | MIST compresses chain-of-thought by ranking tokens according to how much their internal residual-stream contributions affect the model’s answer likelihood. | 9 | 8 |
 | 2026-08-31 | [TopoCompress: Long Context Compression via Graph-Wired Semantic Trajectories](https://arxiv.org/abs/2608.30811) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Long-Context Models | TopoCompress is a training-free, model-agnostic method that uses graph-based semantic trajectories to preserve coherent evidence while compressing long contexts. | 8 | 7 |

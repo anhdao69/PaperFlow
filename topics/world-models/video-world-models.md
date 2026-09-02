@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**34 papers total**
+**36 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [REFACTOR-VLA: Unsupervised Library Learning of Typed Motor Programs](https://arxiv.org/abs/2609.01215) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | REFACTOR-VLA learns reusable, typed motor programs by clustering behaviorally equivalent actions with a learned world model and generating them through a library-conditioned decoder. | 8 | 8 |
+| 2026-09-01 | [IMPACT: Attention Is the Interaction Map for Scalable Interaction-Aware World Model Training](https://arxiv.org/abs/2609.00161) | World Models: Video World Models, Interactive World Models | IMPACT improves interaction-aware world model training by reallocating denoising supervision toward dynamic object regions using attention-derived interaction maps. | 8 | 8 |
 | 2026-08-31 | [Analytic Dynamics: Learning Physics-Grounded Representation for Fast Intrinsic Dynamics Inference from Monocular Videos](https://arxiv.org/abs/2608.31025) | World Models: Video World Models | Analytic Dynamics uses a physics-grounded intermediate representation to infer intrinsic object dynamics efficiently from monocular videos. | 7 | 7 |
 | 2026-08-31 | [Can Video World Models Track Unobserved World States?](https://arxiv.org/abs/2608.30692) | World Models: Video World Models | Video models can render plausible scenes while failing to track hidden world states, unless their architectures maintain and update an explicit persistent state. | 9 | 8 |
 | 2026-08-31 | [Matrix-Game 3.5: Enhancing Real-Time Streaming Interactive World Models with Patch Memory](https://arxiv.org/abs/2608.29910) | World Models: Video World Models, Interactive World Models | Matrix-Game 3.5 improves real-time interactive world generation with geometry-aware patch memory, disentangled scene representations, and progressive distillation for stable, long-horizon simulation. | 8 | 7 |

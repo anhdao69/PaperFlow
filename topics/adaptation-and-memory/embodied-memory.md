@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**12 papers total**
+**13 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [Scaffolding Foundation Models into Physical-World Agents Pushes the Frontier of Long-Horizon Navigation](https://arxiv.org/abs/2608.30396) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | NavMCP combines a vision-language reasoning model with a navigation foundation model to enable persistent, long-horizon physical-world exploration. | 9 | 8 |
 | 2026-08-31 | [Driving on Memory](https://arxiv.org/abs/2608.31029) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | A memory-only driving model can nearly match leading methods on NAVSIM without seeing the current scene, exposing a benchmark limitation in measuring dynamic-scene understanding. | 7 | 7 |
 | 2026-08-31 | [MNIST-PRO: MNIST is Back as a Partially Observable World for AI Agents](https://arxiv.org/abs/2608.31022) | Embodied AI; Adaptation and Memory: Embodied Memory | MNIST-PRO tests whether AI agents can build and update reliable perceptual states from partial visual evidence, revealing major weaknesses beyond simple visual information gathering. | 6 | 6 |
 | 2026-08-31 | [When History Is Multimodal: Rethinking Context Management for Long-Horizon Agents](https://arxiv.org/abs/2608.29897) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning, Embodied Memory | VERA is a training-free, modality-preserving context manager that compresses long interaction histories while retaining native visual evidence, improving efficiency and multimodal task accuracy. | 8 | 8 |

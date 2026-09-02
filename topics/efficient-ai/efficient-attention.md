@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**27 papers total**
+**30 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-01 | [From Language to Behavior: Scaling Sequence Transformers for Industrial Recommendation Ranking with Rec-Native Designs](https://arxiv.org/abs/2609.01240) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | ReST is a recommendation-native Transformer framework that scales behavior-sequence ranking while meeting strict production latency constraints. | 6 | 7 |
+| 2026-09-01 | [Faster Than Flash: Exploiting Attention Sparsity for Efficient Long-Context Decoding](https://arxiv.org/abs/2609.00097) | Efficient AI: Efficient Attention | Faster Flash Decoding accelerates long-context LLM decoding by exploiting attention sparsity with a fused, training-free hardware–algorithm design. | 9 | 8 |
+| 2026-09-01 | [ProxyFormer: A Dual-Stream Proxy Architecture for Ultra-Long Context and High-Resolution Generation](https://arxiv.org/abs/2608.23463) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | ProxyFormer enables ultra-long-context processing and high-resolution generation by compressing local features into proxy tokens for efficient global attention while preserving fine-grained information through a persistent local stream. | 9 | 9 |
 | 2026-08-31 | [Liquid Gated Attention](https://arxiv.org/abs/2608.30695) | Efficient AI: Efficient Attention | Liquid Gated Attention is a solver-free, parallel continuous-time operator that uses observed time intervals to modulate state evolution efficiently over long, irregularly sampled sequences. | 5 | 8 |
 | 2026-08-31 | [Event-Driven Language Models with Sparse Neural Activity for Neuromorphic Hardware](https://arxiv.org/abs/2608.30439) | Efficient AI: Efficient Attention | A threshold-based sparsification method makes quantized linear-attention language models more efficient for event-driven neuromorphic hardware while largely preserving performance. | 8 | 8 |
 | 2026-08-31 | [A.X K2 Technical Report](https://arxiv.org/abs/2608.30181) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | A.X K2 is a 688B-parameter MoE model optimized for agentic tasks, achieving stronger efficiency, long-context performance, and flexible reasoning than its predecessor. | 9 | 8 |
