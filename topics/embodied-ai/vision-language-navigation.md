@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**17 papers total**
+**18 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [LookStep: Efficient Vision-Language Navigation with Linguistic Foresight and Event Driven Memory](https://arxiv.org/abs/2609.02350) | Embodied AI: Vision-Language Navigation | LookStep improves resource-efficient vision-language navigation by predicting linguistic future states and selectively storing observations in a bounded memory. | 9 | 8 |
 | 2026-09-01 | [VerNav: Verifier-First Low-Latency Vision-and-Language Navigation](https://arxiv.org/abs/2609.00920) | Embodied AI: Vision-Language Navigation | VerNav speeds up LLM-based vision-and-language navigation by using batched action verification and invoking generation only when decisions are uncertain, achieving competitive R2R performance with over 10× lower per-step decision latency. | 9 | 8 |
 | 2026-09-01 | [Scaffolding Foundation Models into Physical-World Agents Pushes the Frontier of Long-Horizon Navigation](https://arxiv.org/abs/2608.30396) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | NavMCP combines a vision-language reasoning model with a navigation foundation model to enable persistent, long-horizon physical-world exploration. | 9 | 8 |
 | 2026-08-31 | [LightNav-0: Eliciting VLM Spatial Intelligence for Generalist Embodied Navigation](https://arxiv.org/abs/2608.30935) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | LightNav-0 turns a compact pretrained VLM into a unified, transferable controller for diverse embodied-navigation tasks and robot embodiments. | 10 | 9 |

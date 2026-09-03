@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**19 papers total**
+**21 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [Unified Motion Retargeting for Humanoids with Learned Point Cloud Correspondence](https://arxiv.org/abs/2609.02134) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | UMR learns dense point-cloud correspondences to retarget diverse human motions to different humanoid robots without hand-crafted semantic mappings. | 8 | 8 |
+| 2026-09-02 | [One Demonstration, Many Objects: Generalizing Manipulation via Local Contact Geometry](https://arxiv.org/abs/2609.01938) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | DemoMimic uses local contact geometry and contact-focused rewards to transfer one dexterous manipulation policy across diverse objects and robot hands. | 10 | 8 |
 | 2026-09-01 | [Seeing the World and the Self from Egocentric Video](https://arxiv.org/abs/2609.01276) | Embodied AI: Learning from Human Videos; 3D Vision | RESELF jointly reconstructs the surrounding 3D scene and the wearer’s full-body motion from egocentric video in a shared metric frame. | 8 | 8 |
 | 2026-09-01 | [FoldingAgent: Inferring Parametric Origami Procedures from Demonstration Videos](https://arxiv.org/abs/2609.00377) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | FoldingAgent converts origami demonstration videos into executable, physically plausible parametric folding programs using a tool-augmented vision-language agent. | 8 | 7 |
 | 2026-08-31 | [See the Change, Keep the Flow: Unsupervised Action Segmentation via Spectral-Temporal Representation Learning](https://arxiv.org/abs/2608.29611) | Embodied AI: Learning from Human Videos | SpecT-OT improves unsupervised action segmentation by learning representations that capture both sharp action changes and smooth temporal progression for more reliable optimal-transport pseudo-labels. | 7 | 8 |

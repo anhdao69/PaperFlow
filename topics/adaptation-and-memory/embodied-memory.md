@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**13 papers total**
+**18 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [Epistemic Sybil Resistance: Multiplying AI Agents Without Multiplying Evidence](https://arxiv.org/abs/2609.01873) | Adaptation and Memory: Embodied Memory; Language Foundation Models | Adding AI agents does not necessarily add evidence: reliable collective inference requires tracking independent evidence roots and correlated extraction errors. | 7 | 7 |
+| 2026-09-02 | [Belief-Calibrated Optimization: An Explicit World Model for Agentic Optimization](https://arxiv.org/abs/2609.01861) | World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | Belief-Calibrated Optimization improves agent scaffolds by maintaining an explicit, revisable world model of how edits affect the environment. | 8 | 8 |
+| 2026-09-02 | [The Memory Trust Gap: Capability-Dependent Failures in Persistent-Memory Agents](https://arxiv.org/abs/2609.01852) | Adaptation and Memory: Embodied Memory; Language Foundation Models | Persistent-memory agents increasingly over-trust stale facts as capability grows, especially when stale information appears current, and effective mitigation depends on model scale. | 8 | 7 |
+| 2026-09-02 | [SSAKG 2.0: An Open-Source Package for Structural Associative Sequence Memory and Context-Based Retrieval](https://arxiv.org/abs/2609.01849) | Adaptation and Memory: Embodied Memory; Language Foundation Models | SSAKG 2.0 is an open-source Python/C package that stores ordered sequences as sparse graph structures and reconstructs them from partial, unordered contexts. | 7 | 6 |
+| 2026-09-02 | [Zeta-Lite: A Concurrent, Branchable In-Browser SQL Database for Agentic Memory](https://arxiv.org/abs/2609.01818) | Adaptation and Memory: Embodied Memory | Zeta-Lite brings a compact, concurrent, branchable PostgreSQL-compatible SQL database to the browser, enabling durable and speculative memory for AI agents. | 6 | 8 |
 | 2026-09-01 | [Scaffolding Foundation Models into Physical-World Agents Pushes the Frontier of Long-Horizon Navigation](https://arxiv.org/abs/2608.30396) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | NavMCP combines a vision-language reasoning model with a navigation foundation model to enable persistent, long-horizon physical-world exploration. | 9 | 8 |
 | 2026-08-31 | [Driving on Memory](https://arxiv.org/abs/2608.31029) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | A memory-only driving model can nearly match leading methods on NAVSIM without seeing the current scene, exposing a benchmark limitation in measuring dynamic-scene understanding. | 7 | 7 |
 | 2026-08-31 | [MNIST-PRO: MNIST is Back as a Partially Observable World for AI Agents](https://arxiv.org/abs/2608.31022) | Embodied AI; Adaptation and Memory: Embodied Memory | MNIST-PRO tests whether AI agents can build and update reliable perceptual states from partial visual evidence, revealing major weaknesses beyond simple visual information gathering. | 6 | 6 |

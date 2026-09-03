@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**38 papers total**
+**41 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [PlantC2USeg: Cross-Scale Consistent Pre-Training for Few-Shot Unified Plant Point Cloud Segmentation](https://arxiv.org/abs/2609.02860) | 3D Vision: 3D Foundation Models | PlantC2USeg enables robust few-shot, cross-species plant point-cloud segmentation by aligning representations across spatial scales and restricting decoder information flow. | 6 | 6 |
+| 2026-09-02 | [Adapting a Foundation Model for Lunar Surface Height Estimation](https://arxiv.org/abs/2609.02448) | 3D Vision: 3D Foundation Models | The study fine-tunes Depth Anything V2 on lunar stereophotogrammetry-derived DEMs to improve relative surface-height estimation for landing-hazard localization. | 5 | 4 |
+| 2026-09-02 | [ZipTok3D: High-Fidelity 3D Tokenization with Compact Token Prefixes](https://arxiv.org/abs/2609.01740) | 3D Vision: 3D Foundation Models | ZipTok3D enables high-fidelity 3D reconstruction from extremely short, progressively informative token prefixes. | 8 | 8 |
 | 2026-09-01 | [Revisiting Cross-View Completion: Self-Supervised Pre-Training via Reconstruction Error Comparison](https://arxiv.org/abs/2609.01530) | 3D Vision: 3D Foundation Models | Gekko improves cross-view self-supervised pre-training by using reconstruction-error differences to learn co-visibility and stronger 3D vision features without 3D annotations. | 9 | 8 |
 | 2026-09-01 | [Monocular Depth Estimation from a Single Image: Progress and Opportunities](https://arxiv.org/abs/2609.01172) | 3D Vision: 3D Foundation Models | This survey reviews monocular depth estimation from early learning-based techniques to foundation-model approaches, covering formulations, data, applications, benchmarks, and open challenges. | 7 | 5 |
 | 2026-08-31 | [Lucida: Parse, Generate, and Place for Composable Real-to-Sim Scene Modeling](https://arxiv.org/abs/2608.30821) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; 3D Vision: 3D Foundation Models | Lucida creates editable, simulation-ready indoor scenes by jointly parsing observations, generating complete object assets, and interactively placing them with closed-loop VLM control. | 8 | 8 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**23 papers total**
+**26 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [Language Models Can Control Their Own Attention](https://arxiv.org/abs/2609.02737) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Declarative Attention lets language models state which context region they need, substantially reducing KV-cache reads during long-context decoding with modest accuracy loss. | 9 | 8 |
+| 2026-09-02 | [Trace as State: Reasoning Traces as Conditional States for Long-Context Transformers](https://arxiv.org/abs/2609.02702) | Language Foundation Models: Long-Context Models | Placing a previously generated reasoning trace before a long context substantially improves causal Transformers’ ability to solve long-context reasoning tasks. | 8 | 8 |
+| 2026-09-02 | [HeadWiseKV: Budgeted Per-Head Cache Residency for Hybrid Long-Context Language Models](https://arxiv.org/abs/2609.02029) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | HeadWiseKV reduces hybrid long-context models’ KV-cache memory by assigning each attention head a static history window while preserving near-full-cache quality. | 8 | 8 |
 | 2026-09-01 | [Polish ModernBERT: The Long and Short of Polish Language Understanding](https://arxiv.org/abs/2609.01379) | Language Foundation Models: Long-Context Models | Polish ModernBERT introduces Polish encoder models with standard and 8K-token contexts that deliver strong language-understanding performance with improved long-context and inference efficiency. | 6 | 5 |
 | 2026-09-01 | [MemoryWalker: Stop Training Agents on Contexts They Never Saw](https://arxiv.org/abs/2609.00865) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning; Language Foundation Models: LLM Memory, Long-Context Models | MemoryWalker addresses training–deployment mismatch caused by context compression by exactly or approximately training agents on the tree-structured histories they will actually encounter. | 7 | 8 |
 | 2026-09-01 | [Compile, Don't Memorize: A Context Compilation Architecture (CCA) for In-Context Learning](https://arxiv.org/abs/2609.00759) | Language Foundation Models: Long-Context Models | Context Compilation Architecture (CCA) improves brittle long-context in-context learning by compiling prose into a typed intermediate representation and verifying outputs against it. | 7 | 7 |

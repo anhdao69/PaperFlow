@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**24 papers total**
+**26 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [RoGe: Novel View Synthesis via End-to-End Implicit Reconstruction and Generation](https://arxiv.org/abs/2609.02847) | 3D Vision; Video Generation and Understanding: Video Diffusion | RoGe unifies implicit 3D reconstruction and video generation to synthesize temporally coherent novel views from sparse posed images without an explicit 3D bridge. | 8 | 7 |
+| 2026-09-02 | [How Far Can 5,500 Hours of Driving Take You? A Scaling Law Analysis of Video Diffusion Models](https://arxiv.org/abs/2608.28404) | Video Generation and Understanding: Video Diffusion | A scaling-law study finds that driving video diffusion models benefit most from longer training on fixed data, while larger models achieve better performance when compute and data permit. | 8 | 7 |
 | 2026-09-01 | [H3-World: Turning Language Understanding into World Control](https://arxiv.org/abs/2609.01560) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion | H3-World efficiently converts a pretrained 33B video generator’s language-based controls into precise, temporally grounded interactive world control. | 9 | 8 |
 | 2026-09-01 | [Physically Plausible Video Generation via Visual-Semantic Chain-of-Events Conditioning](https://arxiv.org/abs/2609.00656) | Video Generation and Understanding: Video Diffusion | An event-centric framework improves physically plausible video generation by modeling causal physical transitions and guiding visual synthesis between them. | 7 | 7 |
 | 2026-09-01 | [DensityKV: Density-Guided KV Cache Compression for Long Video Generation](https://arxiv.org/abs/2608.27922) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | DensityKV is a training-free, density-guided KV-cache compression method that preserves long-horizon consistency in autoregressive video generation while keeping historical storage bounded. | 8 | 8 |

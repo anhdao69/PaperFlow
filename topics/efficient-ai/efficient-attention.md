@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**30 papers total**
+**34 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [Graph Machine: Towards Better Pretraining via Edges](https://arxiv.org/abs/2609.02881) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | Graph Machine enables dynamic, sparse access to an O(n)-sized state, improving the efficiency of large-scale language-model pretraining while largely preserving loss. | 9 | 9 |
+| 2026-09-02 | [Language Models Can Control Their Own Attention](https://arxiv.org/abs/2609.02737) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Declarative Attention lets language models state which context region they need, substantially reducing KV-cache reads during long-context decoding with modest accuracy loss. | 9 | 8 |
+| 2026-09-02 | [CRISP: Cliff-awaRe Input-adaptive Sparse Prefilling with Structural-Mass-Motivated Routing](https://arxiv.org/abs/2609.01925) | Efficient AI: Token Pruning and Eviction, Efficient Attention | CRISP enables faster, input-adaptive sparse attention prefilling by routing from attention-map structure and using a noise-aware mass threshold. | 7 | 7 |
+| 2026-09-02 | [hLLM: Single Pass Decoding for Generative Reranking](https://arxiv.org/abs/2609.01807) | Efficient AI: Efficient Attention | hLLM replaces token-by-token generative reranking with a single-pass score-matrix prediction and Hungarian assignment, achieving much faster permutation decoding while preserving teacher-level ranking quality. | 7 | 8 |
 | 2026-09-01 | [From Language to Behavior: Scaling Sequence Transformers for Industrial Recommendation Ranking with Rec-Native Designs](https://arxiv.org/abs/2609.01240) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | ReST is a recommendation-native Transformer framework that scales behavior-sequence ranking while meeting strict production latency constraints. | 6 | 7 |
 | 2026-09-01 | [Faster Than Flash: Exploiting Attention Sparsity for Efficient Long-Context Decoding](https://arxiv.org/abs/2609.00097) | Efficient AI: Efficient Attention | Faster Flash Decoding accelerates long-context LLM decoding by exploiting attention sparsity with a fused, training-free hardware–algorithm design. | 9 | 8 |
 | 2026-09-01 | [ProxyFormer: A Dual-Stream Proxy Architecture for Ultra-Long Context and High-Resolution Generation](https://arxiv.org/abs/2608.23463) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | ProxyFormer enables ultra-long-context processing and high-resolution generation by compressing local features into proxy tokens for efficient global attention while preserving fine-grained information through a persistent local stream. | 9 | 9 |

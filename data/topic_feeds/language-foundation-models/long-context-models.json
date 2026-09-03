@@ -1,6 +1,550 @@
 {
   "days": [
     {
+      "date": "2026-09-02",
+      "paper_count": 3,
+      "papers": [
+        {
+          "abstract": "Language models spend most of their attention on a small fraction of context, yet they read the entire KV cache to find the few tokens that matter. If the user asks about a previous detail in a 1M-token conversation, global attention layers must scan the full context to generate each token of the reply. A prominent approach mitigates this cost by pre-selecting relevant tokens via lightweight proxy scores, but this extrinsic scoring still incurs O(N) per step. We take an intrinsic approach motivated by the simple question: wouldn't the model already know which parts of the context are relevant? To this end, we introduce Declarative Attention (DA), a protocol that elicits the model to declare where it needs to attend within its chain-of-thought, partitioning generation into three modes: (full context), (a specific region), and (recent output only). The inference engine parses these declarations like tool calls and skips most of the KV cache read. Under zero-shot evaluation across 15 long-context tasks, DA on off-the-shelf models (Gemma-4-31B, Qwen-3.6-27B) significantly reduces total attended tokens during decoding (52.0%, 31.1%) with modest accuracy drops (1.27pp, 2.75pp) that shrink with model scale. DA unlocks a new axis of sparse attention, with further potential under training-based methods that future work can explore.",
+          "arxiv_id": "2609.02737",
+          "arxiv_url": "https://arxiv.org/abs/2609.02737",
+          "authors": [
+            "Namgyu Ho, Huzama Ahmad, Woosung Koh, Se-Young Yun, Tal Schuster, Cicero Nogueira dos Santos"
+          ],
+          "bullets": [
+            "Problem: Global attention scans the full context at every decoding step, making million-token conversations expensive.",
+            "Method: The model emits attention declarations—full context, a specific region, or recent output only—which the inference engine uses to skip irrelevant KV-cache reads.",
+            "Result: In zero-shot evaluation on 15 long-context tasks, attended tokens decreased by 52.0% and 31.1% on two off-the-shelf models, with accuracy drops of 1.27 and 2.75 percentage points.",
+            "Scope: Accuracy degradation shrinks with model scale; training-based improvements remain future work."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Declarative Attention (DA) lets a model control its own attention span. (Prompt) A system instruction, long context information divided into segments that we refer to as “magic chunks”, the user’s question, and the DA instruction. (Model Response) The model freely alternates between three modes: <global> navigates the full context, <focus> reasons upon the named chunk, and <local> reasons upon the information accumulated in the response so far. Our protocol does not restrict how, when, or how many times each mode is used. (Declarative Attention Mask) A segment-level attention mask is derived from the model response text based on the DA syntax. Each row represents the global, focus, and local reasoning steps, respectively. The scaffold (system, question, instruction) stays attended in every mode, while context segments are masked (dashed) except those the mode keeps: all segments under <global>, the focused segment (marked F) under <focus>, and none under <local>. DA needs no auxiliary scorer and runs on off-the-shelf models with no training.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 826,
+              "image_path": "figures/2609.02737/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1035
+            },
+            {
+              "caption": "Figure 2: DA’s efficiency comes from attention masking rather than shorter generation. Accuracy, decode steps, and attended tokens for Vanilla, DA, and DAnm on the two headline models, each normalized to that model’s vanilla. Even though DA is elicited zero-shot and generates more tokens than vanilla, it attends far fewer, so its efficiency comes entirely from the attention mask. (a) Accuracy is nearly matched across all three arms (a 1–3pp drop for DA). (b) DA and DAnm both run more decode steps than vanilla (about 15–35% more), a byproduct of the zero-shot protocol. (c) Despite the extra steps, DA attends far fewer tokens than vanilla because of per-step masking, whereas DAnm attends more, since its extra steps run at full attention.",
+              "figure_id": "figure-2-18",
+              "figure_number": "2",
+              "height": 301,
+              "image_path": "figures/2609.02737/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 982
+            },
+            {
+              "caption": "Figure 3: DA accuracy scales favorably with backbone size. Metrics are normalized to each model’s vanilla baseline and the x-axis is total parameters. (a) Relative accuracy rises toward parity as the backbone grows, in both families. (b) Relative attended tokens: DA attends roughly half of vanilla on five of six models. Black lines mark each bar’s value when non-terminating responses (those exhausting the 8K generation budget) are excluded from both arms. Gemma-4-12B sits above vanilla only because about 6% of its DA responses fail to terminate, a decode-length artifact rather than a property of the mask: excluding them brings it just below vanilla (98%). Qwen-3.5-4B shows a milder version of the same effect (50% to 38%), and non-termination occurs in its vanilla arm as well, a small-model trait rather than a DA effect.",
+              "figure_id": "figure-3-19",
+              "figure_number": "3",
+              "height": 285,
+              "image_path": "figures/2609.02737/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 804
+            },
+            {
+              "caption": "Figure 6: DA focus adherence improves with model size. (a) Focus success rate, the fraction of focus calls that parse to a valid chunk reference, rises toward 100% as the backbone grows in both families; the smallest model (Gemma-4-E4B, 58%) is the clear outlier, consistent with its accuracy collapse in Figure 3. (b) Focus attempts per response show no clear trend with model size, holding in a narrow band of about 1.4 to 1.9. Models are grouped by family and ordered by size.",
+              "figure_id": "figure-6-17",
+              "figure_number": "6",
+              "height": 301,
+              "image_path": "figures/2609.02737/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 807
+            },
+            {
+              "caption": "Figure 4: DA holds accuracy near vanilla while its absolute token saving grows with context length. All 15 sources are pooled and binned by context length on Gemma-4-31B. (a) Relative accuracy (normalized to vanilla): DA stays within ∼1pp of vanilla through 32K and then declines modestly at longer contexts, a decline absent from the maskless DA-nm line. (b) Absolute attended-token delta versus vanilla (millions per response): DA’s saving grows from about −1M at short context to about −21M in the longest bin, while DA-nm’s overhead grows positive. The constant-fraction (relative) attention view and the Qwen-3.6-27B counterpart are in Appendix E.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 368,
+              "image_path": "figures/2609.02737/figure-005.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 808
+            },
+            {
+              "caption": "Figure 5: DA spends most tokens in cheap modes, with larger savings at longer contexts. Results on Gemma-4-31B. (a) Token share by mode across context-length buckets; <focus> and <local> account for about 73% of generated tokens, and <global>’s share rises at the longest contexts. (b) Per-token attention saved relative to vanilla: <global> saves 0% by construction, while <focus> and <local> save 76–99% per token, with savings growing as context lengthens. The Qwen-3.6-27B counterpart is in Appendix E.",
+              "figure_id": "figure-5-16",
+              "figure_number": "5",
+              "height": 353,
+              "image_path": "figures/2609.02737/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 808
+            },
+            {
+              "caption": "Figure 7: Agreement between local and frontier LLM judges. Per-sample accuracies from the local Qwen-3.5-4B judge closely match those from the frontier Gemini-3.1-Pro judge across 15 long-context QA sources, two backbone models, and three inference methods. Points near the diagonal indicate strong judge consistency, supporting the use of Qwen-3.5-4B for scalable evaluation.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 482,
+              "image_path": "figures/2609.02737/figure-007.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 492
+            },
+            {
+              "caption": "Figure 8: On Qwen, DA’s long-context accuracy and token savings erode more than on Gemma. Counterpart to Figure 4, on Qwen-3.6-27B. DA’s accuracy declines somewhat more with context than on Gemma, to roughly 92% of vanilla in the longest bin, and its token savings shrink at long context (DA rises toward vanilla while DAnm spikes well above it). This reflects Qwen’s greater reliance on the unmasked global mode at long context, shown in Figure 9.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 371,
+              "image_path": "figures/2609.02737/figure-008.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 808
+            },
+            {
+              "caption": "Figure 9: Qwen matches Gemma’s per-token savings but shifts more into global mode at long context. Counterpart to Figure 5, on Qwen-3.6-27B. Per-token savings match Gemma’s (focus and local save 74–99% per token on Qwen, against 76–99% on Gemma), but Qwen spends an increasing share of tokens in the unmasked global mode as context grows, reaching about 55% in the longest bucket versus roughly 45% on Gemma, which is why its total token savings are smaller at long context.",
+              "figure_id": "figure-9-13",
+              "figure_number": "9",
+              "height": 353,
+              "image_path": "figures/2609.02737/figure-009.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 808
+            },
+            {
+              "caption": "Figure 10: DA’s per-step masking saves a roughly constant fraction of tokens across context length. The same Gemma-4-31B pooling as Figure 4b, normalized to vanilla rather than shown as an absolute delta. DA attends about 50–64% of vanilla in every context bin, while DA-nm stays above vanilla. Together with the absolute view in Figure 4b, this shows that DA’s saving is a stable fraction of a growing total, so the absolute token saving scales up with context length.",
+              "figure_id": "figure-10-14",
+              "figure_number": "10",
+              "height": 406,
+              "image_path": "figures/2609.02737/figure-010.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 482
+            },
+            {
+              "caption": "Table 6: KV bytes per context token, as of August 2026. Stored bytes are what a context token occupies across the global attention layers, and the O(N) read is what one decode step must read per context token. The two coincide under full attention, at 13.8 to 254.0 KB per token as served, and separate by a factor of 6.6 to 33 under indexer-based sparse attention, where the step scans only the indexer keys at O(N) and reads a fixed top-𝑘 set besides, at 0.35 to 2.77 KB per token. MiniMax-M3 is the exception at 20.7 KB, because three of its 60 layers keep full attention and read their whole cache every step. The bf16 columns make the architectures comparable at one precision, and the as-served columns charge the dtype each vendor’s recipe specifies. They agree wherever a width is fixed by the architecture, which is why every indexer read is unchanged between them. \"Forced\" marks a layout the model’s tech report fixes, for which no uniform-bf16 figure is published. 𝐿global counts the layers whose per-step read grows with context, which excludes sliding-window and linear-attention layers. †Not part of the roofline set of Table 7.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 642,
+              "image_path": "figures/2609.02737/table-011.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 956
+            },
+            {
+              "caption": "Table 2: DA reduces attention cost with a 1–3pp average accuracy drop. Across 15 long-context tasks, DA reduces total average attended tokens by 52.0% on Gemma-4-31B and 31.1% on Qwen-3.6-27B, with average accuracy drops of 1.27pp and 2.75pp respectively. DAnm represents the DA ablation without custom attention masking. Averages are shown in",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 615,
+              "image_path": "figures/2609.02737/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 983
+            },
+            {
+              "caption": "Table 1: The benchmark suite spans 15 long-context sources, from short documents to million-token code repositories. We group the sources into two categories, single-span retrieval/reasoning and multi-span reasoning, drawing on synthetic and original QA from RULER, LongBench v1/v2, LooGLE, and ZeroScrolls. The Context Length columns report Mean / STD over the source.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 442,
+              "image_path": "figures/2609.02737/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 987
+            },
+            {
+              "caption": "Table 7: Roofline decode decomposition at a 1M-token context. One decode step on a single B200 at MFU 40% and MBU 70%, with each model charged at the KV dtype its vendor’s serving recipe specifies and its matmul at the matching compute peak. The global read is 94.11 to 99.37% of the step for the full-attention models above the rule and 56.49 to 97.50% for the indexer-based designs below it, so attention carries the decode step across both groups. The two indented rows show what Qwen3.8-Max and Kimi-K3 cost at the bf16 cache their stacks default to without that recipe, which moves neither range. 𝑠local collects sliding-window reads, linear-attention recurrent states, and the fixed top-𝑘 attention reads of the indexer-based models.",
+              "figure_id": "table-7-20",
+              "figure_number": "7",
+              "height": 288,
+              "image_path": "figures/2609.02737/table-014.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 860
+            },
+            {
+              "caption": "Table 3: Estimated decode wall-clock time on an optimized disaggregated inference setup. Per-response decode cost for each model and arm on a single B200 accelerator in bf16, summed over the generation and averaged across the 15 tasks, at MFU 40% for the compute-bound matmuls and MBU 70% for the memory-bound reads. Matmul covers all projection, feed-forward, and output-head GEMMs. Global Memory is the global-attention KV read that the DA mask reduces. Local Memory is the fixed per-step read of the efficient layers, the sliding window attention (SWA) KV cache on Gemma-4-31B and the Gated DeltaNet (GDN) recurrent state on Qwen-3.6-27B, which DA does not reduce. Byte counts are bf16 and summed over all decode steps. DA reduces roofline-estimated decode wall-clock time to 0.71× (Gemma) and 0.77× (Qwen) of vanilla. Appendix C derives each entry.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 184,
+              "image_path": "figures/2609.02737/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 704
+            },
+            {
+              "caption": "Table 10: DA failure cases on Gemma-4-31B. The six sources where DA fails to preserve accuracy or fails to reduce attended tokens, grouped by the two structural failure modes. The cost is either accuracy (cluster 1: 84.2→58.8% mean) or attended-token inflation (cluster 2: 17.8→21.2M/sample), even though per-step attention still falls on every source. DAnm is the DA ablation without custom attention masking. Columns are Accuracy (%) and Attended Tokens (M / sample), each with Vanilla / DAnm / DA, all on Gemma-4-31B.",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 427,
+              "image_path": "figures/2609.02737/table-016.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 704
+            },
+            {
+              "caption": "Table 8: Attention share against context length and against the utilization assumptions. The left block holds MFU and MBU fixed and varies 𝑁 , and the right block holds 𝑁 at 1M and takes the two corners of the reported utilization ranges of Appendix C.5, MFU 40 to 60% and MBU 60 to 85%. Context length moves the share far more than the utilization choice does, which is why the headline states 1M explicitly. Across the whole utilization box the 1M shares span 54.4 to 99.59%, so the conclusion does not rest on the particular values we adopt. See Table 7.",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 321,
+              "image_path": "figures/2609.02737/table-017.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 808
+            },
+            {
+              "caption": "Table 9: Judge agreement between local judge (Qwen-3.5-4B) and frontier judge (Gemini-3.1-Pro). Per-benchmark accuracies (%) from the two judges on a stratified validation sample of 2993 responses (15 benchmarks × 3 arms: Vanilla, DAnm, DA× 2 backbones: Qwen-3.6-27B, Gemma-4-31B). Accuracies are sample-weighted means across arms and backbones; Δ is local − Gemini in percentage points. The two judges agree on 98.53% of individual verdicts (𝜅 = 0.940), per-cell accuracies correlate at 𝑟 = 0.992, and disagreements are symmetric (McNemar 𝑝 = 0.65), supporting use of the local judge for all main-paper accuracy reporting.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 523,
+              "image_path": "figures/2609.02737/table-018.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 488
+            },
+            {
+              "caption": "Table 4: Per-model constants for the wall-time decomposition. Active params 𝑃 , global attention layers 𝐿global, KV bytes per token 𝑏kv, fixed per-step local read 𝑠local, and the local mechanism, each following the published configuration in bf16.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 94,
+              "image_path": "figures/2609.02737/table-019.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 889
+            },
+            {
+              "caption": "Table 5: Trace inputs (macro-averaged over the 15 tasks). Decode-step count 𝐷 and attended-token total 𝐴, measured directly from the generated responses of each arm.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 140,
+              "image_path": "figures/2609.02737/table-020.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 541
+            }
+          ],
+          "first_seen_at": "2026-09-02T21:00:00-04:00",
+          "hero_figure": "figures/2609.02737/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.02737",
+          "relevance": 9,
+          "selection_reason": "Declarative attention protocol that skips most KV cache reads via model-declared attention regions; directly targets efficient attention, KV cache reduction, and long-context processing.",
+          "summary_status": "generated",
+          "title": "Language Models Can Control Their Own Attention",
+          "tldr": "Declarative Attention lets language models state which context region they need, substantially reducing KV-cache reads during long-context decoding with modest accuracy loss.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Transformers process information causally, but long-context reasoning may depend on task state discovered only later. We formalize this mismatch through conditional state update tasks. For causal state update processors, providing the condition first can require exponentially less memory in the worst case than providing it last. Motivated by this principle, we introduce Trace as State. We use collected reasoning traces as a textual proxy for task state and place it before the long-context block on a fresh pass, allowing information derived previously to guide rereading. We conduct extensive experiments on Trace as State and Trace Append, a matched control that uses the same task state proxy but put it after the context. Across three models and three long-context datasets, Trace as State outperforms Trace Append in 26 of 27 reported combinations of model, task, and metric. On GraphWalks Parents, exact match lifts DeepSeek V4 Pro Preview from 29.2% on the initial pass and 43.0% with Trace Appendto 81.8% with Trace as State, and from 66.4% and 83.2% to 100.0% for GLM-5.2. These results show that placing traces before the context can improve long-context reasoning while retaining the causal transformer structure.",
+          "arxiv_id": "2609.02702",
+          "arxiv_url": "https://arxiv.org/abs/2609.02702",
+          "authors": [
+            "Xu Zou, Jie Tang"
+          ],
+          "bullets": [
+            "The work addresses a causal-order mismatch: useful task state may only be discovered after processing later context.",
+            "Trace as State reuses collected reasoning traces as a textual task-state summary and places them before a fresh rereading pass.",
+            "Trace Append is a matched control that places the same trace after the context.",
+            "Across three models and three datasets, Trace as State outperformed Trace Append in 26 of 27 model-task-metric combinations.",
+            "On GraphWalks Parents, exact match improved to 81.8% for DeepSeek V4 Pro Preview and 100.0% for GLM-5.2."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview for TRACE AS STATE (A) A causal processor carries one running state. (B) In a worstcase conditional state update task, condition-first processing tracks only the realized state, whereas condition-last processing can require exponentially more working memory. (C) Reasoning trace T provides a textual proxy for task state. (D) TRACE AS STATE places T before the context in a fresh causal pass.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 646,
+              "image_path": "figures/2609.02702/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 941
+            },
+            {
+              "caption": "Figure 3: GraphWalks exact-match gains over the first pass by BFS depth d (left) and gold-parent count k (right). The blue and orange curves report ∆pre and ∆post. Bin supports appear below the panels. Yellow shading marks descriptive, outcome-informed ranges of larger separation, with boundaries chosen separately for each model and subtask.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 993,
+              "image_path": "figures/2609.02702/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 767
+            },
+            {
+              "caption": "Figure 4: Set F1 gains for the same BFS (top) and Parents (bottom) stratifications. Set F1 records partial overlap between predicted and gold node sets. Yellow shading again marks descriptive, outcome-informed ranges selected separately for each model, subtask, and metric.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 964,
+              "image_path": "figures/2609.02702/figure-003.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 884
+            },
+            {
+              "caption": "Figure 2: Trace-count ablation on DeepSeek V4 Pro GraphWalks 256K. Panel A reports BFS F1 and Panel B reports Parents F1. Shading shows 95% percentile confidence intervals.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 581,
+              "image_path": "figures/2609.02702/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 450
+            },
+            {
+              "caption": "Figure 5: Uncertainty for the strict same-T comparisons. The top two rows show GraphWalks 256K exact match and set F1, split into BFS and Parents; the bottom two wide rows show MRCRv2 8-needle exact match and SequenceMatcher ratio, split into 256K and 512K bins. The final panel shows NUB-1M accuracy. Points are means; bars are 95% percentile intervals after averaging 5 repeats within each problem.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 1125,
+              "image_path": "figures/2609.02702/figure-005.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 678
+            },
+            {
+              "caption": "Figure 6: Uncertainty for DeepSeek V4 Pro GraphWalks 256K control comparisons in exact match and set F1. Points are means; bars are 95% percentile intervals from 20,000 problem-cluster bootstrap resamples (seed 0). Majority@5 retains answer elements occurring in at least three repeat-level prediction sets, and Oracle@5 reports the retrospective maximum evaluator score among the five outputs. Other conditions average five planned repeats within each problem and assign zero to missing or invalid outputs.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 736,
+              "image_path": "figures/2609.02702/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 810
+            },
+            {
+              "caption": "Table 2: Long-context results for first pass, TRACE AS STATE and TRACE APPEND. Scores are percentages averaged over 5 repeats; higher is better. The best score within each model-metric column is bolded.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 454,
+              "image_path": "figures/2609.02702/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 854
+            },
+            {
+              "caption": "Table 1-1: Model configuration and token budgets used in the experiments.",
+              "figure_id": "table-1-1-1",
+              "figure_number": "1-1",
+              "height": 297,
+              "image_path": "figures/2609.02702/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 433
+            },
+            {
+              "caption": "Table 4: The fixed serialization used to construct the reusable trace block.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 294,
+              "image_path": "figures/2609.02702/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 925
+            },
+            {
+              "caption": "Table 1: Vital Notations.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 308,
+              "image_path": "figures/2609.02702/table-010.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 450
+            },
+            {
+              "caption": "Table 1-2: Datasets and scoring used in the experiments.",
+              "figure_id": "table-1-2-2",
+              "figure_number": "1-2",
+              "height": 224,
+              "image_path": "figures/2609.02702/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 439
+            },
+            {
+              "caption": "Table 6: Provider-reported token usage for main-result inference, in millions. Tokens reports the pass named in each row. For TRACE APPEND and TRACE AS STATE, Total tokens adds First Pass component-wise; those columns are blank for First Pass itself. Missed input is total input minus cached input.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 817,
+              "image_path": "figures/2609.02702/table-012.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 575
+            }
+          ],
+          "first_seen_at": "2026-09-02T21:00:00-04:00",
+          "hero_figure": "figures/2609.02702/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.02702",
+          "relevance": 8,
+          "selection_reason": "Proposes placing reasoning traces before long context to improve long-context reasoning in causal transformers; directly fits long-context models.",
+          "summary_status": "generated",
+          "title": "Trace as State: Reasoning Traces as Conditional States for Long-Context Transformers",
+          "tldr": "Placing a previously generated reasoning trace before a long context substantially improves causal Transformers’ ability to solve long-context reasoning tasks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context inference retains a growing key--value (KV) cache during decoding, which consumes substantial GPU memory and can reduce generation throughput. This bottleneck remains in hybrid language models because their residual global-attention layers can dominate context-dependent cache demand. We study how to allocate this state under an aggregate KV-residency budget. We introduce HeadWiseKV, a training-free framework that compresses the residual global KV caches of hybrid language models while preserving their native local, recurrent, and linear paths. It assigns each physical KV head a static, multilevel history window, making cache demand predictable before serving. We formulate this allocation as a restricted operational rate--distortion problem and propose SeqCalib as the core policy-generation algorithm in HeadWiseKV. SeqCalib processes layers in execution order and conditions each decision on the lower-layer policy used at deployment, thereby accounting for interactions across depth. A grouped-cache runtime materializes the selected policy as actual per-head KV residency rather than a mask over a full cache. We evaluate downstream quality across four hybrid long-context models and study physical residency and serving behavior on Qwen3.6-27B. HeadWiseKV retains near-Full-KV RULER and LoCoMo quality across the evaluated models. In the fixed-model systems study, it reduces sampled peak device memory by 8.59\\% at a 112K context length and extends the largest verified successful context from 114K to 161K.",
+          "arxiv_id": "2609.02029",
+          "arxiv_url": "https://arxiv.org/abs/2609.02029",
+          "authors": [
+            "Renjie Xie, Juncheng Yang, Aoting Hu, Mingxi Zhang, Liyao Wu, Zheheng Hong, Wei Xu"
+          ],
+          "bullets": [
+            "Targets GPU-memory and throughput bottlenecks caused by growing residual global-attention KV caches.",
+            "Uses a training-free, budgeted per-head allocation over multilevel history windows while preserving local, recurrent, and linear paths.",
+            "SeqCalib generates policies in execution order and accounts for interactions with lower-layer deployment policies.",
+            "A grouped-cache runtime materializes only the selected per-head KV residency.",
+            "Across four models, it maintains near-Full-KV RULER and LoCoMo quality; in one fixed-model study, peak device memory fell 8.59% at 112K context and verified context length rose from 114K to 161K."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of HeadWiseKV. Residual global-attention layers can have heterogeneous history requirements across KV heads. Offline SeqCalib evaluates a finite suffix codebook one layer at a time under the frozen lower-layer policy and produces a static policy matrix. The runtime loads this matrix once and materializes grouped per-head caches with different physical lengths. Window values are illustrative.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 403,
+              "image_path": "figures/2609.02029/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1032
+            },
+            {
+              "caption": "Figure 3: Systems scaling for the fixed-model case study (Qwen3.6-27B Q4_K_M, F16 KV). Panels report sampled peak VRAM, prefill throughput, and decode throughput across context lengths. Filled Full-KV and HeadWiseKV curves form the matched cohort; the remaining baselines are absolute campaign traces. In Panel (a), dotted extensions show independent capacity successes and gray crosses mark adjacent OOM tests. For StreamingLLM (4 + 90,364), points at C ≤ 90,368 reuse the matched Full-KV measurements because no eviction is triggered and are not independent measurements; the 96K, 112K, and 128K points are measured with our adapted Qwen/llama.cpp fixed-cache control.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 343,
+              "image_path": "figures/2609.02029/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 1: Qwen3.6-27B memory, capacity, and quality summary. HeadWiseKV lowers sampled peak device memory and expands the verified context range while preserving long-context quality. Panel (a) combines matched memory measurements with independent adjacent-grid capacity brackets; panel (b) reports recorded RULER and LoCoMo scores. The systems and quality panels use separately recorded τ = .995 operating points and do not form a joint quality–systems result.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 404,
+              "image_path": "figures/2609.02029/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 467
+            },
+            {
+              "caption": "Figure 4: Single-run context sweep for Qwen3.5-9B Q4_K_M on one RTX 4090 D. The panels report sampled wholeinvocation peak VRAM, prefill throughput, and post-prompt decode throughput at 8, 16, 32, 64, 96, 112, and 128K runtime slots. Each point is one fresh-server invocation that generates 128 tokens, so the curves have no error bars. HeadWiseKV uses τ = .995. StreamingLLM at 8–64K and DuoAttention at 8–16K reserve 512 tokens for the fixed-cache ubatch, so these are independently measured compressed-layout points.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 344,
+              "image_path": "figures/2609.02029/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1030
+            },
+            {
+              "caption": "Table 2: Fixed-model downstream and 128K systems comparison on Qwen3.6-27B Q4_K_M. τ2-Bench uses no-thinking decoding. Higher values are better for all metrics except RQ 128K. “Static” denotes a capacity and selection rule fixed before serving, whereas “Dynamic” denotes request-conditioned score-based selection. AdaKV and HeadKV-R2 use context-wise KV budgets matched to the HeadWiseKV τ = .995 quality policy. The final two columns report pooled throughput at 128K over three repetitions on an RTX 4090 D; OOM denotes failed admission in all attempts. These systems entries are absolute rather than matched quality–throughput comparisons.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 234,
+              "image_path": "figures/2609.02029/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1052
+            },
+            {
+              "caption": "Table 1: Mechanistic comparison of KV-cache methods. We compare Ada-KV + SnapKV (Feng et al. 2025; Li et al. 2024), StreamingLLM (Xiao et al. 2024b), DuoAttention (Xiao et al. 2025), HeadKV (Fu et al. 2025), RazorAttention (Tang et al. 2025), and KV-Compress (Rehg 2024). “Offline capacities” means that cache lengths are fixed before requests. “Prompt-independent retention” means that retention does not use request content or observed attention. “Physical before prefill” means that the runtime reduces allocated storage before constructing the cache. ✓ denotes yes, ◦ denotes partial, and × denotes no, –: not documented.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 296,
+              "image_path": "figures/2609.02029/table-006.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 502
+            },
+            {
+              "caption": "Table 4: Cross-model downstream quality of HeadWiseKV. Results use the shared τ = .995 setting with Q4_K_M weights. Arrows report Full-KV → HeadWiseKV. Because τ induces model-specific retention, all comparisons are within model.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 166,
+              "image_path": "figures/2609.02029/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 466
+            },
+            {
+              "caption": "Table 3: Quality across fixed-model HeadWiseKV operating points. Retention is measured over configurable global KV heads at 128K.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 137,
+              "image_path": "figures/2609.02029/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 500
+            },
+            {
+              "caption": "Table 5: LongMemEval-S accuracy and peak memory for Qwen3.5-9B Q4_K_M. Reviewed ACC is the post-audit score from the shared 500-question protocol. Peak VRAM comes from a separate standardized single-RTX-4090-D workload with a 130,943-token prompt and 128 generated tokens in a 131,072-token runtime slot; each value is the median of three fresh-server, whole-invocation physical-device peaks. Arrows indicate the preferred direction. Full-KV is the uncompressed reference.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 273,
+              "image_path": "figures/2609.02029/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 508
+            }
+          ],
+          "first_seen_at": "2026-09-02T21:00:00-04:00",
+          "hero_figure": "figures/2609.02029/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.02029",
+          "relevance": 8,
+          "selection_reason": "Budgeted per-head KV cache residency compression for hybrid long-context LLMs, directly relevant to KV-cache and memory efficient inference.",
+          "summary_status": "generated",
+          "title": "HeadWiseKV: Budgeted Per-Head Cache Residency for Hybrid Long-Context Language Models",
+          "tldr": "HeadWiseKV reduces hybrid long-context models’ KV-cache memory by assigning each attention head a static history window while preserving near-full-cache quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-01",
       "paper_count": 6,
       "papers": [
@@ -5427,5 +5971,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 23
+  "total_paper_count": 26
 }

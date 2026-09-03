@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**11 papers total**
+**12 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [Beyond Textual Chain-of-Thought: A Survey on Action-Grounded Reasoning in Autonomous Driving](https://arxiv.org/abs/2609.01659) | Embodied AI: Robot Navigation, Vision-Language-Action; World Models: Latent Action Models | This survey reframes autonomous-driving chain-of-thought as action-grounded reasoning and organizes existing work by how intermediate states represent the driving world. | 8 | 7 |
 | 2026-09-01 | [REFACTOR-VLA: Unsupervised Library Learning of Typed Motor Programs](https://arxiv.org/abs/2609.01215) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | REFACTOR-VLA learns reusable, typed motor programs by clustering behaviorally equivalent actions with a learned world model and generating them through a library-conditioned decoder. | 8 | 8 |
 | 2026-08-31 | [Does Latent Planning Survive Point Clouds? Action-Conditioned JEPA World Models for Geometric Observations](https://arxiv.org/abs/2608.29434) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Interactive World Models | Action-conditioned JEPA world models can support robust latent planning from sparse, unordered point clouds, with geometry enabling target-based goals without goal observations. | 8 | 8 |
 | 2026-08-31 | [Hydra: A Navigation World Action Model with Discrete Latent Planning and Continuous Flow-Matching Execution](https://arxiv.org/abs/2608.28995) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Interactive World Models | Hydra enables real-time robot navigation by planning over discrete latent intents and converting them into smooth continuous trajectories without decoding candidate futures into pixels. | 9 | 9 |

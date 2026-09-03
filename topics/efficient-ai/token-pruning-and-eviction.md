@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**39 papers total**
+**42 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [ViSAR: Training-Free Adaptive-$k$ Retrieval for Visual Document Question Answering](https://arxiv.org/abs/2609.02486) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | ViSAR is a training-free retrieval method that dynamically selects the number of document pages for DocVQA, reducing RAG latency while preserving or improving answer accuracy. | 7 | 7 |
+| 2026-09-02 | [CRISP: Cliff-awaRe Input-adaptive Sparse Prefilling with Structural-Mass-Motivated Routing](https://arxiv.org/abs/2609.01925) | Efficient AI: Token Pruning and Eviction, Efficient Attention | CRISP enables faster, input-adaptive sparse attention prefilling by routing from attention-map structure and using a noise-aware mass threshold. | 7 | 7 |
+| 2026-09-02 | [Variable-Granularity Tokenization for High-Resolution Object Detection](https://arxiv.org/abs/2608.28706) | Efficient AI: Token Pruning and Eviction | VGTok uses image-only regional structure cues to allocate tokens adaptively, preserving tiny-object detection accuracy while substantially reducing transformer compute and memory. | 8 | 8 |
 | 2026-09-01 | [S$^2$Prune: Spatially Structured Visual Token Pruning for Multimodal Large Language Models](https://arxiv.org/abs/2609.01224) | Efficient AI: Token Pruning and Eviction | S²Prune is a training-free visual-token pruning method that preserves broad spatial coverage while allocating more tokens to structurally rich image regions. | 8 | 7 |
 | 2026-09-01 | [SinkPruner: Sink-Free Visual Token Pruning for Multimodal Large Language Models](https://arxiv.org/abs/2609.01004) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | SinkPruner is a training-free, coarse-to-fine method that removes redundant high-norm visual tokens before text-guided pruning, enabling efficient MLLM inference with substantial token reduction. | 9 | 8 |
 | 2026-09-01 | [From Saliency to Discriminability: Rank-Preserving Visual Token Pruning for VLM Rerankers](https://arxiv.org/abs/2609.00667) | Efficient AI: Token Pruning and Eviction | RaDiCal enables efficient VLM reranking by pruning visual tokens according to when attention saliency reliably reflects ranking relevance. | 8 | 7 |

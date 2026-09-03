@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**36 papers total**
+**38 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-02 | [SolarWM: Open Data and Scalable Training for Long-Horizon Video World Models](https://arxiv.org/abs/2609.02886) | World Models: Video World Models, Interactive World Models | SolarWM is an open, scalable framework for training reproducible long-horizon interactive video world models across diverse data sources and video backbones. | 9 | 9 |
+| 2026-09-02 | [Spatially Aware World Action Model via Geometric Latent Diffusion](https://arxiv.org/abs/2609.02531) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | SA-WAM extends video-based world action models with depth-aware geometric latent diffusion for more effective 3D robot action and future-state prediction. | 9 | 9 |
 | 2026-09-01 | [REFACTOR-VLA: Unsupervised Library Learning of Typed Motor Programs](https://arxiv.org/abs/2609.01215) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | REFACTOR-VLA learns reusable, typed motor programs by clustering behaviorally equivalent actions with a learned world model and generating them through a library-conditioned decoder. | 8 | 8 |
 | 2026-09-01 | [IMPACT: Attention Is the Interaction Map for Scalable Interaction-Aware World Model Training](https://arxiv.org/abs/2609.00161) | World Models: Video World Models, Interactive World Models | IMPACT improves interaction-aware world model training by reallocating denoising supervision toward dynamic object regions using attention-derived interaction maps. | 8 | 8 |
 | 2026-08-31 | [Analytic Dynamics: Learning Physics-Grounded Representation for Fast Intrinsic Dynamics Inference from Monocular Videos](https://arxiv.org/abs/2608.31025) | World Models: Video World Models | Analytic Dynamics uses a physics-grounded intermediate representation to infer intrinsic object dynamics efficiently from monocular videos. | 7 | 7 |
