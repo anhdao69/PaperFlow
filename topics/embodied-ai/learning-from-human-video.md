@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**21 papers total**
+**22 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-03 | [ZimaBlue: Evolving Generalizable World Action Models through Scalable Video Pre-training](https://arxiv.org/abs/2609.00188) | Embodied AI: Vision-Language-Action, Learning from Human Videos; World Models: Interactive World Models | ZimaBlue uses large-scale egocentric video plus staged action grounding to train generalizable robot World Action Models for real-time control. | 10 | 9 |
 | 2026-09-02 | [Unified Motion Retargeting for Humanoids with Learned Point Cloud Correspondence](https://arxiv.org/abs/2609.02134) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | UMR learns dense point-cloud correspondences to retarget diverse human motions to different humanoid robots without hand-crafted semantic mappings. | 8 | 8 |
 | 2026-09-02 | [One Demonstration, Many Objects: Generalizing Manipulation via Local Contact Geometry](https://arxiv.org/abs/2609.01938) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | DemoMimic uses local contact geometry and contact-focused rewards to transfer one dexterous manipulation policy across diverse objects and robot hands. | 10 | 8 |
 | 2026-09-01 | [Seeing the World and the Self from Egocentric Video](https://arxiv.org/abs/2609.01276) | Embodied AI: Learning from Human Videos; 3D Vision | RESELF jointly reconstructs the surrounding 3D scene and the wearer’s full-body motion from egocentric video in a shared metric frame. | 8 | 8 |

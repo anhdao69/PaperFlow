@@ -1,6 +1,1174 @@
 {
   "days": [
     {
+      "date": "2026-09-03",
+      "paper_count": 7,
+      "papers": [
+        {
+          "abstract": "Hybrid LLMs pair softmax attention with linear-attention layers such as Gated DeltaNet (GDN), whose recurrent state summarizes the context in fixed size. Early community 4-bit quantizations of Qwen3.8-27B (48 GDN layers, 16 attention layers) left the GDN block in 8- or 16-bit precision -- especially its decay and write-strength gates -- on the intuition that errors in a recurrence accumulate over long contexts. We test that intuition by building Minima: NVFP4 W4A4 on all 496 linear layers, GDN included. Across perplexity at 4K/32K, MMLU-Pro, GSM8K, AIME'25, GPQA-Diamond, LiveCodeBench, and RULER retrieval to 64K, Minima matches BF16 within seed noise (5-task average -0.52) while being the smallest (17.5 GiB) and fastest-prefill (+14-19%) recipe we compare, and its 32K perplexity gap shrinks with position. A four-part mechanism study explains why: (i) NVFP4's 16-element block scaling localizes the residual stream's extreme outliers, equalizing activation error across layer roles; (ii) the supposedly fragile gate projections are the least sensitive -- softplus/exponential and sigmoid parameterizations compress ~11% GEMM error to ~2% output error; (iii) the delta-rule recurrence holds injected noise at a flat plateau over 32K tokens and forgets a state impulse within hundreds of steps, because each write overwrites the state along the current key direction; (iv) the per-token quantization cost washes out with context instead of compounding. We also repair a global-scale mismatch that arises when per-module-calibrated NVFP4 checkpoints are served by kernels that fuse those modules into one GEMM, and show calibrated FP8 KV-cache scales are performance-free. The result: a practical recipe -- quantize everything, ship KV scales -- and a mechanistic account of why the recurrent half of a hybrid LLM is the easy half to quantize. Checkpoint: https://huggingface.co/minima-ai/mnma_qwen3.8_27b_nvfp4",
+          "arxiv_id": "2609.04098",
+          "arxiv_url": "https://arxiv.org/abs/2609.04098",
+          "authors": [
+            "Sergii Kozyrev, Davyd Maiboroda"
+          ],
+          "bullets": [
+            "Tests Qwen3.8-27B with all 496 linear layers, including 48 Gated DeltaNet and 16 attention layers, in 4-bit precision.",
+            "Matches BF16 within seed noise across perplexity, reasoning, coding, knowledge, and retrieval evaluations through 64K context.",
+            "Gated DeltaNet remains stable because nonlinear gates compress quantization error, while the delta-rule recurrence limits noise accumulation and forgets state perturbations.",
+            "NVFP4 block scaling localizes activation outliers; a kernel-related global-scale mismatch is also repaired, and calibrated FP8 KV-cache scales add no performance cost.",
+            "The recipe uses 17.5 GiB and improves prefilling by 14–19% relative to the compared recipes; scope is the evaluated Qwen3.8-27B hybrid model and tasks."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: State error of the FP32 lockstep recurrence over 32K tokens, five layers spread over depth (model layer indices). (a) With the full Minima quantization injected at every step, relS(𝑡) plateaus immediately and stays flat — no accumulation. (b) A single 1% state perturbation at 𝑡0=1,024 (log scale, 512-token bin means): the recurrence erases it within a few hundred to a few thousand steps, orders of magnitude faster than the decay-implied horizons of up to 62K tokens, because the delta rule overwrites the state along each new key.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 313,
+              "image_path": "figures/2609.04098/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 861
+            },
+            {
+              "caption": "Figure 2: The two quantization costs, decomposed by position in the 32K window (2K-token bins; full numbers in Table 4). Blue: weight cost (Minima−BF16 at matched KV precision) — largest at the start, falling to zero and below by the end of the window: the opposite of accumulation. Red: KV-cache cost (FP8−BF16 KV, same checkpoint) — small, rising with position, larger for Minima; this is the component the calibrated scales of §7 remove.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 292,
+              "image_path": "figures/2609.04098/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 803
+            },
+            {
+              "caption": "Table 1: Four models, one regime (FP8 KV, vLLM 0.27.1, TP=1, one RTX PRO 6000). Accuracies in %; AIME’25 and GPQA-D are pass@1 over the same 4 seeds for every model (per-seed scores for BF16/Minima in parentheses), LCB v6 single seed; 5-task avg = mean of MMLU-Pro, GSM8K, AIME’25, GPQA-D, LCB. RULER (100 for all four at 32K/64K, single and multikey) is omitted. PPL@32K is measured inside a 32K request. No pair of models is CI-separated on any task. Decode = 1024-in/1024-out at concurrency 32; TTFT = one 32K-token prefill.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 313,
+              "image_path": "figures/2609.04098/table-003.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 782
+            },
+            {
+              "caption": "Table 4: Mean NLL (nats) by position in the 32K window. Anchor: the BF16 model under FP8 KV. ΔW = Minima−BF16 (weight cost, same KV); ΔKV = FP8−BF16 KV (same checkpoint). 0.01 nats ≈ 1% perplexity.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 581,
+              "image_path": "figures/2609.04098/table-004.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 858
+            },
+            {
+              "caption": "Table 6: State error relS(𝑡) vs. the clean FP32 recurrence (%, median over 5 layers) and resulting output errors. alpha/beta-noise rows apply synthetic multiplicative noise directly to the gates; impulse perturbs the state once at 𝑡0=1,024 by 1%.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 327,
+              "image_path": "figures/2609.04098/table-005.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 752
+            },
+            {
+              "caption": "Table 3: Per-projection NVFP4 sensitivity: one projection W4A4 at a time. “gemm”, gate, and 𝑦 columns: median relative errors in % over 96 (layer, sequence) replays of 8K tokens. State column: relS plateau of the 32K lockstep runs of §5.3 (median over 5 layers); 0 = the projection does not touch the recurrence. ab is the pair the community protects; all is the full Minima GDN block.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 227,
+              "image_path": "figures/2609.04098/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 494
+            },
+            {
+              "caption": "Table 5: Full throughput sweep (one RTX PRO 6000, TP=1, FP8 KV, same serving config as every accuracy number). Decode: 1024-token prompts, 1024 generated tokens, concurrency 1/8/32. Prefill: single request, one output token. Minima+scales differs from Minima only by the 32 KV scale tensors.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 202,
+              "image_path": "figures/2609.04098/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 602
+            },
+            {
+              "caption": "Table 2: Activation and weight statistics at NVFP4 granularity (4×32K captured tokens; median over layers). “1-hot blocks” = share of 16-element blocks with max/RMS > 3 (one value holds > 56% of block energy). A4/W4 = relative error of quantizing the activation/weight tensor alone.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 202,
+              "image_path": "figures/2609.04098/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 727
+            }
+          ],
+          "first_seen_at": "2026-09-03T21:00:00-04:00",
+          "hero_figure": "figures/2609.04098/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.04098",
+          "relevance": 8,
+          "selection_reason": "Quantization of hybrid LLM recurrent layers directly targets memory and inference efficiency.",
+          "summary_status": "generated",
+          "title": "Why Gated DeltaNet Survives 4-Bit Quantization: NVFP4 W4A4 for the Recurrent Half of a Hybrid 27B LLM",
+          "tldr": "Minima shows that fully quantizing a hybrid 27B LLM—including Gated DeltaNet’s recurrent layers—to NVFP4 W4A4 can preserve BF16-level quality while reducing memory and improving prefill speed.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "The problem. A long-lived KV cache must be compressed before the queries that will read it exist; selection by observed attention (H2O, SnapKV) collapses there (0.00-0.33 needle retrieval on a NoPE MLA model), because a token's importance has not yet been observed. The method. On Kimi Linear, VestigeKV evicts by a query-independent signal the cache already carries: the 64-dimensional decoupled branch, a vestige of RoPE that NoPE training repurposes into a salience channel. Reading 11% of each row, it partitions the cache: the top-m rows stay in the attended tier; every other row moves -- exactly, never deleted -- to a GPU-resident archive reachable per step by a certified trigger. No training, no quantization, no weight or kernel change. Cost. Nothing measurable: retrieval holds at 1.00 under 8x and 0.92 under 32x from 8k to 65k context, zero gap to full-row selection. The attended tier is 0.25 KB of Kimi Linear's 8.1 KB per-token cache at 32x; the archive stays bit-exact and GPU-resident, with host offload as the VRAM-reclaiming variant. The recall tier -- the standard configuration -- holds 128x at 1.00. Kimi K3 is reported to use a NoPE Gated-MLA variant; if its cache layout matches, the method plausibly extends there -- we make no claim beyond the measured model. NoPE exclusivity. The identical operator on a RoPE MLA collapses to 0.08 (plain eviction: 0.42); query-independent salience itself exists only without rotation (top-1 targets span 2.3-6.7% of tokens vs. 10.2-46.8%), and query-universal exact merging is provably impossible under RoPE. All thresholds were frozen before data; 20 archived verdicts and 8 closed routes accompany the paper.",
+          "arxiv_id": "2609.03949",
+          "arxiv_url": "https://arxiv.org/abs/2609.03949",
+          "authors": [
+            "WenJie Fan"
+          ],
+          "bullets": [
+            "Observed-attention eviction fails before future queries exist, especially on long-lived caches.",
+            "VestigeKV reads 11% of each KV row to rank tokens; only the top-m remain in the attended tier, while all others move exactly to an archive.",
+            "On Kimi Linear, retrieval remains 1.00 at 8× compression and 0.92 at 32×; a 128× recall-tier configuration retains 1.00 retrieval.",
+            "The method requires no training, quantization, weight changes, or kernel changes; host offload is an optional VRAM-saving variant.",
+            "The signal is specific to NoPE-style layouts: the same operator performs poorly on RoPE MLA, and extension to Kimi K3 is unmeasured."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: The delta from classic MLA, per layer. Every model operation (gray) is byte-identical — projections, kernels, arithmetic, weights. What is added (orange) is cache-membership policy: a compression event that ranks rows by the branch slice, and an optional per-step scan-and-fetch. Removing the orange path recovers classic MLA exactly.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 295,
+              "image_path": "figures/2609.03949/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 615
+            },
+            {
+              "caption": "Figure 4: Per decode step: tier-1 attention yields s∗; the index scan admits the archived rows that could compete; fetched rows join that query’s softmax as exact copies (Lemma 1). Tier-2 placement is orthogonal to the algorithm; the standard configuration keeps it GPU-resident (fetch is then free and the saving is per-step attention reads), with host offload as the VRAM-bound variant.",
+              "figure_id": "figure-4-14",
+              "figure_number": "4",
+              "height": 204,
+              "image_path": "figures/2609.03949/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 700
+            },
+            {
+              "caption": "Figure 1: Gray: the prefix — all that observed attention can ever see; orange: the needle. Its importance is conferred entirely by queries that do not exist at compression time. H2O accumulates prefix attention; SnapKV reads a window before the cut; both see nothing (Table 4).",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 153,
+              "image_path": "figures/2609.03949/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 684
+            },
+            {
+              "caption": "Figure 3: VestigeKV reads only the branch (orange, 11% of the row). Kept rows are exact; nothing else is stored.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 122,
+              "image_path": "figures/2609.03949/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 584
+            },
+            {
+              "caption": "Table 4: Tier-1 ablation (recall tier off). Needle intact rate when compression precedes the query (L=8192, 24 trials; L=32768, 12 trials). The recent-window variant rules out a budgetary explanation for the collapse (Section 2). These methods remain strong in their design setting (query present at compression); this is the other setting.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 219,
+              "image_path": "figures/2609.03949/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 598
+            },
+            {
+              "caption": "Table 8: Empirical defaults. Every value traces to a pre-registered measurement.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 380,
+              "image_path": "figures/2609.03949/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            },
+            {
+              "caption": "Table 2: Each ArkVale-style limitation, its mechanism, and the measured effect of removing rotation. Same digest protocol on both models (32-token pages, sphere digests per their Eq. 1–2); recall@8 pages of the true-argmax page, worst layer — the tail-risk statistic that decides adoptability.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 150,
+              "image_path": "figures/2609.03949/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Table 7: Tier-1 ablation. General language-modeling cost (∆CE, nats/token, held-out continuation, 6 docs). The standard configuration is effectively lossless (∼0.0006 bits/byte at 32× for ∼4-byte tokens). The recent-only floor matches on CE while scoring +15 nats on needle — continuation loss alone cannot arbitrate retrieval, which is why needle is the primary metric.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 108,
+              "image_path": "figures/2609.03949/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 522
+            },
+            {
+              "caption": "Table 1: The branch is the trained salience channel. Static rows from weights alone; behavioral rows from 512 real queries × 32 heads.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 150,
+              "image_path": "figures/2609.03949/table-009.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 816
+            },
+            {
+              "caption": "Table 9: Gates and process.",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 150,
+              "image_path": "figures/2609.03949/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 760
+            },
+            {
+              "caption": "Table 5: Tier-1 ablation. Left: dual-arm acceptance, frozen before either arm ran: work on NoPE and fail on RoPE (DeepSeek-V2-Lite, matched layers, 32×). Right: branch-width ablation — posthoc PCA truncation before σ; monotone degradation below 32 dims.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 108,
+              "image_path": "figures/2609.03949/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 802
+            },
+            {
+              "caption": "Table 3: Tier-1 ablation (recall tier off; not the deployed form). Branch-only selection (VestigeKV, reads 11% of each row) vs. full-row selection at matched budget.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 109,
+              "image_path": "figures/2609.03949/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 727
+            },
+            {
+              "caption": "Table 6: Left: end-to-end recovery (L=8192, 24 trials) — the tier restores what eviction loses, admitting only 0.5–2.6% extra rows per query. Right: the index-rank knob — a larger sketch cuts trigger rate and fetch volume while recall rises (tighter bounds rank better). Rows/query is a document-perplexity figure; retrieval-heavy steps legitimately fetch more (5–37 rows per layer at r=192 on needle contexts, recovery still 1.00).",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 108,
+              "image_path": "figures/2609.03949/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 682
+            },
+            {
+              "caption": "Table 10: Wilson 95% intervals, count/trials [lower, upper]. Tier-1 ablation rows above the rule; deployment-loop rows below.",
+              "figure_id": "table-10-3",
+              "figure_number": "10",
+              "height": 182,
+              "image_path": "figures/2609.03949/table-014.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 818
+            }
+          ],
+          "first_seen_at": "2026-09-03T21:00:00-04:00",
+          "hero_figure": "figures/2609.03949/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.03949",
+          "relevance": 8,
+          "selection_reason": "Directly addresses KV cache compression and eviction for LLM inference, fitting the KV Cache and Memory Efficiency subtopic.",
+          "summary_status": "generated",
+          "title": "VestigeKV: The NoPE-MLA KV Cache Carries Its Own Eviction Signal in a Vestigial Branch",
+          "tldr": "VestigeKV uses a query-independent salience signal in NoPE-MLA’s decoupled branch to compress the attended KV tier while preserving an exact GPU-resident archive.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "A free pause token gives a language model extra compute to form each next-token prediction (as a pause, or thinking, token does) but carries that compute in a parallel prediction stream over a weight-shared backbone rather than as an extra token in the sequence. It improves next-token prediction by 2-3 centinats in practice on a 1B parameter model. Because the pause rides an existing position instead of adding one, it is free to use: at inference it adds no context length, no KV cache, and essentially no latency with the growth in inference flops typically irrelevant as it is not the active bottleneck on throughput. The only primary cost is in training, where additional training compute versus an optimized pretraining pipeline is reduced to as low as x1.14 while preserving most of the benefits. The result is an isoflop, isoparameter, and isotoken improvement over standard next token trained transformers.",
+          "arxiv_id": "2609.03807",
+          "arxiv_url": "https://arxiv.org/abs/2609.03807",
+          "authors": [
+            "John Langford, Nathan Godey, Giovanni Monea, Yoav Artzi, Harry Dong, Ying Fan, Gustavo de Rosa, Zheng Zhan"
+          ],
+          "bullets": [
+            "They use a parallel prediction stream over a weight-shared backbone rather than adding sequence tokens.",
+            "On a 1B-parameter model, they improve next-token prediction by 2–3 centinats.",
+            "Inference requires no extra context length or KV cache and adds essentially no latency in typical throughput settings.",
+            "Training compute can be reduced to as little as 1.14× that of an optimized pretraining pipeline.",
+            "The approach yields isoflop, isoparameter, and isotoken gains over standard next-token training."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Left: change in eval CE against the standard control, ∆(t) = CEvariant(t)− CEcontrol(t), for three pause phase start points; after each switch the primary gain accrues within ∼15B tokens with modest further gains. Right: compute frontier—final cooled CE vs. 8×B200 node-hours for different pause start points; improvements over standard control vary from −0.005 to −0.013 nats.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 846,
+              "image_path": "figures/2609.03807/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1055
+            },
+            {
+              "caption": "Figure 3: Phased training (42.5% split) stitched from step 0: standard pretraining to 42.5B, then the split to 100B. Eval loss (red) overlays the standard control (dashed) up to the switch—seamless, no spike—then diverges below it; cooldown at 75B brings the phased run to 2.8691 versus the control’s 2.8957. Train loss (blue) is the pretraining loss.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 450,
+              "image_path": "figures/2609.03807/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 727
+            },
+            {
+              "caption": "Figure 4: Shared gated FFN vs the two-pass free pause. Left: change in eval CE against control by split point; solid = shared FFN, dashed = two-pass. The shared form keeps most of the advantage at half the FFN cost. Right: final cooled CE improvement over each variant’s own control vs node-hours—this normalizes out the different baselines. The shared-FFN frontier (blue) reaches its gain at far fewer node-hours than the two-pass form (orange).",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 311,
+              "image_path": "figures/2609.03807/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 976
+            },
+            {
+              "caption": "Figure 5: Sorted coordinate magnitudes of the learned pause embedding (the full pause, w=0, 100B), against a Gaussian reference at the same RMS (0.88). A handful of channels sit well above Gaussian (±3–4, ≈ 4σ; top-10 dims = 11% of the energy) over a near-Gaussian unit-RMS bulk.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 425,
+              "image_path": "figures/2609.03807/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 706
+            },
+            {
+              "caption": "Figure 2: The free pause at one layer, over three positions. The state stream a is the ordinary causal pass and writes the per-layer keys and values. The prediction stream p is initialized at every position by the same shared embedding epause, forms only a query over the state’s keys and values (dashed; causally pi reads a≤i), and writes none of its own; its output x̂ is scored by the next-token loss. The streams share all weights and this repeats over L layers. Because p adds no key/value and no sequence position, the pause is free at inference; the only added parameter is epause.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 334,
+              "image_path": "figures/2609.03807/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 890
+            },
+            {
+              "caption": "Table 5: Downstream metrics at 1B: DCLM CORE (centered mean over 21 tasks; SE ≈ 0.01) and held-out bits-per-byte on climbmix (SE ≈ 0.004), all at sequence length 8192. Iso-token, the full pause beats the 100B control on every aggregate; iso-compute it matches the 150B control, and the phased schedules reach the same level for far less compute. Per-task lm-eval scores are individually within their 95% intervals and are not shown.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 177,
+              "image_path": "figures/2609.03807/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 590
+            },
+            {
+              "caption": "Table 1: Each change targets the second-pass cost. Overheads are wall-clock, relative to the strong baseline (1.00×).",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 152,
+              "image_path": "figures/2609.03807/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 882
+            },
+            {
+              "caption": "Table 2: Phasing pays the pass only on the tail; full-resumed from a standard iso-parameter checkpoint.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 152,
+              "image_path": "figures/2609.03807/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 652
+            },
+            {
+              "caption": "Table 4: Iso-compute (node-hours) comparison against the strong baseline, from the control’s measured 100B and 150B cooled endpoints (slope ∼0.037 nats/doubling): 114–133B interpolated, 157B a short extrapolation. Every free-pause variant is ahead at equal node-hours.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 127,
+              "image_path": "figures/2609.03807/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 752
+            },
+            {
+              "caption": "Table 3: Shared gated FFN: one FFN evaluation per position instead of two. Throughput 0.74× control (vs 0.64× for the two-pass form); still beats control at every split point. Measured at the faster micro-batch operating point, so the control is the matched shared-batch control (2.8957 → 2.9064; see text).",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 152,
+              "image_path": "figures/2609.03807/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 582
+            }
+          ],
+          "first_seen_at": "2026-09-03T21:00:00-04:00",
+          "hero_figure": "figures/2609.03807/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.03807",
+          "relevance": 7,
+          "selection_reason": "Introduces a method to add compute without increasing context or KV cache, directly relevant to efficient inference.",
+          "summary_status": "generated",
+          "title": "Free Pause Tokens",
+          "tldr": "Free pause tokens add parallel thinking compute without lengthening the sequence, improving language-model prediction at nearly no inference cost.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion reinforcement learning (RL) has recently achieved significant success in post-training image and video generative models. However, most diffusion RL methods, including DanceGRPO and FlowGRPO, recompute selected timesteps with gradient tracking after rollout. Under on-policy training with the same backend for rollout and update, this recomputation is mathematically redundant. Intuitively, the rollout and policy update steps can reuse the same feed-forward backbone to avoid redundant computation, but doing so can incur a large memory overhead during rollout. To address the issue, we present LeanGRPO by restructuring the data-parallel layout and introducing two recompute-free training schedules for trajectory-logprob diffusion RL: (1) LeanGRPO-Retain enables gradient tracking during rollout and directly reuses the resulting computation graphs and saved activations for backward during update, requiring no recomputation; and (2) LeanGRPO-Reweight also enables gradients during rollout, but immediately backpropagates each selected step using a provisional advantage and delays gradient synchronization, then corrects the provisional gradients with the true advantage after the trajectory is completed. These schedules target different model scales and input sizes. Across FlowGRPO/DanceGRPO with FLUX.1-dev and Wan, LeanGRPO achieves up to 1.83x end-to-end speedup while preserving the original optimization objective.",
+          "arxiv_id": "2609.03528",
+          "arxiv_url": "https://arxiv.org/abs/2609.03528",
+          "authors": [
+            "Sijie Wang, Zhiqiang Tan, Xinrui Yang, Shaohuai Shi"
+          ],
+          "bullets": [
+            "Diffusion RL methods often recompute selected rollout timesteps with gradient tracking during updates, despite this being mathematically redundant under on-policy training with the same backend.",
+            "LeanGRPO restructures data parallelism and introduces two recompute-free schedules for trajectory-logprob diffusion RL.",
+            "LeanGRPO-Retain keeps rollout computation graphs and activations for later backward propagation without recomputation.",
+            "LeanGRPO-Reweight backpropagates selected steps using provisional advantages, delays synchronization, and corrects gradients once the true advantage is available.",
+            "The schedules target different model scales and input sizes and are evaluated with FlowGRPO/DanceGRPO on FLUX.1-dev and Wan."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.AR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Comparison of native diffusion RL training and recompute-free LeanGRPO. Here, cb denotes the b-th conditioning prompt, and ϵb,m denotes the independently sampled initial Gaussian latent noise for its m-th generation.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 650,
+              "image_path": "figures/2609.03528/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 824
+            },
+            {
+              "caption": "Figure 3: End-to-end training efficiency of LeanGRPO on DanceGRPO, FlowGRPO-Fast, MixGRPO-Flash, and FlowGRPO.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 535,
+              "image_path": "figures/2609.03528/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 801
+            },
+            {
+              "caption": "Figure 5: Training HPSv2 (Wu et al., 2023) and PickScore rewards (Kirstain et al., 2023), together with time-to-reward efficiency of Native, Retain, and Reweight.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 511,
+              "image_path": "figures/2609.03528/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 694
+            },
+            {
+              "caption": "Figure 2: Geometric interpretation of gradient correction in LeanGRPO-Reweight. (a) All selectedtimestep gradients from one trajectory share the same advantage Ai, so scaling their provisional sum is equivalent to scaling each timestep gradient before summation. (b) Different samples have different advantages Ab,m; their provisional gradients must therefore be corrected before distributed synchronization, since a common scalar cannot in general recover the independently weighted sum after the gradients are mixed.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 402,
+              "image_path": "figures/2609.03528/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 774
+            },
+            {
+              "caption": "Figure 8: Code-audited applicability of LeanGRPO as of August 24, 2026. The inner ring separates methods with sampled-transition update recomputation from methods without the target recomputation. The outer ring further separates graph-colocated target implementations from the processseparated target implementation. Thus, 23/32 methods expose the optimization opportunity, while 22/32 satisfy the necessary graph-colocation condition in their canonical code.",
+              "figure_id": "figure-8-5",
+              "figure_number": "8",
+              "height": 305,
+              "image_path": "figures/2609.03528/figure-005.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 646
+            },
+            {
+              "caption": "Figure 4: End-to-end step-time breakdown of Native, LeanGRPO-Retain, and LeanGRPO-Reweight on DanceGRPO with the FLUX.1-dev backbone.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 238,
+              "image_path": "figures/2609.03528/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 781
+            },
+            {
+              "caption": "Figure 6: GPU memory scaling with selected timesteps on FLUX.1-dev and Wan2.2-TI2V-5B.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 204,
+              "image_path": "figures/2609.03528/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 761
+            },
+            {
+              "caption": "Figure 7: Qualitative schedule suitability across six workload dimensions.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 404,
+              "image_path": "figures/2609.03528/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 380
+            },
+            {
+              "caption": "Table 5: Classification of the audited diffusion RL methods and unverified candidates. “Graphcolocated” means that rollout and update backward execute in one process that can share autograd state. It denotes a necessary condition rather than drop-in compatibility. The 17 unverified candidates are excluded from the 32-method denominator.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 358,
+              "image_path": "figures/2609.03528/table-009.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 814
+            },
+            {
+              "caption": "Table 6: LeanGRPO under different optimizer-step schedules. “Reuse” means that the same sampled trajectory contributes to more than one optimizer update, rather than being partitioned into disjoint backward micro-batches.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 277,
+              "image_path": "figures/2609.03528/table-010.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 806
+            },
+            {
+              "caption": "Table 1: Component ablation for the f = 1.0 settings in Fig. 3(a)–(b).",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 181,
+              "image_path": "figures/2609.03528/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Table 2: Controlled fixed-trajectory alignment on FLUX.1-dev. Native, Retain, and Reweight consume identical transitions, rewards, and advantages; only the gradient execution schedule differs. Here, ∆θ ≡ θafter − θbefore denotes the parameter-update vector produced by one AdamW step. Relative ℓ2 errors are percentages.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 121,
+              "image_path": "figures/2609.03528/table-012.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 544
+            },
+            {
+              "caption": "Table 4: Alignment of the AdamW first- and second-moment states after the same optimizer update. Relative ℓ2 errors are percentages.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 119,
+              "image_path": "figures/2609.03528/table-013.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 806
+            },
+            {
+              "caption": "Table 3: End-to-end one-update numerical alignment with Native under the real reward training configuration. Relative ℓ2 errors are percentages. Parameter alignment is measured on the update vector ∆θ = θafter − θbefore, rather than on the pretrained parameters, whose magnitude would mask update differences.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 96,
+              "image_path": "figures/2609.03528/table-014.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 760
+            }
+          ],
+          "first_seen_at": "2026-09-03T21:00:00-04:00",
+          "hero_figure": "figures/2609.03528/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.03528",
+          "relevance": 6,
+          "selection_reason": "Reduces redundant recomputation and memory overhead in diffusion RL training, fitting efficient AI memory/compute concerns.",
+          "summary_status": "generated",
+          "title": "LeanGRPO: Eliminating Redundant Recomputation in Diffusion RL",
+          "tldr": "LeanGRPO removes redundant diffusion-RL recomputation by reusing rollout computations or gradients, achieving up to 1.83× end-to-end speedup while preserving the optimization objective.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models achieve superior performance on tasks that require extended reasoning, but long chains of thought make the KV cache a severe memory bottleneck. Existing KV cache compression methods share one paradigm: score each cached token by some estimate of how much it will matter later, and keep the top-scoring ones. We show that the selection signal contributes almost nothing. Random Attention keeps the prompt and evicts uniformly at random within each attention head, computing no score at all; across four models and six reasoning tasks it matches the strongest prior evictor while serving 32-43% higher throughput than it in vLLM deployment. Controlled experiments explain this by showing that 1) the prompt is the fragile part of the cache, and most of the gap between selectors is just whether their selection signal happened to keep it; 2) the reasoning trace protects itself against eviction with redundancy at two levels, in the text (the model restates what it still needs as it works) and across attention heads (each keeps its own copy of the trace), so once the prompt is safe, a random draw retains enough copies of what the model still needs, and no score is required to pick them. Our code is publicly available at https://github.com/SalesforceAIResearch/Random-Attention.",
+          "arxiv_id": "2609.03430",
+          "arxiv_url": "https://arxiv.org/abs/2609.03430",
+          "authors": [
+            "Heng Wang, Jielin Qiu, Wenting Zhao, Cheng Qian, Liangwei Yang, Jiawei Han, Heng Ji, Silvio Savarese, Shelby Heinecke, Huan Wang"
+          ],
+          "bullets": [
+            "Long reasoning traces make the KV cache a major memory bottleneck.",
+            "The method preserves the prompt and randomly evicts cached tokens independently within each attention head, without scoring tokens.",
+            "Across four models and six reasoning tasks, it matches the strongest prior eviction method.",
+            "Experiments suggest the prompt is critical, while reasoning traces are protected by redundancy in both text and attention heads.",
+            "The approach is evaluated in vLLM and its code is publicly available."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Equal-memory serving: decode throughput relative to full attention at each method’s largest batch on one H200 (𝐾=3072, 32k generations). ∗TriAttention here is an unfused re-implementation of its scorer, far slower than the vLLM version.",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 271,
+              "image_path": "figures/2609.03430/figure-001.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 956
+            },
+            {
+              "caption": "Figure 3: (a) A fact held in one head is almost never retrieved; held in several it is. (b) Two facts in different heads are worth more together than the sum of each alone (dashed). (c) Real MATH500: contiguous blocks cost nothing up to size 64; accuracy drops only once a head is left with 4 (𝐾=1024) or 2 (𝐾=512) blocks.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 225,
+              "image_path": "figures/2609.03430/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 950
+            },
+            {
+              "caption": "Figure 4: Fraction of positions of a given age that a head still holds (log scale; Qwen3-4B MATH500, 𝐾=1024). Random Attention decays geometrically with age; VaSE concentrates and freezes a tail of old favourites; TriAttention spends almost uniformly across ages, keeping less of the recent middle than Random Attention but several times more of the very old tail.",
+              "figure_id": "figure-4-13",
+              "figure_number": "4",
+              "height": 343,
+              "image_path": "figures/2609.03430/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 515
+            },
+            {
+              "caption": "Table 1: Accuracy under KV cache eviction at each task’s ∼4× compression (LiveCodeBench: ∼3×); the header gives each task’s per-head KV budget 𝐾 (§2). Bold: best eviction method per column; grayed: significantly below Random Attention (paired clustered bootstrap + sign test, 95%).",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 1025,
+              "image_path": "figures/2609.03430/table-004.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 913
+            },
+            {
+              "caption": "Table 10: Serving throughput when each method runs at the largest batch that fits one 143 GB H200, at 𝐾=3072 with 32k generations. The small cache is what buys the batch, so every evictor collects most of the win; the ordering among them follows the cost of their scoring pass. The TriAttention row is an unfused re-implementation of its scorer, far slower than the authors’ kernels, on which the gap to Random Attention on these two models is 1.4×, not 2.7–3.0× (Table 4). Every other row runs on one shared code path.",
+              "figure_id": "table-10-4",
+              "figure_number": "10",
+              "height": 217,
+              "image_path": "figures/2609.03430/table-005.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 572
+            },
+            {
+              "caption": "Table 6: Matched protection in the settings Table 2 does not cover (LiveCodeBench: pass@1; others: accuracy; AIME pools 2025+2026). Small numbers give the gain from the rule in points, red when at least 2; bold marks the best protected method in each setting. TriAttention and Random Attention keep the prompt by construction and appear only in the protected column (values as in Table 1).",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 215,
+              "image_path": "figures/2609.03430/table-006.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 980
+            },
+            {
+              "caption": "Table 5: Performance of Qwen3-14B with the same setting as in Table 1.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 302,
+              "image_path": "figures/2609.03430/table-007.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 882
+            },
+            {
+              "caption": "Table 2: Performance before and after protecting the prompt. R-KV never gains more than 1.9 points, SnapKV gains everywhere, VaSE gains materially only on Phi-4-reasoning.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 234,
+              "image_path": "figures/2609.03430/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 932
+            },
+            {
+              "caption": "Table 9: Cost of one eviction round (scoring + compaction), measured with CUDA events on an otherwise idle H200: 𝐾=1024, 4096 decode steps, single stream. Random Attention performs no scoring, so its round time is the compaction floor every evictor pays; the excess over it is the price of the selection signal. The ordering, and the per-call costs to within 12%, are unchanged across a 3.5× change in model size.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 195,
+              "image_path": "figures/2609.03430/table-009.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 656
+            },
+            {
+              "caption": "Table 7: Mean generated tokens (thousands) per cell of Tables 1 and 5, measured over every run of the cell; Avg = unweighted mean over the five tasks.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 900,
+              "image_path": "figures/2609.03430/table-010.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 882
+            },
+            {
+              "caption": "Table 8: Run-to-run variability: standard deviation of per-run accuracy (points) across each cell’s independent sampled runs, including LiveCodeBench, whose runs are graded individually by test execution.",
+              "figure_id": "table-8-6",
+              "figure_number": "8",
+              "height": 967,
+              "image_path": "figures/2609.03430/table-011.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 882
+            },
+            {
+              "caption": "Table 4: Serving throughput (output tok/s, and the multiple of full attention) under vLLM with PagedAttention on one H200 (𝐾=2048, 1k-token prompts, 32k-token generations).",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 150,
+              "image_path": "figures/2609.03430/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 722
+            },
+            {
+              "caption": "Table 11: Equal-memory serving at 𝐾=1024 (Qwen3-4B, 32k generations, one 143 GB H200): the tighter budget fits a batch of 584 against 28 for full attention, and Random Attention reaches 28.8× full-attention throughput. R-KV and TriAttention were not measured at this budget.",
+              "figure_id": "table-11-3",
+              "figure_number": "11",
+              "height": 173,
+              "image_path": "figures/2609.03430/table-013.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 394
+            }
+          ],
+          "first_seen_at": "2026-09-03T21:00:00-04:00",
+          "hero_figure": "figures/2609.03430/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.03430",
+          "relevance": 9,
+          "selection_reason": "Proposes random KV cache eviction showing selection signal is unnecessary, highly relevant to KV cache memory efficiency.",
+          "summary_status": "generated",
+          "title": "Random Attention: Rethinking KV Cache Eviction for Efficient Reasoning",
+          "tldr": "Random Attention shows that uniformly random KV-cache eviction can match strong scoring-based methods while delivering 32–43% higher throughput for long-context reasoning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models (LLMs) face severe memory bottlenecks in long-context inference due to the linearly growing size of key-value (KV) caches. Existing KV cache compression techniques typically rely on simple heuristics, overlooking the distinct functional roles of different attention heads. We present SGD-KV (Summarization-Guided KV Cache Compression), a head-aware framework that leverages a novel chunk-summarization diagnostic task to systematically identify and prioritize attention heads specialized in hierarchical information aggregation. Experiments on Qwen2.5-7B-1M and Qwen3-32B across diverse long-context benchmarks demonstrate that SGD-KV achieves state-of-the-art performance with contexts up to 1M tokens, while reducing KV cache memory usage by up to 75%. Our findings show that strategically allocating the KV cache budget based on the summarization score distribution of attention heads yields a superior efficiency-accuracy trade-off for long-context inference.",
+          "arxiv_id": "2609.03235",
+          "arxiv_url": "https://arxiv.org/abs/2609.03235",
+          "authors": [
+            "Zeyu Liu, Woomin Song, Xuandi Fu, Sai Muralidhar Jayanthi, Vivek Govindan, Aram Galstyan, Sravan Babu Bodapati, Srikanth Ronanki"
+          ],
+          "bullets": [
+            "Long-context inference faces a KV-cache memory bottleneck because cache size grows linearly with context length.",
+            "Existing compression methods often use heuristics and overlook the different roles of attention heads.",
+            "SGD-KV introduces a chunk-summarization diagnostic to identify heads specialized in hierarchical information aggregation.",
+            "It allocates cache budgets according to attention-head summarization scores and supports contexts up to 1M tokens.",
+            "Evaluations on Qwen2.5-7B-1M and Qwen3-32B show state-of-the-art performance across diverse long-context benchmarks."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: The visualization of the confusion matrix of the head scores of DuoAttention (top), HeadKV (center) and ours (bottom) in Qwen2.5-7B-Instruct-1M model. Y axis is the index of the heads, 4 in total, and the X axis is the index of the layers, 28 in total.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 360,
+              "image_path": "figures/2609.03235/figure-001.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 812
+            },
+            {
+              "caption": "Figure 2: The comparisons of IoU scores between summarization heads with different datasets (left) and different types of heads (right).",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 398,
+              "image_path": "figures/2609.03235/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 822
+            },
+            {
+              "caption": "Figure 1: The illustration of chunk-summarization task.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 259,
+              "image_path": "figures/2609.03235/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 812
+            },
+            {
+              "caption": "Figure 4: The comparisons of accuracy on the MRCR dataset under Different KV Cache Budget.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 490,
+              "image_path": "figures/2609.03235/figure-004.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 812
+            },
+            {
+              "caption": "Table 5: Accuracy comparison between different methods on OpenAI MRCR dataset from 8K to 512K sequence length using fine-tuned Qwen2.5-7B-Instruct-1M.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 548,
+              "image_path": "figures/2609.03235/table-005.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 770
+            },
+            {
+              "caption": "Table 1: Accuracy comparison on MRCR dataset (25% KV cache budget for eviction methods).",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 219,
+              "image_path": "figures/2609.03235/table-006.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Table 4: Accuracy comparison between different methods on BABILong dataset (average over QA1 to QA5) from 32K to 1M sequence length using fine-tuned Qwen2.5-7B-Instruct-1M.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 165,
+              "image_path": "figures/2609.03235/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 746
+            },
+            {
+              "caption": "Table 2: Performance comparison on ETHIC benchmark. \"AT\", \"OG\", and \"RC\" represents the attributing, organizing and recalling sub-tasks, and \"Avg.\" represents the average performance.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 174,
+              "image_path": "figures/2609.03235/table-008.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 756
+            },
+            {
+              "caption": "Table 3: Accuracy comparison on MRCR dataset. Bold values indicate scores that surpass the corresponding Query-Aware baseline results from Table 1.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 150,
+              "image_path": "figures/2609.03235/table-009.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 779
+            }
+          ],
+          "first_seen_at": "2026-09-03T21:00:00-04:00",
+          "hero_figure": "figures/2609.03235/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.03235",
+          "relevance": 8,
+          "selection_reason": "Head-aware KV cache compression for long-context inference with up to 75% memory reduction.",
+          "summary_status": "generated",
+          "title": "SGD-KV: Summarization Guided KV Cache Compression",
+          "tldr": "SGD-KV compresses long-context KV caches by prioritizing attention heads that are effective at hierarchical summarization, reducing memory use by up to 75% while maintaining strong performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "On-device LLM inference is attractive for privacy and responsiveness, but remains challenging on mobile and embedded devices because model weights far exceed available DRAM. Prior systems exploit activation sparsity and offload weights to SSD or flash storage, but face a fundamental systems trade-off: accurate sparse execution decisions require the latest context, whereas efficient computation-I/O overlap requires early prediction. As a result, existing designs either serialize execution or incur redundant weight fetches, extra computation, and large cache overheads. We present LeanStream, a streaming speculate-and-refine framework for efficient on-device LLM inference. LeanStream progressively refines computation, loading, and cache-retention priorities using partial GPU results, enabling fine-grained overlap between GPU execution and storage I/O. We implement LeanStream on both mobile and embedded platforms. Compared with prior on-device LLM inference systems, LeanStream reduces memory usage by 4.8$\\times$ to 7.5$\\times$ at the best throughput achieved by prior work, while further improving token generation throughput by 1.6$\\times$ to 2.1$\\times$.",
+          "arxiv_id": "2609.03079",
+          "arxiv_url": "https://arxiv.org/abs/2609.03079",
+          "authors": [
+            "Renyuan Liu (Richard), Yuyang Leng (Richard), Kaiyan Liu (Richard), Yuzhou Zhong (Richard), Shaohan Hu (Richard), Chun-Fu (Richard), Chen, Peijun Zhao, Heechul Yun, Shuochao Yao"
+          ],
+          "bullets": [
+            "Addresses the tension between context-accurate sparse execution decisions and early I/O scheduling when model weights exceed device DRAM.",
+            "Progressively refines computation, weight-loading, and cache-retention priorities using partial GPU results.",
+            "Enables fine-grained overlap between GPU execution and storage I/O on mobile and embedded platforms.",
+            "Reduces memory usage by 4.8×–7.5× at prior-best throughput and further improves token-generation throughput by 1.6×–2.1×.",
+            "Scope: evaluated on mobile and embedded devices; the abstract does not specify datasets or workload details."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: The overview of LeanStream Framework.",
+              "figure_id": "figure-5-19",
+              "figure_number": "5",
+              "height": 306,
+              "image_path": "figures/2609.03079/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 502
+            },
+            {
+              "caption": "Figure 8: Throughput comparison under varying memory budgets on the Scrolls-Qasper dataset across different devices and models.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 446,
+              "image_path": "figures/2609.03079/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 936
+            },
+            {
+              "caption": "Figure 1: Challenges in on-device LLM inference with activation sparsity. (a) Full-context prediction achieves high accuracy but forces serialized compute and I/O. (b) Layer-wise speculative fetching overlaps I/O with compute, but incurs prediction errors and redundant I/O. (c) Speculation with caching reduces I/O stalls, but still introduces memory redundancy and extra computation. (d) Our streaming speculate-and-refine pipeline progressively updates context for finer-grained compute–I/O coordination.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 396,
+              "image_path": "figures/2609.03079/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 502
+            },
+            {
+              "caption": "Figure 10: End-to-end throughput under different sparsity levels on Qasper using Mistral-7B.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 298,
+              "image_path": "figures/2609.03079/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 492
+            },
+            {
+              "caption": "Figure 6: Thread-block–level, non-blocking, asymmetric coordination mechanism for LLM streaming. (a) GPU thread-blocks perform non-blocking checks on fine-grained flags to consume weights that may have been pre-loaded into DRAM, decoupling weight arrival from compute execution. (b) The CPU asynchronously monitors completed thread-blocks and aggregates multiple partial results to update I/O selection, supporting an asymmetric mapping where one CPU update responds to an arbitrary number of GPU signals.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 199,
+              "image_path": "figures/2609.03079/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 477
+            },
+            {
+              "caption": "Figure 7: The Streaming Control Strategy.",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 236,
+              "image_path": "figures/2609.03079/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 354
+            },
+            {
+              "caption": "Figure 2: Dependency chain of one-shot prediction and LeanStream’s partial-feature refinement. (a) Existing layer-wise predictors use the residual state entering MLP𝑛 to make a fixed single prediction for the neuron priorities of MLP𝑛+1. (b) LeanStream executes MLP𝑛 in priority-ordered stages. As each stage completes, its output is accumulated with the residual state to form an increasingly complete partial residual feature, which is used to refine the neuron priorities of MLP𝑛+1. overlap among I/O and GPU computation, thereby reducing redundant data movement, minimizing processor idle time, and improving end-to-end inference efficiency on resourceconstrained mobile and embedded platforms.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 214,
+              "image_path": "figures/2609.03079/figure-007.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 378
+            },
+            {
+              "caption": "Figure 3: Synchronization overhead analysis. (a) Existing synchronization primitives introduce execution stalls under frequent coordination. (b) Increasing synchronization frequency significantly raises the GPU execution time of a Mistral-7B MLP layer with 80% sparsity on Jetson AGX Orin.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 179,
+              "image_path": "figures/2609.03079/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 403
+            },
+            {
+              "caption": "Figure 4: Cache miss dynamics in Mistral-7B under a 50% weight-cache budget. (a) Cache miss rates vary significantly across layers. (b) Cache miss rates for Layer 0 also fluctuate across prompts. This variability across layers and inputs makes offline profiling unreliable and motivates adaptive online coordination.",
+              "figure_id": "figure-4-14",
+              "figure_number": "4",
+              "height": 141,
+              "image_path": "figures/2609.03079/figure-009.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 475
+            },
+            {
+              "caption": "Figure 11: Ablation study of prioritization components on Qasper dataset with 20% weight caching budget on Jetson AGX Orin and OnePlus 13.",
+              "figure_id": "figure-11-4",
+              "figure_number": "11",
+              "height": 193,
+              "image_path": "figures/2609.03079/figure-010.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 479
+            },
+            {
+              "caption": "Figure 13: Impact of various input prefill lengths on total inference latency on the Qasper dataset using Mistral-7B on Jetson AGX Orin and OnePlus 13 with a fixed output of 256 tokens.",
+              "figure_id": "figure-13-13",
+              "figure_number": "13",
+              "height": 146,
+              "image_path": "figures/2609.03079/figure-011.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 400
+            },
+            {
+              "caption": "Figure 9: Throughput comparison of our LeanStream under varying memory budgets across different datasets when streaming is memory-bound on Jetson AGX Orin.",
+              "figure_id": "figure-9-8",
+              "figure_number": "9",
+              "height": 137,
+              "image_path": "figures/2609.03079/figure-012.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 492
+            },
+            {
+              "caption": "Figure 12: Progressive prediction refinement for Mistral-7B on CoQA under 80% activation sparsity. LeanStream divides the MLP computation into eight stages and executes them in descending priority order. (a) Top-10% recall and importance ratio averaged across all transformer layers. (b) Per-layer importance ratio for different layers. 0/8 represents the initial one-shot prediction, while 8/8 uses the complete MLP output.",
+              "figure_id": "figure-12-12",
+              "figure_number": "12",
+              "height": 420,
+              "image_path": "figures/2609.03079/figure-013.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 377
+            },
+            {
+              "caption": "Table 2: Performance comparison under different sparsity levels.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 348,
+              "image_path": "figures/2609.03079/table-014.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 926
+            },
+            {
+              "caption": "Table 6: Comparison of model size, latency, and relative loading redundancy among DNN-based, BNNbased, and our Stacked Learnable Hashing predictors on Jetson AGX Orin. DNNF uses the full current context, while DNNS uses stale context.",
+              "figure_id": "table-6-18",
+              "figure_number": "6",
+              "height": 263,
+              "image_path": "figures/2609.03079/table-015.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 486
+            },
+            {
+              "caption": "Table 7: Energy consumption and thermal behavior on Jetson AGX Orin. Mistral-7B on Scrolls-Qasper with 3 GB memory budget. Each system runs continuously for two hours at an ambient temperature of 21◦C.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 124,
+              "image_path": "figures/2609.03079/table-016.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 479
+            },
+            {
+              "caption": "Table 1: GPU Computation vs. Prediction Overhead. CPU predictor follows the two-layer MLP design in state-of-the-art works [2, 4]. Latency is measured on Jetson AGX Orin for Mistral-7B with 80% sparsity.",
+              "figure_id": "table-1-20",
+              "figure_number": "1",
+              "height": 151,
+              "image_path": "figures/2609.03079/table-017.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 376
+            },
+            {
+              "caption": "Table 3: Synchronization overhead when partitioning one MLP layer of Mistral-7B on Jetson AGX Orin and OnePlus 13.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 158,
+              "image_path": "figures/2609.03079/table-018.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 464
+            },
+            {
+              "caption": "Table 5: Throughput comparison on the Qasper workload with 20% weight caching on Jetson AGX Orin. Fix uses a default fixed streaming configuration, Best Static uses an offline-searched globally optimal static configuration of compute and I/O blocks, and Ours applies dynamic streaming control.",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 140,
+              "image_path": "figures/2609.03079/table-019.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 382
+            },
+            {
+              "caption": "Table 4: Cache miss ratio of different memory management schemes for Mistral-7B on Qasper. Memory budget denotes the fraction of model weights that can be held in memory relative to the total model weights.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 84,
+              "image_path": "figures/2609.03079/table-020.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 372
+            }
+          ],
+          "first_seen_at": "2026-09-03T21:00:00-04:00",
+          "hero_figure": "figures/2609.03079/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.03079",
+          "relevance": 9,
+          "selection_reason": "Presents LeanStream, a speculate-and-refine framework for efficient on-device LLM inference that reduces memory usage and improves throughput, directly addressing memory efficiency in LLM deployment.",
+          "summary_status": "generated",
+          "title": "LeanStream: A Speculate-and-Refine Streaming Framework for Efficient on-Device LLM Inference",
+          "tldr": "LeanStream improves on-device LLM inference by speculating early and refining decisions as GPU results arrive, overlapping computation with storage I/O to reduce memory use and increase throughput.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-02",
       "paper_count": 7,
       "papers": [
@@ -11629,5 +12797,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 68
+  "total_paper_count": 75
 }

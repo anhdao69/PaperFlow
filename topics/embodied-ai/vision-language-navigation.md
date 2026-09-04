@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**18 papers total**
+**21 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-03 | [Revisiting Topological Graphs for Macro Action based Closed-loop Reinforcement Learning of Vision Language Navigation in Continuous Environment](https://arxiv.org/abs/2609.03906) | Embodied AI: Vision-Language Navigation | A hierarchical, graph-based PPO framework makes closed-loop reinforcement learning for continuous-environment vision-language navigation more tractable by planning with macro actions over topological frontiers. | 9 | 8 |
+| 2026-09-03 | [Air-Ground Collaborative Vision-and-Language Navigation via Shared Bird's-Eye Maps](https://arxiv.org/abs/2609.03483) | Embodied AI: Vision-Language Navigation, Robot Navigation | AGC-VLN enables training-free UAV–UGV navigation by sharing a bird’s-eye map that combines global aerial context with ground-vehicle execution. | 9 | 8 |
+| 2026-09-03 | [GeoAgent: Evaluating VLM Geolocalization Through Embodied Navigation](https://arxiv.org/abs/2608.29483) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | GeoAgent evaluates VLM geolocalization through embodied Street View navigation, finding that sequential exploration improves accuracy but regional reasoning and self-correction remain difficult. | 9 | 8 |
 | 2026-09-02 | [LookStep: Efficient Vision-Language Navigation with Linguistic Foresight and Event Driven Memory](https://arxiv.org/abs/2609.02350) | Embodied AI: Vision-Language Navigation | LookStep improves resource-efficient vision-language navigation by predicting linguistic future states and selectively storing observations in a bounded memory. | 9 | 8 |
 | 2026-09-01 | [VerNav: Verifier-First Low-Latency Vision-and-Language Navigation](https://arxiv.org/abs/2609.00920) | Embodied AI: Vision-Language Navigation | VerNav speeds up LLM-based vision-and-language navigation by using batched action verification and invoking generation only when decisions are uncertain, achieving competitive R2R performance with over 10× lower per-step decision latency. | 9 | 8 |
 | 2026-09-01 | [Scaffolding Foundation Models into Physical-World Agents Pushes the Frontier of Long-Horizon Navigation](https://arxiv.org/abs/2608.30396) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | NavMCP combines a vision-language reasoning model with a navigation foundation model to enable persistent, long-horizon physical-world exploration. | 9 | 8 |

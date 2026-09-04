@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**18 papers total**
+**21 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-03 | [SimSkill: A Lifelong Learning AI Agent for Autonomous Mastery of Traffic Simulation](https://arxiv.org/abs/2609.03753) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | SimSkill is a self-evolving LLM agent that learns reusable traffic-simulation skills through autonomous practice, verification, and memory consolidation without changing its backbone model. | 6 | 6 |
+| 2026-09-03 | [Fresh Memory, Stale Plans: Dependency-Scoped Validation for Distributed LLM-Agent Memory](https://arxiv.org/abs/2609.03340) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | PlanFence prevents distributed LLM agents from executing plans made obsolete by relevant shared-state changes. | 8 | 8 |
+| 2026-09-03 | [PRACTICE: From Experience to Expertise in Self-Evolving Embodied Agents](https://arxiv.org/abs/2608.30760) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | PRACTICE enables embodied agents to continually improve by learning to update a persistent skill library from interaction experience while keeping the task executor frozen. | 9 | 8 |
 | 2026-09-02 | [Epistemic Sybil Resistance: Multiplying AI Agents Without Multiplying Evidence](https://arxiv.org/abs/2609.01873) | Adaptation and Memory: Embodied Memory; Language Foundation Models | Adding AI agents does not necessarily add evidence: reliable collective inference requires tracking independent evidence roots and correlated extraction errors. | 7 | 7 |
 | 2026-09-02 | [Belief-Calibrated Optimization: An Explicit World Model for Agentic Optimization](https://arxiv.org/abs/2609.01861) | World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | Belief-Calibrated Optimization improves agent scaffolds by maintaining an explicit, revisable world model of how edits affect the environment. | 8 | 8 |
 | 2026-09-02 | [The Memory Trust Gap: Capability-Dependent Failures in Persistent-Memory Agents](https://arxiv.org/abs/2609.01852) | Adaptation and Memory: Embodied Memory; Language Foundation Models | Persistent-memory agents increasingly over-trust stale facts as capability grows, especially when stale information appears current, and effective mitigation depends on model scale. | 8 | 7 |

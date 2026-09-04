@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**79 papers total**
+**84 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-03 | [A Low-Cost, Open Platform for End-to-End Autonomous Driving on a Miniature Ackermann Vehicle](https://arxiv.org/abs/2609.04147) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An open, low-cost miniature Ackermann platform links simulation and real driving to study end-to-end autonomous driving and sim-to-real learning. | 8 | 6 |
+| 2026-09-03 | [MulDP: Multimodal Diffusion Policy for Autonomous Quadruped Parkour Navigation across Complex Terrains](https://arxiv.org/abs/2609.03984) | Embodied AI: Robot Navigation | MulDP enables quadruped robots to autonomously navigate complex parkour terrains by generating anticipatory, temporally coherent velocity commands from multimodal inputs. | 8 | 7 |
+| 2026-09-03 | [RoughSense: Lightweight Terrain-Induced Rover Vibration Prediction Using Point Clouds and IMU Feedback](https://arxiv.org/abs/2609.03720) | Embodied AI: Robot Navigation | RoughSense enables lightweight, real-time vibration-aware terrain mapping by combining LiDAR geometry with IMU feedback and online adaptation. | 5 | 5 |
+| 2026-09-03 | [Air-Ground Collaborative Vision-and-Language Navigation via Shared Bird's-Eye Maps](https://arxiv.org/abs/2609.03483) | Embodied AI: Vision-Language Navigation, Robot Navigation | AGC-VLN enables training-free UAV–UGV navigation by sharing a bird’s-eye map that combines global aerial context with ground-vehicle execution. | 9 | 8 |
+| 2026-09-03 | [GeoAgent: Evaluating VLM Geolocalization Through Embodied Navigation](https://arxiv.org/abs/2608.29483) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | GeoAgent evaluates VLM geolocalization through embodied Street View navigation, finding that sequential exploration improves accuracy but regional reasoning and self-correction remain difficult. | 9 | 8 |
 | 2026-09-02 | [Towards Trustworthy Autonomous Robots: An Explainable AI-Based Decision Framework](https://arxiv.org/abs/2609.02861) | Embodied AI: Robot Navigation | TRACE is a model-agnostic framework that makes autonomous robot decisions auditable by linking each action to sensor evidence through documented causal chains. | 7 | 6 |
 | 2026-09-02 | [Do Better Imagined Rollouts Mean Better Robot Control? A Controlled Study of World-Model Evaluation Under Feedback](https://arxiv.org/abs/2609.02811) | Embodied AI: Robot Navigation; World Models | World-model evaluation for robot control is most reliable when prediction tests match the feedback system’s measurement-update schedule, not when using long open-loop rollouts alone. | 7 | 7 |
 | 2026-09-02 | [From Proxy Learning to Driving Decisions: A Transfer-Based Framework for Evaluating Future-Aware Autonomous Driving Planners](https://arxiv.org/abs/2609.02688) | Embodied AI: Robot Navigation; World Models | The Proxy-to-Decision Transfer framework tests whether improvements in future-aware proxy learning actually produce reliable autonomous-driving planning gains. | 6 | 7 |

@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**26 papers total**
+**32 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-03 | [One Editor, Many Edits: A Unified Training-Free Framework for Diverse Video Editing](https://arxiv.org/abs/2609.04190) | Video Generation and Understanding: Video Diffusion | EditVid is a unified, training-free video-editing framework that supports diverse instruction- and reference-guided edits while preserving temporal coherence, identity, and edit locality. | 7 | 7 |
+| 2026-09-03 | [DSAQuant: Denoising-Stage-Aligned Quantization-Aware Training for Video Generation](https://arxiv.org/abs/2609.04031) | Video Generation and Understanding: Video Diffusion; Efficient AI | DSAQuant improves low-bit video diffusion quantization by aligning training supervision and inference guidance with the different roles of denoising stages. | 7 | 7 |
+| 2026-09-03 | [EraseSAE: Surgical Concept Erasure in Text-to-Video Diffusion Models via Sparse Autoencoders](https://arxiv.org/abs/2609.03629) | Video Generation and Understanding: Video Diffusion | EraseSAE enables precise concept removal from text-to-video diffusion models by identifying and erasing localized, interpretable sparse features while preserving unrelated content. | 6 | 7 |
+| 2026-09-03 | [The Attention Triangle in Audio-Video Models](https://arxiv.org/abs/2609.03586) | Multimodal Foundation Models; Video Generation and Understanding: Video Diffusion | The paper identifies a bidirectional audio–video attention pathway as a major source of semantic leakage in audio-video diffusion models and uses attention-based diagnostics and inference interventions to improve cross-modal alignment. | 7 | 7 |
+| 2026-09-03 | [A Lagrangian View of Flow Matching](https://arxiv.org/abs/2609.00198) | Video Generation and Understanding: Video Diffusion | A particle-centric Lagrangian analysis derives Flow Matching’s straight-line trajectories and explains how denoiser Jacobians cause curvature and limit single-step generation. | 5 | 8 |
+| 2026-09-03 | [FlowVVTON: Flow-Guided Mask-Free Video Virtual Try-On](https://arxiv.org/abs/2608.30450) | Video Generation and Understanding: Video Diffusion | FlowVVTON enables mask-free video virtual try-on by using optical flow during training to improve motion-aware temporal consistency. | 4 | 4 |
 | 2026-09-02 | [RoGe: Novel View Synthesis via End-to-End Implicit Reconstruction and Generation](https://arxiv.org/abs/2609.02847) | 3D Vision; Video Generation and Understanding: Video Diffusion | RoGe unifies implicit 3D reconstruction and video generation to synthesize temporally coherent novel views from sparse posed images without an explicit 3D bridge. | 8 | 7 |
 | 2026-09-02 | [How Far Can 5,500 Hours of Driving Take You? A Scaling Law Analysis of Video Diffusion Models](https://arxiv.org/abs/2608.28404) | Video Generation and Understanding: Video Diffusion | A scaling-law study finds that driving video diffusion models benefit most from longer training on fixed data, while larger models achieve better performance when compute and data permit. | 8 | 7 |
 | 2026-09-01 | [H3-World: Turning Language Understanding into World Control](https://arxiv.org/abs/2609.01560) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion | H3-World efficiently converts a pretrained 33B video generator’s language-based controls into precise, temporally grounded interactive world control. | 9 | 8 |

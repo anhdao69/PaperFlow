@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**26 papers total**
+**28 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-03 | [SGD-KV: Summarization Guided KV Cache Compression](https://arxiv.org/abs/2609.03235) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | SGD-KV compresses long-context KV caches by prioritizing attention heads that are effective at hierarchical summarization, reducing memory use by up to 75% while maintaining strong performance. | 8 | 7 |
+| 2026-09-03 | [Modern Transformers Are Implicit Hybrids: From Functional Differentiation to Principled Hybrid Architecture Design](https://arxiv.org/abs/2609.02986) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | The paper derives a principled head-level design for hybrid attention by identifying distinct retrieval and positional functions in RoPE-based Transformers. | 8 | 8 |
 | 2026-09-02 | [Language Models Can Control Their Own Attention](https://arxiv.org/abs/2609.02737) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Declarative Attention lets language models state which context region they need, substantially reducing KV-cache reads during long-context decoding with modest accuracy loss. | 9 | 8 |
 | 2026-09-02 | [Trace as State: Reasoning Traces as Conditional States for Long-Context Transformers](https://arxiv.org/abs/2609.02702) | Language Foundation Models: Long-Context Models | Placing a previously generated reasoning trace before a long context substantially improves causal Transformers’ ability to solve long-context reasoning tasks. | 8 | 8 |
 | 2026-09-02 | [HeadWiseKV: Budgeted Per-Head Cache Residency for Hybrid Long-Context Language Models](https://arxiv.org/abs/2609.02029) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | HeadWiseKV reduces hybrid long-context models’ KV-cache memory by assigning each attention head a static history window while preserving near-full-cache quality. | 8 | 8 |

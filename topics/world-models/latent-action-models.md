@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**12 papers total**
+**15 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-03 | [GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation](https://arxiv.org/abs/2609.04193) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | GIFT improves robotic manipulation policies by training intermediate visual features to encode geometry, affordances, and task goals relevant to action. | 9 | 8 |
+| 2026-09-03 | [Toward Physically Grounded JEPA World Models for Goal-Conditioned Robotic Planning](https://arxiv.org/abs/2609.03565) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | A physically grounded JEPA world model combining inverse dynamics and state alignment improves latent representations for goal-conditioned robotic planning. | 9 | 8 |
+| 2026-09-03 | [TRACE: Spatiotemporal Contact Memory Graph Network Simulator for Granular Dynamics](https://arxiv.org/abs/2609.02991) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | TRACE improves granular-dynamics simulation by preserving contact history on graph edges, enabling accurate, stable, and fast long-horizon rollouts. | 9 | 8 |
 | 2026-09-02 | [Beyond Textual Chain-of-Thought: A Survey on Action-Grounded Reasoning in Autonomous Driving](https://arxiv.org/abs/2609.01659) | Embodied AI: Robot Navigation, Vision-Language-Action; World Models: Latent Action Models | This survey reframes autonomous-driving chain-of-thought as action-grounded reasoning and organizes existing work by how intermediate states represent the driving world. | 8 | 7 |
 | 2026-09-01 | [REFACTOR-VLA: Unsupervised Library Learning of Typed Motor Programs](https://arxiv.org/abs/2609.01215) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | REFACTOR-VLA learns reusable, typed motor programs by clustering behaviorally equivalent actions with a learned world model and generating them through a library-conditioned decoder. | 8 | 8 |
 | 2026-08-31 | [Does Latent Planning Survive Point Clouds? Action-Conditioned JEPA World Models for Geometric Observations](https://arxiv.org/abs/2608.29434) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Interactive World Models | Action-conditioned JEPA world models can support robust latent planning from sparse, unordered point clouds, with geometry enabling target-based goals without goal observations. | 8 | 8 |
