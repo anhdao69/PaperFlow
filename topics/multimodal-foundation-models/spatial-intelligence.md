@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**88 papers total**
+**90 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [FlashRender: Few-Step Generative Rendering via Camera-Controlled Video MeanFlow](https://arxiv.org/abs/2609.03563) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | FlashRender enables fast, few-step video rerendering along target camera paths while preserving video quality, geometric consistency, and strong camera control. | 8 | 8 |
+| 2026-09-04 | [What, Where, and How: Probing Spatiotemporal Representations in Video Foundation Models](https://arxiv.org/abs/2609.01551) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | A layer-wise study finds that V-JEPA 2 and VideoMAE-v2 encode camera motion and some anomalies, but little intuitive physics, with temporally smooth latent geometry enabling improved camera-motion steering. | 9 | 8 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |
 | 2026-09-03 | [Zero-Shot Novel Depth Synthesis Using 3D Foundation Models Scene Representations](https://arxiv.org/abs/2609.04174) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Z3D uses latent diffusion over 3D foundation-model representations to synthesize realistic depth maps for unseen viewpoints without task-specific training. | 7 | 7 |
 | 2026-09-03 | [GraFT: A Training-Free Framework for Spatial Reasoning in Multimodal Large Language Models via 3D Scene Graphs](https://arxiv.org/abs/2609.03892) | Multimodal Foundation Models: Spatial Intelligence | GraFT enables stronger 3D spatial reasoning in MLLMs without training by combining compact scene graphs with symbolic geometry and targeted visual views. | 8 | 8 |

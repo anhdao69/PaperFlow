@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**369 papers total**
+**374 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [Legibility is Not Interpretability: Comparing Judged and Actual Importance in Chain-Of-Thought Reasoning](https://arxiv.org/abs/2609.04194) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Chain-of-thought traces can make reasoning legible without reliably revealing which steps actually drive correct answers. | 7 | 7 |
+| 2026-09-04 | [When Users Don't Ask: Benchmarking Context-Driven Memory Retrieval in Conversational Agents](https://arxiv.org/abs/2609.03467) | Language Foundation Models: LLM Memory | LOCOMO-CONV shows that conversational context reveals memory-retrieval failures—especially for implicit and composed queries—that standard QA benchmarks miss. | 6 | 6 |
+| 2026-09-04 | [Plan Pointers and Record-Directive Form in Budgeted Verification of Inherited Agent Memory](https://arxiv.org/abs/2609.03450) | Language Foundation Models: LLM Memory | Exact directive wording strongly changes which inherited memory record an agent retrieves and how it decides, but effects vary by model, store, and wording. | 5 | 6 |
+| 2026-09-04 | [It's the Problem, Not the Path: Budget and Difficulty Confounds in LLM Reasoning Trajectories](https://arxiv.org/abs/2609.03436) | Language Foundation Models: Large Language Models | LLM reasoning traces provide little evidence of breakthrough moments or early-predictable outcomes once compute budget and problem difficulty are properly controlled. | 5 | 7 |
+| 2026-09-04 | [The Civilization Framework: Sovereign-Anchored Communication Between Personal Multi-Agent Systems](https://arxiv.org/abs/2609.03425) | Language Foundation Models: LLM Memory | The Civilization Framework treats a human-led, persistent ledger as the stable identity for multi-agent communication and shows that unverified early claims can strongly bias AI answers, though the exploratory findings require replication. | 5 | 6 |
 | 2026-09-03 | [ESPO: Error-Structured Prompt Optimization via Diagnose, Diversify, and Stabilize](https://arxiv.org/abs/2609.04197) | Language Foundation Models: Large Language Models | ESPO improves prompt optimization by diagnosing errors, diversifying candidate prompts, and selecting them stably, achieving higher accuracy with substantially shorter prompts than GEPA. | 6 | 7 |
 | 2026-09-03 | [Knowledge Acquisition During Pre-training? Large Language Models Learn Better With Auxiliary Views](https://arxiv.org/abs/2609.04180) | Language Foundation Models: Large Language Models | Auxiliary reformulations of knowledge improve LLM pre-training, suggesting that diverse representations—not just repetition—drive knowledge acquisition. | 7 | 8 |
 | 2026-09-03 | [Rethinking On-Policy Distillation of Large Language Models II: One Training Example](https://arxiv.org/abs/2609.04172) | Language Foundation Models: Large Language Models | On-policy distillation can achieve near full-data performance from very few diverse queries because data quickly exposes broad training states, while optimization—not data—limits further progress. | 5 | 7 |

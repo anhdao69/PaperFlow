@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**125 papers total**
+**127 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [Building Pretraining Data for World Models: An Unreal Engine-Based Pipeline for Action-Conditioned Video Generation](https://arxiv.org/abs/2609.03557) | World Models: Video World Models | An Unreal Engine pipeline generates large-scale, action-aligned, multi-view synthetic video for training world models. | 9 | 7 |
+| 2026-09-04 | [VeriPhy: Agentic Physical Reasoning for World Model Evaluation and Refinement](https://arxiv.org/abs/2609.03153) | World Models: Video World Models | VeriPhy is an auditable video-evaluation system that converts prompts into typed physical checks and produces traceable verdicts about where generated clips violate them. | 8 | 8 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |
 | 2026-09-03 | [GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation](https://arxiv.org/abs/2609.04193) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | GIFT improves robotic manipulation policies by training intermediate visual features to encode geometry, affordances, and task goals relevant to action. | 9 | 8 |
 | 2026-09-03 | [WorldReward: Reward Modeling for Camera-Conditioned World Models](https://arxiv.org/abs/2609.03952) | World Models: Video World Models, Interactive World Models | WorldReward is a VLM-based reward model that evaluates both whether camera actions are executed correctly and whether the resulting videos maintain high visual and motion quality. | 8 | 7 |

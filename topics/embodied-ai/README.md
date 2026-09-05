@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**343 papers total**
+**346 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [Act More, Decide Less: Skill-Guided Adaptive Action Chunking for Long-Horizon LLM Agents](https://arxiv.org/abs/2609.02042) | Embodied AI: Robot Learning and Manipulation | SPACE trains LLM agents to choose adaptive action-chunk boundaries, improving long-horizon task success while substantially reducing LLM decision rounds. | 8 | 7 |
+| 2026-09-04 | [Polished but Unresolved: Identifying Late-Stage Pressure States in Long-Horizon Tool-Use Agents](https://arxiv.org/abs/2609.00823) | Embodied AI: Robot Learning and Manipulation | Late-stage pressure can make tool-use agents submit polished but incomplete answers, and detecting and relieving it helps them continue resolving constraints. | 8 | 7 |
+| 2026-09-04 | [CoLT-Drive: Counterfactual Long-Tail Benchmarking and Knowledge-Preserving Adaptation for Driving Affordance Prediction](https://arxiv.org/abs/2609.00242) | Embodied AI: Robot Navigation | CoLT-Drive evaluates whether models translate rare driving objects into safe action decisions, while KPA improves small VLM adaptation for this task by preserving pretrained knowledge and specializing across decision regimes. | 6 | 7 |
 | 2026-09-03 | [GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation](https://arxiv.org/abs/2609.04193) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | GIFT improves robotic manipulation policies by training intermediate visual features to encode geometry, affordances, and task goals relevant to action. | 9 | 8 |
 | 2026-09-03 | [A Low-Cost, Open Platform for End-to-End Autonomous Driving on a Miniature Ackermann Vehicle](https://arxiv.org/abs/2609.04147) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An open, low-cost miniature Ackermann platform links simulation and real driving to study end-to-end autonomous driving and sim-to-real learning. | 8 | 6 |
 | 2026-09-03 | [Adaptive Vision-Language Grasping via Composable Foundation Priors and Generalizable Grasp Synthesis](https://arxiv.org/abs/2609.04096) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | AdaRoboVLG separates physical grasp synthesis from task understanding, using composable foundation-model priors to adapt grasping across robotic hands and challenging environments without retraining the base policy. | 9 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**75 papers total**
+**77 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [What Matters for Aggressive Decoding-Time KV Eviction? Temporal Aggregation and Ranking Preservation](https://arxiv.org/abs/2609.03515) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | Temporal score aggregation—especially EMA—can matter as much as the scorer itself for aggressive KV-cache eviction, enabling faster methods while preserving quality. | 8 | 7 |
+| 2026-09-04 | [GrowPage: On-Demand KV Budgeting for Efficient LLM Reasoning Serving](https://arxiv.org/abs/2609.03494) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | GrowPage dynamically expands or compresses each request’s KV-cache allocation as reasoning demand changes, improving the performance–throughput trade-off for LLM serving. | 8 | 7 |
 | 2026-09-03 | [Why Gated DeltaNet Survives 4-Bit Quantization: NVFP4 W4A4 for the Recurrent Half of a Hybrid 27B LLM](https://arxiv.org/abs/2609.04098) | Efficient AI: KV Cache and Memory Efficiency | Minima shows that fully quantizing a hybrid 27B LLM—including Gated DeltaNet’s recurrent layers—to NVFP4 W4A4 can preserve BF16-level quality while reducing memory and improving prefill speed. | 8 | 7 |
 | 2026-09-03 | [VestigeKV: The NoPE-MLA KV Cache Carries Its Own Eviction Signal in a Vestigial Branch](https://arxiv.org/abs/2609.03949) | Efficient AI: KV Cache and Memory Efficiency | VestigeKV uses a query-independent salience signal in NoPE-MLA’s decoupled branch to compress the attended KV tier while preserving an exact GPU-resident archive. | 8 | 8 |
 | 2026-09-03 | [Free Pause Tokens](https://arxiv.org/abs/2609.03807) | Efficient AI: KV Cache and Memory Efficiency | Free pause tokens add parallel thinking compute without lengthening the sequence, improving language-model prediction at nearly no inference cost. | 7 | 8 |

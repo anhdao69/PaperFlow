@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**93 papers total**
+**96 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [When Users Don't Ask: Benchmarking Context-Driven Memory Retrieval in Conversational Agents](https://arxiv.org/abs/2609.03467) | Language Foundation Models: LLM Memory | LOCOMO-CONV shows that conversational context reveals memory-retrieval failures—especially for implicit and composed queries—that standard QA benchmarks miss. | 6 | 6 |
+| 2026-09-04 | [Plan Pointers and Record-Directive Form in Budgeted Verification of Inherited Agent Memory](https://arxiv.org/abs/2609.03450) | Language Foundation Models: LLM Memory | Exact directive wording strongly changes which inherited memory record an agent retrieves and how it decides, but effects vary by model, store, and wording. | 5 | 6 |
+| 2026-09-04 | [The Civilization Framework: Sovereign-Anchored Communication Between Personal Multi-Agent Systems](https://arxiv.org/abs/2609.03425) | Language Foundation Models: LLM Memory | The Civilization Framework treats a human-led, persistent ledger as the stable identity for multi-agent communication and shows that unverified early claims can strongly bias AI answers, though the exploratory findings require replication. | 5 | 6 |
 | 2026-09-03 | [Beyond Retrieval: Progressive Latent Memory Evolution for Streaming Video Understanding](https://arxiv.org/abs/2609.04131) | Video Generation and Understanding: Video Understanding; Language Foundation Models: LLM Memory | LatentStream replaces external retrieve-and-store video memory with a compact latent memory that progressively retrieves, internalizes, and refines historical evidence for causal streaming video understanding. | 7 | 7 |
 | 2026-09-03 | [RuleMem: Active Rule Memory for Long-Term Conversational Agents](https://arxiv.org/abs/2609.03915) | Language Foundation Models: LLM Memory | RuleMem improves long-term conversational QA by actively inducing validated logical rules to retrieve distant evidence and guide reasoning. | 8 | 7 |
 | 2026-09-03 | [Remember and Reweight: Enhancing Multi-Agent Debate with Experience Memory and Confidence Estimation](https://arxiv.org/abs/2609.03619) | Language Foundation Models: LLM Memory | R²-MAD improves multi-agent debate by using past debate experiences and agent-specific confidence weights to reduce shared misconceptions. | 5 | 6 |

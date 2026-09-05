@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**243 papers total**
+**245 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [Legibility is Not Interpretability: Comparing Judged and Actual Importance in Chain-Of-Thought Reasoning](https://arxiv.org/abs/2609.04194) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Chain-of-thought traces can make reasoning legible without reliably revealing which steps actually drive correct answers. | 7 | 7 |
+| 2026-09-04 | [It's the Problem, Not the Path: Budget and Difficulty Confounds in LLM Reasoning Trajectories](https://arxiv.org/abs/2609.03436) | Language Foundation Models: Large Language Models | LLM reasoning traces provide little evidence of breakthrough moments or early-predictable outcomes once compute budget and problem difficulty are properly controlled. | 5 | 7 |
 | 2026-09-03 | [ESPO: Error-Structured Prompt Optimization via Diagnose, Diversify, and Stabilize](https://arxiv.org/abs/2609.04197) | Language Foundation Models: Large Language Models | ESPO improves prompt optimization by diagnosing errors, diversifying candidate prompts, and selecting them stably, achieving higher accuracy with substantially shorter prompts than GEPA. | 6 | 7 |
 | 2026-09-03 | [Knowledge Acquisition During Pre-training? Large Language Models Learn Better With Auxiliary Views](https://arxiv.org/abs/2609.04180) | Language Foundation Models: Large Language Models | Auxiliary reformulations of knowledge improve LLM pre-training, suggesting that diverse representations—not just repetition—drive knowledge acquisition. | 7 | 8 |
 | 2026-09-03 | [Rethinking On-Policy Distillation of Large Language Models II: One Training Example](https://arxiv.org/abs/2609.04172) | Language Foundation Models: Large Language Models | On-policy distillation can achieve near full-data performance from very few diverse queries because data quickly exposes broad training states, while optimization—not data—limits further progress. | 5 | 7 |

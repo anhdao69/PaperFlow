@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**84 papers total**
+**85 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [CoLT-Drive: Counterfactual Long-Tail Benchmarking and Knowledge-Preserving Adaptation for Driving Affordance Prediction](https://arxiv.org/abs/2609.00242) | Embodied AI: Robot Navigation | CoLT-Drive evaluates whether models translate rare driving objects into safe action decisions, while KPA improves small VLM adaptation for this task by preserving pretrained knowledge and specializing across decision regimes. | 6 | 7 |
 | 2026-09-03 | [A Low-Cost, Open Platform for End-to-End Autonomous Driving on a Miniature Ackermann Vehicle](https://arxiv.org/abs/2609.04147) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An open, low-cost miniature Ackermann platform links simulation and real driving to study end-to-end autonomous driving and sim-to-real learning. | 8 | 6 |
 | 2026-09-03 | [MulDP: Multimodal Diffusion Policy for Autonomous Quadruped Parkour Navigation across Complex Terrains](https://arxiv.org/abs/2609.03984) | Embodied AI: Robot Navigation | MulDP enables quadruped robots to autonomously navigate complex parkour terrains by generating anticipatory, temporally coherent velocity commands from multimodal inputs. | 8 | 7 |
 | 2026-09-03 | [RoughSense: Lightweight Terrain-Induced Rover Vibration Prediction Using Point Clouds and IMU Feedback](https://arxiv.org/abs/2609.03720) | Embodied AI: Robot Navigation | RoughSense enables lightweight, real-time vibration-aware terrain mapping by combining LiDAR geometry with IMU feedback and online adaptation. | 5 | 5 |

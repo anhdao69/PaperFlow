@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**152 papers total**
+**153 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [Legibility is Not Interpretability: Comparing Judged and Actual Importance in Chain-Of-Thought Reasoning](https://arxiv.org/abs/2609.04194) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Chain-of-thought traces can make reasoning legible without reliably revealing which steps actually drive correct answers. | 7 | 7 |
 | 2026-09-03 | [Efficient Test-Time Adaptation through Human-AI Interaction](https://arxiv.org/abs/2609.04141) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | TAHI personalizes AI agents efficiently by learning from ongoing human interaction and evolving user-specific evaluation criteria. | 9 | 7 |
 | 2026-09-03 | [Beyond Endpoint Scores: Time- and Capacity-Conditioned Evaluation of Continual Knowledge Updating](https://arxiv.org/abs/2609.03900) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Large Language Models | Continual knowledge-updating methods can change rank depending on evaluation time and replay capacity, so endpoint scores alone are unreliable. | 6 | 6 |
 | 2026-09-03 | [SimSkill: A Lifelong Learning AI Agent for Autonomous Mastery of Traffic Simulation](https://arxiv.org/abs/2609.03753) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | SimSkill is a self-evolving LLM agent that learns reusable traffic-simulation skills through autonomous practice, verification, and memory consolidation without changing its backbone model. | 6 | 6 |

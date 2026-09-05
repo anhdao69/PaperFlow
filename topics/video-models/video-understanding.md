@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**99 papers total**
+**101 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [What, Where, and How: Probing Spatiotemporal Representations in Video Foundation Models](https://arxiv.org/abs/2609.01551) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | A layer-wise study finds that V-JEPA 2 and VideoMAE-v2 encode camera motion and some anomalies, but little intuitive physics, with temporally smooth latent geometry enabling improved camera-motion steering. | 9 | 8 |
+| 2026-09-04 | [StreamScout: Learning When to Look Deeper for Streaming Video Understanding](https://arxiv.org/abs/2609.00291) | Video Generation and Understanding: Video Understanding | StreamScout adaptively decides how much visual evidence to retrieve for each streaming-video query, improving accuracy while reducing inference cost and token use. | 8 | 8 |
 | 2026-09-03 | [Temporal Self-Distillation: Learning Visual State Tracking in Videos Without Supervision](https://arxiv.org/abs/2609.04203) | Video Generation and Understanding: Video Understanding | S$^3$T enables unsupervised continuous video state tracking by distilling predictions from densely sampled clips into sparsely sampled views. | 7 | 7 |
 | 2026-09-03 | [Principia: Relational Physics Tests for Video Models](https://arxiv.org/abs/2609.04200) | Video Generation and Understanding: Video Understanding | Principia evaluates video models’ physical reasoning through calibration-independent relationships between paired objects, revealing substantial gaps despite strong conventional benchmark scores. | 6 | 7 |
 | 2026-09-03 | [Seeing Before Synthesizing: VLM-Guided Transition Event Discovery for Weakly-Supervised Dense Video Captioning](https://arxiv.org/abs/2609.04183) | Video Generation and Understanding: Video Understanding | SBS uses a vision-language model to find and temporally refine meaningful transitions between weakly supervised video events before generating auxiliary captions. | 7 | 6 |

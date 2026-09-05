@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**48 papers total**
+**50 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [What Matters for Aggressive Decoding-Time KV Eviction? Temporal Aggregation and Ranking Preservation](https://arxiv.org/abs/2609.03515) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | Temporal score aggregation—especially EMA—can matter as much as the scorer itself for aggressive KV-cache eviction, enabling faster methods while preserving quality. | 8 | 7 |
+| 2026-09-04 | [GrowPage: On-Demand KV Budgeting for Efficient LLM Reasoning Serving](https://arxiv.org/abs/2609.03494) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | GrowPage dynamically expands or compresses each request’s KV-cache allocation as reasoning demand changes, improving the performance–throughput trade-off for LLM serving. | 8 | 7 |
 | 2026-09-03 | [TAP-Path: Task-Adaptive Structural and Token Pruning for Efficient and Trustworthy Pathology Foundation Models](https://arxiv.org/abs/2609.04071) | Efficient AI: Token Pruning and Eviction | TAP-Path compresses a large pathology foundation model through task-adaptive block and token pruning, reducing compute while maintaining or improving predictive performance and reliability. | 8 | 7 |
 | 2026-09-03 | [Select, Compress, Reinvest: A Controlled Study of Visual-Token Allocation in Long-Video MLLMs](https://arxiv.org/abs/2609.03820) | Efficient AI: Token Pruning and Eviction | A controlled study shows that how long-video MLLMs select and reinvest visual tokens matters more than spatial compression alone. | 8 | 8 |
 | 2026-09-03 | [SPARK: Input-Conditioned Sparse Activation Modulation for Frozen DiT-based Super-Resolution](https://arxiv.org/abs/2609.03813) | Efficient AI: Token Pruning and Eviction | SPARK adapts frozen DiT-based super-resolution models by conditionally modulating only a few dominant activation channels, improving fidelity and perceptual quality without fine-tuning the backbone. | 7 | 8 |

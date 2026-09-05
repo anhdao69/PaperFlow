@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**55 papers total**
+**56 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-04 | [Legibility is Not Interpretability: Comparing Judged and Actual Importance in Chain-Of-Thought Reasoning](https://arxiv.org/abs/2609.04194) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Chain-of-thought traces can make reasoning legible without reliably revealing which steps actually drive correct answers. | 7 | 7 |
 | 2026-09-03 | [Efficient Test-Time Adaptation through Human-AI Interaction](https://arxiv.org/abs/2609.04141) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | TAHI personalizes AI agents efficiently by learning from ongoing human interaction and evolving user-specific evaluation criteria. | 9 | 7 |
 | 2026-09-03 | [Test-time adaptation for speech enhancement with an autoregressive speech prior](https://arxiv.org/abs/2609.03622) | Adaptation and Memory: Test-Time Learning | A single-utterance test-time adaptation method improves speech enhancement under mismatched noise by aligning enhanced speech with an autoregressive clean-speech prior. | 6 | 6 |
 | 2026-09-03 | [On the Interaction Between Model Compression and Test-Time Adaptation](https://arxiv.org/abs/2609.03604) | Adaptation and Memory: Test-Time Learning | Model compression can substantially impair test-time adaptation under distribution shift, even when compressed models remain effective with supervised adaptation. | 7 | 6 |
