@@ -1,6 +1,485 @@
 {
   "days": [
     {
+      "date": "2026-09-05",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Chain-of-thought reasoning unfolds in discrete token space: each step is committed as text, errors propagate, and eliciting good traces presupposes traces to imitate. Reasoning instead in a model's continuous representation space - where intermediate states are vectors rather than words - sidesteps these constraints, but leaves open how those latent states should be computed. We approach this along two axes. First, we keep a large language model (LLM) frozen and use it for what it is already good at - modeling and decoding sequences - while a small auxiliary network supplies continuous latent thoughts as input. Second, we produce those latents by recurrence: a tiny recurrent reasoner refines them over many steps, decoupling the depth of computation from the size of the model, so that the latents are a product of iterative processing rather than a single forward pass. We instantiate this as Latent Recurrent Thoughts (LRT): a task-dedicated proposer supplies base latents, a recurrent reasoner refines them through bounded residual corrections, and the frozen LLM decodes the answer. On symbolic reasoning with answer supervision but no reasoning traces (Countdown-4, Sudoku) and on natural-language reasoning (HumanEval, MBPP, StrategyQA), LRT substantially outperforms prior frozen-decoder continuous-space reasoning methods under an identical decoder, prompt, data, and training budget, and outperforms non-thinking-mode chain-of-thought prompting on the same backbone at a small fraction of its inference compute.",
+          "arxiv_id": "2609.01117",
+          "arxiv_url": "https://arxiv.org/abs/2609.01117",
+          "authors": [
+            "Zhaoliang Chen",
+            "Jie Fu"
+          ],
+          "bullets": [
+            "Addresses error propagation and trace-dependence in token-level chain-of-thought reasoning.",
+            "Uses a small task-specific proposer and recurrent reasoner to generate and refine latent thoughts.",
+            "A frozen LLM decodes the refined latents into final answers.",
+            "Evaluated on symbolic and natural-language reasoning tasks with answer-only supervision and no reasoning traces.",
+            "Reportedly outperforms prior frozen-decoder latent methods and non-thinking chain-of-thought prompting under matched settings, using less inference compute than the latter."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The LRT pipeline. A task-dedicated proposer maps the question x to K base latents L(0); a recurrent refiner, re-reading L(0) as an external signal u at every fast update, is unrolled for S·H cycles and emits a bounded residual ∆; the refined latents L⋆=L(0)+∆ are injected as soft tokens after [ I;x ]. Blue boxes are trained (11.2M parameters); the gray box is frozen.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 267,
+              "image_path": "figures/2609.01117/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 449
+            },
+            {
+              "caption": "Figure 3: Refinement dynamics. (a) Accuracy of the answer decoded from the latents after each high-level cycle, from the proposed base L(0) (cycle 0) to the final L⋆ (cycle 9). (b) Normalized latent residual ∥L(t) − L(t−1)∥ over the same cycles. Accuracy rises monotonically while the residual contracts toward a fixed point.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 308,
+              "image_path": "figures/2609.01117/figure-002.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 839
+            },
+            {
+              "caption": "Figure 2: Scaling the recurrent refiner. Pass rate on Countdown-4 and HumanEval as the TRM refiner grows from 7M to 28M parameters, with the frozen Qwen38B decoder and the proposer held fixed (metrics as in Table 1). Both tasks improve monotonically, with the largest gain at the first doubling; the 7M point is the configuration reported in Table 1.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 264,
+              "image_path": "figures/2609.01117/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 356
+            },
+            {
+              "caption": "Table 1: Main results: a single controlled comparison in which every method uses the same frozen Qwen3-8B decoder, prompts, training data, and budget, so that the trained latent module is the only variable. Countdown-4 and Sudoku report exact solve rate, HumanEval and MBPP pass@1, StrategyQA accuracy; entries are mean± standard deviation in percent over three seeds, and Avg. is the unweighted mean over the five benchmarks. The prompted baselines run in non-thinking mode (§4.1). Methods outside this setting – thinking-mode prompting, from-scratch symbolic solvers, and parameter-efficient prompt adaptation – appear as reference points in Table 2 and Appendix C. Bold: best in each column.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 228,
+              "image_path": "figures/2609.01117/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 875
+            },
+            {
+              "caption": "Table 2: Reference points outside the controlled setting of Table 1. Thinking mode is not computematched: at ≈1 TFLOP per example, LRT spends roughly 9× (StrategyQA) to 450× (Sudoku) less. Thinking-mode rows use fixed random test subsets (n=300/200/300 for Countdown-4/Sudoku/MBPP); all other rows use the full evaluation sets. Bold: best in each column; a dash marks a number the original work does not report. MGDM (Ye et al., 2025), TRM (Jolicoeur-Martineau, 2025), and EqR (Huang et al., 2026) are trained from scratch on one symbolic task and have no language interface, so their natural-language entries are undefined rather than missing. †Not a truncation artifact; ‡name-normalized (Appendix B).",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 244,
+              "image_path": "figures/2609.01117/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 451
+            },
+            {
+              "caption": "Table 3: Factorial ablation over proposer and refiner. Generic + no refiner is SoftCoT, generic + energy is EBM-CoT, and task-dedicated + recurrent is LRT; the other three rows are new ablations. Here Avg. is the mean of the three columns shown, not the fivebenchmark average of Table 1.",
+              "figure_id": "table-3-17",
+              "figure_number": "3",
+              "height": 227,
+              "image_path": "figures/2609.01117/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 427
+            },
+            {
+              "caption": "Table 5: LRT hyperparameters used for all reported results.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 321,
+              "image_path": "figures/2609.01117/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 410
+            },
+            {
+              "caption": "Table 6: Dataset sizes. HumanEval is evaluation-only; the code modules are trained on the MBPP training split.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 152,
+              "image_path": "figures/2609.01117/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 381
+            },
+            {
+              "caption": "Table 7: Parameter-efficient prompt adaptation on Countdown-4 at a trainable budget matched to LRT. Prefix-tuning and P-tuning v2 learn a single prompt shared across instances; the proposer conditions on the instance, and the refiner computes over that conditioning.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2609.01117/table-009.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 443
+            },
+            {
+              "caption": "Table 9: Refiner design ablations. Each row changes one component of the refiner relative to LRT (full). Avg. is the five-benchmark mean of Table 1; only three columns are displayed.",
+              "figure_id": "table-9-3",
+              "figure_number": "9",
+              "height": 152,
+              "image_path": "figures/2609.01117/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 422
+            },
+            {
+              "caption": "Table 10: Residual-penalty sweep. rel. ∥∆∥ is the mean residual norm relative to the λ=0.01 setting; Avg. is the five-benchmark mean of Table 1.",
+              "figure_id": "table-10-4",
+              "figure_number": "10",
+              "height": 153,
+              "image_path": "figures/2609.01117/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 281
+            },
+            {
+              "caption": "Table 14: Training-protocol ablations relative to LRT. Avg. is the five-benchmark mean of Table 1.",
+              "figure_id": "table-14-20",
+              "figure_number": "14",
+              "height": 132,
+              "image_path": "figures/2609.01117/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 456
+            },
+            {
+              "caption": "Table 15: Frozen-decoder negative log-likelihood of the reference answer on Countdown-4, and mean cosine similarity of each latent to its nearest decoder input embedding.",
+              "figure_id": "table-15-16",
+              "figure_number": "15",
+              "height": 136,
+              "image_path": "figures/2609.01117/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 381
+            },
+            {
+              "caption": "Table 17: Inference cost. Latency is relative to zeroshot CoT on the same hardware (≈3.2 s/example; LRT ≈1.1 s/example).",
+              "figure_id": "table-17-10",
+              "figure_number": "17",
+              "height": 132,
+              "image_path": "figures/2609.01117/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 389
+            },
+            {
+              "caption": "Table 4: Trainable parameter breakdown; counts are approximate at working width d′=256.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 313,
+              "image_path": "figures/2609.01117/table-015.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 338
+            },
+            {
+              "caption": "Table 8: Countdown-4 exact solve rate as a function of training-set size, with architecture, schedule, and evaluation held fixed. The 100k column is the setting used in Table 1. For reference, SoftCoT and EBM-CoT trained on the full 100k reach 5.9 and 8.4.",
+              "figure_id": "table-8-2",
+              "figure_number": "8",
+              "height": 70,
+              "image_path": "figures/2609.01117/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 373
+            },
+            {
+              "caption": "Table 13: Latent count Kinfer and working width d′. Defaults (Kinfer=4, d′=256) in bold. Avg. is the fivebenchmark mean of Table 1.",
+              "figure_id": "table-13-19",
+              "figure_number": "13",
+              "height": 311,
+              "image_path": "figures/2609.01117/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 268
+            },
+            {
+              "caption": "Table 16: LRT with different frozen decoders. Avg. is the five-benchmark mean of Table 1.",
+              "figure_id": "table-16-15",
+              "figure_number": "16",
+              "height": 113,
+              "image_path": "figures/2609.01117/table-018.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 440
+            },
+            {
+              "caption": "Table 11: Test-time depth extrapolation: a refiner trained at 9 cycles, unrolled deeper at inference without retraining.",
+              "figure_id": "table-11-18",
+              "figure_number": "11",
+              "height": 111,
+              "image_path": "figures/2609.01117/table-019.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 281
+            },
+            {
+              "caption": "Table 12: Recurrent vs. non-recurrent refiner at matched parameter count. Avg. is the five-benchmark mean of Table 1.",
+              "figure_id": "table-12-21",
+              "figure_number": "12",
+              "height": 91,
+              "image_path": "figures/2609.01117/table-020.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 427
+            },
+            {
+              "caption": "Table 18: Cost of training the refiner, normalized to the truncated-unrolling configuration used throughout, on a single 96GB GPU. Full backpropagation through all 45 passes buys no accuracy (Appendix D) at several times the memory and step time.",
+              "figure_id": "table-18-9",
+              "figure_number": "18",
+              "height": 92,
+              "image_path": "figures/2609.01117/table-021.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 427
+            }
+          ],
+          "first_seen_at": "2026-09-05T21:00:00-04:00",
+          "hero_figure": "figures/2609.01117/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.01117",
+          "relevance": 8,
+          "selection_reason": "Fits latent-action/world-model reasoning with recurrent latent refinement and frozen LLM; also relevant to test-time learning via iterative latent computation.",
+          "summary_status": "generated",
+          "title": "Latent Recurrent Thoughts: Recurrent Refinement of Proposed Latents for Reasoning with Frozen LLMs",
+          "tldr": "Latent Recurrent Thoughts enables frozen LLMs to reason through iteratively refined continuous latent states rather than discrete chains of thought.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "Humans need to study only a handful of well-written textbooks to master a discipline and attempt its hardest problems. We argue that an ideal self-evolution method should share the same property, that is autonomously learning from raw training material for transferable problem-solving capability. However, we still lack a direct measurement for it. We introduce StudyBench, a controlled physics benchmark that directly measures how efficiently a self-evolution method converts training material into capability. We organise the test set into an Application Set, consisting of difficult textbook problems and evaluating absorption ability, and a Transfer Set, consisting of olympiad-level problems and evaluating transfer ability. Benchmarking representative self-evolution methods across three base models, we find that improvements on the Application Set rarely translate to the harder Transfer Set. A guidance ablation exposes a Guidance Gap: even the strongest method closes only a small fraction of what the same material unlocks when supplied as in-context guidance. Besides, every method hits a Compute Plateau, saturating well before exhausting its compute budget. The remaining gap is therefore a method problem rather than a data or compute problem. By offering a clean and controlled benchmark, StudyBench turns self-evolution progress from an open-ended pursuit into a measurable target for future research. Our code is released at https://github.com/thunlp/StudyBench.",
+          "arxiv_id": "2609.00787",
+          "arxiv_url": "https://arxiv.org/abs/2609.00787",
+          "authors": [
+            "Yinghao Chen",
+            "Zixi Chen",
+            "Bingxiang He",
+            "Ziqing Qiao",
+            "Huan-ang Gao",
+            "Yinuo Xu",
+            "Yuxin Zuo",
+            "Zeyuan Liu",
+            "Yuhao Zhan",
+            "Chaojun Xiao"
+          ],
+          "bullets": [
+            "Introduces a controlled physics benchmark with an Application Set for textbook-problem absorption and a Transfer Set for olympiad-level transfer.",
+            "Across three base models, gains on textbook problems rarely carry over to the harder olympiad problems.",
+            "A guidance ablation reveals a substantial gap between autonomous learning and performance when the same material is provided as in-context guidance.",
+            "Methods reach a Compute Plateau before using their full compute budgets, suggesting remaining limitations are methodological rather than due to data or compute.",
+            "Provides a measurable target and released code for evaluating self-evolution progress."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Construction pipeline for StudyBench. Textbooks are extracted into a Corpus, Instructions with Answer , and Instructions without Answer, which together form the training material; olympiad problems are extracted along a separate, test-only stream. A Capability Filter run on Qwen3-8B keeps items that model does not solve reliably; Llama-3.2-3B-Instruct and Opus 4.7 reuse the same items. Failed textbook problems become the Application Set; failed olympiad problems pass an additional Naive Reachability Filter and become the Transfer Set.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 379,
+              "image_path": "figures/2609.00787/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 854
+            },
+            {
+              "caption": "Figure 2: Application-Set Sub@8 of ACE against cumulative GPU-time (1×A800). The solid line is the mean of three seeds; the band is ±1 standard deviation. Accuracy jumps from the Qwen3-8B baseline (≈ 29.4%) to ≈ 40% by the 8.50 GPU hour snapshot, then the mean stays in a 38–41% band through the 62.54 GPU hour endpoint. Late seed-to-seed scatter does not resume a climb. The same early-plateau pattern holds for the other four methods (Appendix I).",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 303,
+              "image_path": "figures/2609.00787/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 451
+            },
+            {
+              "caption": "Figure 4: Application-Set Sub@8 of GEPA against cumulative GPU-time (4×A800). GEPA reaches 44.3% by 30.5 GPU hour and remains there through the 112.5 GPU hour endpoint, matching the 44.34 in Table 2.",
+              "figure_id": "figure-4-14",
+              "figure_number": "4",
+              "height": 303,
+              "image_path": "figures/2609.00787/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 451
+            },
+            {
+              "caption": "Figure 5: Application-Set Sub@8 of Intuitor against cumulative GPU-time (8×A800). Intuitor rises to ≈ 42% at 75.3 GPU hour and then drops to 38.23 at the 106.3 GPU hour endpoint.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 303,
+              "image_path": "figures/2609.00787/figure-004.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 451
+            },
+            {
+              "caption": "Figure 6: Application-Set Sub@8 of R-Zero against cumulative GPU-time (8×A800). R-Zero spends 495 GPU hour to peak near 42%, then drops and ends at 39.14 after 614 GPU hour.",
+              "figure_id": "figure-6-16",
+              "figure_number": "6",
+              "height": 303,
+              "image_path": "figures/2609.00787/figure-005.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 451
+            },
+            {
+              "caption": "Figure 3: Application-Set Sub@8 of Bonito against cumulative GPU-time (4×A800). The curve oscillates between ≈ 24% and ≈ 30% over 8.12 GPU hour and ends at 28.13, below the Qwen3-8B baseline, with no sustained climb.",
+              "figure_id": "figure-3-17",
+              "figure_number": "3",
+              "height": 303,
+              "image_path": "figures/2609.00787/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 446
+            },
+            {
+              "caption": "Table 2: Main results on StudyBench for open-weight models (k=8), grouped by training-material layer. Qwen38B’s Transfer Par@8 is 0.00 by construction. ∆Sub@8 is relative to the same base model; ± is over three independent pass@8 evaluations. All numbers in %.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 698,
+              "image_path": "figures/2609.00787/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 948
+            },
+            {
+              "caption": "Table 3: Results on StudyBench for Opus 4.7 with Claude Code (k=1), on the same item set as Table 2. A single pass@1 run. All numbers in %.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 238,
+              "image_path": "figures/2609.00787/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 775
+            },
+            {
+              "caption": "Table 4: Transfer-Set accuracy with textbook-grounded guidance on Qwen3-8B. Solo accuracies repeat Table 2; guided accuracies inject the Naive Reachability Filter traces at inference. Guidance Gap = Accguided − Accsolo. Qwen3-8B’s guided scores are 100 by construction of that filter. Appendix D reports the same protocol with independently written GLM-5.1 traces.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 205,
+              "image_path": "figures/2609.00787/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 469
+            },
+            {
+              "caption": "Table 1: Statistics of the three nested training-material layers. Instructions with Answer means we successfully extracted the instruction-answer pair from the textbook or its official solution manual, while Instructions without Answer means we failed to find the corresponding answer.",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 224,
+              "image_path": "figures/2609.00787/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 389
+            },
+            {
+              "caption": "Table 5: The 11 physics textbooks comprising StudyBench’s training material. Textbooks marked † are paired with an official solution manual, which we bundle alongside the textbook and use to extract exercise answers.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 321,
+              "image_path": "figures/2609.00787/table-011.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 443
+            },
+            {
+              "caption": "Table 7: Sub-discipline mix of the Application Set (88 parents, 109 sub-problems) and the Transfer Set (90 parents, 280 sub-problems).",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 260,
+              "image_path": "figures/2609.00787/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 448
+            },
+            {
+              "caption": "Table 6: The six international physics olympiads we utilized.",
+              "figure_id": "table-6-12",
+              "figure_number": "6",
+              "height": 196,
+              "image_path": "figures/2609.00787/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 451
+            },
+            {
+              "caption": "Table 10: Qwen3-8B Par@8 under GLM-5.1 guidance, by sub-discipline, using the same labels as Table 7. All numbers in %.",
+              "figure_id": "table-10-7",
+              "figure_number": "10",
+              "height": 227,
+              "image_path": "figures/2609.00787/table-014.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 400
+            },
+            {
+              "caption": "Table 9: Qwen3-8B Par@8 under GLM-5.1 guidance, by olympiad source. All numbers in %.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 207,
+              "image_path": "figures/2609.00787/table-015.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 323
+            },
+            {
+              "caption": "Table 11: Attempt-level agreement between the rulebased judger and the LLM fallback on Qwen3-8B Transfer-Set rollouts. A rule-based accept is assumed to be an LLM accept (starred cell, unobserved).",
+              "figure_id": "table-11-3",
+              "figure_number": "11",
+              "height": 123,
+              "image_path": "figures/2609.00787/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 343
+            },
+            {
+              "caption": "Table 8: Transfer-Set accuracy of Qwen3-8B under textbook-grounded guidance written by two teachers. DeepSeek V4 Pro scores are 100 by construction of the Naive Reachability Filter. All numbers in %.",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 91,
+              "image_path": "figures/2609.00787/table-017.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 323
+            }
+          ],
+          "first_seen_at": "2026-09-05T21:00:00-04:00",
+          "hero_figure": "figures/2609.00787/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.00787",
+          "relevance": 5,
+          "selection_reason": "Introduces a controlled benchmark for self-evolution methods, directly relevant to autonomous/continual learning from raw material.",
+          "summary_status": "generated",
+          "title": "StudyBench: Can Self-Evolution Squeeze Textbooks for Olympiad Capability?",
+          "tldr": "StudyBench measures how efficiently self-evolution methods turn textbook material into transferable olympiad-level problem-solving ability.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "continual-and-online-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-04",
       "paper_count": 1,
       "papers": [
@@ -27645,5 +28124,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "adaptation-and-memory",
-  "total_paper_count": 153
+  "total_paper_count": 155
 }

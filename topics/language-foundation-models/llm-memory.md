@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**96 papers total**
+**97 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [TRIS: A Tri-Layer Retrieval Integrity Sieve Against Knowledge Poisoning](https://arxiv.org/abs/2609.00470) | Language Foundation Models: LLM Memory | TRIS sharply reduces retrieval-stage poisoning in RAG by filtering evidence across embeddings, structure, and generation consistency, though it adds substantial query latency. | 8 | 8 |
 | 2026-09-04 | [When Users Don't Ask: Benchmarking Context-Driven Memory Retrieval in Conversational Agents](https://arxiv.org/abs/2609.03467) | Language Foundation Models: LLM Memory | LOCOMO-CONV shows that conversational context reveals memory-retrieval failures—especially for implicit and composed queries—that standard QA benchmarks miss. | 6 | 6 |
 | 2026-09-04 | [Plan Pointers and Record-Directive Form in Budgeted Verification of Inherited Agent Memory](https://arxiv.org/abs/2609.03450) | Language Foundation Models: LLM Memory | Exact directive wording strongly changes which inherited memory record an agent retrieves and how it decides, but effects vary by model, store, and wording. | 5 | 6 |
 | 2026-09-04 | [The Civilization Framework: Sovereign-Anchored Communication Between Personal Multi-Agent Systems](https://arxiv.org/abs/2609.03425) | Language Foundation Models: LLM Memory | The Civilization Framework treats a human-led, persistent ledger as the stable identity for multi-agent communication and shows that unverified early claims can strongly bias AI answers, though the exploratory findings require replication. | 5 | 6 |

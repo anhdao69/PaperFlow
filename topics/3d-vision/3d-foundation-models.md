@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**48 papers total**
+**49 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [ENEAS: Embedding-guided Neural Ensemble for Adaptive Segmentation](https://arxiv.org/abs/2609.03756) | Multimodal Foundation Models: Multimodal Large Language Models; 3D Vision: 3D Foundation Models | ENEAS is a text-promptable system that combines robust instance tracking with semantically verified open-concept segmentation to avoid temporal, spatial, and ontological errors. | 8 | 7 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |
 | 2026-09-03 | [Zero-Shot Novel Depth Synthesis Using 3D Foundation Models Scene Representations](https://arxiv.org/abs/2609.04174) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Z3D uses latent diffusion over 3D foundation-model representations to synthesize realistic depth maps for unseen viewpoints without task-specific training. | 7 | 7 |
 | 2026-09-03 | [Sparse auto-regressive modeling for scene generation from multi-view images](https://arxiv.org/abs/2609.03931) | 3D Vision: 3D Foundation Models | SPAR3S completes unseen parts of 3D scenes from sparse multi-view images using a compact sparse voxel latent space and masked autoregressive generation. | 8 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**142 papers total**
+**144 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [ENEAS: Embedding-guided Neural Ensemble for Adaptive Segmentation](https://arxiv.org/abs/2609.03756) | Multimodal Foundation Models: Multimodal Large Language Models; 3D Vision: 3D Foundation Models | ENEAS is a text-promptable system that combines robust instance tracking with semantically verified open-concept segmentation to avoid temporal, spatial, and ontological errors. | 8 | 7 |
+| 2026-09-05 | [STARS-GS: Structure-Aware Regularized Gaussian Splatting for Large-Scale Aerial Surface Reconstruction](https://arxiv.org/abs/2609.03447) | 3D Vision | STARS-GS improves large-scale aerial surface reconstruction by making Gaussian splatting aware of scene structure, neighborhoods, and local geometric variation. | 6 | 6 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |
 | 2026-09-03 | [Zero-Shot Novel Depth Synthesis Using 3D Foundation Models Scene Representations](https://arxiv.org/abs/2609.04174) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Z3D uses latent diffusion over 3D foundation-model representations to synthesize realistic depth maps for unseen viewpoints without task-specific training. | 7 | 7 |
 | 2026-09-03 | [Stable and Scalable Bundle Adjustment of Holistic 3D Structures](https://arxiv.org/abs/2609.04026) | 3D Vision | A unified bundle-adjustment framework efficiently optimizes rich 3D structures and geometric relations while preserving the stability and scalability of classical point-based BA. | 6 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**33 papers total**
+**34 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Puppeteer: Object-Grounded Posture-Aware Co-Speech Gesture Generation](https://arxiv.org/abs/2609.00369) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | Puppeteer generates temporally synchronized, posture-aware co-speech gestures that interact consistently with surrounding objects. | 9 | 8 |
 | 2026-09-04 | [FlashRender: Few-Step Generative Rendering via Camera-Controlled Video MeanFlow](https://arxiv.org/abs/2609.03563) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | FlashRender enables fast, few-step video rerendering along target camera paths while preserving video quality, geometric consistency, and strong camera control. | 8 | 8 |
 | 2026-09-03 | [One Editor, Many Edits: A Unified Training-Free Framework for Diverse Video Editing](https://arxiv.org/abs/2609.04190) | Video Generation and Understanding: Video Diffusion | EditVid is a unified, training-free video-editing framework that supports diverse instruction- and reference-guided edits while preserving temporal coherence, identity, and edit locality. | 7 | 7 |
 | 2026-09-03 | [DSAQuant: Denoising-Stage-Aligned Quantization-Aware Training for Video Generation](https://arxiv.org/abs/2609.04031) | Video Generation and Understanding: Video Diffusion; Efficient AI | DSAQuant improves low-bit video diffusion quantization by aligning training supervision and inference guidance with the different roles of denoising stages. | 7 | 7 |

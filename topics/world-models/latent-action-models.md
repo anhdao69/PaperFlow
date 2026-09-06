@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**15 papers total**
+**16 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Latent Recurrent Thoughts: Recurrent Refinement of Proposed Latents for Reasoning with Frozen LLMs](https://arxiv.org/abs/2609.01117) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | Latent Recurrent Thoughts enables frozen LLMs to reason through iteratively refined continuous latent states rather than discrete chains of thought. | 8 | 8 |
 | 2026-09-03 | [GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation](https://arxiv.org/abs/2609.04193) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | GIFT improves robotic manipulation policies by training intermediate visual features to encode geometry, affordances, and task goals relevant to action. | 9 | 8 |
 | 2026-09-03 | [Toward Physically Grounded JEPA World Models for Goal-Conditioned Robotic Planning](https://arxiv.org/abs/2609.03565) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | A physically grounded JEPA world model combining inverse dynamics and state alignment improves latent representations for goal-conditioned robotic planning. | 9 | 8 |
 | 2026-09-03 | [TRACE: Spatiotemporal Contact Memory Graph Network Simulator for Granular Dynamics](https://arxiv.org/abs/2609.02991) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | TRACE improves granular-dynamics simulation by preserving contact history on graph edges, enabling accurate, stable, and fast long-horizon rollouts. | 9 | 8 |

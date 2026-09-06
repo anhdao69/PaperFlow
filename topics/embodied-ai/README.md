@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**346 papers total**
+**351 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Long-Horizon Consistent and Interaction-Aware World Models for Multi-Style End-to-End Driving](https://arxiv.org/abs/2609.03225) | Embodied AI: Robot Navigation; World Models: Interactive World Models | StyleDrive improves world-model-based end-to-end driving by stabilizing long-horizon imagination, modeling ego–traffic interactions, and enabling multiple driving styles. | 8 | 8 |
+| 2026-09-05 | [RoboTok: An Internet-Scale Data Engine for Human Demonstration Retrieval and Dexterous Manipulation Learning](https://arxiv.org/abs/2609.03199) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | RoboTok retrieves manipulation-relevant web videos using actor-centered 3D hand-motion representations to scale dexterous robot learning beyond costly robot data collection. | 8 | 7 |
+| 2026-09-05 | [A Study of Conditional Diffusion Models for Open-Loop Control under Dry Friction and Stiction](https://arxiv.org/abs/2609.01756) | Embodied AI: Robot Learning and Manipulation | Conditional diffusion generates temporally coherent open-loop controls that help a friction-limited point mass overcome stiction, particularly with few samples. | 5 | 6 |
+| 2026-09-05 | [Dual Process Motion Planning](https://arxiv.org/abs/2609.01260) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | A neuro-symbolic dual-process architecture combines fast learned intuition with slower symbolic reasoning to improve nonlinear robotic motion planning. | 8 | 7 |
+| 2026-09-05 | [Towards Generalizable Visually Grounded Exploration of Household Devices](https://arxiv.org/abs/2609.00845) | Embodied AI: Vision-Language Navigation, Robot Navigation | VGEBench evaluates whether vision-language models can autonomously explore and operate unfamiliar household devices through visually grounded, feedback-driven interaction. | 7 | 6 |
 | 2026-09-04 | [Act More, Decide Less: Skill-Guided Adaptive Action Chunking for Long-Horizon LLM Agents](https://arxiv.org/abs/2609.02042) | Embodied AI: Robot Learning and Manipulation | SPACE trains LLM agents to choose adaptive action-chunk boundaries, improving long-horizon task success while substantially reducing LLM decision rounds. | 8 | 7 |
 | 2026-09-04 | [Polished but Unresolved: Identifying Late-Stage Pressure States in Long-Horizon Tool-Use Agents](https://arxiv.org/abs/2609.00823) | Embodied AI: Robot Learning and Manipulation | Late-stage pressure can make tool-use agents submit polished but incomplete answers, and detecting and relieving it helps them continue resolving constraints. | 8 | 7 |
 | 2026-09-04 | [CoLT-Drive: Counterfactual Long-Tail Benchmarking and Knowledge-Preserving Adaptation for Driving Affordance Prediction](https://arxiv.org/abs/2609.00242) | Embodied AI: Robot Navigation | CoLT-Drive evaluates whether models translate rare driving objects into safe action decisions, while KPA improves small VLM adaptation for this task by preserving pretrained knowledge and specializing across decision regimes. | 6 | 7 |

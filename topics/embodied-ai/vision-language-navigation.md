@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**21 papers total**
+**22 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Towards Generalizable Visually Grounded Exploration of Household Devices](https://arxiv.org/abs/2609.00845) | Embodied AI: Vision-Language Navigation, Robot Navigation | VGEBench evaluates whether vision-language models can autonomously explore and operate unfamiliar household devices through visually grounded, feedback-driven interaction. | 7 | 6 |
 | 2026-09-03 | [Revisiting Topological Graphs for Macro Action based Closed-loop Reinforcement Learning of Vision Language Navigation in Continuous Environment](https://arxiv.org/abs/2609.03906) | Embodied AI: Vision-Language Navigation | A hierarchical, graph-based PPO framework makes closed-loop reinforcement learning for continuous-environment vision-language navigation more tractable by planning with macro actions over topological frontiers. | 9 | 8 |
 | 2026-09-03 | [Air-Ground Collaborative Vision-and-Language Navigation via Shared Bird's-Eye Maps](https://arxiv.org/abs/2609.03483) | Embodied AI: Vision-Language Navigation, Robot Navigation | AGC-VLN enables training-free UAV–UGV navigation by sharing a bird’s-eye map that combines global aerial context with ground-vehicle execution. | 9 | 8 |
 | 2026-09-03 | [GeoAgent: Evaluating VLM Geolocalization Through Embodied Navigation](https://arxiv.org/abs/2608.29483) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | GeoAgent evaluates VLM geolocalization through embodied Street View navigation, finding that sequential exploration improves accuracy but regional reasoning and self-correction remain difficult. | 9 | 8 |

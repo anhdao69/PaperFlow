@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**50 papers total**
+**54 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [FLaG: Frequency-Domain Latent-attention Gated Pooling for Token Aggregation](https://arxiv.org/abs/2609.00831) | Efficient AI: Token Pruning and Eviction | FLaG improves token aggregation by combining Fourier-domain representations, latent attention, and sample-conditioned gating, with task-dependent gains across protein, image, and language benchmarks. | 4 | 6 |
+| 2026-09-05 | [When Features Become Instances: Inverted Contrastive Learning for Unsupervised Feature Selection](https://arxiv.org/abs/2609.00782) | Efficient AI: Token Pruning and Eviction | ICLFS selects informative features without labels by learning contrastive representations of features themselves and ranking them by embedding magnitude, with redundancy correction improving selection. | 6 | 7 |
+| 2026-09-05 | [Quit While You're Ahead: Quit for Efficient Candidate Generation in Machine Translation Reranking](https://arxiv.org/abs/2609.00588) | Efficient AI: Token Pruning and Eviction | Quit accelerates NMT candidate generation and reranking by stopping early once the best candidate’s estimated quality stabilizes, while preserving translation quality. | 7 | 7 |
+| 2026-09-05 | [QTEA: Ternary LLMs with Sparse Residual Salient Weight and By-Column Optimization](https://arxiv.org/abs/2609.00224) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | QTEA enables hardware-efficient sub-2-bit ternary LLM quantization by combining sparse residual compensation with column-wise optimization, substantially improving accuracy and perplexity over ternary PTQ baselines. | 9 | 8 |
 | 2026-09-04 | [What Matters for Aggressive Decoding-Time KV Eviction? Temporal Aggregation and Ranking Preservation](https://arxiv.org/abs/2609.03515) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | Temporal score aggregation—especially EMA—can matter as much as the scorer itself for aggressive KV-cache eviction, enabling faster methods while preserving quality. | 8 | 7 |
 | 2026-09-04 | [GrowPage: On-Demand KV Budgeting for Efficient LLM Reasoning Serving](https://arxiv.org/abs/2609.03494) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | GrowPage dynamically expands or compresses each request’s KV-cache allocation as reasoning demand changes, improving the performance–throughput trade-off for LLM serving. | 8 | 7 |
 | 2026-09-03 | [TAP-Path: Task-Adaptive Structural and Token Pruning for Efficient and Trustworthy Pathology Foundation Models](https://arxiv.org/abs/2609.04071) | Efficient AI: Token Pruning and Eviction | TAP-Path compresses a large pathology foundation model through task-adaptive block and token pruning, reducing compute while maintaining or improving predictive performance and reliability. | 8 | 7 |

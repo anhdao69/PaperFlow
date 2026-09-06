@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**127 papers total**
+**130 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Drive-HWM: Hierarchical World Models for Dynamic-Latent Guided Autonomous Driving](https://arxiv.org/abs/2609.03572) | World Models: Interactive World Models | Drive-HWM combines slow long-horizon scene prediction with fast observation-grounded action generation to improve autonomous driving decisions. | 9 | 8 |
+| 2026-09-05 | [Long-Horizon Consistent and Interaction-Aware World Models for Multi-Style End-to-End Driving](https://arxiv.org/abs/2609.03225) | Embodied AI: Robot Navigation; World Models: Interactive World Models | StyleDrive improves world-model-based end-to-end driving by stabilizing long-horizon imagination, modeling ego–traffic interactions, and enabling multiple driving styles. | 8 | 8 |
+| 2026-09-05 | [Latent Recurrent Thoughts: Recurrent Refinement of Proposed Latents for Reasoning with Frozen LLMs](https://arxiv.org/abs/2609.01117) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | Latent Recurrent Thoughts enables frozen LLMs to reason through iteratively refined continuous latent states rather than discrete chains of thought. | 8 | 8 |
 | 2026-09-04 | [Building Pretraining Data for World Models: An Unreal Engine-Based Pipeline for Action-Conditioned Video Generation](https://arxiv.org/abs/2609.03557) | World Models: Video World Models | An Unreal Engine pipeline generates large-scale, action-aligned, multi-view synthetic video for training world models. | 9 | 7 |
 | 2026-09-04 | [VeriPhy: Agentic Physical Reasoning for World Model Evaluation and Refinement](https://arxiv.org/abs/2609.03153) | World Models: Video World Models | VeriPhy is an auditable video-evaluation system that converts prompts into typed physical checks and produces traceable verdicts about where generated clips violate them. | 8 | 8 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**101 papers total**
+**102 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [ViTAL-X: Video-Text Alignment with Cross-Modal Temporal Edits](https://arxiv.org/abs/2609.00505) | Video Generation and Understanding: Video Understanding | ViTAL-X adds self-supervised temporal alignment to frozen image-text models, enabling strong video temporal reasoning with limited resources. | 9 | 9 |
 | 2026-09-04 | [What, Where, and How: Probing Spatiotemporal Representations in Video Foundation Models](https://arxiv.org/abs/2609.01551) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | A layer-wise study finds that V-JEPA 2 and VideoMAE-v2 encode camera motion and some anomalies, but little intuitive physics, with temporally smooth latent geometry enabling improved camera-motion steering. | 9 | 8 |
 | 2026-09-04 | [StreamScout: Learning When to Look Deeper for Streaming Video Understanding](https://arxiv.org/abs/2609.00291) | Video Generation and Understanding: Video Understanding | StreamScout adaptively decides how much visual evidence to retrieve for each streaming-video query, improving accuracy while reducing inference cost and token use. | 8 | 8 |
 | 2026-09-03 | [Temporal Self-Distillation: Learning Visual State Tracking in Videos Without Supervision](https://arxiv.org/abs/2609.04203) | Video Generation and Understanding: Video Understanding | S$^3$T enables unsupervised continuous video state tracking by distilling predictions from densely sampled clips into sparsely sampled views. | 7 | 7 |

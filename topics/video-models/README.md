@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**146 papers total**
+**148 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [ViTAL-X: Video-Text Alignment with Cross-Modal Temporal Edits](https://arxiv.org/abs/2609.00505) | Video Generation and Understanding: Video Understanding | ViTAL-X adds self-supervised temporal alignment to frozen image-text models, enabling strong video temporal reasoning with limited resources. | 9 | 9 |
+| 2026-09-05 | [Puppeteer: Object-Grounded Posture-Aware Co-Speech Gesture Generation](https://arxiv.org/abs/2609.00369) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | Puppeteer generates temporally synchronized, posture-aware co-speech gestures that interact consistently with surrounding objects. | 9 | 8 |
 | 2026-09-04 | [FlashRender: Few-Step Generative Rendering via Camera-Controlled Video MeanFlow](https://arxiv.org/abs/2609.03563) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | FlashRender enables fast, few-step video rerendering along target camera paths while preserving video quality, geometric consistency, and strong camera control. | 8 | 8 |
 | 2026-09-04 | [What, Where, and How: Probing Spatiotemporal Representations in Video Foundation Models](https://arxiv.org/abs/2609.01551) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | A layer-wise study finds that V-JEPA 2 and VideoMAE-v2 encode camera motion and some anomalies, but little intuitive physics, with temporally smooth latent geometry enabling improved camera-motion steering. | 9 | 8 |
 | 2026-09-04 | [StreamScout: Learning When to Look Deeper for Streaming Video Understanding](https://arxiv.org/abs/2609.00291) | Video Generation and Understanding: Video Understanding | StreamScout adaptively decides how much visual evidence to retrieve for each streaming-video query, improving accuracy while reducing inference cost and token use. | 8 | 8 |

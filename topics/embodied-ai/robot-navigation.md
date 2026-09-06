@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**85 papers total**
+**88 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Long-Horizon Consistent and Interaction-Aware World Models for Multi-Style End-to-End Driving](https://arxiv.org/abs/2609.03225) | Embodied AI: Robot Navigation; World Models: Interactive World Models | StyleDrive improves world-model-based end-to-end driving by stabilizing long-horizon imagination, modeling ego–traffic interactions, and enabling multiple driving styles. | 8 | 8 |
+| 2026-09-05 | [Dual Process Motion Planning](https://arxiv.org/abs/2609.01260) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | A neuro-symbolic dual-process architecture combines fast learned intuition with slower symbolic reasoning to improve nonlinear robotic motion planning. | 8 | 7 |
+| 2026-09-05 | [Towards Generalizable Visually Grounded Exploration of Household Devices](https://arxiv.org/abs/2609.00845) | Embodied AI: Vision-Language Navigation, Robot Navigation | VGEBench evaluates whether vision-language models can autonomously explore and operate unfamiliar household devices through visually grounded, feedback-driven interaction. | 7 | 6 |
 | 2026-09-04 | [CoLT-Drive: Counterfactual Long-Tail Benchmarking and Knowledge-Preserving Adaptation for Driving Affordance Prediction](https://arxiv.org/abs/2609.00242) | Embodied AI: Robot Navigation | CoLT-Drive evaluates whether models translate rare driving objects into safe action decisions, while KPA improves small VLM adaptation for this task by preserving pretrained knowledge and specializing across decision regimes. | 6 | 7 |
 | 2026-09-03 | [A Low-Cost, Open Platform for End-to-End Autonomous Driving on a Miniature Ackermann Vehicle](https://arxiv.org/abs/2609.04147) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An open, low-cost miniature Ackermann platform links simulation and real driving to study end-to-end autonomous driving and sim-to-real learning. | 8 | 6 |
 | 2026-09-03 | [MulDP: Multimodal Diffusion Policy for Autonomous Quadruped Parkour Navigation across Complex Terrains](https://arxiv.org/abs/2609.03984) | Embodied AI: Robot Navigation | MulDP enables quadruped robots to autonomously navigate complex parkour terrains by generating anticipatory, temporally coherent velocity commands from multimodal inputs. | 8 | 7 |

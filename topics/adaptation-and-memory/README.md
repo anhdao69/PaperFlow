@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**153 papers total**
+**155 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Latent Recurrent Thoughts: Recurrent Refinement of Proposed Latents for Reasoning with Frozen LLMs](https://arxiv.org/abs/2609.01117) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | Latent Recurrent Thoughts enables frozen LLMs to reason through iteratively refined continuous latent states rather than discrete chains of thought. | 8 | 8 |
+| 2026-09-05 | [StudyBench: Can Self-Evolution Squeeze Textbooks for Olympiad Capability?](https://arxiv.org/abs/2609.00787) | Adaptation and Memory: Continual and Online Learning | StudyBench measures how efficiently self-evolution methods turn textbook material into transferable olympiad-level problem-solving ability. | 5 | 6 |
 | 2026-09-04 | [Legibility is Not Interpretability: Comparing Judged and Actual Importance in Chain-Of-Thought Reasoning](https://arxiv.org/abs/2609.04194) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Chain-of-thought traces can make reasoning legible without reliably revealing which steps actually drive correct answers. | 7 | 7 |
 | 2026-09-03 | [Efficient Test-Time Adaptation through Human-AI Interaction](https://arxiv.org/abs/2609.04141) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | TAHI personalizes AI agents efficiently by learning from ongoing human interaction and evolving user-specific evaluation criteria. | 9 | 7 |
 | 2026-09-03 | [Beyond Endpoint Scores: Time- and Capacity-Conditioned Evaluation of Continual Knowledge Updating](https://arxiv.org/abs/2609.03900) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Large Language Models | Continual knowledge-updating methods can change rank depending on evaluation time and replay capacity, so endpoint scores alone are unreliable. | 6 | 6 |

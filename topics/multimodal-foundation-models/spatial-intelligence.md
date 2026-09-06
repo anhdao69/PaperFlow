@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**90 papers total**
+**92 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-05 | [Location-Aware Language Models via Secondary Embeddings](https://arxiv.org/abs/2609.00454) | Multimodal Foundation Models: Spatial Intelligence; Language Foundation Models: Large Language Models | A lightweight, model-agnostic method adds latitude–longitude signals and location-focused masking to pretrained language models, improving geo-spatial understanding without tokenizer changes or costly retraining. | 9 | 8 |
+| 2026-09-05 | [Puppeteer: Object-Grounded Posture-Aware Co-Speech Gesture Generation](https://arxiv.org/abs/2609.00369) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | Puppeteer generates temporally synchronized, posture-aware co-speech gestures that interact consistently with surrounding objects. | 9 | 8 |
 | 2026-09-04 | [FlashRender: Few-Step Generative Rendering via Camera-Controlled Video MeanFlow](https://arxiv.org/abs/2609.03563) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | FlashRender enables fast, few-step video rerendering along target camera paths while preserving video quality, geometric consistency, and strong camera control. | 8 | 8 |
 | 2026-09-04 | [What, Where, and How: Probing Spatiotemporal Representations in Video Foundation Models](https://arxiv.org/abs/2609.01551) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | A layer-wise study finds that V-JEPA 2 and VideoMAE-v2 encode camera motion and some anomalies, but little intuitive physics, with temporally smooth latent geometry enabling improved camera-motion steering. | 9 | 8 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |
