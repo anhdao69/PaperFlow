@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**48 papers total**
+**49 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-06 | [TourPhysics: Bringing Physics to World Models for Exploration and Manipulation from a Single Image](https://arxiv.org/abs/2609.04911) | World Models: Video World Models, Interactive World Models | TourPhysics combines deterministic physics simulation with video generation to enable physically consistent exploration and manipulation from a single image. | 8 | 8 |
 | 2026-09-04 | [Building Pretraining Data for World Models: An Unreal Engine-Based Pipeline for Action-Conditioned Video Generation](https://arxiv.org/abs/2609.03557) | World Models: Video World Models | An Unreal Engine pipeline generates large-scale, action-aligned, multi-view synthetic video for training world models. | 9 | 7 |
 | 2026-09-04 | [VeriPhy: Agentic Physical Reasoning for World Model Evaluation and Refinement](https://arxiv.org/abs/2609.03153) | World Models: Video World Models | VeriPhy is an auditable video-evaluation system that converts prompts into typed physical checks and produces traceable verdicts about where generated clips violate them. | 8 | 8 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |

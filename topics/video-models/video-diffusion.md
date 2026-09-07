@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**34 papers total**
+**39 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-06 | [ReaDiT Guidance: Control for Image and Video Generation using Diffusion Transformer Features](https://arxiv.org/abs/2609.04649) | Video Generation and Understanding: Video Diffusion | ReaDiT Guidance controls image and video generation by steering DiT models with features from a single transformer block and user-provided spatial targets. | 7 | 8 |
+| 2026-09-06 | [Joint Alignment and Distillation for Video Generation via Sample-Guided Distribution Matching](https://arxiv.org/abs/2609.04283) | Video Generation and Understanding: Video Diffusion | DM-Align unifies video distillation and human-preference alignment in a single distribution-matching optimization stage, avoiding costly multi-stage reinforcement learning. | 8 | 8 |
+| 2026-09-06 | [Step Back to Move Forward: Reflection-Aware Preference Optimization for Visual Generation](https://arxiv.org/abs/2609.04282) | Video Generation and Understanding: Video Diffusion | RA-GRPO improves diffusion-model preference alignment by using backward reflection to guide exploration and reduce reward hacking without adding inference-time cost. | 8 | 8 |
+| 2026-09-06 | [AVENUE: Audio-Video EditiNg Understanding and Evaluation](https://arxiv.org/abs/2609.04253) | Video Generation and Understanding: Video Diffusion | AVENUE introduces a broad benchmark and modality-aware evaluation framework for testing whether audio-video editing models make the intended edits while preserving the other modality. | 5 | 6 |
+| 2026-09-06 | [Encore: Infinite Audio-Video Generation with Adaptive Signal Routing](https://arxiv.org/abs/2609.04249) | Video Generation and Understanding: Video Diffusion | Encore enables theoretically unbounded, synchronized audio-video generation by combining chunk-wise context propagation, global reference conditioning, and adaptive signal routing. | 7 | 7 |
 | 2026-09-05 | [Puppeteer: Object-Grounded Posture-Aware Co-Speech Gesture Generation](https://arxiv.org/abs/2609.00369) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | Puppeteer generates temporally synchronized, posture-aware co-speech gestures that interact consistently with surrounding objects. | 9 | 8 |
 | 2026-09-04 | [FlashRender: Few-Step Generative Rendering via Camera-Controlled Video MeanFlow](https://arxiv.org/abs/2609.03563) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | FlashRender enables fast, few-step video rerendering along target camera paths while preserving video quality, geometric consistency, and strong camera control. | 8 | 8 |
 | 2026-09-03 | [One Editor, Many Edits: A Unified Training-Free Framework for Diverse Video Editing](https://arxiv.org/abs/2609.04190) | Video Generation and Understanding: Video Diffusion | EditVid is a unified, training-free video-editing framework that supports diverse instruction- and reference-guided edits while preserving temporal coherence, identity, and edit locality. | 7 | 7 |

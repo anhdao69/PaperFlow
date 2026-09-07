@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**49 papers total**
+**54 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-06 | [Reflection-aware Generative Novel View Synthesis](https://arxiv.org/abs/2609.05382) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Ref-GeNVS enables training-free, reflection-consistent novel-view synthesis in mirror scenes by treating reflections as complementary virtual views. | 8 | 8 |
+| 2026-09-06 | [BEAM3R: Beam's-eye-view architecture with Mamba-3 for implicit dose reconstruction](https://arxiv.org/abs/2609.04747) | World Models: Latent Action Models; 3D Vision: 3D Foundation Models | BEAM3R uses a beam’s-eye-view Mamba-3 architecture with physics-based conditioning to rapidly reconstruct photon and proton doses, achieving high CT-based accuracy but reduced performance with synthetic CTs. | 7 | 8 |
+| 2026-09-06 | [Where Appearance Fails, Geometry Recognizes: A CAD-Free 3D Shape Prior That Complements Vision Foundation Models](https://arxiv.org/abs/2609.04381) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | A CAD-free 3D shape prototype built from a short RGB-D scan complements frozen DINOv2 features and improves recognition, especially under occlusion and for shape-distinctive objects. | 7 | 7 |
+| 2026-09-06 | [Object Concepts Emerge from Motion](https://arxiv.org/abs/2609.04348) | 3D Vision: 3D Foundation Models | Motion-derived pseudo-instance masks from raw videos teach static image encoders object-centric representations, improving geometry- and instance-sensitive downstream tasks without human annotations. | 8 | 9 |
+| 2026-09-06 | [The microscope is the mask: privileged views and labels from a cryo-ET forward model](https://arxiv.org/abs/2609.04325) | 3D Vision: 3D Foundation Models | CARNIVAL uses cryo-ET simulation physics and protein annotations to learn dense, transferable protein representations without real-data finetuning. | 7 | 8 |
 | 2026-09-05 | [ENEAS: Embedding-guided Neural Ensemble for Adaptive Segmentation](https://arxiv.org/abs/2609.03756) | Multimodal Foundation Models: Multimodal Large Language Models; 3D Vision: 3D Foundation Models | ENEAS is a text-promptable system that combines robust instance tracking with semantically verified open-concept segmentation to avoid temporal, spatial, and ontological errors. | 8 | 7 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |
 | 2026-09-03 | [Zero-Shot Novel Depth Synthesis Using 3D Foundation Models Scene Representations](https://arxiv.org/abs/2609.04174) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Z3D uses latent diffusion over 3D foundation-model representations to synthesize realistic depth maps for unseen viewpoints without task-specific training. | 7 | 7 |

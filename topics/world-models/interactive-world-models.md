@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**72 papers total**
+**76 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-06 | [One Diffusion Model, Two Roles: Guided Trajectory Planning and Safety-Critical Scenario Generation in Closed-Loop Simulation](https://arxiv.org/abs/2609.04921) | Embodied AI: Robot Navigation; World Models: Interactive World Models | A single pretrained diffusion traffic model can both plan ego motion and generate realistic safety-critical scenarios that reveal hidden planner weaknesses. | 8 | 7 |
+| 2026-09-06 | [TourPhysics: Bringing Physics to World Models for Exploration and Manipulation from a Single Image](https://arxiv.org/abs/2609.04911) | World Models: Video World Models, Interactive World Models | TourPhysics combines deterministic physics simulation with video generation to enable physically consistent exploration and manipulation from a single image. | 8 | 8 |
+| 2026-09-06 | [Coupled Control and Wireless World Models for Resilient Remote Robotic Control](https://arxiv.org/abs/2609.04851) | Embodied AI: Robot Navigation; World Models: Interactive World Models | A communication-aware JEPA world-model framework improves the efficiency and resilience of remote robotic control under changing wireless and visual conditions. | 7 | 7 |
+| 2026-09-06 | [Latent Energy Action Planning with World Models](https://arxiv.org/abs/2609.03294) | World Models: Latent Action Models, Interactive World Models | LEAP improves latent world-model control by optimizing full action sequences to jointly match latent goals and decoded terminal descriptors. | 8 | 7 |
 | 2026-09-05 | [Drive-HWM: Hierarchical World Models for Dynamic-Latent Guided Autonomous Driving](https://arxiv.org/abs/2609.03572) | World Models: Interactive World Models | Drive-HWM combines slow long-horizon scene prediction with fast observation-grounded action generation to improve autonomous driving decisions. | 9 | 8 |
 | 2026-09-05 | [Long-Horizon Consistent and Interaction-Aware World Models for Multi-Style End-to-End Driving](https://arxiv.org/abs/2609.03225) | Embodied AI: Robot Navigation; World Models: Interactive World Models | StyleDrive improves world-model-based end-to-end driving by stabilizing long-horizon imagination, modeling ego–traffic interactions, and enabling multiple driving styles. | 8 | 8 |
 | 2026-09-03 | [Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States](https://arxiv.org/abs/2609.04196) | World Models: Video World Models, Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Puffin-World is a unified multimodal model that jointly represents physics, 3D geometry, and appearance to generate, reconstruct, and interact with physically consistent 3D worlds. | 8 | 8 |

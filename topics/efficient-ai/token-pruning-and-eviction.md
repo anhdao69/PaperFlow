@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**54 papers total**
+**58 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-06 | [PACE: Propagation-Aware Collaborative Correction for One-Shot Personalized Federated Graph Learning](https://arxiv.org/abs/2609.04832) | Efficient AI: Token Pruning and Eviction | PACE enables one-shot personalized federated graph learning by adding a compact, propagation-aware correction to each client’s local predictor while preserving it when external knowledge is unhelpful. | 6 | 7 |
+| 2026-09-06 | [LookThere! Sparse Vision by Reinforced Selection](https://arxiv.org/abs/2609.04698) | Efficient AI: Token Pruning and Eviction | LookThere uses end-to-end reinforcement learning to select only task-relevant image tokens, enabling highly sparse vision processing while preserving accuracy. | 9 | 8 |
+| 2026-09-06 | [Extremely Sparse Supervision Incentivizes Reasoning Ability](https://arxiv.org/abs/2609.04565) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Extremely sparse supervision—just one or two tokens per reasoning trajectory—can effectively improve LLM reasoning, often matching or surpassing full-token post-training. | 9 | 8 |
+| 2026-09-06 | [Reducing Hallucinated Transcripts in Whisper via Hallucination Space Projection](https://arxiv.org/abs/2609.04561) | Multimodal Foundation Models; Efficient AI: Token Pruning and Eviction | A training-free low-rank projection of Whisper decoder activations substantially suppresses hallucinated transcripts on non-speech inputs, with gated application trading slightly higher speech-recognition error for fewer false rejections. | 8 | 7 |
 | 2026-09-05 | [FLaG: Frequency-Domain Latent-attention Gated Pooling for Token Aggregation](https://arxiv.org/abs/2609.00831) | Efficient AI: Token Pruning and Eviction | FLaG improves token aggregation by combining Fourier-domain representations, latent attention, and sample-conditioned gating, with task-dependent gains across protein, image, and language benchmarks. | 4 | 6 |
 | 2026-09-05 | [When Features Become Instances: Inverted Contrastive Learning for Unsupervised Feature Selection](https://arxiv.org/abs/2609.00782) | Efficient AI: Token Pruning and Eviction | ICLFS selects informative features without labels by learning contrastive representations of features themselves and ranking them by embedding magnitude, with redundancy correction improving selection. | 6 | 7 |
 | 2026-09-05 | [Quit While You're Ahead: Quit for Efficient Candidate Generation in Machine Translation Reranking](https://arxiv.org/abs/2609.00588) | Efficient AI: Token Pruning and Eviction | Quit accelerates NMT candidate generation and reranking by stopping early once the best candidate’s estimated quality stabilizes, while preserving translation quality. | 7 | 7 |

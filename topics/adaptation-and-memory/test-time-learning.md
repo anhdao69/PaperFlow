@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**57 papers total**
+**62 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-06 | [Distill Globally, Adapt Locally: Reasoning Distillation and Product-Type Test-Time Training for Scalable Trade-Up Recommendation](https://arxiv.org/abs/2609.05363) | Adaptation and Memory: Test-Time Learning | A two-level approach distills LLM trade-up reasoning into a fast embedding-based classifier, then adapts it to product types for more accurate and scalable recommendations. | 6 | 6 |
+| 2026-09-06 | [Cross-Domain Tracker Adaptation Without Target-Domain Labels via Vision-Language Agents](https://arxiv.org/abs/2609.05239) | Adaptation and Memory: Test-Time Learning | A vision-language agent can adapt a tracking pipeline across domains without target labels by visually diagnosing failures and selectively tuning exposed parameters. | 7 | 7 |
+| 2026-09-06 | [TROVE: Adaptive Agent Skill Orchestration via Trace-Grounded Route Validation and Editing](https://arxiv.org/abs/2609.05019) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | TROVE adaptively edits only invalidated parts of an agent’s execution route using runtime evidence, improving the quality–efficiency trade-off across multiple reasoning tasks. | 9 | 8 |
+| 2026-09-06 | [A Removal Based Approach to Improve LLM Faithfulness at Test-Time](https://arxiv.org/abs/2609.04343) | Adaptation and Memory: Test-Time Learning | A model-agnostic test-time method improves LLM explanation faithfulness by removing input concepts omitted from the explanation before re-querying. | 5 | 6 |
+| 2026-09-06 | [FailSAE: Towards Interpretable Failure Prediction for Vision-Language Models via Sparse Autoencoders](https://arxiv.org/abs/2609.04276) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | FailSAE uses sparse autoencoders to make vision-language model failure prediction both more accurate and interpretable. | 8 | 9 |
 | 2026-09-05 | [Latent Recurrent Thoughts: Recurrent Refinement of Proposed Latents for Reasoning with Frozen LLMs](https://arxiv.org/abs/2609.01117) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | Latent Recurrent Thoughts enables frozen LLMs to reason through iteratively refined continuous latent states rather than discrete chains of thought. | 8 | 8 |
 | 2026-09-04 | [Legibility is Not Interpretability: Comparing Judged and Actual Importance in Chain-Of-Thought Reasoning](https://arxiv.org/abs/2609.04194) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Chain-of-thought traces can make reasoning legible without reliably revealing which steps actually drive correct answers. | 7 | 7 |
 | 2026-09-03 | [Efficient Test-Time Adaptation through Human-AI Interaction](https://arxiv.org/abs/2609.04141) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | TAHI personalizes AI agents efficiently by learning from ongoing human interaction and evolving user-specific evaluation criteria. | 9 | 7 |

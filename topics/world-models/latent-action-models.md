@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**16 papers total**
+**18 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-06 | [BEAM3R: Beam's-eye-view architecture with Mamba-3 for implicit dose reconstruction](https://arxiv.org/abs/2609.04747) | World Models: Latent Action Models; 3D Vision: 3D Foundation Models | BEAM3R uses a beam’s-eye-view Mamba-3 architecture with physics-based conditioning to rapidly reconstruct photon and proton doses, achieving high CT-based accuracy but reduced performance with synthetic CTs. | 7 | 8 |
+| 2026-09-06 | [Latent Energy Action Planning with World Models](https://arxiv.org/abs/2609.03294) | World Models: Latent Action Models, Interactive World Models | LEAP improves latent world-model control by optimizing full action sequences to jointly match latent goals and decoded terminal descriptors. | 8 | 7 |
 | 2026-09-05 | [Latent Recurrent Thoughts: Recurrent Refinement of Proposed Latents for Reasoning with Frozen LLMs](https://arxiv.org/abs/2609.01117) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | Latent Recurrent Thoughts enables frozen LLMs to reason through iteratively refined continuous latent states rather than discrete chains of thought. | 8 | 8 |
 | 2026-09-03 | [GIFT: Guided Intermediate Feature Training via Action-Oriented Structural Supervision for Robotic Manipulation](https://arxiv.org/abs/2609.04193) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | GIFT improves robotic manipulation policies by training intermediate visual features to encode geometry, affordances, and task goals relevant to action. | 9 | 8 |
 | 2026-09-03 | [Toward Physically Grounded JEPA World Models for Goal-Conditioned Robotic Planning](https://arxiv.org/abs/2609.03565) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | A physically grounded JEPA world model combining inverse dynamics and state alignment improves latent representations for goal-conditioned robotic planning. | 9 | 8 |
