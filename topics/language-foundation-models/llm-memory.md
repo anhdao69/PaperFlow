@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**112 papers total**
+**113 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Evidence Integration in Large Language Models](https://arxiv.org/abs/2609.04290) | Language Foundation Models: LLM Memory | LLMs integrate external evidence according to receiver-specific priors and candidate compatibility, sometimes accepting verified-invalid answers and even being harmed by evidence. | 8 | 8 |
 | 2026-09-06 | [Does Your Agent's Memory Survive a Model Upgrade? A Controlled Study of Memory Portability](https://arxiv.org/abs/2609.05339) | Language Foundation Models: LLM Memory | A controlled study finds that structured memories survive model upgrades best, while compressed notes and partially migrated retrieval indexes are fragile. | 8 | 8 |
 | 2026-09-06 | [TROVE: Adaptive Agent Skill Orchestration via Trace-Grounded Route Validation and Editing](https://arxiv.org/abs/2609.05019) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | TROVE adaptively edits only invalidated parts of an agent’s execution route using runtime evidence, improving the quality–efficiency trade-off across multiple reasoning tasks. | 9 | 8 |
 | 2026-09-06 | [A Tree-based RAG Framework for Evidence-Intensive QA via Adaptive Planning and Topology-Aware Evidence Gathering](https://arxiv.org/abs/2609.04981) | Language Foundation Models: LLM Memory | APT-RAG improves evidence-intensive multi-hop QA by adaptively expanding reasoning trees and gathering evidence across their topology. | 8 | 7 |

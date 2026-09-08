@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**303 papers total**
+**305 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [XMerge: Cross-Axis Selection and Reconstructive Layer Merging for LLM Depth Compression](https://arxiv.org/abs/2609.02083) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | XMerge compresses LLM depth by selecting removable layers across two axes and locally reconstructing neighboring layers, preserving quality without architectural changes or fine-tuning. | 7 | 7 |
+| 2026-09-07 | [The Dynamics of Continuous Mixture Collapse in Language Models](https://arxiv.org/abs/2609.02049) | Language Foundation Models: Large Language Models | Continuous mixtures in LLM reasoning tend to collapse because architectural distortion, nonlinear readout, and autoregressive feedback amplify or erase differences between possible reasoning paths. | 6 | 7 |
 | 2026-09-06 | [How Does mHC Use Its Residual Streams? Selective Routing and Near-Identity Mixing](https://arxiv.org/abs/2609.05309) | Language Foundation Models: Large Language Models | In DeepSeek-V4-Flash’s four-stream mHC pathway, routing is selective, early mixing is functionally important, and late mixing contributes little on the evaluated metrics. | 7 | 6 |
 | 2026-09-06 | [RISE: Recursive Improvement via Self-Extrapolating Policy Distillation](https://arxiv.org/abs/2609.05295) | Language Foundation Models: Large Language Models | RISE improves language-model post-training by turning the model’s own RLVR progress into a refreshed, dense token-level teacher for recursive self-distillation. | 7 | 8 |
 | 2026-09-06 | [GUT: Quantifying and Optimizing the Reasoning Uncertainty of LLMs via Graph Complexity](https://arxiv.org/abs/2609.05284) | Language Foundation Models: Large Language Models | GUT represents LLM reasoning branches as directed acyclic graphs to quantify and reduce reasoning uncertainty. | 6 | 7 |

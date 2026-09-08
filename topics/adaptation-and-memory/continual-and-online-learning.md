@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**92 papers total**
+**94 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Continual Field-Adaptive Models (CFAMs) for Post-Deployment Physical AI](https://arxiv.org/abs/2609.04552) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | CFAMs enable physical AI systems to learn new skills after deployment with gradient-free, on-device updates while largely retaining prior capabilities. | 9 | 8 |
+| 2026-09-07 | [The 2026 PNPL Competition: Word Classification and Efficient Cross-Subject Generalisation in LibriBrain100](https://arxiv.org/abs/2609.03231) | Adaptation and Memory: Continual and Online Learning | The 2026 PNPL competition advances non-invasive speech decoding to word classification while evaluating both high-performance within-subject decoding and efficient generalisation to new users. | 7 | 6 |
 | 2026-09-06 | [RegionFed: Federated Learning for Personalized Query Understanding in Heterogeneous Retail Environments](https://arxiv.org/abs/2609.05403) | Adaptation and Memory: Continual and Online Learning | RegionFed uses gradient conflicts to provide architecture-robust, privacy-preserving personalization for heterogeneous federated retail search. | 7 | 8 |
 | 2026-09-06 | [MePo++: Unifying Representation Refinement and Reconciliation for General Continual Learning](https://arxiv.org/abs/2609.05075) | Adaptation and Memory: Continual and Online Learning | MePo++ improves pretrained models for general continual learning by refining representations before adaptation and stabilizing them during evolving data streams. | 9 | 7 |
 | 2026-09-06 | [Solution-space heterogeneity shapes federated learning dynamics across partial differential equations](https://arxiv.org/abs/2609.05012) | Adaptation and Memory: Continual and Online Learning | A reusable solution-space partitioning protocol shows how PDE response heterogeneity drives federated optimization divergence, while its impact on final accuracy depends on the task. | 6 | 7 |

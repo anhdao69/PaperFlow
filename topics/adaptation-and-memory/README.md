@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**170 papers total**
+**174 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Continual Field-Adaptive Models (CFAMs) for Post-Deployment Physical AI](https://arxiv.org/abs/2609.04552) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | CFAMs enable physical AI systems to learn new skills after deployment with gradient-free, on-device updates while largely retaining prior capabilities. | 9 | 8 |
+| 2026-09-07 | [The 2026 PNPL Competition: Word Classification and Efficient Cross-Subject Generalisation in LibriBrain100](https://arxiv.org/abs/2609.03231) | Adaptation and Memory: Continual and Online Learning | The 2026 PNPL competition advances non-invasive speech decoding to word classification while evaluating both high-performance within-subject decoding and efficient generalisation to new users. | 7 | 6 |
+| 2026-09-07 | [DESA-TTA: Dynamic EMA and Source Anchoring for Test-Time Adaptation](https://arxiv.org/abs/2609.01795) | Adaptation and Memory: Test-Time Learning | DESA-TTA improves vision-language object detector robustness under distribution shifts by dynamically updating teachers and anchoring students to pretrained parameters during test-time adaptation. | 7 | 6 |
+| 2026-09-07 | [A Survey on Self-Improving Test-Time Intelligence: Feedback-Driven Adapting, Learning, and Scaling at Inference](https://arxiv.org/abs/2609.01679) | Adaptation and Memory: Test-Time Learning | This survey unifies feedback-driven methods that let AI systems improve during inference through test-time adaptation, learning, and scaling. | 10 | 7 |
 | 2026-09-06 | [RegionFed: Federated Learning for Personalized Query Understanding in Heterogeneous Retail Environments](https://arxiv.org/abs/2609.05403) | Adaptation and Memory: Continual and Online Learning | RegionFed uses gradient conflicts to provide architecture-robust, privacy-preserving personalization for heterogeneous federated retail search. | 7 | 8 |
 | 2026-09-06 | [Towards Neuro-Symbolic Procedural Reasoning for Long-Horizon Vision-Language-Action Manipulation](https://arxiv.org/abs/2609.05369) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A neuro-symbolic framework combines VLA control, task graphs, procedural memory, and demonstration-derived visual guidance to improve long-horizon robotic manipulation. | 9 | 7 |
 | 2026-09-06 | [Distill Globally, Adapt Locally: Reasoning Distillation and Product-Type Test-Time Training for Scalable Trade-Up Recommendation](https://arxiv.org/abs/2609.05363) | Adaptation and Memory: Test-Time Learning | A two-level approach distills LLM trade-up reasoning into a fast embedding-based classifier, then adapts it to product types for more accurate and scalable recommendations. | 6 | 6 |

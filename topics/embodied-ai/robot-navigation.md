@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**99 papers total**
+**102 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [GPU-Accelerated Astrodynamics World Models for Spacecraft Rendezvous and Proximity Operations](https://arxiv.org/abs/2609.03067) | Embodied AI: Robot Navigation; World Models: Interactive World Models | This paper introduces GPU-accelerated spacecraft simulation and a transformer world model for uncertainty-aware rendezvous, docking, and anomaly detection. | 9 | 8 |
+| 2026-09-07 | [Seeing Less Is Not Seeing Safely: Privacy Leakage from Task-Scoped Robot Perception Exports](https://arxiv.org/abs/2609.03055) | Embodied AI: Robot Navigation | Task-scoped robot perception exports can preserve task performance while leaking substantial household information, so privacy must be evaluated across multiple inference risks—not just raw-data removal or abstraction level. | 7 | 6 |
+| 2026-09-07 | [If It Moves, Radar Knows: A Physics-Aware Radar Transformer for Class-Agnostic Moving-Object Detection](https://arxiv.org/abs/2609.02289) | Embodied AI: Robot Navigation | PART is a compact, radar-only Transformer that detects moving objects without relying on predefined classes by combining Doppler-aware proposals, physics-guided attention, and uncertainty-aware supervision. | 8 | 7 |
 | 2026-09-06 | [Human-Human & Human-Robot Interaction Transformer (H2INT) for Robot Navigation in Dense and Uncertain Crowds](https://arxiv.org/abs/2609.05300) | Embodied AI: Robot Navigation | H2INT enables safer robot navigation in dense, uncertain crowds by modeling both pedestrian–pedestrian and pedestrian–robot interactions with varying responsiveness. | 7 | 6 |
 | 2026-09-06 | [A Schema Bounded Language Model for Refining Robot Policies Without Destabilizing Local Learning](https://arxiv.org/abs/2609.05133) | Embodied AI: Robot Navigation | A schema-bounded, decentralized architecture lets heterogeneous robots refine high-level LLM policies while Double DQN handles stable tick-level navigation control. | 7 | 6 |
 | 2026-09-06 | [Compact Bellman-Grounded Cognitive Maps for Cost-Aware Navigation](https://arxiv.org/abs/2609.05104) | Embodied AI: Robot Navigation | BCM learns a compact, reusable cognitive map that supports cost-aware navigation for changing goals without retraining. | 8 | 7 |

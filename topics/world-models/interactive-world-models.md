@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**76 papers total**
+**77 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [GPU-Accelerated Astrodynamics World Models for Spacecraft Rendezvous and Proximity Operations](https://arxiv.org/abs/2609.03067) | Embodied AI: Robot Navigation; World Models: Interactive World Models | This paper introduces GPU-accelerated spacecraft simulation and a transformer world model for uncertainty-aware rendezvous, docking, and anomaly detection. | 9 | 8 |
 | 2026-09-06 | [One Diffusion Model, Two Roles: Guided Trajectory Planning and Safety-Critical Scenario Generation in Closed-Loop Simulation](https://arxiv.org/abs/2609.04921) | Embodied AI: Robot Navigation; World Models: Interactive World Models | A single pretrained diffusion traffic model can both plan ego motion and generate realistic safety-critical scenarios that reveal hidden planner weaknesses. | 8 | 7 |
 | 2026-09-06 | [TourPhysics: Bringing Physics to World Models for Exploration and Manipulation from a Single Image](https://arxiv.org/abs/2609.04911) | World Models: Video World Models, Interactive World Models | TourPhysics combines deterministic physics simulation with video generation to enable physically consistent exploration and manipulation from a single image. | 8 | 8 |
 | 2026-09-06 | [Coupled Control and Wireless World Models for Resilient Remote Robotic Control](https://arxiv.org/abs/2609.04851) | Embodied AI: Robot Navigation; World Models: Interactive World Models | A communication-aware JEPA world-model framework improves the efficiency and resilience of remote robotic control under changing wireless and visual conditions. | 7 | 7 |

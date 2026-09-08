@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**85 papers total**
+**86 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [XMerge: Cross-Axis Selection and Reconstructive Layer Merging for LLM Depth Compression](https://arxiv.org/abs/2609.02083) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | XMerge compresses LLM depth by selecting removable layers across two axes and locally reconstructing neighboring layers, preserving quality without architectural changes or fine-tuning. | 7 | 7 |
 | 2026-09-06 | [Compression Beyond the Uncompressed: A Two-Stage Training Recipe for Soft Context Compression in RAG](https://arxiv.org/abs/2609.05152) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | DEX-Comp trains soft context compressors to overcome the performance ceiling of uncompressed-RAG distillation while reducing RAG context length and inference cost. | 7 | 7 |
 | 2026-09-06 | [Deep Microcompression: Structured Pruning and Bit-packed Quantization for Microcontrollers](https://arxiv.org/abs/2609.05081) | Efficient AI: KV Cache and Memory Efficiency | DMC combines hardware-aware pruning, quantization, and bit-packing to enable accurate, deterministic CNN inference on highly resource-constrained microcontrollers. | 7 | 7 |
 | 2026-09-06 | [BeaconKV: Key-Value Cache Compression Guided by Beacon Queries for Efficient Large Reasoning Model Inference](https://arxiv.org/abs/2609.04971) | Efficient AI: KV Cache and Memory Efficiency | BeaconKV compresses long-reasoning KV caches by retaining representative “beacon queries” that predict which distant context tokens will be revisited, reducing memory use while largely preserving accuracy. | 9 | 8 |

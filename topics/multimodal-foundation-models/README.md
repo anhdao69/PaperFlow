@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**384 papers total**
+**387 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [GlyphAnchor: Enhancing Visual Text Rendering via Position-Anchored Glyph Priors](https://arxiv.org/abs/2609.02349) | Multimodal Foundation Models: Multimodal Large Language Models | GlyphAnchor improves text rendering in diffusion-based image generation and editing by anchoring lightweight glyph priors to target-image positions. | 7 | 6 |
+| 2026-09-07 | [Structured-Prior-Guided Diffusion Inpainting with Physical Consistency for Traffic Sign Augmentation](https://arxiv.org/abs/2609.02348) | Multimodal Foundation Models: Multimodal Large Language Models | A physically consistent, structured-prior-guided diffusion inpainting framework generates more realistic and controllable traffic-sign augmentations, improving rare-sign detection. | 8 | 7 |
+| 2026-09-07 | [Domain shift-robust object detection with GenAI image editing](https://arxiv.org/abs/2609.02299) | Multimodal Foundation Models: Multimodal Large Language Models | Diffusion-based image editing can improve object-detector robustness to camouflage domain shifts by synthesizing realistic camouflage in training images. | 7 | 6 |
 | 2026-09-06 | [Same Trajectory, Contradictory Rewards (ROBORMBENCH): Paraphrase Fragility in Vision Language Reward Models](https://arxiv.org/abs/2609.05401) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Multimodal Large Language Models | VLM-based robot reward models can assign contradictory rewards to the same behavior when goal instructions are paraphrased, revealing paraphrase robustness as a critical reliability requirement. | 7 | 7 |
 | 2026-09-06 | [Reflection-aware Generative Novel View Synthesis](https://arxiv.org/abs/2609.05382) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Ref-GeNVS enables training-free, reflection-consistent novel-view synthesis in mirror scenes by treating reflections as complementary virtual views. | 8 | 8 |
 | 2026-09-06 | [MEOX: Compact Multimodal Mixture-of-Experts for Earth Observation](https://arxiv.org/abs/2609.05351) | Multimodal Foundation Models | MEOX is a compact multimodal mixture-of-experts masked autoencoder that supports heterogeneous and missing Earth-observation data while achieving strong transfer performance. | 7 | 6 |

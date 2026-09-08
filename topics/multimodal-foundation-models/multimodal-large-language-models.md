@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**266 papers total**
+**269 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [GlyphAnchor: Enhancing Visual Text Rendering via Position-Anchored Glyph Priors](https://arxiv.org/abs/2609.02349) | Multimodal Foundation Models: Multimodal Large Language Models | GlyphAnchor improves text rendering in diffusion-based image generation and editing by anchoring lightweight glyph priors to target-image positions. | 7 | 6 |
+| 2026-09-07 | [Structured-Prior-Guided Diffusion Inpainting with Physical Consistency for Traffic Sign Augmentation](https://arxiv.org/abs/2609.02348) | Multimodal Foundation Models: Multimodal Large Language Models | A physically consistent, structured-prior-guided diffusion inpainting framework generates more realistic and controllable traffic-sign augmentations, improving rare-sign detection. | 8 | 7 |
+| 2026-09-07 | [Domain shift-robust object detection with GenAI image editing](https://arxiv.org/abs/2609.02299) | Multimodal Foundation Models: Multimodal Large Language Models | Diffusion-based image editing can improve object-detector robustness to camouflage domain shifts by synthesizing realistic camouflage in training images. | 7 | 6 |
 | 2026-09-06 | [Same Trajectory, Contradictory Rewards (ROBORMBENCH): Paraphrase Fragility in Vision Language Reward Models](https://arxiv.org/abs/2609.05401) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Multimodal Large Language Models | VLM-based robot reward models can assign contradictory rewards to the same behavior when goal instructions are paraphrased, revealing paraphrase robustness as a critical reliability requirement. | 7 | 7 |
 | 2026-09-06 | [First Things First: Teaching LLM-Based Agents to Prioritize Must-Haves before Nice-to-Haves](https://arxiv.org/abs/2609.05224) | Multimodal Foundation Models: Multimodal Large Language Models | FTF-RL teaches MLLM agents to satisfy must-have requirements before using nice-to-haves, improving success on structured real-world tasks and broader reasoning benchmarks. | 6 | 6 |
 | 2026-09-06 | [WeAgent-MMGenEdit: A Full-Stack Recipe for Multimodal Agentic Image Generation and Editing](https://arxiv.org/abs/2609.05171) | Multimodal Foundation Models: Multimodal Large Language Models | WeAgent-MMGenEdit is a full-stack multimodal agent framework that improves knowledge-intensive image generation and editing through persistent evidence management, verification, integration, and joint post-training. | 6 | 6 |

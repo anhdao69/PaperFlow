@@ -1,6 +1,338 @@
 {
   "days": [
     {
+      "date": "2026-09-07",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "Removing complete transformer layers preserves a standard serving architecture, but existing depth-compression methods can lose substantial quality, and the loss varies unpredictably across models. We introduce XMerge, a post-training method with two components. Cross-axis selection identifies a block with low relative-magnitude and angular hidden-state change, and local boundary reconstruction re-fits the adjacent surviving block to match the original two-block output. XMerge uses no task labels or end-to-end fine-tuning, and it introduces neither architectural changes nor additional inference-time parameters. Across seven Llama and Qwen backbones (0.5B-8B), five published baselines, and three layer-reduction levels, its advantage over baselines is largest at the most aggressive removal: at k=4 it ranks first on six of seven backbones on CORE (a 22-task aggregate) and, separately, on six of seven on MMLU (five of seven on both at once), while avoiding the large perplexity increases of several competing operators. In a task-level bootstrap, the 95% confidence intervals for the three largest CORE margins exclude zero; the remaining margins are consistent with ties. Across the 14 (model, regime) cells it is also the only evaluated operator that never collapses, ranking top-2 in both zero-shot and in-context regimes; on a first calibration probe (one backbone) it is the best-calibrated operator. Ablations show that local reconstruction provides most of the gain, while cross-axis fusion helps when the two selection axes disagree. The additional construction cost is recovered through per-token decode savings after roughly tens of thousands of requests.",
+          "arxiv_id": "2609.02083",
+          "arxiv_url": "https://arxiv.org/abs/2609.02083",
+          "authors": [
+            "Jundong Hu",
+            "Shekar Ramachandran"
+          ],
+          "bullets": [
+            "Targets unpredictable quality loss from removing complete transformer layers.",
+            "Uses cross-axis hidden-state selection plus boundary reconstruction of the adjacent surviving block.",
+            "Requires no task labels, end-to-end fine-tuning, extra inference parameters, or architecture changes.",
+            "Across seven Llama and Qwen backbones, it performs best especially under aggressive removal, ranking first on six of seven models on both CORE and MMLU at k=4.",
+            "Local reconstruction drives most gains; added construction cost is recovered after roughly tens of thousands of requests through decode savings."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Quality–latency Pareto per backbone (Setting A, operators only, no recovery): CORE vs. measured batch-1 decode speedup (⋆=dense; points k=1, 2, 4). All operators share the same L−k architecture at matched speedup, so higher-and-to-the-right is better; XMERGE is best at the k=4 endpoint on six of seven backbones (best-or-tied 15/21; trails at k=1,2 on Qwen2.5-0.5B). Protocol + speedup table §K.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 377,
+              "image_path": "figures/2609.02083/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 814
+            },
+            {
+              "caption": "Figure 4: Perplexity vs. measured speedup per backbone (Setting A, recovery-free): WikiText-2 test PPL (log scale, lower is better) against measured batch-1 decode speedup (⋆=dense at 1×; points are k=1, 2, 4). For the same depth-proportional speedup, XMERGE stays near the dense perplexity while several competing operators blow up under aggressive removal (LaCo, like XMERGE, stays bounded; XMERGE is lower than LaCo on six of seven backbones at k=4), the analogous perplexity-versusspeedup plot to the CORE Pareto (Fig. 3). Latency is method-independent at fixed k (§K).",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 380,
+              "image_path": "figures/2609.02083/figure-002.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 814
+            },
+            {
+              "caption": "Figure 5: Reliability diagrams on MMLU (Llama-3-8B, k=4, Setting A) for all seven methods: per-bin accuracy vs. mean confidence; the diagonal is perfect calibration and points below it are overconfident. XMERGE (ECE 0.135) tracks the dense model (0.125) most closely, the two highlighted in bold with bin-population shading; the analytic folds deviate further, LaCo and CoMe (0.146), ShortGPT (0.148) and SWM (0.160), and MKA (0.235) collapses below the diagonal in the high-confidence bins. Marker area ∝ bin population.",
+              "figure_id": "figure-5-28",
+              "figure_number": "5",
+              "height": 430,
+              "image_path": "figures/2609.02083/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 494
+            },
+            {
+              "caption": "Figure 1: XMERGE in three stages. (1) Score every block by relative-magnitude (RM) and BlockInfluence (BI) hidden-state change on WikiText-2 activations, and select a block with low values on both axes; a block with low magnitude change but high angular change is not selected. (2) Reconstruct the pair (fℓ, fℓ+1) into one surviving block f̃ℓ by a label-free 300-step local activationmatching fit. (3) Deploy a standard L−1 transformer with zero added inference-time parameters. Definitions in §3.2–§3.3.",
+              "figure_id": "figure-1-11",
+              "figure_number": "1",
+              "height": 338,
+              "image_path": "figures/2609.02083/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 793
+            },
+            {
+              "caption": "Figure 2: Mean CORE retention (compressed/dense) as the absolute number of removed layers grows from k=1 to 4 (mean±s.d. over 7 backbones). A fixed k is a different relative reduction per backbone, so this shows robustness to larger absolute removal, not a matched-ratio scaling law. XMERGE vs. best drop (ShortGPT) and best competing merge baseline (per-(model, k) max over LaCo/MKA/SWM/CoMe).",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 263,
+              "image_path": "figures/2609.02083/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 578
+            },
+            {
+              "caption": "Table 6: Recovery under a shared additional post-compression budget (k=4), mean over the LR grid {1, 2, 5}×10−5 (no LR tuned on the eval metric; per-LR + full protocol §I). The four healed methods each get the same follow-on WikiText-2 KD stage on their own compressed model (LaCo/MKA are Setting-A only). Bold = best per metric (CORE, PPL scored separately) within a model; a merge baseline has the lowest raw PPL at each scale (SWM@1B, CoMe@8B).",
+              "figure_id": "table-6-24",
+              "figure_number": "6",
+              "height": 89,
+              "image_path": "figures/2609.02083/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 694
+            },
+            {
+              "caption": "Table 20: Per-LR recovery (Setting B, k=4); Table 6 reports the per-method mean of these three rows. CORE and MMLU to three decimals, wiki-PPL to two.",
+              "figure_id": "table-20-19",
+              "figure_number": "20",
+              "height": 633,
+              "image_path": "figures/2609.02083/table-007.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 448
+            },
+            {
+              "caption": "Table 17: Calibration on MMLU (Llama-3-8B, k=4, Setting A). ECE/MCE lower is better; signed gap > 0 = overconfident; ∆ECE is relative to the dense model. XMERGE is the best-calibrated operator.",
+              "figure_id": "table-17-27",
+              "figure_number": "17",
+              "height": 192,
+              "image_path": "figures/2609.02083/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 582
+            },
+            {
+              "caption": "Table 18: Oracle backtest: absolute Spearman rank correlation |ρ| between each candidate selection criterion and the oracle removal sweep, on two backbones. Higher = better predictor of that metric. RM is the top CORE predictor on both models and BI is close behind on both; WS is strong on Llama but not Qwen; P/PMR/Taylor predict perplexity but not CORE; IRS is uninformative. Bold = best CORE predictor per model.",
+              "figure_id": "table-18-21",
+              "figure_number": "18",
+              "height": 223,
+              "image_path": "figures/2609.02083/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 744
+            },
+            {
+              "caption": "Table 1: Operator design properties (not accuracy). Above the rule: the five evaluated baselines and XMERGE; below: ReplaceMe and LLM-Streamline, cited for positioning only (not run). All except LLM-Streamline yield a plain L−k transformer with zero new inference parameters, so they differ in how the removed block is absorbed. “Gradient fit” is an operator property; CoMe’s distillation and SWM’s LoRA are separate Setting-B stages (§7).",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 266,
+              "image_path": "figures/2609.02083/table-010.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 672
+            },
+            {
+              "caption": "Table 3: Main results at k=4: XMERGE (XM) vs. the strongest per-model baseline (“bb”) on each metric, with the winning baseline named for CORE and MMLU (full grids §B–§E). Among baselines LaCo has the lowest PPL in every row, so each wiki-PPL bb is LaCo (not the overall best — XMERGE beats LaCo’s PPL on six of seven). CORE↑, MMLU↑, wiki-PPL↓; bold = winner.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 193,
+              "image_path": "figures/2609.02083/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 802
+            },
+            {
+              "caption": "Table 5: Robustness across all 14 (model × regime) cells at k=4. A break is centered CORE < 0.10; “floor” is each operator’s worst cell. Per-model 0-shot/ICL tables are in §J.",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 173,
+              "image_path": "figures/2609.02083/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 652
+            },
+            {
+              "caption": "Table 19: Layers removed at k=4 (0-indexed), RM-only vs. deployed max-fusion. “chg” marks the two models where max-fusion overrides RM.",
+              "figure_id": "table-19-12",
+              "figure_number": "19",
+              "height": 192,
+              "image_path": "figures/2609.02083/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 536
+            },
+            {
+              "caption": "Table 7: CORE, k=1.",
+              "figure_id": "table-7-22",
+              "figure_number": "7",
+              "height": 194,
+              "image_path": "figures/2609.02083/table-014.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 572
+            },
+            {
+              "caption": "Table 8: CORE, k=2.",
+              "figure_id": "table-8-23",
+              "figure_number": "8",
+              "height": 192,
+              "image_path": "figures/2609.02083/table-015.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 572
+            },
+            {
+              "caption": "Table 10: Paired task-bootstrap of the k=4 CORE margin (XMERGE − strongest per-model baseline), B=20,000 resamples over the 22 CORE tasks. “(tie)” marks margins whose 95% CI includes zero. The three largest margins are separable from task noise; the narrow wins and the single Qwen3-1.7B loss are ties. Across backbones XMERGE is strongest on six of seven (one-sided sign test p=0.06). Point columns are rounded to match the CORE values in Table 3 and §B; margins and CIs are computed from the unrounded per-task scores, so a listed margin can differ by up to 0.001 from the difference of the displayed points.",
+              "figure_id": "table-10-15",
+              "figure_number": "10",
+              "height": 194,
+              "image_path": "figures/2609.02083/table-016.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 744
+            },
+            {
+              "caption": "Table 11: MMLU, k=1.",
+              "figure_id": "table-11-13",
+              "figure_number": "11",
+              "height": 194,
+              "image_path": "figures/2609.02083/table-017.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 572
+            },
+            {
+              "caption": "Table 9: CORE, k=4.",
+              "figure_id": "table-9-14",
+              "figure_number": "9",
+              "height": 193,
+              "image_path": "figures/2609.02083/table-018.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 572
+            },
+            {
+              "caption": "Table 14: wiki-PPL, k=1.",
+              "figure_id": "table-14-9",
+              "figure_number": "14",
+              "height": 194,
+              "image_path": "figures/2609.02083/table-019.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 582
+            },
+            {
+              "caption": "Table 15: wiki-PPL, k=2.",
+              "figure_id": "table-15-8",
+              "figure_number": "15",
+              "height": 192,
+              "image_path": "figures/2609.02083/table-020.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 582
+            },
+            {
+              "caption": "Table 16: wiki-PPL, k=4.",
+              "figure_id": "table-16-3",
+              "figure_number": "16",
+              "height": 193,
+              "image_path": "figures/2609.02083/table-021.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 582
+            },
+            {
+              "caption": "Table 2: Backbones (two families, 0.5B–8B): Llama-3 Dubey et al. [2024], Qwen2.5 Qwen Team [2024], and Qwen3 Qwen Team [2025]. Depth-reduction % shown for k=1/2/4.",
+              "figure_id": "table-2-26",
+              "figure_number": "2",
+              "height": 193,
+              "image_path": "figures/2609.02083/table-022.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 782
+            },
+            {
+              "caption": "Table 4: Selector head-to-head at k=4 (CORE / wiki-PPL / MMLU), on the two backbones where cross-axis fusion overrides RM; identical reconstruction HPs, so only selection differs (max-fusion adopted). BI-only collapses (Qwen3-1.7B PPL 5.1×104, selecting the final block; Qwen3-0.6B under a plain drop, CORE .079 / PPL 226); MKA shown for reference (high PPL despite competitive CORE). Narration in §6.2.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 132,
+              "image_path": "figures/2609.02083/table-023.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 636
+            },
+            {
+              "caption": "Table 22: Few-shot / ICL regime (15 tasks), centered CORE, k=4. Bold = best in row.",
+              "figure_id": "table-22-20",
+              "figure_number": "22",
+              "height": 225,
+              "image_path": "figures/2609.02083/table-024.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 577
+            },
+            {
+              "caption": "Table 21: 0-shot regime (7 tasks), centered CORE, k=4. Bold = best in row.",
+              "figure_id": "table-21-18",
+              "figure_number": "21",
+              "height": 225,
+              "image_path": "figures/2609.02083/table-025.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 572
+            },
+            {
+              "caption": "Table 25: Break-even for the one-time construction cost at k=4. Tc = construction time (s, from the table above); dense sd and speedup σ are the batch-1 values from Table 23; N⋆ = Tc sd σ/(σ− 1) is the number of generated tokens after which the recurring decode saving offsets the construction cost, also shown as 256-token requests. After N⋆, every further token is net faster than dense.",
+              "figure_id": "table-25-5",
+              "figure_number": "25",
+              "height": 192,
+              "image_path": "figures/2609.02083/table-026.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 668
+            },
+            {
+              "caption": "Table 23: Measured decode speedup vs. dense, k=1/2/4 per cell. “Dense” is batch-1 decode tok/s on the MIG slice; “Theory” is L/(L−k). Measured batch-1 tracks the depth-proportional prediction; batch-16 is the high-variance secondary regime (§K).",
+              "figure_id": "table-23-25",
+              "figure_number": "23",
+              "height": 225,
+              "image_path": "figures/2609.02083/table-027.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 798
+            },
+            {
+              "caption": "Table 24: Construction cost (s), k=1/2/4 per cell. A few training-free-baseline cells are nonmonotonic in k (e.g. LaCo and CoMe on Llama-3-8B, where the k=1 entry exceeds k=2): these are one-off first-call effects (weight load, CPU-offload paging, and kernel/cache warm-up on the largest backbones), not algorithmic scaling, and do not affect any reported quality number.",
+              "figure_id": "table-24-6",
+              "figure_number": "24",
+              "height": 175,
+              "image_path": "figures/2609.02083/table-028.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 829
+            }
+          ],
+          "first_seen_at": "2026-09-07T21:00:00-04:00",
+          "hero_figure": "figures/2609.02083/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.02083",
+          "relevance": 7,
+          "selection_reason": "Post-training LLM depth compression reduces inference compute/memory while preserving quality, directly relevant to efficient LLM serving.",
+          "summary_status": "generated",
+          "title": "XMerge: Cross-Axis Selection and Reconstructive Layer Merging for LLM Depth Compression",
+          "tldr": "XMerge compresses LLM depth by selecting removable layers across two axes and locally reconstructing neighboring layers, preserving quality without architectural changes or fine-tuning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-06",
       "paper_count": 8,
       "papers": [
@@ -14286,5 +14618,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 85
+  "total_paper_count": 86
 }

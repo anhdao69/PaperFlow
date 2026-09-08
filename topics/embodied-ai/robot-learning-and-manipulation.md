@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**197 papers total**
+**199 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Continual Field-Adaptive Models (CFAMs) for Post-Deployment Physical AI](https://arxiv.org/abs/2609.04552) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | CFAMs enable physical AI systems to learn new skills after deployment with gradient-free, on-device updates while largely retaining prior capabilities. | 9 | 8 |
+| 2026-09-07 | [Facet-0: A Robotic Foundation Model for Contact-Rich Precise Manipulation](https://arxiv.org/abs/2609.01596) | Embodied AI: Robot Learning and Manipulation | Facet-0 is a contact-aware robotic foundation model that improves precise, sub-millimeter assembly by predicting the wrench consequences of actions and adapting efficiently to task-specific dynamics. | 10 | 8 |
 | 2026-09-06 | [Same Trajectory, Contradictory Rewards (ROBORMBENCH): Paraphrase Fragility in Vision Language Reward Models](https://arxiv.org/abs/2609.05401) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Multimodal Large Language Models | VLM-based robot reward models can assign contradictory rewards to the same behavior when goal instructions are paraphrased, revealing paraphrase robustness as a critical reliability requirement. | 7 | 7 |
 | 2026-09-06 | [What Matters, When? Diagnosing and Improving Conditional Visual Grounding in Visuomotor Imitation Policies](https://arxiv.org/abs/2609.05376) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Visuomotor policies can execute manipulation skills yet select the wrong target under visually similar distractors, while phase- and state-aware interventions substantially improve grounding robustness. | 9 | 8 |
 | 2026-09-06 | [Towards Neuro-Symbolic Procedural Reasoning for Long-Horizon Vision-Language-Action Manipulation](https://arxiv.org/abs/2609.05369) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A neuro-symbolic framework combines VLA control, task graphs, procedural memory, and demonstration-derived visual guidance to improve long-horizon robotic manipulation. | 9 | 7 |

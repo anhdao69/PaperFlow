@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**26 papers total**
+**27 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Continual Field-Adaptive Models (CFAMs) for Post-Deployment Physical AI](https://arxiv.org/abs/2609.04552) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | CFAMs enable physical AI systems to learn new skills after deployment with gradient-free, on-device updates while largely retaining prior capabilities. | 9 | 8 |
 | 2026-09-06 | [Towards Neuro-Symbolic Procedural Reasoning for Long-Horizon Vision-Language-Action Manipulation](https://arxiv.org/abs/2609.05369) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A neuro-symbolic framework combines VLA control, task graphs, procedural memory, and demonstration-derived visual guidance to improve long-horizon robotic manipulation. | 9 | 7 |
 | 2026-09-06 | [Trace2Tower: Transition-Aware EigenTrace Induction of Multi-Level Skills for LLM Agents](https://arxiv.org/abs/2609.05261) | Adaptation and Memory: Embodied Memory | Trace2Tower converts execution traces into a transition-aware, outcome-guided hierarchy of reusable skills, improving LLM-agent performance and experience reuse on ALFWorld and WebShop. | 5 | 6 |
 | 2026-09-06 | [Linguistic Trajectory Encoding for Efficient Long-Horizon Spatial Memory in Embodied Agents](https://arxiv.org/abs/2609.04802) | Embodied AI; Adaptation and Memory: Embodied Memory | Linguistic Trajectory Encoding enables embodied agents to efficiently store and query dynamic object histories in natural language over day-long video. | 9 | 8 |

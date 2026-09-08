@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**160 papers total**
+**161 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Diffusion-Encoding Gaussian Field for Joint k-q dMRI Reconstruction](https://arxiv.org/abs/2609.02288) | 3D Vision: 3D Foundation Models | A self-supervised spatial-angular Gaussian field jointly reconstructs undersampled k-space and missing diffusion directions by modeling shared anatomy alongside direction-dependent signals. | 8 | 8 |
 | 2026-09-06 | [WorldSculpt: Generating Compositional Worlds from Grounded Videos](https://arxiv.org/abs/2609.05416) | 3D Vision | WorldSculpt generates compositional 3D mesh worlds with hundreds of heavily occluded objects by adapting a single-object generative prior to grounded multi-view observations. | 6 | 7 |
 | 2026-09-06 | [CrossDepth: Geometry-Constrained Attention for Generalizable Multi-View Surround Depth Estimation](https://arxiv.org/abs/2609.05397) | 3D Vision | CrossDepth improves generalizable surround-view depth estimation by combining camera-aware ray features with geometry-constrained cross-image attention in a self-supervised framework. | 6 | 6 |
 | 2026-09-06 | [Reflection-aware Generative Novel View Synthesis](https://arxiv.org/abs/2609.05382) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Ref-GeNVS enables training-free, reflection-consistent novel-view synthesis in mirror scenes by treating reflections as complementary virtual views. | 8 | 8 |

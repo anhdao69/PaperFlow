@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**138 papers total**
+**140 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [GPU-Accelerated Astrodynamics World Models for Spacecraft Rendezvous and Proximity Operations](https://arxiv.org/abs/2609.03067) | Embodied AI: Robot Navigation; World Models: Interactive World Models | This paper introduces GPU-accelerated spacecraft simulation and a transformer world model for uncertainty-aware rendezvous, docking, and anomaly detection. | 9 | 8 |
+| 2026-09-07 | [Generative Diffusion Surrogates with Analytical Variance Schedule](https://arxiv.org/abs/2609.01705) | World Models | A diffusion-model surrogate uses the known variance growth of a transport process to set its noise schedule, enabling calibrated modeling of non-Gaussian, time-evolving distributions without intermediate-time transport data. | 6 | 8 |
 | 2026-09-06 | [One Diffusion Model, Two Roles: Guided Trajectory Planning and Safety-Critical Scenario Generation in Closed-Loop Simulation](https://arxiv.org/abs/2609.04921) | Embodied AI: Robot Navigation; World Models: Interactive World Models | A single pretrained diffusion traffic model can both plan ego motion and generate realistic safety-critical scenarios that reveal hidden planner weaknesses. | 8 | 7 |
 | 2026-09-06 | [TourPhysics: Bringing Physics to World Models for Exploration and Manipulation from a Single Image](https://arxiv.org/abs/2609.04911) | World Models: Video World Models, Interactive World Models | TourPhysics combines deterministic physics simulation with video generation to enable physically consistent exploration and manipulation from a single image. | 8 | 8 |
 | 2026-09-06 | [From Language Models to World-Acting Systems: Progress and Limits of Agentic AI across Digital, Social, Virtual, and Physical Environments](https://arxiv.org/abs/2609.04894) | Embodied AI; World Models | Agentic AI is expanding from language generation to world-affecting action, but reliable autonomy and safe delegation remain unproven across environments. | 6 | 4 |

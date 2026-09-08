@@ -6,10 +6,17 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**301 papers total**
+**308 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [ProgResViT: Progressive Resolution and Width for Adaptive Vision Transformers](https://arxiv.org/abs/2609.03216) | Efficient AI | ProgResViT adaptively increases image resolution and model width only when needed, improving vision-transformer accuracy–compute efficiency. | 8 | 8 |
+| 2026-09-07 | [Who Speaks for the Pruned? Visual Token Pruning as Coverage Optimization](https://arxiv.org/abs/2609.03158) | Efficient AI: Token Pruning and Eviction | CoverPruner improves training-free visual token pruning by preserving tokens that best represent discarded visual evidence, especially under aggressive compression. | 9 | 8 |
+| 2026-09-07 | [XMerge: Cross-Axis Selection and Reconstructive Layer Merging for LLM Depth Compression](https://arxiv.org/abs/2609.02083) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | XMerge compresses LLM depth by selecting removable layers across two axes and locally reconstructing neighboring layers, preserving quality without architectural changes or fine-tuning. | 7 | 7 |
+| 2026-09-07 | [GAPS: Dimension-Level Gates for Conditional Activation Steering](https://arxiv.org/abs/2609.01878) | Efficient AI: Efficient Attention | GAPS improves conditional activation steering by selecting both when to intervene and which hidden dimensions to steer. | 6 | 7 |
+| 2026-09-07 | [How Do Prompt Variations Affect Energy Consumption in On-Device LLMs?](https://arxiv.org/abs/2609.01798) | Efficient AI | Prompt design affects on-device LLM energy use through distinct mechanisms, so energy-efficient prompting should be model-aware. | 5 | 5 |
+| 2026-09-07 | [Allocate Before You Embed: Adaptive Visual Input Allocation for Video Embeddings](https://arxiv.org/abs/2609.01778) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | AllocEmbed improves long-video retrieval by adaptively allocating a fixed visual-input budget across frames before embedding. | 8 | 8 |
+| 2026-09-07 | [CAT-Flow: Curvature-Adaptive sTeps for Flow Matching](https://arxiv.org/abs/2609.01746) | Efficient AI | CAT-Flow introduces training-free, curvature-adaptive step-size methods that reduce Flow Matching sampling steps by up to 40% while maintaining comparable image quality. | 8 | 8 |
 | 2026-09-06 | [Lightweight Vision Transformer Compression for On-Device Plant Disease Detection in Resource-Constrained Agricultural Field Conditions](https://arxiv.org/abs/2609.05334) | Efficient AI | A unified pruning, quantization, and distillation pipeline compresses a Vision Transformer for on-device chilli disease detection to 6.01 MB while maintaining near-baseline accuracy in cross-village and cross-device testing. | 7 | 6 |
 | 2026-09-06 | [Adaptive Gated Deepfake Detection for Low-Resolution and Resource-Constrained Environments](https://arxiv.org/abs/2609.05320) | Efficient AI | AdaGate-DF adaptively routes deepfake images through multiple exits to maintain detection performance while reducing inference cost for low-resolution and resource-constrained settings. | 6 | 5 |
 | 2026-09-06 | [Don't Drop Dropout: Optimizing Layer Sparsity for Efficient LLM Training and Inference](https://arxiv.org/abs/2609.05275) | Efficient AI; Language Foundation Models: Large Language Models | Optimally scheduled layer dropout can reduce LLM training compute by up to 25% and enable inference speedups of up to 1.5× with negligible accuracy loss. | 8 | 7 |

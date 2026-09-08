@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**113 papers total**
+**115 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Video2Reaction: Training Foundation Video Models to Predict Audience Reaction](https://arxiv.org/abs/2609.01816) | Video Generation and Understanding: Video Understanding | Video2Reaction trains vision-language models to predict diverse audience emotions elicited by short movie clips using real-world social media reactions. | 5 | 5 |
+| 2026-09-07 | [Allocate Before You Embed: Adaptive Visual Input Allocation for Video Embeddings](https://arxiv.org/abs/2609.01778) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | AllocEmbed improves long-video retrieval by adaptively allocating a fixed visual-input budget across frames before embedding. | 8 | 8 |
 | 2026-09-06 | [Few-Shot Video Recognition via Hierarchical Metric Learning](https://arxiv.org/abs/2609.05242) | Video Generation and Understanding: Video Understanding | HML-FSAR improves few-shot action recognition by progressively learning robust class prototypes from enriched spatial-temporal video features. | 7 | 6 |
 | 2026-09-06 | [From Vision to Language: Investigating Causal Information Flow in Multimodal Decision-Making](https://arxiv.org/abs/2609.05149) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | A layer-wise causal analysis shows that video-language models integrate visual evidence mainly while processing answer options, with nouns anchoring semantics and verbs supporting temporal reasoning. | 6 | 6 |
 | 2026-09-06 | [Adaptive Multi-Granularity Temporal Modeling for Weakly Supervised Video Anomaly Detection](https://arxiv.org/abs/2609.05066) | Video Generation and Understanding: Video Understanding | An adaptive multi-granularity framework improves weakly supervised video anomaly detection by modeling long-range dependencies and dynamically segmenting anomalous events. | 7 | 6 |

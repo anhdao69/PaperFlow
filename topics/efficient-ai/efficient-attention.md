@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**38 papers total**
+**39 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [GAPS: Dimension-Level Gates for Conditional Activation Steering](https://arxiv.org/abs/2609.01878) | Efficient AI: Efficient Attention | GAPS improves conditional activation steering by selecting both when to intervene and which hidden dimensions to steer. | 6 | 7 |
 | 2026-09-06 | [Fast Gauss Sums via Flash Attention](https://arxiv.org/abs/2609.04910) | Efficient AI: Efficient Attention | Flash Attention can efficiently compute unnormalized Gaussian kernel sums with arbitrary signed weights, improving speed, memory overhead, and accuracy for higher-dimensional fp16 workloads. | 8 | 8 |
 | 2026-09-06 | [EXAONE Forecast for Finance](https://arxiv.org/abs/2609.04239) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Efficient Attention | EXAONE Finance is an attention-free financial time-series foundation model designed for long, multivariate, intermittently observed market data, achieving top performance across FinVerse’s forecasting evaluations. | 7 | 7 |
 | 2026-09-03 | [Hardware-Aware FP4 FlashAttention-4](https://arxiv.org/abs/2609.04105) | Efficient AI: Efficient Attention | Hardware-aware FP4 attention reduces softmax and dependency overhead, achieving faster noncausal inference and modestly faster causal training on NVIDIA Blackwell. | 7 | 6 |

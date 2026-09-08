@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**54 papers total**
+**55 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Diffusion-Encoding Gaussian Field for Joint k-q dMRI Reconstruction](https://arxiv.org/abs/2609.02288) | 3D Vision: 3D Foundation Models | A self-supervised spatial-angular Gaussian field jointly reconstructs undersampled k-space and missing diffusion directions by modeling shared anatomy alongside direction-dependent signals. | 8 | 8 |
 | 2026-09-06 | [Reflection-aware Generative Novel View Synthesis](https://arxiv.org/abs/2609.05382) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Ref-GeNVS enables training-free, reflection-consistent novel-view synthesis in mirror scenes by treating reflections as complementary virtual views. | 8 | 8 |
 | 2026-09-06 | [BEAM3R: Beam's-eye-view architecture with Mamba-3 for implicit dose reconstruction](https://arxiv.org/abs/2609.04747) | World Models: Latent Action Models; 3D Vision: 3D Foundation Models | BEAM3R uses a beam’s-eye-view Mamba-3 architecture with physics-based conditioning to rapidly reconstruct photon and proton doses, achieving high CT-based accuracy but reduced performance with synthetic CTs. | 7 | 8 |
 | 2026-09-06 | [Where Appearance Fails, Geometry Recognizes: A CAD-Free 3D Shape Prior That Complements Vision Foundation Models](https://arxiv.org/abs/2609.04381) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | A CAD-free 3D shape prototype built from a short RGB-D scan complements frozen DINOv2 features and improves recognition, especially under occlusion and for shape-distinctive objects. | 7 | 7 |

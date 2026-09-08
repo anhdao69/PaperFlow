@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**449 papers total**
+**452 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Evidence Integration in Large Language Models](https://arxiv.org/abs/2609.04290) | Language Foundation Models: LLM Memory | LLMs integrate external evidence according to receiver-specific priors and candidate compatibility, sometimes accepting verified-invalid answers and even being harmed by evidence. | 8 | 8 |
+| 2026-09-07 | [XMerge: Cross-Axis Selection and Reconstructive Layer Merging for LLM Depth Compression](https://arxiv.org/abs/2609.02083) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | XMerge compresses LLM depth by selecting removable layers across two axes and locally reconstructing neighboring layers, preserving quality without architectural changes or fine-tuning. | 7 | 7 |
+| 2026-09-07 | [The Dynamics of Continuous Mixture Collapse in Language Models](https://arxiv.org/abs/2609.02049) | Language Foundation Models: Large Language Models | Continuous mixtures in LLM reasoning tend to collapse because architectural distortion, nonlinear readout, and autoregressive feedback amplify or erase differences between possible reasoning paths. | 6 | 7 |
 | 2026-09-06 | [Does Your Agent's Memory Survive a Model Upgrade? A Controlled Study of Memory Portability](https://arxiv.org/abs/2609.05339) | Language Foundation Models: LLM Memory | A controlled study finds that structured memories survive model upgrades best, while compressed notes and partially migrated retrieval indexes are fragile. | 8 | 8 |
 | 2026-09-06 | [How Does mHC Use Its Residual Streams? Selective Routing and Near-Identity Mixing](https://arxiv.org/abs/2609.05309) | Language Foundation Models: Large Language Models | In DeepSeek-V4-Flash’s four-stream mHC pathway, routing is selective, early mixing is functionally important, and late mixing contributes little on the evaluated metrics. | 7 | 6 |
 | 2026-09-06 | [RISE: Recursive Improvement via Self-Extrapolating Policy Distillation](https://arxiv.org/abs/2609.05295) | Language Foundation Models: Large Language Models | RISE improves language-model post-training by turning the model’s own RLVR progress into a refreshed, dense token-level teacher for recursive self-distillation. | 7 | 8 |

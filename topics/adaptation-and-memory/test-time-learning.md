@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**62 papers total**
+**64 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [DESA-TTA: Dynamic EMA and Source Anchoring for Test-Time Adaptation](https://arxiv.org/abs/2609.01795) | Adaptation and Memory: Test-Time Learning | DESA-TTA improves vision-language object detector robustness under distribution shifts by dynamically updating teachers and anchoring students to pretrained parameters during test-time adaptation. | 7 | 6 |
+| 2026-09-07 | [A Survey on Self-Improving Test-Time Intelligence: Feedback-Driven Adapting, Learning, and Scaling at Inference](https://arxiv.org/abs/2609.01679) | Adaptation and Memory: Test-Time Learning | This survey unifies feedback-driven methods that let AI systems improve during inference through test-time adaptation, learning, and scaling. | 10 | 7 |
 | 2026-09-06 | [Distill Globally, Adapt Locally: Reasoning Distillation and Product-Type Test-Time Training for Scalable Trade-Up Recommendation](https://arxiv.org/abs/2609.05363) | Adaptation and Memory: Test-Time Learning | A two-level approach distills LLM trade-up reasoning into a fast embedding-based classifier, then adapts it to product types for more accurate and scalable recommendations. | 6 | 6 |
 | 2026-09-06 | [Cross-Domain Tracker Adaptation Without Target-Domain Labels via Vision-Language Agents](https://arxiv.org/abs/2609.05239) | Adaptation and Memory: Test-Time Learning | A vision-language agent can adapt a tracking pipeline across domains without target labels by visually diagnosing failures and selectively tuning exposed parameters. | 7 | 7 |
 | 2026-09-06 | [TROVE: Adaptive Agent Skill Orchestration via Trace-Grounded Route Validation and Editing](https://arxiv.org/abs/2609.05019) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | TROVE adaptively edits only invalidated parts of an agent’s execution route using runtime evidence, improving the quality–efficiency trade-off across multiple reasoning tasks. | 9 | 8 |

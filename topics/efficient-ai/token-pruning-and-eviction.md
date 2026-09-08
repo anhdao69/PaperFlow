@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**58 papers total**
+**60 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-07 | [Who Speaks for the Pruned? Visual Token Pruning as Coverage Optimization](https://arxiv.org/abs/2609.03158) | Efficient AI: Token Pruning and Eviction | CoverPruner improves training-free visual token pruning by preserving tokens that best represent discarded visual evidence, especially under aggressive compression. | 9 | 8 |
+| 2026-09-07 | [Allocate Before You Embed: Adaptive Visual Input Allocation for Video Embeddings](https://arxiv.org/abs/2609.01778) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | AllocEmbed improves long-video retrieval by adaptively allocating a fixed visual-input budget across frames before embedding. | 8 | 8 |
 | 2026-09-06 | [PACE: Propagation-Aware Collaborative Correction for One-Shot Personalized Federated Graph Learning](https://arxiv.org/abs/2609.04832) | Efficient AI: Token Pruning and Eviction | PACE enables one-shot personalized federated graph learning by adding a compact, propagation-aware correction to each client’s local predictor while preserving it when external knowledge is unhelpful. | 6 | 7 |
 | 2026-09-06 | [LookThere! Sparse Vision by Reinforced Selection](https://arxiv.org/abs/2609.04698) | Efficient AI: Token Pruning and Eviction | LookThere uses end-to-end reinforcement learning to select only task-relevant image tokens, enabling highly sparse vision processing while preserving accuracy. | 9 | 8 |
 | 2026-09-06 | [Extremely Sparse Supervision Incentivizes Reasoning Ability](https://arxiv.org/abs/2609.04565) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Extremely sparse supervision—just one or two tokens per reasoning trajectory—can effectively improve LLM reasoning, often matching or surpassing full-token post-training. | 9 | 8 |
