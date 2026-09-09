@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**28 papers total**
+**33 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-08 | [Learning Length-Extrapolatable Recurrent Models](https://arxiv.org/abs/2609.09157) | Language Foundation Models: Long-Context Models | CST stabilizes backward state-credit signals in recurrent models, enabling substantially better generalization far beyond the training sequence length. | 6 | 7 |
+| 2026-09-08 | [Length Generalization for Transformers via Compression](https://arxiv.org/abs/2609.08851) | Language Foundation Models: Long-Context Models | The paper sharpens transformer length-generalization theory by using compressed strings to derive polynomial bounds and reconcile prior contradictory evidence. | 6 | 7 |
+| 2026-09-08 | [SequenceO1: End-to-End Ultra-Long (100K) Sequence Modeling in Recommendation with Low-Rank Caching](https://arxiv.org/abs/2609.08443) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | SequenceO1 enables end-to-end recommendation over 100K-user-interaction histories by compressing long-term behavior into cached low-rank sketches and combining it with recent-history attention. | 7 | 8 |
+| 2026-09-08 | [EvolveScaler: Synthesizing Information-Evolution Contexts via Executable State Machines and Natural-Language Rendering](https://arxiv.org/abs/2609.08435) | Language Foundation Models: Long-Context Models | EvolveScaler generates verifiable, evolving-information tasks by executing state-machine specifications and rendering their histories as natural language. | 7 | 8 |
+| 2026-09-08 | [PARSER: Read in Parallel, Reason in Depth for Long-Context LLM Agents](https://arxiv.org/abs/2609.06702) | Language Foundation Models: Long-Context Models | PARSER separates parallel document reading from iterative reasoning, improving long-context QA accuracy and reducing latency. | 8 | 7 |
 | 2026-09-03 | [SGD-KV: Summarization Guided KV Cache Compression](https://arxiv.org/abs/2609.03235) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | SGD-KV compresses long-context KV caches by prioritizing attention heads that are effective at hierarchical summarization, reducing memory use by up to 75% while maintaining strong performance. | 8 | 7 |
 | 2026-09-03 | [Modern Transformers Are Implicit Hybrids: From Functional Differentiation to Principled Hybrid Architecture Design](https://arxiv.org/abs/2609.02986) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | The paper derives a principled head-level design for hybrid attention by identifying distinct retrieval and positional functions in RoPE-based Transformers. | 8 | 8 |
 | 2026-09-02 | [Language Models Can Control Their Own Attention](https://arxiv.org/abs/2609.02737) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Declarative Attention lets language models state which context region they need, substantially reducing KV-cache reads during long-context decoding with modest accuracy loss. | 9 | 8 |

@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**27 papers total**
+**32 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-08 | [Closing the Consistency Gap: Self-Evolving Agents That Learn to Stay on Course](https://arxiv.org/abs/2609.08832) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | A self-evolving agent framework improves reliability across repeated executions by turning unstable trajectory steps into reusable episodic guidance. | 9 | 8 |
+| 2026-09-08 | [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](https://arxiv.org/abs/2609.07047) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MEMOBench evaluates whether robotic policies can store, update, and compress information over time—not just complete tasks successfully. | 9 | 8 |
+| 2026-09-08 | [Human-agent discovery of reconfigurable in-plane ferroelectric superdomain control](https://arxiv.org/abs/2609.06887) | Adaptation and Memory: Embodied Memory | SPARC enables a human–coding-agent team to discover and control reconfigurable ferroelectric superdomain orientations through iterative microscopy, memory, and validated instrument operations. | 6 | 7 |
+| 2026-09-08 | [CAM: Question Answering on Entity-Centric Videos with Continuous Extraction and Adaptive Querying](https://arxiv.org/abs/2609.06504) | Video Generation and Understanding: Video Understanding; Adaptation and Memory: Embodied Memory | CAM improves long-video question answering by combining continuously summarized entity-centric memory with adaptive multimodal retrieval. | 8 | 7 |
+| 2026-09-08 | [SimpleMemVLA: A Simple but Effective Native-Video Memory for Vision-Language-Action Models](https://arxiv.org/abs/2609.05533) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | SimpleMemVLA enables long-horizon manipulation by feeding intact, timestamped video history directly to a vision-language backbone instead of using a separate memory module. | 9 | 8 |
 | 2026-09-07 | [Continual Field-Adaptive Models (CFAMs) for Post-Deployment Physical AI](https://arxiv.org/abs/2609.04552) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | CFAMs enable physical AI systems to learn new skills after deployment with gradient-free, on-device updates while largely retaining prior capabilities. | 9 | 8 |
 | 2026-09-06 | [Towards Neuro-Symbolic Procedural Reasoning for Long-Horizon Vision-Language-Action Manipulation](https://arxiv.org/abs/2609.05369) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A neuro-symbolic framework combines VLA control, task graphs, procedural memory, and demonstration-derived visual guidance to improve long-horizon robotic manipulation. | 9 | 7 |
 | 2026-09-06 | [Trace2Tower: Transition-Aware EigenTrace Induction of Multi-Level Skills for LLM Agents](https://arxiv.org/abs/2609.05261) | Adaptation and Memory: Embodied Memory | Trace2Tower converts execution traces into a transition-aware, outcome-guided hierarchy of reusable skills, improving LLM-agent performance and experience reuse on ALFWorld and WebShop. | 5 | 6 |
