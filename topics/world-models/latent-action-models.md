@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**20 papers total**
+**21 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [Learning Counterfactual World Models for Embodied Reasoning under Partial Observability](https://arxiv.org/abs/2609.05834) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Latent Action Models | Counterfactual Latent World Models make embodied world models more actionable by distinguishing interventions that look visually similar but lead to different outcomes. | 9 | 9 |
 | 2026-09-08 | [WM-Craftnet: World Synesthesia Model for Generalizable and Robust Dexterous In-Hand Manipulation](https://arxiv.org/abs/2609.07002) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | WM-Craftnet uses a multimodal recurrent world model to provide denoised, contact-aware context for robust dexterous in-hand rotation across object and disturbance changes. | 9 | 8 |
 | 2026-09-08 | [ARC-Bench: Closed-Loop Replanning Masks Broken Action Ranking in Frozen JEPA World Models](https://arxiv.org/abs/2609.05461) | World Models: Latent Action Models | ARC-Bench shows that frozen JEPA world models often rank actions incorrectly, while frequent closed-loop replanning conceals these failures. | 8 | 8 |
 | 2026-09-06 | [BEAM3R: Beam's-eye-view architecture with Mamba-3 for implicit dose reconstruction](https://arxiv.org/abs/2609.04747) | World Models: Latent Action Models; 3D Vision: 3D Foundation Models | BEAM3R uses a beam’s-eye-view Mamba-3 architecture with physics-based conditioning to rapidly reconstruct photon and proton doses, achieving high CT-based accuracy but reduced performance with synthetic CTs. | 7 | 8 |

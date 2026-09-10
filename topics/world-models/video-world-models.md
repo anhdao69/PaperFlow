@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**56 papers total**
+**58 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [Geometry Without Coordinates: LiDAR Diffusion as a 3D Feature Bridge](https://arxiv.org/abs/2609.10322) | World Models: Video World Models; 3D Vision: 3D Foundation Models | A LiDAR-conditioned diffusion model transfers 2D foundation-model priors into structured 3D features without relying on raw coordinates. | 9 | 9 |
+| 2026-09-09 | [Arti-JEPA: Adapting Video World Model to Real-Time MRI of the Vocal Tract for Speech-Production Analysis](https://arxiv.org/abs/2609.09757) | World Models: Video World Models; Video Generation and Understanding: Video Understanding | Arti-JEPA adapts a video world model to vocal-tract rtMRI, yielding reusable frozen representations for articulatory and clinical speech analysis. | 7 | 7 |
 | 2026-09-08 | [STSG-VQA: Evidence-Grounded Temporal Question Answering from Surgical Spatio-Temporal Scene Graphs](https://arxiv.org/abs/2609.08543) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Video World Models | STSG-VQA introduces temporally structured surgical scene-graph supervision that improves VLM reasoning over evidence-grounded workflow dynamics. | 9 | 8 |
 | 2026-09-08 | [PhysReal: Learning Real-World Deformable Object Physics via Hybrid Constitutive Modeling](https://arxiv.org/abs/2609.07532) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models | PhysReal learns physically plausible dynamics of real deformable objects from video by combining interpretable physics, neural residuals, and differentiable simulation. | 9 | 9 |
 | 2026-09-08 | [OpenWAM: An Open, Modular Exploration Towards Systematic World-Action Model Pretraining](https://arxiv.org/abs/2609.07398) | Embodied AI: Learning from Human Videos; World Models: Video World Models, Interactive World Models | OpenWAM makes world-action model pretraining modular and systematically studies how generative world knowledge and action learning should be combined for embodied control. | 9 | 8 |

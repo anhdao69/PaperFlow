@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**105 papers total**
+**109 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [From State Synchronization to Cognitive Self-Evolution: An Operational Architecture for Cognitive Digital Twins](https://arxiv.org/abs/2609.09625) | Adaptation and Memory: Continual and Online Learning | The paper proposes a four-layer Cognitive Digital Twin architecture that enables task-oriented, self-evolving operation through a closed loop linking physical states, cognition, decisions, and feedback. | 5 | 6 |
+| 2026-09-09 | [CAROL: Context-Aware Online Learning for Fuzzer Scheduling](https://arxiv.org/abs/2609.06772) | Adaptation and Memory: Continual and Online Learning | CAROL improves ensemble-fuzzer scheduling by using live, target-specific context to allocate CPU time and uncover more bugs than existing schedulers. | 6 | 7 |
+| 2026-09-09 | [When and What to Teach: Budget-Aware Online Adaptation for Web Agents](https://arxiv.org/abs/2609.05513) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | A budget-aware online teaching framework reduces unnecessary teacher interactions and training compute for adapting lightweight web agents. | 7 | 6 |
+| 2026-09-09 | [SCAFFOLD: Self-Improving Web Agents via Recursive Parametric Skill Abstraction](https://arxiv.org/abs/2609.05511) | Adaptation and Memory: Continual and Online Learning | SCAFFOLD enables web agents to self-improve by learning, recursively composing, compressing, and internalizing reusable procedural skills. | 6 | 7 |
 | 2026-09-08 | [SkillAdam: Stable and Efficient Skill Evolution for Agents](https://arxiv.org/abs/2609.08944) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | SkillAdam improves the stability, adaptability, and efficiency of automatically evolving discrete skill documents for language-model agents. | 9 | 8 |
 | 2026-09-08 | [Experience Funnel: A State-Policy Alternating Loop for Self-Evolving Agents](https://arxiv.org/abs/2609.08919) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | Experience Funnel alternates rapid textual-state adaptation with slower policy consolidation to turn interaction experience into reusable agent competence. | 6 | 7 |
 | 2026-09-08 | [Popular Knowledge Propagates More Errors in LLM Knowledge Updating](https://arxiv.org/abs/2609.08067) | Adaptation and Memory: Continual and Online Learning | In LLM knowledge updating, facts linked to highly connected entities are more vulnerable to corruption, while PopAnchor reduces their forgetting through lightweight rehearsal. | 7 | 6 |

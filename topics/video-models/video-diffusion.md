@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**48 papers total**
+**50 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [Decoupled Self-Forcing Distillation for Streaming Talking Head Generation](https://arxiv.org/abs/2609.10317) | Video Generation and Understanding: Video Diffusion | Decoupled self-forcing distillation enables high-fidelity, efficient streaming talking-head generation by controlling a causal diffusion renderer through a compact motion representation. | 7 | 8 |
+| 2026-09-09 | [Mask Forcing: Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout](https://arxiv.org/abs/2609.09123) | Video Generation and Understanding: Video Diffusion | Mask Forcing improves autoregressive video diffusion distillation by using dual-noise spatial-temporal masking to reduce mode collapse and produce more realistic videos. | 8 | 8 |
 | 2026-09-08 | [Geodesic-informed Generative Diffusion Model For Topology-preserved Image Video Generation](https://arxiv.org/abs/2609.08153) | Video Generation and Understanding: Video Diffusion | IGG augments diffusion generation with topology-preserving geodesic deformation dynamics to produce structurally consistent and more interpretable image sequences. | 6 | 7 |
 | 2026-09-08 | [Novel Methods for Catheter and Guidewire Segmentation in X-ray Fluoroscopy under a Federated Learning Setting](https://arxiv.org/abs/2609.06876) | Video Generation and Understanding: Video Diffusion | A structure-aware federated learning framework improves privacy-preserving catheter and guidewire segmentation and analysis in X-ray fluoroscopy despite heterogeneous and limited data. | 5 | 6 |
 | 2026-09-08 | [RoLA: Rotary-Positioned Low-Rank Linear Attention for Efficient Diffusion Transformers](https://arxiv.org/abs/2609.06712) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | RoLA enables efficient video Diffusion Transformers by combining rotary-compatible low-rank global attention with sparse local attention, achieving competitive quality at 90% sparsity and a 2.63× end-to-end speedup. | 9 | 9 |

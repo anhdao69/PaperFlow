@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**33 papers total**
+**35 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [ConvMem: Convolutional Memory for Long-Context Reasoning](https://arxiv.org/abs/2609.10441) | Language Foundation Models: Long-Context Models | ConvMem enables faster, training-free long-context reasoning by hierarchically summarizing text with a parallelizable convolution-inspired memory. | 8 | 8 |
+| 2026-09-09 | [Fine-Tuning a KV Cache Concatenation-Aware Model or Recomputing KV Caches? Why Not Both?](https://arxiv.org/abs/2609.09768) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | A combined strategy of KV-concatenation-aware fine-tuning and selective KV-cache recomputation improves long-context RAG accuracy while substantially reducing time to first token. | 8 | 7 |
 | 2026-09-08 | [Learning Length-Extrapolatable Recurrent Models](https://arxiv.org/abs/2609.09157) | Language Foundation Models: Long-Context Models | CST stabilizes backward state-credit signals in recurrent models, enabling substantially better generalization far beyond the training sequence length. | 6 | 7 |
 | 2026-09-08 | [Length Generalization for Transformers via Compression](https://arxiv.org/abs/2609.08851) | Language Foundation Models: Long-Context Models | The paper sharpens transformer length-generalization theory by using compressed strings to derive polynomial bounds and reconcile prior contradictory evidence. | 6 | 7 |
 | 2026-09-08 | [SequenceO1: End-to-End Ultra-Long (100K) Sequence Modeling in Recommendation with Low-Rank Caching](https://arxiv.org/abs/2609.08443) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | SequenceO1 enables end-to-end recommendation over 100K-user-interaction histories by compressing long-term behavior into cached low-rank sketches and combining it with recent-history attention. | 7 | 8 |

@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**46 papers total**
+**51 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [ScopeMamba-YOLO: Widening the Perceptual Scope Inward and Outward for Small Object Detection in Remote Sensing Imagery](https://arxiv.org/abs/2609.10156) | Efficient AI: Efficient Attention | ScopeMamba-YOLO improves small-object detection in remote-sensing imagery by adding off-path long-range context modeling while preserving local high-resolution features. | 7 | 8 |
+| 2026-09-09 | [SymbolicLight V2: Hybrid Neuromorphic Architecture and Sparse Execution for Low-Energy Language Inference](https://arxiv.org/abs/2609.09772) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | SymbolicLight V2 uses sparse event-driven and continuous processing to reduce language-inference energy on FPGA and ARM hardware, while retaining a quality gap versus a dense control. | 7 | 7 |
+| 2026-09-09 | [Adaptive Anisotropic Attention for Axis-Structured Signals](https://arxiv.org/abs/2609.08788) | Efficient AI: Efficient Attention | AXON improves attention for structured signals by adaptively balancing temporal and spatial interactions instead of using dense all-to-all attention. | 6 | 7 |
+| 2026-09-09 | [Beyond the Matrix Sign: Quadratic Spectral Descent](https://arxiv.org/abs/2609.07597) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | Quadratic Spectral Descent extends Muon with curvature-aware updates, improving validation loss and reducing training time in GPT pre-training experiments. | 7 | 8 |
+| 2026-09-09 | [Parallelism Strategy Chaining for Fast Training Convergence](https://arxiv.org/abs/2609.07236) | Efficient AI: Efficient Attention; Language Foundation Models | CONA accelerates language-model training by switching parallelism strategies online as the best strategy changes throughout training. | 8 | 8 |
 | 2026-09-08 | [SequenceO1: End-to-End Ultra-Long (100K) Sequence Modeling in Recommendation with Low-Rank Caching](https://arxiv.org/abs/2609.08443) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | SequenceO1 enables end-to-end recommendation over 100K-user-interaction histories by compressing long-term behavior into cached low-rank sketches and combining it with recent-history attention. | 7 | 8 |
 | 2026-09-08 | [Nystr\\"om Attention Matches Full Attention for Cross-Sectional Stock Prediction](https://arxiv.org/abs/2609.08106) | Efficient AI: Efficient Attention | MASTER’s cross-stock attention is valuable because its near-uniform but low-rank structure enables Nyström attention to match full attention at linearized cost, though benefits do not persist at very large universes. | 8 | 6 |
 | 2026-09-08 | [Support Topology and Gradient Mixing in Sinkhorn Layers](https://arxiv.org/abs/2609.07954) | Efficient AI: Efficient Attention | A fixed-support analysis of Sinkhorn layers links graph topology and marginals to gradient mixing, yielding criteria for uniform contraction of quotient-gradient components. | 7 | 8 |

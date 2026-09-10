@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**133 papers total**
+**139 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [Fortunate Recall: Ontology-Driven Memory Lifecycle Management for Persistent Coherence in LLMs](https://arxiv.org/abs/2609.10413) | Language Foundation Models: LLM Memory | Fortunate Recall improves persistent LLM memory by applying fact-specific lifecycle policies, reducing confabulation while improving temporal retrieval accuracy. | 8 | 8 |
+| 2026-09-09 | [What Should an Agent Forget? Separating What Is Stored from What Is Used](https://arxiv.org/abs/2609.10263) | Language Foundation Models: LLM Memory | RD-Forget keeps a complete source archive while selectively controlling which evidence influences an answer, allowing agents to handle changing facts without losing historical information. | 8 | 8 |
+| 2026-09-09 | [From Retrieval to Weights: Parametric Individualization of Small Language Models with Individual Text Corpora](https://arxiv.org/abs/2609.10155) | Language Foundation Models: LLM Memory | Personal text corpora can be written into small language-model weights, but this personalization improves knowledge modeling more than alignment with an individual’s answers. | 5 | 6 |
+| 2026-09-09 | [Kernel-Managed Shared Memory for System-Wide Personalization](https://arxiv.org/abs/2609.10144) | Language Foundation Models: LLM Memory | Kernel-managed shared memory lets multi-agent AI systems share personalized context more effectively while reducing prompt length, latency, and inference cost. | 8 | 7 |
+| 2026-09-09 | [ROAM: Robust Organization of Atomic Memories for Agents through Semantic Relations](https://arxiv.org/abs/2609.09778) | Language Foundation Models: LLM Memory | ROAM organizes atomic memories by semantic relations and fuses them into focused views, improving long-term agent answers while reducing redundancy and outdated evidence. | 8 | 7 |
+| 2026-09-09 | [PRAGMA: Evaluating Personalized Guidance with Memory Alignment in Lifelong Conversations](https://arxiv.org/abs/2609.09664) | Language Foundation Models: LLM Memory | PRAGMA benchmarks whether conversational memory systems can use evolving user histories to provide personalized guidance, not merely recall facts. | 7 | 7 |
 | 2026-09-08 | [Procedural Graphs: Self-Evolving Execution Structures for LLM Agents](https://arxiv.org/abs/2609.09153) | Language Foundation Models: LLM Memory | Procedural Graphs help LLM agents plan and execute long-horizon tasks by organizing procedural knowledge into self-improving execution structures. | 6 | 8 |
 | 2026-09-08 | [MeClear: Cooperative Game-Theoretic Attribution and Risk-Aware Memory Clearance for Long-Horizon LLM Agents](https://arxiv.org/abs/2609.09115) | Language Foundation Models: LLM Memory | MeClear improves long-horizon LLM agents by identifying and temporarily suppressing memories with negative downstream utility using cooperative game-theoretic attribution. | 7 | 7 |
 | 2026-09-08 | [PlannerForge: LLM Agents for Scenario-Based Testing of Motion Planners in Autonomous Driving](https://arxiv.org/abs/2609.08965) | Embodied AI: Robot Navigation; Language Foundation Models: LLM Memory | PlannerForge unifies LLM-agent support for the full scenario-based testing pipeline of autonomous-driving motion planners, improving scenario generation, selection, editing, and planner outcomes without domain-specific fine-tuning. | 8 | 7 |

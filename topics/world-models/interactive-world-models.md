@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**87 papers total**
+**93 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-09 | [Programmable World Model](https://arxiv.org/abs/2609.10540) | World Models: Interactive World Models | Programmable World Model separates explicit, persistent world-state simulation from video rendering to enable controllable, rule-based, long-horizon interactive worlds. | 9 | 8 |
+| 2026-09-09 | [Valerant: An Automatic Navigable Game Map Generator via Action-Conditioned World Model Exploration](https://arxiv.org/abs/2609.09418) | World Models: Interactive World Models | Valerant turns a pretrained action-conditioned world model into a training-free explorer that builds persistent, navigable 3D game maps from a single image. | 8 | 7 |
+| 2026-09-09 | [SyncWorld: Visual Calibration Enables World Models as Zero-Shot Simulators](https://arxiv.org/abs/2609.09155) | World Models: Interactive World Models | SyncWorld uses visual calibration to make action-conditioned world models generalize as zero-shot simulators across unseen robotic environments. | 9 | 9 |
+| 2026-09-09 | [Hi-FLoop: Hierarchical State-Feedback Loops for Multi-Timescale World Modeling](https://arxiv.org/abs/2609.08796) | World Models: Interactive World Models | Hi-FLoop generates coherent, physically realistic multi-agent traffic futures by maintaining one shared scene hypothesis while adapting intent, interaction, and motion across multiple feedback timescales. | 8 | 8 |
+| 2026-09-09 | [ActionSplice: In-Flight Action Editing for Interactive World Models](https://arxiv.org/abs/2609.08230) | World Models: Interactive World Models | ActionSplice enables interactive action changes during video-world-model sampling without rollback or replay, while preserving visual consistency and reducing latency. | 9 | 8 |
+| 2026-09-09 | [InfluenceField: A Differentiable Field with Interventionally Identifiable Causal Structure for Multimodal World Modeling](https://arxiv.org/abs/2609.07874) | World Models: Interactive World Models | InfluenceField adds an intervention-aware spatial latent field to multimodal models, enabling more accurate prediction of how local visual changes affect downstream answers. | 8 | 9 |
 | 2026-09-08 | [Model Predictive Control of Tensegrity Robots via Contact-Aware Graph Neural Dynamics Model](https://arxiv.org/abs/2609.08958) | Embodied AI: Robot Navigation; World Models: Interactive World Models | A contact-aware GNN dynamics model paired with hybrid MPPI enables robust navigation of tensegrity robots through complex, contact-rich environments. | 8 | 8 |
 | 2026-09-08 | [VeriScene: Reconstructing Crime Scenes from Legal Evidence via World-Model Agent](https://arxiv.org/abs/2609.08342) | World Models: Interactive World Models | VeriScene orchestrates a physics-based world model to reconstruct and re-enact crime scenes while tracing claims to legal evidence and handling unreliable testimony. | 8 | 8 |
 | 2026-09-08 | [WorldAgen: Unified State-Action Prediction with Test-Time World Model Training](https://arxiv.org/abs/2609.08162) | Embodied AI: Vision-Language-Action; World Models: Interactive World Models | WorldAgen jointly predicts world states and actions, then adapts its world model at test time to improve VLA performance in novel environments. | 9 | 8 |

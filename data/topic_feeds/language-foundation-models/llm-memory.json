@@ -1,6 +1,1522 @@
 {
   "days": [
     {
+      "date": "2026-09-09",
+      "paper_count": 6,
+      "papers": [
+        {
+          "abstract": "Current LLM memory systems treat all personal facts identically, so stores grow without bound while retrieval precision degrades. The core challenge is lifecycle management: which memories should persist, which should be replaced, and at what rate, conditioned on the behavioral type of each fact. Fortunate Recall (FR) is a composable policy layer that classifies personal facts into a 10+1 behavioral ontology and applies category-specific lifecycle policies (differential temporal decay, slot-key supersession, event-time validity, and category-aware retrieval routing) as deterministic functions over LLM-extracted metadata. FR-Bank, our infrastructure-independent implementation, reaches a 76.9% pass rate on LifecycleBench, a new 516-question temporal-disambiguation benchmark, ahead of Mem0, A-MEM, Memory-R1, and MemoryOS (61% to 70.5%), and 75.2% on the full LongMemEval-S under the canonical Wu et al. judge protocol, so lifecycle policies impose no measurable cost on standard retrieval. A pre-registered ablation locates the gains: replacing the typed layer with three generic lifecycle primitives leaves correctness statistically unchanged (-1.7pp, 95% CI [-6.0, +2.7]), so the generic lifecycle metadata carries the correctness advantage, while the behavioral ontology carries calibration, halving downstream confabulation (12.0% vs 24.2%, p<0.001). End-to-end, FR-Bank cuts confabulation from Mem0's 45.1% to 22.4% over answered queries and from 32.2% to 13.0% over all queries while answering more of them correctly (31.2% vs 18.6%); the ranking replicates on the open-weight Kimi K2.5. The decomposition transfers to BEAM, an independently built benchmark: 46.8% correct vs Mem0's 32.9% over 280 questions, with the ontology's benefit concentrated in contradiction resolution and saturating near seven policy clusters. The ontology, benchmark, and code are released.",
+          "arxiv_id": "2609.10413",
+          "arxiv_url": "https://arxiv.org/abs/2609.10413",
+          "authors": [
+            "Ansuman Mullick, Eray T\\\"uz\\\"un"
+          ],
+          "bullets": [
+            "Problem: Treating all personal facts alike causes unbounded memory growth, stale retrievals, and contradictions.",
+            "Method: Classifies facts into a 10+1 behavioral ontology and applies typed decay, slot-key supersession, event-time validity, and category-aware retrieval routing.",
+            "Results: FR-Bank achieves 76.9% on LifecycleBench and 75.2% on LongMemEval-S, with no measurable standard-retrieval cost.",
+            "Impact: Confabulation falls substantially versus Mem0, while correct-answer rates improve; results replicate on Kimi K2.5 and BEAM.",
+            "Scope: Generic lifecycle metadata drives correctness gains, while the ontology mainly improves calibration and contradiction handling, saturating near seven policy clusters."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Fortunate Recall architecture and the LLM / lifecycle-math boundary. Ingestion (top, asynchronous): one gpt-4.1-mini call per turn extracts each edge 𝑒 and tags it with behavioral category 𝑐, slot key 𝜅, lifecycle state 𝜉, event-time anchor ℎ, ingest time 𝑡, and confidence 𝑣; 𝑡 and ℎ are two independent clocks (bi-temporal). Retrieval (bottom, per query): hybrid candidate generation is distilled by a single small-model call to top-20, which the deterministic lifecycle layer ranks by the closed-form log-score of Eq. (2). The pipeline uses exactly two LLM calls per turn, and every lifecycle decision is a named term of ℓ, inspectable per edge and per term at millisecond latency.",
+              "figure_id": "figure-1-20",
+              "figure_number": "1",
+              "height": 466,
+              "image_path": "figures/2609.10413/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: Two lifecycle mechanisms in detail. (A) Slot-key supersession with query-conditioned state mask. When “I moved to London” is ingested, the high-confidence contradiction marks the earlier “lives in Istanbul” edge as 𝜉 = superseded. The same store returns different answers depending on query intent: current-state queries apply 𝑀𝑞 (𝜉) to exclude superseded edges (returning London); change-aware queries include them (returning Istanbul). (B) Event-time validity for obligations. Activation is governed by distance to the event-time anchor ℎ, not from creation. Anticipatory activation rises as the deadline approaches; post-event the validity kernel 𝑉𝑐 (𝑡, ℎ) collapses, suppressing expired obligations from current-state queries. Both mechanisms instantiate dimensions of the metadata basis (𝑐, 𝜅, 𝜉, ℎ) that Theorems 1–3 establish as necessary for lifecycleaware scoring.",
+              "figure_id": "figure-2-51",
+              "figure_number": "2",
+              "height": 500,
+              "image_path": "figures/2609.10413/figure-002.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: Consolidated results across LifecycleBench (LCB) and end-to-end response quality (E2E), 𝑛 = 516; the rule separates cross-system rows from FR-Graphiti ablation rows. Confabulation is reported under both denominators, with correct-over-total alongside so the abstention trade-off is visible in the same row. An abstention is never counted as a confabulation, and “all queries” means all 516 questions.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 318,
+              "image_path": "figures/2609.10413/table-003.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 752
+            },
+            {
+              "caption": "Table 33: Lifecycle-feature feasibility per system. Moderate = new schema field plus filter wrapper; Hard = new retrieval mechanism / fork or RL retraining; Impossible = requires architectural rebuild; ≡FR = adding the feature reimplements FR’s pipeline.",
+              "figure_id": "table-33-1",
+              "figure_number": "33",
+              "height": 262,
+              "image_path": "figures/2609.10413/table-004.webp",
+              "kind": "table",
+              "page": 43,
+              "width": 818
+            },
+            {
+              "caption": "Table 1: The 10+1 behavioral ontology. Each category determines lifecycle dynamics: decay rate (half-life), supersession semantics, and expiry logic. Half-lives govern base decay; actual persistence also depends on access frequency and soft category membership (Appendix B).",
+              "figure_id": "table-1-38",
+              "figure_number": "1",
+              "height": 413,
+              "image_path": "figures/2609.10413/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 772
+            },
+            {
+              "caption": "Table 2: Core FR mechanisms versus implementation engineering. Every engineering row is independently ablated; every core row is grounded in a theoretical result, a measured ablation, or both.",
+              "figure_id": "table-2-59",
+              "figure_number": "2",
+              "height": 334,
+              "image_path": "figures/2609.10413/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 768
+            },
+            {
+              "caption": "Table 54: Full per-AV E2E on Kimi K2.5 across all five systems.",
+              "figure_id": "table-54-52",
+              "figure_number": "54",
+              "height": 335,
+              "image_path": "figures/2609.10413/table-007.webp",
+              "kind": "table",
+              "page": 56,
+              "width": 640
+            },
+            {
+              "caption": "Table 42: Full per-AV E2E response quality on GPT-5.4, all five systems.",
+              "figure_id": "table-42-7",
+              "figure_number": "42",
+              "height": 333,
+              "image_path": "figures/2609.10413/table-008.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 640
+            },
+            {
+              "caption": "Table 4: Ontology ablation on LifecycleBench, referenced from §6. Same FR-Bank pipeline, same stored edges, same judge; only the category-to-parameter mapping changes. Cognitive categories: Semantic (Identity, Relational, Intellectual, Health, Financial), Episodic (Obligations, Logistical), Procedural (Preferences, Hobbies, Projects). The behavioral partition wins 7 of 9 attack vectors under arithmetic aggregation and 4 of 5 non-tied vectors under harmonic. The 77.5% cell is a distinct ontology-ablation run; its 0.6pp difference from the canonical 76.9% of Table 3 is judge non-determinism across separate runs, well inside the observed variance (Table 15) and the canonical 95% CI [73.3, 80.6].",
+              "figure_id": "table-4-45",
+              "figure_number": "4",
+              "height": 109,
+              "image_path": "figures/2609.10413/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 552
+            },
+            {
+              "caption": "Table 20: Per-question-type lifecycle decomposition on the 234-question oracle POC subset. Lifecycle and no-lifecycle arms were evaluated on identical banks; cross-pipeline LME-S comparisons (with-lifecycle pipeline vs. no-lifecycle oracle pipeline) are not used here because they involve different judge models and ingestion paths. The knowledge-update row of the submitted version reported 87.2% vs. 80.8% (+6.4pp); those cells trace to no surviving artifact and are withdrawn here. The artifact-backed knowledge-update decomposition is on the 317-question matched subset (Table 21), where the effect is −6.4pp. This table and Table 21 are two different subsets and must not be read as one series.",
+              "figure_id": "table-20-40",
+              "figure_number": "20",
+              "height": 175,
+              "image_path": "figures/2609.10413/table-010.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 740
+            },
+            {
+              "caption": "Table 12: LifecycleBench attack vectors, referenced from §efsec:benchmark. Each targets a distinct lifecycle failure mode; 𝑛 is the question count.",
+              "figure_id": "table-12-55",
+              "figure_number": "12",
+              "height": 378,
+              "image_path": "figures/2609.10413/table-011.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 790
+            },
+            {
+              "caption": "Table 58: Retrieval stability under independent metadata corruption. Jaccard@10 is between the unperturbed and perturbed top-10 sets; Δ staleness is the change in the fraction of questions whose top-10 contains an edge the uncorrupted metadata marks superseded, expired, retracted or shadowed (baseline 8.1%).",
+              "figure_id": "table-58-41",
+              "figure_number": "58",
+              "height": 412,
+              "image_path": "figures/2609.10413/table-012.webp",
+              "kind": "table",
+              "page": 64,
+              "width": 664
+            },
+            {
+              "caption": "Table 45: Literature positioning with empirical results.",
+              "figure_id": "table-45-43",
+              "figure_number": "45",
+              "height": 346,
+              "image_path": "figures/2609.10413/table-013.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 764
+            },
+            {
+              "caption": "Table 53: Cross-generator validation: GPT-5.4 vs Kimi K2.5. The lower block lists the additional A-MEM and Mem0 (gpt-4.1-mini) configurations introduced in §6. Correction: three cells of the A-MEM (GPT-5.4) row were transcription errors in the submitted version (Partial 19.0, Wrong 20.0, Abstain 42.2); recomputed from the raw per-question judgments (𝑛 = 516) they are 27.5 (142), 28.3 (146) and 25.4 (131). The printed Correct (18.8%, 97), Confab (47.0%) and Safe (44.2%) cells were already correct—indeed the printed Correct and Safe cells force Abstain = 25.4%—so no gap, ranking or downstream figure changes (Appendix AI).",
+              "figure_id": "table-53-35",
+              "figure_number": "53",
+              "height": 334,
+              "image_path": "figures/2609.10413/table-014.webp",
+              "kind": "table",
+              "page": 55,
+              "width": 772
+            },
+            {
+              "caption": "Table 25: Per-attack-vector results on FR-Graphiti (full vs. baseline).",
+              "figure_id": "table-25-15",
+              "figure_number": "25",
+              "height": 288,
+              "image_path": "figures/2609.10413/table-015.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 764
+            },
+            {
+              "caption": "Table 32: Gap analysis. “Cog.” = cognitive categories without behavioral conditioning. Mem0 gaps empirically validated on LifecycleBench (§6).",
+              "figure_id": "table-32-18",
+              "figure_number": "32",
+              "height": 265,
+              "image_path": "figures/2609.10413/table-016.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 830
+            },
+            {
+              "caption": "Table 48: Category-specific blending weights 𝛼 and semantic floors. Emotional loading is a transient activation modifier applied to other categories rather than a standalone memory category; the listed 𝛼 governs the decay of the loading signal itself, not a separate row of the ontology.",
+              "figure_id": "table-48-56",
+              "figure_number": "48",
+              "height": 299,
+              "image_path": "figures/2609.10413/table-017.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 714
+            },
+            {
+              "caption": "Table 19: LongMemEval lifecycle ablation. Retrieval pipeline: +7.4pp; lifecycle: +0.9pp net.",
+              "figure_id": "table-19-39",
+              "figure_number": "19",
+              "height": 117,
+              "image_path": "figures/2609.10413/table-018.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 490
+            },
+            {
+              "caption": "Table 5: Ontology granularity sweep. 𝑉user is the intuitive partition at each 𝐾; 𝑉opt is the minimumvariance 𝐾-partition. The behavioral 𝐾=11 partition matches the optimal floor exactly. The cognitive 𝐾=3 partition is 4.2× worse than the optimal 𝐾=3.",
+              "figure_id": "table-5-42",
+              "figure_number": "5",
+              "height": 177,
+              "image_path": "figures/2609.10413/table-019.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 598
+            },
+            {
+              "caption": "Table 59: Numerical corrections relative to the submitted version.",
+              "figure_id": "table-59-27",
+              "figure_number": "59",
+              "height": 1065,
+              "image_path": "figures/2609.10413/table-020.webp",
+              "kind": "table",
+              "page": 65,
+              "width": 822
+            },
+            {
+              "caption": "Table 44: Per-AV end-to-end confabulation (three systems), regenerated from the raw per-question judge records (gpt54_nr, 𝑛 = 516). Corr. = CORRECT / 𝑛AV; confab. = confabulations / nonabstaining responses. AV7: both Mem0 and MR1 cause >90% confabulation without structural retraction filtering. Correction: the FR and Mem0 columns of this table in the submitted version were stale (they matched no current run; the Memory-R1 column was already correct) and are replaced here in full (Appendix AI).",
+              "figure_id": "table-44-60",
+              "figure_number": "44",
+              "height": 205,
+              "image_path": "figures/2609.10413/table-021.webp",
+              "kind": "table",
+              "page": 48,
+              "width": 830
+            },
+            {
+              "caption": "Table 26: Per-AV cross-system comparison (five systems).",
+              "figure_id": "table-26-14",
+              "figure_number": "26",
+              "height": 185,
+              "image_path": "figures/2609.10413/table-022.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 826
+            },
+            {
+              "caption": "Table 50: Cross-system outcome matrix (516 questions).",
+              "figure_id": "table-50-5",
+              "figure_number": "50",
+              "height": 117,
+              "image_path": "figures/2609.10413/table-023.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 502
+            },
+            {
+              "caption": "Table 37: Phase 2 per-AV results.",
+              "figure_id": "table-37-28",
+              "figure_number": "37",
+              "height": 288,
+              "image_path": "figures/2609.10413/table-024.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 610
+            },
+            {
+              "caption": "Table 36: Per-category half-life feasibility intervals (mean Jaccard@10 ≥ 0.95 over 𝑛 = 516 questions; pool composition cached, scoring re-run per cell). All defaults sit interior to their feasibility regions.",
+              "figure_id": "table-36-46",
+              "figure_number": "36",
+              "height": 275,
+              "image_path": "figures/2609.10413/table-025.webp",
+              "kind": "table",
+              "page": 44,
+              "width": 636
+            },
+            {
+              "caption": "Table 49: Per-category decay rates. Spread: 5.3×.",
+              "figure_id": "table-49-58",
+              "figure_number": "49",
+              "height": 286,
+              "image_path": "figures/2609.10413/table-026.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 577
+            },
+            {
+              "caption": "Table 28: Deterministic lifecycle layer latency on the 40 LifecycleBench persona banks. Primary row (𝑘=20): 1,000 iterations per persona, 50-iteration warmup. Scaling rows: 1,000 iterations over a 𝑘-sized pool sampled across personas (with synthetic id rewrites to avoid cross-bank id collisions). Single-threaded Python 3.13 on AMD Zen 3.",
+              "figure_id": "table-28-36",
+              "figure_number": "28",
+              "height": 221,
+              "image_path": "figures/2609.10413/table-027.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 732
+            },
+            {
+              "caption": "Table 47: Fine-grained alpha sweep. All p-values fail Bonferroni correction (𝑝 < 0.0056). All |𝑑 | < 0.2.",
+              "figure_id": "table-47-57",
+              "figure_number": "47",
+              "height": 253,
+              "image_path": "figures/2609.10413/table-028.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 627
+            },
+            {
+              "caption": "Table 15: LongMemEval-S 500-question variance over 10 identical reruns (temperature 0, identical configuration). “stdev” is sample standard deviation in percentage points.",
+              "figure_id": "table-15-16",
+              "figure_number": "15",
+              "height": 219,
+              "image_path": "figures/2609.10413/table-029.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 677
+            },
+            {
+              "caption": "Table 10: Per-category classifier P/R/F1 from the held-out audit (𝑛 = 200; majority vote of three independent judges as ground truth, restricted to facts with a majority verdict, 𝑛eff = 188). Macro-averaged F1 = 0.595; weighted F1 = 0.647; overall accuracy 66.5%.",
+              "figure_id": "table-10-13",
+              "figure_number": "10",
+              "height": 276,
+              "image_path": "figures/2609.10413/table-030.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 536
+            },
+            {
+              "caption": "Table 56: Three independent executions of the identical FR-full configuration, plus the two independently specified minimal arms. The prompt cache was reaped between runs, so each is a genuine re-generation.",
+              "figure_id": "table-56-12",
+              "figure_number": "56",
+              "height": 215,
+              "image_path": "figures/2609.10413/table-031.webp",
+              "kind": "table",
+              "page": 61,
+              "width": 686
+            },
+            {
+              "caption": "Table 43: Full per-AV E2E response quality on GPT-5.4: A-MEM and Mem0 (gpt-4.1-mini), regenerated from the raw per-question judge records. Correction: the per-AV Correct cells of this table in the submitted version were stale—weighting them by 𝑛AV gave 17.8 (A-MEM) and 23.9 (Mem0-mini) rather than the stated aggregates. The “All” aggregates were already correct; the regenerated per-AV cells below weight-average to them exactly (Appendix AI).",
+              "figure_id": "table-43-8",
+              "figure_number": "43",
+              "height": 336,
+              "image_path": "figures/2609.10413/table-032.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 418
+            },
+            {
+              "caption": "Table 46: Full alpha sweep on LongMemEval.",
+              "figure_id": "table-46-44",
+              "figure_number": "46",
+              "height": 298,
+              "image_path": "figures/2609.10413/table-033.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 422
+            },
+            {
+              "caption": "Table 8: Three-judge agreement results with full session context. Cohen’s 𝜅 over the 11-category label set; “Majority vote” aggregates judges by simple plurality (≥ 2 of 3 agree).",
+              "figure_id": "table-8-33",
+              "figure_number": "8",
+              "height": 231,
+              "image_path": "figures/2609.10413/table-034.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 498
+            },
+            {
+              "caption": "Table 9: Per-category majority-vote agreement vs FR-Bank classifier label, sorted descending.",
+              "figure_id": "table-9-34",
+              "figure_number": "9",
+              "height": 275,
+              "image_path": "figures/2609.10413/table-035.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 398
+            },
+            {
+              "caption": "Table 51: Per-AV positional staleness exposure (high-attention zone).",
+              "figure_id": "table-51-6",
+              "figure_number": "51",
+              "height": 219,
+              "image_path": "figures/2609.10413/table-036.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 418
+            },
+            {
+              "caption": "Table 27: Context efficiency and positional staleness.",
+              "figure_id": "table-27-37",
+              "figure_number": "27",
+              "height": 186,
+              "image_path": "figures/2609.10413/table-037.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 436
+            },
+            {
+              "caption": "Table 31: Retrieval metric paradox on AV7.",
+              "figure_id": "table-31-19",
+              "figure_number": "31",
+              "height": 163,
+              "image_path": "figures/2609.10413/table-038.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 427
+            },
+            {
+              "caption": "Table 18: FR-Bank per-question-type results on the 234-question oracle POC subset (earlier configuration).",
+              "figure_id": "table-18-23",
+              "figure_number": "18",
+              "height": 139,
+              "image_path": "figures/2609.10413/table-039.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 472
+            },
+            {
+              "caption": "Table 38: Phase 3 overall results.",
+              "figure_id": "table-38-30",
+              "figure_number": "38",
+              "height": 139,
+              "image_path": "figures/2609.10413/table-040.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 306
+            },
+            {
+              "caption": "Table 52: Ablation results (Phase 2, 8 personas).",
+              "figure_id": "table-52-4",
+              "figure_number": "52",
+              "height": 209,
+              "image_path": "figures/2609.10413/table-041.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 768
+            },
+            {
+              "caption": "Table 29: Controlled comparison: same question, same judge, opposite outcomes.",
+              "figure_id": "table-29-49",
+              "figure_number": "29",
+              "height": 209,
+              "image_path": "figures/2609.10413/table-042.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 748
+            },
+            {
+              "caption": "Table 57: End-to-end response quality under both denominators, 𝑛 = 516, GPT-5.4 generator. Safe = correct + abstain.",
+              "figure_id": "table-57-10",
+              "figure_number": "57",
+              "height": 192,
+              "image_path": "figures/2609.10413/table-043.webp",
+              "kind": "table",
+              "page": 62,
+              "width": 756
+            },
+            {
+              "caption": "Table 13: Five LifecycleBench personas illustrating attack-vector coverage. Across these five rows the table illustrates AV1 (superseded preference), AV2 (expired/upcoming logistics), AV4 (multi-version fact), AV7 (retraction), and AV9 (soft/ambiguous supersession).",
+              "figure_id": "table-13-21",
+              "figure_number": "13",
+              "height": 171,
+              "image_path": "figures/2609.10413/table-044.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 830
+            },
+            {
+              "caption": "Table 11: Retrieval-set stability under random label flips between the two confused category pairs (Obligations ↔ Logistical Context, Intellectual Interests ↔ Projects & Endeavors). Averaged over 516 LifecycleBench questions and 3 seeds per rate. Jaccard and displaced are over top-10 edge IDs; Kendall 𝜏 is over edges present in both rankings (variant 𝜏𝑏; undefined when the intersection has fewer than 2 edges). Scoring reproduces the deterministic portion of lifecycle_search: cosine top-60, BM25 top-20, supersession/expiry/retraction filters, and category-dependent blended scoring (decay rate 𝜆𝑐, blending weight 𝛼𝑐, semantic floor); category-forced retrieval, multi-hop entity expansion, and LLM distillation are omitted as they require external API calls.",
+              "figure_id": "table-11-9",
+              "figure_number": "11",
+              "height": 186,
+              "image_path": "figures/2609.10413/table-045.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 698
+            },
+            {
+              "caption": "Table 21: Artifact-backed lifecycle decomposition on the 317-question matched subset of LongMemEval-S (the questions for which both configurations were evaluated on identical banks). The knowledge-update effect is negative: the Wu et al. judge credits a response when the superseded fact is present alongside the updated one, so lifecycle filtering is penalized for producing cleaner context (§D.2).",
+              "figure_id": "table-21-53",
+              "figure_number": "21",
+              "height": 152,
+              "image_path": "figures/2609.10413/table-046.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 744
+            },
+            {
+              "caption": "Table 16: Peer-reviewed LongMemEval-S results prior to and including this work.",
+              "figure_id": "table-16-22",
+              "figure_number": "16",
+              "height": 117,
+              "image_path": "figures/2609.10413/table-047.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 919
+            },
+            {
+              "caption": "Table 22: Five-phase scaling validation.",
+              "figure_id": "table-22-54",
+              "figure_number": "22",
+              "height": 141,
+              "image_path": "figures/2609.10413/table-048.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 706
+            },
+            {
+              "caption": "Table 17: LongMemEval results on the 234-question oracle POC subset (earlier FR-Bank configuration). Primary LongMemEval-S numbers are in Table 15.",
+              "figure_id": "table-17-24",
+              "figure_number": "17",
+              "height": 164,
+              "image_path": "figures/2609.10413/table-049.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 606
+            },
+            {
+              "caption": "Table 24: LifecycleBench pass rates with 95% paired bootstrap confidence intervals (10,000 resamples, seed=42, 𝑛 = 516). Pairwise significance vs FR-Bank via McNemar’s exact test on paired binary outcomes. The FR-Bank vs FR-Graphiti gap is not statistically significant (𝑝 = 0.10); two implementations of the same lifecycle policy land within statistical resolution of each other.",
+              "figure_id": "table-24-3",
+              "figure_number": "24",
+              "height": 162,
+              "image_path": "figures/2609.10413/table-050.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 586
+            },
+            {
+              "caption": "Table 7: Classifier prompt iteration on a 30-fact development set, scored as strict-agreement plus half-credit for primary/secondary swaps. The 93% figure is the dev-set prompt-iteration result and is not the canonical classifier quality number; the held-out audit on 𝑛 = 200 facts reports 70.7% majority-vote agreement (𝜅 = +0.673, Table 8).",
+              "figure_id": "table-7-32",
+              "figure_number": "7",
+              "height": 141,
+              "image_path": "figures/2609.10413/table-051.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 640
+            },
+            {
+              "caption": "Table 14: LifecycleBench scale relative to LongMemEval.",
+              "figure_id": "table-14-17",
+              "figure_number": "14",
+              "height": 140,
+              "image_path": "figures/2609.10413/table-052.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 644
+            },
+            {
+              "caption": "Table 55: Full stack versus the untyped three-primitive arm, 𝑛 = 516, single paired judging pass. Confabulation is over all queries. McNemar 𝑏 counts questions where only the full stack shows the outcome and 𝑐 where only the untyped arm does.",
+              "figure_id": "table-55-31",
+              "figure_number": "55",
+              "height": 110,
+              "image_path": "figures/2609.10413/table-053.webp",
+              "kind": "table",
+              "page": 60,
+              "width": 806
+            },
+            {
+              "caption": "Table 41: Reasoning token overhead by context staleness.",
+              "figure_id": "table-41-25",
+              "figure_number": "41",
+              "height": 141,
+              "image_path": "figures/2609.10413/table-054.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 610
+            },
+            {
+              "caption": "Table 30: Reasoning vs non-reasoning. The 18.2pp architectural gap is unclosable by compute.",
+              "figure_id": "table-30-50",
+              "figure_number": "30",
+              "height": 140,
+              "image_path": "figures/2609.10413/table-055.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 598
+            },
+            {
+              "caption": "Table 35: Rate spread calibration.",
+              "figure_id": "table-35-48",
+              "figure_number": "35",
+              "height": 118,
+              "image_path": "figures/2609.10413/table-056.webp",
+              "kind": "table",
+              "page": 44,
+              "width": 660
+            },
+            {
+              "caption": "Table 39: Projected scaling over 2 years.",
+              "figure_id": "table-39-29",
+              "figure_number": "39",
+              "height": 139,
+              "image_path": "figures/2609.10413/table-057.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 548
+            },
+            {
+              "caption": "Table 34: Activation survival at original 800× rate spread.",
+              "figure_id": "table-34-47",
+              "figure_number": "34",
+              "height": 140,
+              "image_path": "figures/2609.10413/table-058.webp",
+              "kind": "table",
+              "page": 44,
+              "width": 536
+            },
+            {
+              "caption": "Table 23: Substrate comparison: same lifecycle policies on two infrastructures.",
+              "figure_id": "table-23-2",
+              "figure_number": "23",
+              "height": 95,
+              "image_path": "figures/2609.10413/table-059.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 422
+            },
+            {
+              "caption": "Table 40: Staleness predicts confabulation end-to-end.",
+              "figure_id": "table-40-26",
+              "figure_number": "40",
+              "height": 94,
+              "image_path": "figures/2609.10413/table-060.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 422
+            }
+          ],
+          "first_seen_at": "2026-09-09T21:00:00-04:00",
+          "hero_figure": "figures/2609.10413/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.10413",
+          "relevance": 8,
+          "selection_reason": "Proposes an ontology-driven lifecycle management policy for LLM memory, offering a structured approach to memory coherence and retrieval.",
+          "summary_status": "generated",
+          "title": "Fortunate Recall: Ontology-Driven Memory Lifecycle Management for Persistent Coherence in LLMs",
+          "tldr": "Fortunate Recall improves persistent LLM memory by applying fact-specific lifecycle policies, reducing confabulation while improving temporal retrieval accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Persistent language agents need stored experience to remain available across time, while each answer requires evidence suited to a particular question. A superseded fact can mislead a current-state answer and still be essential for a historical query. We present RD-Forget, a training-free framework that separates what an agent stores from what it uses. A retained source archive preserves observations, and a query-conditioned memory view controls their influence on the current answer. A frozen language-model curator extracts relevant evidence, groups facts into semantic slots, and preserves the relations needed for multi-hop reasoning. Same-slot replacement links suppress superseded values in current-state contexts, while intent-aware retrieval makes earlier evidence eligible again. A rate-distortion formulation guides construction of the answer-time view within a memory budget. Experiments span conversational memory, knowledge updating, fact consolidation, long-context reasoning, and personalization under a shared answering pipeline. The results associate accurate answers with both query-relevant evidence construction and control over obsolete alternatives. Configurations without forgetting or query conditioning have the largest score deficits, while slot grouping, historical access, and relation preservation contribute complementary functions. Retaining history while selectively controlling its use offers a practical way to accommodate changing facts and future questions.",
+          "arxiv_id": "2609.10263",
+          "arxiv_url": "https://arxiv.org/abs/2609.10263",
+          "authors": [
+            "Yuhang Li, Yuchen Li"
+          ],
+          "bullets": [
+            "Addresses the conflict between preserving superseded facts for historical questions and suppressing them for current-state answers.",
+            "Uses a training-free, query-conditioned memory view built by a frozen language-model curator.",
+            "Groups facts into semantic slots, preserves multi-hop relations, and suppresses superseded same-slot values when appropriate.",
+            "Intent-aware retrieval can reactivate earlier evidence for historical queries.",
+            "Experiments across several memory and reasoning settings link performance to relevant evidence construction and obsolete-information control."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Separating storage and use in RD-Forget. The archive retains source observations; the query-conditioned view determines the evidence used for an answer. Same-slot replacement suppresses the earlier employer while preserving the independent location relation. Historical intent and the rescue switch jointly make superseded entries eligible again. The shared selector and packer construct the answer context, illustrated by the Mira–Beryl–Lyon chain.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 347,
+              "image_path": "figures/2609.10263/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1020
+            },
+            {
+              "caption": "Figure 3: Matched Luna component comparison on (a) AMB-Text, (b) LME-KU, and (c) MAB-FC. Bars show the aggregate answer accuracies from Table 2; all panels use the same zero-based percentage scale. Purple denotes matched Full. −FORGET has the largest deficit relative to matched Full on every benchmark, followed by −QC. Variants use the end-to-end protocol in Section 4.4.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 322,
+              "image_path": "figures/2609.10263/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1043
+            },
+            {
+              "caption": "Figure 2: Scope-aware preference curation, shown through a constructed example. (a) A user wants to learn Python, considers Course A, then rejects that option and requests online evening study. (b) The recommendation view keeps the learning goal, applies the new format and schedule constraints, and excludes Course A. Rejecting an option does not imply rejecting the broader interest. Icons represent evidence and constraints, not measured execution steps.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 313,
+              "image_path": "figures/2609.10263/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1023
+            },
+            {
+              "caption": "Table 1: Main comparison (%). Mean equally weights the three displayed benchmark scores. Bold marks column bests within each model; purple identifies RD-Forget.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 436,
+              "image_path": "figures/2609.10263/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1072
+            },
+            {
+              "caption": "Table 2: Luna ablations (%). The shaded matched Full is a separate batch from Table 1. Bold marks column bests, including ties.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 320,
+              "image_path": "figures/2609.10263/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 520
+            },
+            {
+              "caption": "Table 3: Query-intent evaluation (%). BEAM averages rubric scores; PersonaMem uses single-option accuracy. Bold marks row bests.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 263,
+              "image_path": "figures/2609.10263/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 520
+            }
+          ],
+          "first_seen_at": "2026-09-09T21:00:00-04:00",
+          "hero_figure": "figures/2609.10263/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.10263",
+          "relevance": 8,
+          "selection_reason": "Introduces a training-free framework for separating stored experience from used evidence, offering a novel approach to memory management in agents.",
+          "summary_status": "generated",
+          "title": "What Should an Agent Forget? Separating What Is Stored from What Is Used",
+          "tldr": "RD-Forget keeps a complete source archive while selectively controlling which evidence influences an answer, allowing agents to handle changing facts without losing historical information.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "We approach a cognitive simulation perspective on episodic and semantic memory in multiple-choice question answering by incorporating text from individual text corpora (ITC) into retrieval-augmented generation and DoRA fine-tuning. We web-crawl the search histories of 515 participants who answered 36 multiple-choice knowledge items and analyze a stratified subsample of 150 participants. For each participant, one DoRA adapter consolidates their ITC into a small language model (SLM) whose baseline correctness falls below the participants' lowest quartile. The adapter measurably writes the ITC into the weights: it fits its own participant's held-out text better than other participants' texts (dz =1.27), an individuality effect that increases with ITC size in rank order. On the generalized knowledge test, however, the adapter adds knowledge rather than alignment with the individual: log-loss match improves, whereas match accuracy under a bias-corrected PMI readout does not, and retrieval adds nothing on top. Our results demonstrate that ITCs can be consolidated into the weights of SLMs, an encouraging basis for individualized tutoring agents, and we discuss how to move from there toward a realistic simulation of episodic and semantic memory at the individual level.",
+          "arxiv_id": "2609.10155",
+          "arxiv_url": "https://arxiv.org/abs/2609.10155",
+          "authors": [
+            "Christoph Wigbels, Ali Abusaleh, Markus T. Jansen, Alexander Mehler, Markus J. Hofmann"
+          ],
+          "bullets": [
+            "The study models individual episodic and semantic memory using retrieval augmentation and DoRA fine-tuning on participants’ text corpora.",
+            "It analyzes search histories from 515 participants, with a stratified subsample of 150 for individualized adaptation.",
+            "Participant-specific DoRA adapters fit their owner’s held-out text better than other participants’ text, with stronger individuality effects for larger corpora.",
+            "On generalized knowledge questions, fine-tuning improves log-loss matching but not bias-corrected answer accuracy; retrieval adds no further benefit.",
+            "The findings support weight-based personalization for future tutoring agents, while realistic individual memory simulation remains unresolved."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.IR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the study.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 423,
+              "image_path": "figures/2609.10155/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 923
+            },
+            {
+              "caption": "Figure 2: Answer correctness (share of items answered correctly) for the four design cells and the participants, for all 36 knowledge items and separately for the 12 public BEFKI GC-K items and the 24 unpublished extended items (N=138, PMI scoring view). Error bars are 95% confidence intervals across participants. The dashed line marks the four-option chance level (0.25), the dotted line the participants’ lower quartile (0.556); every model cell falls below it. The base model answers the public items markedly more often correctly than the unpublished ones, whereas the participants do not.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 325,
+              "image_path": "figures/2609.10155/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 431
+            },
+            {
+              "caption": "Figure 3: Log-loss match (negative log probability of the participant’s own answer; lower is better) for base model and per-participant adapter, without retrieval and with ITC-RAG, under the primary PMI and the lengthnormalized (LN) robustness view (N=138). Bars: cell means with 95% CIs across participants; dashed line: chance level (− ln 0.25 ≈ 1.39 nats). Brackets: paired base-vs-adapter contrast per retrieval condition (Shapiro–Wilk-selected t/Wilcoxon; ∗∗∗p < .001; dz = 0.51/0.44 under PMI, 1.74/1.58 under LN).",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 282,
+              "image_path": "figures/2609.10155/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 445
+            },
+            {
+              "caption": "Table 1: H1 answer-level contrasts (adapter vs. base), N=138. Note. Base and Adapter are cell means averaged over the two retrieval conditions; M is the mean within-participant difference (log-loss match as base minus adapter, so that positive values mean improvement) and dz the within-subject Cohen’s dz . All measures are defined in Section 3.5. Chance reference: 0.25 for match accuracy and chosen-option mass, − ln(0.25) ≈ 1.39 nats for log-loss match, and 0 for knowledge gain and error alignment; CK-accuracy is in percentage points. PMI is the primary scoring view, LN (length-normalized) the robustness view. The paired test is selected per contrast by a Shapiro–Wilk check (t/Wilcoxon); ∗p < .05, ∗∗p < .01, ∗∗∗p < .001, unmarked entries are not significant. Each contrast targets a distinct construct, so p-values are uncorrected. bN=136: two participants answered all items correctly.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 294,
+              "image_path": "figures/2609.10155/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 858
+            }
+          ],
+          "first_seen_at": "2026-09-09T21:00:00-04:00",
+          "hero_figure": "figures/2609.10155/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.10155",
+          "relevance": 5,
+          "selection_reason": "Consolidates individual text corpora into model weights (DoRA) and RAG to simulate episodic/semantic memory, a persistent memory mechanism for language models.",
+          "summary_status": "generated",
+          "title": "From Retrieval to Weights: Parametric Individualization of Small Language Models with Individual Text Corpora",
+          "tldr": "Personal text corpora can be written into small language-model weights, but this personalization improves knowledge modeling more than alignment with an individual’s answers.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "AI systems become more useful when they can adapt to the people using them, but in multi-agent systems, useful context learned by one agent often remains unavailable to others. We present kernel-managed shared memory, a system-level abstraction in which specialized agents write structured, tagged memories while the agent-system kernel, not individual agents, governs retrieval, privacy enforcement, and prompt injection. We implement and evaluate this design on AIOS and compare it against three alternatives across three assistant models (GPT-4o, Llama-3.1:8B, Qwen-2.5:7B) and 1,800 total trials. Against an unmanaged external memory backend (Mem0) using identical underlying storage, kernel-managed retrieval and injection improve personalization scores by 2.4-4.0 points on a 5-point scale (e.g., 1.05 to 4.69 profile usage on GPT-4o), with every comparison significant at p < 10^-18. Against standard retrieval-augmented injection, gains are similarly large and consistent across all three models. Against full, unfiltered context concatenation, a soft ceiling on available context rather than on response quality, kernel-managed injection statistically matches performance on two of three models and shows a small, model-specific deficit on the third, while using substantially shorter prompts: end-to-end latency is 15-61% lower across all three models, with corresponding reductions in per-call token usage and inference cost. These results indicate that centralizing memory management in the agent-system kernel, rather than leaving retrieval and privacy enforcement to individual agents, delivers most of the personalization benefit of unconstrained context at a fraction of its cost.",
+          "arxiv_id": "2609.10144",
+          "arxiv_url": "https://arxiv.org/abs/2609.10144",
+          "authors": [
+            "Ryan Lum, Yongfeng Zhang"
+          ],
+          "bullets": [
+            "Specialized agents write structured, tagged memories; the kernel centrally controls retrieval, privacy, and prompt injection.",
+            "Evaluated on AIOS with three assistant models, three alternatives, and 1,800 trials.",
+            "Improved personalization by 2.4–4.0 points on a 5-point scale versus unmanaged memory, with statistically significant gains.",
+            "Matched full context concatenation on two of three models and incurred only a small model-specific deficit on the third.",
+            "Reduced end-to-end latency by 15–61% while using fewer tokens and lowering inference cost."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Kernel-managed shared memory centralizes retrieval, privacy enforcement, and prompt injection at the agent-system kernel instead of leaving them to individual agents (left vs. right), matching full-context personalization quality at a fraction of the latency and token cost (Section 4.4).",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 302,
+              "image_path": "figures/2609.10144/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 706
+            },
+            {
+              "caption": "Figure 2: Kernel-managed shared memory: ProfileAgent and TaskAgent write structured memories, AssistantAgent remains retrieval-free, and the kernel enforces write ordering, privacy, retrieval, formatting, and injection between them.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 283,
+              "image_path": "figures/2609.10144/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 514
+            },
+            {
+              "caption": "Figure 3: Mean difference and 95% bootstrap CI for the nine kernel_shared vs. naive_concat comparisons; six of nine intervals cross zero (dashed line), indicating no significant difference.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 222,
+              "image_path": "figures/2609.10144/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 342
+            },
+            {
+              "caption": "Table 2: Full results across 3 models × 4 methods, 150 trials per condition, judged by GPT-5.4. Values are mean ± SD.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 562,
+              "image_path": "figures/2609.10144/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 834
+            },
+            {
+              "caption": "Table 4: kernel_shared vs. naive_concat: mean difference and significance across all three models (independent samples, n = 150 per condition). Bold marks p < 0.05 under both Welch’s t-test and Mann–Whitney U .",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 238,
+              "image_path": "figures/2609.10144/table-005.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 664
+            },
+            {
+              "caption": "Table 6: Ablation: Phase 2 (shared) − Phase 1 (private) score deltas across successive pipeline and evaluation refinements (Qwen-2.5:7B, 30-trial pilot).",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 126,
+              "image_path": "figures/2609.10144/table-006.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 677
+            },
+            {
+              "caption": "Table 1: Baselines compared against the proposed method.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 200,
+              "image_path": "figures/2609.10144/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 786
+            },
+            {
+              "caption": "Table 3: Human rater vs. automated judge agreement, by method (GPT-4o, Integration dimension, N = 6 per method).",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 111,
+              "image_path": "figures/2609.10144/table-008.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 464
+            },
+            {
+              "caption": "Table 5: Output length (words) by condition and model, with significance of the kernel_shared vs. naive_concat difference and the within-condition correlation between output length and latency.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 127,
+              "image_path": "figures/2609.10144/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 760
+            },
+            {
+              "caption": "Table 7: Kernel modules and their corresponding operations for shared-memory personalization.",
+              "figure_id": "table-7-8",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2609.10144/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 760
+            }
+          ],
+          "first_seen_at": "2026-09-09T21:00:00-04:00",
+          "hero_figure": "figures/2609.10144/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.10144",
+          "relevance": 8,
+          "selection_reason": "Introduces kernel-managed shared memory for multi-agent systems, directly addressing persistent memory mechanisms in LLMs.",
+          "summary_status": "generated",
+          "title": "Kernel-Managed Shared Memory for System-Wide Personalization",
+          "tldr": "Kernel-managed shared memory lets multi-agent AI systems share personalized context more effectively while reducing prompt length, latency, and inference cost.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-term language-model agents rely on external memory across interactions. Atomic memories are particularly useful: their fine-grained semantic boundaries enable precise retrieval and direct comparison between observations. Yet accumulating atoms inevitably become redundant, overlapping, or conflicting. Existing methods often ask an LLM manager to add, update, delete, or rewrite memories directly, coupling semantic interpretation, storage decisions, and content generation in one error-prone operation. We introduce ROAM, a relation-guided framework that uses atomicity for management while allowing richer answer-time representations. ROAM classifies incoming--stored atom pairs as independent, equivalent, directionally subsuming, or conflicting, then organizes observations into active Primary and supporting Evidence roles. Fusion subsequently combines complementary details and temporal changes into compact, potentially non-atomic views. Only Primary views are retrieved for answering, preventing redundant or outdated atoms from competing independently. Across models and evaluation settings, ROAM improves answer accuracy by up to 29.8 percentage points. Ablations show complementary benefits from different relations and consistent gains from fusion beyond role organization. Mechanism analysis further finds 15.6-point higher answer-critical source recall and an 11.5-point lower confounder-token share. ROAM remains robust across manager scales.",
+          "arxiv_id": "2609.09778",
+          "arxiv_url": "https://arxiv.org/abs/2609.09778",
+          "authors": [
+            "Jianjie Zheng, Peng Lai, Sijie Cheng, Jiehui Zhao, Lei Yang, Guanhua Chen"
+          ],
+          "bullets": [
+            "Addresses redundant, overlapping, and conflicting memories in long-term language-model agents.",
+            "Classifies incoming–stored atom pairs as independent, equivalent, subsuming, or conflicting.",
+            "Assigns memories to Primary and supporting Evidence roles, retrieving only Primary views for answers.",
+            "Fuses complementary details and temporal changes into compact, richer representations.",
+            "Improves answer accuracy by up to 29.8 percentage points, with higher critical-source recall and fewer confounder tokens; remains robust across manager scales."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the ROAM Framework. ROAM separates memory management from answer-time retrieval. Incoming atoms are compared with Primary atomic texts and assigned Primary or Evidence roles through five-way relation inference. Fusion constructs a read view for each surviving Primary; answer-time retrieval searches only these views, while Evidence remains preserved but inactive.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 439,
+              "image_path": "figures/2609.09778/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 931
+            },
+            {
+              "caption": "Figure 1: Motivation for ROAM. Existing methods ask the model to directly choose a memory operation for each old–new memory pair, making the task complex and the results unreliable. ROAM first identifies the semantic relations between memories, then uses them to guide memory organization and fusion, making memory management more controllable and accurate.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 177,
+              "image_path": "figures/2609.09778/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 449
+            },
+            {
+              "caption": "Figure 3: Manager-model scale sensitivity. The horizontal axis varies the Gemma-4 manager from E4B to 26B-A4B; the vertical axis reports answer accuracy. Panels show N ∈ {0, 4, 8}, with all other components fixed.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 142,
+              "image_path": "figures/2609.09778/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 457
+            },
+            {
+              "caption": "Figure 4: Memory-context budget sensitivity with Qwen3.5-9B. The horizontal axis gives the memorycontext budget in tokens; the vertical axis reports answer accuracy . Panels show N ∈ {0, 4, 8}.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 141,
+              "image_path": "figures/2609.09778/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 457
+            },
+            {
+              "caption": "Table 2: Answer accuracy (%; higher is better) with a 256-token memory budget. Because Append-all is managerindependent, its result is repeated across manager-model blocks. Boldface and underlining mark the highest and second-highest means, respectively, within each manager-model block and evaluation condition.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 384,
+              "image_path": "figures/2609.09778/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 946
+            },
+            {
+              "caption": "Table 6: Answer accuracy (%) by question type on the original LongMemEval benchmark. Temp., Multi., Update, User, Pref., and Asst. denote temporal reasoning, multi-session, knowledge update, single-session user, singlesession preference, and single-session assistant questions, respectively. Append-all is pooled across manager-model blocks. Boldface and underlining mark the highest and second-highest values, respectively, within each managermodel block and question type.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 228,
+              "image_path": "figures/2609.09778/table-006.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 675
+            },
+            {
+              "caption": "Table 7: Answer accuracy (%) by question type on MEME-Post. The benchmark’s question-type abbreviations are retained from the evaluation data. Append-all is pooled across manager-model blocks. Boldface and underlining mark the highest and second-highest values, respectively, within each manager-model block and question type.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 227,
+              "image_path": "figures/2609.09778/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 633
+            },
+            {
+              "caption": "Table 9: Gold-source recall (%) by confounder type at N = 8. Type I contains semantic non-answering confounders for 398 queries; Type II contains temporally obsolete values for 72 Knowledge Update queries. Append-all is pooled across manager-model blocks.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 228,
+              "image_path": "figures/2609.09778/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 443
+            },
+            {
+              "caption": "Table 1: Relation-conditioned memory updates. Atomic text remains immutable. Role Update denotes the deterministic mapping.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 504,
+              "image_path": "figures/2609.09778/table-009.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 461
+            },
+            {
+              "caption": "Table 4: Relation-inference performance (%) of Gemma-4-26B-A4B-it on 843 manually verified PersonaMem-v2 memory pairs. Stratified sampling supports balanced evaluation across the five relations.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 225,
+              "image_path": "figures/2609.09778/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 377
+            },
+            {
+              "caption": "Table 3: Relation and fusion ablations with Qwen3.5-9B and a 256-token memory budget. Values are answer accuracy (%; higher is better). Append-all and ROAM reuse the corresponding results from Table 2; other rows use matched ablation runs. Boldface and underlining mark the highest and second-highest values, respectively, at each interference level.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 139,
+              "image_path": "figures/2609.09778/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 454
+            },
+            {
+              "caption": "Table 8: Audit of the fixed confounder set for the 470 controlled questions. Type I memories are semantic and non-answering; Type II memories contain temporally obsolete values. Similarity rows report candidate-level means. The final two rows give the percentage of confounders whose query similarity exceeds that of at least one or all required gold memories.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 173,
+              "image_path": "figures/2609.09778/table-012.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 406
+            },
+            {
+              "caption": "Table 5: retrieval diagnostics with Qwen3.5-9B at N = 8 under a 256-token memory-context budget. Goldsource metrics use deduplicated provenance; an original entry or its provenance-linked Primary read view covers the corresponding source. Explicit confounder tokens exclude mixed or unattributed tokens. Ever-s. denotes the adapted EverMemOS-style baseline.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 128,
+              "image_path": "figures/2609.09778/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 454
+            },
+            {
+              "caption": "Table 10: Mean memory-management overhead per episode at N = 4. Call counts include failed requests.",
+              "figure_id": "table-10-7",
+              "figure_number": "10",
+              "height": 109,
+              "image_path": "figures/2609.09778/table-014.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 458
+            }
+          ],
+          "first_seen_at": "2026-09-09T21:00:00-04:00",
+          "hero_figure": "figures/2609.09778/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.09778",
+          "relevance": 8,
+          "selection_reason": "Relation-guided organization of atomic external memories for LLM agents directly addresses persistent agent memory and retrieval.",
+          "summary_status": "generated",
+          "title": "ROAM: Robust Organization of Atomic Memories for Agents through Semantic Relations",
+          "tldr": "ROAM organizes atomic memories by semantic relations and fuses them into focused views, improving long-term agent answers while reducing redundancy and outdated evidence.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models (LLMs) are increasingly deployed as personalized assistants that interact with users over extended periods of time. As conversations grow longer, relying on full interaction histories becomes increasingly inefficient and unreliable: long contexts introduce substantial computational overhead, making it difficult for models to consistently identify and utilize the most relevant information for the current request. These challenges have motivated memory systems that structure and retrieve user-specific information. In realistic interactions, users often seek practical guidance such as recommendations, planning, and decision support. Unlike factual recall tasks, personalized guidance requires models to integrate information across multiple past conversations and reason about changing user preferences and experiences. However, existing conversational memory evaluations mainly focus on retrieval and factual recall. To study this challenge, we introduce PRAGMA, a benchmark for evaluating personalized guidance in long-term conversations. PRGAMA contains curated longitudinal conversation histories, evidence annotations, and guidance scenarios grounded in evolving user contexts and incorrect user assumptions. Experiments across retrieval systems, memory systems, and long-context models reveal that current systems struggle both to recover the appropriate conversational evidence and to effectively use it for personalized guidance. Our results highlight the need for memory architectures that support robust conversational retrieval and memory-grounded reasoning beyond evidence recall.",
+          "arxiv_id": "2609.09664",
+          "arxiv_url": "https://arxiv.org/abs/2609.09664",
+          "authors": [
+            "Hyojeong Yu, Hyukhun Koh, Minsung Kim, Yunah Jang, Kyomin Jung"
+          ],
+          "bullets": [
+            "Targets long-term interactions where full-history processing is costly and unreliable.",
+            "Evaluates recommendations, planning, and decision support involving changing preferences, experiences, and incorrect assumptions.",
+            "Provides longitudinal conversation histories, evidence annotations, and guidance scenarios grounded in evolving contexts.",
+            "Experiments show current retrieval, memory, and long-context systems struggle to find relevant evidence and use it effectively.",
+            "Highlights the need for memory architectures that combine robust retrieval with memory-grounded reasoning."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the PRAGMA benchmark construction pipeline.",
+              "figure_id": "figure-2-19",
+              "figure_number": "2",
+              "height": 316,
+              "image_path": "figures/2609.09664/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 921
+            },
+            {
+              "caption": "Figure 1: Personalized guidance requires both effective conversational retrieval and downstream memorygrounded reasoning. Relevant evidence may be temporally distributed and only implicitly connected to the final user request. Although both responses use retrieved memories, only the right response correctly synthesizes the user’s longitudinal context.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 541,
+              "image_path": "figures/2609.09664/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 446
+            },
+            {
+              "caption": "Figure 9: Shared prompts used for all evaluation calls. Top: system prompt; Bottom: user prompt template. {criteria} is filled with the per-query-type criteria below.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 427,
+              "image_path": "figures/2609.09664/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 458
+            },
+            {
+              "caption": "Figure 6: Prompt template for Event-Corrective query generation. Additional few-shot examples were provided during generation.",
+              "figure_id": "figure-6-24",
+              "figure_number": "6",
+              "height": 388,
+              "image_path": "figures/2609.09664/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 458
+            },
+            {
+              "caption": "Figure 8: Prompt template for Trajectory-Corrective query generation. Additional few-shot examples were provided during generation.",
+              "figure_id": "figure-8-23",
+              "figure_number": "8",
+              "height": 384,
+              "image_path": "figures/2609.09664/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 458
+            },
+            {
+              "caption": "Figure 7: Prompt template for Trajectory-Aligned query generation.",
+              "figure_id": "figure-7-25",
+              "figure_number": "7",
+              "height": 346,
+              "image_path": "figures/2609.09664/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 458
+            },
+            {
+              "caption": "Figure 3: Prompt template for event generation.",
+              "figure_id": "figure-3-26",
+              "figure_number": "3",
+              "height": 208,
+              "image_path": "figures/2609.09664/figure-007.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 461
+            },
+            {
+              "caption": "Figure 10: Evaluation criteria for Event-Aligned queries. Top: alignment (primary); Bottom: grounding (auxiliary).",
+              "figure_id": "figure-10-7",
+              "figure_number": "10",
+              "height": 512,
+              "image_path": "figures/2609.09664/figure-008.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 458
+            },
+            {
+              "caption": "Figure 12: Evaluation criteria for Trajectory-Aligned queries. Top: alignment (primary); Bottom: grounding (auxiliary).",
+              "figure_id": "figure-12-32",
+              "figure_number": "12",
+              "height": 595,
+              "image_path": "figures/2609.09664/figure-009.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 461
+            },
+            {
+              "caption": "Figure 13: Evaluation criteria for Trajectory-Corrective queries. Top: alignment (primary); Bottom: grounding (auxiliary).",
+              "figure_id": "figure-13-33",
+              "figure_number": "13",
+              "height": 535,
+              "image_path": "figures/2609.09664/figure-010.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 458
+            },
+            {
+              "caption": "Figure 11: Evaluation criteria for Event-Corrective queries. Top: alignment (primary); Bottom: grounding (auxiliary).",
+              "figure_id": "figure-11-34",
+              "figure_number": "11",
+              "height": 515,
+              "image_path": "figures/2609.09664/figure-011.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 461
+            },
+            {
+              "caption": "Figure 5: Prompt template for Event-Aligned query generation. Additional few-shot examples were provided during generation.",
+              "figure_id": "figure-5-22",
+              "figure_number": "5",
+              "height": 427,
+              "image_path": "figures/2609.09664/figure-012.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 461
+            },
+            {
+              "caption": "Figure 4: Prompt template for trajectory generation.",
+              "figure_id": "figure-4-21",
+              "figure_number": "4",
+              "height": 408,
+              "image_path": "figures/2609.09664/figure-013.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 461
+            },
+            {
+              "caption": "Table 3: Performance across query types. Aln. denotes alignment and Grd. denotes grounding. S and T indicate session- and turn-level retrieval. Bold indicates the best result among practical systems.",
+              "figure_id": "table-3-31",
+              "figure_number": "3",
+              "height": 594,
+              "image_path": "figures/2609.09664/table-014.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 646
+            },
+            {
+              "caption": "Table 21: gpt-5-mini response cases by query type. The RAG baseline retrieved all or nearly all gold evidence but still failed the alignment judgment. The memory-system response on the same query is judged alignment-correct.",
+              "figure_id": "table-21-3",
+              "figure_number": "21",
+              "height": 590,
+              "image_path": "figures/2609.09664/table-015.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 1029
+            },
+            {
+              "caption": "Table 5: RAG accuracy across query types and metrics. S and T indicate session- and turn-level retrieval, while QR and AdaK indicate query rewriting and Adaptive-K. Rec. and Ex. denote evidence recall and exact recall.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 370,
+              "image_path": "figures/2609.09664/table-016.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 969
+            },
+            {
+              "caption": "Table 4: No-Context and oracle settings. Aln. denotes alignment and Grd. denotes grounding.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 294,
+              "image_path": "figures/2609.09664/table-017.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 750
+            },
+            {
+              "caption": "Table 20: Examples of how memory systems store information for the same user.",
+              "figure_id": "table-20-28",
+              "figure_number": "20",
+              "height": 275,
+              "image_path": "figures/2609.09664/table-018.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 925
+            },
+            {
+              "caption": "Table 6: Results on corrective guidance queries involving misaligned user assumptions. S and T indicate sessionand turn-level retrieval. Alignment and Grounding denote one-stage generation with an explicit instruction that the user’s assumption may be incorrect; 2-Stage first identifies inconsistencies before generating the response.",
+              "figure_id": "table-6-18",
+              "figure_number": "6",
+              "height": 269,
+              "image_path": "figures/2609.09664/table-019.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 700
+            },
+            {
+              "caption": "Table 1: Comparison of long-term conversational memory benchmarks. In-situ: queries embedded in conversations; Open: open-ended generation; Guide: personalized guidance; E-A/E-C and T-A/T-C: event- and trajectory-grounded aligned/corrective reasoning. Tokens: approximate context length. ◦: supported, △: partial, ×: unsupported.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 221,
+              "image_path": "figures/2609.09664/table-020.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 675
+            },
+            {
+              "caption": "Table 8: Response-stage evidence utilization across query types. EA: Event-Align, EC: Event-Correct, TA: Trajectory-Align, TC: Trajectory-Correct.",
+              "figure_id": "table-8-29",
+              "figure_number": "8",
+              "height": 200,
+              "image_path": "figures/2609.09664/table-021.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 389
+            },
+            {
+              "caption": "Table 19: Examples and truncated gold responses for each PRAGMA query type.",
+              "figure_id": "table-19-27",
+              "figure_number": "19",
+              "height": 536,
+              "image_path": "figures/2609.09664/table-022.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 956
+            },
+            {
+              "caption": "Table 15: Results for additional baselines across generation models. Synth explicitly synthesizes retrieved evidence, RAPTOR uses hierarchical retrieval, and LightMem constructs summary-based memories. Align and Ground denote alignment and grounding scores, respectively.",
+              "figure_id": "table-15-30",
+              "figure_number": "15",
+              "height": 206,
+              "image_path": "figures/2609.09664/table-023.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 641
+            },
+            {
+              "caption": "Table 16: Additional generation-model results using llama-4-scout-17b-16e-instruct, gpt-oss-120b, and claudeopus-4.6. Full-context results for gpt-oss are omitted because its context window is shorter than some PRAGMA histories.",
+              "figure_id": "table-16-9",
+              "figure_number": "16",
+              "height": 638,
+              "image_path": "figures/2609.09664/table-024.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 683
+            },
+            {
+              "caption": "Table 22: Case study of grounding failure in follow-up interaction. Both conditions include the corresponding first model response in chat history. For the follow-up turn, the grounded condition uses oracle evidence summaries as memory context, whereas the poor-grounding condition uses fresh SimpleMem retrieval on the follow-up query.",
+              "figure_id": "table-22-4",
+              "figure_number": "22",
+              "height": 831,
+              "image_path": "figures/2609.09664/table-025.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 950
+            },
+            {
+              "caption": "Table 9: PRAGMA implicitness scores by query type.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 181,
+              "image_path": "figures/2609.09664/table-026.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 447
+            },
+            {
+              "caption": "Table 11: Summary statistics for PRAGMA. Averages are reported for per-user and per-query quantities.",
+              "figure_id": "table-11-5",
+              "figure_number": "11",
+              "height": 594,
+              "image_path": "figures/2609.09664/table-027.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 435
+            },
+            {
+              "caption": "Table 12: Average evidence count and query length by query type.",
+              "figure_id": "table-12-8",
+              "figure_number": "12",
+              "height": 171,
+              "image_path": "figures/2609.09664/table-028.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 389
+            },
+            {
+              "caption": "Table 13: Inter-judge agreement on the balanced 800- instance audit subset. Exact denotes exact agreement (%); r and ρ denote Pearson and Spearman correlation, respectively. The final panel reports three-way exact agreement and Krippendorff’s α with interval distance.",
+              "figure_id": "table-13-20",
+              "figure_number": "13",
+              "height": 679,
+              "image_path": "figures/2609.09664/table-029.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 357
+            },
+            {
+              "caption": "Table 7: Evidence preservation across memory stages. St: fraction of gold evidence preserved in storage; Rt: fraction of stored evidence successfully retrieved; Rs: fraction of retrieved evidence reflected in the response.",
+              "figure_id": "table-7-17",
+              "figure_number": "7",
+              "height": 334,
+              "image_path": "figures/2609.09664/table-030.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 338
+            },
+            {
+              "caption": "Table 2: PRAGMA query taxonomy.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 104,
+              "image_path": "figures/2609.09664/table-031.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 458
+            },
+            {
+              "caption": "Table 18: Excerpt from a long-term PRAGMA conversation history. The history spans 354 days from the first evidence session to the query, with five evidence sessions distributed over 333 days. Intervening sessions and portions of conversations are omitted for brevity.",
+              "figure_id": "table-18-16",
+              "figure_number": "18",
+              "height": 1190,
+              "image_path": "figures/2609.09664/table-032.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 915
+            },
+            {
+              "caption": "Table 14: Reference evaluations with gpt-5.",
+              "figure_id": "table-14-15",
+              "figure_number": "14",
+              "height": 112,
+              "image_path": "figures/2609.09664/table-033.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 937
+            },
+            {
+              "caption": "Table 10: Average Spearman correlations across methods between PRAGMA implicitness scores and retrieval/response outcomes.",
+              "figure_id": "table-10-13",
+              "figure_number": "10",
+              "height": 90,
+              "image_path": "figures/2609.09664/table-034.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 415
+            }
+          ],
+          "first_seen_at": "2026-09-09T21:00:00-04:00",
+          "hero_figure": "figures/2609.09664/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.09664",
+          "relevance": 7,
+          "selection_reason": "Benchmark for personalized guidance with memory alignment in lifelong conversations; directly evaluates LLM memory and continued interaction.",
+          "summary_status": "generated",
+          "title": "PRAGMA: Evaluating Personalized Guidance with Memory Alignment in Lifelong Conversations",
+          "tldr": "PRAGMA benchmarks whether conversational memory systems can use evolving user histories to provide personalized guidance, not merely recall facts.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-08",
       "paper_count": 20,
       "papers": [
@@ -24665,5 +26181,5 @@
   "schema_version": 1,
   "subtopic_id": "llm-memory",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 133
+  "total_paper_count": 139
 }
