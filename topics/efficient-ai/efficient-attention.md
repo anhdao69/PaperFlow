@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**51 papers total**
+**55 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [CoRA-NAS: Coarse Ranking and Anchor-Residual Refinement for Neural Architecture Search](https://arxiv.org/abs/2609.11884) | Efficient AI: Efficient Attention | CoRA-NAS combines zero-cost ranking with low-cost learning-curve refinement to robustly select neural architectures across diverse search spaces. | 8 | 8 |
+| 2026-09-10 | [A Dataset and Model for Imputing Water Surface Elevation on a Large and Extremely Sparse Spatiotemporal Graph](https://arxiv.org/abs/2609.11580) | Efficient AI: Efficient Attention | AmazonSWE enables extremely sparse river-network water-level imputation, with a topology-aware state space model substantially improving satellite-based elevation estimates against gauges. | 8 | 8 |
+| 2026-09-10 | [FreeFlow: A Bias-free Hierarchical Transformer for Optical Flow Estimation](https://arxiv.org/abs/2609.11486) | Efficient AI: Efficient Attention | FreeFlow estimates optical flow with a bias-free hierarchical transformer that achieves state-of-the-art benchmark results using a simple feed-forward design. | 7 | 7 |
+| 2026-09-10 | [Intra-Prompt Parallel Decoding for Common-Context Question Answering](https://arxiv.org/abs/2609.05707) | Efficient AI: Efficient Attention | IPPD accelerates common-context question answering by decoding multiple answers in parallel within one prompt, achieving up to 7× effective throughput without quality loss. | 6 | 7 |
 | 2026-09-09 | [ScopeMamba-YOLO: Widening the Perceptual Scope Inward and Outward for Small Object Detection in Remote Sensing Imagery](https://arxiv.org/abs/2609.10156) | Efficient AI: Efficient Attention | ScopeMamba-YOLO improves small-object detection in remote-sensing imagery by adding off-path long-range context modeling while preserving local high-resolution features. | 7 | 8 |
 | 2026-09-09 | [SymbolicLight V2: Hybrid Neuromorphic Architecture and Sparse Execution for Low-Energy Language Inference](https://arxiv.org/abs/2609.09772) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | SymbolicLight V2 uses sparse event-driven and continuous processing to reduce language-inference energy on FPGA and ARM hardware, while retaining a quality gap versus a dense control. | 7 | 7 |
 | 2026-09-09 | [Adaptive Anisotropic Attention for Axis-Structured Signals](https://arxiv.org/abs/2609.08788) | Efficient AI: Efficient Attention | AXON improves attention for structured signals by adaptively balancing temporal and spatial interactions instead of using dense all-to-all attention. | 6 | 7 |

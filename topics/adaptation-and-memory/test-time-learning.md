@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**84 papers total**
+**90 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [When is Test-Time Adaptation Identifiable From Unlabeled Evidence?](https://arxiv.org/abs/2609.11235) | Adaptation and Memory: Test-Time Learning | Test-time adaptation selection is impossible when unlabeled evidence cannot distinguish deployments requiring different adaptation actions. | 8 | 8 |
+| 2026-09-10 | [Importance Weighting for Unlabeled-unlabeled Learning under Distribution Shift](https://arxiv.org/abs/2609.10994) | Adaptation and Memory: Test-Time Learning | A principled importance-weighting method adapts unlabeled-unlabeled learning to distribution shifts using limited unlabeled data from the test distribution. | 7 | 7 |
+| 2026-09-10 | [Counterfactual Marginalisation: Framework for Evaluating Robustness to Nuisance Variables](https://arxiv.org/abs/2609.10778) | Adaptation and Memory: Test-Time Learning | Counterfactual marginalisation evaluates whether classifiers remain robust when demographic or acquisition-related nuisance variables are altered at test time. | 7 | 7 |
+| 2026-09-10 | [Conformal Calibration Transfer](https://arxiv.org/abs/2609.10737) | Adaptation and Memory: Test-Time Learning | Transported Conformal Calibration transfers prediction-set coverage from labeled source data to an unlabeled target domain using paired observations and label-free mismatch correction. | 7 | 7 |
+| 2026-09-10 | [Beyond Fluent Generation: A CPU Reliability Benchmark for MCP-Style Tool Calling in Sub-2B Small Language Models for Edge Deployment](https://arxiv.org/abs/2609.07370) | Efficient AI: Token Pruning and Eviction; Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Qwen2.5 models provide the strongest MCP-style tool-calling reliability among tested sub-2B models, but robust edge deployment still requires output recovery and safety controls. | 8 | 7 |
+| 2026-09-10 | [Agents Trust Tools Too Much: Measuring Reliance on Unreliable Tools](https://arxiv.org/abs/2609.05587) | Adaptation and Memory: Test-Time Learning | LLM agents frequently accept plausible but corrupted tool outputs—even when they detect the conflict—revealing a persistent overtrust problem that current mitigations do not reliably solve. | 6 | 7 |
 | 2026-09-09 | [Guiding Image-to-3D Generation with Test-Time Partial Observations](https://arxiv.org/abs/2609.10531) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Test-Time Learning | A training-free test-time guidance method uses partial geometric observations to improve the fidelity and visual quality of pretrained image-to-3D generation. | 7 | 7 |
 | 2026-09-09 | [HyperTrace: Hypothesis-Based Preference Tracing for Online LLM Personalization](https://arxiv.org/abs/2609.09835) | Adaptation and Memory: Test-Time Learning | HyperTrace enables training-free online LLM personalization by tracing evolving short- and long-term user preferences with interpretable hypotheses. | 7 | 7 |
 | 2026-09-09 | [RealSimLoop: Online Real-to-Sim Adaptation via Differentiable Reduced-Order Simulation with Vision Feedback](https://arxiv.org/abs/2609.09828) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | RealSimLoop enables online real-to-sim adaptation for deformable objects by combining reduced-order differentiable simulation with vision-based feedback. | 7 | 7 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**74 papers total**
+**77 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [LILA: Calibration-Free Structured Pruning of Large Language Models via Latent Spectral Geometry](https://arxiv.org/abs/2609.11163) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | LILA enables calibration-free, training-free structured LLM pruning by ranking neurons through latent spectral changes, achieving strong accuracy and generative preservation without altering model architecture. | 8 | 9 |
+| 2026-09-10 | [EigenLI: Spectral Approximations to Late Interaction](https://arxiv.org/abs/2609.07561) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: LLM Memory | EigenLI compresses ColBERT-style late-interaction representations using document-specific spectral subspaces, reducing storage and scoring costs while preserving retrieval effectiveness. | 7 | 8 |
+| 2026-09-10 | [Beyond Fluent Generation: A CPU Reliability Benchmark for MCP-Style Tool Calling in Sub-2B Small Language Models for Edge Deployment](https://arxiv.org/abs/2609.07370) | Efficient AI: Token Pruning and Eviction; Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Qwen2.5 models provide the strongest MCP-style tool-calling reliability among tested sub-2B models, but robust edge deployment still requires output recovery and safety controls. | 8 | 7 |
 | 2026-09-09 | [Beyond One-Size-Fits-All: Sample-Adaptive Strategy Routing for Vision Token Pruning in MLLMs](https://arxiv.org/abs/2609.10346) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | VIP-Router adaptively chooses the best visual-token pruning strategy per input, improving MLLM accuracy and token-efficiency over any single fixed strategy. | 8 | 7 |
 | 2026-09-09 | [TRACE: Trajectory-robust Admission with Evidence Ordering for Efficient GUI Agents](https://arxiv.org/abs/2609.10297) | Embodied AI: Robot Navigation; Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | TRACE is a training-free GUI visual-token pruning framework that preserves useful, diverse, and spatially distributed evidence for efficient trajectory-based agents. | 8 | 8 |
 | 2026-09-09 | [CoGe-GCD: Reframing Generalized Category Discovery with Compositional Generalization](https://arxiv.org/abs/2609.10158) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction | CoGe-GCD improves generalized category discovery by explicitly modeling primitives and their spatial relationships to better recognize unseen category combinations. | 5 | 6 |

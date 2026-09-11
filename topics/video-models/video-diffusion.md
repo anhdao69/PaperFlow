@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**50 papers total**
+**54 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [Vidu S2: Real-Time Interactive, Editable, and Spatial Video Generation](https://arxiv.org/abs/2609.11638) | Video Generation and Understanding: Video Diffusion, Video Understanding | Vidu S2 enables real-time interactive character generation and video editing, with exploratory support for spatial video. | 6 | 7 |
+| 2026-09-10 | [Harnessing Intrinsic Subject-Aware Attention for Controllable Multi-Subject Video Generation](https://arxiv.org/abs/2609.11507) | Video Generation and Understanding: Video Diffusion | DIAL uses intrinsic DiT attention maps to control subject fidelity and reduce semantic drift in multi-subject video generation. | 8 | 8 |
+| 2026-09-10 | [Multi-Modal Controlled Coherent Motion Generation](https://arxiv.org/abs/2609.11439) | Video Generation and Understanding: Video Diffusion | MOCO generates coherent, lifelike 3D avatar motions from simultaneous speech, text, and trajectory inputs without requiring aligned multimodal training data. | 8 | 8 |
+| 2026-09-10 | [Temporal State Transport in Video Generation: Diagnosing and Correcting Spectral Imbalance](https://arxiv.org/abs/2609.08505) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | A training-free diagnostic and regulator corrects imbalanced temporal information transport to improve video coherence and visual quality. | 9 | 8 |
 | 2026-09-09 | [Decoupled Self-Forcing Distillation for Streaming Talking Head Generation](https://arxiv.org/abs/2609.10317) | Video Generation and Understanding: Video Diffusion | Decoupled self-forcing distillation enables high-fidelity, efficient streaming talking-head generation by controlling a causal diffusion renderer through a compact motion representation. | 7 | 8 |
 | 2026-09-09 | [Mask Forcing: Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout](https://arxiv.org/abs/2609.09123) | Video Generation and Understanding: Video Diffusion | Mask Forcing improves autoregressive video diffusion distillation by using dual-noise spatial-temporal masking to reduce mode collapse and produce more realistic videos. | 8 | 8 |
 | 2026-09-08 | [Geodesic-informed Generative Diffusion Model For Topology-preserved Image Video Generation](https://arxiv.org/abs/2609.08153) | Video Generation and Understanding: Video Diffusion | IGG augments diffusion generation with topology-preserving geodesic deformation dynamics to produce structurally consistent and more interpretable image sequences. | 6 | 7 |

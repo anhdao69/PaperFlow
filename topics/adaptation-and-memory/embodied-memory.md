@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**32 papers total**
+**36 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |
+| 2026-09-10 | [Memory as Plans: World-Action Modeling with Memory-Grounded Planning](https://arxiv.org/abs/2609.11561) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MaP-WAM turns long-term multimodal memory into compact visual-language plans, enabling efficient non-Markovian robotic manipulation with fixed executor context and adaptive execution. | 9 | 9 |
+| 2026-09-10 | [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](https://arxiv.org/abs/2609.11308) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | 2AM shows that long-horizon manipulation can keep task memory in a multimodal Agent while an RGB-only action model executes Agent-provided language and 2D spatial guidance. | 9 | 8 |
+| 2026-09-10 | [AttnCompress: Dynamic Attention-Guided Trajectory Compression for Software Engineering Agents](https://arxiv.org/abs/2609.08318) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | AttnCompress dynamically compresses software-engineering agent trajectories while preserving critical code and reasoning context, improving task performance and reducing token and cost overhead. | 8 | 7 |
 | 2026-09-08 | [Closing the Consistency Gap: Self-Evolving Agents That Learn to Stay on Course](https://arxiv.org/abs/2609.08832) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | A self-evolving agent framework improves reliability across repeated executions by turning unstable trajectory steps into reusable episodic guidance. | 9 | 8 |
 | 2026-09-08 | [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](https://arxiv.org/abs/2609.07047) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MEMOBench evaluates whether robotic policies can store, update, and compress information over time—not just complete tasks successfully. | 9 | 8 |
 | 2026-09-08 | [Human-agent discovery of reconfigurable in-plane ferroelectric superdomain control](https://arxiv.org/abs/2609.06887) | Adaptation and Memory: Embodied Memory | SPARC enables a human–coding-agent team to discover and control reconfigurable ferroelectric superdomain orientations through iterative microscopy, memory, and validated instrument operations. | 6 | 7 |

@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**139 papers total**
+**145 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [SIRF: A Spec-Internalized Risk Foundation Model for Industrial Content Risk Control](https://arxiv.org/abs/2609.11752) | Language Foundation Models: LLM Memory | SIRF internalizes industrial risk policies into model weights to enable high-precision, second-level, verdict-only content moderation. | 7 | 6 |
+| 2026-09-10 | [Enabling Knowledge Graph Understanding at Scale with the EXplore Your Graphs ENgine (EXYGEN)](https://arxiv.org/abs/2609.11569) | Language Foundation Models: Large Language Models, LLM Memory | EXYGEN enables scalable conversational knowledge-graph access by combining automatically generated schema context, graph samples, and lightweight RAG prompting for text-to-SPARQL generation. | 5 | 5 |
+| 2026-09-10 | [VikingRAG: Accurate and Token-efficient Retrieval-augmented Generation over Structured Documents](https://arxiv.org/abs/2609.11390) | Efficient AI; Language Foundation Models: LLM Memory | VikingRAG preserves competitive RAG accuracy while substantially reducing token use through structure-aware retrieval, trace reuse, and adaptive escalation. | 5 | 6 |
+| 2026-09-10 | [Auto-RecSys: Harnessing Autonomous Research Agents for Industry-Scale Recommender System](https://arxiv.org/abs/2609.10922) | Language Foundation Models: LLM Memory | Auto-RecSys enables reliable, parallel, long-horizon autonomous experimentation for industry-scale recommender systems. | 5 | 6 |
+| 2026-09-10 | [EigenLI: Spectral Approximations to Late Interaction](https://arxiv.org/abs/2609.07561) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: LLM Memory | EigenLI compresses ColBERT-style late-interaction representations using document-specific spectral subspaces, reducing storage and scoring costs while preserving retrieval effectiveness. | 7 | 8 |
+| 2026-09-10 | [EdgeMem: LLM-Free Agent Memory Construction and Retrieval via Evidence-Preserving Multi-Anchor Hypergraph](https://arxiv.org/abs/2609.05553) | Language Foundation Models: LLM Memory | EdgeMem builds LLM-free agent memory by organizing original conversation evidence in a multi-anchor hypergraph for faithful, efficient retrieval. | 8 | 8 |
 | 2026-09-09 | [Fortunate Recall: Ontology-Driven Memory Lifecycle Management for Persistent Coherence in LLMs](https://arxiv.org/abs/2609.10413) | Language Foundation Models: LLM Memory | Fortunate Recall improves persistent LLM memory by applying fact-specific lifecycle policies, reducing confabulation while improving temporal retrieval accuracy. | 8 | 8 |
 | 2026-09-09 | [What Should an Agent Forget? Separating What Is Stored from What Is Used](https://arxiv.org/abs/2609.10263) | Language Foundation Models: LLM Memory | RD-Forget keeps a complete source archive while selectively controlling which evidence influences an answer, allowing agents to handle changing facts without losing historical information. | 8 | 8 |
 | 2026-09-09 | [From Retrieval to Weights: Parametric Individualization of Small Language Models with Individual Text Corpora](https://arxiv.org/abs/2609.10155) | Language Foundation Models: LLM Memory | Personal text corpora can be written into small language-model weights, but this personalization improves knowledge modeling more than alignment with an individual’s answers. | 5 | 6 |

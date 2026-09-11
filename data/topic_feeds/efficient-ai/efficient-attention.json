@@ -1,6 +1,869 @@
 {
   "days": [
     {
+      "date": "2026-09-10",
+      "paper_count": 4,
+      "papers": [
+        {
+          "abstract": "Zero-cost proxies rank architectures cheaply, but their reliability varies across search spaces. We introduce CoRA-NAS (COarse Ranking + Anchor-residual), a two-stage framework combining a static ranking prior with low-cost learning-curve refinement. CoRA-Rank aggregates capacity and structure-at-initialization proxies through an equal-weight log-rank consensus and a target-free consensus gate. CoRA-Refine samples anchors across this prior, extrapolates their early validation curves, and propagates a learned residual correction with an ExtraTrees model. The refinement uses approximately 1% of the cost of fully training the candidate set. Fully trained architecture-accuracy labels are not used to fit the ranker. One configuration is used across spaces, with space-specific architecture encodings. Across NAS-Bench-201, NAS-Bench-101, TransNAS-Bench-101, and NATS-SSS, CoRA-Refine achieves mean Spearman correlations of 0.946, 0.715, 0.786, and 0.894, respectively. Its worst-space correlation of 0.715 is the highest among the compared methods. On NAS-Bench-201/CIFAR-100, its selected architecture reaches 73.32% accuracy, near the reported ground-truth best of 73.37%. On the pure size space, refinement recovers the static prior's shortfall relative to parameter count, while remaining tied with the strongest capacity proxies within noise. The resulting framework combines cross-space ranking robustness with low-cost architecture selection.",
+          "arxiv_id": "2609.11884",
+          "arxiv_url": "https://arxiv.org/abs/2609.11884",
+          "authors": [
+            "Yifan Yang, Zhaoyan Wang, Zheng Gao, Xiaoyu Li, Jiaojiao Jiang"
+          ],
+          "bullets": [
+            "Uses an equal-weight log-rank consensus of capacity and initialization-structure proxies, gated without target labels.",
+            "Samples anchor architectures, extrapolates early validation curves, and learns residual corrections with ExtraTrees.",
+            "Refinement costs approximately 1% of fully training the candidate set and does not fit the ranker on architecture-accuracy labels.",
+            "Achieves mean Spearman correlations of 0.946, 0.715, 0.786, and 0.894 across four NAS benchmarks; the worst-space score is highest among compared methods.",
+            "On NAS-Bench-201/CIFAR-100, selects an architecture reaching 73.32% accuracy versus a reported best of 73.37%."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: CoRA-NAS in one pass. Final accuracy is driven by three cheap, complementary signals: two static axes, capacity (#Params, Synflow) and structure-at-init (NASWOT/jacov, AZ-NAS views), and one dynamic axis, learning dynamics. Stage 1 (Rank, blue) percentile-ranks a bank of 𝑚 off-the-shelf zero-cost proxies, applies a target-free consensus gate, and aggregates the kept set into a static prior 𝜋. Stage 2 (Refine, green) draws stratified anchors across 𝜋, trains each for an early prefix, extrapolates its curve, and propagates an ExtraTrees residual correction. The diagram is schematic: the implemented prior uses log-percentile aggregation (Equation 3), and the residual model uses the raw-signal and encoding features in Section 3.3, followed by clipping and locality smoothing (Equation 6–Equation 7). The anchor and prefix fractions satisfy 𝛾𝜂 ≈ 1% of the cost of fully training the candidate set. Early validation curves are used; fully trained architecture-accuracy labels are not used to fit the ranker.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 592,
+              "image_path": "figures/2609.11884/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 979
+            },
+            {
+              "caption": "Figure 1: Cost–quality frontier on NAS-Bench-201. Mean Spearman 𝜌 (over the three NB201 datasets, Table 2) versus search cost per architecture, measured as proxy runtime relative to full training (log scale). All zero-cost proxies occupy one negligible-cost band (∼10–700 ms/arch, ∼10−5 of full training); within it CoRA-Rank attains the highest ranking quality (𝜌 = 0.927). It is not the cheapest: at ≈140 ms/arch it runs AZ-NAS’s three views plus additional proxies (≈4× AZ-NAS’s 35 ms). But nothing cheaper ranks better, so it sits on the Pareto frontier (dashed). The ≈1% CoRA-Refine stage then reaches near-oracle 𝜌 = 0.946; the oracle is the ground-truth ranking (𝜌 = 1).",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 391,
+              "image_path": "figures/2609.11884/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 873
+            },
+            {
+              "caption": "Figure 3: The cross-over, and how CoRA-Refine closes it. Per-space Spearman 𝜌 for representative methods across the four vision spaces (values from Table 3); an open ring marks each method’s worst space. Capacityand structure-driven proxies each collapse in the opposite regime (grey), and even target-aware LIBRA-NAS floors at 0.667 on TransNAS; only CoRA-Refine stays high on all four, with the highest floor (𝜌 = 0.715) of any compared method.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 542,
+              "image_path": "figures/2609.11884/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 834
+            },
+            {
+              "caption": "Table 2: Ranking and selection on NAS-Bench-201. Ranking (KT 𝜏, SPR 𝜌 over all 15,625 architectures) and selected-network accuracy (mean± std, 5 runs) under one evaluation protocol; live measurements use a single NVIDIA L40S, while Fisher and Plain use the precomputed source noted in Appendix A. Our two stages: CoRA-Rank (Stage 1, zero-cost prior) and CoRA-Refine (Stage 2, +≈1% refinement, †). For KT and SPR, the best value per column is bold with dark-blue shading and the second-best is shaded light blue; proxy input type A/B/F = architectural/backward/forward. Runtime and budget accounting in Section 4.1.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 618,
+              "image_path": "figures/2609.11884/table-004.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 980
+            },
+            {
+              "caption": "Table 14: Per-dataset / per-task breakdown of Table 3. Each cell is |𝜌| (Spearman); the 𝜇 column of every space reproduces that space’s main-table value (max deviation 0.0014). CoRA-Refine’s largest singledataset gain is on NATS-SSS CIFAR-100 (CoRA-Rank 0.564 → 0.824). NB201/SSS use their 3 datasets (C10/C100/IN16); TransNAS-micro uses its 3 classification tasks (Object/Scene/Jigsaw); NB101 is CIFAR10 only. NB201 uses the full 15,625-architecture space. In the other spaces, live proxies and CoRA use the fixed 3000-architecture samples; Suite-Zero precomputed TransNAS classics (𝑏 in Table 3) use the full 4096-architecture benchmark. The five newer methods (MeCo/SWAP/T-CET/Dextr/LIBRA) are omitted here: their per-space means are in Table 3 and their NB201 per-dataset values in Table 2; their remaining per-dataset breakdowns are not yet compiled under our protocol.",
+              "figure_id": "table-14-14",
+              "figure_number": "14",
+              "height": 483,
+              "image_path": "figures/2609.11884/table-005.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 852
+            },
+            {
+              "caption": "Table 9: The framework’s boundary: a non-vision space (NAS-Bench-NLP). On the out-of-family recurrent space both the off-the-shelf proxies and the architecture encoding are weak, and Refine does not consistently improve the prior. In contrast, on NATS-SSS the informative encoding lets it lift 0.747 → 0.894. The framework’s benefit scales with the prior’s and the encoding’s informativeness (Section 4.3).",
+              "figure_id": "table-9-16",
+              "figure_number": "9",
+              "height": 127,
+              "image_path": "figures/2609.11884/table-006.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 977
+            },
+            {
+              "caption": "Table 3: Cross-space ranking generalization (Spearman 𝜌 over the evaluated candidate sets, one configuration). Capacity proxies (#Params/FLOPs/Synflow) are strong on the size space but weak on topology; structure proxies (NASWOT) show the opposite; only CoRA-Refine is robust across both. The first three columns vary structure or task; only NATS-SSS varies capacity. Each cell is a per-space mean; the perdataset/per-task breakdown is in Table 14 (appendix). Per-cell sourcing, reproduction caveats, and the target-aware caveat for LIBRA-NAS are detailed in Appendix B.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 655,
+              "image_path": "figures/2609.11884/table-007.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 977
+            },
+            {
+              "caption": "Table 5: Real-space search on DARTS / CIFAR-10. All three panels use the DARTS cell space; margins are small on this low-variance space, and the curve-residual Stage 2 recovers the capacity-dominated boundary where the zero-cost prior is weakest. (a) Full-space ranking (Spearman vs. the NB301 surrogate) and bestof-10 selection (oracle 94.42): the prior alone trails #Params, and real 15-epoch curves in Stage 2 recover it (beating diluted Rank +0.046, matching #Params Δ=+0.008). (b) Shared-pool selection: all four selectors pick from the same 100k-genotype pool; the selected networks are trained from scratch under the same protocol at 5 shared seeds. CoRA-Refine beats AZ-NAS, CoRA-Rank and random (seed-paired 𝑝 < 0.015); search costs differ as reported below. (c) Anchor-count ablation: full-space SPR vs. stratified-anchor count 𝐾 on the 100k pool († nearest the deployed ≈230). Surrogate SPRs are vs. predicted accuracy, not comparable to tabular true-accuracy SPRs (Section 4.2).",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 697,
+              "image_path": "figures/2609.11884/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 977
+            },
+            {
+              "caption": "Table 13: Differences from published values exceeding 0.02 for eight methods, with the documented cause. None is a port error.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 353,
+              "image_path": "figures/2609.11884/table-009.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 868
+            },
+            {
+              "caption": "Table 10: Zero-cost ranking on a transformer space (ViT-Bench-101). Spearman correlation with true accuracy over seven targets (𝑛=200 evaluated AutoFormer-Tiny subnets). CoRA-Rank’s mean is approximately 0.03 below L-SWAG’s; it leads on CIFAR-100 (KD) and has a higher mean than AZ-NAS. We do not claim to beat L-SWAG overall. L-SWAG uses sample labels, while LIBRA is target-aware (soft upper bound). Bold dark-blue cells mark the best per row, excluding LIBRA. Details in Section 4.3.",
+              "figure_id": "table-10-2",
+              "figure_number": "10",
+              "height": 304,
+              "image_path": "figures/2609.11884/table-010.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 977
+            },
+            {
+              "caption": "Table 6: Search efficiency (NATS-SSS / CIFAR-100). Best-found test-acc@90 vs. epoch budget. A zero-cost prior (CoRA-Rank) reaches within 0.5% of the 70.74 in-shortlist oracle at ≈1% of the 270,000-epoch fullevaluation budget, and beats prior-free multi-fidelity search by 1–2% at every matched budget. The NB201 frontier and real DARTS search are reported in Table 7 and Table 5, respectively.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 242,
+              "image_path": "figures/2609.11884/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 802
+            },
+            {
+              "caption": "Table 1: The three complementary axes of signal that drive final accuracy, and the cheap estimator CoRA uses for each. The prior (Stage 1) aggregates the two static axes; the refinement (Stage 2) injects the dynamic axis as a residual.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 177,
+              "image_path": "figures/2609.11884/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 948
+            },
+            {
+              "caption": "Table 8: Single-provenance (all-live) cross-space check, TransNAS/class_object. Every proxy scored under one live recipe, same 3000-arch sample, |𝜌| vs the live ground truth (no Suite-Zero/cited cells); CoRARank/Refine lead every live baseline, so the Table 3 cross-space lead is not a mixed-provenance artifact. (jacov, NASWOT could not be scored cleanly live on the dense-task MacroNet.)",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 244,
+              "image_path": "figures/2609.11884/table-013.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 568
+            },
+            {
+              "caption": "Table 11: Additive ablation of CoRA’s composition. Rank and Refine form separate cumulative blocks; additions are relative to the preceding row within each block. The two load-bearing pieces are the consensus gate (topology, NB101) and the curve-residual refinement (size, NATS-SSS); the pow3 blend and op-smoothing are within-noise (±0.001) and kept for stability, not accuracy. The full-CoRA NB101 value (0.715) is the deployed configuration and matches Table 3; the 0.716 peak at the+gate/+pow3 rows is within the ±0.001 band.",
+              "figure_id": "table-11-5",
+              "figure_number": "11",
+              "height": 225,
+              "image_path": "figures/2609.11884/table-014.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 727
+            },
+            {
+              "caption": "Table 12: Cross-space leave-one-out of the five-signal CoRA-Rank bank. |𝜌| of the equal-weight consensus with each proxy dropped in turn, vs. the locked gated full bank. On NB101 the best drop is exactly jacov, the proxy the target-free gate removes there; on NATS-SSS dropping trainability would help but the gate keeps it (it agrees with the consensus), and the residual stage closes the slack (0.747→0.894). Bold dark-blue cells mark the best per column; details in Section 4.4.",
+              "figure_id": "table-12-8",
+              "figure_number": "12",
+              "height": 244,
+              "image_path": "figures/2609.11884/table-015.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 902
+            },
+            {
+              "caption": "Table 4: A clean prior makes a learnable residual. Four priors fed into the same Stage 2 refinement (NB201). A good prior combines a strong start with a learnable-enough residual; CV-𝑅2 separates clean priors (≥ 0.43) from the opaque AZ-NAS score (0.37) but does not by itself rank among the clean priors (note 3-view’s higher 0.48 only ties, and params-only’s 0.46 still loses from a weak start). ∗mean best-found accuracy over the three NB201 datasets. Values are from the exp26 prior-ablation sweep (run on benchmark learning curves); absolute SPRs differ from the live Table 2 by ≤ 0.006 (a separate run on cached benchmark curves; the reported number is the 0.946 live value), but the prior-vs-prior ordering, the point of this table, is unaffected.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 153,
+              "image_path": "figures/2609.11884/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 826
+            },
+            {
+              "caption": "Table 7: End-to-end search on the home space (NB201, CIFAR-10/100). Best-found test accuracy at a matched epoch budget (5 seeds for the stochastic baselines). At the moderate-budget operating point (𝐵=1200–2400) CoRA-Rank reaches within ∼0.3 of the in-shortlist oracle and is ≥ random search, successive-halving and a synflow-guided predictor-SHA. The 12-epoch re-rank is imperfect on larger shortlists (non-monotone at higher budget), so we report the moderate-budget point. (NB201 ImageNet16-120 signals are not cached; a from-scratch DARTS run is reported in Table 5.)",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 169,
+              "image_path": "figures/2609.11884/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 977
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11884/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11884",
+          "relevance": 8,
+          "selection_reason": "Proposes CoRA-NAS, a framework for efficient Neural Architecture Search using zero-cost proxies and learning-curve refinement, directly addressing computational efficiency in model design.",
+          "summary_status": "generated",
+          "title": "CoRA-NAS: Coarse Ranking and Anchor-Residual Refinement for Neural Architecture Search",
+          "tldr": "CoRA-NAS combines zero-cost ranking with low-cost learning-curve refinement to robustly select neural architectures across diverse search spaces.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Continuous monitoring of water surface elevation across river networks is critical for flood forecasting, water resource management, and understanding the global water cycle. Yet, the scarcity of in situ gauges across much of the globe constrains the development of reliable modeling frameworks. Satellite altimetry has the potential to alleviate this problem but its use is currently hindered by sparse temporal coverage. To this end, we introduce AmazonSWE, a dataset for training and evaluating large-scale spatiotemporal graph imputation methods that integrates processed satellite altimetry measurements from a range of sources, including the recent wide-swath SWOT sensor. The dataset covers over 19K river sections and 10 years (2016-2026) in the Amazon river basin, with in situ gauges held out for evaluation. Besides contributing a novel real-world use case with the potential for societal impact, AmazonSWE introduces significant technical challenges: with fewer than 1% of sections observed per day, the dataset is far sparser than existing imputation benchmarks, and its directed acyclic river topology is both structurally different from and larger than graphs in existing datasets. We show that prior spatiotemporal graph imputation methods are not adapted to this topology, scale and sparsity, and propose a simple bidirectional selective state space model that outperforms them by sampling connected subgraphs and flattening space and time into a single token sequence with topology-aware positional encodings. Compared to the state-of-the-art published method for SWOT-based WSE densification, which integrates statistics with physical modeling, our model reduces RMSE against in situ gauges by 18-39%, while producing predictions for every river section rather than only those with sufficient nearby satellite coverage.",
+          "arxiv_id": "2609.11580",
+          "arxiv_url": "https://arxiv.org/abs/2609.11580",
+          "authors": [
+            "Ruben Cartuyvels, Karim Douch, Gabriele Bertoli, Mounia El Baz, Artemis Vrettou, S\\'ebastien Lef\\`evre, Diego Fernandez Prieto"
+          ],
+          "bullets": [
+            "Introduces a dataset spanning over 19K Amazon river sections across 10 years, integrating multiple satellite altimetry sources including SWOT.",
+            "Addresses a setting where fewer than 1% of sections are observed per day and the graph has a large directed acyclic river topology.",
+            "Proposes a bidirectional selective state space model that samples connected subgraphs and jointly sequences spatial and temporal information with topology-aware positional encodings.",
+            "Outperforms prior graph-imputation methods and a published SWOT-based densification approach, reducing gauge-based RMSE by 18–39%.",
+            "Produces estimates for every river section, including areas lacking sufficient nearby satellite coverage."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Construction of inference sample that is input to our model (top) vs. to graph based methods for imputation like SPIN (Marisca, Cini, and Alippi 2022) or KITS (Xu et al. 2025). Learned query tokens are added to sparse conditioning inputs to inform the model of what to decode. Graph based methods add large amounts of query tokens (grey) to obtain a full spatiotemporal grid, while we add tokens only for a single location, but still using context from different locations.",
+              "figure_id": "figure-5-19",
+              "figure_number": "5",
+              "height": 334,
+              "image_path": "figures/2609.11580/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 400
+            },
+            {
+              "caption": "Figure 15: Example predictions of our method compared to Reach-Reg on SWOT-era (top) and on hindcast (bottom, where Reach-Reg does not have enough input observations to predict the whole series). The dotted lines represent the in situ gauge series linearly projected to the datum of our predictions and of Reach-Reg.",
+              "figure_id": "figure-15-13",
+              "figure_number": "15",
+              "height": 600,
+              "image_path": "figures/2609.11580/figure-002.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1044
+            },
+            {
+              "caption": "Figure 9: Examples of SWOT observations retained and rejected by the harmonic-residual (left). Observations retained and discarded by the rating curve filter that considers ∆width/∆WSE (right).",
+              "figure_id": "figure-9-5",
+              "figure_number": "9",
+              "height": 501,
+              "image_path": "figures/2609.11580/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1043
+            },
+            {
+              "caption": "Figure 13: Filtered (blue) and unfiltered (orange) in situ gauge time series: a clean time series (top, left), a faulty time series that shows sudden jumps that clearly do not represent natural variations in river WSE (top, right), and two time series where automatic filters removed outliers (bottom, left and right).",
+              "figure_id": "figure-13-6",
+              "figure_number": "13",
+              "height": 529,
+              "image_path": "figures/2609.11580/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 8: Left: temporal coverage of sources inAmazonWSE. Right: temporal coverage of satellite sensors included in HydroWeb: the SWOT nadir altimeter (i.e., a different sensor than the swath altimetry sensor used for the SWOT data source inAmazonWSE), Sentinel-3A/B, Sentinel-6A, JASON-2/3, SARAL.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 325,
+              "image_path": "figures/2609.11580/figure-005.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 10: Interpolated SWOT mean and std fields that are used to de-normalize predictions.",
+              "figure_id": "figure-10-18",
+              "figure_number": "10",
+              "height": 441,
+              "image_path": "figures/2609.11580/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 11: Unfiltered SWOT RiverSP measurements (in red) with time series of collocated in situ gauges (top) and HydroWeb locations (bottom). While for some reaches SWOT measurements follow HydroWeb/in situ gauges closely (left), for other reaches, SWOT measurements are very noisy or low quality (right).",
+              "figure_id": "figure-11-15",
+              "figure_number": "11",
+              "height": 350,
+              "image_path": "figures/2609.11580/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 1: Example time series and local graph topology in AmazonWSE. Locations can be observed by zero, one (such as the location observed by SWOT) or more (such as the location observed by ICESat-2 and S3A) sources. The satellite sources measure with reference to the approximate sea level, while the in situ gauges measure deviations from a chosen location-specific reference level.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 316,
+              "image_path": "figures/2609.11580/figure-008.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 494
+            },
+            {
+              "caption": "Figure 7: Ablation of sampled subgraph size limits.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 234,
+              "image_path": "figures/2609.11580/figure-009.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 358
+            },
+            {
+              "caption": "Figure 6: Ours vs. baseline RMSE as a function of the number of observations in the subgraph neighborhood per month.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 226,
+              "image_path": "figures/2609.11580/figure-010.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 360
+            },
+            {
+              "caption": "Figure 3: Example of sampled subgraph (local edges in grey) with river topology (SWORD reaches in blue).",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 205,
+              "image_path": "figures/2609.11580/figure-011.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 394
+            },
+            {
+              "caption": "Figure 12: ICESat-2 harmonics filter (left) and aggregation of transect measurements per reach per day with accepted and rejected measurements (right).",
+              "figure_id": "figure-12-14",
+              "figure_number": "12",
+              "height": 252,
+              "image_path": "figures/2609.11580/figure-012.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 14: Spatial distribution of data sources in AmazonWSE, matched (kept) and unmatched (discarded) to SWORD reaches within 10 km (before quality filtering). From left to right: HydroWeb virtual stations, ICESat-2 transects, and ANA in situ gauges.",
+              "figure_id": "figure-14-20",
+              "figure_number": "14",
+              "height": 294,
+              "image_path": "figures/2609.11580/figure-013.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 2: Spatial distribution of data sources in AmazonWSE, after quality filters, with SWORD river topology background. Left to right: SWORD reaches, SWOT-observed reaches, HydroWeb virtual stations, ICESat-2 transects, ANA in situ gauges.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 179,
+              "image_path": "figures/2609.11580/figure-014.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1054
+            },
+            {
+              "caption": "Table 7: Hyperparameters used for the SSM model.",
+              "figure_id": "table-7-17",
+              "figure_number": "7",
+              "height": 639,
+              "image_path": "figures/2609.11580/table-015.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 876
+            },
+            {
+              "caption": "Table 6: NetCDF schema shared by all data sources. Variables are grouped by their associated dimension.",
+              "figure_id": "table-6-21",
+              "figure_number": "6",
+              "height": 336,
+              "image_path": "figures/2609.11580/table-016.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 868
+            },
+            {
+              "caption": "Table 4: Ablation study (validation period, mean over heldout gauges). Base has all metadata encodings and tokens, uses all 3 data sources in training and inference (when available), sees input sequences sorted by time, and is 2-directional.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 296,
+              "image_path": "figures/2609.11580/table-017.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 427
+            },
+            {
+              "caption": "Table 1: Spatiotemporal dataset comparison. Obs.: measurements, reported or estimated from time steps and sparsity.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 202,
+              "image_path": "figures/2609.11580/table-018.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 452
+            },
+            {
+              "caption": "Table 2: Dataset statistics for the Amazon basin. Percentage observed (% obs.) is calculated over the respective periods of operation of the sources.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 181,
+              "image_path": "figures/2609.11580/table-019.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 492
+            },
+            {
+              "caption": "Table 5: Comparison with Reach-Reg (RR) and ImputeFormer (IF). Mean metrics are computed on gauges overlapping with Reach-Reg; Cov. reports RR/total gauge coverage. Scores differ from other tables because we evaluate only on gauges for which Reach-Reg makes a prediction.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 125,
+              "image_path": "figures/2609.11580/table-020.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 436
+            },
+            {
+              "caption": "Table 3: Baseline comparison on held-out in situ gauges for the 2.7% (>2023/07) and 0.6% (<2022/06) sparsity regimes. sub: subgraph sampling and full: full graph in each sample.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 406,
+              "image_path": "figures/2609.11580/table-021.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 381
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11580/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11580",
+          "relevance": 8,
+          "selection_reason": "Introduces a bidirectional selective state space model (S4) for spatiotemporal graph imputation, leveraging efficient attention mechanisms to handle large, sparse, and topologically complex graphs.",
+          "summary_status": "generated",
+          "title": "A Dataset and Model for Imputing Water Surface Elevation on a Large and Extremely Sparse Spatiotemporal Graph",
+          "tldr": "AmazonSWE enables extremely sparse river-network water-level imputation, with a topology-aware state space model substantially improving satellite-based elevation estimates against gauges.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Optical flow methods typically rely on task-specific inductive biases, such as correlation volumes, feature warping, and iterative refinement, among others, to reach high accuracy. While effective, such biases constrain the model to predefined heuristics, which can limit its expressivity and lead to more complex pipelines and additional computational cost. We present FreeFlow, a hierarchical transformer built without any flow-specific components, using instead a single feed-forward encoder--decoder. FreeFlow combines three attention variants: window attention for local processing, shifted-window attention for cross-window information exchange, and a global attention operating at a reduced resolution. The resulting architecture scales naturally with model capacity, enabling a consistent accuracy gain from small to large variants. Despite the absence of standard inductive biases, FreeFlow achieves state-of-the-art results on major benchmarks, including Sintel (0.68/1.48 EPE on Clean/Final), KITTI-2015 (3.23 Fl-all), and Spring (3.192 1px), while remaining memory efficient at 1080p inference.",
+          "arxiv_id": "2609.11486",
+          "arxiv_url": "https://arxiv.org/abs/2609.11486",
+          "authors": [
+            "Vladislav Bargatin, Alexander Yakovenko, Khaled Abud, Dmitriy Vatolin"
+          ],
+          "bullets": [
+            "Removes task-specific components such as correlation volumes, feature warping, and iterative refinement.",
+            "Uses window, shifted-window, and reduced-resolution global attention for local, cross-window, and global processing.",
+            "Employs a single hierarchical transformer encoder–decoder that scales from small to large variants.",
+            "Reports state-of-the-art results on Sintel, KITTI-2015, and Spring while remaining memory-efficient at 1080p inference."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3: Method overview. Given an image pair (I1, I2), we patchify each input into 8×8 tokens and extract features using two shared-weight encoders composed of Window, Shifted-Window, and Global attention blocks (Fig. 4), producing F 1 and F 2. A transformer decoder combines self-attention with cross-attention between F 1 and F 2 to form flow tokens, which are depatchified and mapped to a dense optical flow field by a lightweight prediction head.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 946,
+              "image_path": "figures/2609.11486/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 719
+            },
+            {
+              "caption": "Fig. 4: Attention block variants. Our architecture uses three attention patterns: (i) Window attention over a 4×4 partition (16 non-overlapping windows), (ii) ShiftedWindow attention with a half-window offset to exchange information across window boundaries, and (iii) Global attention applied at 2× lower spatial resolution via down/up-sampling. See Fig. 2 for the partitioning visualization.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 816,
+              "image_path": "figures/2609.11486/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 652
+            },
+            {
+              "caption": "Fig. 5: Qualitative comparison on the Spring benchmark [29]. Examples of error-maps of Win-Win [20], CroCo-Flow [52], WAFT [49], and FreeFlow predictions; the colorbar represents endpoint error. Our approach combines high level of detail (note the hole in the staff that only our method captures and the thin object bounds) with high motion consistency (note the staff’s end in the top example and the low error in the background of the bottom example). Crops are sourced from official leaderboard submissions.",
+              "figure_id": "figure-5-13",
+              "figure_number": "5",
+              "height": 339,
+              "image_path": "figures/2609.11486/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 7: Qualitative ablation comparison of FreeFlow models with and without Global Attention block and pretrained with different masking ratios on the Spring benchmark. Zoom in for better view.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 263,
+              "image_path": "figures/2609.11486/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 350
+            },
+            {
+              "caption": "Fig. 8: Model scaling on Sintel. Sintel Final EPE (↓) versus parameter count (M), ×106 for FreeFlow variants and transformer-based baselines.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 236,
+              "image_path": "figures/2609.11486/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 310
+            },
+            {
+              "caption": "Fig. 1: Feature fusion ablation. We compare a DepthPro-style Late Feature Fusion baseline (CroCo backbone with multi-scale decoding) to FreeFlow with Dense Feature Fusion. Late fusion does not reliably propagate information between scales and tiles: the model tends to rely on the finest-level tiles and under-utilize coarse-scale features, leading to globally inconsistent flow despite sharp local detail (left). Dense fusion exchanges features throughout the network, yielding predictions that are both locally detailed and globally consistent (right).",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 423,
+              "image_path": "figures/2609.11486/figure-006.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 719
+            },
+            {
+              "caption": "Fig. 2: Comparison of high-resolution prediction techniques. (a) No Feature Fusion: per-tile prediction without inter-tile feature exchange (limited global coherence; long-range motions spanning multiple tiles not captured). (b) Late Feature Fusion: multi-scale features are fused only in the decoder (global context arrives late and may not propagate to full-resolution features; with small overlap and no information flow across tile borders, seams may remain visible; see supplementary). (c) Dense Feature Fusion (ours): repeated cross-tile/global feature exchange across the network (information flow is not restricted to the decoder).",
+              "figure_id": "figure-2-20",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2609.11486/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 704
+            },
+            {
+              "caption": "Fig. 3: Additional qualitative samples on Sintel. Across the board FreeFlow models produce the sharpest details and effectively separate the wooden structure from the background. Images are sourced from the official leaderboard webpages. Viewer is advised to zoom in.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 946,
+              "image_path": "figures/2609.11486/figure-008.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 719
+            },
+            {
+              "caption": "Fig. 6: Qualitative comparison on Sintel. Examples of FreeFlowL, GeoViT [54], WAFT-DAv2-a2 [49], CroCo-Flow [52], Win-Win [20], and MEMFOF-XL [1] outputs on the Sintel [4] benchmark. Sourced from the official leaderboard submissions.",
+              "figure_id": "figure-6-16",
+              "figure_number": "6",
+              "height": 585,
+              "image_path": "figures/2609.11486/figure-009.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 304
+            },
+            {
+              "caption": "Fig. 4: Additional qualitative samples on KITTI-15. FreeFlow has significantly more details on complex objects such as the wheels of bicycles, side-view mirrors of cars and tree foliage. Images are sourced from the official leaderboard webpages. Viewer is advised to zoom in.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 816,
+              "image_path": "figures/2609.11486/figure-010.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 652
+            },
+            {
+              "caption": "Fig. 2: Visualization of the softmax logits for different parts of the proposed localglobal attention. The red point represents the query token.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2609.11486/figure-011.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 704
+            },
+            {
+              "caption": "Table 3: Spring benchmark results. \"*\" indicates that it was submitted by the Spring team without being finetuned on the provided training set. Speed (runtime) and peak GPU memory consumption were measured on a Nvidia RTX 3090 GPU (24 GB) with automatic mixed precision and without memory efficient correlation volumes, where \"—\" denotes no available data or implementation for a given model and \"†\" denotes our best estimate based on the authors description. \"MF\" indicates that the method uses multiple frames (three or more). The best results are indicated in bold, second-best are underlined, third best are indicated in italic. Method configurations are taken from submissions to the Spring benchmark if present, and from submissions to the Sintel benchmark otherwise.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 592,
+              "image_path": "figures/2609.11486/table-012.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 712
+            },
+            {
+              "caption": "Table 4: Sintel [4] and KITTI-15 [30] benchmark results. Sintel uses EPE as it’s metric for both splits, while KITTI-15 uses the Fl-all outliers metric. \"—\" indicates no published results and \"MF\" indicates that the method used multiple frames (three or more) to generate it’s submissions.",
+              "figure_id": "table-4-15",
+              "figure_number": "4",
+              "height": 544,
+              "image_path": "figures/2609.11486/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 383
+            },
+            {
+              "caption": "Table 3: Zero-shot comparison. We report zero-shot evaluation results on the Sintel and KITTI-15 training sets. By default, all methods are trained or fine-tuned for optical flow estimation on (FlyingChairs +) FlyingThings3D, with the \"TA\" column indicating that TartanAir was additionally used. Method biases abbreviations: IR: Iterative Refinement, CV: Correlation Volume, W: Warping. The pre-train column indicates whether some part of the method was not trained from scratch, size is reported as the total number of frames in the dataset (for CroCo, this is double the number of image pairs, for Kinetics, this is the total number of frames in all videos). \"MF\" indicates that the method used multiple frames (three or more) to generate it’s submissions.",
+              "figure_id": "table-3-17",
+              "figure_number": "3",
+              "height": 592,
+              "image_path": "figures/2609.11486/table-014.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 712
+            },
+            {
+              "caption": "Table 1: Architectural Inductive Biases in Optical Flow Methods. We summarize common design choices used to inject task-specific structure compared to our approach, which has no flow-specific inductive biases and uses a simple decoder head. \"DPT head\" refers to the decoder head from Dense Prediction Transformer (DPT) [33].",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 124,
+              "image_path": "figures/2609.11486/table-015.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 710
+            },
+            {
+              "caption": "Table 6: Model configurations. Architectural hyperparameters of FreeFlow variants and our best-effort estimates for transformerbased baselines. “+” denotes separate encoder and decoder widths (or counts), while “×” denotes repeated recurrent decoder calls.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 185,
+              "image_path": "figures/2609.11486/table-016.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 383
+            },
+            {
+              "caption": "Table 2: Training procedure details. Dataset abbreviations: TA: TartanAir [48], T: Things [28], S: Sintel [4], K: KITTI-2015 [30], H: HD1K [19]. Inspired by SEARAFT [50] and MEMFOF [1], the dataset distributions for the TaTSKH stages are TA (0.23), S(0.25), T(0.24), K(0.09), H(0.19).",
+              "figure_id": "table-2-19",
+              "figure_number": "2",
+              "height": 241,
+              "image_path": "figures/2609.11486/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 719
+            },
+            {
+              "caption": "Table 2: Comparison with close alternative approaches, results on Spring (sub-val) after Spring (sub-train). All models have a width of 256 with 4 attention heads (except for FreeFlow-S+, which has 8), used a masking ratio of 0.95 during pre-training, and followed the training procedure described above. The \"iters\" column indicates the number of iterative refinements used in GeoViT warping (during both training and inference). \"+\" splits time into the transformer and the postprocessing head parts.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 241,
+              "image_path": "figures/2609.11486/table-018.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 719
+            },
+            {
+              "caption": "Table 1: Patch size ablation. We compare FreeFlow-S with a 16×16 variant at matched 1080p inference time. To account for the larger image area represented by each token, we increase the variant’s width and number of attention heads. The base model still achieves better 1px accuracy with much lower memory and parameter cost.",
+              "figure_id": "table-1-18",
+              "figure_number": "1",
+              "height": 124,
+              "image_path": "figures/2609.11486/table-019.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 710
+            },
+            {
+              "caption": "Table 5: Masking ratio and attentionblock ablation. Spring sub-validation results for FreeFlow variants with different cross-view completion masking ratios and active attention subblocks",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 57,
+              "image_path": "figures/2609.11486/table-020.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 318
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11486/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.11486",
+          "relevance": 7,
+          "selection_reason": "Proposes a hierarchical transformer for optical flow that removes standard inductive biases, contributing to Efficient AI through novel attention mechanisms.",
+          "summary_status": "generated",
+          "title": "FreeFlow: A Bias-free Hierarchical Transformer for Optical Flow Estimation",
+          "tldr": "FreeFlow estimates optical flow with a bias-free hierarchical transformer that achieves state-of-the-art benchmark results using a simple feed-forward design.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "In common-context question answering (CCQA) tasks, multiple input questions share a common context to base their answers from. However, Large Language Models typically generate each answer using an independent prompt. While existing batching and caching techniques help improve parallelism and reduce repeated computations, the separation of questions across prompts limits the achievable speedup, as modern GPUs are underutilized due to a memory bottleneck during attention. We present Intra-Prompt Parallel Decoding (IPPD), a novel inference method that answers multiple common-context questions in parallel within a single prompt. IPPD directly addresses the bottleneck by efficiently sharing both memory and computation during the attention process, as the next token for every question is decoded in a single inference step. IPPD uses virtual position IDs and attention mask manipulation to generate the same output as standard prompting without requiring fine-tuning or any changes to the LLM architecture. Since all parallelism occurs within a prompt, IPPD is fully compatible with batched inference, even when each prompt features a different context. Our experiments show that IPPD delivers up to 7X the effective throughput as standard decoding without quality degradation, and outperforms prefix caching with PagedAttention in most settings.",
+          "arxiv_id": "2609.05707",
+          "arxiv_url": "https://arxiv.org/abs/2609.05707",
+          "authors": [
+            "Theodore Glavas",
+            "Nikhita Vedula",
+            "Dushyanta Dhyani",
+            "Antonios Valkanas",
+            "Yilun Zhu",
+            "Shervin Malmasi"
+          ],
+          "bullets": [
+            "Targets GPU underutilization and attention memory bottlenecks caused by independently prompting each question.",
+            "Shares attention memory and computation so all questions decode their next token in one inference step.",
+            "Uses virtual position IDs and attention-mask manipulation, requiring no fine-tuning or architecture changes.",
+            "Compatible with batched inference across prompts with different contexts.",
+            "Outperforms prefix caching with PagedAttention in most evaluated settings."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Throughput measured in questions answered per second. Normalized throughput is relative to the standard batched inference baseline. IPPD outperforms prefix caching + PagedAttention for both short answer QA tasks (top), and for one of the two multiple-choice tasks (bottom). Darker colored shades represent batched inference (baseline), medium shades represent prefix caching + PagedAttention, and lighter shades represent IPPD.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 448,
+              "image_path": "figures/2609.05707/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 927
+            },
+            {
+              "caption": "Figure 2: The attention process between the queries (rows) and keys (columns) is depicted with green cells representing unmasked query-key pairs. In standard batched inference, the sequence contains a common instruction p, shared context c, question x and partial answer y (simplified as one or two tokens for illustrative purposes). The arrows indicate which token is generated using the output of that query row. IPPD concatenates multiple contexts and queries into a single stacked prompt. The attention mask ensures that each query can only attend to past tokens from the relevant context and question, identifiable by color and shade respectively. At inference step t, IPPD generates the t-th token of four answers through a single shared attention operation per layer in this example. Batched inference would require four independent attention calculations to achieve the same result.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 497,
+              "image_path": "figures/2609.05707/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 781
+            },
+            {
+              "caption": "Figure 1: In QA tasks, multiple questions often reference the same context. Traditional batched inference separates each question into a separate prompt, and processes prompts independently to generate the answer. IPPD combines multiple questions and contexts within a single prompt and jointly decodes multiple answers in parallel. This eliminates repeated computations and reduces the memory bottleneck of GPUs during attention to generate the same answers in a fraction of the time.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 317,
+              "image_path": "figures/2609.05707/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 708
+            },
+            {
+              "caption": "Table 8: Questions-per-context ablation across datasets and models. Values are throughput speedups relative to batched autoregressive inference (higher is better). The better method for each model and column is in bold, and dashes denote configurations that exceed the model’s maximum sequence length.",
+              "figure_id": "table-8-8",
+              "figure_number": "8",
+              "height": 338,
+              "image_path": "figures/2609.05707/table-004.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 950
+            },
+            {
+              "caption": "Table 9: Context-length ablation across datasets and models. Values are throughput speedups relative to batched autoregressive inference (higher is better). The better method for each model and column is in bold, and dashes denote configurations that exceed the model’s maximum sequence length.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 551,
+              "image_path": "figures/2609.05707/table-005.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 693
+            },
+            {
+              "caption": "Table 6: Throughput comparison of all models on four selected CCQA datasets. We compare batched inference, prefix caching + PagedAttention (PC + PA), and our proposed IPPD. We use queries per second (QPS) as the measurement. The highest score for each setting is in bold.",
+              "figure_id": "table-6-10",
+              "figure_number": "6",
+              "height": 441,
+              "image_path": "figures/2609.05707/table-006.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 750
+            },
+            {
+              "caption": "Table 5: Hyperparameter selection for batch size B and contexts stacked per prompt C/P for IPPD and standard batched inference. Hyperparameters are mostly constant across model sizes, except when VRAM limits require a lower batch size.",
+              "figure_id": "table-5-9",
+              "figure_number": "5",
+              "height": 298,
+              "image_path": "figures/2609.05707/table-007.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 733
+            },
+            {
+              "caption": "Table 7: Prefill and decode step and time reductions from IPPD relative to batched autoregressive inference. Values are multiplicative speedups (higher is better). Dashes denote datasets with single-token outputs or configurations that exceed the model’s maximum sequence length.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 546,
+              "image_path": "figures/2609.05707/table-008.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 750
+            },
+            {
+              "caption": "Table 3: Recommended inference method by answer length and context length, assuming several questions share each context.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 111,
+              "image_path": "figures/2609.05707/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 406
+            },
+            {
+              "caption": "Table 4: Summary of the matrix dimensions for queries q and keys/values K and V for a single attention head, using prefix caching + PagedAttention (PC+PA) and IPPD with one context per prompt. dim(·) denotes the dimension that varies with sequence length, ignoring the hidden dimension. Prefill denotes the first forward pass of each prompt, with the First column representing the calculation of the prefix cache. Subsequent prefills leverage this cache to avoid recomputations. The decode column represents the autoregressive decoding stage. The Frequency row indicates how often attention must be performed using these matrix dimensions. Mj denotes the number of questions in context cj . The ∗ indicates that the value may decrease after multiple inference steps, as some answers complete generation before others. The table shows that IPPD’s stacked prompts require larger dimensions but fewer attention calculations.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 325,
+              "image_path": "figures/2609.05707/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 815
+            },
+            {
+              "caption": "Table 2: Quality metrics for standard batched inference, with the delta to IPPD outputs shown in subscript. EM (Exact Match)% measures the percentage of batched inference and IPPD answers matching each other exactly. IPPD provides the same computational path for each token but numerical instabilities result in a near 100% EM rate.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 198,
+              "image_path": "figures/2609.05707/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 823
+            },
+            {
+              "caption": "Table 1: Dataset statistics with the average token length of each prompt sub-section. (5s) means the instruction p includes 5 few-shot examples. Average parallelism is the average number of questions sharing a common context, i.e., M̄ = 1 J ∑J j=1 Mj for a dataset with J contexts and Mj questions per context cj .",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 173,
+              "image_path": "figures/2609.05707/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 746
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.05707/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.05707",
+          "relevance": 6,
+          "selection_reason": "Parallel decoding method to improve inference efficiency and throughput.",
+          "summary_status": "generated",
+          "title": "Intra-Prompt Parallel Decoding for Common-Context Question Answering",
+          "tldr": "IPPD accelerates common-context question answering by decoding multiple answers in parallel within one prompt, achieving up to 7× effective throughput without quality loss.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-09",
       "paper_count": 5,
       "papers": [
@@ -9104,5 +9967,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 51
+  "total_paper_count": 55
 }

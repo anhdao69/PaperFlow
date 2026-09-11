@@ -1,6 +1,932 @@
 {
   "days": [
     {
+      "date": "2026-09-10",
+      "paper_count": 6,
+      "papers": [
+        {
+          "abstract": "We revisit Kashin-decomposition-based weight quantization for large language models and propose an improved algorithm with stronger convergence properties and structured, efficient orthogonal transforms. The method retains the core factorization of each weight into two components -- one with bounded infinity norm and the other with bounded infinity norm after an orthogonal transformation -- but replaces the dense random orthogonal matrix with a sign-randomized Discrete Cosine Transform (DCT), reducing the per-iteration cost from $\\mathcal{O}(N^2)$ to $\\mathcal{O}(N \\log N)$. The proposed greedy algorithm with alternating updates guarantees the four-peak distribution required for stable 2-bit clustering of each factor and admits closed-form initialization of cluster centers, removing the multi-restart k-means bottleneck of prior work. Composed with OPTQ-style sequential error compensation and QuIP-style incoherence preprocessing, the resulting JAX pipeline is competitive with OPTQ, QuIP, QuIP-RG and a fine-tuning- and vector-quantization-free variant of QuIP# at 4-bit per channel on OPT, Llama-2 and Pythia, with favorable wall-clock scaling. The bounded-$\\ell_\\infty$ factorization is also notably robust: on stress configurations where QuIP variants diverge to four-digit perplexity (Pythia-6.9B) or abort with NaNs in LDL back-substitution (Mistral-7B), Kashin-DCT remains numerically stable and stays close to FP16 baseline. At inference time, each weight decomposes into two 2-bit factor codes per channel that are structurally suited to native-2-bit hardware.",
+          "arxiv_id": "2609.11687",
+          "arxiv_url": "https://arxiv.org/abs/2609.11687",
+          "authors": [
+            "Daria Cherniuk, Alexander Rudikov, Boris Kashin, Ivan Oseledets"
+          ],
+          "bullets": [
+            "Improves Kashin-decomposition quantization with stronger convergence and alternating greedy updates.",
+            "Uses a sign-randomized DCT, reducing transform cost from O(N²) to O(N log N).",
+            "Provides closed-form cluster-center initialization for stable 2-bit factor quantization, avoiding multi-restart k-means.",
+            "Combined with OPTQ-style compensation and QuIP-style preprocessing, it is competitive at 4-bit per-channel quantization across OPT, Llama-2, and Pythia, with favorable wall-clock scaling.",
+            "Remains numerically stable on stress cases where QuIP variants diverge or produce NaNs, while supporting native-2-bit hardware through two 2-bit codes per channel."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The proposed quantization pipeline consists of several stages: (a) move to the next column to quantize; (b) decompose with the proposed Greedy Algorithm with Alternating Updates (Algorithm 1) into u and v̂; (c) quantize each factor to 2 bits via 4-peak clustering; (d) stack the quantized vectors into the output matrices U and V̂ ; then add error compensation to the unquantized weights and return to (a).",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 367,
+              "image_path": "figures/2609.11687/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 795
+            },
+            {
+              "caption": "Figure 2: Convergence and factor-distribution comparison on a single random vector x ∈ RN with N = 104 drawn from N (0, IN ). Left: residual norm ∥∥x − uk − vk ∥∥ 2 versus the number of greedy updates for the original greedy algorithm of Kashin [1977] (Algorithm 2 in Appendix B, violet) and our partitioned variant of Algorithm 1 (yellow). Center, right: empirical densities of uk and UE,Φ vk at convergence; the partitioned schedule produces four sharp symmetric peaks, while the original schedule leaves the second factor unimodal.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 331,
+              "image_path": "figures/2609.11687/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 968
+            },
+            {
+              "caption": "Figure 3: Joint value distribution of u and v̂ for the fc2 layer weights of the third decoder block of OPT-125m, decomposed by three algorithms. Red crosses indicate the cluster centers found by k-means after factorization. (a) Matrix reformulation of Merkulov et al. [2024]: the matrix-wise greedy iteration drops the per-vector convergence guarantee and the u-v̂ joint distribution collapses, leaving cluster centers ill-defined. (b) Original vector greedy algorithm [Kashin, 1977] (Algorithm 2): per-vector convergence is restored but the v̂-axis remains spread-out, so 2-bit clustering of v̂ is degenerate. (c) Proposed Algorithm 1: the partitioned schedule and DCT-based P produce four-peaked marginals along both axes, yielding well-separated cluster centers.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 331,
+              "image_path": "figures/2609.11687/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 968
+            },
+            {
+              "caption": "Table 1: Perplexity (PPL) on WikiText-2 / C4 and accuracy (acc_norm for HellaSwag and PiQA, acc for Winogrande) at 4-bit per-output-channel weight quantization. Best quantization result per column in bold, second best underlined (FP16 and RTN excluded from ranking). Context length 2048; each cell is mean ± std over 3 random seeds (except for FP16 and RTN). †LDLQ (QuIP) and LDLQ-RG (QuIP-RG) are unstable on Pythia-1.4B and Llama-2-7B in our reruns; see Section 5. Pythia-6.9B stress test in Appendix A.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 445,
+              "image_path": "figures/2609.11687/table-004.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 980
+            },
+            {
+              "caption": "Table 2: Pythia-6.9B at 4-bit per channel. WikiText-2 / C4 perplexity (lower is better), HellaSwag / PiQA / Winogrande accuracy (higher is better). Best quantization result in bold, second best underlined (FP16/RTN excluded).",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 262,
+              "image_path": "figures/2609.11687/table-005.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 979
+            },
+            {
+              "caption": "Table 3: Mistral-7B v0.1 at 4-bit per channel. WikiText-2 / C4 perplexity, HellaSwag / PiQA / Winogrande accuracy. “aborts” = produces NaNs and fails to complete; see paragraph below. Best non-aborting quantization result per column in bold, second best underlined.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 193,
+              "image_path": "figures/2609.11687/table-006.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 976
+            },
+            {
+              "caption": "Table 4: Quantization wall-clock time at 4 bits per channel. Single NVIDIA H100 GPU; mean ± std over three random seeds.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 109,
+              "image_path": "figures/2609.11687/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 594
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11687/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.11687",
+          "relevance": 7,
+          "selection_reason": "Proposes structured-transform quantization for LLMs, reducing memory overhead, fitting the Efficient AI topic.",
+          "summary_status": "generated",
+          "title": "Structured Transforms for Low-Overhead Quantization of Language Models",
+          "tldr": "Kashin-DCT enables efficient, stable low-overhead language-model quantization by replacing dense transforms with structured DCTs and representing weights using two 2-bit factor codes.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "As Omni-modal large language models (Omni-LLMs) take in audio, video and text together, their KV cache memory cost grows. KV cache quantization is the de facto approach in text-only LLMs, but its application to Omni-LLMs remains unexplored. In this paper, we analyze how TurboQuant, a representative rotation-based KV cache quantization method, behaves on multimodal caches and identify two critical issues: temporal key drift and heterogeneous value geometry. To address these, we propose OmniKVQuant, a training-free framework that (i) sets the key quantization range over each short window of the input stream; and (ii) rotates values separately per modality. On Qwen2.5-Omni and Qwen3-Omni, OmniKVQuant enables 2-bit KV caches while substantially preserving performance across seven audio-visual benchmarks. We further provide a fused Triton decode kernel that unpacks the 2-bit cache during attention, so no dense FP16 cache is ever built. Code: https://github.com/kaistmm/OmniKVQuant",
+          "arxiv_id": "2609.11582",
+          "arxiv_url": "https://arxiv.org/abs/2609.11582",
+          "authors": [
+            "Suho Yoo, Hyunjong Ok, Jongmin Choi, Jihoo Jung, Joon Son Chung"
+          ],
+          "bullets": [
+            "Omni-LLM KV caches grow substantially when processing audio, video, and text together, but their quantization behavior was previously unexplored.",
+            "The authors identify temporal key drift and heterogeneous value geometry as key challenges for rotation-based quantization.",
+            "The training-free method calibrates key ranges over short input windows and applies separate value rotations per modality.",
+            "Evaluations on Qwen2.5-Omni and Qwen3-Omni across seven audio-visual benchmarks show substantial performance preservation with 2-bit KV caches.",
+            "A fused Triton decode kernel unpacks the compressed cache during attention without constructing a dense FP16 cache."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Heterogeneous value geometry. Value representations form distinct modality-specific distributions, with text, audio, and video occupying different regions of the feature space.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 204,
+              "image_path": "figures/2609.11582/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 510
+            },
+            {
+              "caption": "Fig. 3: Value quantization error across rotation choices. Using the rotation matched to each token modality (▼) yields the lowest error in all three groups, while pooled and shared rotations are consistently worse.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 199,
+              "image_path": "figures/2609.11582/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 489
+            },
+            {
+              "caption": "Table 2: Main results. All compressed methods use K2/V2 KV cache quantization. Avg. normalizes each benchmark score to its FP16 counterpart before averaging. The FP16 baseline is shown in gray.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 280,
+              "image_path": "figures/2609.11582/table-003.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 1054
+            },
+            {
+              "caption": "Table 4: Component ablation. Local key ranges provide the largest improvement over TurboQuant, while modality-specific value rotation yields additional gains across both model scales.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 257,
+              "image_path": "figures/2609.11582/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "Table 3: Quantization error at comparable bit budgets. Our method consistently reduces error compared with TurboQuant.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 132,
+              "image_path": "figures/2609.11582/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 510
+            },
+            {
+              "caption": "Table 1: Distribution analysis over 32-token windows. Keys exhibit substantially lower local variance than a Gaussian distribution, especially for audio and video tokens.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 188,
+              "image_path": "figures/2609.11582/table-006.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 512
+            },
+            {
+              "caption": "Table 6: Effect of temporal adaptation on key quantization. Modality information alone is insufficient; preserving local temporal structure further reduces key quantization error.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 106,
+              "image_path": "figures/2609.11582/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 510
+            },
+            {
+              "caption": "Table 5: Multiple-choice performance at different bit widths. OmniKVQuant consistently outperforms TurboQuant from 2-bit to 4-bit quantization, demonstrating generalizes well across quantization levels.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 89,
+              "image_path": "figures/2609.11582/table-008.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11582/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11582",
+          "relevance": 9,
+          "selection_reason": "Training-free KV cache quantization tailored to omni-modal LLMs, addressing multimodal-specific key drift and value geometry at 2-bit precision.",
+          "summary_status": "generated",
+          "title": "OmniKVQuant: KV Cache Quantization for Omni-LLMs",
+          "tldr": "OmniKVQuant enables efficient 2-bit KV-cache quantization for audio-visual Omni-LLMs by addressing modality- and time-dependent cache geometry.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Retrieval-augmented generation (RAG) improves knowledge-intensive large language model (LLM) applications by conditioning generation on retrieved documents, but longer contexts increase latency, key-value (KV) cache memory, and token cost. Post-retrieval compression can reduce this cost, yet existing compressors often operate independently for each query, rely on auxiliary models or rewriting, and introduce online overhead that can offset the benefit of shorter prompts. We revisit RAG compression from a data-mining perspective by aggregating historical query--document--model interactions into reusable evidence views. We first show that modern compressors have unstable gains over simple truncation and can add substantial inference-time latency. We then propose Reusable Evidence View Aggregation (REVA), a framework that mines the target generator's historical attention traces into a document-keyed, budget-agnostic score store. REVA maps token-level attention to readable word units, aggregates importance across repeated document accesses, and renders budget-specific plain-text views that preserve document order and the standard RAG interface. Across four representative benchmarks and modern LLMs, REVA improves generation quality by 1.0--5.8 points over existing advances, while reducing compression overhead by a factor of 5.3 to 15.6, adding less than 40 ms of latency.",
+          "arxiv_id": "2609.11209",
+          "arxiv_url": "https://arxiv.org/abs/2609.11209",
+          "authors": [
+            "Tuan Nguyen, Qiran Hu, Banruo Liu, Khoa D. Doan, Kok-Seng Wong, Fan Lai"
+          ],
+          "bullets": [
+            "Long RAG contexts increase latency, KV-cache memory use, and token cost.",
+            "Existing query-specific compressors may be unstable and add substantial online inference overhead.",
+            "REVA mines historical query–document–model attention traces into a document-keyed, budget-agnostic score store.",
+            "It converts token importance into readable word units and renders budget-specific views while preserving document order and the standard RAG interface.",
+            "Across four benchmarks and modern LLMs, REVA improves generation quality by 1.0–5.8 points, cuts compression overhead 5.3–15.6×, and adds under 40 ms latency."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL",
+            "cs.IR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. REVA pipeline. Historical or asynchronous accesses produce generator attention scores over document tokens, which are aggregated into reusable word-unit statistics for each retrieval unit. At inference time, REVA materializes budgeted plain-text views for documents with stored scores and merges them with prefix-truncation fallback views when scores are unavailable. Here, n denotes the observation count per word unit, and t denotes tokens.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 493,
+              "image_path": "figures/2609.11209/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1072
+            },
+            {
+              "caption": "Fig. 1. Motivation for REVA. (a) Representative compressors add inference-time overhead beyond truncation. (b) Matched-budget gains over naive global truncation are selective rather than universal; trunc(D,B) = D[0, . . . , B] keeps the first B context tokens from the concatenated top-10 documents. (c) Seen-query rates measure the percentage of held-out queries whose top-10 retrieval contains at least one document previously accessed in the training prefix. Experiments use Llama-3.1-8B with B = 512.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 287,
+              "image_path": "figures/2609.11209/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 917
+            },
+            {
+              "caption": "Fig. 3. Quality across compression budgets for representative generator– dataset pairs. REVA-local and REVA-global remain competitive across budgets, often matching or surpassing inference-time compressors while requiring only lightweight serving-time materialization.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 444,
+              "image_path": "figures/2609.11209/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 495
+            },
+            {
+              "caption": "Fig. 4. Effect of word-unit materialization and rendering order at B = 512 with Qwen3.5-9B. Converting token-level selections into word units improves quality, and preserving original document order further improves generation.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 253,
+              "image_path": "figures/2609.11209/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 491
+            },
+            {
+              "caption": "TABLE III BUDGET-ROBUST QUALITY-COST SUMMARY OVER 120 ALL-SEEN CELLS. F1 AND EM ARE AVERAGED OVER DATASETS AND BUDGETS. BOLD AND UNDERLINE MARK THE BEST AND SECOND-BEST VALUES IN EACH METRIC COLUMN; FOR OO, LOWER IS BETTER",
+              "figure_id": "table-III-3",
+              "figure_number": "III",
+              "height": 269,
+              "image_path": "figures/2609.11209/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 972
+            },
+            {
+              "caption": "TABLE V REVA ALLOCATION BREAKDOWN OVER THE ALL-SEEN BUDGET GRID. ∆T /∆R : F1 MINUS TRUNC-LOCAL/RECOMP-E; ≥ R: CELLS AT OR ABOVE RECOMP-E",
+              "figure_id": "table-V-9",
+              "figure_number": "V",
+              "height": 317,
+              "image_path": "figures/2609.11209/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 508
+            },
+            {
+              "caption": "TABLE IV COMPONENT ABLATION OVER THE ALL-SEEN GRID. VALUES ARE AVERAGED OVER GENERATORS, DATASETS, AND BUDGETS; ∆F1 IS RELATIVE TO DOCUMENT-WISE TRUNCATION. Q DENOTES QUERY-ONLY SCORING; Q+A DENOTES QUERY-PLUS-ANSWER/RESPONSE SCORING",
+              "figure_id": "table-IV-7",
+              "figure_number": "IV",
+              "height": 158,
+              "image_path": "figures/2609.11209/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 504
+            },
+            {
+              "caption": "TABLE VI COMPARISON WITH THRESHOLD-BASED EXTRACTION AND GENERATIVE REWRITING AT B = 512",
+              "figure_id": "table-VI-8",
+              "figure_number": "VI",
+              "height": 136,
+              "image_path": "figures/2609.11209/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 470
+            },
+            {
+              "caption": "TABLE I FULL-SPLIT STRICT REUSE AT B = 512. REVA-LOCAL USES PREFIX FALLBACK FOR UNCOVERED DOCUMENTS. ANY-SEEN QUERIES RETRIEVE AT LEAST ONE SCORE-COVERED TOP-10 DOCUMENT; F1 AND EM ARE AVERAGED OVER THREE LLMS",
+              "figure_id": "table-I-1",
+              "figure_number": "I",
+              "height": 140,
+              "image_path": "figures/2609.11209/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 496
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11209/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11209",
+          "relevance": 8,
+          "selection_reason": "Addresses context efficiency in RAG serving by aggregating historical evidence, directly relevant to LLM serving and memory efficiency.",
+          "summary_status": "generated",
+          "title": "REVA: Reusable Evidence View Aggregation for Context-Efficient RAG Serving",
+          "tldr": "REVA makes RAG compression faster and reusable by aggregating historical generator attention into document-level evidence views.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Soft context compression condenses a context into a few memory tokens that a frozen LLM consumes in place of the raw text, but existing compressors fix the compression ratio at training and inference: each deployed ratio requires a separately trained model, and the chosen ratio is applied uniformly to all inputs, whose actual needs vary drastically. We propose FlexComp, a method-agnostic framework that decouples the ratio from both training and deployment: Matryoshka-style training samples the memory budget $K$ per instance, turning one model into an any-ratio compressor, and the budget is then chosen per input by: (1) confidence-based cascade routing or (2) a lightweight learned $K$ predictor. Across ICAE, 500xCompressor, and SAC on MRQA, a single FlexComp model matches separately trained fixed-ratio specialists with minimal degradation. Cascade routing preserves over 98% of the mildest ratio's accuracy at up to 266x average compression; the $K$ predictor, in a single compression-decoding pass, reaches 158-236x within 0.7 F1 of the mildest ratio. At serving-scale batch sizes, the $K$ predictor cuts context KV cache by 50% and improves decoding throughput by 47%.",
+          "arxiv_id": "2609.11192",
+          "arxiv_url": "https://arxiv.org/abs/2609.11192",
+          "authors": [
+            "Kaiyan Zhao, Zhongtao Miao, Akiko Aizawa, Yoshimasa Tsuruoka"
+          ],
+          "bullets": [
+            "Addresses fixed-ratio compressors that require separate models and compress every input equally.",
+            "Uses Matryoshka-style training to vary the memory-token budget during training.",
+            "Selects budgets via confidence-based cascade routing or a lightweight learned predictor.",
+            "Across ICAE, 500xCompressor, and SAC on MRQA, it nearly matches fixed-ratio specialists.",
+            "Reaches up to 266× average compression with cascade routing; the predictor reduces KV cache by 50% and improves throughput by 47%."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of FlexComp. Left: Matryoshka training in fine-tuning. For each instance, a budget K is randomly sampled. The LoRA-adapted encoder compresses the context into K memory tokens, and the frozen decoder is supervised to generate the answer based on the memory tokens and prompt. Right: two inference-time budget-selection strategies exploiting the resulting freedom. (a) Cascade routing starts at the most aggressive budget and re-encodes at the next larger one only when the decoder’s confidence falls below the threshold τ . (b) The K predictor is a lightweight MLP head that maps budget-free encoder features to a distribution over K and commits to a budget before compression, answering in a single compression-decoding pass.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 273,
+              "image_path": "figures/2609.11192/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 946
+            },
+            {
+              "caption": "Figure 7: Budget non-monotonic cases (K=1 correct, K=34 wrong) from the Matryoshka-trained SAC model, in domain (a, b) and out of domain (c, d); failure-mode analysis is provided in Section 5.5. Underlined: the in-context source of the K=34 error; bold: the gold answer.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 467,
+              "image_path": "figures/2609.11192/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 950
+            },
+            {
+              "caption": "Figure 4: Cascade routing results on ICAE, 500xCompressor, and SAC. Top: average F1 (ID: solid, OOD: dashed, F1 reported above each mark) versus the average memory budget K̄, where K̄ includes retry costs after escalation; the top axis reports the corresponding measured average compression ratio. Each curve traces four cascade configuration thresholds, ordered from conservative (cons.) to most aggressive (high cr), and stars mark the fixed K=34 baseline of the same Matryoshka model. Bottom: realized routing distribution at each configuration.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 403,
+              "image_path": "figures/2609.11192/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 928
+            },
+            {
+              "caption": "Figure 1: Fixed-ratio compression vs. FlexComp. Top: for existing soft-token compressors, each deployed compression ratio requires a separately trained model, and the model applies the fixed ratio uniformly to all inputs. Bottom: FlexComp trains a single model that supports any ratio, and selects the budget per input at inference time, via cascade routing or K predictor.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 331,
+              "image_path": "figures/2609.11192/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 410
+            },
+            {
+              "caption": "Figure 5: Spearman correlation between decoder confidence and answer F1, computed on the Matryoshkatrained SAC model at each K. Higher confidence consistently corresponds to higher answer quality.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 275,
+              "image_path": "figures/2609.11192/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 412
+            },
+            {
+              "caption": "Figure 2: The budget each input needs varies drastically. For each subset, we show the distribution over solvable inputs of the minimal sufficient budget: the smallest K ∈ {1, 10, 34} (number of memory tokens) at which the SAC Matryoshka model answers correctly. A large fraction of inputs is already solvable at K=1 (510x compression), so any fixed ratio could be suboptimal.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 400,
+              "image_path": "figures/2609.11192/figure-006.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 440
+            },
+            {
+              "caption": "Figure 6: Budget non-monotonicity on solvable samples (samples answered correctly (F1 > 0) under at least one budget). Left: fraction of samples where K=1 strictly outperforms K=34. Larger budgets can actively hurt, and consistently more so on OOD, where the gist-only representation avoids misleading surface details. Right: fraction of samples strictly requiring the full budget (answered correctly only at K=34). Budget sensitivity grows with compressor strength (ICAE < 500xCompressor < SAC).",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 164,
+              "image_path": "figures/2609.11192/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 438
+            },
+            {
+              "caption": "Table 1: F1 of separately trained fixed-ratio compressors vs. a single Matryoshka-trained model per method, averaged over in-domain (ID) and out-of-domain (OOD) tasks. K=34/10/1 correspond to 15 × /51 × /510× compression.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 292,
+              "image_path": "figures/2609.11192/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 615
+            },
+            {
+              "caption": "Table 2: Per-input budget selection with the K predictor. Each pair compares the Matryoshka model run uniformly at its mildest budget (K=34, 15×) against the same model with the predictor choosing K ∈ {1, 10, 34} per input before encoding. ID/OOD: average F1 over in-/out-of-domain tasks; Avg. cr / K̄: measured average compression ratio and memory budget; right block: distribution of predicted budgets. Random routing assigns budgets with the same per-budget proportions but ignores the input, matching the predictor’s average budget.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 265,
+              "image_path": "figures/2609.11192/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 804
+            },
+            {
+              "caption": "Table 6: Scaling to Llama-3.1-8B (SAC; token-level F1, averaged over ID / OOD tasks). The single Matryoshka model matches or exceeds its fixed-ratio specialists at every budget, and adaptive selection substantially raises the average compression ratio. K̄ includes retry costs for cascade routing.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 335,
+              "image_path": "figures/2609.11192/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 425
+            },
+            {
+              "caption": "Table 4: Per-class accuracy of the K predictor. Trained on the raw label distribution, the predictor collapses onto the majority class (K=1); balanced resampling restores usable accuracy on all three classes.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 146,
+              "image_path": "figures/2609.11192/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 425
+            },
+            {
+              "caption": "Table 5: Inference efficiency across compression ratios on the Matryoshka-trained SAC model (generation length 512, batch size 96, greedy decoding). KV Cache is the total context KV memory over the batch under grouped-query attention; Throughput is the aggregate decoding rate over the full batch.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 79,
+              "image_path": "figures/2609.11192/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 454
+            },
+            {
+              "caption": "Table 3: Applying budget sampling already during compressor pretraining degrades quality; FlexComp therefore applies it only in the SFT stage.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 92,
+              "image_path": "figures/2609.11192/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 425
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11192/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.11192",
+          "relevance": 8,
+          "selection_reason": "Introduces FlexComp, a method for context compression that decouples the compression ratio from training and deployment. It specifically targets KV cache reduction and throughput improvement, fitting the Efficient AI subtopic.",
+          "summary_status": "generated",
+          "title": "FlexComp: One Model for Every Ratio in Context Compression",
+          "tldr": "FlexComp trains one context compressor to support any compression ratio and selects the needed budget per input, achieving strong accuracy with major efficiency gains.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Datacenter GPU power is the binding constraint on LLM serving capacity, and production serving has shifted to prefill/decode (PD) disaggregation. Deploying NVIDIA's Max-Q inference profile on a disaggregated B200 system, we found its realized gain modest (+8.6% tokens/J), model-dependent, and carrying a mean end-to-end latency cost (+5.2%) that throughput-only evaluation does not surface; the profile also applies one setting to prefill and decode GPUs that operate in opposite hardware regimes. We hypothesize that the optimal power setting is a property of the deployed (model, quantization, engine, hardware) combination rather than of the GPU class, that each lane warrants its own profile, and that converting SLO headroom into energy safely requires latency-gated calibration under a runtime SLO guard rather than a fixed recipe. We present a phase-decoupled, model-calibrated controller: the prefill lane runs under an SM-clock window whose floor is a latency guarantee by construction, and the decode lane under a power cap placed by automatic calibration just above a measured throughput/latency cliff. Because a disaggregated decode lane draws flat, memory-bound power, the cap binds continuously, the reactive-overshoot weakness that led POLCA to reject capping is absent, and the GPU's own power manager retains throughput under the cap. On an 8x B200 node serving Qwen3-Coder-480B (FP8) under agentic load, our balanced mode delivers +20.4% tokens/J at +3.5% mean e2e versus +8.6% at +5.2% for Max-Q, a Pareto improvement on both axes. On Qwen3-235B-A22B (NVFP4) every operating mode meets the ITL-p99 SLO in every repetition; both vendor profiles miss it. A decode-actuator A/B shows the calibrated cap beats static clock locks, and a three-day sustained run saves 32.3% of a lane pair's electricity. Both models are MoE; a dense model recovers roughly 5x less, so we scope our claims to MoE serving.",
+          "arxiv_id": "2609.11133",
+          "arxiv_url": "https://arxiv.org/abs/2609.11133",
+          "authors": [
+            "Jae Gon Kim, Donghoon Yoo, Hanyul Ryu, Sungho Ha, Juyeon Lee, Soojung Ryu"
+          ],
+          "bullets": [
+            "Vendor Max-Q delivered only +8.6% tokens/J with a +5.2% mean end-to-end latency cost and used one setting for both serving phases.",
+            "The controller decouples prefill and decode: prefill uses an SLO-guaranteeing SM-clock window, while decode uses an automatically calibrated cap above a throughput/latency cliff.",
+            "On an 8× B200 node, balanced mode achieved +20.4% tokens/J at +3.5% mean end-to-end latency for Qwen3-Coder-480B FP8.",
+            "For Qwen3-235B-A22B NVFP4, all proposed operating modes met ITL-p99 SLOs, while both vendor profiles missed them; a sustained run saved 32.3% of lane-pair electricity.",
+            "Results are scoped to MoE models; a dense model showed roughly five times less recovery."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.DC"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Phase-decoupled control architecture. The serving plane is an unmodified PD-disaggregated stack; the control plane assigns each lane its own actuator (SM-clock window for prefill, calibrated power cap for decode), parameterized by a per-(model, quant, engine) calibration store, an operating-mode ladder, and an ITL-p99 SLO guard.",
+              "figure_id": "figure-1-10",
+              "figure_number": "1",
+              "height": 556,
+              "image_path": "figures/2609.11133/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 944
+            },
+            {
+              "caption": "Figure 2: Calibration contract and artifact semantics. (a) The setpoint search is replaceable; its contract is fixed: it runs against the live stack, accepts a setpoint only if throughput is preserved and ITL-p99 stays within the SLO, and emits an artifact that a fingerprint change invalidates. (b) What the artifact encodes on each lane’s actuation axis: on the decode power axis, the region below the calibrated cliff is rejected by the acceptance gate and the three mode caps span the calibrated headroom between the cliff (EFF) and the natural draw (PERF); on the prefill clock axis, each mode selects a window whose floor is the latency guarantee. Positions are schematic; every marker is a per-combination measurement, not a universal constant.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 559,
+              "image_path": "figures/2609.11133/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 905
+            },
+            {
+              "caption": "Figure 5: Efficiency/latency plane, agentic workload on both models. (a) 480B: both BAL and EFF lie above and to the left of Max-Q — 2.4× and 3.4× its efficiency gain at lower mean-e2e — so each is a Pareto improvement on both axes. (b) 235B (paired repeated runs; error bars ±1σ): the result reproduces on a second model; BAL matches Max-Q’s latency cost while exceeding its gain, and EFF delivers 3.4× the gain. Every plotted arm meets the ITL-p99 SLO. The standard-workload ladder, where efficiency is bought with latency inside the SLO envelope, is reported in §5.2.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 377,
+              "image_path": "figures/2609.11133/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 907
+            },
+            {
+              "caption": "Figure 9: Accepted EFF decode cap across 30 back-to-back independent calibrations of the same (model, quant, engine) combination, early calibrator revision (480B). The estimates cluster at 460–500 W (21/30) but scatter to 540–808 W and collapse to no-cap twice — the signature of estimating a crossing point on a flat curve from single-run reference measurements. The production revision’s noise-robust acceptance settles at 520 W on the same stack (dashed). Single-run cliff estimates reported without a reproducibility study are unsafe (failure class 1).",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 295,
+              "image_path": "figures/2609.11133/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 885
+            },
+            {
+              "caption": "Figure 3: Measured decode cap-sweep from the calibration pass (235B NVFP4, TP1 PD, calibration load). Throughput (left axis) is flat from the natural draw down to the calibrated cliff (≈430 W, the minimum-J/tok point) and collapses below it (-36% at 350 W); ITL p95 (right axis) stays well inside the SLO everywhere above the cliff. The calibrated mode caps span the headroom: EFF 460 W just above the cliff, BAL 547 W, PERF uncapped at the natural draw. This is the measured counterpart of Figure 2b’s schematic; the sweep reports ITL p95, and the acceptance gate additionally checks ITL-p99 under serving-parity load (Algorithm 2).",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 376,
+              "image_path": "figures/2609.11133/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 868
+            },
+            {
+              "caption": "Figure 7: Runtime behavior under EFF (480B, agentic; 100 ms telemetry), with a 60 s load spike of +64 concurrency injected mid-run (shaded). Top: the prefill lane holds its in-window operating clock (1155 MHz) through the spike. Middle: decode-lane draw rides the commanded 500 W cap — the cap binds continuously, spike included. Bottom: rolling ITL p99 (5 s window) sits at 24–28 ms in steady state, is pushed across the 30 ms SLO line during the spike (peak 96 ms), and returns to baseline within seconds of the spike ending; the run’s aggregate ITL-p99 is 29.5 ms, inside the SLO. This capture isolates the steady-state contract — window held, cap binding — through a load transient, so the harness left the runtime guard of §3.2 out of the loop and the trace shows the crossing-and-recovery the guard is designed to bound. Guard behavior under load is the subject of §5.6, where the SLO sets the usable ceiling. Complements the run-level lane timeline of Figure A4.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 684,
+              "image_path": "figures/2609.11133/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 895
+            },
+            {
+              "caption": "Figure 4: Request anatomy of the two workloads (schematic; segment lengths not to scale). The agentic workload accumulates context across tool-calling turns, so prefill ingests grow while generations remain long; the standard workload issues short independent requests at high turnover, with content and lengths drawn from ShareGPT [16]. The two bracket the prefill/decode balance a production mix moves between.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 429,
+              "image_path": "figures/2609.11133/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 869
+            },
+            {
+              "caption": "Figure 6: The operating-mode ladder on the standard workload (235B). Efficiency gain (a) and mean node power saved (b) both increase monotonically down the ladder, every mode passes the ITL-p99 SLO, and the vendor profile’s operating point (dashed) falls strictly inside the ladder.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 308,
+              "image_path": "figures/2609.11133/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 880
+            },
+            {
+              "caption": "Figure 8: Decode-lane actuator A/B on 480B (all arms share the same calibrated prefill efficiency floor; only the decode lever differs). Power cap wins on efficiency in both workloads while retaining throughput.",
+              "figure_id": "figure-8-11",
+              "figure_number": "8",
+              "height": 440,
+              "image_path": "figures/2609.11133/figure-009.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 903
+            },
+            {
+              "caption": "Figure 10: Efficiency advantage of EFF over the shipped Max-Q profile across nine concurrency points (235B NVFP4, TP1 PD; block-paired ∆ tokens/J, bars ±1σ). On the standard workload the advantage holds at every point and widens with load; on the agentic workload it is real but flat and thin. Above the shaded boundary EFF no longer holds the ITL-p99 SLO, so the widening advantage there is not adoptable under an SLO-bound frame.",
+              "figure_id": "figure-10-5",
+              "figure_number": "10",
+              "height": 411,
+              "image_path": "figures/2609.11133/figure-010.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 861
+            },
+            {
+              "caption": "Figure 11: Facility-level translation of the efficiency results: SLO-compliant tokens deliverable per provisioned megawatt, indexed to baseline = 100 (235B, paired repeated runs). The vendor profile buys roughly 11 points of capacity; per-stack calibrated modes buy 22 to 39 depending on workload.",
+              "figure_id": "figure-11-9",
+              "figure_number": "11",
+              "height": 278,
+              "image_path": "figures/2609.11133/figure-011.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 886
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11133/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.11133",
+          "relevance": 8,
+          "selection_reason": "Directly addresses LLM serving efficiency and power control, a core concern for deploying large language models.",
+          "summary_status": "generated",
+          "title": "Phase-Decoupled, Model-Calibrated Power Control for Disaggregated LLM Serving",
+          "tldr": "A phase-specific, model-calibrated power controller improves energy efficiency for disaggregated MoE LLM serving while better preserving latency SLOs than vendor-wide power profiles.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "We present a Kubernetes Dynamic Resource Allocation (DRA) driver that makes composable CXL memory a schedulable cluster resource, and evaluate the resulting shared-memory tier for cross-node KV-cache reuse in LLM serving. The driver composes CXL regions on demand, materializes them as DAX devices on each participating host, and injects them into pods under a single Container Device Interface (CDI) name so that pods on different nodes access the same physical region. A shared-memory connector for vLLM/llm-d uses that region as a KV-cache tier with a slot directory embedded inside the shared medium, which eliminates the need for an external metadata service. On a two-node cluster with a 512\\,GiB CXL appliance and Qwen2.5-7B-Instruct, cross-node prefix reuse reduces TTFT by 5.5$\\times$--36.6$\\times$ at an external hit rate of 95.4--99.5\\,\\%, while node-local tiers (GPU prefix caching, CPU-DRAM offload) fall back to full recompute. The sharing gap, defined as the latency ratio between cross-node and same-node reuse, is 1--4\\%, indicating that cross-node reuse incurs little additional latency relative to same-node reuse on our testbed. Both replicas run full engines; the study demonstrates memory disaggregation rather than prefill/decode disaggregation. We report this as a feasibility study rather than a performance evaluation.",
+          "arxiv_id": "2609.10790",
+          "arxiv_url": "https://arxiv.org/abs/2609.10790",
+          "authors": [
+            "Hongjian Fan, Kevin Zhang, David Habinsky, Sean Dykstra"
+          ],
+          "bullets": [
+            "Makes composable CXL memory schedulable through a Kubernetes DRA driver and exposes shared regions to pods across nodes.",
+            "Uses a shared-memory connector for vLLM/llm-d with an embedded slot directory, avoiding an external metadata service.",
+            "On a two-node Qwen2.5-7B-Instruct testbed, 95.4–99.5% external hit rates yield 5.5×–36.6× lower TTFT for cross-node prefix reuse.",
+            "Cross-node reuse adds only 1–4% latency relative to same-node reuse on the tested system.",
+            "Scope: memory disaggregation and feasibility demonstration; both replicas run full engines, not prefill/decode disaggregation."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: The shared region. (a) The self-describing layout: magic and layout headers, the writer’s configuration, the slot bitmap, the parallel key array, and the per-slot CRC32 array, then fixedsize data slots. (b) The lookup protocol: a slot key derived from the block-hash filename, key % num_slots with linear probing, and a hit only when the bit is set and the stored key matches, with the acquire/release ordering that makes it safe across processes. (c) The host-staged data path and the coherence rules for DAX versus file-backed mappings.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 694,
+              "image_path": "figures/2609.10790/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 932
+            },
+            {
+              "caption": "Figure 1: Measured trade-off between the candidate KV-reuse tiers on our testbed. Local DRAM is fastest but private; RoCEv2 is shared but protocol-bound. CXL is the only shareable tier within ∼4.5× of local DRAM latency, using ordinary loads and offering pooled capacity beyond per-node budgets.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 663,
+              "image_path": "figures/2609.10790/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 764
+            },
+            {
+              "caption": "Figure 6: Cross-node reuse. When the reusing request lands on the other node, the GPU prefix cache (T1) and CPU-DRAM offload (T2) coincide with full recompute (T0): neither cache exists on the node that must serve the request. The shared CXL tier (T4) serves it, and its advantage grows with context length. Error bars span the three repetitions.",
+              "figure_id": "figure-6-17",
+              "figure_number": "6",
+              "height": 661,
+              "image_path": "figures/2609.10790/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 786
+            },
+            {
+              "caption": "Figure 3: A claim for a 512 GiB region shared by two nodes. Size, share count and QoS are annotations, not part of the device request (§2.2). Both vLLM pods reference this one claim, so both access the same composed region.",
+              "figure_id": "figure-3-18",
+              "figure_number": "3",
+              "height": 362,
+              "image_path": "figures/2609.10790/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 706
+            },
+            {
+              "caption": "Figure 7: The sharing gap: the same data read as a within-tier question. What does it cost a tier when the reusing request moves to the other node? For the node-local tiers the hit is simply lost; for the shared region there is no boundary to cross.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 388,
+              "image_path": "figures/2609.10790/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 882
+            },
+            {
+              "caption": "Figure 4: The allocate→compose→materialize→inject→free sequence. Note the owner election among DaemonSet replicas, the span over which the finalizer is held, and the shaded out-of-band window: the region is composed by a controller, not by the node that kubelet asks to prepare the claim, so PrepareResourceClaims has to wait for CDI names to appear in the claim status.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 890,
+              "image_path": "figures/2609.10790/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 902
+            },
+            {
+              "caption": "Figure 2: The DRA driver in context. Control-plane objects on the left: a ResourceSlice per blade whose node selector spans the connected hosts, and a ResourceClaim carrying size, share count and QoS in annotations. The dra-plugin DaemonSet on each node runs both a claim controller (one of which is elected to compose) and a kubelet plugin. cfm-service drives the blade over Redfish; cxl-host materializes the region locally. The result is one composed region reaching a pod on each node under a single CDI name.",
+              "figure_id": "figure-2-16",
+              "figure_number": "2",
+              "height": 849,
+              "image_path": "figures/2609.10790/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 902
+            },
+            {
+              "caption": "Figure 8: (a) Cross-node external hit rate against the 256-token block-alignment bound: every fully aligned block hits, and the residual is one trailing partial block. (b) Achieved effective read rate against the measured fabric ceiling: the limit we measured is our host-staged copy, not CXL.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 315,
+              "image_path": "figures/2609.10790/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 979
+            },
+            {
+              "caption": "Figure 9: TTFT distribution in the cross arm at the shortest and longest prefix (n = 60 per tier per panel). Distributions are tight for every tier; this is a closed-loop, one-session-at-a-time harness, so no tail-latency-under-load claim can be made from it. T4’s only visible tail is the single first-touch request discussed in the text.",
+              "figure_id": "figure-9-4",
+              "figure_number": "9",
+              "height": 408,
+              "image_path": "figures/2609.10790/figure-009.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 979
+            },
+            {
+              "caption": "Figure 10: The reading replica pays a ∼420 ms first-touch cost once per process, from DAX page faults and staging-buffer allocation, and never again. The 2 K cell runs first and absorbs it; the longer cells that follow show no spike.",
+              "figure_id": "figure-10-19",
+              "figure_number": "10",
+              "height": 593,
+              "image_path": "figures/2609.10790/figure-010.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 832
+            },
+            {
+              "caption": "Table 2: The four KV-reuse configurations under comparison. Only T4 places KV blocks somewhere a replica on the other node can reach.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 277,
+              "image_path": "figures/2609.10790/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 790
+            },
+            {
+              "caption": "Table 9: Comparison of KV-cache sharing and CXL memory systems. Our work is the first to make a composable CXL region schedulable by Kubernetes DRA.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 215,
+              "image_path": "figures/2609.10790/table-012.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 672
+            },
+            {
+              "caption": "Table 4: The sharing gap: cross-arm median TTFT divided by same-arm median TTFT. A value of 1.0 means the tier shares perfectly; node-local tiers lose their hit entirely when the request moves.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 152,
+              "image_path": "figures/2609.10790/table-013.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 377
+            },
+            {
+              "caption": "Table 6: TTFT of the reusing request (ms), n = 60 per cell (3 repetitions × 20 sessions). cross means the second request is served by the replica on the other node, so only a shared tier can hit.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 884,
+              "image_path": "figures/2609.10790/table-014.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 664
+            },
+            {
+              "caption": "Table 1: Testbed and measured tier characterization. Latency and bandwidth are measured with Intel MLC on both worker nodes.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 213,
+              "image_path": "figures/2609.10790/table-015.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 932
+            },
+            {
+              "caption": "Table 3: Cross-node KV reuse. Speedups are ratios of median TTFT; cross/same is 1.0 for a tier that shares perfectly and grows without bound for a node-local one.",
+              "figure_id": "table-3-13",
+              "figure_number": "3",
+              "height": 177,
+              "image_path": "figures/2609.10790/table-016.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 790
+            },
+            {
+              "caption": "Table 7: The honest cost of the tier when reuse is local (same arm): the GPU’s own prefix cache is faster than the shared region, by at most 1.7×.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2609.10790/table-017.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 418
+            },
+            {
+              "caption": "Table 8: Reproducibility: per-repetition median TTFT (ms) in the cross arm. spread is (max−min)/median. Repetitions ran in different tier orders on different days.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 486,
+              "image_path": "figures/2609.10790/table-018.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 486
+            },
+            {
+              "caption": "Table 5: Effective KV read rate achieved by the shared tier, computed as the reloaded KV volume divided by the whole median TTFT (so it includes the engine’s fixed cost). The fabric ceiling is the 27.1 GB/s measured in Table 1.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 151,
+              "image_path": "figures/2609.10790/table-019.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 614
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.10790/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.10790",
+          "relevance": 7,
+          "selection_reason": "Focuses on KV-cache memory efficiency and shared memory for LLM serving.",
+          "summary_status": "generated",
+          "title": "Composable CXL Memory as a Kubernetes-Native Shared Memory for LLM Serving",
+          "tldr": "A Kubernetes-native CXL memory tier enables low-overhead cross-node KV-cache reuse for LLM serving, demonstrated as a feasibility study.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-09",
       "paper_count": 10,
       "papers": [
@@ -17851,5 +18777,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 104
+  "total_paper_count": 110
 }

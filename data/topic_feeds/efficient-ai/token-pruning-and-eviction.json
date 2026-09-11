@@ -1,6 +1,646 @@
 {
   "days": [
     {
+      "date": "2026-09-10",
+      "paper_count": 3,
+      "papers": [
+        {
+          "abstract": "Structured pruning of large language models (LLMs) offers hardware-efficient compression, yet existing methods require calibration data, gradient computation, or large auxiliary policy networks at pruning time. LILA (\\emph{Latent-Informed Layer Analysis}) scores neuron importance via the Kolmogorov--Smirnov (KS) distance between empirical singular value distributions of the full and neuron-ablated feed-forward network (FFN) weight matrix, providing a closed-form spectral rule requiring no training, calibration data, or auxiliary network. Without any fine-tuning, LILA surpasses PruneNet (45M-parameter RL policy) by 1.57~pp in zero-shot accuracy on LLaMA-2-7B at 25\\% sparsity, and outperforms WikiText-2-calibrated SliceGPT by up to 6.0~pp across all sparsity levels, while preserving the original architecture. After one epoch of LoRA recovery fine-tuning, LILA achieves highly competitive performance, matching the heavily calibrated SliceGPT baseline to within a 0.48~pp margin across LLaMA-2-7B and Phi-2, despite using zero calibration data. A Neural Tangent Kernel analysis confirms a 22$\\times$ reduction in functional distortion versus random pruning, providing theoretical grounding for the spectral importance criterion. Finally, extending LILA to dynamically allocate sparsity budgets via KS-scores yields state-of-the-art generative preservation at moderate compression, while uncovering fundamental single-layer architectural bottlenecks at higher compression regimes.",
+          "arxiv_id": "2609.11163",
+          "arxiv_url": "https://arxiv.org/abs/2609.11163",
+          "authors": [
+            "Sankar Behera, Dhruv Singh, Anshika Agnihotri, Raj Kumar Choudhary, Satyadev Ahlawat, Yamuna Prasad"
+          ],
+          "bullets": [
+            "Uses the Kolmogorov–Smirnov distance between singular-value distributions of original and neuron-ablated FFN matrices to score importance.",
+            "Requires no calibration data, gradient computation, training, or auxiliary pruning policy network.",
+            "Without fine-tuning, outperforms PruneNet and calibrated SliceGPT across reported pruning settings.",
+            "With one epoch of LoRA recovery, approaches calibrated SliceGPT performance on LLaMA-2-7B and Phi-2.",
+            "Neural Tangent Kernel analysis and dynamic sparsity allocation support reduced functional distortion and improved preservation at moderate compression; higher compression exposes single-layer bottlenecks."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: LILA framework. (1) For each FFN layer, a non-negative matrix M is constructed (2) from W using one of three variants, (3) factorized with rank-r NMF, and (4) each neuron j is scored by the Kolmogorov– Smirnov distance between the singular value distributions of M and the neuron-ablated matrix Mj . (5) The lowest-scoring (1− s) fraction of neurons are pruned by removing rows in W and corresponding columns in W (e). (6) The resulting pruned LLM preserves the dense architecture and can be optionally fine-tuned with LoRA for recovery.",
+              "figure_id": "figure-1-12",
+              "figure_number": "1",
+              "height": 342,
+              "image_path": "figures/2609.11163/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 732
+            },
+            {
+              "caption": "Table 3: Computational efficiency comparison. Pruning time: wall-clock minutes for the scoring and masking stage only (excludes model loading and zero-shot evaluation), measured on a single NVIDIA A100-SXM4-40GB GPU. Model-specific values: (LLaMA-2-7B | Phi-2 | OPT-1.3B). In Calib.: ✗ = not required, ✓ = required. In Arch. OK: ✗ = architecture modified (columns deleted). †: slicing step adds 30–60 min before FFN pruning. ⋆: PruneNet timing excludes RL policy pre-training cost. Bold: our methods. All LILA accuracy values are after 1-epoch LoRA RFT (LLaMA-2-7B, 25%); see table 1 for full breakdown.",
+              "figure_id": "table-3-17",
+              "figure_number": "3",
+              "height": 374,
+              "image_path": "figures/2609.11163/table-002.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 760
+            },
+            {
+              "caption": "Table 1: Comparative Evaluation of Structured Pruning Methods. Zero-shot accuracy (% ↑): mean over PIQA, HellaSwag, ARC-Easy, ARC-Challenge, WinoGrande. Bold: best calibration-free result per column. Underline: overall best per column. † Architecture-modifying (permanent PCA rotation). ‡ Requires 128 WikiText-2 activation samples. § Requires 45M-parameter RL policy. + 1-epoch LoRA RFT on 8 192 Alpaca samples (rank = 32, α= 10). “—”: not reported. Variants: Abs = data-free (raw W ); Split = data-free (sym. W+W⊤); Act = WikiText-2 activation-weighted.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 660,
+              "image_path": "figures/2609.11163/table-003.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 828
+            },
+            {
+              "caption": "Figure 3: Per-layer mean KS-distance spectrum score vs. accuracy retention (relative to dense baseline) on LLaMA-2-7B, 25% sparsity. Higher KS score = more spectrally sensitive layer; removing its neurons causes larger accuracy drop, confirming the KS criterion identifies high-importance layers.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 370,
+              "image_path": "figures/2609.11163/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 501
+            },
+            {
+              "caption": "Figure 2: Zero-shot accuracy (%) vs. sparsity. All curves are zero fine-tuning (noRFT), WikiText-2 evaluation. LILA-Spectrum (solid red), LILA-Sensitivity (purple dashed), LILA-Residual (orange dash-dot): calibrationfree, arch.-preserving. Wanda (blue): 128 WikiText-2 calibration samples, arch.-preserving. SliceGPT (grey dotted): 1,024 WikiText-2 samples, arch. permanently modified; from Table 7 of Ashkboos et al. [2024]. LILA-Spectrum (data-free) outperforms SliceGPT (WikiText-2 calibrated) by +5.2–6.0 pp across all settings without accessing any data. Dense: black dashed baseline.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 192,
+              "image_path": "figures/2609.11163/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 820
+            },
+            {
+              "caption": "Table 11: Extended head-to-head with PruneNet. Zero-shot accuracy (% ↑): mean over PIQA, HellaSwag, ARC-Easy, ARC-Challenge, WinoGrande. noRFT: no recovery fine-tuning. +RFT: LoRA fine-tuned on WikiText-2 (both PruneNet and LILA use the same dataset for a fair comparison; PruneNet uses rank=8, LILA uses rank=32). PruneNet/SliceGPT numbers reproduced from Tables 2–3 of Sengupta et al. [2025]. LILA+RFT numbers from the WikiText-2 sweep (section A). Bold: best among calibration-free methods. Underline: overall best per column. § PruneNet trains a 45M-parameter RL policy network. † SliceGPT applies an irreversible PCA rotation; architecture permanently modified. ‡ LILA noRFT values represent high-fidelity NMF K = 64 pruning, while +RFT values use NMF K = 32 due to compute constraints on the WikiText sweep.",
+              "figure_id": "table-11-15",
+              "figure_number": "11",
+              "height": 336,
+              "image_path": "figures/2609.11163/table-006.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 857
+            },
+            {
+              "caption": "Table 12: Ablation on LLaMA-2-7B at 25% sparsity: mean zero-shot accuracy (%) and WikiText-2 perplexity (PPL) for all 3 × 3 combinations of NMF matrix variant and scoring method. Bold: best per metric. †: PPL > 100; model has collapsed under this configuration (noRFT).",
+              "figure_id": "table-12-8",
+              "figure_number": "12",
+              "height": 309,
+              "image_path": "figures/2609.11163/table-007.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 494
+            },
+            {
+              "caption": "Table 14: NTK trace ratio ρ(K) (eq. (12)) per pruning criterion on Phi-2 at 25% sparsity. ρ ↓: lower indicates less functional distortion relative to the dense model. ∆ρ: reduction vs. random pruning (ρ = 47.38). NTK cosine similarity = 1.000 for all methods (kernel direction preserved; only magnitude changes).",
+              "figure_id": "table-14-14",
+              "figure_number": "14",
+              "height": 214,
+              "image_path": "figures/2609.11163/table-008.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 577
+            },
+            {
+              "caption": "Table 2: Post-RFT head-to-head comparison with SliceGPT. SliceGPT numbers are exact values from Table 10 of Ashkboos et al. [2024] (Alpaca calibration + recovery fine-tuning). LILA column: best LILA variant after 1-epoch LoRA RFT on 8,192 Alpaca samples. PruneNet: reported without RFT. ∆ = LILA + RFT − SliceGPT + RFT.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 388,
+              "image_path": "figures/2609.11163/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 798
+            },
+            {
+              "caption": "Table 15: Rank sensitivity of LILA-Spectrum (Split) across NMF ranks r ∈ {8, 16, 32, 64} at four sparsity levels on all three models. Metric: mean zero-shot accuracy (%) over five benchmarks (PIQA, HellaSwag, ARC-Easy, ARC-Challenge, WinoGrande); WikiText-2 PPL in brackets. Bold: best accuracy per sparsity–model pair. Results demonstrate that performance plateaus at r = 16–32, confirming that a low-rank NMF basis suffices to capture the spectral geometry of FFN weight matrices.",
+              "figure_id": "table-15-18",
+              "figure_number": "15",
+              "height": 440,
+              "image_path": "figures/2609.11163/table-010.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 690
+            },
+            {
+              "caption": "Table 9: SliceGPT across all calibration and fine-tuning conditions versus LILA-Spectrum (Abs/Split, datafree, no fine-tuning). All numbers are zero-shot average accuracy (% ↑) on the PIQA / HellaSwag / ARC-Easy / ARC-Challenge / WinoGrande suite. Bold: LILA is better in that cell. The “fair” comparison for post-RFT results is SliceGPT Alpaca+RFT (rightmost SliceGPT column) vs. LILA+RFT (table 2).",
+              "figure_id": "table-9-19",
+              "figure_number": "9",
+              "height": 417,
+              "image_path": "figures/2609.11163/table-011.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 814
+            },
+            {
+              "caption": "Table 6: LLaMA-2-7B full per-benchmark zero-shot results for all LILA configurations. Dense baseline: 69.00% (PIQA 79.11, HellaSwag 75.99, ARC-E 74.58, ARC-C 46.25, WinoGrande 69.06), PPL 5.47. RFT: 1 epoch LoRA (rank=32, α = 10) on 8,192 Alpaca samples. “–” indicates run not completed.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 1150,
+              "image_path": "figures/2609.11163/table-012.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 686
+            },
+            {
+              "caption": "Table 7: Phi-2 full per-benchmark zero-shot results for all LILA configurations. Dense baseline: 70.33% (PIQA 78.40, HellaSwag 72.75, ARC-E 75.59, ARC-C 51.28, WinoGrande 73.64), PPL 5.10. RFT: 1 epoch LoRA (rank=32, α = 10) on 8,192 Stanford Alpaca samples. “–” indicates run not completed. Best per column in bold.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 791,
+              "image_path": "figures/2609.11163/table-013.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 694
+            },
+            {
+              "caption": "Table 5: Uniform vs. Adaptive Sparsity. Adaptive allocation drastically improves perplexity at 25%. At 30%, LLaMA-2 collapses due to structural limits.",
+              "figure_id": "table-5-16",
+              "figure_number": "5",
+              "height": 270,
+              "image_path": "figures/2609.11163/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 397
+            },
+            {
+              "caption": "Table 4: Inference throughput (tok/s) of dense vs. pruned models (25% sparsity). Yields out-of-the-box speedups without custom sparse kernels.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 106,
+              "image_path": "figures/2609.11163/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 397
+            },
+            {
+              "caption": "Table 17: OPT-2.7B scaling validation. Zero-shot accuracy (%↑, mean over 5 benchmarks) for all LILA configurations and SliceGPT reference values. Dense baseline: 56.39%. Bold: best LILA result per sparsity and fine-tuning block. SliceGPT reference from Table 8 of Ashkboos et al. [2024] (Alpaca calibration, no fine-tuning); SliceGPT does not report +RFT results for OPT models.",
+              "figure_id": "table-17-5",
+              "figure_number": "17",
+              "height": 577,
+              "image_path": "figures/2609.11163/table-016.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 472
+            },
+            {
+              "caption": "Table 8: OPT-1.3B zero-shot results. Due to resource constraints, only LILA-Spectrum (Split, default r = 32) and Wanda were fully swept across all four sparsity levels for this model. Dense baseline: 49.56% Acc | PPL 14.34. RFT: not applied to OPT-1.3B in this study. All other variants available for LLaMA-2-7B and Phi-2 (see Tables 6 and 7).",
+              "figure_id": "table-8-1",
+              "figure_number": "8",
+              "height": 161,
+              "image_path": "figures/2609.11163/table-017.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 764
+            },
+            {
+              "caption": "Table 10: Impact of Recovery Fine-Tuning (RFT) Dataset. Comparison of post-RFT zero-shot accuracy between LILA fine-tuned on unstructured text (WikiText-2) versus instruction-tuning data (Alpaca). Both settings utilize an identical 1-epoch LoRA protocol. Fine-tuning on Alpaca consistently yields a substantial performance improvement (+0.81 to +2.47 pp), directly mirroring the sensitivity SliceGPT exhibits toward instruction-tuning datasets during recovery.",
+              "figure_id": "table-10-20",
+              "figure_number": "10",
+              "height": 224,
+              "image_path": "figures/2609.11163/table-018.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 732
+            },
+            {
+              "caption": "Table 13: Calibration corpus sensitivity for LILA-Spectrum (noRFT). Zero-shot accuracy (%↑) comparing Variant Act (WikiText-2 activation-weighted) and an alternative instruction-following calibration corpus across all sparsity levels. Variants Abs and Split (data-free) are shown for reference. Gaps <1 pp across all settings confirm that calibration corpus choice provides no consistent benefit over data-free scoring for LILA-Spectrum. “–”: run not completed.",
+              "figure_id": "table-13-13",
+              "figure_number": "13",
+              "height": 265,
+              "image_path": "figures/2609.11163/table-019.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 690
+            },
+            {
+              "caption": "Table 16: LLaMA-2-13B scaling validation. Zero-shot accuracy (%↑, mean over 5 benchmarks) for all LILA configurations and SliceGPT reference values. Dense baseline: 71.76%. Bold: best LILA result per sparsity block. SliceGPT values reproduced from Tables 7–10 of Ashkboos et al. [2024]. “–”: not reported.",
+              "figure_id": "table-16-3",
+              "figure_number": "16",
+              "height": 631,
+              "image_path": "figures/2609.11163/table-020.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 486
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.11163/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.11163",
+          "relevance": 8,
+          "selection_reason": "Introduces a calibration-free structured pruning method for LLMs, relevant to model efficiency and compression.",
+          "summary_status": "generated",
+          "title": "LILA: Calibration-Free Structured Pruning of Large Language Models via Latent Spectral Geometry",
+          "tldr": "LILA enables calibration-free, training-free structured LLM pruning by ranking neurons through latent spectral changes, achieving strong accuracy and generative preservation without altering model architecture.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Late-interaction models such as ColBERT achieve strong effectiveness by representing each document with many token-level vectors, but this expressivity leads to large indexing cost, storage footprints and expensive MaxSim scoring. We show that late-interaction representations exhibit an intrinsic low-rank structure: document token embeddings concentrate in a low-dimensional subspace that preserves most of the retrieval signal. Leveraging this observation, we introduce EigenLI, a spectral approximation framework that compresses late-interaction representations via document-specific low-dimensional subspaces. Unlike clustering or pooling methods, EigenLI identifies the dominant eigendirections of each document and uses them to construct reduced interaction representations. Empirically, $k$-EigenLI with $k \\le 32$ outperforms k-means and Ward clustering based pooling methods on ColBERTv2 and AnswerAI-ColBERT-small; GTE-ModernColBERT exhibits a different tradeoff at $k=32$, where clustering methods perform better. The same spectral construction also yields EigenLI-SV, an ANN-compatible single-vector representation derived from the second-order summary of the reduced structure. Across multiple datasets and all three text models, EigenLI-SV consistently outperforms comparable single-vector surrogates such as MUVERA.",
+          "arxiv_id": "2609.07561",
+          "arxiv_url": "https://arxiv.org/abs/2609.07561",
+          "authors": [
+            "Archish S",
+            "Sabyasachi Basu",
+            "Ankit Garg",
+            "Ravishankar Krishnaswamy",
+            "Kirankumar Shiragur"
+          ],
+          "bullets": [
+            "Late-interaction models are costly because they store many token vectors and require expensive MaxSim scoring.",
+            "The method exploits an intrinsic low-rank structure in document token embeddings.",
+            "k-EigenLI uses dominant document-specific eigendirections to form reduced interaction representations.",
+            "For most evaluated models, k-EigenLI with k ≤ 32 outperforms clustering-based pooling; GTE-ModernColBERT is an exception at k = 32.",
+            "EigenLI-SV provides an ANN-compatible single-vector representation and consistently outperforms MUVERA across the evaluated datasets and models."
+          ],
+          "categories": [
+            "cs.IR",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The spectra of the second moment matrix (normalized) of five longest (top) and randomly chosen (bottom) documents for four datasets. Each line refers to a different document.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 454,
+              "image_path": "figures/2609.07561/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 882
+            },
+            {
+              "caption": "Table 1: Geometric (GM) and arithmetic (AM) means over the 13 per-dataset performance ratios, expressed as a relative improvement, of EigenLI-32 over each baseline on BEIR, grouped by embedding model.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 279,
+              "image_path": "figures/2609.07561/table-002.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 973
+            },
+            {
+              "caption": "Table 8: ColBERTv2 Recall across BEIR datasets.",
+              "figure_id": "table-8-13",
+              "figure_number": "8",
+              "height": 719,
+              "image_path": "figures/2609.07561/table-003.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 973
+            },
+            {
+              "caption": "Table 9: Recall across ViDoRe-v3 datasets.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 543,
+              "image_path": "figures/2609.07561/table-004.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 968
+            },
+            {
+              "caption": "Table 4: Mean trends in MUVERA and EigenLI-SV (32) over 13 BEIR datasets before (U) and after (C) centering, with ∆ = C − U .",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 294,
+              "image_path": "figures/2609.07561/table-005.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 973
+            },
+            {
+              "caption": "Table 10: MUVERA (10240) vs EigenLI-SV (8256) Recall on all 13 BEIR datasets.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 368,
+              "image_path": "figures/2609.07561/table-006.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 890
+            },
+            {
+              "caption": "Table 12: nDCG across ViDoRe-v3 datasets.",
+              "figure_id": "table-12-8",
+              "figure_number": "12",
+              "height": 544,
+              "image_path": "figures/2609.07561/table-007.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 968
+            },
+            {
+              "caption": "Table 11: MUVERA (10240) vs EigenLI-SV (8256) nDCG on all 13 BEIR datasets.",
+              "figure_id": "table-11-7",
+              "figure_number": "11",
+              "height": 369,
+              "image_path": "figures/2609.07561/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 890
+            },
+            {
+              "caption": "Table 13: ColBERTv2 nDCG across BEIR datasets.",
+              "figure_id": "table-13-18",
+              "figure_number": "13",
+              "height": 911,
+              "image_path": "figures/2609.07561/table-009.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 1339
+            },
+            {
+              "caption": "Table 14: ColBERTv2 MRR across BEIR datasets.",
+              "figure_id": "table-14-3",
+              "figure_number": "14",
+              "height": 911,
+              "image_path": "figures/2609.07561/table-010.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 1339
+            },
+            {
+              "caption": "Table 2: Geometric (GM) and arithmetic (AM) means over the 8 per-dataset performance ratios, expressed as a relative improvement, of EigenLI-32 on ViDoRe-v3.",
+              "figure_id": "table-2-17",
+              "figure_number": "2",
+              "height": 188,
+              "image_path": "figures/2609.07561/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 656
+            },
+            {
+              "caption": "Table 15: Effect of centering on EigenLI-SV-32 and MUVERA for AnswerAI-ColBERT-small and GTE-ModernColBERT. U and C denote uncentered and centered results, respectively, and ∆ = C − U .",
+              "figure_id": "table-15-9",
+              "figure_number": "15",
+              "height": 623,
+              "image_path": "figures/2609.07561/table-012.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 1355
+            },
+            {
+              "caption": "Table 7: Compression-time overhead relative to EigenLI. Each model row averages per-dataset time ratios over 13 BEIR datasets; the final row averages over all 39 model–dataset pairs. Ratios above one mean the clustering baseline is slower.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 150,
+              "image_path": "figures/2609.07561/table-013.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 794
+            },
+            {
+              "caption": "Table 3: Geometric (GM) and arithmetic (AM) means over the 13 per-dataset relative improvements of EigenLI-SV-32 over MUVERA on BEIR. For AnswerAI-ColBERT-small and GTE-ModernColBERT, we use centered MUVERA. The ColBERTv2 comparison uses the original uncentered MUVERA representation.",
+              "figure_id": "table-3-16",
+              "figure_number": "3",
+              "height": 156,
+              "image_path": "figures/2609.07561/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 976
+            },
+            {
+              "caption": "Table 5: Mean relative Recall loss (%) against full MaxSim over the four noted datasets. Each entry reports @10/@100/@1000.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 73,
+              "image_path": "figures/2609.07561/table-015.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 760
+            },
+            {
+              "caption": "Table 6: Mean relative nDCG loss (%) against full MaxSim over the four noted datasets. Each entry reports @10/@100/@1000.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 70,
+              "image_path": "figures/2609.07561/table-016.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 760
+            },
+            {
+              "caption": "Table 16: AnswerAI-ColBERT-small BEIR effectiveness results; results use centered MUVERA.",
+              "figure_id": "table-16-15",
+              "figure_number": "16",
+              "height": 1375,
+              "image_path": "figures/2609.07561/table-017.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 832
+            },
+            {
+              "caption": "Table 17: GTE-ModernColBERT BEIR effectiveness results; results use centered MUVERA.",
+              "figure_id": "table-17-14",
+              "figure_number": "17",
+              "height": 1375,
+              "image_path": "figures/2609.07561/table-018.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 832
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.07561/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.07561",
+          "relevance": 7,
+          "selection_reason": "Introduces EigenLI, a spectral approximation framework to compress late-interaction representations (ColBERT) for efficiency. The technique of spectral compression is transferable to memory and token management in LLMs.",
+          "summary_status": "generated",
+          "title": "EigenLI: Spectral Approximations to Late Interaction",
+          "tldr": "EigenLI compresses ColBERT-style late-interaction representations using document-specific spectral subspaces, reducing storage and scoring costs while preserving retrieval effectiveness.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Resource constrained single-board computers including Raspberry Pi, NVIDIA Jetson Nano, Arduino UNO Q, Orange Pi, and LattePanda motivate on-device small language model (SLM) agents that reduce cloud dependence, improve data locality, and tolerate intermittent connectivity. Model Context Protocol (MCP)-style tool invocation demands more than fluent generation: an agent must emit machine-readable JSON, select the correct tool, supply all required arguments, and avoid unintended actions. We establish a platform-agnostic CPU baseline by evaluating five open-weight models below two billion parameters Phi-1.5, Pythia-1.4B, TinyLlama-1.1B-Chat, Qwen2.5-0.5B, and Qwen2.5-1.5B on 100 prompts spanning weather retrieval, web search, calculation, email composition, and task creation, under greedy decoding and nucleus sampling. A recovery parser strips Markdown fences, extracts brace-delimited substrings, and scores parseability, tool-name correctness, argument completeness, and value agreement. Under this criterion, Qwen2.5-1.5B achieves 75% (greedy) and 79% (sampling); Qwen2.5-0.5B achieves 72% (greedy) but drops to 32% under sampling. Phi-1.5 scores 0%; Pythia and TinyLlama reach at most 7%. A strict post-hoc audit finds only 5 of 1,000 raw responses directly parseable as JSON, exposing near-total dependence on output recovery. A CPU resource probe shows Qwen2.5-1.5B requires 7,960 MiB and 30.782 s mean latency; Qwen2.5-0.5B uses 3,637 MiB and 10.627 s, revealing a reliability-resource trade-off for edge deployment. These results do not cover the named boards directly or a full MCP implementation. Safe deployment requires schema validation, constrained generation, least-privilege execution, and human escalation for consequential actions.",
+          "arxiv_id": "2609.07370",
+          "arxiv_url": "https://arxiv.org/abs/2609.07370",
+          "authors": [
+            "Abrar Shahriar Qurat-Ul-Ain Mastoi"
+          ],
+          "bullets": [
+            "Evaluates five open-weight models under 2B parameters on 100 tool-calling prompts using greedy and nucleus sampling.",
+            "Scores parseability, tool selection, argument completeness, and value agreement with a recovery parser.",
+            "Qwen2.5-1.5B reaches 75% greedy and 79% sampling reliability; Qwen2.5-0.5B reaches 72% greedy but falls to 32% with sampling.",
+            "Only 5 of 1,000 raw responses are directly valid JSON, showing heavy dependence on post-processing.",
+            "Qwen2.5-1.5B uses more memory and latency than the 0.5B model, highlighting a reliability–resource trade-off; named boards and full MCP implementations are not directly tested."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the local SLM tool-calling benchmark. Raspberry Pi, Orange Pi, NVIDIA Jetson Nano, and Arduino UNO Q are shown as prospective edge deployment targets; LattePanda is an additional target discussed in the text. None of these devices was directly benchmarked in this study.",
+              "figure_id": "figure-1-10",
+              "figure_number": "1",
+              "height": 861,
+              "image_path": "figures/2609.07370/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 618
+            },
+            {
+              "caption": "Figure 4: Process-level memory footprint recorded after loading each unquantised FP32 checkpoint on CPU. Because measurement occurred in a shared notebook process, the bars represent observed process RSS rather than isolated model weight size.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 466,
+              "image_path": "figures/2609.07370/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 938
+            },
+            {
+              "caption": "Figure 5: Mean CPU inference time for each model over the three resource-probe prompts. Error bars show the population standard deviation. Each greedy generation was capped at 50 new tokens after one warm-up generation.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 466,
+              "image_path": "figures/2609.07370/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 938
+            },
+            {
+              "caption": "Figure 3: Distribution of terminal error labels among failed calls. The denominator differs by row because successful calls are excluded.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 639,
+              "image_path": "figures/2609.07370/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 958
+            },
+            {
+              "caption": "Figure 2: Notebook success rates with 95% Wilson confidence intervals. Success is based on recovered rather than whole-response JSON.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 498,
+              "image_path": "figures/2609.07370/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 990
+            },
+            {
+              "caption": "Table 2: Recovered-call outcomes on 100 prompts per condition. CI is the 95% Wilson interval. “Exact” additionally rejects extra parameter keys. Strict JSON parses the complete raw response with no recovery.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 277,
+              "image_path": "figures/2609.07370/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 790
+            },
+            {
+              "caption": "Table 3: Percentage passing each cumulative evaluation stage. Values are computed over all 100 prompts in each condition.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 275,
+              "image_path": "figures/2609.07370/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1002
+            },
+            {
+              "caption": "Table 4: Notebook success rate (%) by tool; each cell contains 20 prompts.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 277,
+              "image_path": "figures/2609.07370/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 714
+            },
+            {
+              "caption": "Table 1: Evaluated checkpoints. Parameter counts are those computed in the notebook.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 165,
+              "image_path": "figures/2609.07370/table-009.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 520
+            },
+            {
+              "caption": "Table 5: Exploratory LangGraph integration diagnostic. Mean elapsed time is failure-handling time, not model inference latency.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 94,
+              "image_path": "figures/2609.07370/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 516
+            },
+            {
+              "caption": "Table 6: Separate CPU resource probe. Latency is mean ± population standard deviation over three prompts after one warm-up; generation was capped at 50 new tokens.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 162,
+              "image_path": "figures/2609.07370/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 772
+            }
+          ],
+          "first_seen_at": "2026-09-10T21:00:00-04:00",
+          "hero_figure": "figures/2609.07370/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.07370",
+          "relevance": 8,
+          "selection_reason": "Evaluates sub-2B SLMs for edge deployment, focusing on tool calling reliability and resource efficiency. Addresses token management and optimization for constrained environments, relevant to LLMs and efficient AI.",
+          "summary_status": "generated",
+          "title": "Beyond Fluent Generation: A CPU Reliability Benchmark for MCP-Style Tool Calling in Sub-2B Small Language Models for Edge Deployment",
+          "tldr": "Qwen2.5 models provide the strongest MCP-style tool-calling reliability among tested sub-2B models, but robust edge deployment still requires output recovery and safety controls.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-09",
       "paper_count": 5,
       "papers": [
@@ -13962,5 +14602,5 @@
   "schema_version": 1,
   "subtopic_id": "token-pruning-and-eviction",
   "topic_id": "efficient-ai",
-  "total_paper_count": 74
+  "total_paper_count": 77
 }

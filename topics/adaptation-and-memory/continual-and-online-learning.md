@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**109 papers total**
+**114 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [Convex Optimization with Nested Evolving Feasible Sets (CONES) under Time-Varying Loss Functions](https://arxiv.org/abs/2609.11207) | Adaptation and Memory: Continual and Online Learning | Extends CONES to time-varying convex losses and characterizes achievable tradeoffs between regret and movement under evolving nested feasible sets. | 6 | 7 |
+| 2026-09-10 | [A Bellman Optimality Equation for Plasticity](https://arxiv.org/abs/2609.10776) | Adaptation and Memory: Continual and Online Learning | The paper derives a Bellman optimality equation for maximizing plasticity in continual reinforcement learning under a generalized directed-information definition. | 7 | 7 |
+| 2026-09-10 | [When Synthetic Data Hurts: On Catastrophic Forgetting in Skill Retrieval for LLM Agents](https://arxiv.org/abs/2609.10750) | Adaptation and Memory: Continual and Online Learning | Synthetic-data fine-tuning can improve in-distribution skill retrieval while causing catastrophic forgetting on real and OOD skills, which continual-learning methods can mitigate. | 8 | 6 |
+| 2026-09-10 | [Byzantine-Robust Federated Fire Detection with a Rotating Coordinator](https://arxiv.org/abs/2609.10647) | Adaptation and Memory: Continual and Online Learning | A rotating-coordinator federated learning system enables bandwidth-efficient, Byzantine-robust indoor fire detection without relying on a permanently trusted server. | 7 | 7 |
+| 2026-09-10 | [SCCM : Stream Cruise Control Method for Automated Drift Detection and Adaptation](https://arxiv.org/abs/2609.09432) | Adaptation and Memory: Continual and Online Learning | SCCM is an online regression framework that detects distribution drift early and automatically adapts models through dynamic thresholds, tuning, and recalibration. | 8 | 7 |
 | 2026-09-09 | [From State Synchronization to Cognitive Self-Evolution: An Operational Architecture for Cognitive Digital Twins](https://arxiv.org/abs/2609.09625) | Adaptation and Memory: Continual and Online Learning | The paper proposes a four-layer Cognitive Digital Twin architecture that enables task-oriented, self-evolving operation through a closed loop linking physical states, cognition, decisions, and feedback. | 5 | 6 |
 | 2026-09-09 | [CAROL: Context-Aware Online Learning for Fuzzer Scheduling](https://arxiv.org/abs/2609.06772) | Adaptation and Memory: Continual and Online Learning | CAROL improves ensemble-fuzzer scheduling by using live, target-specific context to allocate CPU time and uncover more bugs than existing schedulers. | 6 | 7 |
 | 2026-09-09 | [When and What to Teach: Budget-Aware Online Adaptation for Web Agents](https://arxiv.org/abs/2609.05513) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | A budget-aware online teaching framework reduces unnecessary teacher interactions and training compute for adapting lightweight web agents. | 7 | 6 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**31 papers total**
+**34 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [SEED-UMI: Sharing the Exoskeleton between human and robot for onE-to-one Dexterous demonstration](https://arxiv.org/abs/2609.11753) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | SEED-UMI improves dexterous imitation learning by having humans and robots share the same exoskeleton, enabling contact-faithful demonstrations and direct policy learning from exoskeleton-centric views. | 8 | 8 |
+| 2026-09-10 | [Morphology-Aware Human Motion Retargeting for Wheeled-Humanoid Loco-Manipulation](https://arxiv.org/abs/2609.11357) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | A reproducible pipeline retargets general human motion into physically executable loco-manipulation for the wheeled Galaxea R1 Pro humanoid. | 7 | 6 |
+| 2026-09-10 | [HuRo: Robotizing Human Videos for Scalable VLA Pretraining](https://arxiv.org/abs/2609.10706) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | HuRo robotizes large-scale human videos into robot-aligned training data, enabling scalable VLA pretraining that substantially improves real-world manipulation and out-of-distribution robustness. | 9 | 8 |
 | 2026-09-08 | [Dex-X: Learning Visual-Tactile Dexterous Manipulation From Human Videos with Simulated Interaction](https://arxiv.org/abs/2609.07747) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | DEX-X turns monocular human videos into deployable visual-tactile dexterous manipulation policies by reconstructing interactions in simulation to generate missing tactile supervision. | 9 | 9 |
 | 2026-09-08 | [OpenWAM: An Open, Modular Exploration Towards Systematic World-Action Model Pretraining](https://arxiv.org/abs/2609.07398) | Embodied AI: Learning from Human Videos; World Models: Video World Models, Interactive World Models | OpenWAM makes world-action model pretraining modular and systematically studies how generative world knowledge and action learning should be combined for embodied control. | 9 | 8 |
 | 2026-09-08 | [Social Intuition vs. Machine Reasoning: Anticipating Human-Robot Interaction from multiple modalities](https://arxiv.org/abs/2609.07394) | Embodied AI: Learning from Human Videos | Humans predict whether people will interact with a robot far better from full egocentric video than from pose alone, while current vision-language models do not match this social intuition. | 6 | 5 |

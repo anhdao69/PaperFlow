@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**8 papers total**
+**11 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-10 | [Logit Refiner: Improving Visual Autoregressive Models via Intra-Scale Dependency Modeling](https://arxiv.org/abs/2609.11804) | Video Generation and Understanding: Autoregressive Video Models | Logit Refiner improves Visual Autoregressive Models by restoring dependencies among same-scale image tokens during decoding, without retraining the backbone. | 6 | 7 |
+| 2026-09-10 | [World in World: Explore the World with World Models](https://arxiv.org/abs/2609.11548) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | World in World is a training-free interface that uses structured visual evidence and attention control to make frozen video world models support consistent, controllable exploration across viewpoints and time. | 9 | 8 |
+| 2026-09-10 | [Uncertainty DMD: Restoring Diversity in Few-Step Autoregressive Video Distillation](https://arxiv.org/abs/2609.11265) | Video Generation and Understanding: Autoregressive Video Models | Uncertainty DMD restores diversity and motion dynamics in few-step autoregressive video generation by injecting uncertainty into initial and later autoregressive chunks. | 8 | 7 |
 | 2026-09-08 | [PAI-Actor: Cinematic Multi-Character Replacement in Dynamic Scenes](https://arxiv.org/abs/2609.05918) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | PAI-Actor replaces and animates multiple characters in dynamic movie scenes while preserving motion, interactions, camera movement, backgrounds, and cinematic appearance. | 7 | 6 |
 | 2026-09-01 | [Streaming4D: Accelerate 4D World Models via Block-wise Video Generation and Incremental Reconstruction](https://arxiv.org/abs/2609.00610) | Video Generation and Understanding: Autoregressive Video Models | Streaming4D reduces 4D world-model feedback latency by generating video in blocks and incrementally reconstructing 3D geometry in parallel. | 6 | 7 |
 | 2026-08-31 | [LayerRecall: A State-Conditioned Memory Router for Long-Horizon Consistency in Video Generation](https://arxiv.org/abs/2608.28460) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | LayerRecall improves long-video consistency by routing relevant historical memory to the layers best suited to use it, while preserving local continuity. | 8 | 8 |
