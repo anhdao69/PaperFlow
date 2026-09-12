@@ -1,6 +1,1718 @@
 {
   "days": [
     {
+      "date": "2026-09-11",
+      "paper_count": 11,
+      "papers": [
+        {
+          "abstract": "Counterfactual regret minimization (CFR) is one of the few large numerical workloads that still runs faster on CPUs than on GPUs. Each iteration sweeps a game tree with up to billions of states in millions of small, interdependent gather and scatter steps issued through a generic tree interface. On a GPU every kernel finishes in microseconds, so kernel launches and framework dispatch dominate the run time, and prior GPU implementations have lost to optimized CPU code. We observe that for a fixed game, everything about a CFR iteration except the numerical values is known before the first iteration runs. We propose GPU-CFR, a compiler and runtime built on this observation. It compiles any game once into static dataflow: flat edge and information-set arrays, precomputed indices, and depth-level batched passes fix the entire operation sequence, and only solver state changes between iterations. Static chance folding, depth-level execution blocks, and a dual-lane reach buffer cut the number of framework operations by up to 18.1x. Because shapes, indices, and buffer addresses never change, CUDA Graph Replay records the iteration once and replays it with a single graph launch. On one A100, across an eight-game suite that spans card games, dice games, and board games, GPU-CFR runs 29.8--80.4x faster than the fastest prior GPU CFR on the same accelerator, and 14--258x faster than LiteEFG, one of the fastest open-source CPU implementations, on the four largest games. The compiled representation carries most of that margin: on eight CPU threads with no accelerator it is already 2.2--51.1x faster than the GPU baseline. On the CPU the optimized path reproduces the reference iterates bitwise, and tree construction and graph capture pay for themselves within the first solve. GPU-CFR beats every CPU and GPU baseline on the mid-to-large games of the suite without changing the update rule.",
+          "arxiv_id": "2609.11923",
+          "arxiv_url": "https://arxiv.org/abs/2609.11923",
+          "authors": [
+            "Boning Li, Longbo Huang"
+          ],
+          "bullets": [
+            "Targets CFR workloads where millions of small, interdependent GPU operations are dominated by kernel-launch and framework overhead.",
+            "Compiles the game into flat arrays, precomputed indices, depth-level batches, static chance folding, and a dual-lane reach buffer.",
+            "CUDA Graph Replay reduces each iteration to a single graph launch after one-time capture.",
+            "Across eight games on an A100, it is 29.8–80.4× faster than the prior GPU baseline and 14–258× faster than LiteEFG on four large games.",
+            "The compiled CPU path is also 2.2–51.1× faster than the GPU baseline and reproduces reference iterates bitwise."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.AI",
+            "cs.GT",
+            "cs.MS",
+            "cs.PL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2 | The compilation pipeline on an 11-node example game. A build-time walk flattens the tree into the depthsegmented node array and values template (colored lines trace each node to its cell); at run time, eager execution submits 𝑐1+ 𝑐2𝐷 framework operations per iteration (each one or more kernel launches), graph replay one graph launch.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 594,
+              "image_path": "figures/2609.11923/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 487
+            },
+            {
+              "caption": "Figure 1 | Steady-state time per CFR iteration versus game size (both axes logarithmic; lower is better); backends and variants as in Table 3.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 497,
+              "image_path": "figures/2609.11923/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 585
+            },
+            {
+              "caption": "Figure 8 | Exploitability versus training wall-clock (both axes logarithmic) on four public games and the native HUNL subgames.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 396,
+              "image_path": "figures/2609.11923/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 908
+            },
+            {
+              "caption": "Figure 3 | One compiled CFR+ iteration on the example game of Fig. 2, stacked in execution order inside the captured CUDA graph (rounded frame). Arcs are colored by the acting owner of their edge (gray chance, teal P1, violet P2); each apex square is the gathered strategy factor (green) or the sentinel (dark).",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 643,
+              "image_path": "figures/2609.11923/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 449
+            },
+            {
+              "caption": "Figure 9 | The compiler passes of Algorithm 2 on the example game of Fig. 2; badges are algorithm lines. The host lane flattens the tree into slot, node, and edge strips, sorts the edges into 𝐷 depth blocks, folds chance into the values template, and emits the per-lane index arrays, where dark cells point at the sentinel ⊥. The device lane sizes every buffer of Table 17 once (bars scale with element count; dots mark pinned addresses, rings the inputs rewritten between solves), binds the hooks each update rule uses (dots: bound), and after three eager iterations records one graph that is replayed thereafter; between solves only the ringed buffers are rewritten.",
+              "figure_id": "figure-9-13",
+              "figure_number": "9",
+              "height": 596,
+              "image_path": "figures/2609.11923/figure-005.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 968
+            },
+            {
+              "caption": "Figure 6 | CPU thread scaling of the compiled solver (eager, CFR+); dash-dot lines mark ideal scaling from the onethread point, the dotted line the 8-thread arm of Table 3.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 327,
+              "image_path": "figures/2609.11923/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 457
+            },
+            {
+              "caption": "Figure 7 | CUDA-graph replay vs. eager execution: steadystate ms per CFR+ iteration for every game (log scale). Labels give the eager/graph ratio.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 423,
+              "image_path": "figures/2609.11923/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 456
+            },
+            {
+              "caption": "Table 1 | The realized operation schedule of one CFR+ iteration (Fig. 3). ia abbreviates index_add, 𝐼(𝑞) is the information set owning slot 𝑞, and the build-time sign 𝑠 ∈ {±1} orients each edge’s regret toward its acting player. Only the two per-level rows repeat with depth.",
+              "figure_id": "table-1-17",
+              "figure_number": "1",
+              "height": 529,
+              "image_path": "figures/2609.11923/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 627
+            },
+            {
+              "caption": "Table 5 | Time-to-threshold behind Fig. 8. For each game the thresholds are 10×, 3× and 1.5× the median exploitability Kim (2026)’s A100 arm reaches at its 30 s checkpoint; rows in which fewer than eight of ten processes of either matched arm reach the threshold within the budget are omitted. Cells give the median over independent processes of the estimated crossing time, the second at which a process’s trace, interpolated log–log between the bracketing checkpoints, first passes the threshold, with a 10,000-resample bootstrap 95% interval in brackets; the ratio column is Kim’s median over GPU-CFR’s. GPU-CFR and Kim run matched CFR+ semantics; the CPU column is the same compiled solver on eight threads, reported as a median over ten processes without an interval. Reached counts processes that attain the threshold within 30 s (GPU-CFR, Kim).",
+              "figure_id": "table-5-24",
+              "figure_number": "5",
+              "height": 657,
+              "image_path": "figures/2609.11923/table-009.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 968
+            },
+            {
+              "caption": "Table 2 | Benchmark suite and PyTorch/Aten operations issued per CFR+ iteration (load-immune count), reference implementation vs. compiled dataflow. Infosets counts information sets, one per player at every non-chance history including terminals; States counts the legal non-chance histories once both players’ private information is revealed. Blocks counts the sequential execution blocks per pass; the last column is the maximum absolute regret difference after 22 float32 iterations.",
+              "figure_id": "table-2-21",
+              "figure_number": "2",
+              "height": 284,
+              "image_path": "figures/2609.11923/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 846
+            },
+            {
+              "caption": "Table 6 | Exploitability after 1,000 iterations for four update rules under both update orders, all on the same compiled engine. Bold marks the tightest rule per game and order; cells are bit-reproducible CPU measurements, and a repetition disagreement withholds the cell.",
+              "figure_id": "table-6-19",
+              "figure_number": "6",
+              "height": 358,
+              "image_path": "figures/2609.11923/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 964
+            },
+            {
+              "caption": "Table 15 | Alternative execution models on the compiled dataflow, steady-state ms/iteration (medians). Top: iterations recorded per CUDA graph under the paper’s PyTorch 1.13.1 stack. Bottom: the ladder re-measured under PyTorch 2.5.1+cu121, and the same iteration body under torch.compile; “fails” marks a configuration Inductor could not compile (Section 14).",
+              "figure_id": "table-15-8",
+              "figure_number": "15",
+              "height": 310,
+              "image_path": "figures/2609.11923/table-012.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 978
+            },
+            {
+              "caption": "Table 14 | Kernel-level profile of one steady-state CFR+ iteration. Top: Nsight Systems over 100 iterations; ops are Aten operations, launches the host submissions per iteration (kernel launches plus graph launches), busy the fraction of the window with a kernel resident on the GPU. The last column (unprof.) is the unprofiled steady-state time in ms of Table 3; the tracer inflates eager launches. Bottom: Nsight Compute hardware counters over two eager iterations (the graph replays the same kernels); MB/iter is DRAM traffic per iteration, the achieved bandwidth divides the measured DRAM traffic by the unprofiled iteration time, and <1 wave is the share of kernels whose grid has fewer blocks than the A100’s 108 SMs.",
+              "figure_id": "table-14-9",
+              "figure_number": "14",
+              "height": 252,
+              "image_path": "figures/2609.11923/table-013.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 977
+            },
+            {
+              "caption": "Table 7 | Libratus endgame 4 at full range (96,159 Infosets on 36,098,784 States), solved by 3 independent backends from one 2.42GB exported file. Columns as in Table 13; GPU-CFR Train is the median of two runs, with quality from the fastest run; baselines are single runs. The backends agree on the value to at most 1.4% of the certificate bound.",
+              "figure_id": "table-7-18",
+              "figure_number": "7",
+              "height": 244,
+              "image_path": "figures/2609.11923/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 864
+            },
+            {
+              "caption": "Table 9 | Solver lifecycle on the A100 (CFR+, float32, CUDA graph; medians over independent processes, HUNL turn: 5, Endgame 4: 5). Top: one-time and per-call phases. Middle: peak GPU memory. Bottom: measured wall-clock of 𝑘 back-to-back 1,000-iteration solves that reuse one solver through reset() plus a payoff and root-range update before every solve after the first (one-time cost included), against a model estimate for 𝑘 independent build-and-solve cycles. Per-solve time varied by at most 0.3% / 0.0% across the 100 reused solves.",
+              "figure_id": "table-9-14",
+              "figure_number": "9",
+              "height": 645,
+              "image_path": "figures/2609.11923/table-015.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 556
+            },
+            {
+              "caption": "Table 17 | Memory plan of the compiled solver. Sizes are element counts; the dtype is the configured compute dtype except where noted. Pinned marks buffers whose addresses the captured graph records; Mutable marks the inputs a caller may rewrite in place between solves.",
+              "figure_id": "table-17-23",
+              "figure_number": "17",
+              "height": 373,
+              "image_path": "figures/2609.11923/table-016.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 840
+            },
+            {
+              "caption": "Table 13 | The HUNL river subgame (3,000 Infosets) solved by all three backends from one exported file. Value is player 0’s payoff in chips under each backend’s own average profile, Train the training-call wall-clock after solver construction (Section 10). Train is the median across runs; quality metrics come from the fastest run; exploitability feeds the certificate of Eq. (16) and is not comparable across backends (their averaging conventions differ). Each backend runs its native CFR+ preset: GPU-CFR and Kim simultaneous updates with linear averaging in float32, LiteEFG alternating updates (one half-update per player per iteration) in float64, so these LiteEFG times are not those of the vanilla-CFR arm of Table 3. No pair uses more than 24% of its bound.",
+              "figure_id": "table-13-20",
+              "figure_number": "13",
+              "height": 271,
+              "image_path": "figures/2609.11923/table-017.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 852
+            },
+            {
+              "caption": "Table 4 | One-time costs (CUDA, graph on): build (specification, compilation, solver construction; split in Table 9), three eager warmup iterations, graph capture with first replay, and steady-state iteration time; medians over 𝑛 = 20 processes.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 150,
+              "image_path": "figures/2609.11923/table-018.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 806
+            },
+            {
+              "caption": "Table 8 | Semantics of every timed arm. Order: simultaneous (S) or alternating (A, one half-update per player per iteration). Averaging: uniform (U) or linear (L) iterate weights. Every arm starts from uniform strategies and zero regrets; the LiteEFG preset arm appears in Section 12.",
+              "figure_id": "table-8-3",
+              "figure_number": "8",
+              "height": 250,
+              "image_path": "figures/2609.11923/table-019.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 594
+            },
+            {
+              "caption": "Table 11 | Dispersion behind the Table 3 medians. Columns are independent maxima across games, relative to each game’s median; parentheses identify the range-maximizing game.",
+              "figure_id": "table-11-7",
+              "figure_number": "11",
+              "height": 225,
+              "image_path": "figures/2609.11923/table-020.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 714
+            },
+            {
+              "caption": "Table 10 | Peak GPU memory (MiB) during a 1000-iteration CFR+ solve (float32), median over 𝑛 independent runs. Reserved memory includes the private CUDA-graph capture pool.",
+              "figure_id": "table-10-15",
+              "figure_number": "10",
+              "height": 249,
+              "image_path": "figures/2609.11923/table-021.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 482
+            },
+            {
+              "caption": "Table 16 | Hand-fused Triton kernels against the compiled tensor path on the same stack (PyTorch 2.5.1+cu121, Triton 3.1.0, A100). Steady-state ms/iteration, medians over ten processes; ops counts Aten operations per iteration on the generic path and kern. kernel launches on the fused path; graph is CUDA graph replay. The fused kernels compute one depth level of the forward or backward pass per launch and fuse regret matching, the regret update and the average-strategy update into one kernel each; the last column is the gain of fusion on top of graph replay.",
+              "figure_id": "table-16-12",
+              "figure_number": "16",
+              "height": 209,
+              "image_path": "figures/2609.11923/table-022.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 560
+            },
+            {
+              "caption": "Table 18 | Generated operation schedule per update rule (Aten operations per iteration, counted under TorchDispatchMode, load-immune). Δ is the rule’s difference from CFR+; the last column lists the operations the rule adds to or removes from the CFR+ schedule; graph records whether the rule’s iteration body captured into a CUDA graph on the A100. The delta is identical on both games: rule logic touches only the slot vectors, so its cost is independent of tree size.",
+              "figure_id": "table-18-22",
+              "figure_number": "18",
+              "height": 150,
+              "image_path": "figures/2609.11923/table-023.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 932
+            },
+            {
+              "caption": "Table 12 | Cross-implementation check of the rule ranking in Table 6 after 𝑇 = 1000 CFR CPU iterations on the six common games (LiteEFG (Liu et al., 2024), OpenSpiel (Lanctot et al., 2020)). Bold marks the tightest rule within each backend and order; superscripts give the scoring (uniform u, linear l, last-iterate z), “n/a” an unsupported cell, “–” unmeasured, “≠” inconsistent repetitions. Among 10 two-sided comparisons with unique minima, 10 agree; 2 further comparisons are excluded for a tied minimum on at least one side.",
+              "figure_id": "table-12-5",
+              "figure_number": "12",
+              "height": 40,
+              "image_path": "figures/2609.11923/table-024.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 886
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11923/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11923",
+          "relevance": 7,
+          "selection_reason": "Proposes a compiler and runtime (GPU-CFR) that compiles game trees into static dataflow to eliminate kernel launch overhead. This represents a significant efficiency optimization technique for iterative algorithms on hardware, transferable to other large numerical workloads.",
+          "summary_status": "generated",
+          "title": "GPU-CFR: 80x Faster Counterfactual Regret Minimization by Compiling the Game to Static Dataflow and CUDA Graph Replay",
+          "tldr": "GPU-CFR compiles a fixed game’s CFR computation into static GPU dataflow and replays it with CUDA Graphs, achieving major speedups over prior CPU and GPU implementations.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Prefix caching can reduce the time to first token (TTFT) of long-context LLM requests by reusing previously computed key-value (KV) states, but for short prefixes or fast GPUs, recomputation can be faster than loading from an external cache. We characterize this tradeoff in vLLM across GPU, CPU, and NVMe tiers using synthetic workloads, long-context benchmarks, production traces, and find that cache performance depends on transfer granularity, intermediate memory use, and when transfers enter the request schedule, not only on device bandwidth. These findings motivate py-kvcache, a vLLM KV Offload connector with asynchronous direct I/O, bounded shared staging, and scheduler-aware preloading, which starts disk reads while requests are still waiting, overlapping with compute. At 80k tokens, py-kvcache loading from disk is 2.0x faster than LMCache, with preloading contributing 1.34x. With GPU, CPU, and disk caching enabled, it is 1.23x faster than LMCache and within approximately 4% of the native vLLM KV Offload implementation. LongBench and SCBench show that these benefits extend to irregular prefix chains and multi-turn workloads. Bailian trace replays improve TTFT on a weaker GPU, but on an H100 the average request falls below the break-even point and GPU memory alone retains enough prefixes. External KV caching should therefore be treated as a setup specific admission decision. The py-kvcacheimplementation is available at: https://github.com/atlarge-research/py-kvcache.",
+          "arxiv_id": "2609.11744",
+          "arxiv_url": "https://arxiv.org/abs/2609.11744",
+          "authors": [
+            "Joseph Kanichai",
+            "Tiziano De Matteis",
+            "Animesh Trivedi"
+          ],
+          "bullets": [
+            "External KV caching can lose to recomputation for short prefixes or fast GPUs, so admission should be setup-specific.",
+            "Performance depends on transfer granularity, staging-memory usage, and scheduling—not just device bandwidth.",
+            "py-kvcache uses asynchronous direct I/O, bounded shared staging, and scheduler-aware preloading.",
+            "At 80k tokens, it loads from disk 2.0× faster than LMCache; combined GPU/CPU/disk caching is 1.23× faster and within about 4% of native vLLM KV Offload.",
+            "Benefits extend to irregular and multi-turn workloads, but on an H100 GPU memory alone may make external caching unnecessary."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 9: py-kvcache architecture.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 714,
+              "image_path": "figures/2609.11744/figure-001.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 716
+            },
+            {
+              "caption": "Figure 3: Sample py-kvcache execution trace. Blue blocks are I/O reads and pink blocks are transfers to the GPU.",
+              "figure_id": "figure-3-14",
+              "figure_number": "3",
+              "height": 436,
+              "image_path": "figures/2609.11744/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 968
+            },
+            {
+              "caption": "Figure 6: TTFT break-even frontiers (vLLM v0.22, Snellius node). Above each line, loading the cached prefix is faster than recomputing it.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 397,
+              "image_path": "figures/2609.11744/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1023
+            },
+            {
+              "caption": "Figure 8: Storage microbenchmarks.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 340,
+              "image_path": "figures/2609.11744/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1040
+            },
+            {
+              "caption": "Figure 2: vLLM KV cache interfaces and execution sequences (v0.22.0). Offload defers stores to the next engine iteration so they overlap the following forward pass, while Transfer waits for them after each pass.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 1278,
+              "image_path": "figures/2609.11744/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 722
+            },
+            {
+              "caption": "Figure 11: Query TTFT for LongBench and SCBench workloads on the Snellius node, and Bailian traces on the local node (vLLM v0.22, Qwen3 4B, Snellius node). py-kvcache, LMCache, and native vLLM KV Offload run with GPU prefix caching enabled.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 625,
+              "image_path": "figures/2609.11744/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1038
+            },
+            {
+              "caption": "Figure 10: Isolated long-document evaluation (vLLM v0.22, Llama 3.2 3B, Snellius node).",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 345,
+              "image_path": "figures/2609.11744/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1039
+            },
+            {
+              "caption": "Figure 4: Long-document benchmark TTFT (vLLM v0.16, local node). Both external caches cut cache-hit TTFT by 2.2– 32.8× relative to recomputation.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 297,
+              "image_path": "figures/2609.11744/figure-008.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 490
+            },
+            {
+              "caption": "Figure 1: Prefix-hash chaining.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 199,
+              "image_path": "figures/2609.11744/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 498
+            },
+            {
+              "caption": "Figure 12: SCBench CPU-pool occupancy and storage throughput (vLLM v0.22, Qwen3 4B, Snellius node). Unbounded promotions keep the native CPU pool full and read 3.4 TB from disk, whereas py-kvcache’s bounded staging reads 85 GB and finishes serving all requests by 480 s.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 450,
+              "image_path": "figures/2609.11744/figure-010.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 1038
+            },
+            {
+              "caption": "Figure 5: GPU ↔ CPU transfer bandwidth for different max_num_batched_tokens. 1k–10k in the legend denotes the max_num_batched_tokens value (vLLM v0.16, local node).",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 304,
+              "image_path": "figures/2609.11744/figure-011.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 490
+            },
+            {
+              "caption": "Figure 7: Break-even storage bandwidth (vLLM v0.22, Snellius node). This is a bandwidth representation of the Pareto Frontiers in Figure 6. The dashed lines show ideal measured throughput of our SSDs.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 302,
+              "image_path": "figures/2609.11744/figure-012.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 490
+            },
+            {
+              "caption": "Table 1: Summary of the compared external KV cache systems. py-kvcache is this work, and is described in section 6.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 422,
+              "image_path": "figures/2609.11744/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1002
+            },
+            {
+              "caption": "Table 2: Local node configuration.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 233,
+              "image_path": "figures/2609.11744/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 479
+            },
+            {
+              "caption": "Table 3: Snellius GPU node configuration.",
+              "figure_id": "table-3-12",
+              "figure_number": "3",
+              "height": 213,
+              "image_path": "figures/2609.11744/table-015.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 479
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11744/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.11744",
+          "relevance": 9,
+          "selection_reason": "Introduces py-kvcache, a performance-optimized external KV caching connector for vLLM that overlaps disk I/O with compute to reduce latency.",
+          "summary_status": "generated",
+          "title": "Building py-kvcache: A Performance Characterization of External KV Caching for vLLM with NVMe SSDs",
+          "tldr": "py-kvcache accelerates vLLM’s external NVMe KV caching by overlapping scheduler-aware disk prefetching with computation, while showing that caching benefits depend strongly on workload and hardware.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language model serving costs scale directly with output sequence length, yet standard preference alignment often inflates response verbosity without improving utility. We study whether the parameterization of post-training updates affects generation length: low-rank subspaces alter sequence length without modifying the alignment loss. We present LOCUS, a method that selects a task-aware low-rank adaptation subspace to minimize output-token cost subject to a utility constraint. Within this subspace, post-training retains the native preference objective with a frozen backbone. Across Anthropic HH-RLHF dialogue preferences, we evaluate two $\\sim$3B decoder backbones, Pythia-2.8B and Qwen2.5-3B, against protocol-matched full-parameter DPO and DrDPO branches and the released SamPO checkpoint. LOCUS reduces continuation length by up to 39.84\\% on Pythia-2.8B and by 14.87--17.58\\% on Qwen2.5-3B while updating only 0.24--0.28\\% of model parameters, with no material change in the internal preference diagnostic.",
+          "arxiv_id": "2609.11739",
+          "arxiv_url": "https://arxiv.org/abs/2609.11739",
+          "authors": [
+            "Dongfang Zhao"
+          ],
+          "bullets": [
+            "Targets serving costs caused by excessive verbosity after preference alignment.",
+            "Selects a low-rank adaptation subspace that minimizes output-token cost under a utility constraint.",
+            "Keeps the backbone frozen and applies the native preference objective within the selected subspace.",
+            "Evaluated on Anthropic HH-RLHF with Pythia-2.8B and Qwen2.5-3B against matched DPO variants and SamPO.",
+            "Cuts continuation length by up to 39.84% on Pythia and 14.87–17.58% on Qwen while updating 0.24–0.28% of parameters, with no material change in the internal preference diagnostic."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: LOCUS procedure from native-objective training to selected low-rank deployment.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 629,
+              "image_path": "figures/2609.11739/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 426
+            },
+            {
+              "caption": "Figure 1: Token and accuracy summary on Pythia-2.8B.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 389,
+              "image_path": "figures/2609.11739/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 448
+            },
+            {
+              "caption": "Figure 4: Continuation length CDF.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 332,
+              "image_path": "figures/2609.11739/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 448
+            },
+            {
+              "caption": "Figure 3: Constrained checkpoint selection.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 317,
+              "image_path": "figures/2609.11739/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 448
+            },
+            {
+              "caption": "Figure 5: Sensitivity to adapter rank.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 315,
+              "image_path": "figures/2609.11739/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 448
+            },
+            {
+              "caption": "Figure 7: Cross-task evaluations.",
+              "figure_id": "figure-7-13",
+              "figure_number": "7",
+              "height": 261,
+              "image_path": "figures/2609.11739/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 451
+            },
+            {
+              "caption": "Figure 8: Cross-backbone token and accuracy results.",
+              "figure_id": "figure-8-12",
+              "figure_number": "8",
+              "height": 257,
+              "image_path": "figures/2609.11739/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 453
+            },
+            {
+              "caption": "Figure 6: Target-module ablation.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 248,
+              "image_path": "figures/2609.11739/figure-008.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 451
+            },
+            {
+              "caption": "Table 3: Datasets, development splits, and frozen evaluation sets.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 361,
+              "image_path": "figures/2609.11739/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 904
+            },
+            {
+              "caption": "Table 2: Full-parameter and low-rank branches used in the primary comparisons.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 236,
+              "image_path": "figures/2609.11739/table-010.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 916
+            },
+            {
+              "caption": "Table 1: Backbones and backbone-specific LOCUS parameterizations.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 194,
+              "image_path": "figures/2609.11739/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 924
+            },
+            {
+              "caption": "Table 4: Primary results across both backbone families.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 127,
+              "image_path": "figures/2609.11739/table-012.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 945
+            },
+            {
+              "caption": "Table 5: Cross-task token and accuracy comparisons.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 133,
+              "image_path": "figures/2609.11739/table-013.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 869
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11739/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.11739",
+          "relevance": 6,
+          "selection_reason": "Reduces output-token serving cost via low-rank post-training, aligning with efficiency-oriented AI methods.",
+          "summary_status": "generated",
+          "title": "LOCUS: Task-Aware Low-Rank Post-Training for Token-Efficient Language Generation",
+          "tldr": "LOCUS uses a task-aware low-rank post-training subspace to reduce language-model output length while preserving preference alignment.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Artificial neural networks rely on vector-matrix multiplications (VMMs), whose implementation in von Neumann architectures is dominated by costly data movement between memory and processing units. Spiking neural networks (SNNs) mitigate this bottleneck by performing in-memory, analog VMMs using memristive crossbar arrays. However, conventional current-mode readout circuits incur significant area and power overhead. This work proposes a fully analog readout architecture based on voltage-to-time conversion of the VMM output. By sensing the column voltage, the proposed approach avoids current-mode summing and scaling circuitry, improving area and energy efficiency. Post-layout simulations of a 10x1 SNN implemented in a 130 nm CMOS technology validate the proposed architecture, while application to a trained 64x10 SNN for digit classification further demonstrates its feasibility for SNN inference.",
+          "arxiv_id": "2609.11713",
+          "arxiv_url": "https://arxiv.org/abs/2609.11713",
+          "authors": [
+            "Elia Mateu-Barriendos, \\'Alvaro G\\'omez-Pau, Josep Rius, Daniel Arum\\'i, Rosa Rodr\\'iguez-Monta\\~n\\'es, Salvador Manich"
+          ],
+          "bullets": [
+            "Targets data-movement and readout overheads in in-memory analog VMMs for SNNs.",
+            "Converts the sensed memristive crossbar column voltage into a time-coded output.",
+            "Avoids conventional current-mode summing and scaling circuitry.",
+            "Post-layout simulations in 130 nm CMOS validate a 10×1 SNN implementation.",
+            "A trained 64×10 digit-classification SNN demonstrates inference feasibility."
+          ],
+          "categories": [
+            "cs.ET",
+            "cs.AI",
+            "cs.AR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 7: Application of the proposed architecture to a trained 64×10 SNN with quantized synaptic weights. Membrane traces are included only when multiple neurons are active.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 267,
+              "image_path": "figures/2609.11713/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 526
+            },
+            {
+              "caption": "Fig. 3: V2T circuit: (a) high-level conceptual schematic including the IF neuron (b) illustrative waveforms.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 280,
+              "image_path": "figures/2609.11713/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1074
+            },
+            {
+              "caption": "Fig. 6: Post-layout simulation waveforms of the 10×1 SNN prototype, illustrating two scenarios: one (orange) and ten (blue) simultaneously active inputs at 200 kHz, corresponding to column conductances of 0.2mS and 2mS, respectively.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 253,
+              "image_path": "figures/2609.11713/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 913
+            },
+            {
+              "caption": "Fig. 2: Analog SNN with 1T1R memristive synapses employing voltage-mode crossbar sensing. The VMM output is represented by a column voltage VREAD,j and converted into a pulse duration ∆tj controlling the neuron current injection.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 324,
+              "image_path": "figures/2609.11713/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 489
+            },
+            {
+              "caption": "Fig. 5: Post-layout simulation results of the conductance-totime conversion characteristic of the 10×1 SNN prototype.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 272,
+              "image_path": "figures/2609.11713/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 473
+            },
+            {
+              "caption": "Fig. 4: Layout of the implemented 10×1 SNN prototype. Total area is 2880.52 µm2.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 60,
+              "image_path": "figures/2609.11713/figure-006.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE I: Design parameters for the 10×1 SNN prototype",
+              "figure_id": "table-I-5",
+              "figure_number": "I",
+              "height": 231,
+              "image_path": "figures/2609.11713/table-007.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 492
+            },
+            {
+              "caption": "TABLE II: Area of the Implemented Prototype",
+              "figure_id": "table-II-3",
+              "figure_number": "II",
+              "height": 118,
+              "image_path": "figures/2609.11713/table-008.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 440
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11713/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.11713",
+          "relevance": 5,
+          "selection_reason": "Directly targets energy and area efficiency of AI inference via analog memristive SNN readout hardware.",
+          "summary_status": "generated",
+          "title": "A Time-Based Readout for Vector-Matrix Multiplication in Fully Analog Memristive SNNs",
+          "tldr": "A fully analog voltage-to-time readout reduces the area and energy overhead of memristive SNN vector-matrix multiplication.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "In this paper, we investigate the generalization performance of distributed gradient descent algorithms in a reproducing kernel Hilbert space under a robust loss function $l_σ$. By exploiting the spectral characterization of gradient descent together with the intrinsic properties of robust loss functions, we establish optimal learning rates for the distributed kernel-based robust gradient descent (DKRGD) algorithm with an appropriately chosen scale parameter $σ$. The proposed parameter choice of $σ$ simultaneously alleviates the saturation phenomenon and guarantees statistical robustness. A key technical contribution is a novel error analysis that provides substantially sharper bounds for products of operators, thereby significantly relaxing existing restrictions on the maximum number of local machines while retaining optimal learning rates. Finally, we develop a communication-efficient strategy that further improves the convergence performance of DKRGD.",
+          "arxiv_id": "2609.11712",
+          "arxiv_url": "https://arxiv.org/abs/2609.11712",
+          "authors": [
+            "Jun-Yi Meng",
+            "Zheng-Chu Guo",
+            "Yuan Mao"
+          ],
+          "bullets": [
+            "Analyzes generalization of distributed gradient descent in reproducing kernel Hilbert spaces under a robust loss.",
+            "Chooses the loss scale parameter to mitigate saturation while preserving statistical robustness.",
+            "Introduces sharper bounds for products of operators, relaxing restrictions on the number of local machines.",
+            "Develops a communication-efficient strategy that improves convergence performance.",
+            "Scope: theoretical guarantees for the DKRGD algorithm; specific empirical results are not stated in the abstract."
+          ],
+          "categories": [
+            "stat.ML",
+            "cs.LG",
+            "math.OA",
+            "math.PR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure. 1: Two convex types of lσ with different σ. (a) Huber Loss, (b) Fair Loss.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 406,
+              "image_path": "figures/2609.11712/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1067
+            },
+            {
+              "caption": "Figure. 2: Two nonconvex types of lσ with different σ. (a) Cauchy Loss, (b) Welsch Loss.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 406,
+              "image_path": "figures/2609.11712/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1067
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11712/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11712",
+          "relevance": 8,
+          "selection_reason": "Investigates distributed kernel-based robust gradient descent with a communication-efficient strategy, contributing to efficient training methods.",
+          "summary_status": "generated",
+          "title": "Generalization Analysis of Distributed Kernel-based Robust Gradient Descent Algorithms",
+          "tldr": "This paper establishes optimal learning rates and improved scalability for distributed kernel-based robust gradient descent through principled robust-loss parameter selection and sharper operator analysis.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language model (LLM) training is among the fastest-growing sources of electricity demand in modern data centers, and power availability is a primary bottleneck to continued AI infrastructure growth. Making the power consumption of these workloads flexible could unlock additional power for AI growth, limit increases in electricity prices, and improve the utilization of existing grid infrastructure. However, to realize this flexibility, we must first understand how the performance of training workloads changes when GPU power is reduced. This paper presents the first systematic characterization of \\emph{job power elasticity} (the sensitivity of throughput to power reductions) in LLM training. To quantify elasticity, we introduce the \\emph{Power Flexibility Index (PFI)}, a normalized metric that quantifies the performance cost of power reductions and provides a control primitive for SLA-aware power flexibility. We collect data from 131 LLM training runs on H200 (plus 24 H200 validation runs and 34 matched H100 runs), including both dense and mixture-of-experts models, pretraining and fine-tuning tasks, and up to 32 GPUs. We find that LLM training jobs exhibit substantial but variable power elasticity, and we identify telemetry signals that predict PFI at runtime. Finally, we demonstrate that PFI-aware power allocation maximizes total tokens/second throughput under power constraints. Under a 30\\% power reduction, PFI-aware power allocation recovers ~1.5k tokens/s per job, 63\\% of the performance gap between an equal-weight allocation and an oracle with perfect information. Our results establish power elasticity as a measurable property of training jobs and provide a foundation for power-aware, grid-responsive AI infrastructure.",
+          "arxiv_id": "2609.11542",
+          "arxiv_url": "https://arxiv.org/abs/2609.11542",
+          "authors": [
+            "Philip Colangelo, Charles Dawson, Shayan Sengupta, Ayse Coskun, Varun Sivaram"
+          ],
+          "bullets": [
+            "Power availability is a growing bottleneck for AI infrastructure, motivating flexible LLM training workloads.",
+            "The study characterizes job power elasticity across 131 H200 training runs, with additional H200 validation and matched H100 runs spanning dense, mixture-of-experts, pretraining, and fine-tuning workloads.",
+            "The Power Flexibility Index (PFI) measures performance loss from power reductions and serves as an SLA-aware control signal.",
+            "Runtime telemetry can predict PFI, enabling power allocation tailored to individual jobs.",
+            "With a 30% power reduction, PFI-aware allocation recovers about 1.5k tokens/s per job and 63% of the gap between equal-weight allocation and an oracle policy."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: LLM training jobs vary in how quickly performance degrades under power reductions. Relatively more power flexible (—) jobs maintain throughput despite power reductions, while relatively less flexible (- -) jobs quickly lose performance at lower power. We introduce the Power Flexibility Index (PFI), a new metric for measuring power elasticity, and conduct large-scale, systematic characterization of modern LLM training jobs. We develop a model for predicting PFI online from readily available GPU telemetry, and we demonstrate how PFI-aware power allocation improves total throughput under cluster-wide GPU power constraints and realistic job mixes.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 200,
+              "image_path": "figures/2609.11542/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 820
+            },
+            {
+              "caption": "Figure 4: Left: PFI distribution across all jobs. Right: PFI by architecture and training task; median shown as horizontal bar.",
+              "figure_id": "figure-4-25",
+              "figure_number": "4",
+              "height": 140,
+              "image_path": "figures/2609.11542/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 535
+            },
+            {
+              "caption": "Figure 5: PFI vs. GPU telemetry metrics, showing the correlation (ordinary least-squares fit and Spearman ρ) between PFI and metrics measured for the uncapped job in each sweep group. DRAM copy product and tensor to SM ratio are derived metrics. ∗q < 0.05, ∗∗q < 0.01, where q is the Benjamini–Hochberg FDR-corrected p-value across all metrics tested in Fig. 14 in the appendix.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 392,
+              "image_path": "figures/2609.11542/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 809
+            },
+            {
+              "caption": "Figure 8: Difference in throughput for four allocation strategies compared against an oracle with perfect information of each job’s power-performance curve (less negative = closer to optimal) across a range of curtailment targets and workload mixes (random = jobs sampled at random from our dataset, production = jobs sampled according to the pretraining/fine-tuning mix from recent work [10]).",
+              "figure_id": "figure-8-16",
+              "figure_number": "8",
+              "height": 243,
+              "image_path": "figures/2609.11542/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 813
+            },
+            {
+              "caption": "Figure 3: Power–performance curves for all sweep groups. Left: Aggregate GPU power vs. throughput. Center: Per-sweep normalized power vs. throughput. Right: Mean normalized power vs. throughput for each category (dense vs. MoE, pretraining vs LoRA SFT). Full data are provided in Appendix C.",
+              "figure_id": "figure-3-26",
+              "figure_number": "3",
+              "height": 222,
+              "image_path": "figures/2609.11542/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 726
+            },
+            {
+              "caption": "Figure 6: Steady-state SM clock and memory clock frequency as a function of power cap.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 280,
+              "image_path": "figures/2609.11542/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 354
+            },
+            {
+              "caption": "Figure 7: Predictions of the PFI model fit to DRAM copy product, including the validation set.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 301,
+              "image_path": "figures/2609.11542/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 310
+            },
+            {
+              "caption": "Figure 2: Aggregate GPU power and training throughput for a representative QWEN3-32B pretraining run on 32×H200 at 700W/GPU.",
+              "figure_id": "figure-2-19",
+              "figure_number": "2",
+              "height": 194,
+              "image_path": "figures/2609.11542/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 395
+            },
+            {
+              "caption": "Figure 11: Power-throughput curves (raw and normalized) for each headline and validation run on H200.",
+              "figure_id": "figure-11-13",
+              "figure_number": "11",
+              "height": 880,
+              "image_path": "figures/2609.11542/figure-009.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 718
+            },
+            {
+              "caption": "Figure 12: Power-throughput curves (raw and normalized) for each headline and validation run on H200 (continued).",
+              "figure_id": "figure-12-20",
+              "figure_number": "12",
+              "height": 880,
+              "image_path": "figures/2609.11542/figure-010.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 718
+            },
+            {
+              "caption": "Figure 10: Comparison of the empirical distribution of the three alternative PFI definitions on the training set cohort.",
+              "figure_id": "figure-10-4",
+              "figure_number": "10",
+              "height": 556,
+              "image_path": "figures/2609.11542/figure-011.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 563
+            },
+            {
+              "caption": "Figure 13: Power-throughput curves (raw and normalized) for each headline and validation run on H200 (continued).",
+              "figure_id": "figure-13-24",
+              "figure_number": "13",
+              "height": 880,
+              "image_path": "figures/2609.11542/figure-012.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 718
+            },
+            {
+              "caption": "Figure 14: PFI vs. all DCGM GPU metrics and composite features. Dashed lines show ordinary least-squares fit; Spearman ρ and significance are annotated. ∗q < 0.05, ∗∗q < 0.01, where q is the Benjamini–Hochberg FDR-corrected p-value across all metrics in this figure.",
+              "figure_id": "figure-14-23",
+              "figure_number": "14",
+              "height": 1164,
+              "image_path": "figures/2609.11542/figure-013.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 730
+            },
+            {
+              "caption": "Figure 9: Comparison of constant-elasticity fit with the observed power-performance curve for gpt-oss-20b fine-tuning on 8×H200s.",
+              "figure_id": "figure-9-12",
+              "figure_number": "9",
+              "height": 283,
+              "image_path": "figures/2609.11542/figure-014.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 312
+            },
+            {
+              "caption": "Table 3: Predictor ablation for PFI (n = 25). Job metadata includes architecture type, training task, and log2 GPU count. p: # of features. LOO: leave-one-out. LOCO: leave-one-cluster-out. ρ: Spearman rank correlation.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 226,
+              "image_path": "figures/2609.11542/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 818
+            },
+            {
+              "caption": "Table 6: Power Flexibility Index for each of the headline sweep groups on H200. Each group runs a single job (fixed model, task, cluster size, and training configuration) at multiple power caps; # runs is the number of power-caps measured. 95% CI is estimated from 10,000 Monte Carlo samples for each run, with power and throughput measurements resampled from the empirical noise distribution.",
+              "figure_id": "table-6-22",
+              "figure_number": "6",
+              "height": 617,
+              "image_path": "figures/2609.11542/table-016.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 718
+            },
+            {
+              "caption": "Table 13: Spearman rank correlation between the DRAM copy product and PFI within architecture subgroups, over the 25 headline sweep groups.",
+              "figure_id": "table-13-14",
+              "figure_number": "13",
+              "height": 140,
+              "image_path": "figures/2609.11542/table-017.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 390
+            },
+            {
+              "caption": "Table 2: Models used in experiments, split into training and held-out validation sets. Active params denote the per-token activation count for sparse Mixture-of-Experts (MoE) models.",
+              "figure_id": "table-2-18",
+              "figure_number": "2",
+              "height": 202,
+              "image_path": "figures/2609.11542/table-018.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 710
+            },
+            {
+              "caption": "Table 10: PFI by task/architecture regime across the 25 headline sweep groups.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 118,
+              "image_path": "figures/2609.11542/table-019.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 514
+            },
+            {
+              "caption": "Table 9: PFI for 8-GPU sweep groups computed on the full six-cap grid (200–700 W) and on the coarse four-cap grid (200, 500, 600, 700 W) used for the 16- and 32-GPU groups.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 411,
+              "image_path": "figures/2609.11542/table-020.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 786
+            },
+            {
+              "caption": "Table 5: Compute resources used for this project.",
+              "figure_id": "table-5-21",
+              "figure_number": "5",
+              "height": 207,
+              "image_path": "figures/2609.11542/table-021.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 686
+            },
+            {
+              "caption": "Table 1: Experiment matrix. Each sweep group fixes one full configuration per job and varies only the per-GPU power cap; PFI is computed within a sweep group. 8-GPU groups sweep power caps in 100 W increments from 200–700 W, 16- and 32-GPU groups sweep 200/500/600/700 W only. EP = expert parallelism degree (pretraining only); PT = pretraining; LoRA = rank-32 LoRA SFT. GC = gradient checkpointing.",
+              "figure_id": "table-1-17",
+              "figure_number": "1",
+              "height": 134,
+              "image_path": "figures/2609.11542/table-022.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 830
+            },
+            {
+              "caption": "Table 12: Spearman rank correlation between the DRAM copy product and PFI as the k highestleverage sweep groups are removed, over the 25 headline groups. Leverage is computed from the predictor only. Groups are removed in leverage order: Qwen3-30B-A3B (MoE, fine-tuning, 8 GPU), gpt-oss-20b (MoE, fine-tuning, 8 GPU), Qwen3-30B-A3B (MoE, fine-tuning, 16 GPU), Qwen3-32B (dense, pretraining, 8 GPU), Llama-3.1-70B (dense, pretraining, 16 GPU).",
+              "figure_id": "table-12-15",
+              "figure_number": "12",
+              "height": 186,
+              "image_path": "figures/2609.11542/table-023.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 232
+            },
+            {
+              "caption": "Table 4: Compute for paper-included runs. Wall-clock figures are the actual DCGM-bracketed durations from the master telemetry frame, not the 30 min training cap.",
+              "figure_id": "table-4-27",
+              "figure_number": "4",
+              "height": 150,
+              "image_path": "figures/2609.11542/table-024.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 552
+            },
+            {
+              "caption": "Table 8: PFI for six matched sweep groups on H100 and H200. All groups use 8 GPUs. Rank ordering is nearly preserved across generations (Spearman ρ = 0.943).",
+              "figure_id": "table-8-6",
+              "figure_number": "8",
+              "height": 215,
+              "image_path": "figures/2609.11542/table-025.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 786
+            },
+            {
+              "caption": "Table 7: Power Flexibility Index for the 4 held-out validation sweep groups on H200.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 139,
+              "image_path": "figures/2609.11542/table-026.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 590
+            },
+            {
+              "caption": "Table 11: Dunn’s post-hoc test, all three pairs, Holm–Bonferroni corrected (m = 3). ∗ denotes pHolm < 0.05.",
+              "figure_id": "table-11-9",
+              "figure_number": "11",
+              "height": 116,
+              "image_path": "figures/2609.11542/table-027.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 718
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11542/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11542",
+          "relevance": 6,
+          "selection_reason": "First systematic characterization of power elasticity in LLM training with a Power Flexibility Index and power-aware allocation; directly addresses energy efficiency in AI systems.",
+          "summary_status": "generated",
+          "title": "Characterizing Job Power Elasticity for Power-Flexible AI Training",
+          "tldr": "LLM training jobs can flex GPU power with variable throughput costs, and the proposed PFI metric enables runtime-aware allocation that substantially preserves performance under power constraints.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Heterogeneous model collaboration seeks to exploit the complementary strengths of different models to balance predictive performance and inference cost. Existing approaches typically rely either on trained routers, which tie routing decisions to a fixed task and model pool, or on raw-confidence cascades, whose thresholds lack consistent reliability semantics across heterogeneous models. Consequently, these approaches adapt poorly to changing model pools and deployment budgets. We propose Calibration-Aware Uncertainty Cascades (CAUC), a simple post-hoc framework that independently calibrates each model's confidence and selects deployment policies using validation data. The resulting calibrated confidence scores establish a common reliability scale for accepting an early prediction, invoking a stronger model, or selectively combining model outputs. This unified decision criterion decouples deployment policies from any particular model pool or operating budget. We further show theoretically that calibration gives confidence thresholds an explicit selective-risk interpretation, whereas uncalibrated scores offer no comparable reliability guarantee. Extensive experiments demonstrate that, across six language benchmarks, CAUC achieves an average relative accuracy improvement of 1.9% over strong-model-only inference while avoiding approximately 47% of strong-model calls. On image classification benchmarks, it maintains or improves predictive performance while reducing measured GFLOPs by up to 57%.",
+          "arxiv_id": "2609.11446",
+          "arxiv_url": "https://arxiv.org/abs/2609.11446",
+          "authors": [
+            "Yilin Zhang, Han Jiang, Cai Xu, Ying Liu, Wei Zhao"
+          ],
+          "bullets": [
+            "Addresses unreliable raw-confidence thresholds and task- or model-pool-specific trained routers.",
+            "Independently calibrates each model post hoc using validation data, then selects cascading or selective-combination policies.",
+            "Gives confidence thresholds an explicit selective-risk interpretation under calibration.",
+            "Across six language benchmarks, improves average relative accuracy by 1.9% over strong-model-only inference while avoiding about 47% of strong-model calls.",
+            "On image classification, maintains or improves performance while reducing measured GFLOPs by up to 57%."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "failed",
+          "figures": [],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": null,
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.11446",
+          "relevance": 6,
+          "selection_reason": "Introduces a post-hoc calibration framework for model cascades that reduces inference cost (strong-model calls, GFLOPs) with a unified reliability criterion, a transferable efficiency contribution.",
+          "summary_status": "generated",
+          "title": "Calibration-Aware Uncertainty Cascades for Efficient Heterogeneous Model Collaboration",
+          "tldr": "CAUC calibrates heterogeneous models onto a shared reliability scale, enabling efficient cascaded inference with fewer expensive-model calls while preserving or improving accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Reducing audio-encoder depth lowers the inference cost of speech large language models, but removing complete blocks perturbs the embeddings consumed by the decoder and can cause deletion and premature end-of-sequence errors. We introduce X-AuT, a progressive framework that selects layer combinations through short behavioral probes and restores the pruned model through representation alignment, cross-scale distillation, scheduled student-policy supervision, and LoRA finetuning. The language-model backbone remains frozen, while attention LoRA adapters and the tied output embedding adapt during distillation. Training uses the highest-agreement tier from a transcript-consistency pipeline, followed by source reweighting during finetuning. On ten public Chinese--English benchmarks, compressing Qwen3-ASR-0.6B from 18 to 16 audio-encoder layers reduces macro-average error from 5.61% to 5.27%. The 14-layer model reaches 5.75% with 20.7% fewer audio-tower parameters. Under the matched recipe, the 1.7B teacher yields 5.55% mean error, compared with 8.45% for self-distillation, and progressive 18$\\rightarrow$14 pruning outperforms direct pruning (5.75% vs. 6.73%). These single-run results establish two practical operating points and show that the accuracy effects vary across benchmarks. Project website: https://xpeng-ai.github.io/x-aut",
+          "arxiv_id": "2609.11412",
+          "arxiv_url": "https://arxiv.org/abs/2609.11412",
+          "authors": [
+            "Haojun Zhang, Yi Zou, Min Chen, Qize Yu, Lianrui Fan, Xini Ding, Hao Li, Shuchang Zhou, Xianming Liu, Shiyu Huang"
+          ],
+          "bullets": [
+            "Targets deletion and premature end-of-sequence errors caused by removing complete audio-encoder blocks.",
+            "Selects layer combinations using short behavioral probes, then applies representation alignment, cross-scale distillation, scheduled student-policy supervision, and LoRA finetuning.",
+            "Keeps the language-model backbone frozen while adapting attention LoRA modules and the tied output embedding.",
+            "On ten public Chinese–English benchmarks, 18→16 layers reduce mean error from 5.61% to 5.27%; 18→14 layers achieve 5.75% with 20.7% fewer audio-tower parameters.",
+            "Progressive pruning outperforms direct pruning (5.75% vs. 6.73%), while results vary across benchmarks and are based on single runs."
+          ],
+          "categories": [
+            "cs.SD",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Four-step data pipeline: corpus unification and normalization, dual-system transcription, pairwise CER/WER and consistency voting, and quality-ranked label selection. The rightmost panel reports the WenetSpeech audit summary; audit percentages describe label-selection behavior and are not used as training weights.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 308,
+              "image_path": "figures/2609.11412/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: Overview of X-AuT. Transcript-consistency filtering constructs the class 1 training pool, matched short-budget probes select recoverable layer combinations, and two pruning hops reduce the audio tower from 18 to 14 layers. Each pruned student is recovered through representation alignment, cross-scale distillation with teacher-forced and scheduled student-policy contexts, and LoRA finetuning while the decoder backbone remains frozen. Evaluation aggregates CER/WER over ten benchmarks; Secs. 4.2 and 3.4 provide the full configuration.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 551,
+              "image_path": "figures/2609.11412/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Selection-suite TER during 16-layer recovery. (a) Stage 0/1 distillation, with the transition near step 4000. (b) Stage 2 finetuning from the best Stage 1 checkpoint; the dashed line marks 5.76%. The displayed trends summarize checkpoint evaluations and are not uncertainty estimates.",
+              "figure_id": "figure-4-13",
+              "figure_number": "4",
+              "height": 646,
+              "image_path": "figures/2609.11412/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 782
+            },
+            {
+              "caption": "Figure 5: Layer-screening results for single- and double-layer removals after the same 0.3-epoch warm-up. Lower TER is better; green marks the candidate selected for progressive pruning.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 324,
+              "image_path": "figures/2609.11412/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 814
+            },
+            {
+              "caption": "Figure 6: Premature-EOS ablation on prune-16. A disables both mitigations, B trains the tied head, C applies minimum-token gating, and D combines them. (a) Development TER. (b) Empty-rollout ratio (dashed) and mean rollout length (solid). All runs start from the same Stage 0 checkpoint.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 312,
+              "image_path": "figures/2609.11412/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 826
+            },
+            {
+              "caption": "Figure 7: Stage 1 strategy dashboard for plain off-policy, matched off-policy, and hybrid on-policy training; lower TER is better. Exact best and final values in the accompanying text are taken from the archived checkpoint logs.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 415,
+              "image_path": "figures/2609.11412/figure-006.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 782
+            },
+            {
+              "caption": "Figure 1: Per-benchmark accuracy preservation of the Stage 2 X-AuT models relative to unpruned Qwen3-ASR-0.6B. The dashed contour marks the baseline (100); higher values indicate better accuracy retention.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 394,
+              "image_path": "figures/2609.11412/figure-007.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 402
+            },
+            {
+              "caption": "Table 3: Full-suite error rates for the 14-layer model. The 147.8M audio tower has 20.7% fewer parameters than the 186.4M baseline. Formatting and reporting conventions follow Table 2.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 368,
+              "image_path": "figures/2609.11412/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 590
+            },
+            {
+              "caption": "Table 2: Full-suite error rates for the 16-layer model. S1 is the Stage 1 best checkpoint and S2 is the finetuned checkpoint. Mean is the unweighted macro average. Relative mean-error change is (ē/ēbase − 1) × 100%; negative is better. Bold marks the best observed value, not statistical significance.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 367,
+              "image_path": "figures/2609.11412/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 590
+            },
+            {
+              "caption": "Table 1: Nine-tier transcript-consistency hierarchy. Threshold bands use emax, the maximum pairwise edit rate. The tiers measure transcript agreement rather than ground-truth quality.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 297,
+              "image_path": "figures/2609.11412/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 756
+            },
+            {
+              "caption": "Table 4: Main 16-layer hyperparameters. The 14-layer run uses the same recipe and initializes from the recovered 16-layer checkpoint.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 383,
+              "image_path": "figures/2609.11412/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 682
+            },
+            {
+              "caption": "Table 9: Descriptive inference measurements averaged over more than 50 utterances of varying lengths. No run-to-run variance was retained. Peak device memory includes the full model, so encoder-only pruning changes it modestly.",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 223,
+              "image_path": "figures/2609.11412/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 652
+            },
+            {
+              "caption": "Table 6: Teacher-scale comparison for the 16-layer Stage 1 student. Schedules, data, and optimization are matched; cross-scale training additionally uses the required hidden-width projections. Values are single-run best-checkpoint results.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 339,
+              "image_path": "figures/2609.11412/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 582
+            },
+            {
+              "caption": "Table 8: Direct 18→14 pruning versus progressive 18→16→14 pruning. Both remove {1, 18, 5, 6} and use the same recovery/data budget. Single-run best-checkpoint results; bold marks the best observed value.",
+              "figure_id": "table-8-16",
+              "figure_number": "8",
+              "height": 317,
+              "image_path": "figures/2609.11412/table-014.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 560
+            },
+            {
+              "caption": "Table 5: Premature-EOS safeguards on prune-16 in a 2×2 ablation. All configurations share the same Stage 0 checkpoint and Stage 1 recipe. Empty events count 100-step windows with at least one empty rollout; rejections sum budget, length, and repetition filters. TER is the best development-suite observation.",
+              "figure_id": "table-5-1",
+              "figure_number": "5",
+              "height": 130,
+              "image_path": "figures/2609.11412/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 582
+            },
+            {
+              "caption": "Table 7: Pair probes for 16→14 pruning after the same 0.3-epoch warm-up. TER is the macro mean over five development subsets, including proprietary SC. ∆ is relative to {5, 6}. Bold marks the best observed candidate.",
+              "figure_id": "table-7-15",
+              "figure_number": "7",
+              "height": 142,
+              "image_path": "figures/2609.11412/table-016.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 510
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11412/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.11412",
+          "relevance": 7,
+          "selection_reason": "Progressive audio-encoder compression for speech LLMs directly reduces inference cost, fitting Efficient AI.",
+          "summary_status": "generated",
+          "title": "X-AuT: Progressive Audio-Encoder Compression for Speech LLMs with Cross-Scale Distillation",
+          "tldr": "X-AuT progressively compresses speech-LLM audio encoders while restoring decoder-compatible representations, reducing audio-tower cost with limited accuracy degradation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "High-fanout agent workloads create a growing memory bottleneck because a single task may spawn many concurrent sandbox sessions. Yet these sandboxes are far from independent: they originate from a shared template and execute related trajectories, exposing substantial template-relative and cross-sandbox memory redundancy. Conventional memory compression is poorly matched to this setting in three fundamental dimensions: how to compress, because they fail to exploit similarity across non-identical sandbox pages; what to compress, because they control page-fault overhead through conservative page selection; and when to compress, because compression is either triggered by memory pressure or performed without awareness of agent execution phases. We present AgentZip, the first memory compression system designed specifically for AI-agent sandboxes. AgentZip introduces compression mechanisms that exploit both the template-relative and cross-sandbox redundancy. It broadens the compression scope to any page with a profitable representation and shifts overhead control from compression-time page selection to restore-time prefetching. It further aligns expensive compression with LLM waiting periods to avoid interfering with foreground tool execution. Across LLM training and inference workloads, AgentZip reduces sandbox-owned memory by up to 8.7x, compared with 2.1x for the Linux configuration. Restore prefetching and agent-execution-aware scheduling reduce the slowdown of aggressive compression from as high as 3.1x to 1.40x while retaining nearly all of its memory-saving benefit.",
+          "arxiv_id": "2609.11294",
+          "arxiv_url": "https://arxiv.org/abs/2609.11294",
+          "authors": [
+            "Mengming Li, Ceyu XU, Qijun Zhang, Jiangnan Yu, Xiangfeng Sun, Haohui Mai, Zhiyao Xie"
+          ],
+          "bullets": [
+            "Targets memory bottlenecks in high-fanout workloads where sandboxes share templates and related execution trajectories.",
+            "Exploits template-relative and cross-sandbox redundancy and compresses any page with a profitable representation.",
+            "Controls overhead through restore-time prefetching rather than conservative compression-time page selection.",
+            "Schedules costly compression during LLM waiting periods to reduce interference with tool execution.",
+            "Across training and inference workloads, reduces sandbox memory by up to 8.7× and limits slowdown to 1.40× under aggressive compression."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.OS"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. AgentZip overview. AgentZip compresses sandbox-private pages using a portfolio of codecs, schedules expensive compression during LLM waiting periods, and proactively restores predicted pages before demand.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 385,
+              "image_path": "figures/2609.11294/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1042
+            },
+            {
+              "caption": "Figure 5. Average sandbox-owned memory saving relative to the paired no-compression baseline across Rollout and GAF.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 248,
+              "image_path": "figures/2609.11294/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 6. End-to-end wall-time slowdown relative to the paired no-compression baseline across Rollout and GAF.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 235,
+              "image_path": "figures/2609.11294/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 1. Similarity between sandboxes creates opportunities for inter-sandbox memory compression.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 383,
+              "image_path": "figures/2609.11294/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 498
+            },
+            {
+              "caption": "Figure 3. AgentZip’s compression infrastructure. Compressed pages are stored in a user-space pool. Later accesses to compressed pages are intercepted by userfaultfd.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 339,
+              "image_path": "figures/2609.11294/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 496
+            },
+            {
+              "caption": "Figure 8. Memory–latency trade-off of compression timing under the same compression algorithm portfolio.",
+              "figure_id": "figure-8-5",
+              "figure_number": "8",
+              "height": 290,
+              "image_path": "figures/2609.11294/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 501
+            },
+            {
+              "caption": "Figure 4. AgentZip lifecycle-aware scheduler. A lightweight scout identifies compression candidates during tool execution, while expensive compression during LLM waiting.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 291,
+              "image_path": "figures/2609.11294/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 498
+            },
+            {
+              "caption": "Figure 7. Effectiveness of AgentZip’s codec portfolio.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 285,
+              "image_path": "figures/2609.11294/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 497
+            },
+            {
+              "caption": "Figure 9. Cumulative prefetch ablation. (a) Demand restores amplification normalized by the number of reclaimed pages. (b) End-to-end slowdown.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 278,
+              "image_path": "figures/2609.11294/figure-009.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 501
+            },
+            {
+              "caption": "Figure 10. Counterfactual coverage and precision.",
+              "figure_id": "figure-10-7",
+              "figure_number": "10",
+              "height": 263,
+              "image_path": "figures/2609.11294/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 501
+            },
+            {
+              "caption": "Figure 12. AgentZip compression and restore overheads. (a) Breakdown of compression-pool memory usage. (b) Latency of codec decoding, asynchronous prefetch restoration, and blocking demand restoration.",
+              "figure_id": "figure-12-2",
+              "figure_number": "12",
+              "height": 312,
+              "image_path": "figures/2609.11294/figure-011.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 502
+            },
+            {
+              "caption": "Figure 11. Similarity and dictionary sensitivity study.",
+              "figure_id": "figure-11-3",
+              "figure_number": "11",
+              "height": 301,
+              "image_path": "figures/2609.11294/figure-012.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 501
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11294/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11294",
+          "relevance": 8,
+          "selection_reason": "Proposes AgentZip, a memory compression system for AI-agent sandboxes, directly addressing memory efficiency and cache management.",
+          "summary_status": "generated",
+          "title": "Memory Compression for High-Fanout Agent Sandboxes",
+          "tldr": "AgentZip compresses redundant memory across concurrent AI-agent sandboxes, achieving substantially higher memory savings while limiting execution slowdown through restore prefetching and phase-aware scheduling.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Agentic LLM workflows consist of sequences of model turns interleaved with tool interactions, so their end-to-end completion time depends not only on inference speed but also on when ready turns are released. Most runtimes release each turn immediately upon readiness. Under contention, this eager release policy can accumulate released but unfinished work; once submitted, those turns can no longer be reordered by the workflow-level policy, increasing tail latency. We present a tail-risk-aware turn release scheduling method that jointly decides which ready turn to release next and how much released but unfinished work to maintain. The method uses a mean--Conditional Value-at-Risk (CVaR) objective to capture the evolving tail risk of unfinished workflows, incorporates online estimates of turn work when prioritizing ready turns, and adapts the released work budget to observed queue pressure. We evaluate the method using real agent execution traces from software engineering tasks across multiple LLMs and workflow arrival rates. The method performs comparably to eager release under light load and substantially reduces the P95 of workflow flow time under contention, achieving up to a \\(3.50\\times\\) speedup.",
+          "arxiv_id": "2609.10964",
+          "arxiv_url": "https://arxiv.org/abs/2609.10964",
+          "authors": [
+            "Bochao Feng, Jianjiang Li, Haojie Wang, Lin Qiao, Yinghui Li, Yukun Yan, Jidong Zhai"
+          ],
+          "bullets": [
+            "Eagerly releasing every ready turn can create unreorderable queues and increase workflow tail latency.",
+            "The method jointly prioritizes ready turns and regulates the budget of released but unfinished work.",
+            "It optimizes a mean–CVaR objective, using online work estimates and observed queue pressure.",
+            "Across real software-engineering agent traces, it matches eager release under light load and reduces P95 flow time under contention.",
+            "Reported speedups reach up to 3.50×."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.SE"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Load dependent effects of eager release. At low load, immediately released turns receive service quickly and create little committed backlog. Under congestion, continued release causes released but unfinished work to accumulate in the shared LLM engine without a proportional increase in effective service capacity. When another turn later becomes ready or a workflow becomes more urgent to advance, previously committed turns cannot be reordered by the workflow runtime, resulting in lost scheduling optionality.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 527,
+              "image_path": "figures/2609.10964/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1034
+            },
+            {
+              "caption": "Figure 2: Workflow Tail Latency under Increasing Arrival Rates",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 500,
+              "image_path": "figures/2609.10964/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1026
+            },
+            {
+              "caption": "Figure 3: Ablation of Turn Release Scheduling Components",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 685,
+              "image_path": "figures/2609.10964/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 504
+            },
+            {
+              "caption": "Table 1: Characteristics of the evaluated agent workflow traces.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 123,
+              "image_path": "figures/2609.10964/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 864
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.10964/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.10964",
+          "relevance": 6,
+          "selection_reason": "Reduces tail latency of LLM workflow serving through turn-release scheduling, matching the compute/latency reduction goal of efficient-ai.",
+          "summary_status": "generated",
+          "title": "Decoupling Readiness from Release for Tail-Aware Scheduling of Agentic LLM Workflows",
+          "tldr": "A tail-aware scheduler improves agentic LLM workflow tail latency by controlling both which ready turns to release and how much work to release under contention.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "The key-value (KV) cache is the dominant memory bottleneck in long-context large language model (LLM) decoding: every step reads it entirely, so decoding is memory-bandwidth bound. Holding a quantized KV cache in dense on-chip non-volatile memory (NVM) removes the off-chip transfer. Existing KV quantization methods, however, were designed for GPU-style memory systems: KIVI attaches per-group metadata, adding about 25% to the stored KV cache; KVQuant keeps sparse full-precision outliers that a dense array cannot hold in place. This paper examines what these structures cost when the KV cache resides in NVM behind fixed-range converters, and designs a quantization scheme matched to that interface. The architecture stores the quantized KV cache in dense on-chip NVM, uses a small static analog crossbar only for the fixed rotation, and keeps attention in on-chip digital logic. A randomized rotation and per-vector normalization give every coordinate the same range, so one fixed codebook for keys and one for values, each shared across all tokens of the corresponding tensor type, serve the entire KV cache. The codebook thresholds are programmed once as the read converter's reference levels, enabling fixed-range digitization with no per-token converter reconfiguration. Dequantization is a sixteen-entry lookup and one norm multiply; the only per-vector metadata is one scalar, about 3%. Across models from 3B to 14B and contexts to 32k tokens, the four-bit KV cache maintains accuracy under storage and crossbar noise simulated at realistic device levels. KIVI and KVQuant remain more accurate in software; the advantage of our format lies at the memory interface: 3.1-3.6x lower KV read energy than both mapped to the same NVM, and 8x lower metadata overhead than KIVI. The contribution is a KV quantization co-designed with the NVM memory interface rather than a new accuracy record.",
+          "arxiv_id": "2609.05764",
+          "arxiv_url": "https://arxiv.org/abs/2609.05764",
+          "authors": [
+            "Jiahao Zheng",
+            "Yifan Qin",
+            "Xiaobo Sharon Hu",
+            "Yiyu Shi"
+          ],
+          "bullets": [
+            "Targets the KV cache’s memory-bandwidth bottleneck in long-context decoding by avoiding off-chip transfers.",
+            "Uses randomized rotation, per-vector normalization, and globally shared key/value codebooks compatible with fixed-range converters.",
+            "Stores only one scalar of metadata per vector, avoiding KIVI’s per-group overhead and KVQuant’s sparse full-precision outliers.",
+            "Across 3B–14B models and contexts up to 32k tokens, four-bit caching maintains accuracy under simulated storage and crossbar noise.",
+            "Compared at the same NVM mapping, it achieves 3.1–3.6× lower KV-read energy than KIVI and KVQuant, with 8× less metadata than KIVI."
+          ],
+          "categories": [
+            "cs.AR",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Three ways to hold the KV cache. (a) GPU-style system: the KV cache and its per-group metadata (red; about 25% for KIVI) reside in off-chip DRAM and cross the off-chip boundary at every decoding step. (b) Prior CiM attention accelerators, drawn after the gain-cell design of Leroux et al. [11] (per-design variants in Table 1): keys and values live in volatile compute cells with a fixed window, one column rewritten at every token (dashed). (c) This work: dense NVM holds write-once 4-bit indices, read through sense-amplifier comparators (SA) whose references are the fixed codebook thresholds, then a sixteen-entry lookup and one norm multiply; a small static crossbar applies the rotation, and attention stays digital. Purple marks the KV cells, orange the analog crossbar, blue the digital logic; D/A blocks are converters; the bottom strip lists per-step costs.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 340,
+              "image_path": "figures/2609.05764/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 886
+            },
+            {
+              "caption": "Figure 2: Proposed data path: one static write-once crossbar holds the rotation H (the only analog matrix-vector product); keys and values return from the NVM KV cache as codebook indices, looked up and rescaled by their stored norm; attention runs digitally in rotated space with the un-rotation folded intoW′ 𝑂 .",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 319,
+              "image_path": "figures/2609.05764/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 760
+            },
+            {
+              "caption": "Figure 4: Static rotation crossbar under realistic device noise (2% conductance, 6-bit DAC, 2% accumulation) versus the ideal rotation (mean ± std, three runs): the crossbar tracks the ideal.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 143,
+              "image_path": "figures/2609.05764/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 488
+            },
+            {
+              "caption": "Table 4: Full-precision (fp16) versus four-bit on-chip KV storage at 8k context on the 3B model, same NVM and NeuroSim 22nm constants. Our area includes the 26mm2 norm SRAM; KV read energy per step follows Section 4.3.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 107,
+              "image_path": "figures/2609.05764/table-004.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 412
+            },
+            {
+              "caption": "Table 1: Existing CiM attention accelerators versus this work.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 116,
+              "image_path": "figures/2609.05764/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 410
+            },
+            {
+              "caption": "Table 3: Memory-interface cost of four-bit KV formats on the same NVM substrate at 𝑑 = 128. Effective bits include each format’s metadata; KV read energy (Section 4.3) is per coordinate, normalized to ours; breakdown in the text.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 104,
+              "image_path": "figures/2609.05764/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 426
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.05764/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.05764",
+          "relevance": 8,
+          "selection_reason": "Co-designs a quantization scheme for KV caches specifically for dense on-chip NVM. This addresses a major bottleneck in long-context LLMs and fits both LLM Memory and Efficient AI (KV Cache) categories.",
+          "summary_status": "generated",
+          "title": "Interface-Aware KV Cache Quantization for Dense On-Chip NVM in Long-Context LLM Decoding",
+          "tldr": "An interface-aware 4-bit KV-cache format enables dense on-chip NVM storage for long-context LLM decoding while preserving accuracy under simulated hardware noise and reducing read energy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-10",
       "paper_count": 24,
       "papers": [
@@ -71583,5 +73295,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "efficient-ai",
-  "total_paper_count": 406
+  "total_paper_count": 417
 }

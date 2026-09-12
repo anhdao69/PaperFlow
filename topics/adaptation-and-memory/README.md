@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**227 papers total**
+**231 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Investigating catastrophic forgetting in sound event classification](https://arxiv.org/abs/2609.11447) | Adaptation and Memory: Continual and Online Learning | The study finds that freezing the feature extractor while fine-tuning an expanding classifier head effectively limits catastrophic forgetting in incremental sound event classification. | 8 | 6 |
+| 2026-09-11 | [Beyond Confidence: Stability-Aware Test-Time Adaptation for LLM Reasoning](https://arxiv.org/abs/2609.11393) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | TASCO improves frozen-LLM reasoning at test time by optimizing confidence that remains stable under local perturbations, rather than confidence alone. | 8 | 7 |
+| 2026-09-11 | [Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation](https://arxiv.org/abs/2609.10954) | World Models: Interactive World Models; Adaptation and Memory: Continual and Online Learning | The fork ledger estimates whether updating a continual world model improves deployment by comparing matched update-versus-hold counterfactuals at pre-registered decision points. | 9 | 9 |
+| 2026-09-11 | [When Validation Stops Learning: Auditing Update Admission for Continual Embodied Agents](https://arxiv.org/abs/2609.10873) | Adaptation and Memory: Continual and Online Learning | Update-admission gates can safely reject harmful continual-learning updates but may also block nearly all useful learning, so they should be audited for both error control and missed opportunities. | 8 | 8 |
 | 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |
 | 2026-09-10 | [Memory as Plans: World-Action Modeling with Memory-Grounded Planning](https://arxiv.org/abs/2609.11561) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MaP-WAM turns long-term multimodal memory into compact visual-language plans, enabling efficient non-Markovian robotic manipulation with fixed executor context and adaptive execution. | 9 | 9 |
 | 2026-09-10 | [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](https://arxiv.org/abs/2609.11308) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | 2AM shows that long-horizon manipulation can keep task memory in a multimodal Agent while an RGB-only action model executes Agent-provided language and 2D spatial guidance. | 9 | 8 |

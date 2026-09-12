@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**187 papers total**
+**189 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation](https://arxiv.org/abs/2609.10954) | World Models: Interactive World Models; Adaptation and Memory: Continual and Online Learning | The fork ledger estimates whether updating a continual world model improves deployment by comparing matched update-versus-hold counterfactuals at pre-registered decision points. | 9 | 9 |
+| 2026-09-11 | [Earth System World Model for What-If Simulations: A Case Study for Terrestrial Ecosystems](https://arxiv.org/abs/2609.08855) | World Models: Interactive World Models | An action-conditioned Earth-system world model enables interactive what-if simulations of ecosystem interventions while retaining accurate long-horizon emulation. | 7 | 7 |
 | 2026-09-10 | [Near-Optimal Reinforcement Learning with Multi-Step Transition Lookahead](https://arxiv.org/abs/2609.11807) | World Models: Video World Models | Exact planning with multi-step transition look-ahead is NP-hard for every fixed discount factor, but efficient near-optimal planning and learning are still possible. | 8 | 8 |
 | 2026-09-10 | [CAP: Continuously Adaptive Perception-Blind Humanoid Locomotion via Learned Denoising](https://arxiv.org/abs/2609.11553) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Video World Models | CAP enables a single humanoid locomotion policy to remain robust as depth perception becomes partially or intermittently corrupted. | 8 | 8 |
 | 2026-09-10 | [World in World: Explore the World with World Models](https://arxiv.org/abs/2609.11548) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | World in World is a training-free interface that uses structured visual evidence and attention control to make frozen video world models support consistent, controllable exploration across viewpoints and time. | 9 | 8 |

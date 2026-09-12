@@ -6,10 +6,18 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**504 papers total**
+**512 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [RetroThinker: Enabling Retrospective Thinking in Speech LLMs](https://arxiv.org/abs/2609.11864) | Multimodal Foundation Models: Multimodal Large Language Models | RetroThinker enables a streaming SpeechLLM to revise its reasoning during inference, improving GSM8K accuracy by 11% at comparable latency. | 7 | 7 |
+| 2026-09-11 | [Exploring Diffusion Transformers for Cross-Modal Augmentation in Multimodal Brain State Decoding](https://arxiv.org/abs/2609.11341) | Multimodal Foundation Models | CoMA-DiT uses paired modalities as mutual generative supervision to augment latent representations and improve multimodal brain state decoding. | 5 | 6 |
+| 2026-09-11 | [Mr.LHDR: A Benchmark for Multimodal Real-World Long-Horizon Deep Research Agents](https://arxiv.org/abs/2609.11318) | Multimodal Foundation Models: Multimodal Large Language Models | Mr.LHDR benchmarks whether deep research agents can sustain long, dependency-heavy, multimodal investigations rather than merely retrieve isolated facts. | 6 | 6 |
+| 2026-09-11 | [Routing by Reasoning Need: Trajectory-Aware Decoding Control for Diffusion Vision-Language Models](https://arxiv.org/abs/2609.11315) | Multimodal Foundation Models: Multimodal Large Language Models | A training-free controller routes diffusion VLM decoding based on answer trajectories, matching inference effort to each question’s reasoning needs. | 6 | 6 |
+| 2026-09-11 | [When Does Text Inform? Benchmarking Information-Theoretic Metrics for Multimodal Time-Series Forecasting](https://arxiv.org/abs/2609.11282) | Multimodal Foundation Models | A controlled benchmark shows which information-theoretic metrics can assess the predictive value of text annotations for multimodal time-series forecasting. | 8 | 7 |
+| 2026-09-11 | [Sci-MMR: Benchmarking Multi-Step Evidence-Grounded Scientific Reasoning in Multimodal Agents](https://arxiv.org/abs/2609.11243) | Multimodal Foundation Models | Sci-MMR shows that multimodal agents often produce correct scientific answers without recovering or integrating the complete evidence needed to support them. | 8 | 8 |
+| 2026-09-11 | [A Voice-Interactive Multi-Agent System for Smart Operating Rooms: Architecture Design and Key Technologies](https://arxiv.org/abs/2609.11231) | Multimodal Foundation Models | SurgicalRoomAgent is a voice-driven, LLM-based multi-agent system that enables real-time operating-room interaction, device control, recording, and report generation. | 8 | 8 |
+| 2026-09-11 | [Studying Image Tokenizers as Visual Languages in Unified Multimodal Models](https://arxiv.org/abs/2609.09143) | Multimodal Foundation Models: Multimodal Large Language Models | A task-specific loss framework reveals how image tokenizers function as visual languages within jointly trained multimodal models. | 6 | 6 |
 | 2026-09-10 | [SenseNova-U1.5: Towards Native Unified Visual Intelligence](https://arxiv.org/abs/2609.11929) | Multimodal Foundation Models | SenseNova-U1.5 is an 8B native unified multimodal model that jointly understands, reasons about, and generates visual content end to end. | 9 | 8 |
 | 2026-09-10 | [MindTopo: Can Foundation Models Reason in Topological Space?](https://arxiv.org/abs/2609.11900) | Multimodal Foundation Models: Spatial Intelligence | MindTopo benchmarks whether foundation models can reason about and act within topology-based spatial relations, revealing a substantial gap from human performance. | 9 | 9 |
 | 2026-09-10 | [Nuha-Speech: Building General-Purpose Arabic Speech-LLMs](https://arxiv.org/abs/2609.11892) | Multimodal Foundation Models: Multimodal Large Language Models | Nuha-Speech develops an end-to-end infrastructure for training and evaluating general-purpose Arabic speech-LLMs. | 7 | 6 |

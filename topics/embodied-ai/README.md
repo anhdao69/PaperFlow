@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**554 papers total**
+**559 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [ORCH: Organizational Principles Enable Collective Intelligence in Embodied AI](https://arxiv.org/abs/2609.11737) | Embodied AI | ORCH uses task-specific hierarchical organization to improve coordination and performance in large, heterogeneous embodied-agent teams. | 7 | 7 |
+| 2026-09-11 | [Distributed Optimization of Modular Production Systems using Model-based Reinforcement Learning with Inverse Models](https://arxiv.org/abs/2609.11615) | Embodied AI: Robot Learning and Manipulation | A model-based reinforcement-learning framework with approximate inverse models enables faster, more efficient self-learning control of flexible modular production systems. | 8 | 7 |
+| 2026-09-11 | [Lightweight LiDAR-Based Cone Detection Framework Using Random Forest for Formula Student Driverless](https://arxiv.org/abs/2609.11527) | Embodied AI: Robot Navigation | A lightweight LiDAR-only pipeline enables fast and accurate cone detection for Formula Student Driverless vehicles using CPU hardware. | 5 | 5 |
+| 2026-09-11 | [JEPA Policy: Diffusion-Free Imitation Learning via Paired Action and Future Representation Prediction](https://arxiv.org/abs/2609.09630) | Embodied AI: Robot Learning and Manipulation | JEPA Policy enables low-latency, diffusion-free imitation learning by jointly predicting action chunks and their paired future representations. | 7 | 7 |
+| 2026-09-11 | [Closed-Loop Evaluation of Bird's-Eye-View Maps from Cross-View Transformers as Inputs to Behavior-Cloning Policies](https://arxiv.org/abs/2609.05783) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | Closed-loop CARLA tests show that BEV prediction quality at critical locations—especially along the route—matters more for behavior-cloning driving than overall segmentation IoU. | 8 | 8 |
 | 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |
 | 2026-09-10 | [Rapid Learning of Dexterous In-Hand Pen Writing through Real-Time Jacobian Estimation](https://arxiv.org/abs/2609.11775) | Embodied AI: Robot Learning and Manipulation | A lightweight controller enables an anthropomorphic robot hand to rapidly learn pen writing through online Jacobian estimation, without simulation, demonstrations, or an analytic hand–object model. | 8 | 8 |
 | 2026-09-10 | [Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting](https://arxiv.org/abs/2609.11766) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | A low-cost monocular Visual-SLAM pipeline combines Hierarchical Localization and GLOMAP to reconstruct greenhouse tomato plants and identify occluded fruit for future robotic harvesting. | 6 | 5 |

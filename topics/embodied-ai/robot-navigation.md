@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**146 papers total**
+**148 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Lightweight LiDAR-Based Cone Detection Framework Using Random Forest for Formula Student Driverless](https://arxiv.org/abs/2609.11527) | Embodied AI: Robot Navigation | A lightweight LiDAR-only pipeline enables fast and accurate cone detection for Formula Student Driverless vehicles using CPU hardware. | 5 | 5 |
+| 2026-09-11 | [Closed-Loop Evaluation of Bird's-Eye-View Maps from Cross-View Transformers as Inputs to Behavior-Cloning Policies](https://arxiv.org/abs/2609.05783) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | Closed-loop CARLA tests show that BEV prediction quality at critical locations—especially along the route—matters more for behavior-cloning driving than overall segmentation IoU. | 8 | 8 |
 | 2026-09-10 | [Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting](https://arxiv.org/abs/2609.11766) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | A low-cost monocular Visual-SLAM pipeline combines Hierarchical Localization and GLOMAP to reconstruct greenhouse tomato plants and identify occluded fruit for future robotic harvesting. | 6 | 5 |
 | 2026-09-10 | [MC-DeTra: Motion-Consistent Joint Object Detection and Socially-Aware Trajectory Forecasting in Bird's-Eye-View Images](https://arxiv.org/abs/2609.11717) | Embodied AI: Robot Navigation | MC-DeTra improves joint BEV object detection and socially aware trajectory forecasting by training with motion-consistency signals that add no test-time cost. | 7 | 6 |
 | 2026-09-10 | [CAP: Continuously Adaptive Perception-Blind Humanoid Locomotion via Learned Denoising](https://arxiv.org/abs/2609.11553) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Video World Models | CAP enables a single humanoid locomotion policy to remain robust as depth perception becomes partially or intermittently corrupted. | 8 | 8 |

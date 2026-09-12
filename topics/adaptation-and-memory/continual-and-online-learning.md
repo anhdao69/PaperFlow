@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**114 papers total**
+**117 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Investigating catastrophic forgetting in sound event classification](https://arxiv.org/abs/2609.11447) | Adaptation and Memory: Continual and Online Learning | The study finds that freezing the feature extractor while fine-tuning an expanding classifier head effectively limits catastrophic forgetting in incremental sound event classification. | 8 | 6 |
+| 2026-09-11 | [Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation](https://arxiv.org/abs/2609.10954) | World Models: Interactive World Models; Adaptation and Memory: Continual and Online Learning | The fork ledger estimates whether updating a continual world model improves deployment by comparing matched update-versus-hold counterfactuals at pre-registered decision points. | 9 | 9 |
+| 2026-09-11 | [When Validation Stops Learning: Auditing Update Admission for Continual Embodied Agents](https://arxiv.org/abs/2609.10873) | Adaptation and Memory: Continual and Online Learning | Update-admission gates can safely reject harmful continual-learning updates but may also block nearly all useful learning, so they should be audited for both error control and missed opportunities. | 8 | 8 |
 | 2026-09-10 | [Convex Optimization with Nested Evolving Feasible Sets (CONES) under Time-Varying Loss Functions](https://arxiv.org/abs/2609.11207) | Adaptation and Memory: Continual and Online Learning | Extends CONES to time-varying convex losses and characterizes achievable tradeoffs between regret and movement under evolving nested feasible sets. | 6 | 7 |
 | 2026-09-10 | [A Bellman Optimality Equation for Plasticity](https://arxiv.org/abs/2609.10776) | Adaptation and Memory: Continual and Online Learning | The paper derives a Bellman optimality equation for maximizing plasticity in continual reinforcement learning under a generalized directed-information definition. | 7 | 7 |
 | 2026-09-10 | [When Synthetic Data Hurts: On Catastrophic Forgetting in Skill Retrieval for LLM Agents](https://arxiv.org/abs/2609.10750) | Adaptation and Memory: Continual and Online Learning | Synthetic-data fine-tuning can improve in-distribution skill retrieval while causing catastrophic forgetting on real and OOD skills, which continual-learning methods can mitigate. | 8 | 6 |

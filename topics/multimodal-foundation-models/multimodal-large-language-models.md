@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**332 papers total**
+**336 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [RetroThinker: Enabling Retrospective Thinking in Speech LLMs](https://arxiv.org/abs/2609.11864) | Multimodal Foundation Models: Multimodal Large Language Models | RetroThinker enables a streaming SpeechLLM to revise its reasoning during inference, improving GSM8K accuracy by 11% at comparable latency. | 7 | 7 |
+| 2026-09-11 | [Mr.LHDR: A Benchmark for Multimodal Real-World Long-Horizon Deep Research Agents](https://arxiv.org/abs/2609.11318) | Multimodal Foundation Models: Multimodal Large Language Models | Mr.LHDR benchmarks whether deep research agents can sustain long, dependency-heavy, multimodal investigations rather than merely retrieve isolated facts. | 6 | 6 |
+| 2026-09-11 | [Routing by Reasoning Need: Trajectory-Aware Decoding Control for Diffusion Vision-Language Models](https://arxiv.org/abs/2609.11315) | Multimodal Foundation Models: Multimodal Large Language Models | A training-free controller routes diffusion VLM decoding based on answer trajectories, matching inference effort to each question’s reasoning needs. | 6 | 6 |
+| 2026-09-11 | [Studying Image Tokenizers as Visual Languages in Unified Multimodal Models](https://arxiv.org/abs/2609.09143) | Multimodal Foundation Models: Multimodal Large Language Models | A task-specific loss framework reveals how image tokenizers function as visual languages within jointly trained multimodal models. | 6 | 6 |
 | 2026-09-10 | [Nuha-Speech: Building General-Purpose Arabic Speech-LLMs](https://arxiv.org/abs/2609.11892) | Multimodal Foundation Models: Multimodal Large Language Models | Nuha-Speech develops an end-to-end infrastructure for training and evaluating general-purpose Arabic speech-LLMs. | 7 | 6 |
 | 2026-09-10 | [Augustinian BabyLM: What Ostensive Definition Can and Cannot Teach a Small Language Model](https://arxiv.org/abs/2609.11870) | Multimodal Foundation Models: Multimodal Large Language Models | Visual grounding gives a small language model persistent word-level knowledge benefits, but standard BabyLM evaluations largely fail to detect them. | 7 | 7 |
 | 2026-09-10 | [OmniKVQuant: KV Cache Quantization for Omni-LLMs](https://arxiv.org/abs/2609.11582) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: KV Cache and Memory Efficiency | OmniKVQuant enables efficient 2-bit KV-cache quantization for audio-visual Omni-LLMs by addressing modality- and time-dependent cache geometry. | 9 | 8 |

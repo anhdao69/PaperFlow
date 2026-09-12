@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**110 papers total**
+**113 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Building py-kvcache: A Performance Characterization of External KV Caching for vLLM with NVMe SSDs](https://arxiv.org/abs/2609.11744) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory | py-kvcache accelerates vLLM’s external NVMe KV caching by overlapping scheduler-aware disk prefetching with computation, while showing that caching benefits depend strongly on workload and hardware. | 9 | 9 |
+| 2026-09-11 | [Memory Compression for High-Fanout Agent Sandboxes](https://arxiv.org/abs/2609.11294) | Efficient AI: KV Cache and Memory Efficiency | AgentZip compresses redundant memory across concurrent AI-agent sandboxes, achieving substantially higher memory savings while limiting execution slowdown through restore prefetching and phase-aware scheduling. | 8 | 8 |
+| 2026-09-11 | [Interface-Aware KV Cache Quantization for Dense On-Chip NVM in Long-Context LLM Decoding](https://arxiv.org/abs/2609.05764) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory | An interface-aware 4-bit KV-cache format enables dense on-chip NVM storage for long-context LLM decoding while preserving accuracy under simulated hardware noise and reducing read energy. | 8 | 8 |
 | 2026-09-10 | [Structured Transforms for Low-Overhead Quantization of Language Models](https://arxiv.org/abs/2609.11687) | Efficient AI: KV Cache and Memory Efficiency | Kashin-DCT enables efficient, stable low-overhead language-model quantization by replacing dense transforms with structured DCTs and representing weights using two 2-bit factor codes. | 7 | 6 |
 | 2026-09-10 | [OmniKVQuant: KV Cache Quantization for Omni-LLMs](https://arxiv.org/abs/2609.11582) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: KV Cache and Memory Efficiency | OmniKVQuant enables efficient 2-bit KV-cache quantization for audio-visual Omni-LLMs by addressing modality- and time-dependent cache geometry. | 9 | 8 |
 | 2026-09-10 | [REVA: Reusable Evidence View Aggregation for Context-Efficient RAG Serving](https://arxiv.org/abs/2609.11209) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | REVA makes RAG compression faster and reusable by aggregating historical generator attention into document-level evidence views. | 8 | 8 |

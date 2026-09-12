@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**100 papers total**
+**102 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation](https://arxiv.org/abs/2609.10954) | World Models: Interactive World Models; Adaptation and Memory: Continual and Online Learning | The fork ledger estimates whether updating a continual world model improves deployment by comparing matched update-versus-hold counterfactuals at pre-registered decision points. | 9 | 9 |
+| 2026-09-11 | [Earth System World Model for What-If Simulations: A Case Study for Terrestrial Ecosystems](https://arxiv.org/abs/2609.08855) | World Models: Interactive World Models | An action-conditioned Earth-system world model enables interactive what-if simulations of ecosystem interventions while retaining accurate long-horizon emulation. | 7 | 7 |
 | 2026-09-10 | [World in World: Explore the World with World Models](https://arxiv.org/abs/2609.11548) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | World in World is a training-free interface that uses structured visual evidence and attention control to make frozen video world models support consistent, controllable exploration across viewpoints and time. | 9 | 8 |
 | 2026-09-10 | [Recursive Code World Models: Building Complex Worlds through Recursive Scene Programs](https://arxiv.org/abs/2609.11499) | World Models: Interactive World Models | RCWM reconstructs complex executable 3D worlds from a single image by recursively refining scenes from global structure to local details and back. | 9 | 9 |
 | 2026-09-10 | [DUET-DINO: Simultaneous Cross-View World Modeling for Latent Planning in Robot Manipulation](https://arxiv.org/abs/2609.10506) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | DUET-DINO jointly models static side- and wrist-camera views to improve latent planning for fine-grained 7-DoF robot manipulation. | 9 | 8 |

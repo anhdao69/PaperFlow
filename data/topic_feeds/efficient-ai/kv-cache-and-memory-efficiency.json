@@ -1,6 +1,476 @@
 {
   "days": [
     {
+      "date": "2026-09-11",
+      "paper_count": 3,
+      "papers": [
+        {
+          "abstract": "Prefix caching can reduce the time to first token (TTFT) of long-context LLM requests by reusing previously computed key-value (KV) states, but for short prefixes or fast GPUs, recomputation can be faster than loading from an external cache. We characterize this tradeoff in vLLM across GPU, CPU, and NVMe tiers using synthetic workloads, long-context benchmarks, production traces, and find that cache performance depends on transfer granularity, intermediate memory use, and when transfers enter the request schedule, not only on device bandwidth. These findings motivate py-kvcache, a vLLM KV Offload connector with asynchronous direct I/O, bounded shared staging, and scheduler-aware preloading, which starts disk reads while requests are still waiting, overlapping with compute. At 80k tokens, py-kvcache loading from disk is 2.0x faster than LMCache, with preloading contributing 1.34x. With GPU, CPU, and disk caching enabled, it is 1.23x faster than LMCache and within approximately 4% of the native vLLM KV Offload implementation. LongBench and SCBench show that these benefits extend to irregular prefix chains and multi-turn workloads. Bailian trace replays improve TTFT on a weaker GPU, but on an H100 the average request falls below the break-even point and GPU memory alone retains enough prefixes. External KV caching should therefore be treated as a setup specific admission decision. The py-kvcacheimplementation is available at: https://github.com/atlarge-research/py-kvcache.",
+          "arxiv_id": "2609.11744",
+          "arxiv_url": "https://arxiv.org/abs/2609.11744",
+          "authors": [
+            "Joseph Kanichai",
+            "Tiziano De Matteis",
+            "Animesh Trivedi"
+          ],
+          "bullets": [
+            "External KV caching can lose to recomputation for short prefixes or fast GPUs, so admission should be setup-specific.",
+            "Performance depends on transfer granularity, staging-memory usage, and scheduling—not just device bandwidth.",
+            "py-kvcache uses asynchronous direct I/O, bounded shared staging, and scheduler-aware preloading.",
+            "At 80k tokens, it loads from disk 2.0× faster than LMCache; combined GPU/CPU/disk caching is 1.23× faster and within about 4% of native vLLM KV Offload.",
+            "Benefits extend to irregular and multi-turn workloads, but on an H100 GPU memory alone may make external caching unnecessary."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 9: py-kvcache architecture.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 714,
+              "image_path": "figures/2609.11744/figure-001.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 716
+            },
+            {
+              "caption": "Figure 3: Sample py-kvcache execution trace. Blue blocks are I/O reads and pink blocks are transfers to the GPU.",
+              "figure_id": "figure-3-14",
+              "figure_number": "3",
+              "height": 436,
+              "image_path": "figures/2609.11744/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 968
+            },
+            {
+              "caption": "Figure 6: TTFT break-even frontiers (vLLM v0.22, Snellius node). Above each line, loading the cached prefix is faster than recomputing it.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 397,
+              "image_path": "figures/2609.11744/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1023
+            },
+            {
+              "caption": "Figure 8: Storage microbenchmarks.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 340,
+              "image_path": "figures/2609.11744/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1040
+            },
+            {
+              "caption": "Figure 2: vLLM KV cache interfaces and execution sequences (v0.22.0). Offload defers stores to the next engine iteration so they overlap the following forward pass, while Transfer waits for them after each pass.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 1278,
+              "image_path": "figures/2609.11744/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 722
+            },
+            {
+              "caption": "Figure 11: Query TTFT for LongBench and SCBench workloads on the Snellius node, and Bailian traces on the local node (vLLM v0.22, Qwen3 4B, Snellius node). py-kvcache, LMCache, and native vLLM KV Offload run with GPU prefix caching enabled.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 625,
+              "image_path": "figures/2609.11744/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1038
+            },
+            {
+              "caption": "Figure 10: Isolated long-document evaluation (vLLM v0.22, Llama 3.2 3B, Snellius node).",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 345,
+              "image_path": "figures/2609.11744/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1039
+            },
+            {
+              "caption": "Figure 4: Long-document benchmark TTFT (vLLM v0.16, local node). Both external caches cut cache-hit TTFT by 2.2– 32.8× relative to recomputation.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 297,
+              "image_path": "figures/2609.11744/figure-008.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 490
+            },
+            {
+              "caption": "Figure 1: Prefix-hash chaining.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 199,
+              "image_path": "figures/2609.11744/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 498
+            },
+            {
+              "caption": "Figure 12: SCBench CPU-pool occupancy and storage throughput (vLLM v0.22, Qwen3 4B, Snellius node). Unbounded promotions keep the native CPU pool full and read 3.4 TB from disk, whereas py-kvcache’s bounded staging reads 85 GB and finishes serving all requests by 480 s.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 450,
+              "image_path": "figures/2609.11744/figure-010.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 1038
+            },
+            {
+              "caption": "Figure 5: GPU ↔ CPU transfer bandwidth for different max_num_batched_tokens. 1k–10k in the legend denotes the max_num_batched_tokens value (vLLM v0.16, local node).",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 304,
+              "image_path": "figures/2609.11744/figure-011.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 490
+            },
+            {
+              "caption": "Figure 7: Break-even storage bandwidth (vLLM v0.22, Snellius node). This is a bandwidth representation of the Pareto Frontiers in Figure 6. The dashed lines show ideal measured throughput of our SSDs.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 302,
+              "image_path": "figures/2609.11744/figure-012.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 490
+            },
+            {
+              "caption": "Table 1: Summary of the compared external KV cache systems. py-kvcache is this work, and is described in section 6.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 422,
+              "image_path": "figures/2609.11744/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1002
+            },
+            {
+              "caption": "Table 2: Local node configuration.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 233,
+              "image_path": "figures/2609.11744/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 479
+            },
+            {
+              "caption": "Table 3: Snellius GPU node configuration.",
+              "figure_id": "table-3-12",
+              "figure_number": "3",
+              "height": 213,
+              "image_path": "figures/2609.11744/table-015.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 479
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11744/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.11744",
+          "relevance": 9,
+          "selection_reason": "Introduces py-kvcache, a performance-optimized external KV caching connector for vLLM that overlaps disk I/O with compute to reduce latency.",
+          "summary_status": "generated",
+          "title": "Building py-kvcache: A Performance Characterization of External KV Caching for vLLM with NVMe SSDs",
+          "tldr": "py-kvcache accelerates vLLM’s external NVMe KV caching by overlapping scheduler-aware disk prefetching with computation, while showing that caching benefits depend strongly on workload and hardware.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "High-fanout agent workloads create a growing memory bottleneck because a single task may spawn many concurrent sandbox sessions. Yet these sandboxes are far from independent: they originate from a shared template and execute related trajectories, exposing substantial template-relative and cross-sandbox memory redundancy. Conventional memory compression is poorly matched to this setting in three fundamental dimensions: how to compress, because they fail to exploit similarity across non-identical sandbox pages; what to compress, because they control page-fault overhead through conservative page selection; and when to compress, because compression is either triggered by memory pressure or performed without awareness of agent execution phases. We present AgentZip, the first memory compression system designed specifically for AI-agent sandboxes. AgentZip introduces compression mechanisms that exploit both the template-relative and cross-sandbox redundancy. It broadens the compression scope to any page with a profitable representation and shifts overhead control from compression-time page selection to restore-time prefetching. It further aligns expensive compression with LLM waiting periods to avoid interfering with foreground tool execution. Across LLM training and inference workloads, AgentZip reduces sandbox-owned memory by up to 8.7x, compared with 2.1x for the Linux configuration. Restore prefetching and agent-execution-aware scheduling reduce the slowdown of aggressive compression from as high as 3.1x to 1.40x while retaining nearly all of its memory-saving benefit.",
+          "arxiv_id": "2609.11294",
+          "arxiv_url": "https://arxiv.org/abs/2609.11294",
+          "authors": [
+            "Mengming Li, Ceyu XU, Qijun Zhang, Jiangnan Yu, Xiangfeng Sun, Haohui Mai, Zhiyao Xie"
+          ],
+          "bullets": [
+            "Targets memory bottlenecks in high-fanout workloads where sandboxes share templates and related execution trajectories.",
+            "Exploits template-relative and cross-sandbox redundancy and compresses any page with a profitable representation.",
+            "Controls overhead through restore-time prefetching rather than conservative compression-time page selection.",
+            "Schedules costly compression during LLM waiting periods to reduce interference with tool execution.",
+            "Across training and inference workloads, reduces sandbox memory by up to 8.7× and limits slowdown to 1.40× under aggressive compression."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.OS"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. AgentZip overview. AgentZip compresses sandbox-private pages using a portfolio of codecs, schedules expensive compression during LLM waiting periods, and proactively restores predicted pages before demand.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 385,
+              "image_path": "figures/2609.11294/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1042
+            },
+            {
+              "caption": "Figure 5. Average sandbox-owned memory saving relative to the paired no-compression baseline across Rollout and GAF.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 248,
+              "image_path": "figures/2609.11294/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 6. End-to-end wall-time slowdown relative to the paired no-compression baseline across Rollout and GAF.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 235,
+              "image_path": "figures/2609.11294/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 1. Similarity between sandboxes creates opportunities for inter-sandbox memory compression.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 383,
+              "image_path": "figures/2609.11294/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 498
+            },
+            {
+              "caption": "Figure 3. AgentZip’s compression infrastructure. Compressed pages are stored in a user-space pool. Later accesses to compressed pages are intercepted by userfaultfd.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 339,
+              "image_path": "figures/2609.11294/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 496
+            },
+            {
+              "caption": "Figure 8. Memory–latency trade-off of compression timing under the same compression algorithm portfolio.",
+              "figure_id": "figure-8-5",
+              "figure_number": "8",
+              "height": 290,
+              "image_path": "figures/2609.11294/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 501
+            },
+            {
+              "caption": "Figure 4. AgentZip lifecycle-aware scheduler. A lightweight scout identifies compression candidates during tool execution, while expensive compression during LLM waiting.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 291,
+              "image_path": "figures/2609.11294/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 498
+            },
+            {
+              "caption": "Figure 7. Effectiveness of AgentZip’s codec portfolio.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 285,
+              "image_path": "figures/2609.11294/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 497
+            },
+            {
+              "caption": "Figure 9. Cumulative prefetch ablation. (a) Demand restores amplification normalized by the number of reclaimed pages. (b) End-to-end slowdown.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 278,
+              "image_path": "figures/2609.11294/figure-009.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 501
+            },
+            {
+              "caption": "Figure 10. Counterfactual coverage and precision.",
+              "figure_id": "figure-10-7",
+              "figure_number": "10",
+              "height": 263,
+              "image_path": "figures/2609.11294/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 501
+            },
+            {
+              "caption": "Figure 12. AgentZip compression and restore overheads. (a) Breakdown of compression-pool memory usage. (b) Latency of codec decoding, asynchronous prefetch restoration, and blocking demand restoration.",
+              "figure_id": "figure-12-2",
+              "figure_number": "12",
+              "height": 312,
+              "image_path": "figures/2609.11294/figure-011.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 502
+            },
+            {
+              "caption": "Figure 11. Similarity and dictionary sensitivity study.",
+              "figure_id": "figure-11-3",
+              "figure_number": "11",
+              "height": 301,
+              "image_path": "figures/2609.11294/figure-012.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 501
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.11294/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.11294",
+          "relevance": 8,
+          "selection_reason": "Proposes AgentZip, a memory compression system for AI-agent sandboxes, directly addressing memory efficiency and cache management.",
+          "summary_status": "generated",
+          "title": "Memory Compression for High-Fanout Agent Sandboxes",
+          "tldr": "AgentZip compresses redundant memory across concurrent AI-agent sandboxes, achieving substantially higher memory savings while limiting execution slowdown through restore prefetching and phase-aware scheduling.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "The key-value (KV) cache is the dominant memory bottleneck in long-context large language model (LLM) decoding: every step reads it entirely, so decoding is memory-bandwidth bound. Holding a quantized KV cache in dense on-chip non-volatile memory (NVM) removes the off-chip transfer. Existing KV quantization methods, however, were designed for GPU-style memory systems: KIVI attaches per-group metadata, adding about 25% to the stored KV cache; KVQuant keeps sparse full-precision outliers that a dense array cannot hold in place. This paper examines what these structures cost when the KV cache resides in NVM behind fixed-range converters, and designs a quantization scheme matched to that interface. The architecture stores the quantized KV cache in dense on-chip NVM, uses a small static analog crossbar only for the fixed rotation, and keeps attention in on-chip digital logic. A randomized rotation and per-vector normalization give every coordinate the same range, so one fixed codebook for keys and one for values, each shared across all tokens of the corresponding tensor type, serve the entire KV cache. The codebook thresholds are programmed once as the read converter's reference levels, enabling fixed-range digitization with no per-token converter reconfiguration. Dequantization is a sixteen-entry lookup and one norm multiply; the only per-vector metadata is one scalar, about 3%. Across models from 3B to 14B and contexts to 32k tokens, the four-bit KV cache maintains accuracy under storage and crossbar noise simulated at realistic device levels. KIVI and KVQuant remain more accurate in software; the advantage of our format lies at the memory interface: 3.1-3.6x lower KV read energy than both mapped to the same NVM, and 8x lower metadata overhead than KIVI. The contribution is a KV quantization co-designed with the NVM memory interface rather than a new accuracy record.",
+          "arxiv_id": "2609.05764",
+          "arxiv_url": "https://arxiv.org/abs/2609.05764",
+          "authors": [
+            "Jiahao Zheng",
+            "Yifan Qin",
+            "Xiaobo Sharon Hu",
+            "Yiyu Shi"
+          ],
+          "bullets": [
+            "Targets the KV cache’s memory-bandwidth bottleneck in long-context decoding by avoiding off-chip transfers.",
+            "Uses randomized rotation, per-vector normalization, and globally shared key/value codebooks compatible with fixed-range converters.",
+            "Stores only one scalar of metadata per vector, avoiding KIVI’s per-group overhead and KVQuant’s sparse full-precision outliers.",
+            "Across 3B–14B models and contexts up to 32k tokens, four-bit caching maintains accuracy under simulated storage and crossbar noise.",
+            "Compared at the same NVM mapping, it achieves 3.1–3.6× lower KV-read energy than KIVI and KVQuant, with 8× less metadata than KIVI."
+          ],
+          "categories": [
+            "cs.AR",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Three ways to hold the KV cache. (a) GPU-style system: the KV cache and its per-group metadata (red; about 25% for KIVI) reside in off-chip DRAM and cross the off-chip boundary at every decoding step. (b) Prior CiM attention accelerators, drawn after the gain-cell design of Leroux et al. [11] (per-design variants in Table 1): keys and values live in volatile compute cells with a fixed window, one column rewritten at every token (dashed). (c) This work: dense NVM holds write-once 4-bit indices, read through sense-amplifier comparators (SA) whose references are the fixed codebook thresholds, then a sixteen-entry lookup and one norm multiply; a small static crossbar applies the rotation, and attention stays digital. Purple marks the KV cells, orange the analog crossbar, blue the digital logic; D/A blocks are converters; the bottom strip lists per-step costs.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 340,
+              "image_path": "figures/2609.05764/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 886
+            },
+            {
+              "caption": "Figure 2: Proposed data path: one static write-once crossbar holds the rotation H (the only analog matrix-vector product); keys and values return from the NVM KV cache as codebook indices, looked up and rescaled by their stored norm; attention runs digitally in rotated space with the un-rotation folded intoW′ 𝑂 .",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 319,
+              "image_path": "figures/2609.05764/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 760
+            },
+            {
+              "caption": "Figure 4: Static rotation crossbar under realistic device noise (2% conductance, 6-bit DAC, 2% accumulation) versus the ideal rotation (mean ± std, three runs): the crossbar tracks the ideal.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 143,
+              "image_path": "figures/2609.05764/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 488
+            },
+            {
+              "caption": "Table 4: Full-precision (fp16) versus four-bit on-chip KV storage at 8k context on the 3B model, same NVM and NeuroSim 22nm constants. Our area includes the 26mm2 norm SRAM; KV read energy per step follows Section 4.3.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 107,
+              "image_path": "figures/2609.05764/table-004.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 412
+            },
+            {
+              "caption": "Table 1: Existing CiM attention accelerators versus this work.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 116,
+              "image_path": "figures/2609.05764/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 410
+            },
+            {
+              "caption": "Table 3: Memory-interface cost of four-bit KV formats on the same NVM substrate at 𝑑 = 128. Effective bits include each format’s metadata; KV read energy (Section 4.3) is per coordinate, normalized to ours; breakdown in the text.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 104,
+              "image_path": "figures/2609.05764/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 426
+            }
+          ],
+          "first_seen_at": "2026-09-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.05764/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.05764",
+          "relevance": 8,
+          "selection_reason": "Co-designs a quantization scheme for KV caches specifically for dense on-chip NVM. This addresses a major bottleneck in long-context LLMs and fits both LLM Memory and Efficient AI (KV Cache) categories.",
+          "summary_status": "generated",
+          "title": "Interface-Aware KV Cache Quantization for Dense On-Chip NVM in Long-Context LLM Decoding",
+          "tldr": "An interface-aware 4-bit KV-cache format enables dense on-chip NVM storage for long-context LLM decoding while preserving accuracy under simulated hardware noise and reducing read energy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-10",
       "paper_count": 6,
       "papers": [
@@ -18777,5 +19247,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 110
+  "total_paper_count": 113
 }

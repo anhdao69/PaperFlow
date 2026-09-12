@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**145 papers total**
+**147 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Building py-kvcache: A Performance Characterization of External KV Caching for vLLM with NVMe SSDs](https://arxiv.org/abs/2609.11744) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory | py-kvcache accelerates vLLM’s external NVMe KV caching by overlapping scheduler-aware disk prefetching with computation, while showing that caching benefits depend strongly on workload and hardware. | 9 | 9 |
+| 2026-09-11 | [Interface-Aware KV Cache Quantization for Dense On-Chip NVM in Long-Context LLM Decoding](https://arxiv.org/abs/2609.05764) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory | An interface-aware 4-bit KV-cache format enables dense on-chip NVM storage for long-context LLM decoding while preserving accuracy under simulated hardware noise and reducing read energy. | 8 | 8 |
 | 2026-09-10 | [SIRF: A Spec-Internalized Risk Foundation Model for Industrial Content Risk Control](https://arxiv.org/abs/2609.11752) | Language Foundation Models: LLM Memory | SIRF internalizes industrial risk policies into model weights to enable high-precision, second-level, verdict-only content moderation. | 7 | 6 |
 | 2026-09-10 | [Enabling Knowledge Graph Understanding at Scale with the EXplore Your Graphs ENgine (EXYGEN)](https://arxiv.org/abs/2609.11569) | Language Foundation Models: Large Language Models, LLM Memory | EXYGEN enables scalable conversational knowledge-graph access by combining automatically generated schema context, graph samples, and lightweight RAG prompting for text-to-SPARQL generation. | 5 | 5 |
 | 2026-09-10 | [VikingRAG: Accurate and Token-efficient Retrieval-augmented Generation over Structured Documents](https://arxiv.org/abs/2609.11390) | Efficient AI; Language Foundation Models: LLM Memory | VikingRAG preserves competitive RAG accuracy while substantially reducing token use through structure-aware retrieval, trace reuse, and adaptive escalation. | 5 | 6 |

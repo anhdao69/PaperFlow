@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**222 papers total**
+**224 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Closed-Loop Evaluation of Bird's-Eye-View Maps from Cross-View Transformers as Inputs to Behavior-Cloning Policies](https://arxiv.org/abs/2609.05783) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | Closed-loop CARLA tests show that BEV prediction quality at critical locations—especially along the route—matters more for behavior-cloning driving than overall segmentation IoU. | 8 | 8 |
+| 2026-09-11 | [AAMBERS-UAV: Acquisition-Aware Multimodal Backbone Evaluation and Ranking for UAV Weedy Rice Segmentation](https://arxiv.org/abs/2609.05762) | 3D Vision | Acquisition-aware splits reveal that target-survey exposure can inflate UAV weedy-rice segmentation performance and alter which input modality appears best. | 6 | 7 |
 | 2026-09-10 | [Visual-SLAM for the detection of hidden tomatoes in greenhouses by Hierarchical Localization and GLOMAPfor robotized harvesting](https://arxiv.org/abs/2609.11766) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | A low-cost monocular Visual-SLAM pipeline combines Hierarchical Localization and GLOMAP to reconstruct greenhouse tomato plants and identify occluded fruit for future robotic harvesting. | 6 | 5 |
 | 2026-09-10 | [Revisiting Avatar-As-Image: High-Fidelity Registration is All You Need](https://arxiv.org/abs/2609.11722) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | AvaImg enables high-fidelity UV-based 3D clothed-human avatars by accurately registering arbitrary scans to SMPL(-X)+D models with texture and displacement. | 6 | 7 |
 | 2026-09-10 | [LangStreet: Persistent Language Fields for Anchor-Decoded Street Gaussians](https://arxiv.org/abs/2609.11616) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | LangStreet makes language fields persistent and storage-efficient for view-conditioned Gaussian scenes by assigning semantics to stable anchors and decoder slots rather than transient child Gaussians. | 7 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**288 papers total**
+**290 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-11 | [Distributed Optimization of Modular Production Systems using Model-based Reinforcement Learning with Inverse Models](https://arxiv.org/abs/2609.11615) | Embodied AI: Robot Learning and Manipulation | A model-based reinforcement-learning framework with approximate inverse models enables faster, more efficient self-learning control of flexible modular production systems. | 8 | 7 |
+| 2026-09-11 | [JEPA Policy: Diffusion-Free Imitation Learning via Paired Action and Future Representation Prediction](https://arxiv.org/abs/2609.09630) | Embodied AI: Robot Learning and Manipulation | JEPA Policy enables low-latency, diffusion-free imitation learning by jointly predicting action chunks and their paired future representations. | 7 | 7 |
 | 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |
 | 2026-09-10 | [Rapid Learning of Dexterous In-Hand Pen Writing through Real-Time Jacobian Estimation](https://arxiv.org/abs/2609.11775) | Embodied AI: Robot Learning and Manipulation | A lightweight controller enables an anthropomorphic robot hand to rapidly learn pen writing through online Jacobian estimation, without simulation, demonstrations, or an analytic hand–object model. | 8 | 8 |
 | 2026-09-10 | [SEED-UMI: Sharing the Exoskeleton between human and robot for onE-to-one Dexterous demonstration](https://arxiv.org/abs/2609.11753) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | SEED-UMI improves dexterous imitation learning by having humans and robots share the same exoskeleton, enabling contact-faithful demonstrations and direct policy learning from exoskeleton-centric views. | 8 | 8 |
