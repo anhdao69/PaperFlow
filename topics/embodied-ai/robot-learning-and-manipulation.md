@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**290 papers total**
+**291 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-12 | [LTLDiff: Finite Linear Temporal Logic-Guided Data Generation and Diffusion Policies for Multi-agent Robotic Manipulation](https://arxiv.org/abs/2609.11043) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | LTLDiff uses learned finite temporal-logic specifications to guide demonstrations and diffusion policies for better-coordinated multi-agent manipulation. | 8 | 7 |
 | 2026-09-11 | [Distributed Optimization of Modular Production Systems using Model-based Reinforcement Learning with Inverse Models](https://arxiv.org/abs/2609.11615) | Embodied AI: Robot Learning and Manipulation | A model-based reinforcement-learning framework with approximate inverse models enables faster, more efficient self-learning control of flexible modular production systems. | 8 | 7 |
 | 2026-09-11 | [JEPA Policy: Diffusion-Free Imitation Learning via Paired Action and Future Representation Prediction](https://arxiv.org/abs/2609.09630) | Embodied AI: Robot Learning and Manipulation | JEPA Policy enables low-latency, diffusion-free imitation learning by jointly predicting action chunks and their paired future representations. | 7 | 7 |
 | 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |

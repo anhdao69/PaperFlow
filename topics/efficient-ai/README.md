@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**417 papers total**
+**418 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-12 | [TriCCOT: Tri-part Convolutional Conformal Transformer for Onboard Space Object Detection](https://arxiv.org/abs/2609.08659) | Efficient AI: Efficient Attention | TriCCOT combines CNN proposals, conformal prediction, and hardware-friendly attention to enable robust, deployable space-object detection on resource-constrained FPGA systems. | 5 | 6 |
 | 2026-09-11 | [GPU-CFR: 80x Faster Counterfactual Regret Minimization by Compiling the Game to Static Dataflow and CUDA Graph Replay](https://arxiv.org/abs/2609.11923) | Efficient AI | GPU-CFR compiles a fixed game’s CFR computation into static GPU dataflow and replays it with CUDA Graphs, achieving major speedups over prior CPU and GPU implementations. | 7 | 8 |
 | 2026-09-11 | [Building py-kvcache: A Performance Characterization of External KV Caching for vLLM with NVMe SSDs](https://arxiv.org/abs/2609.11744) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory | py-kvcache accelerates vLLM’s external NVMe KV caching by overlapping scheduler-aware disk prefetching with computation, while showing that caching benefits depend strongly on workload and hardware. | 9 | 9 |
 | 2026-09-11 | [LOCUS: Task-Aware Low-Rank Post-Training for Token-Efficient Language Generation](https://arxiv.org/abs/2609.11739) | Efficient AI | LOCUS uses a task-aware low-rank post-training subspace to reduce language-model output length while preserving preference alignment. | 6 | 7 |

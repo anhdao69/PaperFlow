@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**559 papers total**
+**561 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-12 | [LTLDiff: Finite Linear Temporal Logic-Guided Data Generation and Diffusion Policies for Multi-agent Robotic Manipulation](https://arxiv.org/abs/2609.11043) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | LTLDiff uses learned finite temporal-logic specifications to guide demonstrations and diffusion policies for better-coordinated multi-agent manipulation. | 8 | 7 |
+| 2026-09-12 | [Causal Attribution for Agentic Decisions: Estimators, Coupling, and a Traceability Specification](https://arxiv.org/abs/2609.06445) | Embodied AI | The paper defines causal estimands for agentic decisions, demonstrates when they misattribute step contributions, and proposes traceability records needed for post-hoc attribution. | 6 | 7 |
 | 2026-09-11 | [ORCH: Organizational Principles Enable Collective Intelligence in Embodied AI](https://arxiv.org/abs/2609.11737) | Embodied AI | ORCH uses task-specific hierarchical organization to improve coordination and performance in large, heterogeneous embodied-agent teams. | 7 | 7 |
 | 2026-09-11 | [Distributed Optimization of Modular Production Systems using Model-based Reinforcement Learning with Inverse Models](https://arxiv.org/abs/2609.11615) | Embodied AI: Robot Learning and Manipulation | A model-based reinforcement-learning framework with approximate inverse models enables faster, more efficient self-learning control of flexible modular production systems. | 8 | 7 |
 | 2026-09-11 | [Lightweight LiDAR-Based Cone Detection Framework Using Random Forest for Formula Student Driverless](https://arxiv.org/abs/2609.11527) | Embodied AI: Robot Navigation | A lightweight LiDAR-only pipeline enables fast and accurate cone detection for Formula Student Driverless vehicles using CPU hardware. | 5 | 5 |

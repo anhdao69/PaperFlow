@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**55 papers total**
+**56 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-12 | [TriCCOT: Tri-part Convolutional Conformal Transformer for Onboard Space Object Detection](https://arxiv.org/abs/2609.08659) | Efficient AI: Efficient Attention | TriCCOT combines CNN proposals, conformal prediction, and hardware-friendly attention to enable robust, deployable space-object detection on resource-constrained FPGA systems. | 5 | 6 |
 | 2026-09-10 | [CoRA-NAS: Coarse Ranking and Anchor-Residual Refinement for Neural Architecture Search](https://arxiv.org/abs/2609.11884) | Efficient AI: Efficient Attention | CoRA-NAS combines zero-cost ranking with low-cost learning-curve refinement to robustly select neural architectures across diverse search spaces. | 8 | 8 |
 | 2026-09-10 | [A Dataset and Model for Imputing Water Surface Elevation on a Large and Extremely Sparse Spatiotemporal Graph](https://arxiv.org/abs/2609.11580) | Efficient AI: Efficient Attention | AmazonSWE enables extremely sparse river-network water-level imputation, with a topology-aware state space model substantially improving satellite-based elevation estimates against gauges. | 8 | 8 |
 | 2026-09-10 | [FreeFlow: A Bias-free Hierarchical Transformer for Optical Flow Estimation](https://arxiv.org/abs/2609.11486) | Efficient AI: Efficient Attention | FreeFlow estimates optical flow with a bias-free hierarchical transformer that achieves state-of-the-art benchmark results using a simple feed-forward design. | 7 | 7 |

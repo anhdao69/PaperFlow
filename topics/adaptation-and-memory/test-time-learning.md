@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**91 papers total**
+**92 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-12 | [XAI-Refine: An Automated Explanation-Knowledge Loop for Brain-Age Prediction](https://arxiv.org/abs/2609.09388) | Adaptation and Memory: Test-Time Learning | XAI-Refine iteratively uses reliable explanations and verified neurobiological literature to refine brain-age prediction models while guarding predictive performance and explanation stability. | 4 | 6 |
 | 2026-09-11 | [Beyond Confidence: Stability-Aware Test-Time Adaptation for LLM Reasoning](https://arxiv.org/abs/2609.11393) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | TASCO improves frozen-LLM reasoning at test time by optimizing confidence that remains stable under local perturbations, rather than confidence alone. | 8 | 7 |
 | 2026-09-10 | [When is Test-Time Adaptation Identifiable From Unlabeled Evidence?](https://arxiv.org/abs/2609.11235) | Adaptation and Memory: Test-Time Learning | Test-time adaptation selection is impossible when unlabeled evidence cannot distinguish deployments requiring different adaptation actions. | 8 | 8 |
 | 2026-09-10 | [Importance Weighting for Unlabeled-unlabeled Learning under Distribution Shift](https://arxiv.org/abs/2609.10994) | Adaptation and Memory: Test-Time Learning | A principled importance-weighting method adapts unlabeled-unlabeled learning to distribution shifts using limited unlabeled data from the test distribution. | 7 | 7 |

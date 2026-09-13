@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**231 papers total**
+**232 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-12 | [XAI-Refine: An Automated Explanation-Knowledge Loop for Brain-Age Prediction](https://arxiv.org/abs/2609.09388) | Adaptation and Memory: Test-Time Learning | XAI-Refine iteratively uses reliable explanations and verified neurobiological literature to refine brain-age prediction models while guarding predictive performance and explanation stability. | 4 | 6 |
 | 2026-09-11 | [Investigating catastrophic forgetting in sound event classification](https://arxiv.org/abs/2609.11447) | Adaptation and Memory: Continual and Online Learning | The study finds that freezing the feature extractor while fine-tuning an expanding classifier head effectively limits catastrophic forgetting in incremental sound event classification. | 8 | 6 |
 | 2026-09-11 | [Beyond Confidence: Stability-Aware Test-Time Adaptation for LLM Reasoning](https://arxiv.org/abs/2609.11393) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | TASCO improves frozen-LLM reasoning at test time by optimizing confidence that remains stable under local perturbations, rather than confidence alone. | 8 | 7 |
 | 2026-09-11 | [Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation](https://arxiv.org/abs/2609.10954) | World Models: Interactive World Models; Adaptation and Memory: Continual and Online Learning | The fork ledger estimates whether updating a continual world model improves deployment by comparing matched update-versus-hold counterfactuals at pre-registered decision points. | 9 | 9 |

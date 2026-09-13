@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**128 papers total**
+**129 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-12 | [LTLDiff: Finite Linear Temporal Logic-Guided Data Generation and Diffusion Policies for Multi-agent Robotic Manipulation](https://arxiv.org/abs/2609.11043) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | LTLDiff uses learned finite temporal-logic specifications to guide demonstrations and diffusion policies for better-coordinated multi-agent manipulation. | 8 | 7 |
 | 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |
 | 2026-09-10 | [ActSafeGuard: Differentiable and Training-Aligned Constraint Enforcement for Flow-Matching Policies](https://arxiv.org/abs/2609.11697) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | ActSafeGuard trains flow-matching robotic policies to satisfy hard action constraints at every step while preserving task performance. | 8 | 8 |
 | 2026-09-10 | [Memory as Plans: World-Action Modeling with Memory-Grounded Planning](https://arxiv.org/abs/2609.11561) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MaP-WAM turns long-term multimodal memory into compact visual-language plans, enabling efficient non-Markovian robotic manipulation with fixed executor context and adaptive execution. | 9 | 9 |
