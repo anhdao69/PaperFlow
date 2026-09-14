@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**34 papers total**
+**35 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [Decoding Mixture Perception through Computational Modeling of Component Interactions](https://arxiv.org/abs/2609.11958) | Embodied AI: Learning from Human Videos | A bio-inspired deep learning framework models molecule–receptor interactions and component competition to recognize odor perceptions in complex mixtures. | 8 | 8 |
 | 2026-09-10 | [SEED-UMI: Sharing the Exoskeleton between human and robot for onE-to-one Dexterous demonstration](https://arxiv.org/abs/2609.11753) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | SEED-UMI improves dexterous imitation learning by having humans and robots share the same exoskeleton, enabling contact-faithful demonstrations and direct policy learning from exoskeleton-centric views. | 8 | 8 |
 | 2026-09-10 | [Morphology-Aware Human Motion Retargeting for Wheeled-Humanoid Loco-Manipulation](https://arxiv.org/abs/2609.11357) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | A reproducible pipeline retargets general human motion into physically executable loco-manipulation for the wheeled Galaxea R1 Pro humanoid. | 7 | 6 |
 | 2026-09-10 | [HuRo: Robotizing Human Videos for Scalable VLA Pretraining](https://arxiv.org/abs/2609.10706) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | HuRo robotizes large-scale human videos into robot-aligned training data, enabling scalable VLA pretraining that substantially improves real-world manipulation and out-of-distribution robustness. | 9 | 8 |

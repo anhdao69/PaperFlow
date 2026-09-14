@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**102 papers total**
+**104 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [IMPLY: Physically Anchored Consistency for World-Model Rollouts](https://arxiv.org/abs/2609.12441) | World Models: Interactive World Models | IMPLY evaluates world-model rollouts by checking whether observed calibration pushes identify one consistent physical object, exposing models that are self-consistent but ignore the object. | 8 | 8 |
+| 2026-09-13 | [NDT Factory: Synthesizing Verified Network Digital Twins from Semantic Models via Multi-Agent LLM](https://arxiv.org/abs/2609.12170) | World Models: Interactive World Models | NDT Factory uses multiple LLM agents to automatically synthesize verified, executable network digital twins from semantic models for adaptive network-intent evaluation. | 7 | 8 |
 | 2026-09-11 | [Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation](https://arxiv.org/abs/2609.10954) | World Models: Interactive World Models; Adaptation and Memory: Continual and Online Learning | The fork ledger estimates whether updating a continual world model improves deployment by comparing matched update-versus-hold counterfactuals at pre-registered decision points. | 9 | 9 |
 | 2026-09-11 | [Earth System World Model for What-If Simulations: A Case Study for Terrestrial Ecosystems](https://arxiv.org/abs/2609.08855) | World Models: Interactive World Models | An action-conditioned Earth-system world model enables interactive what-if simulations of ecosystem interventions while retaining accurate long-horizon emulation. | 7 | 7 |
 | 2026-09-10 | [World in World: Explore the World with World Models](https://arxiv.org/abs/2609.11548) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | World in World is a training-free interface that uses structured visual evidence and attention control to make frozen video world models support consistent, controllable exploration across viewpoints and time. | 9 | 8 |

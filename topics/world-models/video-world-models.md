@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**67 papers total**
+**72 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [Physics-Aware Video Generation via Agentic Planning and Graph-Guided Optimization](https://arxiv.org/abs/2609.13006) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | PhysPlan improves the physical plausibility of video diffusion outputs through agentic visual reasoning and object-focused, adaptive test-time optimization. | 9 | 8 |
+| 2026-09-13 | [A Splitting Method for SDE Terminal-Law Estimation](https://arxiv.org/abs/2609.12513) | World Models: Video World Models | A path-splitting strategy can improve terminal-law estimation for SDEs over i.i.d. path sampling under a fixed simulation budget. | 7 | 7 |
+| 2026-09-13 | [DWMP: Leveraging Dual World Models for Humanoid Obstacle Traversal](https://arxiv.org/abs/2609.12347) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Video World Models | DWMP combines separate dynamics and visual world models to help humanoid robots traverse cluttered obstacles using proprioceptive and depth observations. | 9 | 8 |
+| 2026-09-13 | [Pelican-Sim 1.0: A General World Model Simulator for Embodied Intelligence](https://arxiv.org/abs/2609.12036) | World Models: Video World Models | Pelican-Sim 1.0 is a controllable, efficient world-model simulator that predicts visual futures from robot actions across heterogeneous embodiments and supports strong downstream policy learning and evaluation. | 9 | 8 |
+| 2026-09-13 | [Continuous Learning of Gravity Field Irregularities Around Small Bodies via Neural Hamiltonian ODEs](https://arxiv.org/abs/2609.12022) | World Models: Video World Models | A Neural Hamiltonian ODE continuously learns small-body gravity irregularities from noisy position–velocity tracking and enables accurate descent planning. | 7 | 8 |
 | 2026-09-10 | [Near-Optimal Reinforcement Learning with Multi-Step Transition Lookahead](https://arxiv.org/abs/2609.11807) | World Models: Video World Models | Exact planning with multi-step transition look-ahead is NP-hard for every fixed discount factor, but efficient near-optimal planning and learning are still possible. | 8 | 8 |
 | 2026-09-10 | [CAP: Continuously Adaptive Perception-Blind Humanoid Locomotion via Learned Denoising](https://arxiv.org/abs/2609.11553) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Video World Models | CAP enables a single humanoid locomotion policy to remain robust as depth perception becomes partially or intermittently corrupted. | 8 | 8 |
 | 2026-09-10 | [World in World: Explore the World with World Models](https://arxiv.org/abs/2609.11548) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | World in World is a training-free interface that uses structured visual evidence and attention control to make frozen video world models support consistent, controllable exploration across viewpoints and time. | 9 | 8 |

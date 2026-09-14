@@ -1,6 +1,705 @@
 {
   "days": [
     {
+      "date": "2026-09-13",
+      "paper_count": 5,
+      "papers": [
+        {
+          "abstract": "Post-training attention sparsification reduces the quadratic cumulative attention cost of pretrained Transformers by selecting a small set of context units (tokens or blocks) for each query. Existing trainable methods usually use a lightweight selector to score context units, followed by hard Top-K selection that blocks gradients from the language modeling loss. Consequently, these methods commonly distill layer-wise dense attention distributions. Although this encourages the selector to rank context units by dense attention weights in the original model, the ranking is not directly aligned with their impact on predictions under a fixed attention budget (i.e., the number of attended context units per query), potentially wasting the limited budget on less useful units. To address this misalignment, we propose Simple Attention Sparsification (SAS), a gated sparse attention mechanism that optimizes context ranking end-to-end with the language modeling loss. The key idea is to inject the selector's continuous scores into attention logits during training, allowing the loss to update the selector through standard backpropagation. We identify several choices crucial for this simple design to work well in practice: placing the gate inside the attention softmax in log form, using normalized softmax gates to calibrate historical context against the always-retained current block, and preserving continuous selector scores so the model learns relative priorities rather than only hard selections. To support long-sequence training, we implement a memory-efficient Triton kernel that integrates SAS into FlashAttention-style computation. Across reasoning, long-context understanding, and agentic tasks, SAS consistently outperforms trainable sparse attention baselines across attention budgets, with especially large gains under tight budgets, demonstrating more effective context ranking for downstream tasks.",
+          "arxiv_id": "2609.13141",
+          "arxiv_url": "https://arxiv.org/abs/2609.13141",
+          "authors": [
+            "Zhiwei Li, Lei Zhu, Hao Gu, Xiang Hu, Yan Wang, Haitao Mi, Sirui Han, Leo Liang, Zhijiang Guo"
+          ],
+          "bullets": [
+            "Post-training sparsification must select few tokens or blocks, but hard Top-K selection prevents language-modeling gradients from directly training the selector.",
+            "SAS injects continuous selector scores into attention logits during training, allowing standard backpropagation to optimize ranking.",
+            "Log-space gating inside the attention softmax, normalized gates, and continuous scores help calibrate retained context and learn relative priorities.",
+            "A memory-efficient Triton kernel integrates SAS with FlashAttention-style computation for long-sequence training.",
+            "Across reasoning, long-context understanding, and agentic tasks, SAS outperforms trainable sparse-attention baselines, especially under tight budgets."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1 (a) Gradient Blockage in Discrete Selection. Sparse attention with discrete Top-K selection prevents gradients propagation from language modeling loss to selector. Existing approaches bypass this issue using auxiliary distillation [10, 13] or heuristics [29, 59]. (b) Differentiable Continuous Gating. SAS keeps discrete Top-K selection but attaches a continuous soft gate to each selected block, enabling gradient flow from the language modeling loss to the selector.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 445,
+              "image_path": "figures/2609.13141/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 963
+            },
+            {
+              "caption": "Figure 3 Evolution of selector logits s under softmax, sigmoid gating and raw-logit injection in different layers. Sigmoid gating saturates historical gates toward one, while raw injection collapses logits toward zero with reduced variance. Thus, both transformations approach effectively ungated attention and fail to provide a discriminative signal for learning block rankings. These observations highlight the importance of the competitive nature of softmax normalization in avoiding such trivial solutions and preserving discriminative block selection.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 394,
+              "image_path": "figures/2609.13141/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 960
+            },
+            {
+              "caption": "Figure 4 Gradient behavior under sparse and full training scopes with Top-K of 3. For non Top-K blocks, sparse scope training yields noisy and highly correlated gradients, with gradients of these unselected blocks simultaneously being either positive or negative across blocks, ignoring their own importance scores (x-axis). This provides a less informative optimization signal and leads to less efficient gate optimization than full scope training.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 352,
+              "image_path": "figures/2609.13141/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 950
+            },
+            {
+              "caption": "Figure 6 Generation behavior of distillation (SeerAttention-R) and end-to-end NTP (SAS) on Qwen3-4B at a 4096 token budget across four reasoning benchmarks. Left: average generation length; SAS generates shorter traces. Right: truncation rate under a maximum generation length of 32,768; SAS truncates less often. These trends are consistent with more effective context selection, suggesting SAS reaches answers with fewer tokens, with the gap largest on the harder AIME tasks.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 237,
+              "image_path": "figures/2609.13141/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 962
+            },
+            {
+              "caption": "Figure 7 End-to-end decode efficiency of SAS versus dense attention on Qwen3-4B in SGLang (single GPU, CUDA graphs, steady-state decode). (a) At batch 1, dense latency grows linearly with context length, while SAS remains nearly constant, achieving up to 5.6× lower latency at 512K. (b) At batch 8, speedup reaches ∼13× and is largely insensitive to the token budget. (c) Sparse-decode latency breakdown: attention cost remains constant, while Top-K selection dominates at long contexts.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 231,
+              "image_path": "figures/2609.13141/figure-005.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 974
+            },
+            {
+              "caption": "Figure 8 Training dynamics for different gated sparsification designs. Inner softmax gate yields lower training loss than outer gate. Independent sigmoid gates and raw-logit injection achieve lower loss than normalized softmax gates. Hard gating reduces the training loss, but substantially increases the gradient norm. Sparse scope training starts with a higher loss but gradually approaches full scope training, while introducing noise yields little difference.",
+              "figure_id": "figure-8-14",
+              "figure_number": "8",
+              "height": 881,
+              "image_path": "figures/2609.13141/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 970
+            },
+            {
+              "caption": "Table 2 Evaluation results on reasoning benchmarks. Quest∗ denotes results extracted from Figure 5 of SeerAttentionR using the WebPlotDigitizer tool, while SeerAttn-R# denotes our reproduced results. Standard deviations are shown in parentheses.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 324,
+              "image_path": "figures/2609.13141/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 976
+            },
+            {
+              "caption": "Table 6 Evaluation results on general downstream tasks for OLMo3-7B continued pretraining.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 405,
+              "image_path": "figures/2609.13141/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 727
+            },
+            {
+              "caption": "Table 4 Evaluation results on BFCL (Multi-Turn).",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 193,
+              "image_path": "figures/2609.13141/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 577
+            },
+            {
+              "caption": "Table 3 Evaluation results on LongBench, grouped by input length (0-4K, 4-8K, and 8K+ tokens).",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 207,
+              "image_path": "figures/2609.13141/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 922
+            },
+            {
+              "caption": "Table 5 Evaluation results on VitaBench with Qwen3-14B.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 200,
+              "image_path": "figures/2609.13141/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 952
+            },
+            {
+              "caption": "Table 7 Evaluation results on LongBench for OLMo3-7B continued pretraining.",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 149,
+              "image_path": "figures/2609.13141/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 972
+            },
+            {
+              "caption": "Table 9 Final accuracy (%) of full training scope versus sparse training scope across model scales and token budgets. Standard deviations are shown in parentheses.",
+              "figure_id": "table-9-5",
+              "figure_number": "9",
+              "height": 164,
+              "image_path": "figures/2609.13141/table-013.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 976
+            },
+            {
+              "caption": "Table 8 Evaluation results on the RULER benchmark.",
+              "figure_id": "table-8-4",
+              "figure_number": "8",
+              "height": 148,
+              "image_path": "figures/2609.13141/table-014.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 976
+            }
+          ],
+          "first_seen_at": "2026-09-13T21:00:00-04:00",
+          "hero_figure": "figures/2609.13141/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.13141",
+          "relevance": 7,
+          "selection_reason": "Trainable sparse attention with end-to-end context ranking and memory-efficient kernel, directly matching efficient attention.",
+          "summary_status": "generated",
+          "title": "SAS: Simple Attention Sparsification via End-to-End Optimization of Context Ranking",
+          "tldr": "SAS trains sparse-attention context rankings end-to-end so limited attention budgets prioritize units that most improve predictions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "With the recent rise and adoption of tabular foundation models, optimizing their inference performance becomes an emerging field for efficiency research. While the models are architecturally similar to transformer-based large language models (LLMs), the size and serving patterns differ significantly. We show that the focus should be on the attention calculation and less on weight or KV cache quantization, which are more popular in LLMs. We develop a quantization strategy for queries, keys, and values to FP8 and use explicit FP8 matrix multiplication instructions to speed up the attention calculation. We find that it is crucial to align the quantization error in the test rows with the quantization error in the training rows, as otherwise the accuracy drops drastically. Our Triton kernel achieves a speedup up to 1.7x over regular 16-bit kernels, and we show that on TabPFN-v3 and TabICLv2 there is no relevant accuracy loss across TabArena and BeyondArena.",
+          "arxiv_id": "2609.13031",
+          "arxiv_url": "https://arxiv.org/abs/2609.13031",
+          "authors": [
+            "Jonas M. K\\\"ubler, Benjamin J\\\"ager, Klemens Fl\\\"oge, Noah Hollmann, Frank Hutter"
+          ],
+          "bullets": [
+            "Targets attention computation rather than weight or KV-cache quantization, reflecting tabular model serving patterns.",
+            "Quantizes queries, keys, and values to FP8 and uses explicit FP8 matrix multiplication instructions.",
+            "Shows that matching quantization error between training and test rows is crucial for preserving accuracy.",
+            "A Triton kernel achieves up to 1.7× speedup over regular 16-bit kernels.",
+            "Evaluations on TabPFN-v3 and TabICLv2 across TabArena and BeyondArena report no relevant accuracy loss."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Per-dataset relative change in metric error of the gated FP8 configuration against the unquantized baseline, over three preprocessing seeds. Grey points are datasets below the N > 8192 gate, which run the unquantized path and match the baseline. Green points are those where FP8 is active. Each bar spans the three seeds.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 366,
+              "image_path": "figures/2609.13031/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 798
+            },
+            {
+              "caption": "Figure 3: TabArena performance across three random seeds when Gaussian noise is added to Q,K, V (left) and E2E runtime scaling.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 226,
+              "image_path": "figures/2609.13031/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 814
+            },
+            {
+              "caption": "Figure 2: Quantization approach illustrated for a single head. We quantize Q,K, V with per-head scaled absmax quantization, the Q and K scales are then applied in the kernel together with the softmax scale, whereas the V scale is applied in the epilogue. The P matrix is never materialized in global memory and is quantized with a fixed scale inside the kernel.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 206,
+              "image_path": "figures/2609.13031/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 814
+            },
+            {
+              "caption": "Table 2: Accuracy ablations on TabPFN-v3. We run all the experiments over three seeds in TabPFN, whereas the datasets are not random. n is the number of datasets whose predictions differ from the baseline at all: the gated arm leaves those below 8192 training rows untouched and hence they reproduce the baseline exactly. They are not considered in the sign test. win is the fraction of those n on which the arm beat the baseline, so 0.5 is the null hypothesis. This is the quantity the sign test operates on. ∆err is the mean per-dataset relative change in metric_error, positive being worse. p is the one-sided sign test p-value.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 515,
+              "image_path": "figures/2609.13031/table-004.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 656
+            },
+            {
+              "caption": "Table 3: Speed of the kernel and end-to-end on TabPFN-v3 on NVIDIA RTX PRO 6000 Blackwell Server Edition. Our baseline is always torch SDPA, which uses FlashAttention 2. But for comparison we also include a 16-bit version of our own kernel, which closely follows torch. Therefore, the speedups can be clearly attributed to usage of FP8 tensor cores. Kernel: a single ICL train↔train attention call (B = 1, H = Hkv = 8, D = 64, float16), where quantization of Q, K, and V is included. End-to-end: predict of a 20-feature, 1024-test-row problem. FP8 is gated off below 8192 training rows in the end-to-end tests.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 321,
+              "image_path": "figures/2609.13031/table-005.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 798
+            },
+            {
+              "caption": "Table 6: A single attention call at head dimension 128, on one NVIDIA RTX PRO 6000 Blackwell Server Edition.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 321,
+              "image_path": "figures/2609.13031/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 594
+            },
+            {
+              "caption": "Table 5: End to end speed of FP8 ICL attention in TabICLv2 on one NVIDIA RTX PRO 6000 Blackwell Server Edition. Same setting as in Table 3, however, for TabICLv2 we did not implement the actual gate at row count of 8k.",
+              "figure_id": "table-5-9",
+              "figure_number": "5",
+              "height": 286,
+              "image_path": "figures/2609.13031/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 377
+            },
+            {
+              "caption": "Table 7: A single attention call of our Triton kernel at head dimension 64, on one NVIDIA L4. torch is the SDPA baseline path (FlashAttention-2).",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 321,
+              "image_path": "figures/2609.13031/table-008.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 602
+            },
+            {
+              "caption": "Table 1: FP8 attention ablations on TabPFN-v3 with TabArena without N > 8192 gating.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 139,
+              "image_path": "figures/2609.13031/table-009.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 732
+            },
+            {
+              "caption": "Table 4: FP8 ICL attention in TabICLv2 against stock TabICLv2. The baseline scores an Elo of 1568.9. To estimate the accuracy impact of quantization from 16 bit to FP8, we do not employ our previous gating of N > 8192. However, TabICLv2 already runs small datasets (N < 1024) in FP32. Since our goal is to understand the impact of quantization from 16 bits to FP8, and to not confound our insights with this design, we only replace the attention in the existing 16 bit paths. Columns are as in Table 2.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 93,
+              "image_path": "figures/2609.13031/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 641
+            }
+          ],
+          "first_seen_at": "2026-09-13T21:00:00-04:00",
+          "hero_figure": "figures/2609.13031/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.13031",
+          "relevance": 7,
+          "selection_reason": "FP8 quantization of attention QKV with explicit FP8 matmul kernels speeds up attention for tabular foundation models with minimal accuracy loss.",
+          "summary_status": "generated",
+          "title": "Attention Quantization for Tabular Foundation Models",
+          "tldr": "An FP8 quantization strategy for tabular foundation model attention speeds inference by up to 1.7× without relevant accuracy loss when training and test quantization errors are aligned.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "A single SM utilization percentage can make an LLM inference workload look compute-saturated while hiding how much useful work is being done. The problem is not that the counter is wrong, but that it collapses several different mechanisms into one number. This is most severe during decode, where each request contributes only one new token and dense projection GEMMs become small-row matrix multiplications. On Hopper, the bfloat16 GMMA path executes these operations in fixed 64-row matrix fragments, so small-batch decode can fill only a small fraction of each fragment with real token rows. In this paper, we profile vLLM with FlashAttention-3 and cuBLASLt on an H100 NVL across cold prefill, warm prefill, and decode, sweeping sequence length and batch size. We replace the usual single utilization number with eight counter-validated views derived from raw Nsight Compute reports, each pinned to an NCU counter or explicit formula. Together, these views map utilization gaps to concrete mechanisms - fragment fill, occupancy limits, stall signatures, wave quantization, and kernel selection - across four production models and six per-layer kernel roles.",
+          "arxiv_id": "2609.12923",
+          "arxiv_url": "https://arxiv.org/abs/2609.12923",
+          "authors": [
+            "Mohammad Siavashi, Gerald Q. Maguire Jr., Dejan Kostic, Marco Chiesa"
+          ],
+          "bullets": [
+            "The issue is most pronounced during decode, where each request adds only one token and projection GEMMs have few rows.",
+            "Hopper’s bfloat16 GMMA path uses fixed 64-row fragments, leaving much of each fragment unused at small decode batch sizes.",
+            "The study profiles vLLM with FlashAttention-3 and cuBLASLt on an H100 NVL across prefill and decode conditions.",
+            "Eight views derived from raw Nsight Compute reports cover fragment fill, occupancy, stalls, wave quantization, and kernel selection.",
+            "The analysis spans four production models and six per-layer kernel roles, mapping utilization gaps to concrete mechanisms."
+          ],
+          "categories": [
+            "cs.PF",
+            "cs.AR",
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: SM utilization heatmaps by model, regime, role, and (S, B). Rows are kernel roles; columns are swept (S, B) corners; one panel per (model, regime).",
+              "figure_id": "figure-1-12",
+              "figure_number": "1",
+              "height": 428,
+              "image_path": "figures/2609.12923/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 498
+            },
+            {
+              "caption": "Figure 2: Achieved warps/SM under two denominators on the canonical cell (Llama-3-8B decode, S=2048, B=1): normalized by the 64-warp architectural limit and by each kernel’s resource cap ηcap (12 dense, 8 FA3 main). Dense decode values stay within 9.0–9.4 warps/SM across the full sweep (S∈{2k . . . 16k}, B∈{1 . . . 8}, 8B–32B models): the empty warp pool is not a small-budget artifact, and this cell is representative.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 274,
+              "image_path": "figures/2609.12923/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 475
+            },
+            {
+              "caption": "Figure 7: Decode-QKV grid CTA count per model: 132-CTA (Qwen3-14B, 0% waste), 96-CTA (Llama-3-8B, 27%), 80-CTA (Qwen3-32B and -30B-A3B, 39% each). Grid is invariant across all swept S∈{2048, . . . , 16384}, B∈{1, 2, 4, 8}.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 233,
+              "image_path": "figures/2609.12923/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 450
+            },
+            {
+              "caption": "Figure 3: Two regime-resolved metrics for dense BF16",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 336,
+              "image_path": "figures/2609.12923/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 500
+            },
+            {
+              "caption": "Figure 6: cuBLASLt tile-space enumeration for Llama-3-8B decode-QKV (M=8, N=6144, K=4096, BF16 NT) on H100. Bars count producible (algoId, tile) pairs at each resulting CTA-grid size; η is the corresponding wave efficiency. The three 132·k wave-perfect grids are interleaved as hatched rows: none of the 59 producible pairs reaches one, and the heuristic settles on 96 CTAs.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 265,
+              "image_path": "figures/2609.12923/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 468
+            },
+            {
+              "caption": "Figure 5: Device-wide compute SOL on H100 by regime (compute_sol_pct×SMs reached/132). Right axis: effective SM compute-throughput equivalents (out of 528), an intuition-only upper bound, not a literal Tensor-Core count. Averaged over the four dense GEMMs, cold prefill reaches 92.0% device-wide SOL but decode only 7.9%, an 11.7× gap.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 271,
+              "image_path": "figures/2609.12923/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 448
+            },
+            {
+              "caption": "Figure 4: Stall-reason breakdown of warp_cycles_per_issued for Llama-3-8B dense BF16 GEMMs (cold prefill (P) vs. decode (D)) at (S=2048, B=1). Cold prefill is barrier/gmma-dominated, while decode is dominated by long_scoreboard. other aggregates NCU selected (issue) cycles and remaining minor stalls.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 262,
+              "image_path": "figures/2609.12923/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 449
+            },
+            {
+              "caption": "TABLE 6: Decode microarchitecture at B=32 on H100 with FA3. Columns report per-iteration time shares for the three largest buckets (dense GEMMs / FA3 / MoE experts), SMbusy for dense GEMMs, and per-token decode time (ms/tok). Shares are not a partition and may not sum to 100%.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 372,
+              "image_path": "figures/2609.12923/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 442
+            },
+            {
+              "caption": "TABLE 3: Model architectures from HuggingFace config.json [12, 19]. Qwen3-30B-A3B’s F is per-expert.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 83,
+              "image_path": "figures/2609.12923/table-009.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 510
+            },
+            {
+              "caption": "TABLE 2: The eight primary metrics (§5) and their derived quantities. Some metrics occupy two rows where distinct denominators or normalizations apply.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 683,
+              "image_path": "figures/2609.12923/table-010.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 1026
+            },
+            {
+              "caption": "TABLE 1: Per-layer kernel roles tracked in this study. Dense models use the top five rows; MoE models replace Gate/Up+Down with moe.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 319,
+              "image_path": "figures/2609.12923/table-011.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 492
+            },
+            {
+              "caption": "TABLE 7: Cross-metric, cross-regime summary on dense BF16 GEMMs. The metrics split into code-generation levers (warps/SM, wave efficiency — largely flat across regimes) and workload outcomes (sm_busy_pct, compute SOL, L2 fit, launch overhead, stalls — order-of-magnitude shifts cold→decode); this separates fixes that live in cuBLASLt/compilers/serving from those that require workload restructuring. The launch-overhead row is analytical (τ=5µs).",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 214,
+              "image_path": "figures/2609.12923/table-012.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 1079
+            },
+            {
+              "caption": "TABLE 4: Configuration-sweep coverage.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 387,
+              "image_path": "figures/2609.12923/table-013.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 482
+            },
+            {
+              "caption": "TABLE 5: Per-resource warps/SM ceilings, grouped by kernel family.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 234,
+              "image_path": "figures/2609.12923/table-014.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 446
+            }
+          ],
+          "first_seen_at": "2026-09-13T21:00:00-04:00",
+          "hero_figure": "figures/2609.12923/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.12923",
+          "relevance": 7,
+          "selection_reason": "Analyzes GPU utilization for LLM inference, specifically focusing on kernel selection and attention mechanisms to identify bottlenecks, contributing to efficiency research.",
+          "summary_status": "generated",
+          "title": "Dissecting GPU Utilization for LLM Inference on Nvidia Hopper",
+          "tldr": "A single SM-utilization metric obscures why LLM decode underuses Hopper GPUs, so this paper introduces eight counter-validated views that connect utilization gaps to specific hardware and kernel mechanisms.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear attention and state-space models provide linear-time sequence modeling, but their recurrent memory remains a second-order tensor (a matrix), limiting the order of interactions that can be represented in the state. We introduce the RunningTensor, which generalizes this memory to an order-$o$ tensor, updated by a rank-1 outer product and read by contracting against $o-1$ vector queries. Order $2$ recovers linear attention; we study order $3$ as a proof of concept, retaining both recurrent and parallel forms while remaining linear in sequence length $T$ and improving working memory capacity from $\\mathcal{O}(W^2)$ to $\\mathcal{O}(W^o)$. On synthetic multi-query associative recall, RunningTensor outperforms linear-attention and SSM baselines. After pretraining, it also improves performance on language-understanding and non-synthetic retrieval tasks, suggesting that higher-order recurrent state can provide useful additional memory capacity beyond matrix-valued state.",
+          "arxiv_id": "2609.12814",
+          "arxiv_url": "https://arxiv.org/abs/2609.12814",
+          "authors": [
+            "Luca Herranz-Celotti, Vincent Guigue"
+          ],
+          "bullets": [
+            "Linear attention and SSMs use matrix-valued recurrent states, limiting interaction order.",
+            "RunningTensor stores an order-\u0000 tensor via rank-1 outer-product updates and reads it with vector contractions.",
+            "Order 2 matches linear attention; the order-3 proof of concept supports both recurrent and parallel computation.",
+            "Memory capacity scales from O(W²) to O(Wᵒ) while remaining linear in sequence length.",
+            "It outperforms linear-attention and SSM baselines on synthetic recall and improves pretrained language-understanding and retrieval performance."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: State geometry of linear-time recurrences. A vector-state RNN (RNNv) has linear memory capacity, linear attention has quadratic memory capacity given its matrix state, and RunningTensor can increase state size and therefore memory capacity to cubic and higher. One vector query q contraction turns a matrix state into a vector state, but several vector queries q, u are required to turn a tensor state into a vector output.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 151,
+              "image_path": "figures/2609.12814/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 312
+            },
+            {
+              "caption": "Table 2: RunningTensor variants on MQAR validation F1 (%) at dmodel = 128 (same protocol as Table 1; row labels match internal experiment summaries).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 275,
+              "image_path": "figures/2609.12814/table-002.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 772
+            },
+            {
+              "caption": "Table 1: MQAR validation F1 (%) at dmodel = 128 (Attention, SSM baselines, and RunningTensor; each cell reports the best validation F1 over 3 seeds and learning rates {10−2, 10−3, 10−4}; 1024, 2048, and 4096 = MQAR validation sequence length (tokens); ms/step = mean validation forward-pass milliseconds per eval batch step (lower is faster); Params = non-embedding param count per layer; Avg = mean over 1024, 2048, and 4096.)",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 179,
+              "image_path": "figures/2609.12814/table-003.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 698
+            }
+          ],
+          "first_seen_at": "2026-09-13T21:00:00-04:00",
+          "hero_figure": "figures/2609.12814/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.12814",
+          "relevance": 7,
+          "selection_reason": "Generalizes linear attention to higher-order recurrent states, relevant to efficient attention and LLM sequence-modeling architectures.",
+          "summary_status": "generated",
+          "title": "RunningTensor: Generalizing Linear Attention to Higher-Order Recurrent States",
+          "tldr": "RunningTensor extends linear attention with higher-order tensor memory, increasing recurrent capacity while preserving linear-time sequence processing.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Generative recommendation (GR) relies on large-beam decoding to generate hundreds of candidate items, creating a new scaling challenge for recurrent linear attention. Existing linear attention serving systems either materialize a full recurrent state for every beam or repeatedly replay shared history, incurring substantial memory and traffic overhead. To address this, we present OneLA, a linear-attention decoding framework that exploits the shared prompt and short divergent suffixes of GR workloads. Specifically, OneLA represents all beam states using a single shared prompt-derived state and compact, append-only records of their divergent transitions. Using this representation, OneLA computes only the state information required at each decoding step, without reconstructing a full recurrent state for every beam. Furthermore, OneLA uses a lightweight ancestry index to track the transition records that make up each beam's history, allowing beams to be updated without moving or copying existing records. A fused GPU kernel further reuses the shared state across beams. Our analysis shows that OneLA achieves 1.54-2.46x end-to-end decode speedups while substantially reducing recurrent-state memory use and data movement.",
+          "arxiv_id": "2609.12399",
+          "arxiv_url": "https://arxiv.org/abs/2609.12399",
+          "authors": [
+            "Xiangrui Yang, Cheng Peng, Yunfeng Zhao, Liang Zeng, Ao Hu, Jiawei Yang, Shengzhe Wang, Jingshan Lv, Xiao Liang, Chen Yang, Jiaqiang Liu, Yiming Qiu"
+          ],
+          "bullets": [
+            "Targets memory and data-movement overheads from maintaining or replaying recurrent linear-attention states across hundreds of beams.",
+            "Represents beams with one shared prompt-derived state plus append-only records for divergent transitions.",
+            "Uses an ancestry index to update beam histories without copying existing records.",
+            "A fused GPU kernel reuses shared state across beams during decoding.",
+            "Reports 1.54–2.46× end-to-end decoding speedups with substantially lower recurrent-state memory and data movement."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.DC",
+            "cs.IR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. State management in an existing framework.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 181,
+              "image_path": "figures/2609.12399/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 484
+            },
+            {
+              "caption": "Figure 3. OneLA Overview",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 98,
+              "image_path": "figures/2609.12399/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 483
+            },
+            {
+              "caption": "Figure 6. Cumulative full-model decode-forward GPU time.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 182,
+              "image_path": "figures/2609.12399/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 482
+            },
+            {
+              "caption": "Figure 5. Shared-Context Attention Kernel",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 310,
+              "image_path": "figures/2609.12399/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 500
+            },
+            {
+              "caption": "Figure 7. Operator speedup and persistent recurrent-state capacity reduction.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 234,
+              "image_path": "figures/2609.12399/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 490
+            },
+            {
+              "caption": "Figure 8. Recurrent-state efficiency breakdown.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 205,
+              "image_path": "figures/2609.12399/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 500
+            },
+            {
+              "caption": "Figure 4. Projection replay in vector form.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 183,
+              "image_path": "figures/2609.12399/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 441
+            },
+            {
+              "caption": "Figure 1. Decoding workflow for GR.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 195,
+              "image_path": "figures/2609.12399/figure-008.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 290
+            }
+          ],
+          "first_seen_at": "2026-09-13T21:00:00-04:00",
+          "hero_figure": "figures/2609.12399/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.12399",
+          "relevance": 8,
+          "selection_reason": "Introduces OneLA, a framework for scaling linear-attention decoding in generative recommendation by efficiently managing shared states and divergent suffixes, addressing memory and compute efficiency in attention mechanisms.",
+          "summary_status": "generated",
+          "title": "OneLA: Scaling Linear-Attention Decoding to Large Beams in Generative Recommendation",
+          "tldr": "OneLA accelerates large-beam generative recommendation decoding by sharing prompt state and storing only compact per-beam divergence records.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-12",
       "paper_count": 1,
       "papers": [
@@ -10035,5 +10734,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 56
+  "total_paper_count": 61
 }

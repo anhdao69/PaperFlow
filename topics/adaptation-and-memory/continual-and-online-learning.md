@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**117 papers total**
+**119 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [SCORE: SubDistribution-aware Collaborative Knowledge Reinforcing for Cloth-Hybrid Lifelong Person Re-Identification](https://arxiv.org/abs/2609.12577) | Adaptation and Memory: Continual and Online Learning | SCORE mitigates catastrophic forgetting in cloth-hybrid lifelong person re-identification by modeling and collaboratively reinforcing diverse identity-specific subdistributions. | 5 | 5 |
+| 2026-09-13 | [LoRA-RC: Reservoir Computing with Low-Rank Adaptation](https://arxiv.org/abs/2609.12327) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | LoRA-RC enables stable online adaptation of a reservoir computer under system drift by learning a constrained low-rank recurrent update. | 8 | 9 |
 | 2026-09-11 | [Investigating catastrophic forgetting in sound event classification](https://arxiv.org/abs/2609.11447) | Adaptation and Memory: Continual and Online Learning | The study finds that freezing the feature extractor while fine-tuning an expanding classifier head effectively limits catastrophic forgetting in incremental sound event classification. | 8 | 6 |
 | 2026-09-11 | [Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation](https://arxiv.org/abs/2609.10954) | World Models: Interactive World Models; Adaptation and Memory: Continual and Online Learning | The fork ledger estimates whether updating a continual world model improves deployment by comparing matched update-versus-hold counterfactuals at pre-registered decision points. | 9 | 9 |
 | 2026-09-11 | [When Validation Stops Learning: Auditing Update Admission for Continual Embodied Agents](https://arxiv.org/abs/2609.10873) | Adaptation and Memory: Continual and Online Learning | Update-admission gates can safely reject harmful continual-learning updates but may also block nearly all useful learning, so they should be audited for both error control and missed opportunities. | 8 | 8 |

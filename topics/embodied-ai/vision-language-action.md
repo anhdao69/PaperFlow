@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**129 papers total**
+**133 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [Breaking the Vision-Action Shortcut: Latent Interface Training for Generalizable Robotics Foundation Models](https://arxiv.org/abs/2609.12641) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Latent Interface Training reduces vision-action shortcuts in robot foundation models by forcing visual inputs through a pose-supervised, goal-relevant latent interface, improving robustness to visual shifts. | 9 | 8 |
+| 2026-09-13 | [STAR: Sparse Tactile Representation Learning in Vision-Tactile-Language-Action Models for Dexterous Manipulation](https://arxiv.org/abs/2609.12549) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | STAR combines a large synchronized vision-tactile-language-action dataset with sparse tactile representation learning to improve dexterous robot manipulation. | 9 | 8 |
+| 2026-09-13 | [Efficient Vision-Language-Action Management and Serving for Robot Factories](https://arxiv.org/abs/2609.12075) | Embodied AI: Vision-Language-Action | Robion is a VLA serving and management system that efficiently supports multiple robots and models on multi-GPU edge servers while meeting latency SLOs. | 9 | 8 |
+| 2026-09-13 | [Look Before You Leap: Pre-Action Verification for LLM Agents](https://arxiv.org/abs/2609.11957) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Test-Time Learning | Cheap deterministic pre-action checks can prevent or expose silent failures in LLM-agent shell commands and code edits, especially when verifiers abstain when uncertain. | 9 | 8 |
 | 2026-09-12 | [LTLDiff: Finite Linear Temporal Logic-Guided Data Generation and Diffusion Policies for Multi-agent Robotic Manipulation](https://arxiv.org/abs/2609.11043) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | LTLDiff uses learned finite temporal-logic specifications to guide demonstrations and diffusion policies for better-coordinated multi-agent manipulation. | 8 | 7 |
 | 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |
 | 2026-09-10 | [ActSafeGuard: Differentiable and Training-Aligned Constraint Enforcement for Flow-Matching Policies](https://arxiv.org/abs/2609.11697) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | ActSafeGuard trains flow-matching robotic policies to satisfy hard action constraints at every step while preserving task performance. | 8 | 8 |

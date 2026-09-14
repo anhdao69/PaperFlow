@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**54 papers total**
+**55 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [Physics-Aware Video Generation via Agentic Planning and Graph-Guided Optimization](https://arxiv.org/abs/2609.13006) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | PhysPlan improves the physical plausibility of video diffusion outputs through agentic visual reasoning and object-focused, adaptive test-time optimization. | 9 | 8 |
 | 2026-09-10 | [Vidu S2: Real-Time Interactive, Editable, and Spatial Video Generation](https://arxiv.org/abs/2609.11638) | Video Generation and Understanding: Video Diffusion, Video Understanding | Vidu S2 enables real-time interactive character generation and video editing, with exploratory support for spatial video. | 6 | 7 |
 | 2026-09-10 | [Harnessing Intrinsic Subject-Aware Attention for Controllable Multi-Subject Video Generation](https://arxiv.org/abs/2609.11507) | Video Generation and Understanding: Video Diffusion | DIAL uses intrinsic DiT attention maps to control subject fidelity and reduce semantic drift in multi-subject video generation. | 8 | 8 |
 | 2026-09-10 | [Multi-Modal Controlled Coherent Motion Generation](https://arxiv.org/abs/2609.11439) | Video Generation and Understanding: Video Diffusion | MOCO generates coherent, lifelike 3D avatar motions from simultaneous speech, text, and trajectory inputs without requiring aligned multimodal training data. | 8 | 8 |

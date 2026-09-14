@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**21 papers total**
+**22 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [DWMP: Leveraging Dual World Models for Humanoid Obstacle Traversal](https://arxiv.org/abs/2609.12347) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Video World Models | DWMP combines separate dynamics and visual world models to help humanoid robots traverse cluttered obstacles using proprioceptive and depth observations. | 9 | 8 |
 | 2026-09-09 | [Learning Counterfactual World Models for Embodied Reasoning under Partial Observability](https://arxiv.org/abs/2609.05834) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Latent Action Models | Counterfactual Latent World Models make embodied world models more actionable by distinguishing interventions that look visually similar but lead to different outcomes. | 9 | 9 |
 | 2026-09-08 | [WM-Craftnet: World Synesthesia Model for Generalizable and Robust Dexterous In-Hand Manipulation](https://arxiv.org/abs/2609.07002) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | WM-Craftnet uses a multimodal recurrent world model to provide denoised, contact-aware context for robust dexterous in-hand rotation across object and disturbance changes. | 9 | 8 |
 | 2026-09-08 | [ARC-Bench: Closed-Loop Replanning Masks Broken Action Ranking in Frozen JEPA World Models](https://arxiv.org/abs/2609.05461) | World Models: Latent Action Models | ARC-Bench shows that frozen JEPA world models often rank actions incorrectly, while frequent closed-loop replanning conceals these failures. | 8 | 8 |

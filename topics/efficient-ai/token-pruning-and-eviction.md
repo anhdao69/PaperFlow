@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**77 papers total**
+**80 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-13 | [Pixel Decodability Is Not a Compression Signal: Causally Evaluating Importance Proxies for Visual KV-Cache Eviction](https://arxiv.org/abs/2609.13012) | Multimodal Foundation Models; Efficient AI: Token Pruning and Eviction | Pixel-decodable visual content does not reliably indicate which KV-cache units are causally important for answering questions, making it a poor eviction signal in the tested setting. | 8 | 7 |
+| 2026-09-13 | [ESTS at WMT26: Routing-Informed Expert Pruning for Model Compression](https://arxiv.org/abs/2609.12310) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | ESTS compresses GPT-OSS-20B for two translation directions by pruning experts according to routing behavior, reallocating capacity across layers, and quantizing the retained weights. | 7 | 6 |
+| 2026-09-13 | [Breaking the Token Ceiling: Distilling Smaller, Stronger Byte Models](https://arxiv.org/abs/2609.12303) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Distilled byte-level models start weaker than token models but scale better, becoming more data-efficient and potentially achieving a higher performance ceiling. | 7 | 6 |
 | 2026-09-10 | [LILA: Calibration-Free Structured Pruning of Large Language Models via Latent Spectral Geometry](https://arxiv.org/abs/2609.11163) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | LILA enables calibration-free, training-free structured LLM pruning by ranking neurons through latent spectral changes, achieving strong accuracy and generative preservation without altering model architecture. | 8 | 9 |
 | 2026-09-10 | [EigenLI: Spectral Approximations to Late Interaction](https://arxiv.org/abs/2609.07561) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: LLM Memory | EigenLI compresses ColBERT-style late-interaction representations using document-specific spectral subspaces, reducing storage and scoring costs while preserving retrieval effectiveness. | 7 | 8 |
 | 2026-09-10 | [Beyond Fluent Generation: A CPU Reliability Benchmark for MCP-Style Tool Calling in Sub-2B Small Language Models for Edge Deployment](https://arxiv.org/abs/2609.07370) | Efficient AI: Token Pruning and Eviction; Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Qwen2.5 models provide the strongest MCP-style tool-calling reliability among tested sub-2B models, but robust edge deployment still requires output recovery and safety controls. | 8 | 7 |
