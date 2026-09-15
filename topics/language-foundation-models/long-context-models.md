@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**35 papers total**
+**39 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-14 | [SpectralShift: Effective Context Window Extension of Gated DeltaNet via Spectral Reparameterization](https://arxiv.org/abs/2609.14320) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | SpectralShift extends Gated DeltaNet context windows by reshaping its decay spectrum to improve long-range retrieval while preserving state clearing and context switching. | 8 | 8 |
+| 2026-09-14 | [ZGCM-1: A Fully Open and Extremely Efficient Foundation Model for Math and Agentic Search](https://arxiv.org/abs/2609.13356) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | ZGCM-1 is a fully open 7B model designed to extend compact-model capabilities through efficient training, deliberate reasoning, and active tool use for math and agentic search. | 8 | 7 |
+| 2026-09-14 | [Capability-Routed Visual Retrieval and Evidence Threading for Long-Context Document Question Answering](https://arxiv.org/abs/2609.13268) | Multimodal Foundation Models: Multimodal Large Language Models; Language Foundation Models: Long-Context Models | A capability-aware routing, answerability-based page selection, and layout-linked evidence threading pipeline improves visual retrieval and long-context document QA over flat page concatenation. | 8 | 8 |
+| 2026-09-14 | [Self-Indexing Attention for Compression-Compatible Sparse Long-Context LLM Inference](https://arxiv.org/abs/2609.13205) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Self-Indexing Attention uses a shared 1-bit transform-domain index to make sparse long-context retrieval efficient across both prefill and decode while remaining compatible with KV-cache compression. | 9 | 9 |
 | 2026-09-09 | [ConvMem: Convolutional Memory for Long-Context Reasoning](https://arxiv.org/abs/2609.10441) | Language Foundation Models: Long-Context Models | ConvMem enables faster, training-free long-context reasoning by hierarchically summarizing text with a parallelizable convolution-inspired memory. | 8 | 8 |
 | 2026-09-09 | [Fine-Tuning a KV Cache Concatenation-Aware Model or Recomputing KV Caches? Why Not Both?](https://arxiv.org/abs/2609.09768) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | A combined strategy of KV-concatenation-aware fine-tuning and selective KV-cache recomputation improves long-context RAG accuracy while substantially reducing time to first token. | 8 | 7 |
 | 2026-09-08 | [Learning Length-Extrapolatable Recurrent Models](https://arxiv.org/abs/2609.09157) | Language Foundation Models: Long-Context Models | CST stabilizes backward state-credit signals in recurrent models, enabling substantially better generalization far beyond the training sequence length. | 6 | 7 |

@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**36 papers total**
+**40 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-14 | [MessyMem: Learning-from-Doing Memory for Mobile Manipulation](https://arxiv.org/abs/2609.15976) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MessyMem gives mobile manipulators persistent, interaction-aware memory so they can reuse knowledge from prior tasks across rooms and visits. | 9 | 8 |
+| 2026-09-14 | [P-POSEMEM: Projective Semantic Memory for Consistent Language Grounding under Pose-Graph Rewrites](https://arxiv.org/abs/2609.15475) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | P-POSEMEM preserves consistent language grounding as SLAM pose graphs are optimized, loop-closed, and compressed by maintaining pose-aware semantic memory. | 8 | 8 |
+| 2026-09-14 | [AnchorGUI: Asymmetric Memory for Dual-Scale Learning in GUI Navigation](https://arxiv.org/abs/2609.15457) | Efficient AI; Adaptation and Memory: Embodied Memory | AnchorGUI improves GUI navigation by using prediction errors to retain visual evidence for immediate correction and focus cross-trial learning on likely failures. | 8 | 7 |
+| 2026-09-14 | [HarnessVLN: Unifying Training-Free Embodied Navigation through an Agent Harness](https://arxiv.org/abs/2609.15195) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | HarnessVLN is a zero-shot agent harness that unifies perception, spatial verification, memory, recovery, and execution for training-free embodied navigation. | 9 | 8 |
 | 2026-09-10 | [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](https://arxiv.org/abs/2609.11875) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | UniMPA unifies memory, future prediction, and action generation to produce physically executable, context-adapted robotic manipulation actions. | 9 | 8 |
 | 2026-09-10 | [Memory as Plans: World-Action Modeling with Memory-Grounded Planning](https://arxiv.org/abs/2609.11561) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MaP-WAM turns long-term multimodal memory into compact visual-language plans, enabling efficient non-Markovian robotic manipulation with fixed executor context and adaptive execution. | 9 | 9 |
 | 2026-09-10 | [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](https://arxiv.org/abs/2609.11308) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | 2AM shows that long-horizon manipulation can keep task memory in a multimodal Agent while an RGB-only action model executes Agent-provided language and 2D spatial guidance. | 9 | 8 |

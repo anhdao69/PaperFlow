@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**35 papers total**
+**40 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-14 | [PhysBrain 1.5: From Vision-Language Models to Physical Foundation Models](https://arxiv.org/abs/2609.14973) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Interactive World Models | PhysBrain 1.5 is a unified physical foundation model that understands environments, generates actions, and predicts future states using jointly trained multimodal sequences. | 9 | 8 |
+| 2026-09-14 | [MoVT: Video-Augmented Motion Tokenizer for Text-to-Motion Generation](https://arxiv.org/abs/2609.14965) | Embodied AI: Learning from Human Videos | MoVT improves text-to-3D-motion generation by enriching motion token representations with patterns learned from human action videos. | 6 | 7 |
+| 2026-09-14 | [ReWeight: Leveraging Human Data for VLA Post-Training via Demonstration Retrieval and Sample Weighting](https://arxiv.org/abs/2609.13851) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | ReWeight improves VLA post-training by retrieving behaviorally relevant human demonstrations and weighting them according to cross-embodiment similarity. | 9 | 7 |
+| 2026-09-14 | [Reliable Egocentric Action Anticipation via Temporal Reliability Suppression and Compositional Graph Decoding](https://arxiv.org/abs/2609.13293) | Embodied AI: Learning from Human Videos | A lightweight TRS+RVG framework improves the reliability of egocentric action anticipation under temporal corruption by suppressing unreliable evidence and favoring plausible verb–noun pairs. | 9 | 8 |
+| 2026-09-14 | [Interpretable Temporal Video Reasoning with EventGraph and EventField](https://arxiv.org/abs/2609.13258) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | A structured EventGraph–EventField pipeline with human-readable EventGlyphs enables accurate and inspectable temporal video reasoning on a small calibrated benchmark. | 9 | 8 |
 | 2026-09-13 | [Decoding Mixture Perception through Computational Modeling of Component Interactions](https://arxiv.org/abs/2609.11958) | Embodied AI: Learning from Human Videos | A bio-inspired deep learning framework models molecule–receptor interactions and component competition to recognize odor perceptions in complex mixtures. | 8 | 8 |
 | 2026-09-10 | [SEED-UMI: Sharing the Exoskeleton between human and robot for onE-to-one Dexterous demonstration](https://arxiv.org/abs/2609.11753) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | SEED-UMI improves dexterous imitation learning by having humans and robots share the same exoskeleton, enabling contact-faithful demonstrations and direct policy learning from exoskeleton-centric views. | 8 | 8 |
 | 2026-09-10 | [Morphology-Aware Human Motion Retargeting for Wheeled-Humanoid Loco-Manipulation](https://arxiv.org/abs/2609.11357) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | A reproducible pipeline retargets general human motion into physically executable loco-manipulation for the wheeled Galaxea R1 Pro humanoid. | 7 | 6 |

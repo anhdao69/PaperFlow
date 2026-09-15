@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**55 papers total**
+**60 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-14 | [Converting Sequenced Fuzzy Cognitive Maps to Causal Virtual Worlds with Large Video Generators](https://arxiv.org/abs/2609.14985) | Video Generation and Understanding: Video Diffusion | A framework converts fuzzy cognitive maps into causal video worlds by using their dynamics to generate scene sequences, scripts, and videos with LLM and video-model agents. | 6 | 6 |
+| 2026-09-14 | [CrossDistill: Balancing Quality and Diversity via Trajectory-Level Hybrid Few-Step Distillation](https://arxiv.org/abs/2609.14725) | Video Generation and Understanding: Video Diffusion; Efficient AI | CrossDistill improves few-step diffusion by preserving global diversity at high noise and sharpening local fidelity at low noise. | 7 | 7 |
+| 2026-09-14 | [Dynamic Learning Solutions: A System for Personalized Educational Video Generation](https://arxiv.org/abs/2609.14408) | Video Generation and Understanding: Video Diffusion | A pipeline transforms NCERT textbook PDFs and user questions into personalized, narrated educational videos with textbook-aligned visuals and animations. | 5 | 4 |
+| 2026-09-14 | [SignMimic: Robust High-Quality Sign Language Motion Generation via Human-Shape-Oblivious Pose Transfer Guidance](https://arxiv.org/abs/2609.14122) | Video Generation and Understanding: Video Diffusion | SignMimic generates stable, identity-preserving sign-language videos by separating rigid pose, fine-grained articulation, and pose completion before video diffusion. | 6 | 6 |
+| 2026-09-14 | [DiVA: Enabling Interactive Digital Life Simulation via Video Models](https://arxiv.org/abs/2609.13830) | Video Generation and Understanding: Video Diffusion | DiVA enables long-term, interactive digital character experiences by combining an MLLM router with a three-stage video-generation pipeline and anchored transitions. | 8 | 8 |
 | 2026-09-13 | [Physics-Aware Video Generation via Agentic Planning and Graph-Guided Optimization](https://arxiv.org/abs/2609.13006) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | PhysPlan improves the physical plausibility of video diffusion outputs through agentic visual reasoning and object-focused, adaptive test-time optimization. | 9 | 8 |
 | 2026-09-10 | [Vidu S2: Real-Time Interactive, Editable, and Spatial Video Generation](https://arxiv.org/abs/2609.11638) | Video Generation and Understanding: Video Diffusion, Video Understanding | Vidu S2 enables real-time interactive character generation and video editing, with exploratory support for spatial video. | 6 | 7 |
 | 2026-09-10 | [Harnessing Intrinsic Subject-Aware Attention for Controllable Multi-Subject Video Generation](https://arxiv.org/abs/2609.11507) | Video Generation and Understanding: Video Diffusion | DIAL uses intrinsic DiT attention maps to control subject fidelity and reduce semantic drift in multi-subject video generation. | 8 | 8 |

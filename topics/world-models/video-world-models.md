@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**72 papers total**
+**76 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-14 | [Principal-timestep Restricted Init via Sparse Matrix-decomposition in Flow-matching](https://arxiv.org/abs/2609.15643) | World Models: Video World Models | Prism-LoRA improves diffusion-model fine-tuning by aligning low-rank initialization with dominant timestep and channel gradients. | 8 | 7 |
+| 2026-09-14 | [DIDO: Distilling Interaction-Centric Dynamics into One-Step Denoising for World Action Models](https://arxiv.org/abs/2609.15570) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | DIDO distills multi-step video dynamics into one denoising step while preserving the interaction details needed for fast robotic manipulation control. | 9 | 8 |
+| 2026-09-14 | [LPA-CWM: A Learned Physical Adjudicator for Motion Reasoning with Counterfactual World Models](https://arxiv.org/abs/2609.14073) | World Models: Video World Models | LPA-CWM learns to weight counterfactual world-model responses by reliability, improving motion localization and tracking. | 7 | 6 |
+| 2026-09-14 | [Filling the Unseen: Scene Extrapolation via 3D Gaussian Splatting](https://arxiv.org/abs/2609.13262) | World Models: Video World Models; 3D Vision: 3D Foundation Models | A holistic 3D Gaussian Splatting framework improves large-scale scene extrapolation by parallelizing view generation and selectively using generated content to avoid error accumulation and degradation. | 8 | 9 |
 | 2026-09-13 | [Physics-Aware Video Generation via Agentic Planning and Graph-Guided Optimization](https://arxiv.org/abs/2609.13006) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | PhysPlan improves the physical plausibility of video diffusion outputs through agentic visual reasoning and object-focused, adaptive test-time optimization. | 9 | 8 |
 | 2026-09-13 | [A Splitting Method for SDE Terminal-Law Estimation](https://arxiv.org/abs/2609.12513) | World Models: Video World Models | A path-splitting strategy can improve terminal-law estimation for SDEs over i.i.d. path sampling under a fixed simulation budget. | 7 | 7 |
 | 2026-09-13 | [DWMP: Leveraging Dual World Models for Humanoid Obstacle Traversal](https://arxiv.org/abs/2609.12347) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Video World Models | DWMP combines separate dynamics and visual world models to help humanoid robots traverse cluttered obstacles using proprioceptive and depth observations. | 9 | 8 |

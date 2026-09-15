@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**29 papers total**
+**34 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-14 | [HarnessVLN: Unifying Training-Free Embodied Navigation through an Agent Harness](https://arxiv.org/abs/2609.15195) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | HarnessVLN is a zero-shot agent harness that unifies perception, spatial verification, memory, recovery, and execution for training-free embodied navigation. | 9 | 8 |
+| 2026-09-14 | [C$^2$Nav: Compare Before You Commit for Zero-Shot Vision-and-Language Navigation](https://arxiv.org/abs/2609.15142) | Embodied AI: Vision-Language Navigation | C²Nav improves zero-shot continuous vision-and-language navigation by having VLMs compare physically vetted alternatives instead of directly predicting geometric actions or irreversible decisions. | 9 | 7 |
+| 2026-09-14 | [LG-VLN: A Zero-Shot Vision-and-Language Navigation Framework with LangGraph State Orchestration](https://arxiv.org/abs/2609.15098) | Embodied AI: Vision-Language Navigation | LG-VLN enables zero-shot continuous vision-and-language navigation from monocular RGB by combining shared visual features with LangGraph-based state orchestration. | 8 | 7 |
+| 2026-09-14 | [Multi-Task Visual Perception Network with LLM Conditioning for Autonomous Navigation](https://arxiv.org/abs/2609.14297) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | An LLM-conditioned visual navigation framework uses local visual cues and sequential egocentric actions to avoid dependence on drift-prone global maps. | 9 | 8 |
+| 2026-09-14 | [Seeing What the Vehicle Sees: Video-Augmented Virtual Reality for Physical Autonomous Vehicles](https://arxiv.org/abs/2609.13224) | Embodied AI: Vision-Language Navigation, Robot Navigation | A video-augmented VR system lets passengers observe a physical autonomous vehicle’s live camera view, motion, and navigation decisions with low latency and high synchronization accuracy. | 8 | 7 |
 | 2026-09-08 | [TANGO: Humanoid Navigation in Cluttered Environments with a Whole-Body Vision-Language-Action Model](https://arxiv.org/abs/2609.09158) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | TANGO enables a humanoid robot to follow language instructions through cluttered 3D environments using vision-based, whole-body action prediction trained entirely in simulation. | 9 | 8 |
 | 2026-09-08 | [Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method](https://arxiv.org/abs/2609.08402) | Embodied AI: Vision-Language Navigation, Robot Navigation | This work introduces a benchmark, dataset, and training-free agent for cooperative UAV-UGV object search using vision-language models. | 8 | 8 |
 | 2026-09-08 | [Dual-Layer Semantic-Spatial Belief Mapping for Aerial Object Goal Navigation](https://arxiv.org/abs/2609.08164) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | AeroBelief improves aerial ObjectNav by turning noisy, transient VLM observations into persistent semantic-spatial guidance for exploration, approach, and target confirmation. | 8 | 7 |

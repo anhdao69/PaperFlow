@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**22 papers total**
+**27 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-14 | [WLA$^3$: World Latent Action Modeling for Semantics, Dynamics, and Kinematics](https://arxiv.org/abs/2609.15870) | World Models: Latent Action Models | WLA$^3$ learns compact latent actions from observed world transitions to unify semantic understanding, dynamics modeling, and executable robot control across human and robot videos. | 9 | 9 |
+| 2026-09-14 | [JEPLO: Joint-Embedding Predictive Learning for LiDAR-Based Legged Locomotion](https://arxiv.org/abs/2609.15770) | Embodied AI: Robot Navigation; World Models: Latent Action Models | JEPLO enables mapping-free, LiDAR-based perceptive locomotion on legged robots using predictive latent terrain representations and achieves robust sim-to-real traversal of challenging terrains. | 8 | 9 |
+| 2026-09-14 | [Reconstructing Is Not Acting: Action-Centric Latent Dynamics Modeling](https://arxiv.org/abs/2609.15189) | World Models: Latent Action Models | ACT-LAM improves latent action learning from unlabeled videos by explicitly extracting action-relevant transitions and continuously conditioning future-state prediction on inferred actions. | 9 | 8 |
+| 2026-09-14 | [Diffusion-Based Multiple-Shooting Indirect Optimal Control for Fuel-Optimal Spacecraft Trajectory Generation](https://arxiv.org/abs/2609.13990) | World Models: Latent Action Models | A diffusion-guided multiple-shooting indirect method improves the robustness of generating fuel-optimal, long-horizon spacecraft trajectories while retaining necessary optimality conditions. | 7 | 8 |
+| 2026-09-14 | [LePlanner: An Iterative Amortized Controller For World Models](https://arxiv.org/abs/2609.13845) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | LePlanner amortizes iterative latent-space planning into a lightweight controller that delivers search-level control performance with substantially lower decision-time computation. | 8 | 8 |
 | 2026-09-13 | [DWMP: Leveraging Dual World Models for Humanoid Obstacle Traversal](https://arxiv.org/abs/2609.12347) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Video World Models | DWMP combines separate dynamics and visual world models to help humanoid robots traverse cluttered obstacles using proprioceptive and depth observations. | 9 | 8 |
 | 2026-09-09 | [Learning Counterfactual World Models for Embodied Reasoning under Partial Observability](https://arxiv.org/abs/2609.05834) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Latent Action Models | Counterfactual Latent World Models make embodied world models more actionable by distinguishing interventions that look visually similar but lead to different outcomes. | 9 | 9 |
 | 2026-09-08 | [WM-Craftnet: World Synesthesia Model for Generalizable and Robust Dexterous In-Hand Manipulation](https://arxiv.org/abs/2609.07002) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | WM-Craftnet uses a multimodal recurrent world model to provide denoised, contact-aware context for robust dexterous in-hand rotation across object and disturbance changes. | 9 | 8 |
