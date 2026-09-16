@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**60 papers total**
+**64 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [MDN-Control: Mask-Depth-Noise Guided Region Control for Multi-Subject Video Editing](https://arxiv.org/abs/2609.16475) | Video Generation and Understanding: Video Diffusion | MDN-Control enables more precise multi-subject video editing by combining mask, depth, and noise-based controls without training. | 6 | 7 |
+| 2026-09-15 | [OmniHarness: Harnessing Generalizable Visual Generation via Symbolic Policy Learning](https://arxiv.org/abs/2609.16057) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Diffusion | OmniHarness improves generalizable visual generation by learning reusable symbolic policies, refining them during execution, and practicing autonomously before downstream tasks are specified. | 8 | 8 |
+| 2026-09-15 | [LynnReal-Omni: Native multi-modal Video Generation for Agentic Visual Workflows](https://arxiv.org/abs/2609.15863) | Video Generation and Understanding: Video Diffusion | LynnReal-Omni unifies diverse visual controls and video-generation tasks in a multimodal diffusion framework designed for controllable, coherent, and increasingly real-time agentic video creation. | 7 | 6 |
+| 2026-09-15 | [BEACON: Behavior and Appearance Control for Subject-Specific Video Generation](https://arxiv.org/abs/2609.13264) | Video Generation and Understanding: Video Diffusion | BEACON generates more expressive, subject-specific videos by separately conditioning on a person’s identity and facial dynamics. | 7 | 7 |
 | 2026-09-14 | [Converting Sequenced Fuzzy Cognitive Maps to Causal Virtual Worlds with Large Video Generators](https://arxiv.org/abs/2609.14985) | Video Generation and Understanding: Video Diffusion | A framework converts fuzzy cognitive maps into causal video worlds by using their dynamics to generate scene sequences, scripts, and videos with LLM and video-model agents. | 6 | 6 |
 | 2026-09-14 | [CrossDistill: Balancing Quality and Diversity via Trajectory-Level Hybrid Few-Step Distillation](https://arxiv.org/abs/2609.14725) | Video Generation and Understanding: Video Diffusion; Efficient AI | CrossDistill improves few-step diffusion by preserving global diversity at high noise and sharpening local fidelity at low noise. | 7 | 7 |
 | 2026-09-14 | [Dynamic Learning Solutions: A System for Personalized Educational Video Generation](https://arxiv.org/abs/2609.14408) | Video Generation and Understanding: Video Diffusion | A pipeline transforms NCERT textbook PDFs and user questions into personalized, narrated educational videos with textbook-aligned visuals and animations. | 5 | 4 |

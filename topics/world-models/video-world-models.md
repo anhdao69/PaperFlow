@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**76 papers total**
+**81 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [XPACE: Joint World and Action Modeling from Heterogeneous Experience](https://arxiv.org/abs/2609.17372) | World Models: Video World Models, Interactive World Models | XPACE jointly models robot actions and visual world dynamics to learn from heterogeneous videos and demonstrations, then uses its simulator to generate recovery experience for more robust robot control. | 9 | 8 |
+| 2026-09-15 | [Racing in Volume with Flow Ensembles](https://arxiv.org/abs/2609.16310) | World Models: Video World Models | FastFlowGS enables efficient streaming 4D reconstruction of fast-moving subjects from sparse fixed cameras, supported by the new Monaco4D benchmark. | 8 | 9 |
+| 2026-09-15 | [Drift Field Net: Learning Ocean Lagrangian advection fields from in-situ and satellite observations](https://arxiv.org/abs/2609.16288) | World Models: Video World Models | Drift Field Net improves 7-day ocean particle-drift forecasts by learning surface flow fields from satellite observations with physics-informed Lagrangian training. | 8 | 7 |
+| 2026-09-15 | [AlayaVista: Streaming World Modeling from Panoramic States to Perspective Video](https://arxiv.org/abs/2609.14462) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | AlayaVista streams camera-controllable perspective video by evolving a panoramic latent world state and rendering only the requested view. | 9 | 9 |
+| 2026-09-15 | [Sampling headroom is not selection gain: a compute-value audit of test-time scaling for video world models](https://arxiv.org/abs/2609.13257) | World Models: Video World Models | More test-time sampling can create better video-world-model candidates, but without reliable selection and cost-effective decisions, that headroom does not translate into deployment gains. | 7 | 8 |
 | 2026-09-14 | [Principal-timestep Restricted Init via Sparse Matrix-decomposition in Flow-matching](https://arxiv.org/abs/2609.15643) | World Models: Video World Models | Prism-LoRA improves diffusion-model fine-tuning by aligning low-rank initialization with dominant timestep and channel gradients. | 8 | 7 |
 | 2026-09-14 | [DIDO: Distilling Interaction-Centric Dynamics into One-Step Denoising for World Action Models](https://arxiv.org/abs/2609.15570) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | DIDO distills multi-step video dynamics into one denoising step while preserving the interaction details needed for fast robotic manipulation control. | 9 | 8 |
 | 2026-09-14 | [LPA-CWM: A Learned Physical Adjudicator for Motion Reasoning with Counterfactual World Models](https://arxiv.org/abs/2609.14073) | World Models: Video World Models | LPA-CWM learns to weight counterfactual world-model responses by reliability, improving motion localization and tracking. | 7 | 6 |

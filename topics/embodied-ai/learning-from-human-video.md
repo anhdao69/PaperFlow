@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**40 papers total**
+**44 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [EventEgoHands++: Event-based Egocentric 3D Hand Mesh Reconstruction with Real Dataset](https://arxiv.org/abs/2609.17189) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | EventEgoHands++ improves egocentric event-based 3D hand mesh reconstruction by detecting each hand instance and using adaptive attention to handle cluttered motion events. | 6 | 7 |
+| 2026-09-15 | [GeoLAM: Learning Geometry-Grounded Latent Actions from Unlabeled Human Videos](https://arxiv.org/abs/2609.17099) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | GeoLAM learns continuous, geometry-grounded latent actions from unlabeled human videos and transfers them to robotic manipulation without requiring geometry teachers or video prediction at deployment. | 9 | 8 |
+| 2026-09-15 | [UniDex-ViTac: Learning Unified Visuo-Tactile Dexterous Manipulation Policy from Human Video Data](https://arxiv.org/abs/2609.16504) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | UniDex-ViTac converts human video demonstrations into simulated robot data to train a unified visuo-tactile dexterous manipulation policy that transfers to real objects without robot demonstrations or deployment-time human references. | 9 | 8 |
+| 2026-09-15 | [V-ICAL Bench: Evaluating Video In-Context Learning for Multimodal Agents in Interactive Environments](https://arxiv.org/abs/2609.15683) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | V-ICAL benchmarks how well multimodal agents learn executable policies from video demonstrations in interactive environments, revealing a large gap from human performance. | 7 | 7 |
 | 2026-09-14 | [PhysBrain 1.5: From Vision-Language Models to Physical Foundation Models](https://arxiv.org/abs/2609.14973) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Interactive World Models | PhysBrain 1.5 is a unified physical foundation model that understands environments, generates actions, and predicts future states using jointly trained multimodal sequences. | 9 | 8 |
 | 2026-09-14 | [MoVT: Video-Augmented Motion Tokenizer for Text-to-Motion Generation](https://arxiv.org/abs/2609.14965) | Embodied AI: Learning from Human Videos | MoVT improves text-to-3D-motion generation by enriching motion token representations with patterns learned from human action videos. | 6 | 7 |
 | 2026-09-14 | [ReWeight: Leveraging Human Data for VLA Post-Training via Demonstration Retrieval and Sample Weighting](https://arxiv.org/abs/2609.13851) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | ReWeight improves VLA post-training by retrieving behaviorally relevant human demonstrations and weighting them according to cross-embodiment similarity. | 9 | 7 |

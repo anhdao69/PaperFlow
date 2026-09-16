@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**34 papers total**
+**37 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [ENCP: Episode-Normalized Conformal Prediction for Vision-and-Language Navigation](https://arxiv.org/abs/2609.17499) | Embodied AI: Vision-Language Navigation | ENCP adapts conformal prediction to variable-length, sequential VLN episodes to provide step-level uncertainty coverage despite dependencies between steps. | 8 | 7 |
+| 2026-09-15 | [EgoPathBench: Evaluating Zero-Shot Egocentric Waypoint Decision-Making in Vision-Language Models](https://arxiv.org/abs/2609.16610) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | EgoPathBench evaluates whether vision-language models can perform zero-shot egocentric waypoint navigation, revealing major weaknesses in complete, embodiment-aware route planning. | 9 | 8 |
+| 2026-09-15 | [Map the Possibilities: Spatial Belief Fields for Language-Goal Aerial Navigation](https://arxiv.org/abs/2609.05841) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | SBFNav improves language-guided aerial navigation by maintaining and updating multiple possible target locations instead of committing to a single waypoint too early. | 8 | 8 |
 | 2026-09-14 | [HarnessVLN: Unifying Training-Free Embodied Navigation through an Agent Harness](https://arxiv.org/abs/2609.15195) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | HarnessVLN is a zero-shot agent harness that unifies perception, spatial verification, memory, recovery, and execution for training-free embodied navigation. | 9 | 8 |
 | 2026-09-14 | [C$^2$Nav: Compare Before You Commit for Zero-Shot Vision-and-Language Navigation](https://arxiv.org/abs/2609.15142) | Embodied AI: Vision-Language Navigation | C²Nav improves zero-shot continuous vision-and-language navigation by having VLMs compare physically vetted alternatives instead of directly predicting geometric actions or irreversible decisions. | 9 | 7 |
 | 2026-09-14 | [LG-VLN: A Zero-Shot Vision-and-Language Navigation Framework with LangGraph State Orchestration](https://arxiv.org/abs/2609.15098) | Embodied AI: Vision-Language Navigation | LG-VLN enables zero-shot continuous vision-and-language navigation from monocular RGB by combining shared visual features with LangGraph-based state orchestration. | 8 | 7 |

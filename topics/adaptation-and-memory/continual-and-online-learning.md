@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**130 papers total**
+**134 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [ScienceBuddy: Recursive-in-Recursive Self-Improvement for Interactive Scientific Agents](https://arxiv.org/abs/2609.17523) | Adaptation and Memory: Continual and Online Learning | ScienceBuddy is an interactive scientific workspace that continually improves both its agent-supporting harness and underlying model through researcher feedback and execution evidence. | 5 | 7 |
+| 2026-09-15 | [CLARE: Scalable Class-Incremental Continual Learning via a Sparsity-Based Framework](https://arxiv.org/abs/2609.17026) | Adaptation and Memory: Continual and Online Learning | CLARE improves scalable class-incremental continual learning by using sparse, task-specific parameter updates to reduce interference across long task sequences. | 8 | 8 |
+| 2026-09-15 | [Smarter by the Moment: Environment-Driven Dynamic Policies for Continual LLM Improvement](https://arxiv.org/abs/2609.16800) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | DRPG improves continual LLM adaptation by turning retrieved experiences and environment feedback into task-specific policies rather than reusing individual examples. | 7 | 7 |
+| 2026-09-15 | [Causal neural set filtering for online multi-target tracking](https://arxiv.org/abs/2609.16054) | Efficient AI: KV Cache and Memory Efficiency; Adaptation and Memory: Continual and Online Learning | CNSF is a causal neural set filter that avoids re-encoding measurement histories and improves tracking accuracy, efficiency, and lifecycle modeling. | 7 | 8 |
 | 2026-09-14 | [Self-Evolving Memory for Generative Recommendation](https://arxiv.org/abs/2609.15598) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | LION enables generative recommenders to adapt to changing user preferences without letting dominant behaviors overwhelm underrepresented ones. | 6 | 6 |
 | 2026-09-14 | [Rotation-Based Subspace Tracking for Robust Kernel PCA on Streaming Data](https://arxiv.org/abs/2609.15488) | Adaptation and Memory: Continual and Online Learning | A robust rotation-based update enables kernel PCA to track changing nonlinear subspaces in streaming data more effectively than gradient descent alone. | 7 | 7 |
 | 2026-09-14 | [ModularRSI: Modular and Generalizable Recursive Harness Self-Improvement](https://arxiv.org/abs/2609.14857) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Large Language Models | ModularRSI improves generalization in recursive harness self-improvement by using contrastive, cross-task evidence and independently evolving modular harness components. | 9 | 8 |

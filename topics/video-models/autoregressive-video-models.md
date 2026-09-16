@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**11 papers total**
+**13 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [PhysStream: Streaming Physics-Grounded Video Generation with Structured Scene Memory and Fine-Grained Motion Control](https://arxiv.org/abs/2609.17521) | World Models: Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | PhysStream enables interactive, mid-generation control of physically grounded videos using sparse velocity signals and online scene memory. | 8 | 8 |
+| 2026-09-15 | [AlayaVista: Streaming World Modeling from Panoramic States to Perspective Video](https://arxiv.org/abs/2609.14462) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | AlayaVista streams camera-controllable perspective video by evolving a panoramic latent world state and rendering only the requested view. | 9 | 9 |
 | 2026-09-10 | [Logit Refiner: Improving Visual Autoregressive Models via Intra-Scale Dependency Modeling](https://arxiv.org/abs/2609.11804) | Video Generation and Understanding: Autoregressive Video Models | Logit Refiner improves Visual Autoregressive Models by restoring dependencies among same-scale image tokens during decoding, without retraining the backbone. | 6 | 7 |
 | 2026-09-10 | [World in World: Explore the World with World Models](https://arxiv.org/abs/2609.11548) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | World in World is a training-free interface that uses structured visual evidence and attention control to make frozen video world models support consistent, controllable exploration across viewpoints and time. | 9 | 8 |
 | 2026-09-10 | [Uncertainty DMD: Restoring Diversity in Few-Step Autoregressive Video Distillation](https://arxiv.org/abs/2609.11265) | Video Generation and Understanding: Autoregressive Video Models | Uncertainty DMD restores diversity and motion dynamics in few-step autoregressive video generation by injecting uncertainty into initial and later autoregressive chunks. | 8 | 7 |

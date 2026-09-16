@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**40 papers total**
+**42 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [HuMemSLAM: Efficient Human-Inspired Semantic Place Recognition for Robust Visual SLAM](https://arxiv.org/abs/2609.17168) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | HuMemSLAM improves visual SLAM place recognition by combining human-inspired semantic reasoning with efficient retrieval, increasing robustness while reducing latency and geometric verification workload. | 9 | 8 |
+| 2026-09-15 | [When Malicious Instructions Persist: Persistent Memory Poisoning Attack on Harness-Based Agents](https://arxiv.org/abs/2609.13889) | Adaptation and Memory: Embodied Memory | PMPA shows that malicious instructions hidden in benign external sources can poison an agent’s persistent memory and trigger harmful actions across later sessions. | 7 | 8 |
 | 2026-09-14 | [MessyMem: Learning-from-Doing Memory for Mobile Manipulation](https://arxiv.org/abs/2609.15976) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MessyMem gives mobile manipulators persistent, interaction-aware memory so they can reuse knowledge from prior tasks across rooms and visits. | 9 | 8 |
 | 2026-09-14 | [P-POSEMEM: Projective Semantic Memory for Consistent Language Grounding under Pose-Graph Rewrites](https://arxiv.org/abs/2609.15475) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | P-POSEMEM preserves consistent language grounding as SLAM pose graphs are optimized, loop-closed, and compressed by maintaining pose-aware semantic memory. | 8 | 8 |
 | 2026-09-14 | [AnchorGUI: Asymmetric Memory for Dual-Scale Learning in GUI Navigation](https://arxiv.org/abs/2609.15457) | Efficient AI; Adaptation and Memory: Embodied Memory | AnchorGUI improves GUI navigation by using prediction errors to retain visual evidence for immediate correction and focus cross-trial learning on likely failures. | 8 | 7 |

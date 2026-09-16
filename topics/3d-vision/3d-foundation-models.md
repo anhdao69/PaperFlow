@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**107 papers total**
+**111 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-15 | [PanoGS-SLAM: Panoramic 3D Gaussian Splatting SLAM](https://arxiv.org/abs/2609.17387) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | PanoGS-SLAM is a real-time panoramic dense SLAM system that uses spherical 3D Gaussian Splatting to improve tracking stability and rendering under rapid motion and wide viewpoint changes. | 9 | 8 |
+| 2026-09-15 | [DecoGS: Adaptive Static-Dynamic Decoupling of 3D Gaussians for Free-Viewpoint Video Streaming](https://arxiv.org/abs/2609.17230) | 3D Vision: 3D Foundation Models | DecoGS selectively updates only dynamic or photometrically changing regions of 3D Gaussians during streaming, achieving faster rendering and lower temporal flicker than prior methods without pretraining. | 8 | 7 |
+| 2026-09-15 | [SceneBench: A Hierarchical Benchmark for Vision-Language Understanding of 3D Scenes](https://arxiv.org/abs/2609.16233) | 3D Vision: 3D Foundation Models | SceneBench benchmarks vision-language models on hierarchical, multi-step spatial reasoning in photorealistic 3D scenes, exposing weaknesses beyond basic object recognition. | 8 | 8 |
+| 2026-09-15 | [Occupancy Network-Guided Autonomous Robotic Partial Nephrectomy](https://arxiv.org/abs/2609.16186) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | A vision-guided robot used simulation-trained occupancy networks to autonomously perform complete, margin-negative tumor resections in kidney phantoms despite tissue deformation and cutting. | 9 | 9 |
 | 2026-09-14 | [Anatomical Grounding and Leakage-Aware Multimodal Contrastive Learning for Alzheimer's Disease Classification from Structural MRI](https://arxiv.org/abs/2609.15888) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Anatomical grounding and leakage-aware multimodal training improve the interpretability and reliability of MRI-based Alzheimer’s classification, while exposing inflated performance from label-proximal clinical variables. | 8 | 7 |
 | 2026-09-14 | [Kaininja: Extending Native 3D Generators to the Part Level](https://arxiv.org/abs/2609.15659) | 3D Vision: 3D Foundation Models | KaiNinja extends TRELLIS.2 to generate editable part-level 3D assets directly, using a dual-volume representation that handles touching-part interfaces without segmentation. | 8 | 7 |
 | 2026-09-14 | [CGGT: Curve-Grounded Geometry Transformer for 3D Parametric Curve Reconstruction](https://arxiv.org/abs/2609.14521) | 3D Vision: 3D Foundation Models | CGGT reconstructs editable 3D parametric curves from sparse, unposed multi-view images using a single-pass geometry transformer followed by fast 3D refinement. | 7 | 8 |
