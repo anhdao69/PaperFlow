@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**81 papers total**
+**85 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Spatially Adaptive Noise Injection](https://arxiv.org/abs/2609.18466) | World Models: Video World Models | SANI improves diffusion sampling by injecting noise selectively at pixels where stochastic correction is most useful. | 8 | 7 |
+| 2026-09-16 | [A Comprehensive Review of Generative Physical Artificial Intelligence](https://arxiv.org/abs/2609.18111) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Video World Models | This survey organizes Generative Physical AI approaches for embodied agents, highlighting how they enable perception, reasoning, and action while identifying open challenges for real-world deployment. | 9 | 5 |
+| 2026-09-16 | [Zing-0.5: Toward Playable Worlds with Real-Time Joint Action and Text Control](https://arxiv.org/abs/2609.17909) | World Models: Video World Models, Interactive World Models | Zing-0.5 is a 5B real-time world model that supports continuous gameplay through joint keyboard and text control. | 8 | 7 |
+| 2026-09-16 | [Walking the Score Manifold: Continuous-time Generative Dynamics on Learned Data Manifolds](https://arxiv.org/abs/2609.17901) | World Models: Video World Models | A score-guided continuous-time generative framework learns stable dynamics on data manifolds, enabling arbitrary-time generation and temporal super-resolution. | 8 | 8 |
 | 2026-09-15 | [XPACE: Joint World and Action Modeling from Heterogeneous Experience](https://arxiv.org/abs/2609.17372) | World Models: Video World Models, Interactive World Models | XPACE jointly models robot actions and visual world dynamics to learn from heterogeneous videos and demonstrations, then uses its simulator to generate recovery experience for more robust robot control. | 9 | 8 |
 | 2026-09-15 | [Racing in Volume with Flow Ensembles](https://arxiv.org/abs/2609.16310) | World Models: Video World Models | FastFlowGS enables efficient streaming 4D reconstruction of fast-moving subjects from sparse fixed cameras, supported by the new Monaco4D benchmark. | 8 | 9 |
 | 2026-09-15 | [Drift Field Net: Learning Ocean Lagrangian advection fields from in-situ and satellite observations](https://arxiv.org/abs/2609.16288) | World Models: Video World Models | Drift Field Net improves 7-day ocean particle-drift forecasts by learning surface flow fields from satellite observations with physics-informed Lagrangian training. | 8 | 7 |

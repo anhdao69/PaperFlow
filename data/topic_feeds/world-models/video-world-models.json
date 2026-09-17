@@ -1,6 +1,739 @@
 {
   "days": [
     {
+      "date": "2026-09-16",
+      "paper_count": 4,
+      "papers": [
+        {
+          "abstract": "Diffusion samplers reverse a learned noising process using either stochastic (DDPM) or deterministic (DDIM) updates, which represent endpoints of a single family controlled by a scalar noise-injection variance that is applied identically at every spatial location. This uniform approach neglects the geometry of natural images: high-curvature regions such as edges and textures, where the denoiser is uncertain, benefit from stochastic correction, whereas smooth regions, where the score is precise, are degraded by injected noise. This work investigates whether each pixel requires stochastic correction at a given timestep and introduces Spatially Adaptive Noise Injection (SANI), a novel sampling framework that dynamically adjusts noise application on a per-pixel basis. SANI integrates a probabilistic gating mechanism with a derived spatially adaptive variance, ensuring that noise is injected precisely where needed to refine complex features while preserving well-formed structures. Experimental results and decoupling ablations demonstrate that SANI consistently improves Fr\\'echet Inception Distance (FID) over the vanilla DDPM and DDIM endpoint samplers across diverse sampling timesteps, while remaining competitive with variance-learning baselines, highlighting the importance of spatial adaptivity in diffusion sampling.",
+          "arxiv_id": "2609.18466",
+          "arxiv_url": "https://arxiv.org/abs/2609.18466",
+          "authors": [
+            "Frantzeska Lavda, Maciej Falkiewicz, Van Khoa Nguyen, Alexandros Kalousis"
+          ],
+          "bullets": [
+            "Uniform noise injection can harm smooth image regions while under-serving complex edges and textures.",
+            "SANI uses probabilistic per-pixel gating and a spatially adaptive variance to control noise at each timestep.",
+            "The method targets uncertain, high-curvature regions while preserving well-formed structures.",
+            "Experiments and decoupling ablations show consistently better FID than vanilla DDPM and DDIM samplers across diverse timesteps.",
+            "SANI remains competitive with variance-learning baselines, emphasizing the value of spatial adaptivity."
+          ],
+          "categories": [
+            "cs.LG",
+            "stat.ML"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 4: Per-pixel gating gt,i vs. Sobel edge map of x̂0 along a single reverse trajectory on LSUN Bedroom. Each subplot shows, for the same generated sample at the indicated timestep: the predicted image (left), the Sobel gradient magnitude |∇x̂0| (center), and the gate gt,i (right; blue = 0, red = 1). The gate is near 1 in high noise, progressively aligns with edges and textures during denoising, and collapses to ≈ 0 everywhere except for the highest-gradient pixels at the end of the trajectory.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 212,
+              "image_path": "figures/2609.18466/figure-001.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 714
+            },
+            {
+              "caption": "Fig. 5: Density histograms of standardized residuals Zi = Ri/ √ vi on CIFAR10 (CS) against Gaussian and Laplace unit-variance reference distributions at four reverse-process timesteps. The empirical density is sharply peaked at high noise and concentrates toward the Gaussian as t decreases.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 192,
+              "image_path": "figures/2609.18466/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 652
+            },
+            {
+              "caption": "Fig. 3: Per-pixel gating value gt,i vs. validation loss (x0,i − x̂0,i) 2 on LSUN Bedroom at six noise levels (left to right: decreasing noise). The log-space Pearson correlation rises monotonically from 0.33 to 0.78",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 137,
+              "image_path": "figures/2609.18466/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 1: Empirical validation of Prop. 1 on LSUN Bedroom. Columns: decreasing noise (80%, 50%, 20%) and the clean image x0. Rows: (1) one-step prediction x̂0; (2) denoiser Jacobian diagonal [Jx̂0 ]ii; (3) posterior covariance diagonal [Cov[x0 | xt]]ii; (4) per-pixel reconstruction accuracy. Rows 2-3 are proportional (Eq. 3) and both are spatially anticorrelated with reconstruction accuracy.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 290,
+              "image_path": "figures/2609.18466/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 304
+            },
+            {
+              "caption": "Fig. 2: One-step predictions at three noise levels (80%, 50%, 20%) and the corresponding gating map (dark=0, bright=1) on LSUN Bedroom. The gate assigns high stochasticity to edges and textures, near-zero to flat regions, with the separation sharpening as noise decreases.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 271,
+              "image_path": "figures/2609.18466/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 281
+            },
+            {
+              "caption": "Fig. 6: Spatial distribution of gating values gt,i along the full reverse trajectory on CIFAR-10 (CS), for four tolerances (subplot). Each subplot overlays five timesteps t ∈ {1000, 500, 250, 125, 20}, with density on a logarithmic scale. The distribution is a near-point mass at t = 1000 (spatially uniform uncertainty under pure noise), spreads over [0, 1] at intermediate timesteps (spatial discrimination between confident and uncertain regions), and collapses toward g = 0 at the final steps. Increasing τ by a decade translates this stochastic-to-deterministic transition earlier along the trajectory without changing its shape, as predicted by the dependence of the gate on τ/vi alone.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 149,
+              "image_path": "figures/2609.18466/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 687
+            },
+            {
+              "caption": "Fig. 7: Per-step gating statistics over the reverse process at τ = 10−3, averaged over 1000 generated images per dataset. Solid line: spatial mean ḡt; dark band: ḡt ± σg,t Light band: per-step [min,max]. The mean decreases monotonically from 1 (stochastic) to 0 (deterministic) on every dataset, and the band is widest at intermediate timesteps where spatial heterogeneity peaks.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 142,
+              "image_path": "figures/2609.18466/figure-007.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 581
+            },
+            {
+              "caption": "Table 1: FID (↓) across datasets and sampling steps. Bold: best among stochastic samplers (DDPM family and SANI). Underline: best in the DDIM family. SANI values are additionally underlined when they outperform the best DDIM-family sampler.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 669,
+              "image_path": "figures/2609.18466/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 692
+            },
+            {
+              "caption": "Table 2: Decoupling ablation on CelebA-64. FID (↓). Gated variants report the best FID across a τ sweep at each step count, endpoint and ungated variants are τ -independent.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 325,
+              "image_path": "figures/2609.18466/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 538
+            }
+          ],
+          "first_seen_at": "2026-09-16T21:00:00-04:00",
+          "hero_figure": "figures/2609.18466/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.18466",
+          "relevance": 8,
+          "selection_reason": "Introduces Spatially Adaptive Noise Injection (SANI) to improve diffusion sampling by applying noise based on image geometry, directly relevant to video/image world models.",
+          "summary_status": "generated",
+          "title": "Spatially Adaptive Noise Injection",
+          "tldr": "SANI improves diffusion sampling by injecting noise selectively at pixels where stochastic correction is most useful.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The integration of large-scale foundation models with physical embodiments has led to significant advancements in robotics known as Generative Physical Artificial Intelligence (GPAI). These agentic AI systems autonomously perceive, reason, and act in complex real-world situations. This survey comprehensively analyzes GPAI systems, focusing on their architectural foundations, current applications, and key limitations. We introduce a taxonomy of five distinct approaches: Robot Foundation Models (RFMs) for cross-platform skill transfer; Vision-Language Action (VLA) models for end-to-end multi-modal perception and control; Large Behavior Models (LBMs) for human-like movement generation; Diffusion Policy Models (DPMs) for diffusion model-based temporally coherent action generation; and World Foundation Models (WFMs) for physics-compliant simulation and data generation. We examine how these approaches complement each other: WFMs generate training data for VLAs and DPMs, RFMs enable cross-platform deployment of learned policies, while LBMs provide motion priors for natural behavior. Through examples across autonomous vehicles, industrial automation, healthcare robotics, and humanoid systems, we identify significant performance improvements and summarize promising research directions in data-efficient learning, sim-to-real transfer, edge-compatible architectures, and safety frameworks. These insights advance embodied AI for IoT-connected environments where intelligent agents interact with networked sensors, actuators, and edge devices.",
+          "arxiv_id": "2609.18111",
+          "arxiv_url": "https://arxiv.org/abs/2609.18111",
+          "authors": [
+            "Satyam Gaba, Krutiksinh Rana, Siva Sai, Vinay Chamola, Dusit Niyato"
+          ],
+          "bullets": [
+            "Introduces five categories: Robot Foundation Models, Vision-Language Action models, Large Behavior Models, Diffusion Policy Models, and World Foundation Models.",
+            "Explains complementary roles: WFMs generate data, VLAs and DPMs learn control, RFMs support cross-platform transfer, and LBMs provide motion priors.",
+            "Reviews applications in autonomous vehicles, industrial automation, healthcare robotics, and humanoid systems.",
+            "Highlights research priorities including data-efficient learning, sim-to-real transfer, edge-compatible architectures, and safety.",
+            "Discusses deployment in IoT-connected environments with networked sensors, actuators, and edge devices."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.AI",
+            "cs.CL",
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Large Behavior Model (LBM) architecture comprising two phases: (left) pre-training with reinforcement learning guided by dual feedback mechanisms (authenticity via discriminator and plausibility via physics-coherence evaluation) on expert demonstration data, and (right) inference with embedding and policy networks for policy-driven real-time action generation from state inputs and latent variables.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 687,
+              "image_path": "figures/2609.18111/figure-001.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 927
+            },
+            {
+              "caption": "Figure 7: WFM training and closed-loop control architecture. Raw sensor streams and video data are tokenized to train the WFM to predict future states (xt+1 = f(xt, at)). During control, the planner/MPC queries the WFM to generate simulated rollouts and select optimal candidate actions, which the policy model executes on the robot.",
+              "figure_id": "figure-7-1",
+              "figure_number": "7",
+              "height": 510,
+              "image_path": "figures/2609.18111/figure-002.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1027
+            },
+            {
+              "caption": "Figure 6: Architecture of Diffusion Policy Models. The observations are processed through a multimodal transformer encoder to generate observation embeddings (Ot). These embeddings condition an iterative denoising model that predicts noise (ϵ) and refines initially noisy actions (Ak t ) to generate coherent action sequences (At) over a prediction horizon for robot control.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 423,
+              "image_path": "figures/2609.18111/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 940
+            },
+            {
+              "caption": "Figure 4: General architecture of a VLA. Image, language, and proprioceptive inputs are separately encoded into embeddings, fused by an LLM into contextualized multimodal embeddings, and then decoded into action tokens by the Action Decoder for robot control.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 499,
+              "image_path": "figures/2609.18111/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 846
+            },
+            {
+              "caption": "Figure 8: Applications of GPAI across domains including ADAS, robotics, healthcare, humanoids, assistive technologies, manufacturing, and digital twins.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 252,
+              "image_path": "figures/2609.18111/figure-005.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 458
+            },
+            {
+              "caption": "Table III: Comparison of different GPAI model types for embodied AI systems.",
+              "figure_id": "table-III-9",
+              "figure_number": "III",
+              "height": 600,
+              "image_path": "figures/2609.18111/table-006.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 1094
+            },
+            {
+              "caption": "Table IV: Summary of key limitations, challenges, risks, and emerging solutions in GPAI systems.",
+              "figure_id": "table-IV-8",
+              "figure_number": "IV",
+              "height": 671,
+              "image_path": "figures/2609.18111/table-007.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 1064
+            },
+            {
+              "caption": "Table I: Comparison of related surveys in Physical AI.",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 697,
+              "image_path": "figures/2609.18111/table-008.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 1094
+            },
+            {
+              "caption": "Table II: Major acronyms used in the survey.",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 627,
+              "image_path": "figures/2609.18111/table-009.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 529
+            }
+          ],
+          "first_seen_at": "2026-09-16T21:00:00-04:00",
+          "hero_figure": "figures/2609.18111/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2609.18111",
+          "relevance": 9,
+          "selection_reason": "Survey of Generative Physical AI covering VLA models, robot foundation models, diffusion policies, and world foundation models; directly fits embodied AI and world-model interests.",
+          "summary_status": "generated",
+          "title": "A Comprehensive Review of Generative Physical Artificial Intelligence",
+          "tldr": "This survey organizes Generative Physical AI approaches for embodied agents, highlighting how they enable perception, reasoning, and action while identifying open challenges for real-world deployment.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "video-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "We introduce Zing-0.5, a 5B autoregressive world model designed for playability: users can explore generated worlds, influence unfolding events, and respond to the resulting feedback through joint keyboard and online text control. Our approach brings together three technical contributions: (1) Unified action and text conditioning, combining magnitude-aware keyboard inputs with temporally aligned text instructions and jointly annotated videos to learn navigation and event control within the same sequence; (2) Event-scale supervision for incremental generation, using a segment-level teacher trained on connected multi-prompt videos to supervise a block-level causal student through distribution-matching distillation; and (3) Low-cost real-time interaction, combining four-step generation with context-preserving streaming to support 832 x 480 inference at 24 FPS at an estimated server rental cost of approximately USD 0.009 per stream-minute. Zing-0.5 achieves an overall score of 81.0 and a consistency score of 88.5 across 158 WBench Navigation cases. A joint-control demonstration shows a text-directed event change during continued navigation without restarting generation. We release the model weights, inference code, and Zing-SGLang serving implementation to support further work on playable generated worlds.",
+          "arxiv_id": "2609.17909",
+          "arxiv_url": "https://arxiv.org/abs/2609.17909",
+          "authors": [
+            "Mingyang Chen, Shengdong Chen, Xiaoxiao Fu, Bosheng Gong, Haoyuan Guo, Bowen Li, Jiawen Li, Kejun Li, Tianpeng Li, Yin Liu, Haoze Sun, Zeyang Tian, Meng Wang, Xinmiao Wu, Jiangqiao Yan, Zining Zhao"
+          ],
+          "bullets": [
+            "Learns navigation and event control by jointly conditioning on magnitude-aware keyboard inputs and time-aligned text instructions.",
+            "Uses event-scale teacher supervision and distribution-matching distillation for incremental block-level generation.",
+            "Combines four-step generation with context-preserving streaming for 832×480 inference at 24 FPS.",
+            "Scores 81.0 overall and 88.5 for consistency on 158 WBench Navigation cases.",
+            "The authors release model weights, inference code, and a Zing-SGLang serving implementation."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4. Model architecture. A lightweight action encoder adds frame-aligned control features to visual tokens before the DiT stack. Text conditions the DiT blocks through cross-attention. Prompt updates refresh text K/V while retaining visual K/V from the preceding history.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2609.17909/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 923
+            },
+            {
+              "caption": "Figure 3. Data construction. We curate image–text and video–text pairs, gameplay, real-world videos, and synthetic videos to preserve visual capabilities and learn interactive control. Joint-control sequences align segmentlevel captions and continuous action strengths with video frames, while 30-second clips extend the training context.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 748,
+              "image_path": "figures/2609.17909/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 941
+            },
+            {
+              "caption": "Figure 2. Joint action and text control. Six frames from one interactive session show a sled rider navigating a snowy landscape while responding to text instructions to cheer and open an umbrella. Key symbols summarize movement directions, while text labels summarize event instructions. Timestamps refer to the recording.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 459,
+              "image_path": "figures/2609.17909/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 943
+            },
+            {
+              "caption": "Figure 5. Training procedure. Bidirectional adaptation is followed by autoregressive training of a segment-level teacher and a block-level generator. The generator undergoes ODE initialization and local consistency distillation, followed by DMD supervised by the segment-level teacher. Colored mask entries indicate allowed attention between latent frames, with queries in rows and keys in columns.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 326,
+              "image_path": "figures/2609.17909/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 893
+            },
+            {
+              "caption": "Figure 1. Diverse environments and visual styles in Zing-0.5.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 977,
+              "image_path": "figures/2609.17909/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1039
+            },
+            {
+              "caption": "Figure 7. Navigation, scene dynamics, and exploration. The sequences show (a) keyboard navigation across a sea of clouds, (b) a tree releasing golden sparks after a text instruction, (c) first-person interaction with a melting candy house, and (d) passage through a mirror into a garden. Each row follows a single session, with timestamps referring to its recording.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 956,
+              "image_path": "figures/2609.17909/figure-006.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 943
+            },
+            {
+              "caption": "Figure 8. Joint action and text control. Online text instructions introduce (a) a rainbow over a city and (b) fiery rain over a battlefield, or direct (c) a character to rise into flight and (d) a flying mount to breathe fire. Each session combines these environmental or subject-directed changes with keyboard navigation. Timestamps refer to each recording.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 955,
+              "image_path": "figures/2609.17909/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 943
+            },
+            {
+              "caption": "Figure 6. Temporal partitions for autoregressive adaptation. Rectangles denote denoising units. Both branches separate the first latent frame, then use prompt segments (teacher) or four latent frames (generator).",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 183,
+              "image_path": "figures/2609.17909/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 908
+            },
+            {
+              "caption": "Table 1. WBench Navigation, 158 cases. Selected official leaderboard results as of September 9, 2026 [30]. Scores use the benchmark’s 0–100 scale; higher is better.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 231,
+              "image_path": "figures/2609.17909/table-009.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 796
+            }
+          ],
+          "first_seen_at": "2026-09-16T21:00:00-04:00",
+          "hero_figure": "figures/2609.17909/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.17909",
+          "relevance": 8,
+          "selection_reason": "Introduces a large autoregressive world model (Zing-0.5) designed for 'playable worlds' with joint action and text control. It generates future environments conditioned on actions, fitting 'Interactive World Models' and 'Video World Models'.",
+          "summary_status": "generated",
+          "title": "Zing-0.5: Toward Playable Worlds with Real-Time Joint Action and Text Control",
+          "tldr": "Zing-0.5 is a 5B real-time world model that supports continuous gameplay through joint keyboard and text control.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Generative modeling of time-dependent data is typically formulated on a discrete temporal grid, restricting supervision to the observed timestamps in the training data. We instead frame generation as continuous-time evolution on a learned data manifold. To this end, we leverage pretrained score-based models as geometric priors and learn a vector field that evolves data along score-induced interpolation paths. Because these dynamics follow transitions that respect the geometry learned by the score model, they support generation at arbitrary timestamps and temporal super-resolution beyond the discretization of the training data. Moreover, this geometric formulation allows us to train the vector field simulation-free through a regression objective. To improve long-horizon rollout robustness, we introduce an objective that promotes path-relative transverse exponential stability. While motivated by stability theory, it admits a practical interpretation as denoising score matching transverse to the interpolation path. Further, we extend the framework to a probabilistic setting that models a distribution over plausible future trajectories. We demonstrate the method on natural video and scientific dynamical data, including temporal super-resolution, PDE-based spatiotemporal fields, and molecular dynamics. Our results show that score-based priors provide a strong foundation for learning stochastic continuous-time generative dynamics.",
+          "arxiv_id": "2609.17901",
+          "arxiv_url": "https://arxiv.org/abs/2609.17901",
+          "authors": [
+            "Jan Tauberschmidt, Brian B. Moser, Stanislav Frolov, Andreas Dengel, Andrew B. Duncan, Sebastian J. Vollmer"
+          ],
+          "bullets": [
+            "Addresses the limitation of discrete-time generative models, which only supervise generation at observed timestamps.",
+            "Uses pretrained score-based models as geometric priors and learns a vector field along score-induced interpolation paths.",
+            "Trains the dynamics simulation-free with regression and improves long-horizon rollouts via transverse exponential stability.",
+            "Extends the approach probabilistically to represent distributions over future trajectories.",
+            "Demonstrates applications to natural video, PDE-based spatiotemporal fields, and molecular dynamics, including temporal super-resolution."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview. Left: a pretrained score model (grey arrows) induces manifold-aware interpolation paths (blue curve). Right: the generative vector field follows these paths tangentially while applying a transverse correction (see Sec. 3.2).",
+              "figure_id": "figure-1-12",
+              "figure_number": "1",
+              "height": 182,
+              "image_path": "figures/2609.17901/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 818
+            },
+            {
+              "caption": "Figure 6: Additional conditional samples on the 2D dataset. The model follows the curved scoreinduced manifold and preserves stochasticity over future branch choices that are not fixed by the observed context.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 427,
+              "image_path": "figures/2609.17901/figure-002.webp",
+              "kind": "figure",
+              "page": 47,
+              "width": 827
+            },
+            {
+              "caption": "Figure 11: Interpolation on KTH. Rows: ground truth at integer times (observed frames framed in green; half-times have no ground truth), Vid-ODE, and ours, with all model outputs on the shared half-frame display grid. Vid-ODE drifts off the data manifold at intermediate times (ghosted arms).",
+              "figure_id": "figure-11-24",
+              "figure_number": "11",
+              "height": 257,
+              "image_path": "figures/2609.17901/figure-003.webp",
+              "kind": "figure",
+              "page": 51,
+              "width": 813
+            },
+            {
+              "caption": "Figure 2: 2D example. (a) Score prior: model samples (blue), score field (gray), candidate nodes (black), active loop (green). (b)–(e) Learned fields vθ(x | z), conditioned on the green nodes. Arrows colored by their transverse component toward (blue) or away from (red) the reference path (black).",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 172,
+              "image_path": "figures/2609.17901/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 820
+            },
+            {
+              "caption": "Figure 9: Qualitative robustness comparison for Navier–Stokes reconstruction under coarse secant rollout with step size h = 0.5. The transverse robustness objective reduces accumulated drift by training perturbed states to return toward the interpolation path.",
+              "figure_id": "figure-9-29",
+              "figure_number": "9",
+              "height": 420,
+              "image_path": "figures/2609.17901/figure-005.webp",
+              "kind": "figure",
+              "page": 48,
+              "width": 792
+            },
+            {
+              "caption": "Figure 4: Extrapolation on KTH (rows: ground truth with the last observed input framed in green)",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 203,
+              "image_path": "figures/2609.17901/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 772
+            },
+            {
+              "caption": "Figure 3: Molecular dynamics on MD17 ethanol: learned dynamics preserve molecular geometry more consistently than linear interpolation, as reflected by the bond-length variation.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 185,
+              "image_path": "figures/2609.17901/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 818
+            },
+            {
+              "caption": "Figure 8: Mean LPIPS over rollout for the reconstruction experiment under three inference regimes.",
+              "figure_id": "figure-8-28",
+              "figure_number": "8",
+              "height": 233,
+              "image_path": "figures/2609.17901/figure-008.webp",
+              "kind": "figure",
+              "page": 48,
+              "width": 810
+            },
+            {
+              "caption": "Figure 12: Gray–Scott long-horizon rollouts from the latent-conditioned model. The model is conditioned only on the first observed concentration field and samples different latent variables, producing distinct plausible futures up to T = 256.",
+              "figure_id": "figure-12-23",
+              "figure_number": "12",
+              "height": 214,
+              "image_path": "figures/2609.17901/figure-009.webp",
+              "kind": "figure",
+              "page": 51,
+              "width": 793
+            },
+            {
+              "caption": "Figure 10: Navier–Stokes sub-frame dynamics for score-induced and linear interpolation targets. Left: generated intermediate vorticity fields. Right: change in enstrophy along the interpolation.",
+              "figure_id": "figure-10-15",
+              "figure_number": "10",
+              "height": 224,
+              "image_path": "figures/2609.17901/figure-010.webp",
+              "kind": "figure",
+              "page": 50,
+              "width": 809
+            },
+            {
+              "caption": "Figure 5: 2D example. (a) Learned manifold and one example trajectory. (b)–(d) Conditional trajectory samples for increasing observed context (green). (e) PCA projection of the latent distributions.",
+              "figure_id": "figure-5-13",
+              "figure_number": "5",
+              "height": 183,
+              "image_path": "figures/2609.17901/figure-011.webp",
+              "kind": "figure",
+              "page": 46,
+              "width": 843
+            },
+            {
+              "caption": "Figure 7: The learned field vθ(x | z) conditioned on a second branch configuration (rendering as in Figure 2).",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 248,
+              "image_path": "figures/2609.17901/figure-012.webp",
+              "kind": "figure",
+              "page": 47,
+              "width": 249
+            },
+            {
+              "caption": "Table 8: Optimization settings of the three KTH training stages. A dash marks a setting that the stage configuration does not specify separately. Parameter counts of the generative model are the velocity field followed by the posterior and prior encoders.",
+              "figure_id": "table-8-19",
+              "figure_number": "8",
+              "height": 257,
+              "image_path": "figures/2609.17901/table-013.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 818
+            },
+            {
+              "caption": "Table 5: Video interpolation on KTH Actions (DVF and UVI quoted from Park et al., 2021).",
+              "figure_id": "table-5-26",
+              "figure_number": "5",
+              "height": 154,
+              "image_path": "figures/2609.17901/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 393
+            },
+            {
+              "caption": "Table 7: Main optimization hyperparameters and parameter counts. Parameter counts refer to trainable parameters in the corresponding stage (vector field plus latent encoders, where applicable).",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 513,
+              "image_path": "figures/2609.17901/table-015.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 818
+            },
+            {
+              "caption": "Table 10: Simulation settings of the two PDE datasets. Both simulators are periodic and store 64 frames per trajectory.",
+              "figure_id": "table-10-10",
+              "figure_number": "10",
+              "height": 440,
+              "image_path": "figures/2609.17901/table-016.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 818
+            },
+            {
+              "caption": "Table 12: Training configuration of the augmented molecular interpolator. The correction network is the EGNN of Table 7, evaluated on the paired graph of the two lifted endpoints.",
+              "figure_id": "table-12-25",
+              "figure_number": "12",
+              "height": 333,
+              "image_path": "figures/2609.17901/table-017.webp",
+              "kind": "table",
+              "page": 44,
+              "width": 818
+            },
+            {
+              "caption": "Table 9: Training details of the KTH generative model. Optimizer settings are in Table 8.",
+              "figure_id": "table-9-3",
+              "figure_number": "9",
+              "height": 288,
+              "image_path": "figures/2609.17901/table-018.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 640
+            },
+            {
+              "caption": "Table 1: Measured transverse contraction: median pointwise eigenvalue λ⊥ with the fraction of the tube where it is negative and median empirical decay rate of transverse perturbations.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 139,
+              "image_path": "figures/2609.17901/table-019.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 590
+            },
+            {
+              "caption": "Table 4: Distributional rollout comparison on Gray–Scott: sliced Wasserstein distance normalized by the true-vs-true finite-sample reference (values near one indicate simulator-level variability).",
+              "figure_id": "table-4-17",
+              "figure_number": "4",
+              "height": 88,
+              "image_path": "figures/2609.17901/table-020.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 522
+            },
+            {
+              "caption": "Table 15: Generative fields at the two wider frame spacings, with the frozen teacher for reference. The spectral diagnostic is defined in Appendix D.6.",
+              "figure_id": "table-15-21",
+              "figure_number": "15",
+              "height": 227,
+              "image_path": "figures/2609.17901/table-021.webp",
+              "kind": "table",
+              "page": 49,
+              "width": 698
+            },
+            {
+              "caption": "Table 17: Physics refinement of interpolation paths on the fully observed two-species variant for increasing refinement budgets K (mean ± std over 8 trajectories where shown).",
+              "figure_id": "table-17-14",
+              "figure_number": "17",
+              "height": 279,
+              "image_path": "figures/2609.17901/table-022.webp",
+              "kind": "table",
+              "page": 50,
+              "width": 518
+            },
+            {
+              "caption": "Table 3: Generative fields at twice the training frame spacing (full results in Appendix E.3).",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 112,
+              "image_path": "figures/2609.17901/table-023.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 335
+            },
+            {
+              "caption": "Table 6: Video extrapolation on KTH Actions (observe frames 1–5, generate frames 6–10).",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 109,
+              "image_path": "figures/2609.17901/table-024.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 339
+            },
+            {
+              "caption": "Table 13: Ablations on the 2D example. Each row removes one component (“− correction” keeps the input noise but drops the target correction). Branch acc. has chance level ≈ 1/16, the training rate is −λ = −10, and the metrics are defined in Appendix D.3.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 191,
+              "image_path": "figures/2609.17901/table-025.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 699
+            },
+            {
+              "caption": "Table 16: Interpolation with score geometry against known dynamics on the fully observed twospecies variant (mean ± std over 8 trajectories, ground-truth residual floor 1.79 · 10−5).",
+              "figure_id": "table-16-20",
+              "figure_number": "16",
+              "height": 114,
+              "image_path": "figures/2609.17901/table-026.webp",
+              "kind": "table",
+              "page": 49,
+              "width": 610
+            },
+            {
+              "caption": "Table 11: Gaussian random field parameters of the Navier–Stokes initial vorticity and forcing.",
+              "figure_id": "table-11-18",
+              "figure_number": "11",
+              "height": 94,
+              "image_path": "figures/2609.17901/table-027.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 510
+            },
+            {
+              "caption": "Table 14: Frozen interpolation paths against the true fine-time intermediates (mean ± std over 8 trajectories).",
+              "figure_id": "table-14-22",
+              "figure_number": "14",
+              "height": 88,
+              "image_path": "figures/2609.17901/table-028.webp",
+              "kind": "table",
+              "page": 49,
+              "width": 472
+            },
+            {
+              "caption": "Table 2: Frozen interpolation paths against the true fine-time Gray–Scott intermediates (mean ± std over eight trajectories).",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 88,
+              "image_path": "figures/2609.17901/table-029.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 352
+            }
+          ],
+          "first_seen_at": "2026-09-16T21:00:00-04:00",
+          "hero_figure": "figures/2609.17901/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.17901",
+          "relevance": 8,
+          "selection_reason": "Frames generative modeling as continuous-time evolution on learned data manifolds, supporting temporal super-resolution and future video prediction, which aligns with Video World Models.",
+          "summary_status": "generated",
+          "title": "Walking the Score Manifold: Continuous-time Generative Dynamics on Learned Data Manifolds",
+          "tldr": "A score-guided continuous-time generative framework learns stable dynamics on data manifolds, enabling arbitrary-time generation and temporal super-resolution.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-15",
       "paper_count": 5,
       "papers": [
@@ -16093,5 +16826,5 @@
   "schema_version": 1,
   "subtopic_id": "video-world-models",
   "topic_id": "world-models",
-  "total_paper_count": 81
+  "total_paper_count": 85
 }

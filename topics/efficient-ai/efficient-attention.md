@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**75 papers total**
+**80 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Loco-Loco-RL: Low-Cost Terrain Mapping for Humanoid Locomotion with Reinforcement Learning](https://arxiv.org/abs/2609.19041) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Efficient AI: Token Pruning and Eviction, Efficient Attention | A token-compressed temporal transformer enables robust humanoid terrain walking using compact, low-cost time-of-flight sensing. | 8 | 8 |
+| 2026-09-16 | [Reaching Every Position Without Searching: Rotating Sparse Wiring on the Hypercube as a Substitute for Attention](https://arxiv.org/abs/2609.18145) | Efficient AI: Efficient Attention | Rotating sparse hypercube connections can replace most attention links while preserving full information reachability and improving efficiency. | 7 | 8 |
+| 2026-09-16 | [vidax: A Unified JAX Framework for Video Generative Models on Accelerator Meshes](https://arxiv.org/abs/2609.18077) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | vidax is an open-source JAX/Flax inference framework that brings modern video generative models to Cloud TPUs through unified sharding, optimized attention, and memory-aware execution. | 8 | 8 |
+| 2026-09-16 | [The Attention Within: Consensus Dynamics in Selective State Space Models](https://arxiv.org/abs/2609.17997) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | Selective SSM recurrences can drive token representations toward consensus like transformer attention, while output gating limits complete collapse in practice. | 8 | 8 |
+| 2026-09-16 | [VC-Attention: Value Smoothing and Softmax Casting for Low-bit Attention](https://arxiv.org/abs/2609.15810) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VC-Attention enables faster, accurate low-bit attention for video diffusion Transformers by smoothing value outliers and replacing costly softmax operations with fused probability casting. | 7 | 7 |
 | 2026-09-14 | [Low-Dimensional Embeddings for Gaussian Kernels on Manifolds](https://arxiv.org/abs/2609.15179) | Efficient AI: Efficient Attention | Random Fourier Features provide low-dimensional embeddings that uniformly preserve Gaussian kernel distances on positive-reach manifolds, with only logarithmic dependence on ambient dimension and a topological preservation guarantee. | 7 | 8 |
 | 2026-09-14 | [Typhoon ASR Streaming: Steerable Low-Latency Thai Speech Recognition with Real-Time Shallow Fusion](https://arxiv.org/abs/2609.14991) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | A deployable Thai streaming ASR system achieves low-latency, real-time transcription while enabling decode-time vocabulary steering without retraining. | 6 | 7 |
 | 2026-09-14 | [LiftGCN: Efficient Energy-Preserving Graph Learning via Joukowski Spectral Lifting for Finite Element Stress Prediction](https://arxiv.org/abs/2609.14977) | Efficient AI: Efficient Attention | LiftGCN preserves high-frequency stress information on finite element meshes through efficient, energy-preserving graph propagation. | 7 | 8 |

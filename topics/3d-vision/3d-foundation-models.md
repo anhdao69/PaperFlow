@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**111 papers total**
+**115 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Generalist-Specialist Mixture-of-Experts for Rare Pathology Detection in Multimodal Imaging](https://arxiv.org/abs/2609.18688) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | GS-MoE combines cross-modal generalist representations with modality-specific specialists to improve rare pathology detection while reducing active inference parameters. | 8 | 8 |
+| 2026-09-16 | [Mask 2D-3D: Adaptive Dual-Masked Autoencoder Network for Image-to-Point Cloud Registration](https://arxiv.org/abs/2609.18088) | 3D Vision: 3D Foundation Models | Mask 2D-3D improves image-to-point cloud registration by adaptively masking informative regions and learning more consistent cross-modal features. | 8 | 8 |
+| 2026-09-16 | [HLC-GS: Risk-Map-Guided Height-Layer Consistency Gaussian Splatting for DSM Reconstruction from Optical Satellite Imagery](https://arxiv.org/abs/2609.16772) | 3D Vision: 3D Foundation Models | HLC-GS improves DSM reconstruction from optical satellite imagery by preventing 3D Gaussian splats from mixing across height layers. | 7 | 7 |
+| 2026-09-16 | [PriorPose: Reference-Guided Joint Deformation and Alignment for Category-Level Object Pose Estimation](https://arxiv.org/abs/2609.16727) | 3D Vision: 3D Foundation Models | PriorPose jointly deforms a category reference and aligns it to partial observations, improving category-level 6D pose estimation under shape variation and domain shift. | 8 | 8 |
 | 2026-09-15 | [PanoGS-SLAM: Panoramic 3D Gaussian Splatting SLAM](https://arxiv.org/abs/2609.17387) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | PanoGS-SLAM is a real-time panoramic dense SLAM system that uses spherical 3D Gaussian Splatting to improve tracking stability and rendering under rapid motion and wide viewpoint changes. | 9 | 8 |
 | 2026-09-15 | [DecoGS: Adaptive Static-Dynamic Decoupling of 3D Gaussians for Free-Viewpoint Video Streaming](https://arxiv.org/abs/2609.17230) | 3D Vision: 3D Foundation Models | DecoGS selectively updates only dynamic or photometrically changing regions of 3D Gaussians during streaming, achieving faster rendering and lower temporal flicker than prior methods without pretraining. | 8 | 7 |
 | 2026-09-15 | [SceneBench: A Hierarchical Benchmark for Vision-Language Understanding of 3D Scenes](https://arxiv.org/abs/2609.16233) | 3D Vision: 3D Foundation Models | SceneBench benchmarks vision-language models on hierarchical, multi-step spatial reasoning in photorealistic 3D scenes, exposing weaknesses beyond basic object recognition. | 8 | 8 |

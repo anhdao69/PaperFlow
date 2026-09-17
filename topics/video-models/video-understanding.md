@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**190 papers total**
+**191 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [RoboVAD: A Large Cross-Domain Evaluation Benchmark for Anomaly Detection in Robotic Arm Manipulation Videos](https://arxiv.org/abs/2609.17843) | Embodied AI: Robot Learning and Manipulation; Video Generation and Understanding: Video Understanding | RoboVAD introduces a challenging cross-domain benchmark for detecting anomalies in robotic arm manipulation videos, revealing substantial difficulty for current methods. | 7 | 5 |
 | 2026-09-15 | [Probe-VAD: Ordinal Likelihood Probing for Training-Free Video Anomaly Detection](https://arxiv.org/abs/2609.17211) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Probe-VAD uses ordinal yes/no likelihood probes from a frozen vision-language model to produce continuous, rank-sensitive anomaly scores for training-free video anomaly detection. | 6 | 7 |
 | 2026-09-15 | [Not Another Text Benchmark: Putting the "Visual" Back in Visual Question Answering for Large Video Models](https://arxiv.org/abs/2609.17112) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | This work introduces visual-query benchmarks showing that large video models remain weak at visual reasoning despite strong performance on text-based video QA. | 7 | 7 |
 | 2026-09-15 | [VOR-Bench: A Human Perception-Driven Benchmark for Video Object Removal](https://arxiv.org/abs/2609.16878) | Video Generation and Understanding: Video Understanding | VOR-Bench introduces a human-perception-driven benchmark for evaluating video object removal with realistic paired data and VLM-based scoring. | 6 | 7 |

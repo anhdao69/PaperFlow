@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**44 papers total**
+**48 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Learning to Stack: Cube-Stacking Imitation Learning from Virtual Reality Demonstrations](https://arxiv.org/abs/2609.19040) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | A VR-based pipeline efficiently collects and reuses demonstrations for training a behavior-cloning robot to stack cubes in simulation. | 8 | 7 |
+| 2026-09-16 | [PASSAGE: Scaling Scene-Aligned Motion Learning for Perceptive Humanoid Traversal in Cluttered Environments](https://arxiv.org/abs/2609.18732) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | PASSAGE learns a single perception-conditioned planner–tracker to coordinate diverse humanoid traversal behaviors in cluttered environments, achieving 70.3% simulated contact-free success and demonstrating onboard traversal across 50 unseen physical layouts. | 9 | 8 |
+| 2026-09-16 | [HAP: A Hand-Driven Active Perception Framework for Egocentric Head Motion Prediction](https://arxiv.org/abs/2609.18548) | Embodied AI: Learning from Human Videos | HAP predicts future egocentric 6-DoF head motion by combining hand-driven target intent with dynamic occlusion reasoning. | 6 | 6 |
+| 2026-09-16 | [Weave: Learning Whole-Body Dexterous Loco-Manipulation from Human-Object Interactions](https://arxiv.org/abs/2609.16683) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | Weave learns whole-body humanoid dexterous object interaction from human demonstrations by combining contact-aware retargeting with joint body-and-hand control. | 9 | 8 |
 | 2026-09-15 | [EventEgoHands++: Event-based Egocentric 3D Hand Mesh Reconstruction with Real Dataset](https://arxiv.org/abs/2609.17189) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | EventEgoHands++ improves egocentric event-based 3D hand mesh reconstruction by detecting each hand instance and using adaptive attention to handle cluttered motion events. | 6 | 7 |
 | 2026-09-15 | [GeoLAM: Learning Geometry-Grounded Latent Actions from Unlabeled Human Videos](https://arxiv.org/abs/2609.17099) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | GeoLAM learns continuous, geometry-grounded latent actions from unlabeled human videos and transfers them to robotic manipulation without requiring geometry teachers or video prediction at deployment. | 9 | 8 |
 | 2026-09-15 | [UniDex-ViTac: Learning Unified Visuo-Tactile Dexterous Manipulation Policy from Human Video Data](https://arxiv.org/abs/2609.16504) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | UniDex-ViTac converts human video demonstrations into simulated robot data to train a unified visuo-tactile dexterous manipulation policy that transfers to real objects without robot demonstrations or deployment-time human references. | 9 | 8 |

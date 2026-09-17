@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**268 papers total**
+**273 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Generalist-Specialist Mixture-of-Experts for Rare Pathology Detection in Multimodal Imaging](https://arxiv.org/abs/2609.18688) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | GS-MoE combines cross-modal generalist representations with modality-specific specialists to improve rare pathology detection while reducing active inference parameters. | 8 | 8 |
+| 2026-09-16 | [Mask 2D-3D: Adaptive Dual-Masked Autoencoder Network for Image-to-Point Cloud Registration](https://arxiv.org/abs/2609.18088) | 3D Vision: 3D Foundation Models | Mask 2D-3D improves image-to-point cloud registration by adaptively masking informative regions and learning more consistent cross-modal features. | 8 | 8 |
+| 2026-09-16 | [HLC-GS: Risk-Map-Guided Height-Layer Consistency Gaussian Splatting for DSM Reconstruction from Optical Satellite Imagery](https://arxiv.org/abs/2609.16772) | 3D Vision: 3D Foundation Models | HLC-GS improves DSM reconstruction from optical satellite imagery by preventing 3D Gaussian splats from mixing across height layers. | 7 | 7 |
+| 2026-09-16 | [PriorPose: Reference-Guided Joint Deformation and Alignment for Category-Level Object Pose Estimation](https://arxiv.org/abs/2609.16727) | 3D Vision: 3D Foundation Models | PriorPose jointly deforms a category reference and aligns it to partial observations, improving category-level 6D pose estimation under shape variation and domain shift. | 8 | 8 |
+| 2026-09-16 | [MGAvatar: Mesh-Bound Gaussians for Head Avatar Geometry and Appearance Modeling](https://arxiv.org/abs/2609.12850) | 3D Vision | MGAvatar combines mesh-bound Gaussians with pose- and view-conditioned components to model detailed, deformable head-avatar geometry and appearance. | 5 | 6 |
 | 2026-09-15 | [ORCA: Occlusion-Aware Refinement and Completion for Novel View Synthesis](https://arxiv.org/abs/2609.17450) | 3D Vision | ORCA improves single-image novel-view synthesis by repairing small occlusions from reconstructed RGB-D information and reserving generative inpainting for larger missing regions. | 6 | 6 |
 | 2026-09-15 | [PanoGS-SLAM: Panoramic 3D Gaussian Splatting SLAM](https://arxiv.org/abs/2609.17387) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | PanoGS-SLAM is a real-time panoramic dense SLAM system that uses spherical 3D Gaussian Splatting to improve tracking stability and rendering under rapid motion and wide viewpoint changes. | 9 | 8 |
 | 2026-09-15 | [Online Geometric Change Detection via Scene Decomposition](https://arxiv.org/abs/2609.17302) | 3D Vision | CDSD enables efficient online geometric change detection by comparing dense, scene-specific LiDAR or RGB-D submaps instead of entire global maps. | 8 | 7 |

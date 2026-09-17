@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**64 papers total**
+**67 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [GenStream: Semantic Streaming Framework for Generative Reconstruction of Human-centric Media](https://arxiv.org/abs/2609.18634) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Diffusion | GenStream replaces pixel-based video streaming with semantic scene metadata and generative reconstruction, achieving extreme bandwidth savings for human-centric media. | 8 | 8 |
+| 2026-09-16 | [vidax: A Unified JAX Framework for Video Generative Models on Accelerator Meshes](https://arxiv.org/abs/2609.18077) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | vidax is an open-source JAX/Flax inference framework that brings modern video generative models to Cloud TPUs through unified sharding, optimized attention, and memory-aware execution. | 8 | 8 |
+| 2026-09-16 | [VC-Attention: Value Smoothing and Softmax Casting for Low-bit Attention](https://arxiv.org/abs/2609.15810) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VC-Attention enables faster, accurate low-bit attention for video diffusion Transformers by smoothing value outliers and replacing costly softmax operations with fused probability casting. | 7 | 7 |
 | 2026-09-15 | [MDN-Control: Mask-Depth-Noise Guided Region Control for Multi-Subject Video Editing](https://arxiv.org/abs/2609.16475) | Video Generation and Understanding: Video Diffusion | MDN-Control enables more precise multi-subject video editing by combining mask, depth, and noise-based controls without training. | 6 | 7 |
 | 2026-09-15 | [OmniHarness: Harnessing Generalizable Visual Generation via Symbolic Policy Learning](https://arxiv.org/abs/2609.16057) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Diffusion | OmniHarness improves generalizable visual generation by learning reusable symbolic policies, refining them during execution, and practicing autonomously before downstream tasks are specified. | 8 | 8 |
 | 2026-09-15 | [LynnReal-Omni: Native multi-modal Video Generation for Agentic Visual Workflows](https://arxiv.org/abs/2609.15863) | Video Generation and Understanding: Video Diffusion | LynnReal-Omni unifies diverse visual controls and video-generation tasks in a multimodal diffusion framework designed for controllable, coherent, and increasingly real-time agentic video creation. | 7 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**42 papers total**
+**43 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Agora: Git as Shared Memory for Collective AutoResearch](https://arxiv.org/abs/2609.18094) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | Agora lets autonomous research agents share and verify discoveries through an append-only Git DAG, enabling sustained collective experimentation instead of duplicated searches. | 8 | 8 |
 | 2026-09-15 | [HuMemSLAM: Efficient Human-Inspired Semantic Place Recognition for Robust Visual SLAM](https://arxiv.org/abs/2609.17168) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | HuMemSLAM improves visual SLAM place recognition by combining human-inspired semantic reasoning with efficient retrieval, increasing robustness while reducing latency and geometric verification workload. | 9 | 8 |
 | 2026-09-15 | [When Malicious Instructions Persist: Persistent Memory Poisoning Attack on Harness-Based Agents](https://arxiv.org/abs/2609.13889) | Adaptation and Memory: Embodied Memory | PMPA shows that malicious instructions hidden in benign external sources can poison an agent’s persistent memory and trigger harmful actions across later sessions. | 7 | 8 |
 | 2026-09-14 | [MessyMem: Learning-from-Doing Memory for Mobile Manipulation](https://arxiv.org/abs/2609.15976) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | MessyMem gives mobile manipulators persistent, interaction-aware memory so they can reuse knowledge from prior tasks across rooms and visits. | 9 | 8 |

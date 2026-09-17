@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**106 papers total**
+**111 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Loco-Loco-RL: Low-Cost Terrain Mapping for Humanoid Locomotion with Reinforcement Learning](https://arxiv.org/abs/2609.19041) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Efficient AI: Token Pruning and Eviction, Efficient Attention | A token-compressed temporal transformer enables robust humanoid terrain walking using compact, low-cost time-of-flight sensing. | 8 | 8 |
+| 2026-09-16 | [Beyond Truncation: Rethinking LLM Decoding as Ensemble Pruning](https://arxiv.org/abs/2609.18723) | Efficient AI: Token Pruning and Eviction | ME-Decoding improves LLM token selection by pruning redundant candidates using semantic geometry while preserving high-probability choices. | 7 | 7 |
+| 2026-09-16 | [Accurate Trace Estimation with Fewer Random Bits via Recursive TensorSketch](https://arxiv.org/abs/2609.18577) | Efficient AI: Token Pruning and Eviction | Recursive TensorSketch enables unbiased trace estimation for implicit $d^p \\times d^p$ matrices using far fewer random bits while avoiding the exponential-in-$p$ variance of Kronecker-product queries. | 7 | 8 |
+| 2026-09-16 | [OBC-Prune: Outcome-Based Calibration for Large Reasoning Model Pruning](https://arxiv.org/abs/2609.17890) | Efficient AI: Token Pruning and Eviction | OBC-Prune improves pruning of large reasoning models by weighting calibration data according to each reasoning step’s causal contribution to correct answers. | 8 | 8 |
+| 2026-09-16 | [FairCompressAgent: An Agentic Framework for Fairness-Aware Model Compression for FPGA Deployment](https://arxiv.org/abs/2609.17786) | Efficient AI: Token Pruning and Eviction | FairCompressAgent uses measured feedback and explicit constraints to adaptively select fairness-aware compression configurations for FPGA-oriented deployment. | 7 | 8 |
 | 2026-09-15 | [BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models](https://arxiv.org/abs/2609.17443) | Efficient AI: Token Pruning and Eviction | BrainFocus uses EEG-predicted visual categories and object detection to selectively crop regions for VLM-based VQA, improving accuracy while reducing computation on cluttered images. | 7 | 7 |
 | 2026-09-15 | [Quantum-Inspired Trainable and Parameter-Efficient Tensor Networks for Image Inpainting](https://arxiv.org/abs/2609.17298) | Efficient AI: Token Pruning and Eviction | Quantum-inspired tensor-network transforms enable parameter-efficient image inpainting with invertibility, built-in coherence preservation, and performance comparable to much larger unitary models. | 7 | 8 |
 | 2026-09-15 | [Event-based Selective Attention for Multi-resolution Fast Region of Interest (ROI) Detection](https://arxiv.org/abs/2609.17134) | Efficient AI: Token Pruning and Eviction | A training-free event-based saliency model selects multi-class ROIs from inputs downscaled by up to 256×, enabling efficient millisecond-resolution neuromorphic vision with accuracy up to 70.8%. | 5 | 6 |

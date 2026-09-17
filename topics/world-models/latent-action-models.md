@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**28 papers total**
+**30 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [Principled Koopman Representations with Kalman Inference for Efficient Time-Series Prediction](https://arxiv.org/abs/2609.17815) | World Models: Latent Action Models | K²SVD learns a principled low-rank Koopman representation and uses Kalman filtering for efficient, noise-robust time-series forecasting. | 9 | 8 |
+| 2026-09-16 | [Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics](https://arxiv.org/abs/2609.16778) | World Models: Latent Action Models | MoE-JEPA combines V-JEPA’s semantic priors with high-frequency forensic cues to robustly detect synthetic and manipulated images, achieving 95.54% accuracy on SID-Set. | 8 | 8 |
 | 2026-09-15 | [GeoLAM: Learning Geometry-Grounded Latent Actions from Unlabeled Human Videos](https://arxiv.org/abs/2609.17099) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | GeoLAM learns continuous, geometry-grounded latent actions from unlabeled human videos and transfers them to robotic manipulation without requiring geometry teachers or video prediction at deployment. | 9 | 8 |
 | 2026-09-14 | [WLA$^3$: World Latent Action Modeling for Semantics, Dynamics, and Kinematics](https://arxiv.org/abs/2609.15870) | World Models: Latent Action Models | WLA$^3$ learns compact latent actions from observed world transitions to unify semantic understanding, dynamics modeling, and executable robot control across human and robot videos. | 9 | 9 |
 | 2026-09-14 | [JEPLO: Joint-Embedding Predictive Learning for LiDAR-Based Legged Locomotion](https://arxiv.org/abs/2609.15770) | Embodied AI: Robot Navigation; World Models: Latent Action Models | JEPLO enables mapping-free, LiDAR-based perceptive locomotion on legged robots using predictive latent terrain representations and achieves robust sim-to-real traversal of challenging terrains. | 8 | 9 |

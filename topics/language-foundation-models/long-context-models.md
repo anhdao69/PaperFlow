@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**39 papers total**
+**40 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [GroupKV: Hierarchical KV Cache Management for Long-Context Diffusion LLM Inference](https://arxiv.org/abs/2609.17573) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | GroupKV improves long-context diffusion LLM inference by hierarchically selecting, prefetching, and updating grouped KV caches to reduce memory and offloading bottlenecks. | 8 | 7 |
 | 2026-09-14 | [SpectralShift: Effective Context Window Extension of Gated DeltaNet via Spectral Reparameterization](https://arxiv.org/abs/2609.14320) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | SpectralShift extends Gated DeltaNet context windows by reshaping its decay spectrum to improve long-range retrieval while preserving state clearing and context switching. | 8 | 8 |
 | 2026-09-14 | [ZGCM-1: A Fully Open and Extremely Efficient Foundation Model for Math and Agentic Search](https://arxiv.org/abs/2609.13356) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | ZGCM-1 is a fully open 7B model designed to extend compact-model capabilities through efficient training, deliberate reasoning, and active tool use for math and agentic search. | 8 | 7 |
 | 2026-09-14 | [Capability-Routed Visual Retrieval and Evidence Threading for Long-Context Document Question Answering](https://arxiv.org/abs/2609.13268) | Multimodal Foundation Models: Multimodal Large Language Models; Language Foundation Models: Long-Context Models | A capability-aware routing, answerability-based page selection, and layout-linked evidence threading pipeline improves visual retrieval and long-context document QA over flat page concatenation. | 8 | 8 |

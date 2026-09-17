@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**127 papers total**
+**132 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-16 | [PointZero: 3D Point Track Completion for Learning Transferable 3D Dynamics](https://arxiv.org/abs/2609.19142) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | PointZero learns transferable 3D dynamics from unlabeled RGB-D trajectories by completing sparse 3D point tracks, enabling strong downstream dynamics prediction and imitation learning. | 9 | 8 |
+| 2026-09-16 | [ForwardDLO: Model-Based Bimanual Shape Matching of Unconstrained Deformable Linear Objects](https://arxiv.org/abs/2609.18455) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | ForwardDLO enables fast, accurate model-based bimanual control of unconstrained ropes for shape matching and routing. | 8 | 7 |
+| 2026-09-16 | [Causal-History Test-Time Scaling for Failure Recovery in Autoregressive World-Action Models](https://arxiv.org/abs/2609.18016) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | A training-free test-time framework recovers failed autoregressive robot manipulation by revising unreliable causal histories and selecting the best-verified continuation. | 9 | 9 |
+| 2026-09-16 | [Zing-0.5: Toward Playable Worlds with Real-Time Joint Action and Text Control](https://arxiv.org/abs/2609.17909) | World Models: Video World Models, Interactive World Models | Zing-0.5 is a 5B real-time world model that supports continuous gameplay through joint keyboard and text control. | 8 | 7 |
+| 2026-09-16 | [Modality-Autoregressive World-Action Models](https://arxiv.org/abs/2609.17524) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | ModAR sequentially generates multiple future visual modalities before actions, improving world-action modeling efficiency and performance without pretraining. | 9 | 8 |
 | 2026-09-15 | [PhysStream: Streaming Physics-Grounded Video Generation with Structured Scene Memory and Fine-Grained Motion Control](https://arxiv.org/abs/2609.17521) | World Models: Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | PhysStream enables interactive, mid-generation control of physically grounded videos using sparse velocity signals and online scene memory. | 8 | 8 |
 | 2026-09-15 | [XPACE: Joint World and Action Modeling from Heterogeneous Experience](https://arxiv.org/abs/2609.17372) | World Models: Video World Models, Interactive World Models | XPACE jointly models robot actions and visual world dynamics to learn from heterogeneous videos and demonstrations, then uses its simulator to generate recovery experience for more robust robot control. | 9 | 8 |
 | 2026-09-15 | [Neuro-Symbolic Hierarchical Intention Anticipation in Human Behavior](https://arxiv.org/abs/2609.17064) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | A neuro-symbolic hierarchical decoder anticipates human goals and remaining behavior from partial multimodal observations while enforcing ontological validity. | 9 | 8 |
