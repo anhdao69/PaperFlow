@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**85 papers total**
+**86 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-17 | [ParticleSplat: Self-supervised Object-centric Latent Particle Splatting](https://arxiv.org/abs/2609.19463) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models; 3D Vision: 3D Foundation Models | ParticleSplat learns object-centric 3D latent particles from multi-view images without supervision, enabling object masks, scene editing, and improved robotic manipulation. | 10 | 9 |
 | 2026-09-16 | [Spatially Adaptive Noise Injection](https://arxiv.org/abs/2609.18466) | World Models: Video World Models | SANI improves diffusion sampling by injecting noise selectively at pixels where stochastic correction is most useful. | 8 | 7 |
 | 2026-09-16 | [A Comprehensive Review of Generative Physical Artificial Intelligence](https://arxiv.org/abs/2609.18111) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Video World Models | This survey organizes Generative Physical AI approaches for embodied agents, highlighting how they enable perception, reasoning, and action while identifying open challenges for real-world deployment. | 9 | 5 |
 | 2026-09-16 | [Zing-0.5: Toward Playable Worlds with Real-Time Joint Action and Text Control](https://arxiv.org/abs/2609.17909) | World Models: Video World Models, Interactive World Models | Zing-0.5 is a 5B real-time world model that supports continuous gameplay through joint keyboard and text control. | 8 | 7 |

@@ -1,6 +1,1577 @@
 {
   "days": [
     {
+      "date": "2026-09-17",
+      "paper_count": 11,
+      "papers": [
+        {
+          "abstract": "Episodic test-time adaptation resets a frozen segmenter to source weights $M_0$ on each case and adapts for a fixed step count. A fixed horizon conflates a cohort-level question, how far to adapt, with an irreducibly per-case one, whether this case should be adapted at all. Cohort means hide that decision: on cross-vendor cardiac MRI the mean $\\Delta$Dice from adaptation is statistically indistinguishable from zero while 58.7% of cases are individually made worse. We quantify this harm as harmful accepted area (HA), the harmful fraction of the edited area a controller deploys. Held-out tuning gives a stronger baseline than a fixed horizon, but the budget it selects transfers on neither of the two main medical benchmarks, and no global budget can condition on the case. We show that prediction fragmentation---the disagreement geometry between $M_0$ and the adapted mask $M_k$---predicts HA with no labels or extra backward passes at decision time, comparably on three benchmarks (Spearman $\\rho$ 0.50--0.60), at a quarter of gradient-norm's latency. A case-level router built on it cuts HA from 0.228 to 0.139 on a benchmark that took no part in its design, with the design frozen and only cut-points recalibrated there. On the cardiac benchmark the design was selected on, the router cuts HA from 0.129 to 0.013 at matched Dice and 1.10 deployed updates, against the retrospective-best budget found post hoc on evaluation labels, and reduces that 58.7% to 20.0%, an upper bound we quantify. Where the retained cases are not net-helped (as on prostate), the router still cuts HA but concedes accuracy, a boundary we report. Thresholds are fit once on a labeled split disjoint from evaluation; decisions use no labels or gradients. The template ports across architecture and domain (nnU-Net$\\to$SegFormer, Cityscapes$\\to$ACDC) with coordinate, thresholds and per-bucket actions instantiated per domain.",
+          "arxiv_id": "2609.20700",
+          "arxiv_url": "https://arxiv.org/abs/2609.20700",
+          "authors": [
+            "Lili Wang, Jing Li, Xiaowen Sun, Xiangyu Hu, Zhuangzhuang Gu, Jian Liu, Srihari Nelakuditi, Yan Tong"
+          ],
+          "bullets": [
+            "Fixed adaptation horizons cannot distinguish how far to adapt from whether a case should be adapted, and cohort averages hide per-case harm.",
+            "Prediction fragmentation—the disagreement geometry between source and adapted masks—predicts harmful accepted area without labels or extra decision-time backward passes.",
+            "Across three benchmarks, fragmentation correlates with harmful accepted area at Spearman ρ=0.50–0.60 and has one-quarter the latency of gradient-norm signals.",
+            "A case-level router reduced harmful accepted area from 0.228 to 0.139 on an unseen benchmark; on cardiac MRI, it reduced 0.129 to 0.013 and harmful cases from 58.7% to 20.0% at matched Dice.",
+            "On prostate, the router still reduced harm but could sacrifice accuracy when retained cases were not net-helped; thresholds require labeled tuning but deployment decisions use no labels or gradients."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Harm invisible to Dice (M&Ms, router, A8E1F4 frame09). L→R: GT (evaluation reference only); M0; fixed-4, with every harmful accepted edit outlined in red; ours, which routes this case to rollback and so returns M0 unchanged. This slice has no RV in GT, so the foreground Dice we report is blind to the false-RV expansion HA flags. Panel metrics are slice-level; selection protocol in Sec. S1.15.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 183,
+              "image_path": "figures/2609.20700/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 590
+            },
+            {
+              "caption": "Figure 1: One signal, from problem to payoff. (A) mIoU flat while HA rises (ACDC rain, lr 10−4, K=4; the aggressive budget of Sec. 5.3 is steeper still). (B) M&Ms router attains the lowest HA at matched Dice (ours in red, solid), a per-deployment result, not universal dominance (Sec. 5.2). Against the retrospective fixed-3 only the router separates cleanly; the two outlined budget-axis controllers are marginal or not separated (Sec. S2.8). Cohorts, budgets and panel (A)’s pooling convention: Secs. S1.9, S1.7.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 132,
+              "image_path": "figures/2609.20700/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 813
+            },
+            {
+              "caption": "Table 4: Prostate MRI OOD-all (n=93), online; conventions as in Table 3. Every method is run on the identical case set. The router rolls back 42 of 93 cases. The harder n=34 subset and the ablation configuration names are in Secs. S2.1 and S2.3.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 254,
+              "image_path": "figures/2609.20700/table-003.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 361
+            },
+            {
+              "caption": "Table 2: Harm-predictive comparison across three benchmarks (EATA rows use the anchor variant of Sec. S1.3). Correlations pool (case, step) pairs with step ≥1; ∆ differences consecutive steps within a case. Driving is ACDC pooled over conditions, reported at both budgets because the association inverts at the aggressive one. †From a verification rerun of the same cardiac trajectories, whose sharedsignal correlations match the archived run to ±0.002 (Sec. S9); the archived run stays authoritative for every main-table number. The GraTa-cos comparison is available on prostate only. MSP is maximum softmax probability. Clustered intervals, the per-step decomposition and the case-level ranking AUROCs are in Sec. S4.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 423,
+              "image_path": "figures/2609.20700/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 727
+            },
+            {
+              "caption": "Table 5: Case-level decomposition of ∆ against M0 (% of all cases; µ∆ at three decimals, which is what hides the 58.7%). On M&Ms and night the router retains more helped than hurt; on prostate it does not (bold marks the larger of the two on each router row). Remaining ACDC conditions and the prostate zero-∆ convention are in Sec. S1.12.",
+              "figure_id": "table-5-1",
+              "figure_number": "5",
+              "height": 191,
+              "image_path": "figures/2609.20700/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 640
+            },
+            {
+              "caption": "Table 3: M&Ms cardiac Vendor-B OOD (n=230, online); k=1 is in Table 1. Fixed-k rows are successive checkpoints of one episodic EATA trajectory. The router rolls back 130 of 230 cases; Steps is the deployed depth (executed updates: Sec. S5). The FragSubset modulation never fires on this benchmark; its difference from FragStop traces to four cases (Secs. S1.3, S2.3).",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 265,
+              "image_path": "figures/2609.20700/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 361
+            },
+            {
+              "caption": "Table 1: HA vs. fixed budget (EATA trajectories, anchor variant in Sec. S1.3; Dice omitted, it varies by 0.002, 0.007 and 0.015 across the three rows). Per-split holdout→eval selection is in Sec. S1.4.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 109,
+              "image_path": "figures/2609.20700/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 506
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.20700/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.20700",
+          "relevance": 8,
+          "selection_reason": "Case-level control of test-time adaptation via prediction fragmentation is directly relevant to test-time learning.",
+          "summary_status": "generated",
+          "title": "Should This Case Be Adapted? Prediction Fragmentation Controls Test-Time Adaptation",
+          "tldr": "A label-free router uses prediction fragmentation to decide which cases should undergo test-time adaptation, substantially reducing harmful updates while preserving accuracy in favorable settings.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "A vision-language-action (VLA) policy with a flow-matching action expert generates each action chunk (a short command sequence) by integrating a learned velocity field; once its weights are fixed, the success or failure of an earlier rollout cannot change the chunk generated now. Concurrent test-time methods give a frozen policy such an input from retrieved successes, a learned critic, a verifier, or a dynamics model, but none uses the robot's own failed rollouts as negative evidence with nothing but a terminal outcome bit. We introduce TraceFlow, a progress-aligned guidance field that turns the action densities of retrieved successful and failed rollouts into a bounded correction to a frozen flow-matching action expert, using one terminal outcome bit per rollout and no other label. Its TraceBank stores traces, time-ordered state-action records with a terminal label, starts from the target-task training traces, and later admits the deployed robot's own rollouts. On an ordered real-robot packing task the base completes 21 of 50 trials in order, TraceFlow 39, and one stacking round without any weight update 47, with wrong-sequence episodes falling from 20 to 0. In simulation the gain is selective: with per-suite selected settings, TraceFlow raises RoboMemArena Sequence from 78.92\\% to 91.50\\% task success and Transferring from 54.41\\% to 62.00\\% at stacking round 2, leaves the 26-task aggregate unchanged, lowers Counting and Occlusion by 1.12 and 1.42 points, and changes LIBERO-Plus (Long) by +1.27 points (p = 0.0733). Stacking gains are finite, every branch peaking before round ten, and the bank's success-to-failure ratio predicts no retrieval allocation.",
+          "arxiv_id": "2609.20646",
+          "arxiv_url": "https://arxiv.org/abs/2609.20646",
+          "authors": [
+            "Jiaxuan Zhang, Ruizhe Liu, Yu Zhang, Yanchao Yang"
+          ],
+          "bullets": [
+            "Addresses the lack of adaptation in frozen policies and the underuse of failed rollouts as negative evidence.",
+            "Builds a TraceBank of time-ordered state-action traces labeled only by a terminal success/failure bit, including the robot’s own deployments.",
+            "Converts successful and failed action densities into a bounded, progress-aligned correction to the frozen flow-matching action expert without weight updates.",
+            "On a real-robot packing task, ordered successes rose from 21/50 to 39/50, while wrong-sequence episodes fell from 20 to 0; one stacking round achieved 47 successes.",
+            "Simulation gains were task-selective, and improvements peaked before round ten; some tasks declined or showed limited statistical evidence."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. TraceFlow: observation-to-action guidance and trace reuse. Frozen VLM states uq condition the action expert and are encoded by a frozen retrieval head into query tokens zq . Training traces initialize T0 in TraceBank. The Similarity Gate matches states and aligns progress to return top-K+ success and optional top-K− failure action windows. Their densities define a guidance field over action chunks: green attracts the current noisy chunk At (yellow) toward successful regions, while red repels it from failed ones. Bounded guidance modifies early flow-integration steps before execution. Completed rollouts receive one terminal success/failure bit and are progress-aligned before stacking for subsequent rounds. Snowflakes indicate frozen weights; the flame indicates bank growth.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 450,
+              "image_path": "figures/2609.20646/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1054
+            },
+            {
+              "caption": "Fig. 3. Ten-round trace stacking. Success-only (blue), Failure-only (red), and Joint (green) append new successes, failures, and both, respectively; previously stored traces stay queryable. Each round collects 500/200 rollouts in LIBERO/Arena. LIBERO Success-only peaks at R7 (96.8% SR; R1: 94.8); Failure-only/Joint peak at R9 (95.6/96.2) and end at 95.2/94.4. Arena Success-only, Failure-only, and Joint peak at R7, R1, and R2 (59.0%, 58.0%, and 62.0% TSR), respectively; Failure-only ends at 55.50/64.50 TSR/CSR. The dashed line is the shared Arena collector (54.0%), the policy that generated the rollouts before stacking; R1 starts are LIBERO’s empty-bank scores. R denotes the collection round.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 176,
+              "image_path": "figures/2609.20646/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 466
+            },
+            {
+              "caption": "Fig. 2. Real-world task suite in a cluttered storage-room scene. (a) The dual-arm platform with a third-person camera (Astra Pro Plus) and two wrist cameras (Gemini Pro). (b) T1, two-step relocation: move the double-sided tape down (1), then place the wooden hammer on the white cabinet (2). (c) T2, ordered packing of three fruits into the white box along the numbered paths. (d) T3, two ordered three-step branches across similar drawers: open the upper drawer, place the single-sided tape, close it (1–3); open the lower drawer, place the cable, close it (4–6). Arrow colors separate objects or branches; the numbers give the required order.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 167,
+              "image_path": "figures/2609.20646/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 968
+            },
+            {
+              "caption": "TABLE III Guidance and TraceBank studies.",
+              "figure_id": "table-III-1",
+              "figure_number": "III",
+              "height": 742,
+              "image_path": "figures/2609.20646/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 512
+            },
+            {
+              "caption": "TABLE IV Retrieval and failure ablations.",
+              "figure_id": "table-IV-6",
+              "figure_number": "IV",
+              "height": 469,
+              "image_path": "figures/2609.20646/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 512
+            },
+            {
+              "caption": "TABLE II Real-world results.",
+              "figure_id": "table-II-5",
+              "figure_number": "II",
+              "height": 208,
+              "image_path": "figures/2609.20646/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 512
+            },
+            {
+              "caption": "TABLE I Simulation results.",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 215,
+              "image_path": "figures/2609.20646/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 452
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.20646/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.20646",
+          "relevance": 8,
+          "selection_reason": "Test-time guidance of frozen flow-matching VLA policies using success/failure traces; relevant to robot learning and test-time adaptation.",
+          "summary_status": "generated",
+          "title": "TraceFlow: Guiding Frozen Flow-Matching Robot Policies with Success and Failure Traces",
+          "tldr": "TraceFlow improves a frozen flow-matching robot policy by using retrieved successful and failed rollout traces as test-time guidance, substantially reducing sequence errors in ordered tasks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "A deployed control policy can conceal consequential dynamics changes: an actuator may lose effectiveness without affecting the current task when the policy rarely excites it, despite being critical for a future task that has not yet been specified. We introduce task readiness under dormant dynamics drift, a decision problem that unifies active change diagnosis and post-change control recovery under a limited, task-agnostic interaction budget. An agent must identify whether and where local dynamics have changed, use a small number of informative interactions to characterize the change before downstream task identity is revealed, and subsequently provide each candidate task with either a recovered policy and a calibrated lower bound on its achievable return or an abstention decision to a safe fallback. We propose Evidence-Gated Matched-Pulse Transport, an intervention-based Bayesian procedure that couples fault localization with estimation of actuator effectiveness through a shared matched-response representation, thereby preserving diagnostic reliability while converting localized evidence into recovery-relevant uncertainty. This uncertainty is propagated to task-conditioned policy selection and readiness certification, enabling deployment decisions that explicitly trade off expected performance, confidence, and fallback use. We evaluate the resulting framework on a diverse suite of dormant-actuator benchmarks spanning multiple simulators, under a protocol that separates diagnosis from capability recovery, scores deployment by readiness coverage, selective risk, and interaction cost as well as return, and identifies the fault regimes in which transported evidence is decisive.",
+          "arxiv_id": "2609.20304",
+          "arxiv_url": "https://arxiv.org/abs/2609.20304",
+          "authors": [
+            "Nguyen Viet Tuan Kiet, Huynh Thi Thanh Binh"
+          ],
+          "bullets": [
+            "Targets dormant dynamics drift: a policy may hide actuator degradation that matters only for future tasks.",
+            "Uses a limited interaction budget to localize changes and estimate actuator effectiveness before task identities are known.",
+            "Introduces Evidence-Gated Matched-Pulse Transport, a Bayesian intervention procedure linking fault diagnosis with recovery-relevant uncertainty.",
+            "Propagates uncertainty into task-conditioned policy selection, calibrated performance lower bounds, and abstention to a safe fallback.",
+            "Evaluates readiness using coverage, selective risk, interaction cost, and return across dormant-actuator benchmarks."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of Evidence-Gated Matched-Pulse Transport (EG-MPT). Stage 1 selects task-agnostic diagnostic probes, converts their responses into categorized matched-score evidence for Bayesian fault localization, and gates the corresponding normalized matched amplitude into an actuator-effectiveness posterior. Stage 2 initializes recovery from this transported joint belief, selects recovery probes, and produces a task-conditioned deployment policy after the new task is revealed.",
+              "figure_id": "figure-1-20",
+              "figure_number": "1",
+              "height": 365,
+              "image_path": "figures/2609.20304/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 948
+            },
+            {
+              "caption": "Figure 2: Sensitivity to categorical bins K and calibration episodes N on 4 MuJoCo environments.",
+              "figure_id": "figure-2-26",
+              "figure_number": "2",
+              "height": 534,
+              "image_path": "figures/2609.20304/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 499
+            },
+            {
+              "caption": "Figure 10: Native driving-safety metrics on highway-env at two unseen severities. The paired panel reports EG-MPT’s minimum-time-to-collision advantage over each baseline.",
+              "figure_id": "figure-10-25",
+              "figure_number": "10",
+              "height": 231,
+              "image_path": "figures/2609.20304/figure-003.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 877
+            },
+            {
+              "caption": "Figure 5: Future-task regret and severity CRPS versus Stage 2 recovery budget, macro-averaged over two Box2D backends and two unseen severities. Seed standard deviation is shown for EG-MPT.",
+              "figure_id": "figure-5-19",
+              "figure_number": "5",
+              "height": 319,
+              "image_path": "figures/2609.20304/figure-004.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 613
+            },
+            {
+              "caption": "Figure 4: Realized versus ideal transported coordinate on two Box2D backends. The nominal and calibratedfault anchors are exact; intermediate and extrapolated severities expose bias, saturation, and heteroscedasticity.",
+              "figure_id": "figure-4-18",
+              "figure_number": "4",
+              "height": 291,
+              "image_path": "figures/2609.20304/figure-005.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 626
+            },
+            {
+              "caption": "Figure 6: Transport efficiency under controlled assumption violations (left) and the disappearance of discarded severity information as observation noise grows (right).",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 246,
+              "image_path": "figures/2609.20304/figure-006.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 511
+            },
+            {
+              "caption": "Figure 7: Component ladder on eleven compact plants and Grid2Op. Positive removal cost means the removed component contributes to lower compensation error.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 217,
+              "image_path": "figures/2609.20304/figure-007.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 825
+            },
+            {
+              "caption": "Figure 3: Compensation error across eleven compact plants and a dense effectiveness sweep. The dotted line is the sole calibration fault gcal = 0.35. Summary panels report EG-MPT rank, its paired margin to the best competitor, and interval coverage.",
+              "figure_id": "figure-3-23",
+              "figure_number": "3",
+              "height": 176,
+              "image_path": "figures/2609.20304/figure-008.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 824
+            },
+            {
+              "caption": "Figure 9: Component ladder on Grid2Op, including posterior metrics and grid-native headroom shortfall and ramp-infeasibility rate.",
+              "figure_id": "figure-9-10",
+              "figure_number": "9",
+              "height": 184,
+              "image_path": "figures/2609.20304/figure-009.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 738
+            },
+            {
+              "caption": "Figure 8: Per-family cost of removing the gate, transport, or informed acquisition. The battery plant is highlighted as the one resolved reversal for amplitude transport.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 150,
+              "image_path": "figures/2609.20304/figure-010.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 707
+            },
+            {
+              "caption": "Table 1: Dormant-actuator readiness across six MuJoCo systems.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 175,
+              "image_path": "figures/2609.20304/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1056
+            },
+            {
+              "caption": "Table 10: Box2D readiness at gains absent from categorical calibration.",
+              "figure_id": "table-10-12",
+              "figure_number": "10",
+              "height": 988,
+              "image_path": "figures/2609.20304/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 502
+            },
+            {
+              "caption": "Table 12: Core notation. Symbols local to one derivation or implementation detail are defined in place and omitted here.",
+              "figure_id": "table-12-16",
+              "figure_number": "12",
+              "height": 363,
+              "image_path": "figures/2609.20304/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 898
+            },
+            {
+              "caption": "Table 8: Future-task risk profiles on Ant, HalfCheetah, and Walker2d.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 216,
+              "image_path": "figures/2609.20304/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1054
+            },
+            {
+              "caption": "Table 7: Mechanism-level diagnostics at B2 = 2.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 204,
+              "image_path": "figures/2609.20304/table-015.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1050
+            },
+            {
+              "caption": "Table 6: Evidence-gate ablation on unseen-severity Box2D.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 356,
+              "image_path": "figures/2609.20304/table-016.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 502
+            },
+            {
+              "caption": "Table 4: Cross-physics transfer on Gymnasium Box2D. A nominal ensemble trained on one physics is deployed under a dormant actuator fault in another: BipedalWalker and CarRacing. Entries are future-task regret, macro-averaged over the two backends.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 220,
+              "image_path": "figures/2609.20304/table-017.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 557
+            },
+            {
+              "caption": "Table 17: Complete compact-plant result matrix behind Table 9. Each entry is the rank of EG-MPT among eight methods over five seeds and two unseen severities. A dagger marks a plant shown in the main text.",
+              "figure_id": "table-17-22",
+              "figure_number": "17",
+              "height": 264,
+              "image_path": "figures/2609.20304/table-018.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 486
+            },
+            {
+              "caption": "Table 2: Readiness under recovery budget B2 and pre-reveal probe limit P .",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 186,
+              "image_path": "figures/2609.20304/table-019.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1052
+            },
+            {
+              "caption": "Table 14: Reference MuJoCo experimental and implementation settings.",
+              "figure_id": "table-14-17",
+              "figure_number": "14",
+              "height": 784,
+              "image_path": "figures/2609.20304/table-020.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 893
+            },
+            {
+              "caption": "Table 11: Scope of related-work families. ✓ denotes an explicitly supported property, △ a partial or indirect treatment, and – a property that is not central. Dormant denotes policy-induced zero passive evidence; Hidden task means task identity is unknown during adaptation; and Certificate denotes a task-wise certificate or abstention.",
+              "figure_id": "table-11-6",
+              "figure_number": "11",
+              "height": 148,
+              "image_path": "figures/2609.20304/table-021.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 904
+            },
+            {
+              "caption": "Table 16: Additional MuJoCo controls. Entries are macro means over environments and five seeds. “Best base” is the strongest of the seven baselines, selected separately for each metric.",
+              "figure_id": "table-16-8",
+              "figure_number": "16",
+              "height": 270,
+              "image_path": "figures/2609.20304/table-022.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 510
+            },
+            {
+              "caption": "Table 18: Directional control with no Stage 2 recovery interaction. CartPole reports stability regret and Pendulum reports return regret; lower is better. Entries are mean ± sample standard deviation over five seeds.",
+              "figure_id": "table-18-24",
+              "figure_number": "18",
+              "height": 224,
+              "image_path": "figures/2609.20304/table-023.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 564
+            },
+            {
+              "caption": "Table 13: Environment-specific future-task settings in the reference MuJoCo protocol. The task-aware acquisition weight is wa = νasa, where νa is the reveal probability and sa is the relative control-importance multiplier.",
+              "figure_id": "table-13-15",
+              "figure_number": "13",
+              "height": 162,
+              "image_path": "figures/2609.20304/table-024.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 756
+            },
+            {
+              "caption": "Table 15: Compact-plant evaluation settings.",
+              "figure_id": "table-15-7",
+              "figure_number": "15",
+              "height": 204,
+              "image_path": "figures/2609.20304/table-025.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 864
+            },
+            {
+              "caption": "Table 19: GymInvMgmt generalization control, macro-averaged over three environments and five seeds. “Best base” is the strongest baseline for each metric and setting.",
+              "figure_id": "table-19-21",
+              "figure_number": "19",
+              "height": 137,
+              "image_path": "figures/2609.20304/table-026.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 536
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.20304/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.20304",
+          "relevance": 7,
+          "selection_reason": "Control-policy fault diagnosis and recovery under hidden dynamics changes; relevant to embodied control and test-time adaptation.",
+          "summary_status": "generated",
+          "title": "Diagnose, Recover, Certify: Task Readiness under Hidden Dynamics Changes",
+          "tldr": "A framework diagnoses hidden actuator changes, recovers control capability, and certifies whether future tasks are safe to deploy under limited task-agnostic interactions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "A myoelectric interface needs calibration from the user before it will function. Earlier work has treated calibration as a quantity, but has not asked the question of what a device should do with the calibration repetitions once they have been collected. This paper views personalizing the cross-user encoder as a design decision with a cost. Four alternative approaches to using exactly the same labeled repetitions were tested from a single cross-user encoder per held-out subject. Prototypical adaptation, linear probes, scaled fine-tuning and full fine-tuning were tested at every budget up to the maximum each database allows, five repetitions on DB1 and four on DB2 and DB5. Comparing four ways to spend a small calibration budget across 77 subjects, full fine-tuning is the most accurate at every budget, consistently enough that there is no exception among subsets of subjects. The result which impacts how one might make an engineering decision however is that a gradient free prototypical rule recovers 52 to 78 per cent of its benefit with no optimiser and no per-user copy of the weights, which makes personalisation something a worn device can do at donning time. The widespread intuition that a good representation only needs a fresh classifier is incorrect here. How well each method may perform relative to a per-user classifier that would be fitted by a clinic will depend on the specific database.",
+          "arxiv_id": "2609.20296",
+          "arxiv_url": "https://arxiv.org/abs/2609.20296",
+          "authors": [
+            "Jethro Odeyemi, W. J. Zhang"
+          ],
+          "bullets": [
+            "Studies how to use a small calibration set—not merely how much calibration is needed—for personalizing a cross-user myoelectric encoder.",
+            "Compares prototypical adaptation, linear probes, scaled fine-tuning, and full fine-tuning using the same repetitions across 77 held-out subjects.",
+            "Full fine-tuning is consistently most accurate at every tested calibration budget.",
+            "Prototypical adaptation recovers 52–78% of its benefit without optimization or storing per-user model weights, supporting personalization at device donning.",
+            "Results challenge the assumption that adapting only a classifier is sufficient; comparisons with clinic-fitted classifiers are database-dependent."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.HC"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: (a) The proposed montage-agnostic encoder. Each electrode becomes a single token whose position is supplied by its forearm coordinate rather than its channel index, so one set of weights ingests any electrode count. Rolling-time normalisation makes the representation calibration-free, cross-channel attention mixes the electrode tokens, and bounded channel masking regularises toward user-invariant features. The linear head is used for gesture classification; the dashed head is the self-supervised pretraining branch. (b) The four adaptation strategies. All start from the same cross-user encoder and the same k labelled repetitions from the new user. Prototypical adaptation changes no weights at all, the linear probe moves only the head, and the two fine-tuning variants move the whole model, differing in whether the encoder is held back by a reduced learning rate.",
+              "figure_id": "figure-1-11",
+              "figure_number": "1",
+              "height": 686,
+              "image_path": "figures/2609.20296/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 812
+            },
+            {
+              "caption": "Figure 4: (a) Prototypical adaptation against the scaled fine-tune. Above zero the gradient-based method leads. The gradient-free rule is ahead only on DB1 at one repetition and level on DB5. (b) Across-subject standard deviation of each strategy at each calibration budget.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 903,
+              "image_path": "figures/2609.20296/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 739
+            },
+            {
+              "caption": "Figure 7: (a) Best encoder strategy against the per-user Hudgins and LDA pipeline at matched calibration budget, per dataset. (b) Headline personalisation result across the three databases: the best strategy at the smallest and largest calibration budget.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 909,
+              "image_path": "figures/2609.20296/figure-003.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 741
+            },
+            {
+              "caption": "Figure 2: Personalisation strategies under a calibration budget. (a-c) Cross-user macro-F1 against budget for each strategy on DB1, DB2 and DB5, with the per-user LDA baseline dashed. (d) On DB1, the percentage of full fine-tuning’s gain over the unadapted encoder that each cheaper strategy recovers at each budget. (e) Full personalisation matrix: crossuser macro-F1 for every strategy at every calibration budget, mean over held-out subjects. Grey cells are budgets a database does not provide, since DB2 and DB5 designate only four calibration repetitions and DB1 five.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 895,
+              "image_path": "figures/2609.20296/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 751
+            },
+            {
+              "caption": "Figure 3: (a) Strategy ranking at each calibration budget on DB1. Full fine-tuning leads at every budget, including the smallest; prototypical adaptation is second at one repetition, ahead of the scaled fine-tune (0.428 against 0.380), and falls behind it from two repetitions on. (b) Gain over the unadapted encoder for each strategy and budget. Every strategy improves on no adaptation, but by different amounts per labelled repetition.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 884,
+              "image_path": "figures/2609.20296/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 739
+            },
+            {
+              "caption": "Figure 5: (a) Per-subject macro-F1 at the smallest calibration budget on DB1, prototypical against full fine-tuning. Full fine-tuning is ahead for all 27 held-out users. (b) Per-subject macro-F1 at the largest calibration budget on DB1. With more labelled repetitions full fine-tuning is ahead for every user.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 802,
+              "image_path": "figures/2609.20296/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 750
+            },
+            {
+              "caption": "Figure 6: (a) Accuracy against adaptation cost at one repetition on DB1. Prototypical adaptation needs no gradient steps and no parameter updates; the per-user LDA is cheaper still since it needs no encoder, and on DB1 prototypical adaptation is the more accurate of the two. (b) Calibration budget each strategy needs to reach ninety percent of the best score observed on the dataset. Lower is better.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 915,
+              "image_path": "figures/2609.20296/figure-007.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 713
+            },
+            {
+              "caption": "Table 5: (a) Adaptation cost of each personalisation strategy. Prototypical adaptation and the per-user LDA both need no optimisation; the LDA additionally needs no encoder. Cost is reported as optimisation requirement and parameters updated, not as measured latency. (b) Best encoder strategy, full fine-tuning at every budget on all three databases, against the per-user Hudgins and LDA pipeline at matched calibration budget. (c) Summary of personalisation strategies, ordered by adaptation cost from cheapest to most expensive. The ordering is not an accuracy ranking: full fine-tuning is the most accurate strategy at every calibration budget on all three databases.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 828,
+              "image_path": "figures/2609.20296/table-008.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 731
+            },
+            {
+              "caption": "Table 1: Experimental setup. (a) Databases used for the personalisation study. All three are evaluated leave-one-subject-out with the same calibration protocol. (b) Training and calibration configuration for the personalisation experiments.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 589,
+              "image_path": "figures/2609.20296/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 773
+            },
+            {
+              "caption": "Table 2: (a) Personalisation headline. Cross-user macro-F1 of each adaptation strategy at the smallest and largest calibration budget, with the unadapted encoder and the peruser LDA baseline for reference. (b) Full personalisation matrix: cross-user macro-F1 for every strategy at every calibration budget, mean over held-out subjects. DB2 and DB5 designate only four calibration repetitions, two of their six being held out for test, so their five-repetition cell does not exist and is dashed.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 727,
+              "image_path": "figures/2609.20296/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 733
+            },
+            {
+              "caption": "Table 3: (a) Prototypical adaptation against the scaled fine-tune, the other strategy that moves the encoder. Full fine-tuning leads at every budget on all three databases, so it admits no crossing; against the scaled fine-tune the gradient-free rule is ahead only on DB1 at one repetition and level on DB5, and falls behind everywhere from two repetitions on. (b) Paired comparison of full fine-tuning against prototypical adaptation at each calibration budget. Positive differences favour full fine-tuning. (c) Across-subject standard deviation of each strategy, at the smallest and largest calibration budget. Lower is more reliable.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 893,
+              "image_path": "figures/2609.20296/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 797
+            },
+            {
+              "caption": "Table 4: Per-subject DB1 personalisation at the smallest and largest calibration budget: prototypical adaptation against full fine-tuning.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 915,
+              "image_path": "figures/2609.20296/table-012.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 722
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.20296/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.20296",
+          "relevance": 3,
+          "selection_reason": "Compares fine-tuning, linear probes, and gradient-free prototypical adaptation for personalizing a cross-user encoder under a small deployment-time calibration budget; transferable to test-time adaptation settings.",
+          "summary_status": "generated",
+          "title": "Personalising a Cross-User Surface Electromyography Encoder Under a Small Calibration Budget",
+          "tldr": "With only a few labeled calibration repetitions, full fine-tuning gives the best cross-user sEMG personalization, while a gradient-free prototype method offers a practical on-device alternative.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "Objectives: Quantitative assessment of infarct hypodensity on non-contrast computed tomography (NCCT), including net water uptake (NWU), requires manual or semi-manual lesion delineation, often guided by CT perfusion or diffusion-weighted MRI, limiting clinical applicability. Automated segmentation on NCCT could enable efficient biomarker extraction such as NWU but remains challenging across heterogeneous multicenter data. This study aimed to develop and externally test a domain-aware deep learning framework for ischemic stroke segmentation on NCCT and assess its suitability for NWU quantification. Materials & Methods: In this retrospective multicenter study of 801 patients from four datasets, an nnU-Net-based model was trained on NCCT scans from the University Medical Center Hamburg-Eppendorf and the Acute Ischemic Stroke Dataset. To adapt to new domains, the model was fine-tuned on target-domain subsets from Boston (n=11) and ISLES (n=75), with evaluation on held-out cases not used for fine-tuning. Automated segmentations and NWU values were compared with expert references. Results: For lesions $\\geq$ 30 mL, median Dice was 0.68 (Boston) and 0.56 (ISLES). Including smaller lesions, which predominated in ISLES, median Dice was 0.54 (interquartile range [IQR] 0.30-0.70) for acute lesion segmentation (Boston dataset) and 0.20 (IQR 0.03-0.41) for NCCT lesion segmentations when compared to post-treatment infarct (primary target of the ISLES challenge). Automated NWU mean absolute error was 1.37 percentage points (SD 1.61, Boston). Conclusion: Target-domain adaptation supported NCCT-only infarct segmentation across heterogeneous external cohorts, although performance varied across domains. The approach enabled low-error NWU quantification from baseline NCCT without advanced imaging, supporting further prospective clinical evaluation.",
+          "arxiv_id": "2609.20151",
+          "arxiv_url": "https://arxiv.org/abs/2609.20151",
+          "authors": [
+            "Linus Britt, Maximilian Nielsen, Susan Klapproth, Andre Kemmling, Michael H. Lev, Gabriel Broocks, Rene Werner, Thilo Sentker"
+          ],
+          "bullets": [
+            "Manual lesion delineation, often aided by advanced imaging, limits efficient infarct and NWU assessment on NCCT.",
+            "An nnU-Net-based model was fine-tuned with small target-domain subsets and evaluated on held-out external cases.",
+            "For lesions ≥30 mL, median Dice was 0.68 in Boston and 0.56 in ISLES; smaller lesions were more challenging.",
+            "Automated NWU estimation in Boston had a mean absolute error of 1.37 percentage points.",
+            "Results support further prospective evaluation, with variable segmentation performance across domains."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the proposed infarct segmentation workflow: 1) NCCT images undergo preprocessing including atlas registration, skull stripping, and intensity clipping. 2) A baseline nnU-Net is trained using dual-channel input (native and mirrored images) with 5-fold crossvalidation on the training data. 3) Each model is subsequently fine-tuned on an external target domain (Boston or ISLES). Probability maps on the respective fine-tuning set are then used to determine an optimal probability threshold. For visualization, a uniform colormap is used, where yellow indicates high probability and purple low probability. 4) During inference, the fine-tuned models are combined as an ensemble and applied to the corresponding held-out test set. Final predictions are obtained by applying the fixed threshold and evaluated against reference annotations.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 836,
+              "image_path": "figures/2609.20151/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 846
+            },
+            {
+              "caption": "Figure 1: Study cohort composition, allocation, and analysis populations. Colors distinguish study roles. Two ISLES 2024 cases with empty reference masks were excluded from the lesionvolume-stratified Dice analysis. AISD, Acute Ischemic Stroke Dataset; ISLES, Ischemic Stroke Lesion Segmentation; NWU, net water uptake; UKE, University Medical Center HamburgEppendorf.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 563,
+              "image_path": "figures/2609.20151/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 948
+            },
+            {
+              "caption": "Figure 3: Twelve representative cases from the internal testing data are shown, including six from the UKE dataset and six from the AISD dataset, covering a range of segmentation performance levels (high, medium, and low Dice scores). For each case, the NCCT image is displayed with the reference lesion mask shown in cyan and the predicted segmentation outlined in red. Dice similarity coefficients are reported in the bottom left corner, and case identifiers are shown in the top right corner of each image.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 716,
+              "image_path": "figures/2609.20151/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 854
+            },
+            {
+              "caption": "Figure 4: Twelve representative cases from the external test data are shown, including six Boston lesion segmentations and six ISLES final-infarct predictions, covering a range of performance levels (high, medium, and low Dice scores). For each case, the NCCT image is displayed with the reference lesion mask shown in cyan and the predicted segmentation outlined in red. Dice similarity coefficients are reported in the bottom left corner, and case identifiers are shown in the top right corner of each image.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 717,
+              "image_path": "figures/2609.20151/figure-004.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 852
+            },
+            {
+              "caption": "Figure 5: Reference NWU values (x-axis) compared to NWU values derived from the predicted lesion masks (y-axis) for the UKE dataset and the Boston held-out test set. Each point represents one case and is color-coded according to the corresponding Dice similarity coefficient between predicted and reference segmentations (darker green indicates higher Dice scores). The shaded diagonal region indicates an error margin of ±2 percentage points.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 402,
+              "image_path": "figures/2609.20151/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 950
+            },
+            {
+              "caption": "Table 4: Comparison of different pipeline configurations. Performance on the Boston test set is shown for different pipeline configurations, including dual-channel input, fine-tuning, and thresholding. Metrics include lesion detection rate (LDR), mean average precision (mAP), and Dice coefficient (median [IQR]). Bold values indicate the best performance across configurations.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 268,
+              "image_path": "figures/2609.20151/table-006.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 979
+            },
+            {
+              "caption": "Table 2: Model performance across internal and external cohorts. Results are shown for the combined internal testing (UKE + AISD) and the two external testing (Boston and ISLES) datasets. Segmentation performance is summarized using lesion detection rate (LDR), mean average precision (mAP), Dice similarity coefficient (median [IQR] and mean (SD)), and 95th percentile Hausdorff distance (HD95 [mm]; mean).",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 159,
+              "image_path": "figures/2609.20151/table-007.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1098
+            },
+            {
+              "caption": "Table 3: Dice stratified by reference lesion volume for Boston lesion segmentation and ISLES final-infarct prediction. Values are median Dice similarity coefficient (IQR) and number of cases per stratum. Two ISLES cases with empty reference masks were excluded.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 221,
+              "image_path": "figures/2609.20151/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 817
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.20151/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.20151",
+          "relevance": 7,
+          "selection_reason": "Applies target-domain adaptation for medical image segmentation, relevant to 3D Vision and Test-Time Learning.",
+          "summary_status": "generated",
+          "title": "Ischemic Stroke Segmentation and Net Water Uptake Quantification on Multicenter Non-Contrast CT Using Supervised Target-Domain Adaptation",
+          "tldr": "Target-domain adaptation enabled NCCT-only ischemic stroke segmentation and low-error net water uptake quantification across heterogeneous multicenter cohorts, but performance varied by domain and lesion size.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            },
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "Light field (LF) reconstruction from limited and noisy focal stack (FS) measurements is a highly ill-posed inverse problem. Although the LF-to-FS imaging geometry is fixed for a given optical setup, LF spatial-angular structure---including within-view spatial details, cross-view angular dependencies, and disparity across views---varies across scenes. Consequently, a fixed pre-trained prior may not optimally capture the spatial-angular structure of each test LF. We propose Structure-aware Test-time Adaptation for diffusion-based light field Reconstruction (STAR), the first test-time adaptation framework for reconstructing an LF from FS. For each test LF, STAR freezes a pre-trained diffusion prior and fits three lightweight adapters to the observed FS to jointly adapt the three components of the LF's spatial-angular structure. STAR outperforms existing state-of-the-art methods in both two- and three-focal-sheet settings, with shorter inference times than those with test-time parameter updates.",
+          "arxiv_id": "2609.19747",
+          "arxiv_url": "https://arxiv.org/abs/2609.19747",
+          "authors": [
+            "Wontae Choi, Ki Ryum Moon, Jae Young Lee, Hyung Sup Yun, Il Yong Chun"
+          ],
+          "bullets": [
+            "Addresses the ill-posed problem of recovering light fields from two- or three-focal-sheet observations.",
+            "Fits three lightweight adapters per test sample to capture spatial details, angular dependencies, and cross-view disparity.",
+            "Keeps the pre-trained diffusion prior frozen while adapting to the observed focal stack.",
+            "Outperforms existing state-of-the-art methods in both settings and is faster than approaches using test-time parameter updates."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Overview of the proposed STAR framework. Top: Overall reverse-diffusion process at timestep t, where LF-HDiT estimates a clean LF and DDRM performs a measurement-conditioned update using the tractable decomposition of A. Bottom: The proposed LF-HDiT block equipped with LF-CA, LoRA, and LF-MA for testtime adaptation, where QKV proj. denotes the query (Q), key (K), and value (V) projections. These adapters operate in parallel with the frozen spatial-attention QKV projections, angular-attention QKV projections, and MLP, respectively; their outputs are added to the corresponding frozen outputs, and only the adapters are updated.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 322,
+              "image_path": "figures/2609.19747/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 510
+            },
+            {
+              "caption": "Fig. 2. Architectures of the proposed adaptation modules. (a) LFCA adds low-rank convolutional updates to the frozen Q, K, and V projections in spatial attention. (b) LoRA adds low-rank updates to the corresponding projections in angular attention. (c) LF-MA extracts and fuses spatial, angular, H-EPI, and V-EPI features to compute an update added to the frozen MLP output.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 438,
+              "image_path": "figures/2609.19747/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 3. Comparison of LF reconstructions at the (1, 1)th angular coordinate (C = 2). Each reconstruction is shown with its PSNR in dB and the corresponding error map below. (a) Pseudo-inverse; (b) FSNet; (c) Joint FDL; (d) DDLFRM; (e) DDNM; (f) DAPS; (g) DDS2M; (h) DDIP; (i) STAR; (j) ground truth.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 415,
+              "image_path": "figures/2609.19747/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 510
+            },
+            {
+              "caption": "Table 1. Comparison with existing SOTA LF reconstruction methods and inverse problem solvers on the HCI LF dataset using different numbers of focal sheets (C). Time denotes the average inference time in seconds per LF, measured on a single NVIDIA A100 GPU.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 241,
+              "image_path": "figures/2609.19747/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 458
+            },
+            {
+              "caption": "Table 2. Comparison of adaptation variants on the HCI LF dataset (C=3): (a) adaptation scope, (b) STAR variants, (c) module combinations, (d) LF-MA variants, and (e) LF-CA kernel size. Full FT: full fine-tuning; (·, ·): kernel size variants; LF-MA1 excludes EH-EPI and EV-EPI; LF-MA2 excludes Espa and Eang.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 306,
+              "image_path": "figures/2609.19747/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 477
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.19747/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.19747",
+          "relevance": 7,
+          "selection_reason": "Proposes test-time adaptation for diffusion-based light field reconstruction, directly fitting the test-time learning subtopic.",
+          "summary_status": "generated",
+          "title": "STAR: Structure-aware Test-time Adaptation for diffusion-based light field Reconstruction",
+          "tldr": "STAR adapts a frozen diffusion prior at test time to better reconstruct light fields from limited, noisy focal-stack measurements.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "Clinical coding agents repeatedly encounter the same failure modes, including unsupported codes, missed documented conditions, specificity errors, and procedure-coding convention mismatches. We introduce Learn-Then-Act, an inference-time adaptation framework that converts errors from a small labeled LEARN batch into a structured Mistake Knowledge Database (MistakeKDB). False-negative lessons are routed to a recall-oriented Coder, while false-positive lessons are routed to a precision-oriented Judge. We instantiate the framework in LearnActCoder, a Coder-Judge clinical coding pipeline with lookup-table grounding where available. On 150 matched MIMIC-III notes, structured MistakeKDB improves CPT F1 by 5.9 percentage points, while raw-example and reflection-style memories remain near the no-memory baseline; the ICD-9 improvement is not significant. On a matched MIMIC-IV cohort, memory shifts ICD-10 coding toward higher precision at a recall cost, leaving F1 statistically unchanged. Applying the same memory to 1,000 held-out MIMIC-III notes maintains a stable ICD operating point, providing scale/stability evidence. Overall, the results are consistent with structured, feedback-derived error memory being useful for adapting clinical coding behavior across cases without weight updates or changes to the underlying workflow. Absolute CPT/HCPCS performance remains low, and the system is evaluated retrospectively rather than in clinical deployment.",
+          "arxiv_id": "2609.19721",
+          "arxiv_url": "https://arxiv.org/abs/2609.19721",
+          "authors": [
+            "Meysam Ghaffari, Bhaskar Sen, Nasim Sabetpour, Nina Fatehi, Animesh Agarwal, Carlos Morato"
+          ],
+          "bullets": [
+            "Targets unsupported codes, missed conditions, specificity errors, and procedure-coding convention mismatches.",
+            "Builds a Mistake Knowledge Database from a small labeled LEARN batch without updating model weights or changing the workflow.",
+            "Routes false-negative lessons to a recall-oriented Coder and false-positive lessons to a precision-oriented Judge, with lookup-table grounding where available.",
+            "On matched MIMIC-III notes, structured memory improved CPT F1 by 5.9 percentage points; raw-example and reflection memories stayed near the no-memory baseline.",
+            "ICD gains were limited: MIMIC-III improvement was not significant, while MIMIC-IV showed higher precision at a recall cost with unchanged F1; absolute CPT/HCPCS performance remained low."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.MA"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Learn-Then-Act architecture. During LEARN, predictions and reference administrative labels are analyzed into structured error memory. During ACT, false-negative (FN) lessons are routed to the recall-oriented Coder and false-positive (FP) lessons to the precision-oriented Judge. The lookup component, model weights, and Coder–Judge workflow remain fixed; only role-specific prompt memory changes across cases.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 551,
+              "image_path": "figures/2609.19721/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Table 3: Memory-format ablation on 150 matched MIMIC-III ACT notes. All four conditions code identical notes with an identical pipeline and the same underlying LEARN-phase error pool (1,028 mismatches); only the memory representation differs. The no-memory and structured rows are the matched conditions tested in Table 1. Values are mean per-note precision, recall, and F1 (%).",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 212,
+              "image_path": "figures/2609.19721/table-002.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 556
+            },
+            {
+              "caption": "Table 6: Base-pipeline results without mistake memory on 500 discharge summaries per dataset. Metrics are mean per-note. MIMIC-III ICD-9 uses Judge review without direct ICD-9 lookup validation; MIMIC-IV ICD-10 has lookup-table coverage.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 119,
+              "image_path": "figures/2609.19721/table-003.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 706
+            },
+            {
+              "caption": "Table 8: Same-cohort component ladder on MIMIC-IV (n=250): single-call Coder, Coder–Judge debate without memory, and the full LEARNACTCODER pipeline. All rows use the identical held-out notes.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 140,
+              "image_path": "figures/2609.19721/table-004.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 564
+            },
+            {
+              "caption": "Table 11: MistakeAnalyzer taxonomy over 1,028 prediction/reference-label mismatches from the MIMIC-III LEARN phase. Categories marked with ⋆ are directly targeted by the current memory design; the taxonomy has not been independently coder-adjudicated.",
+              "figure_id": "table-11-6",
+              "figure_number": "11",
+              "height": 202,
+              "image_path": "figures/2609.19721/table-005.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 477
+            },
+            {
+              "caption": "Table 10: Per-LLM-call step durations, reconstructed from timestamped log events over the matched memory-format runs (raw + reflection arms; 633 Coder calls and 604 Judge calls). Durations are end-to-end (model inference plus gateway latency).",
+              "figure_id": "table-10-8",
+              "figure_number": "10",
+              "height": 130,
+              "image_path": "figures/2609.19721/table-006.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 560
+            },
+            {
+              "caption": "Table 4: Scale/stability evaluation on 1,000 held-out MIMIC-III ACT notes (ICD-9 + CPT), using the same 25-note MistakeKDB. Mean per-note and global micro precision, recall, and F1 are reported over the full available label space. The run completed successfully for 999/1,000 notes and converged in 1.91 debate rounds on average.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 119,
+              "image_path": "figures/2609.19721/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 690
+            },
+            {
+              "caption": "Table 2: Matched-note MistakeKDB ablation on MIMIC-IV (n=250; ICD-10 + HCPCS). Identical ACT notes are coded with and without memory. Paired bootstrap 95% CIs (B=2,000) quantify within-note differences.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 117,
+              "image_path": "figures/2609.19721/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 598
+            },
+            {
+              "caption": "Table 1: Matched-note MistakeKDB ablation on 150 MIMIC-III ACT notes. Identical notes are coded with and without structured memory. Values are per-note F1; 95% CIs use a paired bootstrap (B=10,000), and p-values use a Wilcoxon signed-rank test. W/L/T denotes per-note wins/losses/ties for memory.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 88,
+              "image_path": "figures/2609.19721/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 590
+            },
+            {
+              "caption": "Table 5: Post-adaptation operating point on MIMIC-III (ICD-9 + CPT). The 25-note LEARN batch builds MistakeKDB and the 250-note ACT set is held out at the note level. The LEARN and ACT rows contain different notes and therefore must not be interpreted as a before/after effect estimate; memory effects are estimated only in matched-note ablations.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 119,
+              "image_path": "figures/2609.19721/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 690
+            },
+            {
+              "caption": "Table 7: Published context for large-label-space clinical coding. The upper panel reports the standard label-wise macro-F1 and global micro-F1 used on the conventional MIMIC-III-FULL benchmark; the lower panel reports recent agentic results on MDACE. These results are contextual only and are not a head-to-head ranking with our sampled MIMIC cohorts: our primary reported F1 is mean per-note (example-based), and MDACE uses ICD-10 with different note mixtures and candidate-code spaces. Values are taken from the cited papers.",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 198,
+              "image_path": "figures/2609.19721/table-011.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 830
+            },
+            {
+              "caption": "Table 9: End-to-end latency and debate cost per note. Latency and rounds are logged for every note; latency/round is the derived mean, where each round issues two LLM calls (one Coder, one Judge). Matched rows use the 150-note MIMIC-III cohort of Table 3.",
+              "figure_id": "table-9-7",
+              "figure_number": "9",
+              "height": 150,
+              "image_path": "figures/2609.19721/table-012.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 648
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.19721/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.19721",
+          "relevance": 5,
+          "selection_reason": "Inference-time adaptation via structured error memory database for clinical coding agents; fits test-time learning and external LLM memory.",
+          "summary_status": "generated",
+          "title": "LearnActCoder: Role-Aware Error Memory for Adaptive Clinical Coding Agents",
+          "tldr": "LearnActCoder uses role-specific, structured error memory to adapt clinical coding agents at inference time, improving CPT F1 but showing limited or trade-off-heavy gains for ICD coding.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Coding agents can recursively modify their own implementations, forming a loop of self-improvement. While prior work shows this can boost performance on coding benchmarks, existing approaches are costly and compute-intensive. We introduce a simple, sample-efficient self-improvement framework that significantly improves coding performance under strict budget constraints. We identify evaluation of candidate self-modifications as the main runtime bottleneck since prior approaches estimate their effectiveness by re-running a subset of benchmark tasks with the modified agent, which is time-consuming. We introduce Recursive Self Improvement via Fast Tree-search (SIFT), which augments these downstream task evaluations with an LLM-as-a-judge signal that performs pairwise comparisons between candidate patches, where the win-loss record is aggregated with a regularized Bradley-Terry model, and the resulting strength scores drive rank-based parent sampling inside a lightweight disaggregated tree search. Expensive downstream task evaluations are reserved only for the most promising nodes. Using a fully disaggregated tree search pipeline, the judge scores provide intermediate signal to guide exploration on promising candidate patches without being bottlenecked by slow evaluation runs. SIFT outperforms existing tree-search based self-evolution frameworks on the full Polyglot benchmark with significantly lower resource requirements in terms of CPU hours, wall clock time, and API cost.",
+          "arxiv_id": "2609.19526",
+          "arxiv_url": "https://arxiv.org/abs/2609.19526",
+          "authors": [
+            "Xinghong Fu, Aravinth Kulanthaivelu, Yutaro Yamada"
+          ],
+          "bullets": [
+            "Targets the high runtime and resource cost of evaluating self-modified coding agents.",
+            "Uses LLM-as-a-judge pairwise comparisons, aggregated with a regularized Bradley–Terry model, to estimate candidate patch strength.",
+            "Guides rank-based parent sampling in a lightweight, disaggregated tree search.",
+            "Reserves downstream coding-task evaluations for the most promising search nodes.",
+            "Outperforms prior tree-search self-evolution methods on the full Polyglot benchmark with lower CPU, time, and API costs."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Illustration of the SIFT pipeline. In a single expansion step, node i is sampled with probability P (i) ∝ exp(−(αrb(i) + βra(i) + η log(1 + vi))), self-improves, then judged against previous versions in the existing agent archive. The win/loss record is updated and the BT scores of each node is solved numerically. Then the new agent is inserted into the priority queue for evaluation on downstream tasks, prioritizing higher potential nodes.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 327,
+              "image_path": "figures/2609.19526/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: Illustration of the disaggregated pipeline. SIFT allows expansions of nodes that have yet to complete full evaluation but received a strong signal from the judge.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 279,
+              "image_path": "figures/2609.19526/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 622
+            },
+            {
+              "caption": "Figure 5: TerminalBench judge diagnostics for the fully evaluated agents in the clean judge-guided run. Left: nodes are sorted by judge-only Bradley-Terry rank and divided into four groups; bars show each group’s mean realized accuracy and points show its individual nodes. Right: the underlying node-level judge rank versus realized accuracy.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 295,
+              "image_path": "figures/2609.19526/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 804
+            },
+            {
+              "caption": "Figure 4: Transfer between LLMs of the best Polyglot agent found by SIFT. The improved agents in SIFT generalizes to gpt-5-mini and gpt-5.4-mini, where the improved agent consistently achieves a higher accuracy than the base coding agent.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 286,
+              "image_path": "figures/2609.19526/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 829
+            },
+            {
+              "caption": "Figure 9: SWE-60 repeatability and a qualitative judged lineage. Left: individual full-60 evaluations of the four selected agents; horizontal markers show means and error bars show standard errors, and the dashed line marks the single 40.0% root observation. Right: one lineage favored during judge-guided search. Stored search-time BT strengths are shown alongside search accuracy; the two selected descendants additionally show their four-evaluation means.",
+              "figure_id": "figure-9-15",
+              "figure_number": "9",
+              "height": 316,
+              "image_path": "figures/2609.19526/figure-005.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 795
+            },
+            {
+              "caption": "Figure 6: Speedups in SIFT, averaged across five runs.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 243,
+              "image_path": "figures/2609.19526/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 484
+            },
+            {
+              "caption": "Figure 7: Qualitative insights into judge preferences.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 188,
+              "image_path": "figures/2609.19526/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 481
+            },
+            {
+              "caption": "Figure 8: Aggregate repeated-evaluation comparison. Bars show pooled mean accuracy and whiskers the standard error.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 289,
+              "image_path": "figures/2609.19526/figure-008.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 326
+            },
+            {
+              "caption": "Table 2: Polyglot-225 accuracy and comparison to several baselines across different coding and judge models. SIFT outperforms other evolution frameworks such as SICA, DGM and HGM.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 290,
+              "image_path": "figures/2609.19526/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 677
+            },
+            {
+              "caption": "Table 5: TerminalBench judge-model comparison, one search run per condition. “Best agent found” is the highest-scoring agent in each run’s archive, averaged over three independent fullbenchmark evaluations, and “Gain” is its percentage-point improvement over the starting agent (29.2%). Recall@5 counts members of the ground-truth top-5 present in the judge’s BT top-5; ρ is the Spearman correlation between BT rank and full-benchmark score over the run’s 20 fully evaluated candidates; pairwise (top-5) is agreement with the ground-truth ordering within the BT top-5.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 182,
+              "image_path": "figures/2609.19526/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 749
+            },
+            {
+              "caption": "Table 8: State variables maintained by SIFT during tree search.",
+              "figure_id": "table-8-9",
+              "figure_number": "8",
+              "height": 185,
+              "image_path": "figures/2609.19526/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 572
+            },
+            {
+              "caption": "Table 1: Resource consumption breakdown per step. Self-improve and LLM-judge costs and durations are reported per task, averaged across 50 tasks, using gpt-5.4. A single judge comparison is one call on a pair; a full judging round for one new node costs up to K = 10 such calls.",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 162,
+              "image_path": "figures/2609.19526/table-012.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 762
+            },
+            {
+              "caption": "Table 4: TerminalBench selection comparison. “Search eval” is the score observed on the 50-task search subset. Repeated means average three independent full evaluations of each selected agent.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 130,
+              "image_path": "figures/2609.19526/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Table 3: Run-level resource use for the three SIFT configurations reported in Table 2. Judge cost is included in total API cost. Each row is a single search run.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 106,
+              "image_path": "figures/2609.19526/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 829
+            },
+            {
+              "caption": "Table 7: SWE-60 judge/no-judge tree-search comparison. “Search eval” is the score observed during tree search. For each setting we rerun the two agents that the setting itself ranks best at the end of search: for SIFT, the judge’s top two nodes by final Bradley–Terry strength; for the no-judge ablation, the two nodes with the highest measured search accuracy (node 1 ties two other nodes at 48.3%). Raw scores list the search evaluation followed by three repeat evaluations; means include all four scores and parentheses give standard deviations in percentage points. The starting agent has a single complete full-60 evaluation, shared by all searches as their root. Node numbers are local to each run and do not indicate matched pairs.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 150,
+              "image_path": "figures/2609.19526/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 827
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.19526/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.19526",
+          "relevance": 8,
+          "selection_reason": "Introduces a sample-efficient self-improvement framework using fast tree-search and LLM-as-a-judge for coding agents at inference time.",
+          "summary_status": "generated",
+          "title": "Self Improvement via Fast Tree-search",
+          "tldr": "SIFT makes coding-agent self-improvement substantially more compute-efficient by using LLM pairwise judgments to guide tree search and limiting expensive benchmark evaluations to promising candidates.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "Online residual learning can reduce model mismatch in predictive control, but passive data collection may fail to adequately cover states that become important later in the task. Task-agnostic active learning targets uncertain or informative regions, but information acquired in such regions does not necessarily improve task performance. This paper introduces Task-Oriented Information Acquisition (ToIA), an active-learning criterion for model predictive path integral control (MPPI) with online Gaussian process (GP) residual learning. For each sampled control sequence, ToIA estimates how much an observation obtained early in the rollout would reduce predictive uncertainty at later states on the same rollout, and weights this reduction by the rollout's relevance to the task. The score is evaluated over the existing MPPI rollout batch without sampling future observations or re-optimizing control under hypothetical posterior updates. In simulated off-road navigation across held-out maps with heterogeneous terrain, ToIA improved the goal-reaching success rate over passive GP learning by 19.3 and 27.4 percentage points and outperformed task-agnostic active-learning baselines across dense and sparse online-learning intervals. An ablation study indicates that task relevance is particularly important under sparse model updates. The implementation supports online control at 20 Hz on an NVIDIA RTX 2080 Ti.",
+          "arxiv_id": "2609.19378",
+          "arxiv_url": "https://arxiv.org/abs/2609.19378",
+          "authors": [
+            "Nobuaki Aoki, Hojin Lee, Stefan Sosnowski, Sandra Hirche"
+          ],
+          "bullets": [
+            "Targets the mismatch between uncertainty-driven data collection and task-relevant control improvement.",
+            "Estimates how early-rollout observations reduce uncertainty at later states in the same MPPI rollout, weighted by task relevance.",
+            "Evaluates acquisition scores using existing MPPI rollouts without hypothetical observations or control re-optimization.",
+            "Improves goal-reaching success over passive GP learning by 19.3 and 27.4 percentage points across dense and sparse online-learning intervals.",
+            "Runs online at 20 Hz in simulated off-road navigation; task relevance is especially important with sparse model updates."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.SY",
+            "eess.SY"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Overview of the proposed control scheme. Control sequences are first sampled and rolled out. Predictive variance reduction at later queries is then computed and combined with task relevance to score each rollout, and the next control action is obtained by reweighting the rollouts.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 418,
+              "image_path": "figures/2609.19378/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1042
+            },
+            {
+              "caption": "Fig. 4. Analysis of a dense-learning case. (a) Coverage of later states on the matched successful Oracle trajectory, measured by the maximum same-class GP-kernel similarity between the current training data and the trajectory states. (b) RMSE of the pre-update lateral-residual prediction, evaluated along each trajectory over a trailing 1 s window. Shading highlights the transition from higher early ToIA error to lower error before goal entry. Each curve ends when the corresponding run terminates (goal entry or timeout).",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 452,
+              "image_path": "figures/2609.19378/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 2. Example closed-loop trajectories on a held-out task with heterogeneous terrain. (a) Terrain slope with downslope vectors, whose direction indicates local descent and whose length indicates relative slope magnitude. (b) Corresponding terrain-class map. The dashed circle indicates the goal region.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 319,
+              "image_path": "figures/2609.19378/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 512
+            },
+            {
+              "caption": "TABLE I COMMON CONTROLLER AND METHOD-SPECIFIC CONFIGURATIONS.",
+              "figure_id": "table-I-4",
+              "figure_number": "I",
+              "height": 306,
+              "image_path": "figures/2609.19378/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 528
+            },
+            {
+              "caption": "TABLE III GOAL SUCCESS ON THE THREE HELD-OUT VALIDATION MAPS.",
+              "figure_id": "table-III-2",
+              "figure_number": "III",
+              "height": 207,
+              "image_path": "figures/2609.19378/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 514
+            },
+            {
+              "caption": "TABLE IV FIXED-CONFIGURATION ABLATION OF TASK WEIGHTING ρ .",
+              "figure_id": "table-IV-3",
+              "figure_number": "IV",
+              "height": 131,
+              "image_path": "figures/2609.19378/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 431
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.19378/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.19378",
+          "relevance": 8,
+          "selection_reason": "Task-oriented active learning of residual dynamics for online MPPI navigation.",
+          "summary_status": "generated",
+          "title": "Task-Oriented Active Learning of Residual Dynamics for Model Predictive Path Integral Control",
+          "tldr": "ToIA actively learns GP residual dynamics where information is most likely to improve MPPI’s task performance, yielding higher off-road navigation success than passive and task-agnostic learning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "The scaling laws hold that a language model grows more capable with more parameters and more training data, and Mixture-of-Experts (MoE) architectures have ridden these laws to remarkable results, activating only a fraction of an enormous stored parameter bank for each token. That success is built on static pretraining data. A deployed model faces a different world, where much of the data that would make it more useful is not in its training set but in the live interaction it is currently handling, such as the facts a user supplies or the corrections they give. A conventional model cannot learn from this data, because its weights are frozen after training. Instead, the knowledge and behaviour supplied at run time are placed in the prompt, by retrieval or instruction, and re-read on every request only to be discarded once the request ends. We ask how an architecture could learn from live interaction by writing it into its weights. Taking inspiration from MoE, we propose the \\textbf{Infinite-Parameter LLM}. A compact hypernetwork turns the data given at run time into a low-rank modulation of a shared base network, so the feed-forward weights are generated from live data rather than stored in a fixed bank. Where prior weight generators read the context once and freeze, we carry a Bayesian belief over the generator's latent code and update it online, so the effective weight is re-derived from that evolving belief as the session proceeds rather than fixed after one read. The stored footprint stays fixed, yet the weights the model can compile are effectively infinite. For the knowledge and behaviour supplied at run time, carrying them in the weights rather than the prompt is amortized in compute, frees the context window, persists across turns, and can generalise better than in-context use. We specify an evaluation protocol that tests exactly this against in-context learning and retrieval.",
+          "arxiv_id": "2609.18842",
+          "arxiv_url": "https://arxiv.org/abs/2609.18842",
+          "authors": [
+            "Jinli Hu",
+            "Ross M. Clarke",
+            "Yichuan Zhang",
+            "José Miguel Hernández-Lobato"
+          ],
+          "bullets": [
+            "Motivation: conventional models discard user-provided facts and corrections after each request because their weights are frozen.",
+            "Method: a compact hypernetwork converts runtime data into low-rank modulation of a shared base network’s feed-forward weights.",
+            "Online adaptation: a Bayesian belief over the hypernetwork’s latent code evolves throughout the session instead of being fixed after one context read.",
+            "Potential benefits: runtime knowledge and behavior can persist across turns, reduce context-window use, and be amortized in computation.",
+            "Scope: the abstract proposes an evaluation protocol comparing this approach with in-context learning and retrieval, without reporting results."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: The architecture, organised around a belief over the latent code z. On the main (per-turn) path, live data is read by the Data-to-Weight LLM (the encoder Eϕ of § 3.2) into a latent code z; the code generates a low-rank weight delta ∆W that modulates the frozen base model, which produces the output. A belief P over z sits above the code and is what makes the weight move: it is updated online, carried from step to step rather than re-encoded from scratch. The per-token signal (dashed) — the running hidden state, equivalently the realised output, of the autoregressive stream — feeds the belief and is introduced only to amortise the per-token posterior q(z | x1:t); it is not on the main data path. The belief’s form — a Gaussian over a continuous code, or a categorical posterior over materialised codes — is the architectural choice of § 3.5.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 368,
+              "image_path": "figures/2609.18842/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 683
+            },
+            {
+              "caption": "Figure 2: The two architecture axes of the design, and where prior work sits. Down — where each token’s weight comes from: selected from a stored, fully-resident bank (top), or generated on demand from a compact resident generator (bottom); this is the “generate, don’t store” move, and it buys a fixed footprint. Across — what happens to the weight after it is produced: frozen once made (left), or carried as a belief over its latent code and updated online (right); this is the axis that makes the weight live in time. Stored-bank MoE (µMoE, ∞-MoE) and the one-shot weight generators (Text-to-LoRA, SHINE, MoEGen) each sit in a single cell; only the bottom-right — generate the weight from live data and keep a moving belief over the code — is occupied by this work. “Infinite parameters” is the reach this opens up: an unbounded set of effective weights and behaviours across both facts and time, from a fixed resident footprint — not an unbounded store of knowledge, which the capacity laws forbid and we do not claim (§§ 3.4 and 4). Attention is unchanged throughout; the bounded-vs-unbounded geometry of a single generated layer is developed in Figure 4.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 469,
+              "image_path": "figures/2609.18842/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 717
+            },
+            {
+              "caption": "Figure 1: Three regimes for turning data into model capability, ordered by how often the model’s weights change and how recent the data they learn from is. Pre-training and post-training (SFT, RLHF) both update the weights offline, in batch, and leave them frozen thereafter; they differ mainly in the data they use and how often they run. Live-learning, the regime this work targets, updates a generated low-rank code continuously, at inference, on the interaction data — facts, corrections, outcomes — that the others cannot reach in the loop, and keeps adapting rather than freezing. In-context learning and retrieval (bottom) also act at inference, but they leave the weights unchanged and carry the data in the prompt, where it is re-read every request and then discarded. The regimes are complementary, not competing: live-learning does not replace pretraining (§ 4), it reaches the data pretraining and prompting leave on the table.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 284,
+              "image_path": "figures/2609.18842/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 664
+            },
+            {
+              "caption": "Figure 5: The dilution boundary (MS MARCO v2.1, top-1 answer F1, measured, n = 150), at two encoder context budgets (1300 solid, 3000 dashed). Oracle (blue) keeps the answer passage fronted so it survives truncation; realistic (orange) shuffles passage order so the answer is as exposed as any other. Even the oracle declines as the pool grows with nothing truncated (51.6 → 46.9 F1 from 8 to 32 distractors at 3000 tokens, 0% truncation) — the code saturates: a fixed-size code loses fidelity as it carries more. The realistic read falls further below the oracle because the answer is either truncated out (dominant at 1300 tokens, where the 32- and 64-passage reads are 100% truncated) or, once the budget is large enough that nothing truncates (0% at 3000 for ≤ 32 passages), simply buried among distractors and read less faithfully. Saturation bounds how much one code should hold; truncation and burial are failures of foregrounding the right evidence — together they motivate one bounded read per code plus a selector over the pool, rather than one ever-larger read.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 329,
+              "image_path": "figures/2609.18842/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 755
+            },
+            {
+              "caption": "Figure 6: Cross-turn accumulation, routing accuracy against conversation turn over a fixed pool, on context-dependent turns. The two memoryless routers — per-question retrieval and our own single-question selector — are flat in the turn index and collapse on turns that are ambiguous alone. Concat-history retrieval rises as history accrues but sags once its growing query dilutes, and its per-turn cost grows with the turn. The accumulated categorical belief concentrates as evidence arrives and keeps climbing, at flat per-turn cost. Turn 1 is the single-question regime of § 4.3, where the belief coincides with its memoryless self; the curves separate as the conversation grows.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 344,
+              "image_path": "figures/2609.18842/figure-005.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 713
+            },
+            {
+              "caption": "Figure 4: Selection over a stored bank versus generation over a code space, on the same three anchor experts. Left: routing over a finite set of stored atoms (µMoE / discrete MoE) reaches only their convex hull (the triangle); every routed expert lies strictly inside it — bounded. Right: codes generated from data by Eϕ populate a curved manifold that bulges beyond that hull (shown dashed), so a generated expert W0 + Gϕ(z) can lie strictly outside it — the reachable set is contained in no finite-dimensional affine span, and is unbounded. This is the geometric content of the infinite-parameter claim: what matters is that the atoms are generated rather than stored, not whether the belief over them is continuous or categorical. This paper’s categorical belief is a finite working set over this unbounded generated space — a moving slice of the right panel, not a return to the left.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 310,
+              "image_path": "figures/2609.18842/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 626
+            },
+            {
+              "caption": "Table 2: Adaptation positioning: what each method adapts, where, and how. The one-shot weight generators (Textto-LoRA, SHINE) sit at the top as the closest relatives on the “generate the weight” axis — they produce the adapter from context but freeze it for the turn; the test-time-training methods move a point estimate by gradient descent inside the sequence layer or over the whole model. Ours is the only one to carry a calibrated posterior over a generated latent code, updated online.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 371,
+              "image_path": "figures/2609.18842/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 984
+            },
+            {
+              "caption": "Table 1: The hypernetwork / generator lineage — the closest prior work — against the axes that matter once “generate rather than store” is granted. The upper block generates a PEFT module from context in a single pass and then freezes it (turn-level, memoryless); the middle block generates over attention, a stored bank, or the whole weight without a shared low-rank base; the lower block selects from or adapts the usage of a fixed bank. Only this work drives the generator from live, accumulating data and lets the produced weight keep moving, as a calibrated belief over the latent code. “∆ over shared base FFN” marks our specific structure — an additive low-rank modulation of one always-applied base (∼ = partial: ∞-MoE masks a base rather than adding to it); MoBE’s posterior is over labels, not weights.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 525,
+              "image_path": "figures/2609.18842/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 772
+            },
+            {
+              "caption": "Table 3: The three adaptation cadences as one machinery — a belief over the code updated more or less often. A carries no explicit belief (the baseline); B updates the belief once per turn; C every token. The update rule is the recursive Bayes recursion of § 3.3 in every case, differing only in the observation window; it is agnostic to the belief’s form (the Gaussian or categorical realisations of § 3.5).",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 172,
+              "image_path": "figures/2609.18842/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 836
+            },
+            {
+              "caption": "Table 4: Weights versus prompt across the evidence-difficulty axis (measured in F1). The prompt wins when evidence is short and clean (SQuAD); compiling into weights wins when it gets longer and noisier (the others).",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 163,
+              "image_path": "figures/2609.18842/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 672
+            },
+            {
+              "caption": "Table 5: Routing over a pool of frozen codes (top-1 accuracy). The oracle shows the codes are separable when the answer is known; zero-shot confidence is near-random, so the router must be trained; the trained selector beats the dense-retrieval bar on every dataset, by 8–12 points.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 185,
+              "image_path": "figures/2609.18842/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 794
+            },
+            {
+              "caption": "Table 6: End-to-end F1 as the knowledge pool grows (MS MARCO v2.1, following the measured dilution anchors of § 4.2). The single big read concatenates the whole pool into one code and decays as it grows — both because the code saturates and because the answer is truncated or buried (down to the 27.8 floor of Figure 5); the selector routes over per-passage codes, each a small in-window read, and stays flat. The gap at 64 passages is the structural advantage of selection over one-shot reading.",
+              "figure_id": "table-6-12",
+              "figure_number": "6",
+              "height": 142,
+              "image_path": "figures/2609.18842/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 732
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.18842/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.18842",
+          "relevance": 8,
+          "selection_reason": "Proposes an LLM architecture that compiles live interaction data into dynamically generated weights with online Bayesian adaptation.",
+          "summary_status": "generated",
+          "title": "Infinite-Parameter LLMs: Generating and Adapting Weights from Live Data",
+          "tldr": "Infinite-Parameter LLMs generate session-specific low-rank weights from live interaction and update them online, enabling persistent adaptation without expanding stored model size.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "test-time-learning",
+                "continual-and-online-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Retrieval-Augmented Generation (RAG) serves as the primary memory architecture for long-horizon autonomous agents. However, treating shared memory as an append-only stream introduces \\textit{Semantic Shadowing}, a critical failure mode where conflicting historical observations accumulate and statistically dominate valid recent updates. In dynamic environments, this results in severe state divergence as agents retrieve and act upon obsolete facts. This paper formalizes the mechanics of State Mutability to prove that standard dense retrieval suffers from Asymptotic Recall Decay. Furthermore, we formally demonstrate a Majority Vote Trap, revealing that increasing the retrieval context window paradoxically degrades generation accuracy by diluting the attention mechanism under conditions of semantic equivalence. To resolve this, we introduce GC-Mem (Garbage Collection for Memory), a strict inference-time consistency protocol. Unlike heuristic time-decay mechanisms---which indiscriminately destroy valid long-term memory---GC-Mem relies purely on a temporal dominance operator ($Φ_{\\mathcal{T}}$) paired with contradiction detection to surgically excise shadowed context. Evaluated across a rigorous, behaviorally inferred benchmark of 137,760 memory chunks and continuous accumulation sweeps, standard RAG and timestamp re-ranking baselines experience severe degradation. In contrast, GC-Mem empirically recovers $>90\\%$ conflict resolution accuracy. We establish strict precision and recall deployment thresholds, ensuring state convergence where standard mutable RAG fundamentally fails.",
+          "arxiv_id": "2609.16073",
+          "arxiv_url": "https://arxiv.org/abs/2609.16073",
+          "authors": [
+            "Hamed HaddadPajouh",
+            "Amir AmiriTabat"
+          ],
+          "bullets": [
+            "Shared append-only memory can cause Semantic Shadowing, allowing obsolete facts to dominate valid recent observations.",
+            "The paper formalizes State Mutability, Asymptotic Recall Decay, and the Majority Vote Trap in dense retrieval.",
+            "GC-Mem is an inference-time consistency protocol that selectively removes shadowed context without indiscriminate time-based forgetting.",
+            "On a benchmark of 137,760 memory chunks and continuous accumulation sweeps, GC-Mem achieved over 90% conflict-resolution accuracy.",
+            "The approach defines precision and recall deployment thresholds for state convergence; its scope is dynamic, conflict-prone mutable memory."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "failed",
+          "figures": [],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": null,
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.16073",
+          "relevance": 9,
+          "selection_reason": "Formalizes state mutability in RAG and introduces GC-Mem, an inference-time consistency protocol for conflict resolution, directly relevant to memory management and test-time adaptation for agents.",
+          "summary_status": "generated",
+          "title": "The Immutable Past: Formalizing State Mutability and Conflict Resolution in Mutable RAG",
+          "tldr": "GC-Mem uses temporal dominance and contradiction detection to remove obsolete, conflicting memories from mutable RAG, restoring reliable state updates where standard retrieval degrades.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-16",
       "paper_count": 10,
       "papers": [
@@ -24583,5 +26154,5 @@
   "schema_version": 1,
   "subtopic_id": "test-time-learning",
   "topic_id": "adaptation-and-memory",
-  "total_paper_count": 144
+  "total_paper_count": 155
 }

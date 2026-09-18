@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**111 papers total**
+**115 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-17 | [SoL-Pi: Recursively Scaling Auto-Research Loops for Efficient Agent Harness](https://arxiv.org/abs/2609.20519) | Efficient AI: Token Pruning and Eviction | SoL-Pi recursively optimizes coding-agent harnesses to reduce token use and API costs while maintaining performance comparable to Pi. | 6 | 6 |
+| 2026-09-17 | [QCPruner: Query-Conditioned Population Coverage for Visual Token Pruning](https://arxiv.org/abs/2609.19990) | Efficient AI: Token Pruning and Eviction | QCPruner is a training-free, query-conditioned visual-token pruning method that preserves relevant evidence while reducing redundancy in MLLMs. | 8 | 8 |
+| 2026-09-17 | [Understanding and Exploiting Diagonal Attention Sparsity in Autoregressive Image Generation](https://arxiv.org/abs/2609.19702) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | Autoregressive image generation exhibits distinctive diagonal attention sparsity that can be exploited to accelerate decoding with minimal quality loss. | 8 | 8 |
+| 2026-09-17 | [Efficient Unified Multimodal Understanding (EUMU): Winning Solution for the MUMU Track at the 8th LSVOS Challenge](https://arxiv.org/abs/2609.19451) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | EUMU unifies tagging, open-vocabulary detection, and captioning in one resource-efficient multimodal model, winning the MUMU track of the 8th LSVOS Challenge. | 9 | 7 |
 | 2026-09-16 | [Loco-Loco-RL: Low-Cost Terrain Mapping for Humanoid Locomotion with Reinforcement Learning](https://arxiv.org/abs/2609.19041) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Efficient AI: Token Pruning and Eviction, Efficient Attention | A token-compressed temporal transformer enables robust humanoid terrain walking using compact, low-cost time-of-flight sensing. | 8 | 8 |
 | 2026-09-16 | [Beyond Truncation: Rethinking LLM Decoding as Ensemble Pruning](https://arxiv.org/abs/2609.18723) | Efficient AI: Token Pruning and Eviction | ME-Decoding improves LLM token selection by pruning redundant candidates using semantic geometry while preserving high-probability choices. | 7 | 7 |
 | 2026-09-16 | [Accurate Trace Estimation with Fewer Random Bits via Recursive TensorSketch](https://arxiv.org/abs/2609.18577) | Efficient AI: Token Pruning and Eviction | Recursive TensorSketch enables unbiased trace estimation for implicit $d^p \\times d^p$ matrices using far fewer random bits while avoiding the exponential-in-$p$ variance of Kronecker-product queries. | 7 | 8 |

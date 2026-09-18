@@ -1,6 +1,942 @@
 {
   "days": [
     {
+      "date": "2026-09-17",
+      "paper_count": 4,
+      "papers": [
+        {
+          "abstract": "Reasoning and agentic workloads increasingly demand efficient long-context inference. Yet full-attention decoding reads the growing history at every step, regardless of its benefit to the next prediction. We show that a pretrained model's decoding states already contain information predictive of this benefit, before the global read. Building on this finding, we introduce On-Demand Attention (ODA), a local-first decoding method that uses a lightweight recall head to selectively invoke global attention as its predicted benefit changes during generation. ODA trains only the recall head, leaving pretrained weights unchanged and the complete historical KV cache available for future recall. We further implement GPU-side conditional execution in vLLM, translating reduced global reads into practical decoding speedups over full attention at long context lengths. Experiments across Qwen and Gemma models, including hybrid-attention backbones, show that selective recall recovers most of the performance lost under local attention while substantially reducing global reads. These findings support long-context inference in which pretrained models guide their own access to the information they retain.",
+          "arxiv_id": "2609.20734",
+          "arxiv_url": "https://arxiv.org/abs/2609.20734",
+          "authors": [
+            "Haibo Feng, Ruiqi Liang, Hanyang Peng, Shiqi Yu"
+          ],
+          "bullets": [
+            "Full-attention decoding repeatedly reads the entire growing history, even when global context is unlikely to help.",
+            "ODA uses a lightweight recall head to predict when global attention will benefit the next token, after a local-first step.",
+            "Only the recall head is trained; pretrained weights remain unchanged and the full historical KV cache stays available.",
+            "A GPU-side vLLM implementation converts fewer global reads into practical speedups at long context lengths.",
+            "Experiments on Qwen and Gemma, including hybrid-attention models, show substantial reductions in global reads while recovering most local-attention performance."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: On-Demand Attention. Top: ODA performs Local at every step and selectively adds Full. Recall can change the top-ranked token (MAPLE to ORCHID) or change its probability while retaining it (Friday). Words, distributions, and the call schedule are schematic. Bottom: The recall head combines the preceding selected hidden state, current token embedding, and current Local hidden state. When qt > θ, Full recomputes the step from the same pre-step history. The selected ht feeds the frozen LM head; the current-position KVt from the same branch is committed to the retained history. Both access views share this complete history. Only the recall head is trained. The O(n) and O(n2) labels denote cumulative Local and Full attention costs across n causal positions, with fixed model dimensions and a fixed Local window.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 642,
+              "image_path": "figures/2609.20734/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 820
+            },
+            {
+              "caption": "Figure 3: Selective global attention reduces computation and accelerates long-context decoding. (a) Total major decoding FLOPs normalized to Full at each input length (100%), including the Local attempt, additional Full computation, head, and output projection. (b) Measured vLLM decode throughput relative to native Full on the same A100, using three-round warm medians. Each length uses one complete benchmark prompt and a fixed 1,024-token continuation; the actual input lengths are 4,139–128,852, shown as equally spaced categories in both panels. Legend rates are nominal: the three schedules execute 128, 256, or 512 Full calls in 1,023 routed steps. Prefill is excluded. These controlled schedules measure execution efficiency, not task quality.",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 274,
+              "image_path": "figures/2609.20734/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 795
+            },
+            {
+              "caption": "Figure 4: Access benefit and prediction uncertainty provide different rankings. The primary Qwen3-1.7B head and Local entropy are evaluated on the same 2,048 fixed-reference positions: 1,373 Local-correct and 675 Local-incorrect. (a) AUROC for positive signed gain, gt > 0. (b) Net signed gain when selecting 40% of positions within each population, divided by that population’s size. Error bars are 95% paired document-bootstrap intervals. Correctness defines diagnostic subsets after evaluation and is not an input to the policy.",
+              "figure_id": "figure-4-21",
+              "figure_number": "4",
+              "height": 251,
+              "image_path": "figures/2609.20734/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 795
+            },
+            {
+              "caption": "Figure 2: Selecting when to use global attention. (a) Qwen3-1.7B generation on five RULER16K tasks, with 100 examples per task. Both axes average tasks equally. Points represent eight ODA thresholds and their Random controls at actual call rates; Random error bars show the sample standard deviation across three routing seeds on both axes. The ring marks ODA’s zero-threshold configuration. Dashed lines mark Full and Local score references. The horizontal range is 23–60%; the broken vertical axis displays 26–38 and 84–90 on separate linear scales. (b) Offline selection on 2,048 reference positions from 16 documents. Positions are ranked by head score (ODA), uniformly selected (Random expectation), or ranked by realized gain (Oracle). Signed gains are summed and divided by all 2,048 positions. Shading is a pointwise 95% document-bootstrap interval for ODA. This panel holds recorded histories fixed; it does not measure a generated Random or Oracle trajectory.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 238,
+              "image_path": "figures/2609.20734/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 818
+            },
+            {
+              "caption": "Figure 5: Learned and random access across individual tasks. Curves retain all eight measured operating points. Random error bars show sample standard deviations over three seeds on both axes. Full and Local scores are dashed references. Each task has its own score scale and restricted horizontal range. Broken vertical axes separate the high- and low-score ranges except for frequent words, which uses a continuous scale; each visible segment is linear.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 217,
+              "image_path": "figures/2609.20734/figure-005.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 754
+            },
+            {
+              "caption": "Table 1: Long-context generation across model scales, families, and architectures. Scores are task macros (↑); parentheses report ODA’s actual Full-call rates (↓). Full uses each backbone’s native attention configuration. Each backbone has its own recall head. LongBench v1 denotes the 13-task subset specified in Appendix B.2. Dashes indicate measurements not yet available; checkpoint and backend details are in Appendix B.1.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 171,
+              "image_path": "figures/2609.20734/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 618
+            },
+            {
+              "caption": "Table 2: Input composition changes the quality–access operating point. Qwen3-1.7B heads trained for 1,024 updates with a shared seed and the same 28,325,889-parameter architecture. Checkmarks identify distinct available inputs; missing streams are filled by a specified available input to preserve capacity. Every policy first computes Local. These are natural zero-threshold results, not budget-matched comparisons; this training configuration is distinct from the primary head in Table 1.",
+              "figure_id": "table-2-15",
+              "figure_number": "2",
+              "height": 202,
+              "image_path": "figures/2609.20734/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 314
+            },
+            {
+              "caption": "Table 4: Complete RULER16K task scores for the primary reported configurations. Qwen3 uses step 1,024; Qwen3.5 uses the globally normalized run’s step 2,048. All use their actual generated histories and the same 13× 100 task population. Local denotes each model’s fixed restricted-access policy.",
+              "figure_id": "table-4-22",
+              "figure_number": "4",
+              "height": 348,
+              "image_path": "figures/2609.20734/table-008.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 564
+            },
+            {
+              "caption": "Table 3: Training configurations used in the main results and input ablation. The primary Qwen3 schedule has 102 warm-up updates followed by a plateau through update 3,072; the later schedules decay immediately after warm-up. The history threshold is separate from the Full-call penalty.",
+              "figure_id": "table-3-17",
+              "figure_number": "3",
+              "height": 213,
+              "image_path": "figures/2609.20734/table-009.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 686
+            },
+            {
+              "caption": "Table 7: All eight learned-versus-random access comparisons. Random entries are means ± sample standard deviations across three routing seeds. Full rates are realized, task-averaged percentages. The threshold identifies the ODA configuration; Random uses the corresponding per-task Bernoulli probability rather than thresholding a learned score.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 213,
+              "image_path": "figures/2609.20734/table-010.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 608
+            },
+            {
+              "caption": "Table 11: All evaluated checkpoints from the same Qwen3-1.7B v4 run, using selected-cache decoding and score threshold zero. These points describe training evolution, not a threshold sweep.",
+              "figure_id": "table-11-12",
+              "figure_number": "11",
+              "height": 150,
+              "image_path": "figures/2609.20734/table-011.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 477
+            },
+            {
+              "caption": "Table 12: Qwen3.5-2B on RULER16K, using Transformers SDPA, the same 13 × 100 population, and score threshold zero. The cost-adjusted target subtracts 0.001 from the gain. The globally normalized run also changes micro-batch size. Its merge averages head parameters from steps 1,024, 2,048, and 3,072. Rows represent separately trained checkpoints, not matched-budget comparisons. ∆ is the score difference from Full.",
+              "figure_id": "table-12-20",
+              "figure_number": "12",
+              "height": 287,
+              "image_path": "figures/2609.20734/table-012.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 648
+            },
+            {
+              "caption": "Table 16: Signed-gain sensitivity on the same 2,048 Qwen3 reference positions. Each row partitions the entire sample at the stated cutoff in nats. These counts describe magnitude and sign; they are not top-1 corrections or a rerun under another precision.",
+              "figure_id": "table-16-2",
+              "figure_number": "16",
+              "height": 162,
+              "image_path": "figures/2609.20734/table-013.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 322
+            },
+            {
+              "caption": "Table 19: Complete 30-cell vLLM runtime and major-FLOPs matrix. Native Full is shared across the six schedules for each prompt. Warm TPS values are three-round medians; displayed Full rates are realized percentages. The 0% and 100% ODA schedules still execute Local and the recall head.",
+              "figure_id": "table-19-14",
+              "figure_number": "19",
+              "height": 694,
+              "image_path": "figures/2609.20734/table-014.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 622
+            },
+            {
+              "caption": "Table 18: Warm and first-request decoding at 128/1,023 Full calls. TPS denotes tokens/s. Warm values are three-round medians; first-request values are single measurements including decode graph capture. Prefill is excluded in both cases.",
+              "figure_id": "table-18-18",
+              "figure_number": "18",
+              "height": 180,
+              "image_path": "figures/2609.20734/table-015.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 612
+            },
+            {
+              "caption": "Table 5: Complete Qwen3-1.7B LongBench v1 task scores under the archived 40,960-token-budget protocol. ODA is the primary step-1,024 checkpoint at threshold zero. The English passage-retrieval decrease accounts for a substantial part of the aggregate gap.",
+              "figure_id": "table-5-23",
+              "figure_number": "5",
+              "height": 317,
+              "image_path": "figures/2609.20734/table-016.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 356
+            },
+            {
+              "caption": "Table 6: Qwen3-8B RULER16K task scores from the HF evaluations used in Table 1. ODA uses its step-1,024 head and score threshold 0.001.",
+              "figure_id": "table-6-24",
+              "figure_number": "6",
+              "height": 316,
+              "image_path": "figures/2609.20734/table-017.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 344
+            },
+            {
+              "caption": "Table 8: Per-task scores at ODA threshold zero. Parentheses report actual Full-call percentages; Random entries average its three routing seeds. Full and Local use 100% and 0% Full, respectively.",
+              "figure_id": "table-8-7",
+              "figure_number": "8",
+              "height": 151,
+              "image_path": "figures/2609.20734/table-018.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 577
+            },
+            {
+              "caption": "Table 9: Input ablations after 1,024 training updates. Each head is evaluated on 13 tasks with 100 examples each. These are seven training trajectories with one initialization seed, not independent training repeats.",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 222,
+              "image_path": "figures/2609.20734/table-019.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 216
+            },
+            {
+              "caption": "Table 10: Training duration for the complete H +E+L head. These checkpoints are separate from the seven-way, equal-update input comparison.",
+              "figure_id": "table-10-13",
+              "figure_number": "10",
+              "height": 108,
+              "image_path": "figures/2609.20734/table-020.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 486
+            },
+            {
+              "caption": "Table 13: Qwen3-1.7B supervision controls on RULER16K at step 1,024. The table reports each objective’s natural operating point. The operating points are not matched in access frequency.",
+              "figure_id": "table-13-19",
+              "figure_number": "13",
+              "height": 116,
+              "image_path": "figures/2609.20734/table-021.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 477
+            },
+            {
+              "caption": "Table 15: Primary Qwen3 checkpoint at a 40% offline access budget. Positive gain and negative cost are sums in nats; net gain is per eligible reference position. Each subset is ranked independently, so its selected positions are not obtained by partitioning the all-position selection.",
+              "figure_id": "table-15-3",
+              "figure_number": "15",
+              "height": 171,
+              "image_path": "figures/2609.20734/table-022.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 772
+            },
+            {
+              "caption": "Table 14: Primary Qwen3-1.7B router on fixed reference tokens, with positive benefit defined by gt > 0. Intervals use 2,000 paired sequence-bootstrap replicates. Entropy ranks higher-uncertainty positions first. These diagnostics evaluate the complete existing router, not the incremental contribution of its Local hidden input.",
+              "figure_id": "table-14-4",
+              "figure_number": "14",
+              "height": 108,
+              "image_path": "figures/2609.20734/table-023.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 827
+            },
+            {
+              "caption": "Table 17: Independent-reference Qwen3.5 pilot. Positive benefit is gt > 0. Intervals are 95% paired sequence-bootstrap intervals.",
+              "figure_id": "table-17-5",
+              "figure_number": "17",
+              "height": 88,
+              "image_path": "figures/2609.20734/table-024.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 828
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.20734/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.20734",
+          "relevance": 9,
+          "selection_reason": "Selective global attention for long-context inference; directly relevant to efficient attention and long-context language models.",
+          "summary_status": "generated",
+          "title": "On-Demand Attention: Language Models Know When to Recall",
+          "tldr": "On-Demand Attention lets language models selectively recall global context during decoding, reducing long-context computation while preserving most of local attention’s lost performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Understanding humans over long horizons requires agents to infer not only what people need in the moment, but also how routines form, why they repeat, and when they change. We introduce SimLife, a scalable platform for simulating long-term household life with rich visual observations, ground-truth action logs, and synthetic dialogues with audio. Built on SimLife, SimLife-BP evaluates long-context pattern understanding: the ability to infer latent behavioral rules from weeks or months of everyday observations. The benchmark contains 106 episodes averaging 15.49 hours and 38.57 in-game days, and 1,439 question-answer pairs. Each task probes direct, counterfactual, noisy, and inverse reasoning under different levels of rule hints. Evaluating frontier models and architectures, we find that current models often achieve surface-level prediction without comprehensive rule understanding, rely on frequency-based heuristics rather than if-then reasoning over evidence, and struggle to adapt when behavioral patterns change. These findings suggest that long-context pattern understanding remains a major bottleneck for future embodied agents, while SimLife opens a broader space for studying memory, personalization, adaptation, and long-horizon planning in everyday human-AI interaction.",
+          "arxiv_id": "2609.19610",
+          "arxiv_url": "https://arxiv.org/abs/2609.19610",
+          "authors": [
+            "Run Peng, Zinnia Nie, Jing Ding, Yinpei Dai, Yichi Zhang, Zengqing Wu, Yao Fu, Ziqiao Ma, Jiayuan Mao, Joyce Chai"
+          ],
+          "bullets": [
+            "SimLife simulates long-term household life with visual observations, action logs, and synthetic audio dialogues.",
+            "SimLife-BP tests pattern understanding across direct, counterfactual, noisy, and inverse reasoning tasks with varying rule hints.",
+            "The benchmark includes 106 episodes averaging 15.49 hours and 38.57 in-game days, with 1,439 question-answer pairs.",
+            "Evaluated models often rely on frequency-based heuristics and surface predictions rather than evidence-based if-then reasoning.",
+            "Results identify changing behavioral patterns and long-context understanding as key bottlenecks for embodied agents."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: One example task of SIMLIFE-BP benchmark. Given the Father Sim’s workout routine (shown at the top), we simulate three weeks of daily life that reflect this underlying pattern, recorded from the egocentric view of the Servo Bot. After sufficient observation, models are evaluated using four types of questions designed to assess their consistency in multi-source reasoning. We further provide three levels of hints that systematically ablate the skills required for pattern discovery, hypothesis elimination, and situated reasoning.",
+              "figure_id": "figure-3-23",
+              "figure_number": "3",
+              "height": 396,
+              "image_path": "figures/2609.19610/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: SIMLIFE-BP distribution overview. Left: action taxonomy with log-scaled counts. Right-top: episode lengths distribution, where one in-game day corresponds to 24 real minutes, or 0.4 real hours. Right-bottom: composition over three dimensions.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 309,
+              "image_path": "figures/2609.19610/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 468
+            },
+            {
+              "caption": "Figure 4: Per-day trajectories of model predictions and human judgments. A rapid conver-",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 470,
+              "image_path": "figures/2609.19610/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Figure 9: Overview of the human study interface. Some activity blocks are hidden from participants and shown as gray blocks.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 494,
+              "image_path": "figures/2609.19610/figure-004.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 826
+            },
+            {
+              "caption": "Figure 10: Baseline alignment of day-level prediction trajectories (Spearman ρ). Each panel corresponds to one path that produces a daily P(yes) trajectory for the target event: Human (per-person consolidated mean over the 12 participants, anchor-calibrated), Qwen3.5-35BA3B, Gemma-4-26B-A4B-it, Gemini-2.5-Flash, and Gemini-3-Flash-Preview. Within a panel, each cell is the Spearman correlation between that path’s trajectory and one of four reference baselines, computed over the days of a case. Rows N0–N7 are the eight non-anchor cases. Columns are the baselines: Frq. = frequency-based, predicting from the historical base rate; Lst. = last-day-based, extrapolating from the previous day’s outcome; Orc. = groundtruth oracle; Hyp. = hypothesis-elimination, pruning candidate rules against accumulated evidence. A cell is undefined (shown in grey) when the source’s prediction is constant across that case’s days, so the rank correlation has zero variance. Gemini-3-Flash-Preview emits only binary 0/1 probabilities and answers P(yes) = 0 on every one of the 21 days of N2 (“Father fitness + fishing same day”), never predicting “yes”; consequently all four Gemini-3 cells in row N2 are undefined and shown grey. Spearman ρ is rank-based (amplitude-free) and robust to the models’ tendency to saturate at 0 and 1.",
+              "figure_id": "figure-10-22",
+              "figure_number": "10",
+              "height": 262,
+              "image_path": "figures/2609.19610/figure-005.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 814
+            },
+            {
+              "caption": "Figure 11: Additional per-day trajectories of model predictions and human judgments for other non-anchor cases (N1-N6). A rapid convergence of Brier score (bottom) toward zero",
+              "figure_id": "figure-11-29",
+              "figure_number": "11",
+              "height": 1327,
+              "image_path": "figures/2609.19610/figure-006.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Phenomenon Generation page from the SIMLIFE platform. This is what is shown when selecting a phenomenon from the left sidebar, before validating it.",
+              "figure_id": "figure-6-24",
+              "figure_number": "6",
+              "height": 542,
+              "image_path": "figures/2609.19610/figure-007.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 826
+            },
+            {
+              "caption": "Figure 5: Timeline interface that displays the scheduled actions for a specified simulated day for each character in the game. This page will display the schedules the Sims characters will perform when we run the specified simulated day in the game.",
+              "figure_id": "figure-5-16",
+              "figure_number": "5",
+              "height": 539,
+              "image_path": "figures/2609.19610/figure-008.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 826
+            },
+            {
+              "caption": "Figure 8: Task Annotation page from the SIMLIFE platform. This is the appearance after selecting a video chain and a specific simulated day within the video chain in the left sidebar.",
+              "figure_id": "figure-8-32",
+              "figure_number": "8",
+              "height": 539,
+              "image_path": "figures/2609.19610/figure-009.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 826
+            },
+            {
+              "caption": "Figure 7: Output displayed on the Phenomenon Generation page after validation of a phenomenon. Left: The calendar for the specific video chain and available simulated days for a condition set. Right: Scrolling down will show the truth tables for day condition sets and hypothesis elimination trace.",
+              "figure_id": "figure-7-25",
+              "figure_number": "7",
+              "height": 489,
+              "image_path": "figures/2609.19610/figure-010.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 786
+            },
+            {
+              "caption": "Figure 2: Example simulated day in SIMLIFE. Each column shows the 6 AM–10 PM schedule of one Sim, whose behavioral preferences are annotated above the timeline.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 319,
+              "image_path": "figures/2609.19610/figure-011.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 320
+            },
+            {
+              "caption": "Table 19: Overview of the episodes used in the human study.",
+              "figure_id": "table-19-2",
+              "figure_number": "19",
+              "height": 384,
+              "image_path": "figures/2609.19610/table-012.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 822
+            },
+            {
+              "caption": "Table 1: Main results on SIMLIFE-BP (381 tasks / 1,439 questions per hint level). We report All-Correct rate (AC) and question-level accuracy (Acc) with 95% binomial CI half-widths. Each Sub Acc cell shows per-question-type accuracy, left-to-right: Direct, Counterfactual, Noise Counterfactual, Inverse Counterfactual; the gray line marks chance. Shading highlights within-row best variants, and bold marks the overall best in each column.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 477,
+              "image_path": "figures/2609.19610/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Table 20: Pattern-adaptation breakdown on the SIMLIFE dynamic chains (20 chains; question-level accuracy (%) with 95% binomial CI half-width ±). P1/P2: normal tasks whose queried day falls before/after the pattern switch (answering about the active regime); Hist: the history tasks, which query Pattern-1 behavior after the model has already observed Pattern 2. Unanswered or overflow responses count as incorrect. Full-context language models (L, L-N) consistently show P1>Hist>P2, whereas vision, retrieval, and memory baselines remain near chance with no such structure.",
+              "figure_id": "table-20-15",
+              "figure_number": "20",
+              "height": 570,
+              "image_path": "figures/2609.19610/table-014.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: Pattern adaptation of representative baselines (partial-hint, question-level accuracy in %). Stars indicate task-level MannWhitney significance (∗p < .05, ∗∗p < .01, ∗∗∗p< .001). See full results in Table 20.",
+              "figure_id": "table-3-31",
+              "figure_number": "3",
+              "height": 166,
+              "image_path": "figures/2609.19610/table-015.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 402
+            },
+            {
+              "caption": "Table 4: Action categories in SIMLIFE. “Collab.” indicates whether the action can involve multiple participants.",
+              "figure_id": "table-4-26",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2609.19610/table-016.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 818
+            },
+            {
+              "caption": "Table 15: Per-condition hints at the partial and full levels.",
+              "figure_id": "table-15-19",
+              "figure_number": "15",
+              "height": 405,
+              "image_path": "figures/2609.19610/table-017.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 822
+            },
+            {
+              "caption": "Table 13: Question Body templates by type and format. {time} is an optional clock range (e.g. between 3PM and 10PM). Yes/no options are “Yes”/“No”; two-option choices are “{sim} will (not) {action} today{time}” for the first three types, and the two condition statements {icf_body} vs. {icf_body_opposite} for inverse counterfactual. Templates are emitted in the indicative; the LLM rendering pass (Appendix D.7) keeps direct questions indicative and converts the three counterfactual types to the subjunctive.",
+              "figure_id": "table-13-18",
+              "figure_number": "13",
+              "height": 312,
+              "image_path": "figures/2609.19610/table-018.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 826
+            },
+            {
+              "caption": "Table 18: Elimination trace for the example chain. Daughter Sim paints exactly on Mondays and Fridays; the remaining set shrinks from 508 to 2 by day 7. The convergence day is therefore day 7.",
+              "figure_id": "table-18-27",
+              "figure_number": "18",
+              "height": 306,
+              "image_path": "figures/2609.19610/table-019.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 823
+            },
+            {
+              "caption": "Table 2: Spearman rank correlation of Pd(yes) trajectories (%). Blue/light blue: best/secondbest non-self correlation per row ([1]–[5]). Orange/light orange: best/second-best per column ([5], Acc, B-Acc, F1+, Brier).",
+              "figure_id": "table-2-21",
+              "figure_number": "2",
+              "height": 211,
+              "image_path": "figures/2609.19610/table-020.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 6: Supported duration units and their effective lengths.",
+              "figure_id": "table-6-34",
+              "figure_number": "6",
+              "height": 188,
+              "image_path": "figures/2609.19610/table-021.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 490
+            },
+            {
+              "caption": "Table 16: History anchors. {vague_phrase} is one phrase sampled deterministically per task (shared across its questions) from a table bucketed by how far back the phase sits, e.g. 22–28 → “About three weeks earlier,” 29–35→ “About a month earlier.”",
+              "figure_id": "table-16-12",
+              "figure_number": "16",
+              "height": 165,
+              "image_path": "figures/2609.19610/table-022.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 572
+            },
+            {
+              "caption": "Table 23: Phase-2 decoding hyperparameters.",
+              "figure_id": "table-23-28",
+              "figure_number": "23",
+              "height": 173,
+              "image_path": "figures/2609.19610/table-023.webp",
+              "kind": "table",
+              "page": 44,
+              "width": 418
+            },
+            {
+              "caption": "Table 21: Game-time phase definitions.",
+              "figure_id": "table-21-14",
+              "figure_number": "21",
+              "height": 132,
+              "image_path": "figures/2609.19610/table-024.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 372
+            },
+            {
+              "caption": "Table 5: Temporal condition types. Parameters in braces are configurable.",
+              "figure_id": "table-5-33",
+              "figure_number": "5",
+              "height": 110,
+              "image_path": "figures/2609.19610/table-025.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 822
+            },
+            {
+              "caption": "Table 7: Activity-based condition types. Am = main activity, At = trigger activity.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 104,
+              "image_path": "figures/2609.19610/table-026.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 822
+            },
+            {
+              "caption": "Table 8: Condition operations and their semantics. l(i)d is the label from condition i for day d; md is the running merged label.",
+              "figure_id": "table-8-6",
+              "figure_number": "8",
+              "height": 112,
+              "image_path": "figures/2609.19610/table-027.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 664
+            },
+            {
+              "caption": "Table 9: Phenomenon types and their structural constraints.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 96,
+              "image_path": "figures/2609.19610/table-028.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 810
+            },
+            {
+              "caption": "Table 10: Components of an Activity Specification and their matching semantics.",
+              "figure_id": "table-10-17",
+              "figure_number": "10",
+              "height": 125,
+              "image_path": "figures/2609.19610/table-029.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 822
+            },
+            {
+              "caption": "Table 12: The four question types. dobs is the observed DCS; dcf and dinv are alternative DCSs chosen for the counterfactual and inverse types.",
+              "figure_id": "table-12-30",
+              "figure_number": "12",
+              "height": 210,
+              "image_path": "figures/2609.19610/table-030.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 826
+            },
+            {
+              "caption": "Table 17: Independence test for a candidate noise action X. All four cells must be observed at least once for X to qualify.",
+              "figure_id": "table-17-7",
+              "figure_number": "17",
+              "height": 181,
+              "image_path": "figures/2609.19610/table-031.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 826
+            },
+            {
+              "caption": "Table 14: The three hint levels. <body> refers to the four question types introduced in Appendix D.2.",
+              "figure_id": "table-14-20",
+              "figure_number": "14",
+              "height": 121,
+              "image_path": "figures/2609.19610/table-032.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 598
+            },
+            {
+              "caption": "Table 11: Truth table for the chess phenomenon (M = C1 ∨ C2).",
+              "figure_id": "table-11-4",
+              "figure_number": "11",
+              "height": 107,
+              "image_path": "figures/2609.19610/table-033.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 627
+            },
+            {
+              "caption": "Table 22: Phase-1 decoding hyperparameters. Repetition penalty is applied via vLLM’s extra_body parameter.",
+              "figure_id": "table-22-1",
+              "figure_number": "22",
+              "height": 152,
+              "image_path": "figures/2609.19610/table-034.webp",
+              "kind": "table",
+              "page": 43,
+              "width": 260
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.19610/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.19610",
+          "relevance": 6,
+          "selection_reason": "Benchmark for long-horizon behavioral pattern understanding in simulated household life, tied to embodied memory and long-context reasoning.",
+          "summary_status": "generated",
+          "title": "SIMLIFE: Pattern Understanding for Long-Horizon Human-Agent Partnership",
+          "tldr": "SimLife introduces a long-horizon household simulation and benchmark showing that current models struggle to infer, reason about, and adapt to changing human behavioral rules over weeks or months.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "embodied-memory"
+              ],
+              "topic_id": "adaptation-and-memory"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Block diffusion language models (BDLMs) combine autoregressive dependencies across blocks with parallel denoising within blocks, but long-context training is constrained by distributed attention communication and activation memory. Conventional context parallelism (CP) shards the combined clean-plus-corrupted sequence by position, communicating shared clean K/V together with block-specific corrupted K/V and their gradients. We observe that the BDLM objective separates over target blocks. We introduce block parallelism (BP), a new distributed parallelism dimension that assigns each corrupted-block computation to one rank. To scale BP to long contexts, we introduce context-sharded block parallelism (CSBP), which also shards the shared clean sequence across those ranks. CSBP keeps corrupted K/V and gradients local, avoids replicated clean prefixes, and preserves BDLM training semantics. On 16 H200 GPUs at 256K context, CSBP improves throughput over the best baseline by 1.18-1.45x for supervised fine-tuning and 1.27-1.33x for conversion of autoregressive models to BDLMs, while matching or reducing peak HBM. Full-model speedup reaches 1.61x at 512K. On eight H100 GPUs, CSBP accelerates DFlash2 speculative-decoder training by 2.48x at 512K and 7.59x at 1M. In matched 12-hour DiffusionGemma 26B-A4B SFT runs, CSBP achieves higher pass rates at every trained checkpoint on SWE-bench Verified and Terminal-Bench Lite. Code: https://github.com/ScalingIntelligence/Turbo-dLLM",
+          "arxiv_id": "2609.19242",
+          "arxiv_url": "https://arxiv.org/abs/2609.19242",
+          "authors": [
+            "Tarun Suresh, Pranshu Chaturvedi, Hangoo Kang, Parth Shroff, Ishan S. Khare, Hermann Kumbong, Azalia Mirhoseini"
+          ],
+          "bullets": [
+            "BDLM training is limited by distributed attention communication and activation memory at long contexts.",
+            "Block parallelism assigns each corrupted target block to a separate GPU, exploiting the BDLM objective’s block-wise decomposition.",
+            "Context-sharded block parallelism additionally shards the shared clean sequence, keeping corrupted K/V states and gradients local without changing training semantics.",
+            "Reported throughput gains reach up to 1.45× at 256K context, 1.61× at 512K, and 7.59× at 1M for the evaluated training settings.",
+            "In matched 12-hour runs, CSBP produced higher pass rates on SWE-bench Verified and Terminal-Bench Lite at every checkpoint."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Conventional CP shards the combined clean-plus-corrupted sequence by token position. Clean and corrupted K/V cross ranks during forward, and clean and corrupted dK/dV cross ranks during backward; Q, dQ, and attention outputs remain with their query owners. CSBP shards only the shared clean sequence, so only clean K/V and dK/dV cross ranks. Each block owner retains its corrupted Q/K/V and dQ/dK/dV locally.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 367,
+              "image_path": "figures/2609.19242/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 816
+            },
+            {
+              "caption": "Figure 6: Equal-wall-clock downstream performance. Checkpoints from the best baseline and CSBP are evaluated every three hours on (a) SWE-bench Verified and (b) Terminal-Bench Lite.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 352,
+              "image_path": "figures/2609.19242/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 781
+            },
+            {
+              "caption": "Figure 4: CSBP’s throughput gains grow with CP/BP degree.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 338,
+              "image_path": "figures/2609.19242/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 752
+            },
+            {
+              "caption": "Figure 2: (a) Conventional CP shards by token position and exchanges both clean and corrupted K/V across ranks, despite corrupted K/V having no reuse across blocks. (b) BP keeps corrupted K/V local to each block’s owner, but replicates overlapping clean prefixes. (c) CSBP also shards the shared clean context, so only clean K/V and their gradients cross ranks during attention. Figure 3 details the resulting tensor communication.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 252,
+              "image_path": "figures/2609.19242/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 813
+            },
+            {
+              "caption": "Figure 1: CSBP accelerates the frontier of long-context block diffusion training.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 959,
+              "image_path": "figures/2609.19242/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 988
+            },
+            {
+              "caption": "Figure 5: Longer contexts amplify CSBP’s throughput advantage.",
+              "figure_id": "figure-5-13",
+              "figure_number": "5",
+              "height": 294,
+              "image_path": "figures/2609.19242/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 653
+            },
+            {
+              "caption": "Table 4: Context sharding enables block parallelism at long contexts.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 330,
+              "image_path": "figures/2609.19242/table-007.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 830
+            },
+            {
+              "caption": "Table 2: CSBP accelerates long-context DFlash2 drafter training.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 138,
+              "image_path": "figures/2609.19242/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: End-to-end loss agreement between the strongest non-BP baseline and CSBP at 256K context.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 190,
+              "image_path": "figures/2609.19242/table-009.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 826
+            },
+            {
+              "caption": "Table 6: CSBP accelerates AR-to-BDLM conversion from 64K to 256K context.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 54,
+              "image_path": "figures/2609.19242/table-010.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 830
+            },
+            {
+              "caption": "Table 8: Attention and step-time breakdown at 256K: CP8 baseline vs. CSBP.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 181,
+              "image_path": "figures/2609.19242/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 722
+            },
+            {
+              "caption": "Table 9: Throughput and memory gains across long-context training configurations.",
+              "figure_id": "table-9-3",
+              "figure_number": "9",
+              "height": 50,
+              "image_path": "figures/2609.19242/table-012.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 830
+            },
+            {
+              "caption": "Table 1: CSBP accelerates training at 256K context.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 43,
+              "image_path": "figures/2609.19242/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 5: Load balancing accelerates CSBP at 256K context.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 44,
+              "image_path": "figures/2609.19242/table-014.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.19242/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.19242",
+          "relevance": 7,
+          "selection_reason": "Distributed block parallelism for efficient long-context diffusion language model training; relevant to LLM/long-context training and efficiency.",
+          "summary_status": "generated",
+          "title": "Block Parallelism For Efficient Distributed Long-Context Diffusion Language Model Training",
+          "tldr": "Context-sharded block parallelism makes long-context block diffusion language model training faster and more memory-efficient across GPUs.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Rotary position embedding (RoPE) uses each token's integer position to determine the rotation applied inside attention. This works well for local token order, but increasing context length creates a positional train-test mismatch: RoPE produces relative rotations at offsets not seen during training. Methods that rescale, interpolate, randomize, or bias positions specify how attention handles those offsets, but still derive positional information from a growing token counter. We instead divide a token stream into units, retain ordinary RoPE positions within each unit, and assign every completed unit an address computed from its content. Adding units then applies the same learned map to new content rather than extending a positional range or an identifier table. We prove that this construction preserves local RoPE exactly, leaves the attention comparison between two fixed tokens unchanged when other units are inserted or reordered, and does not create new relative rotations merely because more units are added. In a character-level Tiny Shakespeare diagnostic, all-token validation perplexity remains approximately constant from contexts of 256 to 4096 characters. A second diagnostic shows that content-based addressing can retrieve and use information from multiple serialized facts. These are controlled shallow experiments, not scale benchmarks, but they support a direct prescription: use position to address locally and content to address across units.",
+          "arxiv_id": "2609.07314",
+          "arxiv_url": "https://arxiv.org/abs/2609.07314",
+          "authors": [
+            "Mahesh Godavarti"
+          ],
+          "bullets": [
+            "RoPE can suffer train-test mismatch when longer contexts introduce unseen relative rotations.",
+            "The method divides sequences into units, preserves standard RoPE locally, and assigns completed units content-based addresses.",
+            "Adding or reordering other units does not change attention comparisons between two fixed tokens, and does not create new relative rotations.",
+            "In controlled Tiny Shakespeare diagnostics, validation perplexity stayed approximately constant from 256 to 4096 characters, and the model retrieved information across multiple serialized facts.",
+            "The evidence comes from shallow diagnostics rather than large-scale benchmarks."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Table 3: Complete results for retrieval from serialized facts. Higher hit@5 and lower perplexity are better. The best value in each metric and row is bold.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 462,
+              "image_path": "figures/2609.07314/table-001.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 830
+            },
+            {
+              "caption": "Table 1: All-token validation perplexity after training on 256-character Tiny Shakespeare chunks.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 408,
+              "image_path": "figures/2609.07314/table-002.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 779
+            },
+            {
+              "caption": "Table 2: Test hit@5 and perplexity (PPL) on target entity-name characters. Same-entities distractors change the relation. Same-relation distractors change the entities.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 184,
+              "image_path": "figures/2609.07314/table-003.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 514
+            },
+            {
+              "caption": "Table 4: Training-step timing at context length 1024. The baseline time includes the forward pass, backward pass, and optimizer update. Overhead is the content-addressed model’s increase relative to the baseline.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 142,
+              "image_path": "figures/2609.07314/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 636
+            }
+          ],
+          "first_seen_at": "2026-09-17T21:00:00-04:00",
+          "hero_figure": "figures/2609.07314/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.07314",
+          "relevance": 8,
+          "selection_reason": "Presents content-based addressing over RoPE to improve long-context behavior, directly relevant to long-context language model methods.",
+          "summary_status": "generated",
+          "title": "Content-Based Addressing for Long Context",
+          "tldr": "Content-based addressing extends RoPE to longer contexts by using ordinary positions within units and content-derived addresses across units, avoiding new positional offsets as context grows.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-16",
       "paper_count": 1,
       "papers": [
@@ -8612,5 +9548,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 40
+  "total_paper_count": 44
 }

@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**40 papers total**
+**44 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-17 | [On-Demand Attention: Language Models Know When to Recall](https://arxiv.org/abs/2609.20734) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | On-Demand Attention lets language models selectively recall global context during decoding, reducing long-context computation while preserving most of local attention’s lost performance. | 9 | 8 |
+| 2026-09-17 | [SIMLIFE: Pattern Understanding for Long-Horizon Human-Agent Partnership](https://arxiv.org/abs/2609.19610) | Adaptation and Memory: Embodied Memory; Language Foundation Models: Long-Context Models | SimLife introduces a long-horizon household simulation and benchmark showing that current models struggle to infer, reason about, and adapt to changing human behavioral rules over weeks or months. | 6 | 7 |
+| 2026-09-17 | [Block Parallelism For Efficient Distributed Long-Context Diffusion Language Model Training](https://arxiv.org/abs/2609.19242) | Efficient AI; Language Foundation Models: Large Language Models, Long-Context Models | Context-sharded block parallelism makes long-context block diffusion language model training faster and more memory-efficient across GPUs. | 7 | 7 |
+| 2026-09-17 | [Content-Based Addressing for Long Context](https://arxiv.org/abs/2609.07314) | Language Foundation Models: Long-Context Models | Content-based addressing extends RoPE to longer contexts by using ordinary positions within units and content-derived addresses across units, avoiding new positional offsets as context grows. | 8 | 8 |
 | 2026-09-16 | [GroupKV: Hierarchical KV Cache Management for Long-Context Diffusion LLM Inference](https://arxiv.org/abs/2609.17573) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | GroupKV improves long-context diffusion LLM inference by hierarchically selecting, prefetching, and updating grouped KV caches to reduce memory and offloading bottlenecks. | 8 | 7 |
 | 2026-09-14 | [SpectralShift: Effective Context Window Extension of Gated DeltaNet via Spectral Reparameterization](https://arxiv.org/abs/2609.14320) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | SpectralShift extends Gated DeltaNet context windows by reshaping its decay spectrum to improve long-range retrieval while preserving state clearing and context switching. | 8 | 8 |
 | 2026-09-14 | [ZGCM-1: A Fully Open and Extremely Efficient Foundation Model for Math and Agentic Search](https://arxiv.org/abs/2609.13356) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | ZGCM-1 is a fully open 7B model designed to extend compact-model capabilities through efficient training, deliberate reasoning, and active tool use for math and agentic search. | 8 | 7 |

@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**80 papers total**
+**85 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-17 | [Video DeltaNet: A Video-Native Hybrid Attention for Livestream Video Generation](https://arxiv.org/abs/2609.20744) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | Video DeltaNet accelerates livestream video generation by combining local Softmax attention with frame-wise bidirectional linear memory while preserving video quality. | 9 | 8 |
+| 2026-09-17 | [On-Demand Attention: Language Models Know When to Recall](https://arxiv.org/abs/2609.20734) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | On-Demand Attention lets language models selectively recall global context during decoding, reducing long-context computation while preserving most of local attention’s lost performance. | 9 | 8 |
+| 2026-09-17 | [MoSSGate: Memory-Modulated State-Space Gating for Skin Lesion Segmentation](https://arxiv.org/abs/2609.20181) | Efficient AI: Efficient Attention | MoSSGate enhances U-Net skin lesion segmentation by combining boundary-aware gating, adaptive memory modulation, and efficient state-space modeling for accurate global context and sharp boundaries. | 6 | 7 |
+| 2026-09-17 | [A Smaller Transformer in Your Transformer](https://arxiv.org/abs/2609.20100) | Efficient AI: Efficient Attention | TWT fuses redundant Vision Transformer layers into a smaller surrogate, reducing compute while preserving competitive accuracy. | 7 | 8 |
+| 2026-09-17 | [Kalman Delta Networks: Uncertainty-aware Associative Memory](https://arxiv.org/abs/2609.07816) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models, LLM Memory | Kalman Delta Networks add uncertainty tracking to linear-attention memory, enabling evidence- and reliability-adaptive writes while retaining scan-efficient recurrence. | 8 | 8 |
 | 2026-09-16 | [Loco-Loco-RL: Low-Cost Terrain Mapping for Humanoid Locomotion with Reinforcement Learning](https://arxiv.org/abs/2609.19041) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Efficient AI: Token Pruning and Eviction, Efficient Attention | A token-compressed temporal transformer enables robust humanoid terrain walking using compact, low-cost time-of-flight sensing. | 8 | 8 |
 | 2026-09-16 | [Reaching Every Position Without Searching: Rotating Sparse Wiring on the Hypercube as a Substitute for Attention](https://arxiv.org/abs/2609.18145) | Efficient AI: Efficient Attention | Rotating sparse hypercube connections can replace most attention links while preserving full information reachability and improving efficiency. | 7 | 8 |
 | 2026-09-16 | [vidax: A Unified JAX Framework for Video Generative Models on Accelerator Meshes](https://arxiv.org/abs/2609.18077) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | vidax is an open-source JAX/Flax inference framework that brings modern video generative models to Cloud TPUs through unified sharding, optimized attention, and memory-aware execution. | 8 | 8 |

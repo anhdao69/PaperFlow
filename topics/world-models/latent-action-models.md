@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**30 papers total**
+**32 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-17 | [Seismic Site Response Prediction from Sparse Observations Using Finite-Element-Pretrained Latent Dynamics](https://arxiv.org/abs/2609.20451) | World Models: Latent Action Models | FLARE-T combines dense finite-element simulations with sparse sensor records to calibrate low-dimensional site-response dynamics and improve multi-depth seismic predictions. | 8 | 7 |
+| 2026-09-17 | [Improving Cross-embodiment Transfer in Latent Action Models with Action-Similarity Supervision](https://arxiv.org/abs/2609.19846) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | Action-similarity supervision makes latent action models substantially better at transferring robot skills across embodiments without encoding robot-specific actions. | 9 | 8 |
 | 2026-09-16 | [Principled Koopman Representations with Kalman Inference for Efficient Time-Series Prediction](https://arxiv.org/abs/2609.17815) | World Models: Latent Action Models | K²SVD learns a principled low-rank Koopman representation and uses Kalman filtering for efficient, noise-robust time-series forecasting. | 9 | 8 |
 | 2026-09-16 | [Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics](https://arxiv.org/abs/2609.16778) | World Models: Latent Action Models | MoE-JEPA combines V-JEPA’s semantic priors with high-frequency forensic cues to robustly detect synthetic and manipulated images, achieving 95.54% accuracy on SID-Set. | 8 | 8 |
 | 2026-09-15 | [GeoLAM: Learning Geometry-Grounded Latent Actions from Unlabeled Human Videos](https://arxiv.org/abs/2609.17099) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | GeoLAM learns continuous, geometry-grounded latent actions from unlabeled human videos and transfers them to robotic manipulation without requiring geometry teachers or video prediction at deployment. | 9 | 8 |

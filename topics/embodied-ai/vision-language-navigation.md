@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**42 papers total**
+**47 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-17 | [Navi-Agent: Unlocalized Monocular Navigation Agent](https://arxiv.org/abs/2609.20388) | Embodied AI: Vision-Language Navigation, Robot Navigation | Navi-Agent enables zero-shot continuous-environment navigation by building a coordinate-free topology from visual observations and motion histories. | 9 | 9 |
+| 2026-09-17 | [VLN on the Fly: An Onboard Vision-Language Navigation Stack for Aerial Robots](https://arxiv.org/abs/2609.20191) | Embodied AI: Vision-Language Navigation | VLN on the Fly is a modular, inspectable onboard vision-language navigation stack that enables aerial robots to interpret instructions, plan trajectories, and reach targets under limited compute. | 9 | 7 |
+| 2026-09-17 | [GPT-6-Astra in a Navigation Workflow: Behavioral Analysis in Zero-Shot Vision-and-Language Navigation in Continuous Environments](https://arxiv.org/abs/2609.20116) | Embodied AI: Vision-Language Navigation | A zero-shot GPT-6-Astra VLN-CE workflow shows meaningful instruction and scene understanding, but struggles to convert local judgments into sustained navigation and timely stopping. | 8 | 5 |
+| 2026-09-17 | [TADreamer: Zero-Shot Language-Guided 3D Navigation for Terrestrial-Aerial Bimodal Robots via Video Imagination](https://arxiv.org/abs/2609.19824) | Embodied AI: Vision-Language Navigation | TADreamer enables zero-shot language-guided 3D navigation for terrestrial-aerial robots by calibrating video-imagined motion against measured geometry. | 9 | 8 |
+| 2026-09-17 | [Towards Active Cross-View Object Geo-Localization](https://arxiv.org/abs/2609.19662) | Embodied AI: Vision-Language Navigation | ActiveMoPT enables agents to actively choose and stop acquiring views for more accurate, observation-efficient cross-view object geo-localization. | 8 | 8 |
 | 2026-09-16 | [AdaGeoVLN: Selective Geometry Across Representation Depth and Navigation Time for Vision-Language Navigation](https://arxiv.org/abs/2609.18789) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | AdaGeoVLN improves streaming vision-language navigation by selectively using geometry features from multiple representation depths and retaining only the most relevant historical geometric states. | 9 | 8 |
 | 2026-09-16 | [GroundingVLN: Reasoning and Acting with Grounding for Vision-Language Navigation](https://arxiv.org/abs/2609.18581) | Embodied AI: Vision-Language Navigation | GroundingVLN connects visual reasoning to navigation by grounding both evidence and spatial goals in image locations, enabling efficient and strong cross-dataset performance. | 10 | 8 |
 | 2026-09-16 | [VLM-MPPI: Grounding Natural Language in Behaviorally Diverse Trajectories for Aerial Navigation](https://arxiv.org/abs/2609.18451) | Embodied AI: Vision-Language Navigation, Robot Navigation | VLM-MPPI enables UAVs to translate natural-language commands into diverse, dynamically feasible flight behaviors for safe indoor navigation. | 8 | 8 |
