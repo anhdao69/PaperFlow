@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**202 papers total**
+**205 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [JEPA-WAM: Connecting Generated Visual Instructions to World Action Models through JEPA Latent Representations](https://arxiv.org/abs/2609.20277) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | JEPA-WAM improves robot instruction following by converting generated visual task references into compact JEPA goal tokens that guide video and action models. | 9 | 7 |
+| 2026-09-18 | [VABench: Measuring Embodied Spatial Intelligence through Visual Demonstrations, Active Perception, and Metric Control](https://arxiv.org/abs/2609.19554) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | VA-Bench evaluates whether multimodal models can actively observe, reason spatially, act with metric control, and revise actions in embodied tasks. | 8 | 8 |
+| 2026-09-18 | [Towards Scalable RLVR: Multimodal Instruction Following Data Synthesis and Distillation](https://arxiv.org/abs/2609.16059) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models | MIFS makes multimodal RL with verifiable rewards more scalable by synthesizing, filtering, and verifying RL-ready instruction-following data. | 8 | 8 |
 | 2026-09-17 | [GeoAAC: Geometry-Based Adaptive Action Chunking from Denoising Trajectories in VLA Policies](https://arxiv.org/abs/2609.20776) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | GeoAAC adaptively chooses action-chunk horizons from the geometry of flow-matching denoising trajectories, improving VLA manipulation reliability over fixed-horizon approaches. | 9 | 8 |
 | 2026-09-17 | [HIL-UMI: Bringing Human-in-the-Loop Post-Training of Vision-Language-Action Models to Universal Manipulation Interface](https://arxiv.org/abs/2609.20659) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | HIL-UMI enables robot-free human-in-the-loop post-training of vision-language-action models by selectively collecting demonstrations and refining action advantages from handheld interfaces. | 9 | 7 |
 | 2026-09-17 | [SkipVLA: Skipping VLA Steps with Classical Planning for Fast Robot Manipulation](https://arxiv.org/abs/2609.20648) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | SkipVLA accelerates VLA-based robot manipulation by using classical planning for free-space motion and querying the VLA only for contact-rich actions. | 8 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**243 papers total**
+**244 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [PerSeM: Persistent Semantic Memory for Long-Horizon Open-Vocabulary UAV Mapping](https://arxiv.org/abs/2609.19542) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | PerSeM is a training-free persistent 3D semantic memory that improves the accuracy and temporal stability of long-horizon open-vocabulary UAV maps. | 7 | 7 |
 | 2026-09-17 | [OPTED: On-Policy Fine-Tuning for End-to-End Driving using a Render-Free Teacher](https://arxiv.org/abs/2609.20756) | Embodied AI: Robot Navigation | OPTED uses a privileged RL-trained teacher to efficiently fine-tune camera-based driving policies in closed loop without directly applying costly RL to the sensor policy. | 9 | 8 |
 | 2026-09-17 | [MILER: Semantic Mid-Level Representation for Sim-to-Real Reinforcement Learning in Unstructured Autonomous Driving](https://arxiv.org/abs/2609.20747) | Embodied AI: Robot Navigation | MILER enables zero-shot sim-to-real reinforcement learning for autonomous driving in unstructured environments using a shared semantic BEV representation and trajectory alignment. | 7 | 6 |
 | 2026-09-17 | [Towards Scaling Marine Perception with Synthetic Data](https://arxiv.org/abs/2609.20680) | Embodied AI: Robot Navigation | OceanSim is extended with a configurable synthetic-data pipeline to generate photorealistic, automatically labeled underwater datasets and study their sim-to-real utility for sea urchin detection. | 7 | 7 |

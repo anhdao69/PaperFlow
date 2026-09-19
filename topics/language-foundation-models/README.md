@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**936 papers total**
+**941 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [MTVA-Bench: Evaluating the Language Model Inside Cascaded Voice Agents](https://arxiv.org/abs/2609.20152) | Language Foundation Models: Large Language Models | MTVA-Bench evaluates the language model within cascaded voice agents under realistic, multilingual, multi-turn phone-call conditions. | 7 | 7 |
+| 2026-09-18 | [Rethinking Critic Learning in PPO: Understanding and Mitigating Value Flattening](https://arxiv.org/abs/2609.18708) | Embodied AI: Robot Learning and Manipulation; Language Foundation Models: Large Language Models | The paper identifies Value Flattening as a PPO critic failure mode and proposes sparse value supervision to improve policy learning. | 8 | 8 |
+| 2026-09-18 | [Dependency-Aware Trajectory Refinement for Efficient Multi-Turn Agent Fine-Tuning](https://arxiv.org/abs/2609.18417) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Dependency-aware pruning of redundant trajectory rounds improves multi-turn agent accuracy while reducing inference cost. | 7 | 7 |
+| 2026-09-18 | [STHMoE: Hypergraph-Enhanced Heterogeneous Dependency Coordination for LLM-Based Urban Traffic Data Forecasting](https://arxiv.org/abs/2609.15172) | Multimodal Foundation Models; Language Foundation Models: Large Language Models | STHMoE improves urban traffic forecasting by coordinating temporal, frequency, pairwise spatial, and higher-order spatial dependencies with LLM-guided experts and adaptive hypergraph routing. | 6 | 7 |
+| 2026-09-18 | [PhysMent: An Interactive Approach For LLM Reasoning In Physics Problems](https://arxiv.org/abs/2609.13152) | Embodied AI; Language Foundation Models: Large Language Models | PhysMent benchmarks whether LLMs can discover and use physical information through iterative interaction with a physics simulator, revealing strong qualitative reasoning but weak multi-step experimental procedures. | 7 | 7 |
 | 2026-09-17 | [An Empirical Study of Harness Design for Coding Agents](https://arxiv.org/abs/2609.20804) | Language Foundation Models: Large Language Models | A modular study shows that coding-harness components affect agents differently depending on model capability, context budget, and task demands. | 7 | 6 |
 | 2026-09-17 | [RAFT: A Stateful Retrieval-Augmented Framework for Troubleshooting Agents](https://arxiv.org/abs/2609.20754) | Language Foundation Models: Large Language Models | RAFT improves troubleshooting retrieval by matching active cases to intermediate states in historical case trajectories rather than treating cases as static documents. | 7 | 7 |
 | 2026-09-17 | [dQwen3.5: Hybrid-Attention Diffusion Language Models](https://arxiv.org/abs/2609.20751) | Language Foundation Models: Large Language Models | dQwen3.5 shows that hybrid attention–RNN language models can be efficiently adapted into capable diffusion language models despite their causal RNN components. | 7 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**198 papers total**
+**199 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [Does Video Memory Use What It Retrieves? A Causal Audit of Memory Specificity](https://arxiv.org/abs/2609.12090) | Video Generation and Understanding: Video Understanding | A causal read-time substitution test shows that video-memory gains may come from representation support, broad context, or exact retrieved content—not necessarily memory specificity. | 8 | 7 |
 | 2026-09-17 | [PROVIA: Procedure State Tracking for Online Mistake Detection in Egocentric Videos](https://arxiv.org/abs/2609.20638) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | PROVIA detects mistakes online in egocentric procedural videos by tracking the evolving procedure state and applying sequential alarms before the next step begins. | 6 | 7 |
 | 2026-09-17 | [Grounded Product Understanding in Livestream Videos](https://arxiv.org/abs/2609.20508) | Video Generation and Understanding: Video Understanding | GPUB benchmarks the joint challenge of identifying products and locating their supporting moments in livestream videos, while UniPro substantially improves performance over existing multimodal baselines. | 5 | 5 |
 | 2026-09-17 | [MTF-Net: Multi-Modal Temporal Feature Fusion Network for Pedestrian Intention Prediction](https://arxiv.org/abs/2609.20178) | Embodied AI: Robot Navigation; Video Generation and Understanding: Video Understanding | MTF-Net predicts pedestrian crossing intentions early by temporally fusing kinematic, pose, appearance, and contextual cues. | 8 | 7 |

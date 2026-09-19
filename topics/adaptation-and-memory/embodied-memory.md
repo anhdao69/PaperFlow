@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**51 papers total**
+**52 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [PerSeM: Persistent Semantic Memory for Long-Horizon Open-Vocabulary UAV Mapping](https://arxiv.org/abs/2609.19542) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | PerSeM is a training-free persistent 3D semantic memory that improves the accuracy and temporal stability of long-horizon open-vocabulary UAV maps. | 7 | 7 |
 | 2026-09-17 | [Workspace Models: Lightweight Robotic Memory via Saliency-Driven Supervision](https://arxiv.org/abs/2609.20820) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Workspace tokens distill task-relevant history into lightweight robotic memory, avoiding expensive VLM reasoning during deployment while improving policy performance. | 8 | 8 |
 | 2026-09-17 | [Can 4D Foundation Models Remember?](https://arxiv.org/abs/2609.20819) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Embodied Memory | PersistBench evaluates whether 4D foundation models can remember objects beyond the camera’s field of view and finds that their visual memory degrades substantially over time. | 7 | 8 |
 | 2026-09-17 | [AI Smart Glasses for Wearable Intelligence: From Egocentric Sensing to Agentic Personalization](https://arxiv.org/abs/2609.19793) | Embodied AI; Adaptation and Memory: Embodied Memory | This survey frames AI smart glasses as resource-constrained wearable-intelligence platforms that combine egocentric sensing, reasoning, interaction, and personalization for real-world assistance. | 6 | 5 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**623 papers total**
+**625 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [Dependency-Aware Trajectory Refinement for Efficient Multi-Turn Agent Fine-Tuning](https://arxiv.org/abs/2609.18417) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Dependency-aware pruning of redundant trajectory rounds improves multi-turn agent accuracy while reducing inference cost. | 7 | 7 |
+| 2026-09-18 | [DU-NO: A Parameter-Efficient Double U-Shaped Neural Operator for Phase-Resolving Wave Modeling](https://arxiv.org/abs/2609.12115) | Multimodal Foundation Models; Efficient AI | DU-NO is a 3.64M-parameter neural operator that delivers more accurate phase-resolving wave rollouts than much larger spectral-convolutional models by targeting fine-grid, high-wavenumber content with lightweight local branches. | 7 | 7 |
 | 2026-09-17 | [Video DeltaNet: A Video-Native Hybrid Attention for Livestream Video Generation](https://arxiv.org/abs/2609.20744) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | Video DeltaNet accelerates livestream video generation by combining local Softmax attention with frame-wise bidirectional linear memory while preserving video quality. | 9 | 8 |
 | 2026-09-17 | [On-Demand Attention: Language Models Know When to Recall](https://arxiv.org/abs/2609.20734) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | On-Demand Attention lets language models selectively recall global context during decoding, reducing long-context computation while preserving most of local attention’s lost performance. | 9 | 8 |
 | 2026-09-17 | [PhGS: Post-Hoc Pruning and Refinement of Single-View Feed-Forward 3D Gaussian Reconstructions](https://arxiv.org/abs/2609.20623) | 3D Vision; Efficient AI | PhGS compactly refines single-view feed-forward 3D Gaussian reconstructions by pruning redundant Gaussians without retraining the base model. | 6 | 6 |

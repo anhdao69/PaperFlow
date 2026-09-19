@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**199 papers total**
+**200 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [VABench: Measuring Embodied Spatial Intelligence through Visual Demonstrations, Active Perception, and Metric Control](https://arxiv.org/abs/2609.19554) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | VA-Bench evaluates whether multimodal models can actively observe, reason spatially, act with metric control, and revise actions in embodied tasks. | 8 | 8 |
 | 2026-09-17 | [Spatial-Semantic Uncertainty in VLM-Based Target Search: Balancing Exploration and Identification](https://arxiv.org/abs/2609.20443) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | The paper separates spatial uncertainty about where a target is from semantic uncertainty about which candidate it is, enabling information-driven search that reaches confident identifications more efficiently. | 8 | 8 |
 | 2026-09-17 | [Scene-Q: Confidence-Aware Coarse-to-Fine Querying of 3D Scenes with Selective VLM Reasoning](https://arxiv.org/abs/2609.20235) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Scene-Q combines calibrated fast retrieval with selective VLM reasoning to improve open-vocabulary 3D scene querying, especially for ambiguous spatial and relational descriptions. | 9 | 8 |
 | 2026-09-17 | [CitySTAR: Structured and Topology-Aware Reasoning for Open-Vocabulary Urban 3D Grounding](https://arxiv.org/abs/2609.19911) | Embodied AI; Multimodal Foundation Models: Spatial Intelligence; 3D Vision | CitySTAR performs training-free, interpretable urban 3D grounding by combining open-vocabulary scene graphs, topology-aware constraint reasoning, and multimodal evidence. | 8 | 8 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**53 papers total**
+**54 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [SPOT: Spatial Perception-Oriented Long-Horizon Humanoid Teleoperation](https://arxiv.org/abs/2609.07933) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | SPOT is a VR teleoperation system that broadens and stabilizes operators’ spatial awareness to improve long-horizon humanoid demonstration collection. | 10 | 9 |
 | 2026-09-17 | [PROVIA: Procedure State Tracking for Online Mistake Detection in Egocentric Videos](https://arxiv.org/abs/2609.20638) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | PROVIA detects mistakes online in egocentric procedural videos by tracking the evolving procedure state and applying sequential alarms before the next step begins. | 6 | 7 |
 | 2026-09-17 | [Learning Slope-Adaptive Whole-Body Locomotion for Humanoid Robots in Roofing Construction](https://arxiv.org/abs/2609.20558) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | A scene-grounded learning framework enables a humanoid robot to perform slope-adaptive roofing motions while maintaining safe support and work-related spatial relationships. | 8 | 7 |
 | 2026-09-17 | [Improving Cross-embodiment Transfer in Latent Action Models with Action-Similarity Supervision](https://arxiv.org/abs/2609.19846) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | Action-similarity supervision makes latent action models substantially better at transferring robot skills across embodiments without encoding robot-specific actions. | 9 | 8 |

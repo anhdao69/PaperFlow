@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**299 papers total**
+**300 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [Does Video Memory Use What It Retrieves? A Causal Audit of Memory Specificity](https://arxiv.org/abs/2609.12090) | Video Generation and Understanding: Video Understanding | A causal read-time substitution test shows that video-memory gains may come from representation support, broad context, or exact retrieved content—not necessarily memory specificity. | 8 | 7 |
 | 2026-09-17 | [Video DeltaNet: A Video-Native Hybrid Attention for Livestream Video Generation](https://arxiv.org/abs/2609.20744) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | Video DeltaNet accelerates livestream video generation by combining local Softmax attention with frame-wise bidirectional linear memory while preserving video quality. | 9 | 8 |
 | 2026-09-17 | [PROVIA: Procedure State Tracking for Online Mistake Detection in Egocentric Videos](https://arxiv.org/abs/2609.20638) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | PROVIA detects mistakes online in egocentric procedural videos by tracking the evolving procedure state and applying sequential alarms before the next step begins. | 6 | 7 |
 | 2026-09-17 | [Limits of Confidence in Diffusion](https://arxiv.org/abs/2609.20581) | Video Generation and Understanding: Video Diffusion | Discrete diffusion samplers can be fundamentally miscalibrated when they jointly write token positions whose values are dependent. | 8 | 8 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**115 papers total**
+**116 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [Dependency-Aware Trajectory Refinement for Efficient Multi-Turn Agent Fine-Tuning](https://arxiv.org/abs/2609.18417) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Dependency-aware pruning of redundant trajectory rounds improves multi-turn agent accuracy while reducing inference cost. | 7 | 7 |
 | 2026-09-17 | [SoL-Pi: Recursively Scaling Auto-Research Loops for Efficient Agent Harness](https://arxiv.org/abs/2609.20519) | Efficient AI: Token Pruning and Eviction | SoL-Pi recursively optimizes coding-agent harnesses to reduce token use and API costs while maintaining performance comparable to Pi. | 6 | 6 |
 | 2026-09-17 | [QCPruner: Query-Conditioned Population Coverage for Visual Token Pruning](https://arxiv.org/abs/2609.19990) | Efficient AI: Token Pruning and Eviction | QCPruner is a training-free, query-conditioned visual-token pruning method that preserves relevant evidence while reducing redundancy in MLLMs. | 8 | 8 |
 | 2026-09-17 | [Understanding and Exploiting Diagonal Attention Sparsity in Autoregressive Image Generation](https://arxiv.org/abs/2609.19702) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | Autoregressive image generation exhibits distinctive diagonal attention sparsity that can be exploited to accelerate decoding with minimal quality loss. | 8 | 8 |

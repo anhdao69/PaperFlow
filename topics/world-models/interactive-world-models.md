@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**140 papers total**
+**143 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [JEPA-WAM: Connecting Generated Visual Instructions to World Action Models through JEPA Latent Representations](https://arxiv.org/abs/2609.20277) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | JEPA-WAM improves robot instruction following by converting generated visual task references into compact JEPA goal tokens that guide video and action models. | 9 | 7 |
+| 2026-09-18 | [RodForesight: A World Model Enhanced Diffusion Policy for Slender Rod Insertion](https://arxiv.org/abs/2609.12103) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | RodForesight combines visual servoing, diffusion-policy action proposals, and a predictive world model to improve slender-rod insertion under bending and tight clearances. | 9 | 8 |
+| 2026-09-18 | [World-Time Compute with Verified Code World Models](https://arxiv.org/abs/2609.09163) | World Models: Interactive World Models | Verified executable world models can cheaply generate exact training trajectories, improving small LLMs’ generalization to unseen symbolic worlds, especially on short reasoning tasks. | 9 | 9 |
 | 2026-09-17 | [JEPA-Anything: Learning Predictive Models across Different Worlds](https://arxiv.org/abs/2609.20800) | World Models: Interactive World Models | JEPA-Anything uses orthogonal predictive factorization to build a shared world-modeling framework across diverse domains, improving prediction and supporting intervention-oriented scientific discovery. | 9 | 9 |
 | 2026-09-17 | [Agile-WAM: An Agile Tactile World Action Model for Contact-Rich Robot Control](https://arxiv.org/abs/2609.20761) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | Agile-WAM enables fast, contact-rich robot control by jointly predicting actions and multimodal future states with timescale-aware visual–tactile modeling. | 9 | 8 |
 | 2026-09-17 | [MM-Future: Multi-Mode Joint World-Action Modeling for Autonomous Driving](https://arxiv.org/abs/2609.20377) | World Models: Interactive World Models | MM-Future jointly models multiple possible future scenes and driving actions to improve autonomous-driving planning under uncertainty. | 9 | 8 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**32 papers total**
+**33 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [CSWAM: Better Causal Semantic Representations for Out-of-Distribution Generalization in World Action Models](https://arxiv.org/abs/2609.18462) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | CSWAM improves out-of-distribution robot action generalization by combining FastWAM with causally grounded semantic and temporal representations from V-JEPA 2.1. | 8 | 8 |
 | 2026-09-17 | [Seismic Site Response Prediction from Sparse Observations Using Finite-Element-Pretrained Latent Dynamics](https://arxiv.org/abs/2609.20451) | World Models: Latent Action Models | FLARE-T combines dense finite-element simulations with sparse sensor records to calibrate low-dimensional site-response dynamics and improve multi-depth seismic predictions. | 8 | 7 |
 | 2026-09-17 | [Improving Cross-embodiment Transfer in Latent Action Models with Action-Similarity Supervision](https://arxiv.org/abs/2609.19846) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | Action-similarity supervision makes latent action models substantially better at transferring robot skills across embodiments without encoding robot-specific actions. | 9 | 8 |
 | 2026-09-16 | [Principled Koopman Representations with Kalman Inference for Efficient Time-Series Prediction](https://arxiv.org/abs/2609.17815) | World Models: Latent Action Models | K²SVD learns a principled low-rank Koopman representation and uses Kalman filtering for efficient, noise-robust time-series forecasting. | 9 | 8 |

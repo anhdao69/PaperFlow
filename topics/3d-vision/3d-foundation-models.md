@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**127 papers total**
+**128 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [Beyond Argmax: A Mechanistic Study of Semantic Retention in Frozen Foundation-Model Composition for Generalized Few-Shot 3D Segmentation](https://arxiv.org/abs/2609.12099) | 3D Vision: 3D Foundation Models | Retaining multiple plausible class alternatives before fusing frozen foundation-model outputs substantially improves generalized few-shot 3D segmentation over top-1 decisions. | 8 | 7 |
 | 2026-09-17 | [Can 4D Foundation Models Remember?](https://arxiv.org/abs/2609.20819) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Embodied Memory | PersistBench evaluates whether 4D foundation models can remember objects beyond the camera’s field of view and finds that their visual memory degrades substantially over time. | 7 | 8 |
 | 2026-09-17 | [Scene-Q: Confidence-Aware Coarse-to-Fine Querying of 3D Scenes with Selective VLM Reasoning](https://arxiv.org/abs/2609.20235) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Scene-Q combines calibrated fast retrieval with selective VLM reasoning to improve open-vocabulary 3D scene querying, especially for ambiguous spatial and relational descriptions. | 9 | 8 |
 | 2026-09-17 | [Needles in a Raystack: Ultra-Sparse LiDAR Occupancy Detection for Bat Tracks](https://arxiv.org/abs/2609.20160) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | A lightweight 3D U-Net detects ultra-sparse bat flight occupancy in LiDAR raystacks more effectively than a reconstruction-based autoencoder. | 8 | 7 |

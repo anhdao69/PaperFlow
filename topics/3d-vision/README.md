@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**303 papers total**
+**304 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-18 | [Beyond Argmax: A Mechanistic Study of Semantic Retention in Frozen Foundation-Model Composition for Generalized Few-Shot 3D Segmentation](https://arxiv.org/abs/2609.12099) | 3D Vision: 3D Foundation Models | Retaining multiple plausible class alternatives before fusing frozen foundation-model outputs substantially improves generalized few-shot 3D segmentation over top-1 decisions. | 8 | 7 |
 | 2026-09-17 | [Can 4D Foundation Models Remember?](https://arxiv.org/abs/2609.20819) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Embodied Memory | PersistBench evaluates whether 4D foundation models can remember objects beyond the camera’s field of view and finds that their visual memory degrades substantially over time. | 7 | 8 |
 | 2026-09-17 | [SplashSplat: Reconstructing Splashing Liquids from Real-World Multi-View Videos](https://arxiv.org/abs/2609.20818) | 3D Vision | SplashSplat reconstructs fast, view-dependent liquid splashes from synchronized multi-view video using mask-derived geometry and physically guided particle-like Gaussian representations. | 5 | 7 |
 | 2026-09-17 | [FAMOS: Feed-Forward 3D Articulation Modeling from Sparse Observations](https://arxiv.org/abs/2609.20817) | 3D Vision | FAMOS predicts articulated parts and joints from sparse, unordered multi-view point clouds by combining observations to reduce reliance on category priors. | 6 | 7 |
