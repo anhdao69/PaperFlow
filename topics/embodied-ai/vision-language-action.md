@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**205 papers total**
+**206 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [ComVLA: Communication-Aware Split Inference for VLA Models in 6G-Connected Robotics](https://arxiv.org/abs/2609.07838) | Embodied AI: Vision-Language-Action; Efficient AI: Token Pruning and Eviction | ComVLA uses language-guided visual-token selection to adapt cloud-based VLA inference to wireless channel capacity, substantially reducing compute and latency with a small task-success drop. | 8 | 7 |
 | 2026-09-18 | [JEPA-WAM: Connecting Generated Visual Instructions to World Action Models through JEPA Latent Representations](https://arxiv.org/abs/2609.20277) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | JEPA-WAM improves robot instruction following by converting generated visual task references into compact JEPA goal tokens that guide video and action models. | 9 | 7 |
 | 2026-09-18 | [VABench: Measuring Embodied Spatial Intelligence through Visual Demonstrations, Active Perception, and Metric Control](https://arxiv.org/abs/2609.19554) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | VA-Bench evaluates whether multimodal models can actively observe, reason spatially, act with metric control, and revise actions in embodied tasks. | 8 | 8 |
 | 2026-09-18 | [Towards Scalable RLVR: Multimodal Instruction Following Data Synthesis and Distillation](https://arxiv.org/abs/2609.16059) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models | MIFS makes multimodal RL with verifiable rewards more scalable by synthesizing, filtering, and verifying RL-ready instruction-following data. | 8 | 8 |

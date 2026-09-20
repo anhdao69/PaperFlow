@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**965 papers total**
+**968 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [Managing Action Preconditions in Neuro-Symbolic RL: Three Placement Strategies for Embodied Agents](https://arxiv.org/abs/2609.16056) | Embodied AI: Robot Learning and Manipulation | A precondition Bayesian network can improve neuro-symbolic RL, with its placement in the learning loop affecting safety, efficiency, and behavior traceability. | 7 | 6 |
+| 2026-09-19 | [EvoNav-Bench: Benchmarking Lifelong Navigation in Evolving Environments](https://arxiv.org/abs/2609.08292) | Embodied AI: Robot Navigation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | EvoNav-Bench evaluates lifelong navigation agents when environments change between tasks, exposing failures caused by stale scene representations. | 8 | 7 |
+| 2026-09-19 | [ComVLA: Communication-Aware Split Inference for VLA Models in 6G-Connected Robotics](https://arxiv.org/abs/2609.07838) | Embodied AI: Vision-Language-Action; Efficient AI: Token Pruning and Eviction | ComVLA uses language-guided visual-token selection to adapt cloud-based VLA inference to wireless channel capacity, substantially reducing compute and latency with a small task-success drop. | 8 | 7 |
 | 2026-09-18 | [JEPA-WAM: Connecting Generated Visual Instructions to World Action Models through JEPA Latent Representations](https://arxiv.org/abs/2609.20277) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | JEPA-WAM improves robot instruction following by converting generated visual task references into compact JEPA goal tokens that guide video and action models. | 9 | 7 |
 | 2026-09-18 | [VABench: Measuring Embodied Spatial Intelligence through Visual Demonstrations, Active Perception, and Metric Control](https://arxiv.org/abs/2609.19554) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | VA-Bench evaluates whether multimodal models can actively observe, reason spatially, act with metric control, and revise actions in embodied tasks. | 8 | 8 |
 | 2026-09-18 | [PerSeM: Persistent Semantic Memory for Long-Horizon Open-Vocabulary UAV Mapping](https://arxiv.org/abs/2609.19542) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | PerSeM is a training-free persistent 3D semantic memory that improves the accuracy and temporal stability of long-horizon open-vocabulary UAV maps. | 7 | 7 |

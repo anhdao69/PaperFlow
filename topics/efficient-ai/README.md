@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**625 papers total**
+**627 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [StackTok: Accelerating VLMs Inference with Budget-Adaptive Visual Token Selection](https://arxiv.org/abs/2609.16841) | Efficient AI: Token Pruning and Eviction | StackTok is a training-free, query- and budget-adaptive visual-token selector that reduces VLM inference cost while preserving most full-token performance. | 8 | 7 |
+| 2026-09-19 | [ComVLA: Communication-Aware Split Inference for VLA Models in 6G-Connected Robotics](https://arxiv.org/abs/2609.07838) | Embodied AI: Vision-Language-Action; Efficient AI: Token Pruning and Eviction | ComVLA uses language-guided visual-token selection to adapt cloud-based VLA inference to wireless channel capacity, substantially reducing compute and latency with a small task-success drop. | 8 | 7 |
 | 2026-09-18 | [Dependency-Aware Trajectory Refinement for Efficient Multi-Turn Agent Fine-Tuning](https://arxiv.org/abs/2609.18417) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Dependency-aware pruning of redundant trajectory rounds improves multi-turn agent accuracy while reducing inference cost. | 7 | 7 |
 | 2026-09-18 | [DU-NO: A Parameter-Efficient Double U-Shaped Neural Operator for Phase-Resolving Wave Modeling](https://arxiv.org/abs/2609.12115) | Multimodal Foundation Models; Efficient AI | DU-NO is a 3.64M-parameter neural operator that delivers more accurate phase-resolving wave rollouts than much larger spectral-convolutional models by targeting fine-grid, high-wavenumber content with lightweight local branches. | 7 | 7 |
 | 2026-09-17 | [Video DeltaNet: A Video-Native Hybrid Attention for Livestream Video Generation](https://arxiv.org/abs/2609.20744) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | Video DeltaNet accelerates livestream video generation by combining local Softmax attention with frame-wise bidirectional linear memory while preserving video quality. | 9 | 8 |

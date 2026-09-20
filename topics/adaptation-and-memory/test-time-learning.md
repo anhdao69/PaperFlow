@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**155 papers total**
+**156 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [TERN: A Delta-rule Memory with a Seasonal Reference and Online Adaptation for Epidemic Forecasting](https://arxiv.org/abs/2609.18407) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | TERN improves influenza forecasting by combining an adaptive delta-rule memory with seasonal references to retain useful past patterns and discard phase-stale information. | 7 | 6 |
 | 2026-09-17 | [Should This Case Be Adapted? Prediction Fragmentation Controls Test-Time Adaptation](https://arxiv.org/abs/2609.20700) | Adaptation and Memory: Test-Time Learning | A label-free router uses prediction fragmentation to decide which cases should undergo test-time adaptation, substantially reducing harmful updates while preserving accuracy in favorable settings. | 8 | 8 |
 | 2026-09-17 | [TraceFlow: Guiding Frozen Flow-Matching Robot Policies with Success and Failure Traces](https://arxiv.org/abs/2609.20646) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | TraceFlow improves a frozen flow-matching robot policy by using retrieved successful and failed rollout traces as test-time guidance, substantially reducing sequence errors in ordered tasks. | 8 | 8 |
 | 2026-09-17 | [Diagnose, Recover, Certify: Task Readiness under Hidden Dynamics Changes](https://arxiv.org/abs/2609.20304) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | A framework diagnoses hidden actuator changes, recovers control capability, and certifies whether future tasks are safe to deploy under limited task-agnostic interactions. | 7 | 7 |

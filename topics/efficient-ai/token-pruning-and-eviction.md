@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**116 papers total**
+**118 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [StackTok: Accelerating VLMs Inference with Budget-Adaptive Visual Token Selection](https://arxiv.org/abs/2609.16841) | Efficient AI: Token Pruning and Eviction | StackTok is a training-free, query- and budget-adaptive visual-token selector that reduces VLM inference cost while preserving most full-token performance. | 8 | 7 |
+| 2026-09-19 | [ComVLA: Communication-Aware Split Inference for VLA Models in 6G-Connected Robotics](https://arxiv.org/abs/2609.07838) | Embodied AI: Vision-Language-Action; Efficient AI: Token Pruning and Eviction | ComVLA uses language-guided visual-token selection to adapt cloud-based VLA inference to wireless channel capacity, substantially reducing compute and latency with a small task-success drop. | 8 | 7 |
 | 2026-09-18 | [Dependency-Aware Trajectory Refinement for Efficient Multi-Turn Agent Fine-Tuning](https://arxiv.org/abs/2609.18417) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Dependency-aware pruning of redundant trajectory rounds improves multi-turn agent accuracy while reducing inference cost. | 7 | 7 |
 | 2026-09-17 | [SoL-Pi: Recursively Scaling Auto-Research Loops for Efficient Agent Harness](https://arxiv.org/abs/2609.20519) | Efficient AI: Token Pruning and Eviction | SoL-Pi recursively optimizes coding-agent harnesses to reduce token use and API costs while maintaining performance comparable to Pi. | 6 | 6 |
 | 2026-09-17 | [QCPruner: Query-Conditioned Population Coverage for Visual Token Pruning](https://arxiv.org/abs/2609.19990) | Efficient AI: Token Pruning and Eviction | QCPruner is a training-free, query-conditioned visual-token pruning method that preserves relevant evidence while reducing redundancy in MLLMs. | 8 | 8 |

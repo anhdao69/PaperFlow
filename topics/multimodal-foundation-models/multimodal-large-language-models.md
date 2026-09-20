@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**447 papers total**
+**448 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [RegRet: Enhancing Region-Level Retrieval in Large Multimodal Models](https://arxiv.org/abs/2609.16847) | Multimodal Foundation Models: Multimodal Large Language Models | RegRet improves region-level retrieval in large multimodal models while preserving global retrieval performance. | 6 | 6 |
 | 2026-09-17 | [AgriScope: Pixel-Grounded Multimodal Understanding for Agricultural Images](https://arxiv.org/abs/2609.20325) | Multimodal Foundation Models: Multimodal Large Language Models | AgriScope enables unified image-, region-, and pixel-level understanding of agricultural imagery through a pixel-grounded multimodal framework and large-scale instruction-tuning dataset. | 6 | 6 |
 | 2026-09-17 | [Lens: Bringing the Right Semantic Perspective into Focus for Training-Free Multimodal Representation Learning](https://arxiv.org/abs/2609.20252) | Multimodal Foundation Models: Multimodal Large Language Models | Lens enables training-free multimodal representations by directing readout toward the semantic perspective required by each downstream task. | 8 | 8 |
 | 2026-09-17 | [Music Hallucination in Audio-Language Models: A Hierarchical Formulation and Empirical Study](https://arxiv.org/abs/2609.20195) | Multimodal Foundation Models: Multimodal Large Language Models | The study introduces a hierarchical framework and MuseDiag benchmark to measure music hallucination in audio-language models, revealing layer- and paradigm-specific weaknesses and limited transfer of training-free mitigations to free-form generation. | 6 | 7 |

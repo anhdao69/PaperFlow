@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**695 papers total**
+**696 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [RegRet: Enhancing Region-Level Retrieval in Large Multimodal Models](https://arxiv.org/abs/2609.16847) | Multimodal Foundation Models: Multimodal Large Language Models | RegRet improves region-level retrieval in large multimodal models while preserving global retrieval performance. | 6 | 6 |
 | 2026-09-18 | [VABench: Measuring Embodied Spatial Intelligence through Visual Demonstrations, Active Perception, and Metric Control](https://arxiv.org/abs/2609.19554) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | VA-Bench evaluates whether multimodal models can actively observe, reason spatially, act with metric control, and revise actions in embodied tasks. | 8 | 8 |
 | 2026-09-18 | [Towards Scalable RLVR: Multimodal Instruction Following Data Synthesis and Distillation](https://arxiv.org/abs/2609.16059) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models | MIFS makes multimodal RL with verifiable rewards more scalable by synthesizing, filtering, and verifying RL-ready instruction-following data. | 8 | 8 |
 | 2026-09-18 | [STHMoE: Hypergraph-Enhanced Heterogeneous Dependency Coordination for LLM-Based Urban Traffic Data Forecasting](https://arxiv.org/abs/2609.15172) | Multimodal Foundation Models; Language Foundation Models: Large Language Models | STHMoE improves urban traffic forecasting by coordinating temporal, frequency, pairwise spatial, and higher-order spatial dependencies with LLM-guided experts and adaptive hypergraph routing. | 6 | 7 |

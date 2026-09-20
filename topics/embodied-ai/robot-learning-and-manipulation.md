@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**543 papers total**
+**544 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [Managing Action Preconditions in Neuro-Symbolic RL: Three Placement Strategies for Embodied Agents](https://arxiv.org/abs/2609.16056) | Embodied AI: Robot Learning and Manipulation | A precondition Bayesian network can improve neuro-symbolic RL, with its placement in the learning loop affecting safety, efficiency, and behavior traceability. | 7 | 6 |
 | 2026-09-18 | [JEPA-WAM: Connecting Generated Visual Instructions to World Action Models through JEPA Latent Representations](https://arxiv.org/abs/2609.20277) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | JEPA-WAM improves robot instruction following by converting generated visual task references into compact JEPA goal tokens that guide video and action models. | 9 | 7 |
 | 2026-09-18 | [Rethinking Critic Learning in PPO: Understanding and Mitigating Value Flattening](https://arxiv.org/abs/2609.18708) | Embodied AI: Robot Learning and Manipulation; Language Foundation Models: Large Language Models | The paper identifies Value Flattening as a PPO critic failure mode and proposes sparse value supervision to improve policy learning. | 8 | 8 |
 | 2026-09-18 | [CSWAM: Better Causal Semantic Representations for Out-of-Distribution Generalization in World Action Models](https://arxiv.org/abs/2609.18462) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | CSWAM improves out-of-distribution robot action generalization by combining FastWAM with causally grounded semantic and temporal representations from V-JEPA 2.1. | 8 | 8 |

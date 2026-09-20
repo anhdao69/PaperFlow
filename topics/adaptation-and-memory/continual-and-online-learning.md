@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**150 papers total**
+**152 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-19 | [TERN: A Delta-rule Memory with a Seasonal Reference and Online Adaptation for Epidemic Forecasting](https://arxiv.org/abs/2609.18407) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | TERN improves influenza forecasting by combining an adaptive delta-rule memory with seasonal references to retain useful past patterns and discard phase-stale information. | 7 | 6 |
+| 2026-09-19 | [EvoNav-Bench: Benchmarking Lifelong Navigation in Evolving Environments](https://arxiv.org/abs/2609.08292) | Embodied AI: Robot Navigation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | EvoNav-Bench evaluates lifelong navigation agents when environments change between tasks, exposing failures caused by stale scene representations. | 8 | 7 |
 | 2026-09-17 | [EliGSiR: Continual RGB-D Mapping with Gaussian Splatting under Bounded Compute](https://arxiv.org/abs/2609.20348) | 3D Vision; Adaptation and Memory: Continual and Online Learning | EliGSiR enables continual RGB-D Gaussian Splatting by adapting view selection, supervision detail, and geometric growth to preserve and improve maps under bounded compute. | 8 | 7 |
 | 2026-09-17 | [A Noise Optimum in Rehearsal-Free Continual Learning: Isolation, Mechanism, and Scope](https://arxiv.org/abs/2609.20162) | Adaptation and Memory: Continual and Online Learning | In simulation, noise can optimally improve rehearsal-free continual-learning retention when paired with coherent restoration toward consolidated weights, but the effect depends on shared task structure and weakens over longer task sequences. | 8 | 7 |
 | 2026-09-17 | [Past, Future, All at Once: Mitigating Stability-Plasticity Dilemma via Post-hoc JANUS Rectification](https://arxiv.org/abs/2609.19985) | Adaptation and Memory: Continual and Online Learning | JANUS is a post-hoc, tuning-agnostic parameter-update rectification method that reduces catastrophic forgetting while preserving adaptation to new tasks. | 8 | 8 |
