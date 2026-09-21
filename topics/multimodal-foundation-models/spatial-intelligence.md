@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**200 papers total**
+**204 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [Balanced Prompt Adaptation against Entropy-Induced Collapse for Test-Time Binary Segmentation](https://arxiv.org/abs/2609.21743) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Test-Time Learning | BAPA prevents entropy-driven class collapse in test-time binary segmentation by balancing foreground/background anchors and adapting only prompt parameters. | 8 | 8 |
+| 2026-09-20 | [PolyBridgeBench: Benchmarking Multimodal LLMs for Physics-Grounded Bridge Design](https://arxiv.org/abs/2609.21493) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | PolyBridgeBench evaluates whether multimodal LLMs can design, execute, and repair physics-grounded bridges rather than merely generate valid-looking structures. | 6 | 6 |
+| 2026-09-20 | [PlaceReasoner-Beta: Reasoning-Driven Macro Placement and Benchmarking](https://arxiv.org/abs/2609.21263) | Multimodal Foundation Models: Spatial Intelligence | PlaceReasoner-Beta treats macro placement as a verifier-guided reasoning loop, achieving strong routed timing and wirelength results on an open benchmark. | 7 | 7 |
+| 2026-09-20 | [FOCAL-VLA: Subtask-Guided Geometry Distillation and Implicit World Modeling for Vision-Language-Action Models](https://arxiv.org/abs/2609.21228) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | FOCAL-VLA improves precise and long-horizon robot manipulation by distilling subtask-relevant geometry and modeling future interaction dynamics without requiring auxiliary models at inference. | 9 | 8 |
 | 2026-09-18 | [VABench: Measuring Embodied Spatial Intelligence through Visual Demonstrations, Active Perception, and Metric Control](https://arxiv.org/abs/2609.19554) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | VA-Bench evaluates whether multimodal models can actively observe, reason spatially, act with metric control, and revise actions in embodied tasks. | 8 | 8 |
 | 2026-09-17 | [Spatial-Semantic Uncertainty in VLM-Based Target Search: Balancing Exploration and Identification](https://arxiv.org/abs/2609.20443) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | The paper separates spatial uncertainty about where a target is from semantic uncertainty about which candidate it is, enabling information-driven search that reaches confident identifications more efficiently. | 8 | 8 |
 | 2026-09-17 | [Scene-Q: Confidence-Aware Coarse-to-Fine Querying of 3D Scenes with Selective VLM Reasoning](https://arxiv.org/abs/2609.20235) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Scene-Q combines calibrated fast retrieval with selective VLM reasoning to improve open-vocabulary 3D scene querying, especially for ambiguous spatial and relational descriptions. | 9 | 8 |

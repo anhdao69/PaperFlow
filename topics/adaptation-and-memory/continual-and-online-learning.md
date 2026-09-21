@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**152 papers total**
+**156 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [What Must Survive? Exact Task-Information--State Frontiers for Resource-Sufficient Learning](https://arxiv.org/abs/2609.21523) | Adaptation and Memory: Continual and Online Learning | Characterizes exactly how much system state can be retained when limited advance information about a later linear task is available, via an optimal partitioning of tasks by joint operator rank. | 7 | 9 |
+| 2026-09-20 | [Optimal Randomized Proper Online Learning](https://arxiv.org/abs/2609.21445) | Adaptation and Memory: Continual and Online Learning | Randomized proper online learning achieves an optimal expected mistake bound of O(L(H) log T). | 6 | 8 |
+| 2026-09-20 | [FAN: Foresight Action Normalization for Continual Adaptation of Vision-Language-Action Models](https://arxiv.org/abs/2609.21358) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | FAN stabilizes continual vision-language-action adaptation by fixing a task-independent action normalization scheme that avoids coordinate drift and coverage mismatches. | 9 | 9 |
+| 2026-09-20 | [FedeRage: Provably Convergent Agnostic Federated Learning under General Client Drift](https://arxiv.org/abs/2609.21057) | Adaptation and Memory: Continual and Online Learning | FedeRage enables federated learning to handle unknown, skewed client participation by risk-averting toward high-loss and underrepresented clients with provable convergence. | 8 | 8 |
 | 2026-09-19 | [TERN: A Delta-rule Memory with a Seasonal Reference and Online Adaptation for Epidemic Forecasting](https://arxiv.org/abs/2609.18407) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | TERN improves influenza forecasting by combining an adaptive delta-rule memory with seasonal references to retain useful past patterns and discard phase-stale information. | 7 | 6 |
 | 2026-09-19 | [EvoNav-Bench: Benchmarking Lifelong Navigation in Evolving Environments](https://arxiv.org/abs/2609.08292) | Embodied AI: Robot Navigation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | EvoNav-Bench evaluates lifelong navigation agents when environments change between tasks, exposing failures caused by stale scene representations. | 8 | 7 |
 | 2026-09-17 | [EliGSiR: Continual RGB-D Mapping with Gaussian Splatting under Bounded Compute](https://arxiv.org/abs/2609.20348) | 3D Vision; Adaptation and Memory: Continual and Online Learning | EliGSiR enables continual RGB-D Gaussian Splatting by adapting view selection, supervision detail, and geometric growth to preserve and improve maps under bounded compute. | 8 | 7 |

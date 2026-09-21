@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**33 papers total**
+**37 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [Compact but Moving: Intervention-Relevant Geometry in Recurrent World Models](https://arxiv.org/abs/2609.21787) | World Models: Latent Action Models | Compact intervention structure can persist as a moving, state-dependent geometry in high-dimensional recurrent world models, rather than remaining in a fixed low-dimensional subspace. | 8 | 9 |
+| 2026-09-20 | [Beyond Gaussian Worlds: Latent Geometry Matters for JEPAs](https://arxiv.org/abs/2609.21656) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | JEPAs can recover latent variables beyond Gaussian settings when their target distribution matches the latent geometry, with spherical targets enabling especially strong recovery guarantees. | 8 | 9 |
+| 2026-09-20 | [Riemannian Neural Hamiltonian Flows: Geodesic Symplectic Transport and Interpretability](https://arxiv.org/abs/2609.21647) | World Models: Latent Action Models | Riemannian Neural Hamiltonian Flows provide interpretable, volume-preserving generative modeling on curved spaces using geodesic Hamiltonian dynamics. | 6 | 8 |
+| 2026-09-20 | [Making Latent Evolution Explicit: Operator-Structured Transitions for World Action Models](https://arxiv.org/abs/2608.27259) | World Models: Latent Action Models, Interactive World Models | LEON makes latent world-state evolution explicit with operator-structured dynamics, improving closed-loop robot performance and robustness across two WAM formulations. | 10 | 9 |
 | 2026-09-18 | [CSWAM: Better Causal Semantic Representations for Out-of-Distribution Generalization in World Action Models](https://arxiv.org/abs/2609.18462) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | CSWAM improves out-of-distribution robot action generalization by combining FastWAM with causally grounded semantic and temporal representations from V-JEPA 2.1. | 8 | 8 |
 | 2026-09-17 | [Seismic Site Response Prediction from Sparse Observations Using Finite-Element-Pretrained Latent Dynamics](https://arxiv.org/abs/2609.20451) | World Models: Latent Action Models | FLARE-T combines dense finite-element simulations with sparse sensor records to calibrate low-dimensional site-response dynamics and improve multi-depth seismic predictions. | 8 | 7 |
 | 2026-09-17 | [Improving Cross-embodiment Transfer in Latent Action Models with Action-Similarity Supervision](https://arxiv.org/abs/2609.19846) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | Action-similarity supervision makes latent action models substantially better at transferring robot skills across embodiments without encoding robot-specific actions. | 9 | 8 |

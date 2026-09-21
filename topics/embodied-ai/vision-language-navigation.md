@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**47 papers total**
+**48 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [DPed-VLN: A Benchmark for Socially Compliant Vision-and-Language Navigation in Dynamic Pedestrian Environments](https://arxiv.org/abs/2609.21504) | Embodied AI: Vision-Language Navigation | DPed-VLN benchmarks vision-and-language navigation in dynamic pedestrian environments, pairing socially constrained evaluation with pedestrian-aware and adapted VLM navigation policies. | 9 | 8 |
 | 2026-09-17 | [Navi-Agent: Unlocalized Monocular Navigation Agent](https://arxiv.org/abs/2609.20388) | Embodied AI: Vision-Language Navigation, Robot Navigation | Navi-Agent enables zero-shot continuous-environment navigation by building a coordinate-free topology from visual observations and motion histories. | 9 | 9 |
 | 2026-09-17 | [VLN on the Fly: An Onboard Vision-Language Navigation Stack for Aerial Robots](https://arxiv.org/abs/2609.20191) | Embodied AI: Vision-Language Navigation | VLN on the Fly is a modular, inspectable onboard vision-language navigation stack that enables aerial robots to interpret instructions, plan trajectories, and reach targets under limited compute. | 9 | 7 |
 | 2026-09-17 | [GPT-6-Astra in a Navigation Workflow: Behavioral Analysis in Zero-Shot Vision-and-Language Navigation in Continuous Environments](https://arxiv.org/abs/2609.20116) | Embodied AI: Vision-Language Navigation | A zero-shot GPT-6-Astra VLN-CE workflow shows meaningful instruction and scene understanding, but struggles to convert local judgments into sustained navigation and timely stopping. | 8 | 5 |

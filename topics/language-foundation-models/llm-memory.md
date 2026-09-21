@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**213 papers total**
+**218 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [GraphSkillEvo: Evolutionary Optimization of Graph-Structured Agent Skills](https://arxiv.org/abs/2609.21749) | Language Foundation Models: LLM Memory | GraphSkillEvo optimizes graph-structured procedural skills for LLM agents using evolutionary search, improving benchmark accuracy over SkillOpt. | 8 | 7 |
+| 2026-09-20 | [MACE: Memory-Agent Co-Evolution with Adaptive Memory Graphs for Multi-Agent Systems](https://arxiv.org/abs/2609.21533) | Language Foundation Models: LLM Memory | MACE improves multi-agent task performance by jointly adapting memory organization and how agents use retrieved memories based on execution feedback. | 8 | 7 |
+| 2026-09-20 | [Tracing the Evidence Behind Zero-Shot Time-Series Forecasting: A Source-First Taxonomy and Audit Framework](https://arxiv.org/abs/2609.21425) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | Zero-shot time-series forecasting should be defined and compared by the evidence systems can access, not merely by whether their parameters are updated. | 7 | 8 |
+| 2026-09-20 | [HERMES: Contrast-Aware Knowledge Graph Reasoning from Clinical Notes for Patient Outcome Prediction](https://arxiv.org/abs/2609.20825) | Language Foundation Models: LLM Memory | HERMES improves clinical outcome prediction from notes alone by modeling extracted patient relationships, temporal dynamics, and treatment changes in personalized knowledge graphs. | 7 | 7 |
+| 2026-09-20 | [AgentKV: Phase-Aware KV Eviction for Agentic LLMs](https://arxiv.org/abs/2609.14872) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory | AGENTKV improves KV-cache eviction for agentic LLMs by preserving keys needed across distinct generation phases rather than relying only on recent queries. | 8 | 8 |
 | 2026-09-17 | [SkillAA: Attribution-Guided Skill-Graph Updating with Targeted Validation and Rollback](https://arxiv.org/abs/2609.20455) | Language Foundation Models: LLM Memory | SkillAA improves frozen language-model skills by attributing failures to specific skill-graph components, making targeted edits, and validating or rolling them back before commitment. | 6 | 7 |
 | 2026-09-17 | [AdaRepair-Mem: Adaptive Experience Orchestration for Repository-Level Program Repair](https://arxiv.org/abs/2609.20130) | Language Foundation Models: LLM Memory | AdaRepair-Mem improves repository-level program repair by adaptively retrieving relevant, high-quality experiences for each repair stage and repository. | 6 | 6 |
 | 2026-09-17 | [Correct Now, Insufficient Later: Auditing Update Sufficiency in Context Compression](https://arxiv.org/abs/2609.20045) | Language Foundation Models: LLM Memory | Current-answer correctness can conceal memories that fail when later updates require distinctions they discarded. | 6 | 6 |

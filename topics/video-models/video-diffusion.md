@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**74 papers total**
+**78 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [The Weight Is Over - Interactive Diffusion on Consumer GPUs](https://arxiv.org/abs/2609.21849) | Video Generation and Understanding: Video Diffusion; Efficient AI: KV Cache and Memory Efficiency | A lightweight diffusion pipeline enables interactive image generation on consumer GPUs by reducing model size and latency while balancing quality. | 8 | 7 |
+| 2026-09-20 | [Geometry-Aware Diffusion Guidance via Curvature-Adaptive Tubular Correction](https://arxiv.org/abs/2609.21251) | Video Generation and Understanding: Video Diffusion | CAT stabilizes strongly guided diffusion sampling by jointly controlling normal motion and curvature-induced tangent drift within a geometry-aware budget. | 7 | 8 |
+| 2026-09-20 | [4DGS-Fixer: Generative Sparse-View 4D Gaussian Splatting with Iterative Refinement Guided by Video Diffusion Priors](https://arxiv.org/abs/2609.21176) | Video Generation and Understanding: Video Diffusion | 4DGS-Fixer improves sparse-view dynamic scene reconstruction by combining dense depth-based initialization with iterative video-diffusion-guided refinement. | 8 | 8 |
+| 2026-09-20 | [SpaceDiffusion: Over-the-Orbit Diffusion for Space Generate-and-Forward Communications](https://arxiv.org/abs/2609.20899) | Video Generation and Understanding: Video Diffusion | SpaceDiffusion uses an on-orbit diffusion model to reconstruct corrupted image data before forwarding, improving satellite uplink efficiency and reducing required transmit power. | 7 | 8 |
 | 2026-09-17 | [Video DeltaNet: A Video-Native Hybrid Attention for Livestream Video Generation](https://arxiv.org/abs/2609.20744) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | Video DeltaNet accelerates livestream video generation by combining local Softmax attention with frame-wise bidirectional linear memory while preserving video quality. | 9 | 8 |
 | 2026-09-17 | [Limits of Confidence in Diffusion](https://arxiv.org/abs/2609.20581) | Video Generation and Understanding: Video Diffusion | Discrete diffusion samplers can be fundamentally miscalibrated when they jointly write token positions whose values are dependent. | 8 | 8 |
 | 2026-09-17 | [CleanVideo: Adaptive Concept Erasure for Text-to-Video Diffusion Models](https://arxiv.org/abs/2609.20267) | Video Generation and Understanding: Video Diffusion | CleanVideo selectively erases unwanted concepts from text-to-video diffusion models while preserving visual quality and temporal consistency. | 7 | 8 |

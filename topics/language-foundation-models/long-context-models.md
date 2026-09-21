@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**44 papers total**
+**47 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [TierKV: Long-Context On-Device LLMs via Predictive Multi-Tier KV Caching](https://arxiv.org/abs/2609.21172) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | TierKV enables longer-context mobile LLM inference by predicting KV-cache demand and assigning tokens across exact, compressed, and flash tiers before decoding. | 8 | 6 |
+| 2026-09-20 | [RBS-Attention: Radius-Bounded Sparse Prefill for Long-Context Large Language Models](https://arxiv.org/abs/2609.20971) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | RBS-Attention accelerates long-context LLM prefill by combining centroid-based block selection with a radius-based rescue branch to avoid missing highly relevant tokens. | 8 | 7 |
+| 2026-09-20 | [Elastic Threshold Attention: Learned Contextual Sparsity for Long-Context Decoding](https://arxiv.org/abs/2609.20888) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Elastic Threshold Attention learns query-dependent sparsity to accelerate long-context decoding while preserving dense-attention quality. | 9 | 8 |
 | 2026-09-17 | [On-Demand Attention: Language Models Know When to Recall](https://arxiv.org/abs/2609.20734) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | On-Demand Attention lets language models selectively recall global context during decoding, reducing long-context computation while preserving most of local attention’s lost performance. | 9 | 8 |
 | 2026-09-17 | [SIMLIFE: Pattern Understanding for Long-Horizon Human-Agent Partnership](https://arxiv.org/abs/2609.19610) | Adaptation and Memory: Embodied Memory; Language Foundation Models: Long-Context Models | SimLife introduces a long-horizon household simulation and benchmark showing that current models struggle to infer, reason about, and adapt to changing human behavioral rules over weeks or months. | 6 | 7 |
 | 2026-09-17 | [Block Parallelism For Efficient Distributed Long-Context Diffusion Language Model Training](https://arxiv.org/abs/2609.19242) | Efficient AI; Language Foundation Models: Large Language Models, Long-Context Models | Context-sharded block parallelism makes long-context block diffusion language model training faster and more memory-efficient across GPUs. | 7 | 7 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**86 papers total**
+**88 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [JEPA Guided Diffusion: Predictive Vision-Language Conditioning for Generative Traffic Forecasting](https://arxiv.org/abs/2609.21379) | World Models: Video World Models; Multimodal Foundation Models: Multimodal Large Language Models | JEPA Guided Diffusion decouples traffic forecasting from video generation by aligning frozen V-JEPA predictive representations with a frozen Cosmos diffusion model. | 9 | 8 |
+| 2026-09-20 | [MarsFM: Shading-Regularized Flow Matching for Martian Relief Estimation](https://arxiv.org/abs/2609.21095) | World Models: Video World Models | MarsFM estimates local Martian relief from single-band HiRISE imagery using flow matching regularized by geometric supervision and differentiable shading. | 8 | 7 |
 | 2026-09-17 | [ParticleSplat: Self-supervised Object-centric Latent Particle Splatting](https://arxiv.org/abs/2609.19463) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models; 3D Vision: 3D Foundation Models | ParticleSplat learns object-centric 3D latent particles from multi-view images without supervision, enabling object masks, scene editing, and improved robotic manipulation. | 10 | 9 |
 | 2026-09-16 | [Spatially Adaptive Noise Injection](https://arxiv.org/abs/2609.18466) | World Models: Video World Models | SANI improves diffusion sampling by injecting noise selectively at pixels where stochastic correction is most useful. | 8 | 7 |
 | 2026-09-16 | [A Comprehensive Review of Generative Physical Artificial Intelligence](https://arxiv.org/abs/2609.18111) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Video World Models | This survey organizes Generative Physical AI approaches for embodied agents, highlighting how they enable perception, reasoning, and action while identifying open challenges for real-world deployment. | 9 | 5 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**53 papers total**
+**55 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-20 | [Adaptive World Memory 3D Foundation Model for Scalable 3D Mapping, Localization, and Rendering](https://arxiv.org/abs/2609.21502) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Test-Time Learning, Embodied Memory | A memory-centric 3D foundation model uses adaptive temporal-spatial memory to support scalable robotic localization, mapping, reconstruction, and Gaussian rendering. | 8 | 8 |
+| 2026-09-20 | [Visual Navigation Transformer with Pose Attention](https://arxiv.org/abs/2609.21212) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | VNT-PA uses camera-pose-aware attention over depth keyframes to reuse spatial experience for more efficient and robust visual navigation. | 9 | 8 |
 | 2026-09-19 | [EvoNav-Bench: Benchmarking Lifelong Navigation in Evolving Environments](https://arxiv.org/abs/2609.08292) | Embodied AI: Robot Navigation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | EvoNav-Bench evaluates lifelong navigation agents when environments change between tasks, exposing failures caused by stale scene representations. | 8 | 7 |
 | 2026-09-18 | [PerSeM: Persistent Semantic Memory for Long-Horizon Open-Vocabulary UAV Mapping](https://arxiv.org/abs/2609.19542) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | PerSeM is a training-free persistent 3D semantic memory that improves the accuracy and temporal stability of long-horizon open-vocabulary UAV maps. | 7 | 7 |
 | 2026-09-17 | [Workspace Models: Lightweight Robotic Memory via Saliency-Driven Supervision](https://arxiv.org/abs/2609.20820) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Workspace tokens distill task-relevant history into lightweight robotic memory, avoiding expensive VLM reasoning during deployment while improving policy performance. | 8 | 8 |
