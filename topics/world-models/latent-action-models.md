@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**37 papers total**
+**42 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-21 | [NeuIDO: Neural Intrinsic Dynamics Operator for Physics-Informed 4D World Models](https://arxiv.org/abs/2609.24313) | World Models: Latent Action Models | NeuIDO learns intrinsic physical dynamics from visual observations, enabling zero-shot prediction in new scenes and few-shot adaptation to complex real-world dynamics. | 9 | 9 |
+| 2026-09-21 | [What Matters in Designing World Action Models: An Empirical Study](https://arxiv.org/abs/2609.24048) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | A controlled empirical study identifies how causal structure, latent representation, and training objectives influence the design and behavior of World Action Models for robot control. | 9 | 8 |
+| 2026-09-21 | [Imagine-RL: Residual-Confidence-Guided Cross-Attention for World-Model-Augmented VLA Reinforcement Learning](https://arxiv.org/abs/2609.24033) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | Imagine-RL improves reinforcement learning for contact-rich manipulation by using a frozen world model to imagine future visual-torque consequences and confidence-weight them when evaluating VLA actions. | 8 | 8 |
+| 2026-09-21 | [Algebraic Consistency Alone Does Not Certify Temporal Structure in Latent Action Models](https://arxiv.org/abs/2609.23478) | World Models: Latent Action Models | Algebraic consistency metrics alone cannot certify that latent action codes capture temporal structure. | 8 | 7 |
+| 2026-09-21 | [Latent Policy Steering: An Efficient and Flexible Framework for Cross-Embodiment Transfer](https://arxiv.org/abs/2609.22521) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | Latent Policy Steering enables efficient cross-embodiment robot learning by using a shared visual world model to steer existing policies with only 50 target-robot demonstrations. | 8 | 8 |
 | 2026-09-20 | [Compact but Moving: Intervention-Relevant Geometry in Recurrent World Models](https://arxiv.org/abs/2609.21787) | World Models: Latent Action Models | Compact intervention structure can persist as a moving, state-dependent geometry in high-dimensional recurrent world models, rather than remaining in a fixed low-dimensional subspace. | 8 | 9 |
 | 2026-09-20 | [Beyond Gaussian Worlds: Latent Geometry Matters for JEPAs](https://arxiv.org/abs/2609.21656) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | JEPAs can recover latent variables beyond Gaussian settings when their target distribution matches the latent geometry, with spherical targets enabling especially strong recovery guarantees. | 8 | 9 |
 | 2026-09-20 | [Riemannian Neural Hamiltonian Flows: Geodesic Symplectic Transport and Interpretability](https://arxiv.org/abs/2609.21647) | World Models: Latent Action Models | Riemannian Neural Hamiltonian Flows provide interpretable, volume-preserving generative modeling on curved spaces using geodesic Hamiltonian dynamics. | 6 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**14 papers total**
+**16 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-21 | [Uranus: Building the Next-Generation Simulation Infrastructure for Embodied AI](https://arxiv.org/abs/2609.24815) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Uranus is a data-driven robot simulator that enables open-ended, low-latency visual rollouts conditioned on online joint trajectories for scalable embodied-AI development. | 8 | 8 |
+| 2026-09-21 | [ConsistWorld: Evidence Routing for Consistent Multi-Agent World Models](https://arxiv.org/abs/2609.22641) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | ConsistWorld routes historical and peer-view evidence to generate consistent, causally streamed videos for multiple camera-controlled agents observing the same static scene. | 7 | 7 |
 | 2026-09-17 | [Recency Forcing: Bridging the Long-Horizon Gap in Autoregressive Video Generation](https://arxiv.org/abs/2609.19729) | Video Generation and Understanding: Autoregressive Video Models | Recency Forcing reduces long-horizon degradation in autoregressive video generation by smoothly downweighting distant context before KV-cache eviction, without extra inference cost. | 8 | 8 |
 | 2026-09-15 | [PhysStream: Streaming Physics-Grounded Video Generation with Structured Scene Memory and Fine-Grained Motion Control](https://arxiv.org/abs/2609.17521) | World Models: Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | PhysStream enables interactive, mid-generation control of physically grounded videos using sparse velocity signals and online scene memory. | 8 | 8 |
 | 2026-09-15 | [AlayaVista: Streaming World Modeling from Panoramic States to Perspective Video](https://arxiv.org/abs/2609.14462) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | AlayaVista streams camera-controllable perspective video by evolving a panoramic latent world state and rendering only the requested view. | 9 | 9 |

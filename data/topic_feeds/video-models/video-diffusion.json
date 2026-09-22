@@ -1,6 +1,1859 @@
 {
   "days": [
     {
+      "date": "2026-09-21",
+      "paper_count": 9,
+      "papers": [
+        {
+          "abstract": "Scalable simulation is essential for robot data generation, policy training, evaluation, and safe iteration, yet real-world interaction is costly and conventional simulators require labor-intensive construction. We present Uranus, a data-driven robot simulator built around a joint-trajectory-conditioned autoregressive diffusion model. Uranus offers three key capabilities: (1) streaming, open-ended rollout, which receives future joint-position trajectories online and autoregressively generates one latent frame per step, corresponding to four RGB frames, without a fixed horizon; (2) low-latency generation, achieving 24 FPS after inference optimization; and (3) scalable, extensible robot control, providing a unified interface for synchronized multi-view generation across diverse robot embodiments and camera configurations. We conduct comprehensive quantitative and qualitative evaluations on both in-distribution and out-of-distribution data, providing an objective assessment of Uranus and clearly identifying its current limitations. We release the code and model weights to empower the community with practical tools and insights.",
+          "arxiv_id": "2609.24815",
+          "arxiv_url": "https://arxiv.org/abs/2609.24815",
+          "authors": [
+            "Wenkang Qin, Yukun Zhou, Noah Shen, Jisong Cai, Dongxiao Mao, Baicheng Li, Yue Zhang, Wei Sui"
+          ],
+          "bullets": [
+            "Addresses the high cost of real-world robot interaction and labor-intensive simulator construction.",
+            "Uses a joint-trajectory-conditioned autoregressive diffusion model to generate one latent frame per step, corresponding to four RGB frames.",
+            "Supports streaming, open-ended rollouts without a fixed horizon and achieves 24 FPS after inference optimization.",
+            "Provides unified, synchronized multi-view control across diverse robot embodiments and camera configurations.",
+            "Evaluations cover in-distribution and out-of-distribution data, while also identifying current limitations; code and model weights are released."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Autoregressive Diffusion Model Framework. Uranus combines an outer causal autoregressive loop with an inner latent flow-matching diffusion process. At rollout step 𝑡, persistent multi-view reference RGB frames and clean history latent frames are encoded together with text instructions, four future joint configurations aligned with the output RGB timestamps, and per-RGB-frame camera geometry. Conditioned on this context, the DiT iteratively transports Gaussian noise toward the next clean multi-view latent, which is decoded by the pretrained VAE into a synchronized RGB chunk of four frames per view. The generated observation is then appended to the history and reused as context for subsequent predictions, enabling jointtrajectory-conditioned long-horizon rollout.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 564,
+              "image_path": "figures/2609.24815/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 823
+            },
+            {
+              "caption": "Figure 2: Overview of Uranus. Uranus is a multi-view image-to-video diffusion transformer for interactive robot simulation. It autoregressively predicts future multi-camera observations from encoded reference RGB frames and clean history latent frames, future joint-position trajectories rendered as temporally aligned skeleton maps, camera geometry encoded by Plücker ray embeddings, and text prompts. For each generated latent frame, four ordered RGB-time condition maps are compressed into one latent-time token slice by learned temporal–spatial projections and added to the video-latent tokens at the DiT input. Clean context tokens are assigned denoising timestep zero, while the current target latent frame is generated from noise with its actual diffusion timestep. Reference anchors use fixed prefix RoPE positions, whereas generated history and target latent frames use a separate latent-time index starting from zero.",
+              "figure_id": "figure-2-20",
+              "figure_number": "2",
+              "height": 695,
+              "image_path": "figures/2609.24815/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 933
+            },
+            {
+              "caption": "Figure 7: Data Storage and Loading Architecture. Left: object storage provides the durable data lake, while accelerated endpoints use NVMe caching and asynchronous prefetching. Right: multiple workers issue asynchronous range reads in parallel; each requested range is extended with a contiguous read-ahead region and decoded samples are assembled through a shared in-memory queue.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 387,
+              "image_path": "figures/2609.24815/figure-003.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 984
+            },
+            {
+              "caption": "Figure 11: Scalable Serving Architecture. A deployment control plane manages multiple serving replicas and performs cache-affinity routing, health monitoring, autoscaling, and A/B testing. Within each replica, an HTTP API layer and local request scheduler dispatch session requests to fixed multi-GPU runners. Each runner executes an optimized runtime for the DiT, VAE, and text encoder. A cluster-level KV-cache pool tracks persistent session state and cache ownership, while cache-affine routing allows subsequent requests to reuse tensors already materialized on the owning runner.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 557,
+              "image_path": "figures/2609.24815/figure-004.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 806
+            },
+            {
+              "caption": "Figure 4: Data Curation Pipeline. We first convert heterogeneous robot datasets into a common representation, then remove episodes with invalid video, incomplete robot states, or synchronization errors. Camera parameters are recalibrated when possible, and the remaining episodes are checked for geometric consistency. The final corpus contains more than 3,300 hours of real-world robot data.",
+              "figure_id": "figure-4-18",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2609.24815/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 971
+            },
+            {
+              "caption": "Figure 3: Cross-Embodiment Skeleton Conditioning. Different robot bodies are converted into a shared image-space skeleton representation through online forward kinematics and camera projection. The examples show representative robot embodiments from our data, including UR5, ALOHA, AGIBOT, ARX5, and DROID.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 864,
+              "image_path": "figures/2609.24815/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 979
+            },
+            {
+              "caption": "Figure 5: Causal Training and Streaming Attention. Left: the teacher-forcing mask packs encoded reference anchors, clean history latent frames, and noisy target latent frames so that each target attends only to valid reference and past context. Right: the streaming-inference heatmap shows the reference attention-sink mechanism, through which generated latent frames retain access to persistent visual anchors and recent latent-frame history.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 464,
+              "image_path": "figures/2609.24815/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 911
+            },
+            {
+              "caption": "Figure 8: Distributed Training Topology. The 1.3B Uranus model is trained on eight nodes with eight GPUs per node. The HSDP mesh contains eight data-parallel replicas and eight FSDP shards per replica. Within every node, the eight ranks are partitioned into two four-rank sequence-parallel groups. Distributed VAE tile encoding and decoding reuse the corresponding SP process group, avoiding an additional communication-group layout.",
+              "figure_id": "figure-8-15",
+              "figure_number": "8",
+              "height": 366,
+              "image_path": "figures/2609.24815/figure-008.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 965
+            },
+            {
+              "caption": "Figure 6: Self-Rollout DMD Fine-Tuning with PCM Regularization. The student and the two score networks are initialized from the same causal pretrained checkpoint, and the student generates training samples under self forcing history. Fine-tuning alternates a fake-score step with a student step. The student objective combines distribution-level DMD supervision with PCM consistency across adjacent diffusion phases to regularize few-step generation and improve long-horizon rollout stability.",
+              "figure_id": "figure-6-24",
+              "figure_number": "6",
+              "height": 343,
+              "image_path": "figures/2609.24815/figure-009.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 954
+            },
+            {
+              "caption": "Figure 12: DiT–VAE Serving Modes. Box widths in (a) and (b) are proportional to the measured stage latencies on H20 GPUs. The disaggregated timeline in (c) illustrates cross-request pipelining; inter-node transfer time is implementation-dependent and is not drawn to scale.",
+              "figure_id": "figure-12-4",
+              "figure_number": "12",
+              "height": 668,
+              "image_path": "figures/2609.24815/figure-010.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 964
+            },
+            {
+              "caption": "Figure 20: Novel-View Synthesis with Modified Camera Parameters. Given camera intrinsics and extrinsics corresponding to unseen or shifted viewpoints, Uranus generates observations from the requested views.",
+              "figure_id": "figure-20-19",
+              "figure_number": "20",
+              "height": 495,
+              "image_path": "figures/2609.24815/figure-011.webp",
+              "kind": "figure",
+              "page": 50,
+              "width": 962
+            },
+            {
+              "caption": "Figure 9: KV-Cache Update Semantics. An LLM reads prior keys/values and appends the current token’s keys/values in the same forward pass. In Uranus, all DiT evaluations inside the denoising loop read a frozen cache while using the current denoising timestep 𝜏𝑘; intermediate noisy latents are not cached. After denoising finishes, a separate outer-loop cache-fill pass processes the clean latent frame with timestep zero and appends its keys/values exactly once.",
+              "figure_id": "figure-9-28",
+              "figure_number": "9",
+              "height": 429,
+              "image_path": "figures/2609.24815/figure-012.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 942
+            },
+            {
+              "caption": "Figure 14: Qualitative Comparison with GE-Sim 2.0. Ground-truth, Uranus, and GE-Sim 2.0 results are generated from matched initial observations and robot-motion trajectories on the AgiBotWorld-Beta evaluation subset. The numbers above the columns indicate the timestamps of the corresponding frames.",
+              "figure_id": "figure-14-13",
+              "figure_number": "14",
+              "height": 393,
+              "image_path": "figures/2609.24815/figure-013.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 922
+            },
+            {
+              "caption": "Figure 13: Quantitative Comparison with GE-Sim 2.0. PSNR and SSIM over different rollout horizons on the 100-example AgiBotWorld-Beta evaluation subset. Results are grouped into 20-second intervals, with each point representing the mean score across all samples within the corresponding interval. Sample 1: Retrieve from the shelf. Place the held cookie biscuit into the shopping cart.",
+              "figure_id": "figure-13-14",
+              "figure_number": "13",
+              "height": 388,
+              "image_path": "figures/2609.24815/figure-014.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 921
+            },
+            {
+              "caption": "Figure 10: Latent-Frame-Aware Sliding-Window KV Cache. The cache is first prefixed with persistent encoded reference-anchor blocks 𝑅1, 𝑅2, 𝑅3. Each generated latent frame, corresponding to a four-frame RGB chunk, is appended as a history block 𝐻𝑡 and becomes available to the next decoding step. The history-window size counts latent-frame blocks. Once it reaches capacity, appending a new latent frame evicts the oldest history block (shown dashed), while all reference-anchor blocks remain pinned as stable visual anchors.",
+              "figure_id": "figure-10-17",
+              "figure_number": "10",
+              "height": 380,
+              "image_path": "figures/2609.24815/figure-015.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 773
+            },
+            {
+              "caption": "Figure 17: Task Generalization. Evaluation protocol and representative rollouts on manipulation tasks excluded from training.",
+              "figure_id": "figure-17-21",
+              "figure_number": "17",
+              "height": 1265,
+              "image_path": "figures/2609.24815/figure-016.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 962
+            },
+            {
+              "caption": "Figure 15: Scene Generalization. Evaluation protocol and representative rollouts in scenes excluded from training.",
+              "figure_id": "figure-15-1",
+              "figure_number": "15",
+              "height": 1255,
+              "image_path": "figures/2609.24815/figure-017.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 962
+            },
+            {
+              "caption": "Figure 18: Embodiment Generalization. Evaluation split and representative rollouts on the unseen G2 embodiment.",
+              "figure_id": "figure-18-27",
+              "figure_number": "18",
+              "height": 1069,
+              "image_path": "figures/2609.24815/figure-018.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 962
+            },
+            {
+              "caption": "Figure 16: Trajectory Generalization. Evaluation protocol and representative rollouts driven by previously unseen action trajectories.",
+              "figure_id": "figure-16-7",
+              "figure_number": "16",
+              "height": 961,
+              "image_path": "figures/2609.24815/figure-019.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 962
+            },
+            {
+              "caption": "Figure 19: Closed-Loop Policy Evaluation Consistency. Each point represents one policy. The horizontal axis shows its mean success rate in Uranus, while the vertical axis shows its mean success rate in the RoboTwin clean environment as the reference.",
+              "figure_id": "figure-19-11",
+              "figure_number": "19",
+              "height": 364,
+              "image_path": "figures/2609.24815/figure-020.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 382
+            },
+            {
+              "caption": "Table 1: Statistics of the utilized robotic datasets.",
+              "figure_id": "table-1-25",
+              "figure_number": "1",
+              "height": 354,
+              "image_path": "figures/2609.24815/table-021.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 906
+            },
+            {
+              "caption": "Table 5: WorldOlympiad Robotics Evaluation. The unified automatic evaluator scores physical rule adherence (Physical), geometric and camera consistency (3D Consistency), semantic instruction alignment (CLIP Score), interaction fidelity and temporal coherence (Interaction), and their aggregate score (Overall). The best score in each column is highlighted with a light-orange background, boldface, and underlining.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 292,
+              "image_path": "figures/2609.24815/table-022.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 983
+            },
+            {
+              "caption": "Table 6: Robot World-Model Capabilities. Comparison of generation interfaces and generalization support. Frames/call counts the RGB frames produced by one model invocation; “causal” denotes causal training and autoregressive inference.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 242,
+              "image_path": "figures/2609.24815/table-023.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 983
+            },
+            {
+              "caption": "Table 3: Data-Access Acceleration. Measured performance before and after enabling the NVMe cache layer. Batch-loading latency is normalized to the object-storage-only baseline.",
+              "figure_id": "table-3-31",
+              "figure_number": "3",
+              "height": 125,
+              "image_path": "figures/2609.24815/table-024.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 617
+            },
+            {
+              "caption": "Table 4: Runtime Acceleration. Left: cumulative normalized inference speedup for the complete 30-layer DiT stack under SP= 1 and SP= 2, with both columns normalized to the SP= 1 eager baseline. Right: isolated speedup of alternative RoPE implementations relative to the original complex-valued operator. Larger values indicate higher throughput.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 163,
+              "image_path": "figures/2609.24815/table-025.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 983
+            },
+            {
+              "caption": "Table 7: Embodiment-OOD Data Split.",
+              "figure_id": "table-7-26",
+              "figure_number": "7",
+              "height": 160,
+              "image_path": "figures/2609.24815/table-026.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 567
+            },
+            {
+              "caption": "Table 12: Representation Probing. Linear probes on pooled action statistics and frozen Uranus features.",
+              "figure_id": "table-12-30",
+              "figure_number": "12",
+              "height": 118,
+              "image_path": "figures/2609.24815/table-027.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 579
+            },
+            {
+              "caption": "Table 11: Feature Ablations and Controls. Alignment controls for the trained Uranus-feature judge.",
+              "figure_id": "table-11-29",
+              "figure_number": "11",
+              "height": 119,
+              "image_path": "figures/2609.24815/table-028.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 475
+            },
+            {
+              "caption": "Table 10: Local Outcome Prediction. Results on the RoboTwin test split. The Uranus-feature judge uses frozen features from the failure-aware checkpoint.",
+              "figure_id": "table-10-23",
+              "figure_number": "10",
+              "height": 96,
+              "image_path": "figures/2609.24815/table-029.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 558
+            },
+            {
+              "caption": "Table 9: Consequence-Prediction Benchmark. RoboTwin local-branch outcome benchmark used for consequence prediction.",
+              "figure_id": "table-9-22",
+              "figure_number": "9",
+              "height": 96,
+              "image_path": "figures/2609.24815/table-030.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 429
+            },
+            {
+              "caption": "Table 8: Real-World Consistency.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 93,
+              "image_path": "figures/2609.24815/table-031.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 279
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.24815/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.24815",
+          "relevance": 8,
+          "selection_reason": "Data-driven simulator using action-conditioned autoregressive diffusion to generate video frames, relevant to world models and video generation.",
+          "summary_status": "generated",
+          "title": "Uranus: Building the Next-Generation Simulation Infrastructure for Embodied AI",
+          "tldr": "Uranus is a data-driven robot simulator that enables open-ended, low-latency visual rollouts conditioned on online joint trajectories for scalable embodied-AI development.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-diffusion",
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "In this paper, we propose SVEET, a framework that requires merely training on a pretrained bidirectional video diffusion model but supports high-quality streaming video editing in an auto-regressive fashion. To tackle this problem, we first systematically revisit existing video-to-video diffusion approaches and identify two key principles for such streaming adaptation: backbone feature disentanglement and conditional frame independence. Building on these insights, we develop a novel paradigm for controllable video generation. At its core, an auxiliary model branch encodes source video inputs with temporally independent self-attention, and the intermediate features are injected into the corresponding backbone blocks for streaming-compatible control. Moreover, to bridge the discrepancy between the feature spaces of bidirectional and streaming models, we propose a decoupled training scheme that explicitly enforces the orthogonality between the optimization directions of video controllability and model causality. Such disentanglement ensures compatibility between the two objectives at inference and facilitates smooth zero-shot knowledge transfer across heterogeneous backbone architectures. Extensive experiments demonstrate that SVEET achieves superior editing quality while maintaining real-time performance, attaining 15 FPS on a single H100 GPU 17 without any auxiliary acceleration techniques. Codes are available at https://github.com/YujiaHu1109/SVEET.",
+          "arxiv_id": "2609.24788",
+          "arxiv_url": "https://arxiv.org/abs/2609.24788",
+          "authors": [
+            "Yujia Hu, Jiajun Li, Zihao He, Songhua Liu"
+          ],
+          "bullets": [
+            "Identifies backbone feature disentanglement and conditional frame independence as key principles for streaming adaptation.",
+            "Uses an auxiliary branch with temporally independent self-attention to encode source videos and inject features into backbone blocks.",
+            "Introduces decoupled training to separate video controllability from model causality and transfer knowledge across heterogeneous backbones.",
+            "Reports superior editing quality with real-time performance of 15 FPS on a single H100 GPU, without auxiliary acceleration."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Our proposed SVEET. Our method builds upon VACE (a) and introduces a temporally independent 2D attention design in the control branch (b). To enable effective transfer from bidirectional to streaming backbones, we further incorporate an orthogonal decoupled training scheme (c) to bridge the feature discrepancy between the two settings.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 317,
+              "image_path": "figures/2609.24788/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 794
+            },
+            {
+              "caption": "Figure 5: Qualitative comparison results on inpainting and depth-to-video generation.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 416,
+              "image_path": "figures/2609.24788/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 820
+            },
+            {
+              "caption": "Figure 4: Qualitative comparison results on stylization.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 391,
+              "image_path": "figures/2609.24788/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Figure 8: Empirical verification of the assumption.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 277,
+              "image_path": "figures/2609.24788/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 800
+            },
+            {
+              "caption": "Figure 9: Representative training samples for three tasks.",
+              "figure_id": "figure-9-4",
+              "figure_number": "9",
+              "height": 369,
+              "image_path": "figures/2609.24788/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 808
+            },
+            {
+              "caption": "Figure 10: Transfer results on different streaming settings. Note that CF refers to Causal Forcing and SF refers to Self Forcing.",
+              "figure_id": "figure-10-8",
+              "figure_number": "10",
+              "height": 608,
+              "image_path": "figures/2609.24788/figure-006.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 800
+            },
+            {
+              "caption": "Figure 6: Visual comparison of different transfer strategies.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 206,
+              "image_path": "figures/2609.24788/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 804
+            },
+            {
+              "caption": "Figure 3: Performance of three representative structures during bidirectional-to-stream transfer.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 154,
+              "image_path": "figures/2609.24788/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 816
+            },
+            {
+              "caption": "Table 1: Quantitative results on three video editing tasks.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 800,
+              "image_path": "figures/2609.24788/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 826
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.24788/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.24788",
+          "relevance": 8,
+          "selection_reason": "Proposes a framework for streaming video editing using a bidirectional video diffusion model, directly relevant to Video Diffusion and controllable generation.",
+          "summary_status": "generated",
+          "title": "Streaming Video Editing with Easy Adaptation",
+          "tldr": "SVEET adapts a pretrained bidirectional video diffusion model for high-quality, autoregressive streaming video editing at real-time speed.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion and flow models, as promising generative paradigms for speech enhancement, face a training--inference mismatch: training uses analytical path states, whereas inference recursively evaluates models on self-generated rollout states along discretized sampling trajectories. This mismatch causes prediction and discretization errors to accumulate. To address it, we introduce Corrective Forcing (CoF), a post-training paradigm that forces diffusion and flow models to learn from self-generated rollouts and correct their predictions. CoF corrects clean-speech predictions on rollout states toward the ground truth under dynamic sampling schedules, exposing the model to varying inference conditions. It further regularizes local evolution using locally corrected counterfactual transitions as references for factual transitions. By expressing model outputs through a shared clean-speech prediction parameterization, CoF applies the same post-training objective across diffusion and flow formulations. Experiments with SB-VE and OT-CFM demonstrate improvements in perceptual quality and reconstruction fidelity, together with robust performance across different numbers of sampling steps.",
+          "arxiv_id": "2609.24651",
+          "arxiv_url": "https://arxiv.org/abs/2609.24651",
+          "authors": [
+            "Qing Yao, Lijian Gao, Qirong Mao"
+          ],
+          "bullets": [
+            "Addresses the mismatch between analytically generated training states and self-generated inference rollouts.",
+            "Trains models on their own rollout states to correct clean-speech predictions toward ground truth.",
+            "Uses dynamic sampling schedules and locally corrected counterfactual transitions to regularize trajectory evolution.",
+            "A shared clean-speech prediction parameterization enables one objective for both diffusion and flow models.",
+            "Experiments with SB-VE and OT-CFM show improved perceptual quality and reconstruction fidelity across sampling-step counts."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Performance comparison with and without CoF at different NFEs on WSJ0+WHAM (top) and WSJ0+REVERB (bottom).",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 263,
+              "image_path": "figures/2609.24651/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1051
+            },
+            {
+              "caption": "Table 1. Performance comparison on VoiceBank+DEMAND.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 377,
+              "image_path": "figures/2609.24651/table-002.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 510
+            },
+            {
+              "caption": "Table 2. Ablation study on VoiceBank+DEMAND with SB-VE.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 245,
+              "image_path": "figures/2609.24651/table-003.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 510
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.24651/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.24651",
+          "relevance": 5,
+          "selection_reason": "General corrective post-training paradigm for diffusion and flow models using self-generated rollouts; transferable to video diffusion training.",
+          "summary_status": "generated",
+          "title": "Corrective Forcing: Unified Post-Training for Diffusions and Flows in Generative Speech Enhancement",
+          "tldr": "Corrective Forcing is a unified post-training method that reduces rollout and discretization errors in diffusion- and flow-based speech enhancement.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Image morphing aims to produce a smooth and semantically consistent transition between two input images. Existing diffusion-based morphing methods either require expensive per-pair optimization or rely on implicit spatial alignment, which easily fails under large layout discrepancies. To address these limitations, we propose AlignMorph, a novel tuning-free diffusion framework guided by the principle of transport-then-denoise. We explicitly decouple geometric alignment from generative denoising to avoid structural entanglement. Our framework consists of two core components. (1) Global Semantic Transport, which achieves diffusion-compatible semantic alignment via entropic optimal transport and reliability-aware latent warping; and (2) Coordinate-Aligned Generation, which uses a symmetric bi-phase attention handoff to maintain consistent spatial coordinates throughout denoising. Without any tuning, AlignMorph effectively eliminates ghosting and achieves superior structural coherence and temporal smoothness on morphing benchmarks. Code is available at https://github.com/51xOne/Alignmorph.",
+          "arxiv_id": "2609.24330",
+          "arxiv_url": "https://arxiv.org/abs/2609.24330",
+          "authors": [
+            "Wuyi Liu, Xu Han, Yuren Chen, Yige Mao, Zishuo Peng, Xianzhi Li"
+          ],
+          "bullets": [
+            "Targets ghosting and poor coherence caused by per-pair optimization and implicit alignment, especially with large layout differences.",
+            "Uses entropic optimal transport and reliability-aware latent warping for global semantic alignment.",
+            "Applies symmetric bi-phase attention handoff to maintain consistent spatial coordinates during denoising.",
+            "Reports improved structural coherence and temporal smoothness on morphing benchmarks without tuning."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of the AlignMorph framework. Following a transport-then-denoise paradigm, our pipeline explicitly decouples geometric alignment from generative refinement. Stage I (left) establishes a shared coordinate frame: it first extracts Semantic Correspondence via Optimal Transport, and then applies Frequency-Aware Multiband Latent Transport to align endpoint latents without corrupting noise statistics. Stage II (right) executes Coordinate-Aligned Generation, utilizing a symmetric bi-phase attention handoff during UNet denoising to enforce geometric consistency and synthesize artifact-free transitions.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 385,
+              "image_path": "figures/2609.24330/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 720
+            },
+            {
+              "caption": "Fig. 6: More transitions generated by AlignMorph. Our method produces robust transitions across diverse image pairs under different scenarios.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 231,
+              "image_path": "figures/2609.24330/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 3: Bidirectional semantic warping via optimal transport. Top row: Original source and target image pairs. Bottom row: Directly decoded warped latents.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 277,
+              "image_path": "figures/2609.24330/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 5: Qualitative comparison. Left (F1 car), Right (Godzilla).",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 389,
+              "image_path": "figures/2609.24330/figure-004.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 717
+            },
+            {
+              "caption": "Fig. 4: Comparison among (a) FreeMorph [7], (b) full latent warping (Warp-All), and (c) our multiband transport on two examples.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 136,
+              "image_path": "figures/2609.24330/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 8: Failure analysis on extreme cross-category morphing. Left: comparison with FreeMorph on a flower-to-monkey pair. Right: confidence maps for cross-category and same-category pairs.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 205,
+              "image_path": "figures/2609.24330/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 725
+            },
+            {
+              "caption": "Table 1: Quantitative comparison on MorphBench and Morph4Data. Results for the first three baselines are directly cited from [7]. For rigorous benchmarking and to ensure a strictly fair comparison, we additionally report the reproduced results of FreeMorph using their official implementation. ↓ indicates lower is better.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 125,
+              "image_path": "figures/2609.24330/table-007.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 725
+            },
+            {
+              "caption": "Table 3: User Preference Rate (%).",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 42,
+              "image_path": "figures/2609.24330/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 339
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.24330/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.24330",
+          "relevance": 8,
+          "selection_reason": "Introduces AlignMorph, a tuning-free diffusion framework for image morphing using explicit semantic transport. Relevant to video diffusion and generative models.",
+          "summary_status": "generated",
+          "title": "AlignMorph: Tuning-Free Diffusion Image Morphing via Explicit Semantic Transport",
+          "tldr": "AlignMorph enables tuning-free diffusion image morphing by explicitly transporting semantics before denoising to preserve structure and smooth transitions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Classifier-free guidance (CFG) improves conditional generation in Flow Matching, but strong guidance can distort the generated distribution and reduce diversity. We provide a geometric account of this behavior by viewing Flow Matching as a time-varying gradient flow and characterizing how CFG reshapes its underlying potential. This view explains how stronger alignment can be accompanied by mean displacement and trajectory concentration, and motivates controlling guidance through the model-implied terminal posterior mean. We therefore propose Posterior-Mean-Capped CFG (PMC-CFG), a training-free, per-sample method that adaptively retains the strongest feasible guidance without additional network evaluations. Experiments on synthetic and large-scale image-generation benchmarks show that PMC-CFG limits guidance-induced distortion and concentration while improving the alignment--diversity trade-off, with particularly strong benefits when nominal guidance is large.",
+          "arxiv_id": "2609.24287",
+          "arxiv_url": "https://arxiv.org/abs/2609.24287",
+          "authors": [
+            "Jishen Peng, Zheng Ma"
+          ],
+          "bullets": [
+            "Analyzes CFG geometrically as a time-varying gradient flow with a reshaped, non-autonomous potential.",
+            "Explains how strong guidance can cause mean displacement, trajectory concentration, and reduced diversity.",
+            "Controls guidance using the model-implied terminal posterior mean.",
+            "Provides a training-free, per-sample method that requires no additional network evaluations.",
+            "Experiments on synthetic and large-scale image-generation benchmarks show improved alignment–diversity trade-offs, especially at high nominal guidance."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Matched qualitative comparisons. Each row uses the same prompt or class and seed. PMC-CFG better retains the unguided composition than fixed CFG on both ImageNet-256 and SD3.5.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 627,
+              "image_path": "figures/2609.24287/figure-001.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 919
+            },
+            {
+              "caption": "Figure 1: From posterior guidance to posterior-mean control. The amber fan becomes more saturated toward the upper-right far field, indicating that p(c | xt) can remain high far from the data region. The straight arrows from xt show the unconditional and conditional posterior means together with the nominal fixed-CFG and controlled PMC-CFG means. Fixed CFG extrapolates along the ray from mu t (x) through mc t(x) and can reach the remote mean mλ t (x), producing overshoot. The short dashed green arc is the locally relevant portion of the relative norm boundary ∥m∥ = Γ∥mc t(x)∥; PMC-CFG selects its intersection with the same extrapolation ray, mPMC",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 405,
+              "image_path": "figures/2609.24287/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 732
+            },
+            {
+              "caption": "Figure 5: Marginal endpoint densities for the same runs as Figure 3. Rows show the conditional baseline (λ = 1), fixed CFG (λ = 3), and PMC-CFG (λ = 3,Γ = 1.1). Histograms are generated marginals and dark curves are the theoretical conditional target. Fixed CFG shifts and concentrates the distribution, whereas PMC-CFG recovers substantially more of its location, spread, and relative mode mass.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 439,
+              "image_path": "figures/2609.24287/figure-003.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 976
+            },
+            {
+              "caption": "Figure 3: Endpoint samples for the analytic mixture. Gray markers are component means, red diamonds are conditioned means, and blue points are samples. PMC-CFG reduces the overshoot and mode concentration caused by strong fixed guidance.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 124,
+              "image_path": "figures/2609.24287/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 972
+            },
+            {
+              "caption": "Figure 7: Additional matched qualitative comparisons on ImageNet-256. Each three-column group compares no guidance, fixed CFG, and PMC-CFG; corresponding images within each group use the same class and initial latent seed. Fixed CFG and PMC-CFG both use nominal guidance scale λ = 2.5.",
+              "figure_id": "figure-7-1",
+              "figure_number": "7",
+              "height": 1256,
+              "image_path": "figures/2609.24287/figure-005.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 918
+            },
+            {
+              "caption": "Figure 8: Additional matched qualitative comparisons on SD3.5 Medium across dog, landscape, bedroom, and people prompts. Each four-row category compares no guidance, fixed CFG, and PMC-CFG using matched prompts and initial latent seeds. Fixed CFG and PMC-CFG both use nominal guidance scale λ = 5.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 1214,
+              "image_path": "figures/2609.24287/figure-006.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 840
+            },
+            {
+              "caption": "Figure 6: ImageNet-256 mechanism diagnostics. From left to right: the conditional and unconditional posterior-mean norms ∥mc t∥ and ∥mu t ∥ evaluated along the λ = 1 trajectory; their gap ∥∆t∥ on the same trajectory; and the effective PMC-CFG scale γeff t = 1 + β∗ t for nominal scale λ = 2.5. The initially smaller unconditional norm and large gap resemble the centered-GMM geometry; as the gap vanishes, the cap relaxes and the effective scale reaches its nominal upper limit. Thin curves denote individual samples and thick curves their averages.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 222,
+              "image_path": "figures/2609.24287/figure-007.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 967
+            },
+            {
+              "caption": "Table 3: SD3.5 Medium results on 5,000 COCO 2017 validation prompts at 10 NFE. Bold indicates the best directional metric within each guidance scale.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 411,
+              "image_path": "figures/2609.24287/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 627
+            },
+            {
+              "caption": "Table 2: ImageNet-256 results on 50K samples. The best FID at each NFE is bold.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 302,
+              "image_path": "figures/2609.24287/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 540
+            },
+            {
+              "caption": "Table 1: Single-run GMM endpoint statistics (n = 2× 105 per row).",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 213,
+              "image_path": "figures/2609.24287/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 818
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.24287/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.24287",
+          "relevance": 8,
+          "selection_reason": "Provides a geometric analysis of Classifier-Free Guidance in Flow Matching and proposes PMC-CFG. Relevant to video diffusion theory and generation control.",
+          "summary_status": "generated",
+          "title": "Classifier-Free Guidance in Flow Matching: Non-Autonomous Potentials, Overshoot, and Posterior-Mean Control",
+          "tldr": "PMC-CFG adaptively caps classifier-free guidance in Flow Matching to preserve alignment while reducing distributional distortion and loss of diversity.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "We ask how little geometry a person has to draw to control both where people stand and where the camera moves in a generated video. Our answer is a ground plane and one cylinder per person. A user draws a grid on the ground, places one cylinder where each person should stand, moves the cylinders and the camera over 81 frames, and the model renders a photoreal video in which the people occupy the cylinders' positions, move as the cylinders move, and are seen from the drawn camera. Appearance comes from a text prompt and a background reference image; layout and motion come from the geometry. Because no dataset pairs such a signal with video, we build the pairs ourselves: an automatic engine writes 2000 captions from a combinatorial seed, generates a clip for each with a text-to-video model, and lifts every clip back to its geometry with person tracking, background inpainting, an agentic ground-mask loop, feed-forward multi-view reconstruction and a plane fit, with no real footage and no manual labels. A LoRA on Wan2.2-Fun-Control trained on 1935 such tuples follows drawn layouts and camera paths on hold-out clips: the generated people match the cylinders' count, order, position and height, the text changes who they are, the reference image changes where they are, and dolly-in, orbit, pan and crane paths are followed, dolly-out only weakly.",
+          "arxiv_id": "2609.24208",
+          "arxiv_url": "https://arxiv.org/abs/2609.24208",
+          "authors": [
+            "Zhangsihao Yang, Mengyi Shan"
+          ],
+          "bullets": [
+            "Users specify a ground grid, one cylinder per person, and camera/cylinder motion over 81 frames.",
+            "A LoRA fine-tunes Wan2.2-Fun-Control to translate these geometric controls into photorealistic video.",
+            "Training pairs are automatically created by generating clips and reconstructing their geometry, without real footage or manual labels.",
+            "On held-out clips, the model preserves people count, order, position, and height while responding to text and reference-image changes.",
+            "It follows dolly-in, orbit, pan, and crane paths; dolly-out control is weaker."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Overview. Top, inference: a person authors the layout in the editor (cylinders on the grid, their paths, a camera path); the rendered control video, a reference image for the background and a text prompt go into Wan2.2-Fun-A14B-Control, which is frozen except for one LoRA per expert; the output video places the people where the cylinders are and moves the camera as drawn. Bottom, training: a language model writes captions from seed cards, a text-to-video model turns them into clips, and the data engine (Fig. 4) lifts each clip to people, background, ground plane and cameras and renders the same control video; the tuple (control video, background, caption, target clip) trains the LoRAs. The renderer and the three input slots are identical at training and at inference; only the control video’s origin differs.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 352,
+              "image_path": "figures/2609.24208/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1022
+            },
+            {
+              "caption": "Figure 4. The data engine. Every training tuple is produced automatically from text. A language model writes the caption from a combinatorial seed card (region, ground archetype, action family, camera move, weather or lighting, number of people, crowd flags), and a second model validates and repairs it; a text-to-video model turns the caption into the clip. The annotation system then lifts the clip to geometry: SAM 3.1 tracks the people, LaMa removes them from frame 0 to give the background reference image, an agent loop proposes and judges SAM 3 phrases for the ground, HunyuanWorld-Mirror recovers cameras, points and normals on 10 keyframes (shown as a 3D view with the camera frusta), a RANSAC plane is fitted and checked against the GeoCalib horizon, each person’s feet are lifted onto the plane, and the grid and cylinders are rendered into the control video. The tuple (control video, background image, caption, target clip) is what the LoRA is trained on; no real footage and no manual labels enter the pipeline.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 139,
+              "image_path": "figures/2609.24208/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 5. Person tracking and background removal. Rows: four clips with one to four people, indoor and outdoor, static and moving cameras. Columns: the input frame at t = 0, the SAM 3.1 person masks at 0, 2.5 and 5 s (one color per track), and the LaMa background obtained by inpainting the union of the masks in frame 0; this background is the reference image the model is conditioned on.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 440,
+              "image_path": "figures/2609.24208/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 932
+            },
+            {
+              "caption": "Figure 6. Authoring from scratch, with and without fitting the ground of the photograph. Two cylinders were placed in the editor, given curved paths that circle and swap sides, and exported under several camera presets (left); the background reference is a photograph of the Colosseum arena and the prompt reads “two Roman soldiers fight with sword, spear and shields in the Colosseum arena”. With the default authoring camera (rows 1–2) the photograph’s horizon lies 180 pixels below the grid’s, and the fighters come out far larger than the cylinders prescribe. After fitting the camera to the photograph with GeoCalib (Sec. 2.4; rows 3–5) the fighters stand at the cylinders’ distance with their feet on the sand, the dolly-in is followed, and the anchored orbit keeps the photograph’s horizon in its first frame, although the model still enlarges the fighters towards the end of the orbit.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 438,
+              "image_path": "figures/2609.24208/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 932
+            },
+            {
+              "caption": "Figure 8. Hold-out results. Rows 1–5 share the geometry of hold-out clip c0599 (two people), rows 6–10 that of c0899 (three people); the first column is the first control frame, the second the background reference image, then three frames of the generated video. Within each block the rows change one thing at a time: nothing (the clip’s own caption and background), the people in the text, the background reference image (taken from the other clip), the scene (a reference image from a third hold-out clip the model never saw), and the action (a prompt outside the training action families). Count, left-to-right order, footprint and height follow the cylinders throughout; appearance follows the text and the background follows the reference image. All clips are hold-out, one fixed seed, no per-case selection.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 988,
+              "image_path": "figures/2609.24208/figure-005.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 748
+            },
+            {
+              "caption": "Figure 9. Camera control. The same two cylinders, caption and reference image rendered under six authored camera paths (left) and the resulting videos (right). Dolly in, orbit, pan and crane are followed; dolly out is followed only weakly (the subjects shrink less than the cylinders), and the pan clip shows a third person in its first frames.",
+              "figure_id": "figure-9-13",
+              "figure_number": "9",
+              "height": 583,
+              "image_path": "figures/2609.24208/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 11. Out-of-distribution tests, uniformly sampled frames. Rows 1–4: the geometry of a hold-out clip with the background reference image of a different hold-out clip the model never saw. Rows 5–8: prompts with actions outside the 118 training action families. Rows 9–10: control videos authored by hand in the editor (Sec. 2.4), geometry that never occurred in training. Each row shows the first control frame, the reference image, and five frames of the generated video at 0, 1.25, 2.5, 3.75 and 5 s. The full videos are on the project page: https://zshyang.github.io/CoaG/.",
+              "figure_id": "figure-11-8",
+              "figure_number": "11",
+              "height": 889,
+              "image_path": "figures/2609.24208/figure-007.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 932
+            },
+            {
+              "caption": "Figure 7. The authoring editor. Left: top view of the ground grid with the camera at the bottom; each person is a colored disc dragged to keyframes, joined by a Bézier path with editable handles (here two fighters that circle and swap sides). Right: the perspective preview drawn with the same projection as the renderer, here over the background photograph; the dashed line is the photograph’s horizon from the ground fit, the dotted line the grid’s horizon, and the camera panel holds the fitted focal length and tilt, the camera height in subject heights, the path preset and the anchoring switch. Export writes a JSON scene that a script renders into the 81-frame control video.",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 554,
+              "image_path": "figures/2609.24208/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 882
+            },
+            {
+              "caption": "Figure 12. Stress tests on hand-authored geometry (same plaza background and static camera unless stated; rows in the order of the panel). Six people in a diagonal line come out as six; eight people, beyond the training range, come out as seven to eight with the palette cycling. Two people crossing paths twice swap sides at both crossings. A 90-degree orbit is followed by the background while the people hold their spots, and a dolly of 2.4 subject heights is followed all the way to a close-up; the steep top-down camera and the ground-level camera are not followed: the video stays at the eye-level viewpoint of the reference image. An adult of 1.7 units next to a child of 0.6 units keeps the height ratio. When the text contradicts the geometry the model compromises: three cylinders with the prompt “one woman alone” give two women, and standing cylinders with the prompt “two people sit on the ground” give two seated people at the cylinders’ footprints, so the text decides the pose while the geometry decides the place. A person walking past the camera leaves the frame with the cylinder, and an empty control with the prompt “empty plaza” gives no people, though the “leaves blowing” clause fills the air with leaves.",
+              "figure_id": "figure-12-10",
+              "figure_number": "12",
+              "height": 985,
+              "image_path": "figures/2609.24208/figure-009.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 932
+            },
+            {
+              "caption": "Figure 10. Failure cases and what they point to. (a) Under a pan a third person appears in the first frames although the control has two cylinders: count errors cluster under moving cameras, which are under-represented in training, so the first fix is more movingcamera data. (b) Under a dolly out the people shrink less than the cylinders, the weakest of the six camera paths; an explicit camera token or a camera-aware loss would give the model a second handle on the path. (c, d) Objects the geometry never mentioned appear when the text implies them (a tripod when the camera sentence says “static tripod camera”, a duck after “duck blind”): the text still adds content that the control does not constrain. (e) Fast motion still produces large artifacts (a snow-spray blob during a hockey stop). (f) With a photograph as background whose viewpoint is higher and wider than the training cameras, the fighters come out larger and closer than the cylinders prescribe; fitting the authored camera to the background image, as the data engine does for training clips, closes the gap (Fig. 6).",
+              "figure_id": "figure-10-11",
+              "figure_number": "10",
+              "height": 502,
+              "image_path": "figures/2609.24208/figure-010.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 496
+            },
+            {
+              "caption": "Figure 3. The control video. One rendered frame with its elements called out, and the real frame it was recovered from. The ground is a wireframe grid drawn in the plane frame, whose origin is the foot of the first camera on the plane, u the first camera’s forward direction projected onto the plane, n the plane normal and v = n × u; the grid spacing is the median subject height, so all lengths are in subject heights. Each main person is one solid cylinder of radius 0.2h and a height h fixed per clip from the first second, standing on the lifted foot point. Colors follow the left-to-right order of the people in the first frame from a fixed six-color palette; cylinders are drawn far to near on a black background with no lighting; the video has 81 frames at 16 fps under the clip’s camera (the authored one at inference).",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 227,
+              "image_path": "figures/2609.24208/figure-011.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1036
+            },
+            {
+              "caption": "Table 3. Preprocessing QC over the 2000 clips. Hard flags drop a clip; soft flags are recorded in the training metadata. Horizon disagreement compares the horizon implied by the fitted plane with the one estimated from frame 0 by GeoCalib. Camera height is the fitted camera height divided by the median subject height.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 515,
+              "image_path": "figures/2609.24208/table-012.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 622
+            },
+            {
+              "caption": "Table 1. Dataset statistics. Caption numbers are counted over the 2000 seed cards and captions; clip numbers over the full preprocessing run. A clip is dropped only when the ground mask, the plane fit or the anchor second fails; a mismatch between the caption’s person count and the tracked count is kept as a soft flag.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 322,
+              "image_path": "figures/2609.24208/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 479
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.24208/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.24208",
+          "relevance": 8,
+          "selection_reason": "Presents coarse 3D layout control for text-to-video generation, directly addressing controllable video synthesis in diffusion-based video models.",
+          "summary_status": "generated",
+          "title": "CoaG: Cylinders on a Grid: Coarse 3D Layout Control for Video Generation",
+          "tldr": "CoaG enables coarse control of generated video by using cylinders for people and a drawn camera path, with appearance guided by text and a reference image.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Despite impressive visual quality, state-of-the-art video diffusion models often generate content that violates real-world physical laws. While existing solutions rely on external priors or specialized data, we investigate the root cause by exploring the internal mechanisms of these models. Specifically, we present the first interpretability study on the ''motion planning'' process of text-to-video diffusion models, revealing how motion trajectories form during early denoising stages. Building upon the ''first shape, then details'' finding, we combine cross-attention trajectory patterns with causal head contributions to identify a specific subset of attention heads driving motion planning. Further, our self-attention analysis shows that Rotary Position Embedding (RoPE) induces excessive spatial attention decay. This causes early candidate regions to prematurely lock into physically implausible positions, suppressing reasonable trajectories in adjacent frames and triggering generation failure modes. To address this fundamental flaw, we propose a lightweight architectural modification that scales the frequency of RoPE across different denoising steps. This strategy reduces excessive attention decay, helping the model explore better candidate regions to establish coherent physical motion. Finally, training-free and training-based experiments confirm the effectiveness of our approach in enhancing the physical commonsense of generated videos.",
+          "arxiv_id": "2609.23658",
+          "arxiv_url": "https://arxiv.org/abs/2609.23658",
+          "authors": [
+            "Yueyan Li, Haibo Wang, Caixia Yuan, Xiaojie Wang"
+          ],
+          "bullets": [
+            "Analyzes how motion trajectories form during early denoising in text-to-video diffusion models.",
+            "Identifies attention heads that drive motion planning by combining cross-attention patterns with causal contributions.",
+            "Finds that RoPE causes excessive spatial attention decay, prematurely locking regions into implausible positions.",
+            "Introduces a lightweight RoPE frequency-scaling modification across denoising steps.",
+            "Training-free and training-based experiments show improved physical commonsense in generated videos."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 23: (Prompt) “Against a pure white background, a basketball falls vertically from midair onto a wooden floor and bounces up several times.” Each subplot corresponds to the generation result of a random seed, where Top: Wan2.1-T2V-1.3B and Bottom: Wan2.1-T2V-1.3BLoRA+modified RoPE. During inference, we apply the RoPE modification with λh = λw = 0.70 on the model trained with modified RoPE during the first 5 steps of denoising. It can be seen that the results of the training-based method are better than those of the training-free method.",
+              "figure_id": "figure-23-8",
+              "figure_number": "23",
+              "height": 574,
+              "image_path": "figures/2609.23658/figure-001.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 826
+            },
+            {
+              "caption": "Figure 9: The mutual consistency between regions in frame 14 and others at denoising step 2 and 3.",
+              "figure_id": "figure-9-24",
+              "figure_number": "9",
+              "height": 361,
+              "image_path": "figures/2609.23658/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Figure 8: The evolution of candidate regions during denoising. Better viewed when zoomed in.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 327,
+              "image_path": "figures/2609.23658/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: The generated videos after the zero ablation of cross-attention heads in 4.2.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 261,
+              "image_path": "figures/2609.23658/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 819
+            },
+            {
+              "caption": "Figure 2: Head-averaged cross-attention maps in layer 27. The trajectory appears within the first 5 denoising steps (annotated at T7). The green circle at T50 marks the reference area in Section 4.1.",
+              "figure_id": "figure-2-25",
+              "figure_number": "2",
+              "height": 259,
+              "image_path": "figures/2609.23658/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 824
+            },
+            {
+              "caption": "Figure 3: The entropy and support quality of cross-attention heads in layer15. Overall, both metrics show distinct turning points around denoising step5, marking the emergence of the trajectory pattern.",
+              "figure_id": "figure-3-36",
+              "figure_number": "3",
+              "height": 259,
+              "image_path": "figures/2609.23658/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 792
+            },
+            {
+              "caption": "Figure 22: (Prompt) “Against a pure white background, a basketball falls vertically from mid-air onto a wooden floor and bounces up several times.” Each subplot corresponds to the generation result of a random seed, where Top: Wan2.1-T2V-1.3B and Bottom: Wan2.1-T2V-1.3B-modified RoPE. This training-free method requires manually tuning the value of λh/w for each case to achieve optimal results, and the generated content often suffers from instability in terms of motion trajectories and object permanence.",
+              "figure_id": "figure-22-13",
+              "figure_number": "22",
+              "height": 588,
+              "image_path": "figures/2609.23658/figure-007.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 826
+            },
+            {
+              "caption": "Figure 11: The evolution of cross-attention head L15H2 during denoising.",
+              "figure_id": "figure-11-39",
+              "figure_number": "11",
+              "height": 260,
+              "image_path": "figures/2609.23658/figure-008.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 819
+            },
+            {
+              "caption": "Figure 10: The denoising process of Wan2.1-T2V-1.3B. After each denoising step t, we directly pass the denoised video latent to the VAE decoder to get the denoised video. Compared to I2V, the initial noise in T2V does not contain any semantic information. Consequently, the video decoded in the early stage of denoising contains a large amount of noise, which is inconvenient for the study of motion planning. In contrast, the pattern of the cross-attention map enables the observation of the process of motion planning at an earlier stage of denoising.",
+              "figure_id": "figure-10-40",
+              "figure_number": "10",
+              "height": 250,
+              "image_path": "figures/2609.23658/figure-009.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 809
+            },
+            {
+              "caption": "Figure 5: Convergence speed vs. contribution of cross-attention heads at denoising step 2.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 339,
+              "image_path": "figures/2609.23658/figure-010.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 432
+            },
+            {
+              "caption": "Figure 15: Row1: The video generated by Wan2.1-T2V-1.3B with the prompt “Against a pure white background, a basketball falls vertically from mid-air onto a wooden floor and bounces up several times.” with a ramdom seed of 8. Row2-6: The generated videos corresponding to the various zero ablations of cross-attention heads in Section 4.2.",
+              "figure_id": "figure-15-6",
+              "figure_number": "15",
+              "height": 316,
+              "image_path": "figures/2609.23658/figure-011.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 819
+            },
+            {
+              "caption": "Figure 14: Row1: The video generated by Wan2.1-T2V-1.3B with the prompt “Against a pure white background, a wooden cube block at the top of a smooth slope slides straight down the slope with steadily and uniformly increasing speed.” with a ramdom seed of 2. Row2-6: The generated videos corresponding to the various zero ablations of cross-attention heads in Section 4.2.",
+              "figure_id": "figure-14-7",
+              "figure_number": "14",
+              "height": 312,
+              "image_path": "figures/2609.23658/figure-012.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 819
+            },
+            {
+              "caption": "Figure 16: Visualizations of the spatial decay in 3D-RoPE in Wan2.1-T2V-1.3B.",
+              "figure_id": "figure-16-23",
+              "figure_number": "16",
+              "height": 331,
+              "image_path": "figures/2609.23658/figure-013.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 783
+            },
+            {
+              "caption": "Figure 17: The evolution of candidate regions during denoising (seed26, layer18, from T1 to T7). Better viewed when zoomed in.",
+              "figure_id": "figure-17-31",
+              "figure_number": "17",
+              "height": 323,
+              "image_path": "figures/2609.23658/figure-014.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 826
+            },
+            {
+              "caption": "Figure 18: The relationship between mutual consistency and anchor distance.",
+              "figure_id": "figure-18-30",
+              "figure_number": "18",
+              "height": 311,
+              "image_path": "figures/2609.23658/figure-015.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 792
+            },
+            {
+              "caption": "Figure 25: (Prompt) “A diver plunges headlong into a sparkling pool.”",
+              "figure_id": "figure-25-34",
+              "figure_number": "25",
+              "height": 307,
+              "image_path": "figures/2609.23658/figure-016.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 826
+            },
+            {
+              "caption": "Figure 26: (Prompt) “Wooden pencil rolls around on a flat desk.”",
+              "figure_id": "figure-26-35",
+              "figure_number": "26",
+              "height": 307,
+              "image_path": "figures/2609.23658/figure-017.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 826
+            },
+            {
+              "caption": "Figure 27: (Prompt) “A whisk mixes an egg in a bowl.”",
+              "figure_id": "figure-27-28",
+              "figure_number": "27",
+              "height": 305,
+              "image_path": "figures/2609.23658/figure-018.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 826
+            },
+            {
+              "caption": "Figure 29: (Prompt) “A large log floats downstream in a rushing river.”",
+              "figure_id": "figure-29-26",
+              "figure_number": "29",
+              "height": 305,
+              "image_path": "figures/2609.23658/figure-019.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 826
+            },
+            {
+              "caption": "Figure 30: (Prompt) “Refrigerator door closing after getting a soda.”",
+              "figure_id": "figure-30-21",
+              "figure_number": "30",
+              "height": 305,
+              "image_path": "figures/2609.23658/figure-020.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 826
+            },
+            {
+              "caption": "Figure 32: (Prompt) “Bottle topples off the table.”",
+              "figure_id": "figure-32-22",
+              "figure_number": "32",
+              "height": 305,
+              "image_path": "figures/2609.23658/figure-021.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 826
+            },
+            {
+              "caption": "Figure 24: (Prompt) “Cork being twisted out of a bottle.”",
+              "figure_id": "figure-24-33",
+              "figure_number": "24",
+              "height": 304,
+              "image_path": "figures/2609.23658/figure-022.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 826
+            },
+            {
+              "caption": "Figure 28: (Prompt) “A tyre rolls through a large puddle, splashing water.”",
+              "figure_id": "figure-28-27",
+              "figure_number": "28",
+              "height": 304,
+              "image_path": "figures/2609.23658/figure-023.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 826
+            },
+            {
+              "caption": "Figure 31: (Prompt) “Wine pouring from a bottle into a glass.”",
+              "figure_id": "figure-31-20",
+              "figure_number": "31",
+              "height": 304,
+              "image_path": "figures/2609.23658/figure-024.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: From top to bottom are the videos generated by Wan-T2V-1.3B on an A800 GPU using seeds 26, 20, 8, and 29, respectively. Except for the first row, the others visibly violate physical laws, exhibiting behaviors such as mid-air bouncing, anti-gravity floating or sudden freezing.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 223,
+              "image_path": "figures/2609.23658/figure-025.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 7: Candidate regions (bottom) extracted from the head-averaged cross-attention in layer 16.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 119,
+              "image_path": "figures/2609.23658/figure-026.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Head-averaged self-attention map from a region in frame 0 to other frames in layer 20.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 102,
+              "image_path": "figures/2609.23658/figure-027.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 824
+            },
+            {
+              "caption": "Figure 19: The winner-loser gap of mutual consistency (i.e. the difference between the average mutual consistency of the winners in all frames and that of the strongest losers) with denoising steps in all layers. We only show the first 25 denoising steps for convenience since the mutual consistency doesn’t change significantly in the later stages of denoising. As can be seen, during the first few denoising steps, the difference in mutual consistency between the winner and the strongest loser is often less than zero, meaning that the confidence at the object position in the final trajectory can be lower than that of other regions. This indicates that during the early motion planning phase, candidate regions undergo a highly sensitive competitive phase.",
+              "figure_id": "figure-19-3",
+              "figure_number": "19",
+              "height": 1092,
+              "image_path": "figures/2609.23658/figure-028.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 827
+            },
+            {
+              "caption": "Figure 13: Examples of the cross-attention heads mentioned in section 5. Specifically, (a): L6H3, (b): L26H3, (c): L15H2, (d): L9H7. The attention maps are selected at denoising step 7.",
+              "figure_id": "figure-13-38",
+              "figure_number": "13",
+              "height": 206,
+              "image_path": "figures/2609.23658/figure-029.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 819
+            },
+            {
+              "caption": "Figure 12: The attention pattern of cross-attention head L15H1. During the denoising process, its attention pattern consistently remains like this.",
+              "figure_id": "figure-12-37",
+              "figure_number": "12",
+              "height": 52,
+              "image_path": "figures/2609.23658/figure-030.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 826
+            },
+            {
+              "caption": "Figure 21: The minimum, maximum, and average values of λh/w during training. Values of λh/w are sampled at denoising timestep=900 (out of 1,000 steps), and trends of λh/w across other timesteps are similar. The minimum and maximum values of λh/w continuously decrease/increase, while the average value remains stable around 1.0, indicating that approximately half of the self-attention heads adjust their λh/w to values less than 1.",
+              "figure_id": "figure-21-29",
+              "figure_number": "21",
+              "height": 210,
+              "image_path": "figures/2609.23658/figure-031.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 818
+            },
+            {
+              "caption": "Figure 20: “Cork being twisted out of a bottle”. Under identical settings, additionally training FFN during LoRA fine-tuning tends to degrade aesthetic attributes such as the shapes of objects.",
+              "figure_id": "figure-20-4",
+              "figure_number": "20",
+              "height": 195,
+              "image_path": "figures/2609.23658/figure-032.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 826
+            },
+            {
+              "caption": "Figure 36: (Prompt) “A car gliding over a road slick with rainwater.”",
+              "figure_id": "figure-36-15",
+              "figure_number": "36",
+              "height": 132,
+              "image_path": "figures/2609.23658/figure-033.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 826
+            },
+            {
+              "caption": "Figure 34: (Prompt) “Spatula flips pancake in air.”",
+              "figure_id": "figure-34-18",
+              "figure_number": "34",
+              "height": 131,
+              "image_path": "figures/2609.23658/figure-034.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 826
+            },
+            {
+              "caption": "Figure 33: (Prompt) “A teaspoon stirs sugar into a cup of coffee.”",
+              "figure_id": "figure-33-14",
+              "figure_number": "33",
+              "height": 129,
+              "image_path": "figures/2609.23658/figure-035.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 826
+            },
+            {
+              "caption": "Figure 35: (Prompt) “A diver takes a plunge into a swift river.”",
+              "figure_id": "figure-35-16",
+              "figure_number": "35",
+              "height": 129,
+              "image_path": "figures/2609.23658/figure-036.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 826
+            },
+            {
+              "caption": "Figure 37: (Prompt) “Brick falling onto another brick.”",
+              "figure_id": "figure-37-17",
+              "figure_number": "37",
+              "height": 129,
+              "image_path": "figures/2609.23658/figure-037.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 826
+            },
+            {
+              "caption": "Table 3: Main architecture and inference parameters of Wan2.1-T2V-1.3B.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 482,
+              "image_path": "figures/2609.23658/table-038.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 818
+            },
+            {
+              "caption": "Table 1: Experimental results of modified RoPE on VideoPhy. “PR” means prompt refinement.",
+              "figure_id": "table-1-32",
+              "figure_number": "1",
+              "height": 232,
+              "image_path": "figures/2609.23658/table-039.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 818
+            },
+            {
+              "caption": "Table 2: Summary of Notations",
+              "figure_id": "table-2-19",
+              "figure_number": "2",
+              "height": 112,
+              "image_path": "figures/2609.23658/table-040.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 827
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.23658/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.23658",
+          "relevance": 9,
+          "selection_reason": "Provides interpretability into why video diffusion models violate physics, identifying specific attention mechanism flaws (RoPE decay) and proposing architectural fixes.",
+          "summary_status": "generated",
+          "title": "Why Do Video Diffusion Models Violate Physics? Unveiling the Flaws in Attention Mechanisms",
+          "tldr": "The study traces video diffusion models’ physics violations to RoPE-induced attention decay and proposes a lightweight denoising-step frequency adjustment to improve physical motion coherence.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Video diffusion transformers are expensive because attention dominates long spatiotemporal token sequences. We identify the \\emph{high-sparsity trap}: at extreme attention sparsity, step-local training losses keep decreasing while terminal generation quality stagnates or degrades. The trap is one of supervision: the dominant terminal errors originate in the high-noise structure-generation stage, and terminal-aligned training corrects terminal errors that substantially extended step-local training cannot. This yields a simple staging principle: \\emph{first adapt the sparse architecture into a coarse prior, then correct the terminal distribution}. We instantiate the principle as \\method, a unified acceleration framework for visual generation that combines a short sparse warm-up, few-step trajectory-mixed distillation, and FP8 quantization with fused kernels. \\method sustains $97\\%$ attention sparsity with strong visual quality on long-sequence 720P generation across Wan2.1/Wan2.2 backbones and T2V/I2V tasks, and $90\\%$ sparsity on Wan2.1-T2V-1.3B-480P. With 3-step CFG-free inference, \\method achieves a $265\\times$ end-to-end speedup over the 50-step CFG dense baseline for Wan2.1-T2V-14B-720P on a single RTX~5090 ($220\\times$ on H100), and denoises a Wan2.1-T2V-1.3B-480P video in $1.3$s.",
+          "arxiv_id": "2609.23153",
+          "arxiv_url": "https://arxiv.org/abs/2609.23153",
+          "authors": [
+            "Yuxi Liu, Haoyu Li, Zekun Zhang, Tengxu Sun, Yixiang Cai, Jiayong Li, Yifei Xia, Tianle Liu, Baole Ai, Ang Wang, Jiamang Wang, Lin Qu, Kai Zhang, Kun Yuan, Bin Cui"
+          ],
+          "bullets": [
+            "Identifies a high-sparsity trap where step-local losses improve but terminal generation quality stagnates or worsens.",
+            "Attributes the issue to insufficient supervision of high-noise, structure-generation errors that dominate final outputs.",
+            "Uses staged training: sparse architectural warm-up followed by terminal-aligned few-step trajectory-mixed distillation.",
+            "Combines up to 97% attention sparsity with FP8 quantization and fused kernels across Wan backbones and T2V/I2V tasks.",
+            "Reports up to 265× single-GPU end-to-end speedup with 3-step CFG-free inference, including 1.3-second 480P video denoising."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 9 Overview of the SparkDiffusion framework (stages detailed in Sec. 4.1–4.3).",
+              "figure_id": "figure-9-24",
+              "figure_number": "9",
+              "height": 527,
+              "image_path": "figures/2609.23153/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 791
+            },
+            {
+              "caption": "Figure 1 SparkDiffusion teaser. From one pretrained dense video DiT, SparkDiffusion delivers high quality frames across Wan2.1/Wan2.2, T2V/I2V, and 480P/720P with 3-step inference, sustaining 97% attention sparsity on long-sequence 720P models and 90% on the compact Wan2.1-T2V-1.3B-480P.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 937,
+              "image_path": "figures/2609.23153/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1079
+            },
+            {
+              "caption": "Figure 2 End-to-end latency and speedup of SparkDiffusion over Full Attention across Wan video generation models on NVIDIA H100 and RTX 5090 GPUs. Suffixes “90” and “97” denote attention sparsity levels. Speedup is the latency ratio of the full SparkDiffusion stack (few-step distillation, attention sparsity, and FP8) against the dense baseline; NFE conventions follow footnotes 1.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 383,
+              "image_path": "figures/2609.23153/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 886
+            },
+            {
+              "caption": "Figure 4 The high-sparsity trap is rooted in high-noise structure errors. Oracle probe: from the same initial noise, the sparse model’s velocity is replaced by the dense teacher’s velocity inside a short window of sampling steps (“fix ”; σ in the legend is the flow-matching noise level; Wan2.1-T2V-14B-480P, 50-step sampler, 32 prompts × 4 seeds; error bars: 95% CI). (a) Terminal error to the dense reference output (latent MSE, ↓; the teacher is the zero reference and is off the log scale). (b,c) Gains over the uncorrected sparse model (↑; dashed: dense teacher). At 97% sparsity, fixing the five highest-noise steps removes most of the terminal error, while fixing the five lowest-noise steps leaves it essentially unchanged (beige band: equal-budget gap between the two 5-step fixes); a wider 28-step high-noise window recovers nearly all of it. Both the student and the teacher are sampled with classifier-free guidance, and the intervention replaces the student’s guided velocity with the teacher’s guided velocity, isolating sparsity-induced error from any CFG-removal effect.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 321,
+              "image_path": "figures/2609.23153/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 936
+            },
+            {
+              "caption": "Figure 8 Qualitative comparison at 97% attention sparsity on Wan2.1-T2V-14B-720P. We compare the dense teacher, the multi-step sparse model, and the few-step sparse model obtained after trajectory-mixed distillation.",
+              "figure_id": "figure-8-17",
+              "figure_number": "8",
+              "height": 312,
+              "image_path": "figures/2609.23153/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 836
+            },
+            {
+              "caption": "Figure 11 Few-step distillation preserves sample diversity. On Wan2.1-T2V-14B-480P, for each of two prompts, we show one frame per video under three models (dense teacher; sparse model with 90% block sparsity and rank-64 compensation; 3-step student distilled from it) using the same four noise seeds.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 298,
+              "image_path": "figures/2609.23153/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 740
+            },
+            {
+              "caption": "Figure 13 Wan2.1-T2V-14B-480P. Qualitative results at 480× 832 resolution with 81 frames; all methods operate at 90% attention sparsity.",
+              "figure_id": "figure-13-21",
+              "figure_number": "13",
+              "height": 352,
+              "image_path": "figures/2609.23153/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 986
+            },
+            {
+              "caption": "Figure 7 Validation loss and raw quality metrics for Wan2.1-14B across sparsity levels. The “Dense pixel MSE” panel reports the terminal error of Sec.3 after VAE decoding, sharing the pixel-space footing of the other quality panels.",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 531,
+              "image_path": "figures/2609.23153/figure-008.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Figure 6 Video frame comparison on Wan2.1-T2V-14B-480P under attention sparsity levels 80%, 90%, 95%, and 97%.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 267,
+              "image_path": "figures/2609.23153/figure-009.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 932
+            },
+            {
+              "caption": "Figure 10 Sparse warm-up provides the coarse prior for terminal-aligned distillation. On Wan2.1-T2V-14B480P, all models are followed by the same trajectory-mixed distillation stage; a short sparse warm-up establishes the usable coarse prior on which distillation builds.",
+              "figure_id": "figure-10-25",
+              "figure_number": "10",
+              "height": 256,
+              "image_path": "figures/2609.23153/figure-010.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 494
+            },
+            {
+              "caption": "Figure 5 Sliced-W2 distance to the data distribution along the denoising trajectory on six toy 2D sequence manifolds. The sparse model is trained until validation loss plateaus, while the distilled student is obtained by trajectory-mixed distillation.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 260,
+              "image_path": "figures/2609.23153/figure-011.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 443
+            },
+            {
+              "caption": "Figure 12 Wan2.1-T2V-1.3B-480P. Qualitative results at 480× 832 resolution with 81 frames; TurboDiffusion and FastWan and SparkDiffusion operate at 90% attention sparsity.",
+              "figure_id": "figure-12-28",
+              "figure_number": "12",
+              "height": 350,
+              "image_path": "figures/2609.23153/figure-012.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 986
+            },
+            {
+              "caption": "Figure 14 Wan2.1-T2V-14B-720P. Qualitative results at 720× 1280 resolution with 81 frames; TurboDiffusion and FastWan operate at 90% attention sparsity, SparkDiffusion at 97%.",
+              "figure_id": "figure-14-20",
+              "figure_number": "14",
+              "height": 350,
+              "image_path": "figures/2609.23153/figure-013.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 986
+            },
+            {
+              "caption": "Figure 15 Wan2.1-I2V-14B-720P. Qualitative results at 720× 1280 resolution with 81 frames; SparkDiffusion operates at 97% attention sparsity.",
+              "figure_id": "figure-15-14",
+              "figure_number": "15",
+              "height": 532,
+              "image_path": "figures/2609.23153/figure-014.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 832
+            },
+            {
+              "caption": "Figure 16 Wan2.2-T2V-A14B-720P. Qualitative results at 720× 1280 resolution with 81 frames; SparkDiffusion operates at 97% attention sparsity.",
+              "figure_id": "figure-16-15",
+              "figure_number": "16",
+              "height": 445,
+              "image_path": "figures/2609.23153/figure-015.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 836
+            },
+            {
+              "caption": "Figure 3 Headline speedup. On Wan2.1-T2V-14B-720P, SparkDiffusion composes three multiplicative factors— 3-step CFG-free distillation, 97% compensated sparse attention, and fused FP8 kernels—into a measured 265× end-to-end speedup over the dense baseline (footnotes 1).",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 243,
+              "image_path": "figures/2609.23153/figure-016.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 494
+            },
+            {
+              "caption": "Figure 17 Qualitative sample overlays for the same six toy sequence manifolds. In this toy setting, the multi-step sparse model can drift away from the data distribution, producing distorted or misaligned contours, while the 3-step distilled student produces more globally consistent shapes.",
+              "figure_id": "figure-17-19",
+              "figure_number": "17",
+              "height": 739,
+              "image_path": "figures/2609.23153/figure-017.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 494
+            },
+            {
+              "caption": "Figure 18 Roadmap of the mechanism. Each box states one step of the argument and where it is proved. The proof is Hilbert-space geometry: a quadratic step-local loss and a linear terminal functional see the same residual differently. Sparsity enters only through empirical inputs—the residual left by sparse training and the trainable correction subspace—not as a mathematical object in the proof.",
+              "figure_id": "figure-18-26",
+              "figure_number": "18",
+              "height": 487,
+              "image_path": "figures/2609.23153/figure-018.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 686
+            },
+            {
+              "caption": "Table 2 Comparison of generation quality and efficiency on VBench [6] and VBench-2.0 [37]. We evaluate Wan2.1-T2V1.3B at 480× 832, and Wan2.1-T2V-14B and Wan2.2-T2V-A14B at 720× 1280, all with 81 frames. VBench-2.0 reports the overall score and five capability categories: Creativity, Commonsense, Controllability, Human Fidelity, and Physics. “Sp.” denotes attention sparsity; NFE conventions follow footnotes 1. All SparkDiffusion rows are measured with the full deployment stack active—W8A8 FP8 quantization with fused kernels—for both quality metrics and latency; baselines are evaluated with their official inference pipelines, including their own quantization settings. Full Attention rows use our strongest dense implementation: BF16 with FlashAttention-2 on RTX 5090 and FlashAttention-3 on H100, and no other acceleration technique. For Wan2.2-T2V-A14B-720P, the RTX 5090 latency includes the overhead of swapping the high-noise and low-noise expert groups in GPU memory; on H100 both expert groups reside in memory simultaneously. Bold marks the best result among accelerated methods within each model block.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 391,
+              "image_path": "figures/2609.23153/table-019.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 994
+            },
+            {
+              "caption": "Figure 19 The exchange rate inside the surrogate (Corollary C.7, Proposition C.8). Along the optimal path the terminal error falls linearly in the displacement fraction t while the step-local loss rises only quadratically ; the residual norm ∥e(a(t))∥2h = β2 + 2t2C follows the same quadratic. This is the formal reason for a staged recipe rather than a single joint objective. Both axes are surrogate quantities: neither is FID, sliced-W2, or wall-clock training cost.",
+              "figure_id": "figure-19-16",
+              "figure_number": "19",
+              "height": 143,
+              "image_path": "figures/2609.23153/figure-020.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 593
+            },
+            {
+              "caption": "Table 7 The high-sparsity trap across trainable sparse designs (Wan2.1-T2V-14B-480P). Step-local-only rows are trained from the same dense checkpoint with the flow-matching loss (1) under the extended 10,000-step budget of Sec. 3; terminal error is the paired latent MSE of Sec. 3. “FastWan recipe” retrains the official VSA training pipeline [35] with only the sparsity level changed to 97%, and is evaluated under its official inference settings; “+Stage 2” applies our trajectory-mixed distillation to the corresponding 97% checkpoint.",
+              "figure_id": "table-7-22",
+              "figure_number": "7",
+              "height": 329,
+              "image_path": "figures/2609.23153/table-021.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 783
+            },
+            {
+              "caption": "Table 6 Notation used in the appendix. The key objects are the per-step velocity error e, the terminal sensitivity s, the trainable correction subspace U , and the two objectives: the step-local loss L and the terminal error Ψ.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 669,
+              "image_path": "figures/2609.23153/table-022.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 986
+            },
+            {
+              "caption": "Table 8 Training configuration of Stage 1 sparse warm-up on Wan2.1-T2V-14B.",
+              "figure_id": "table-8-23",
+              "figure_number": "8",
+              "height": 848,
+              "image_path": "figures/2609.23153/table-023.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 1014
+            },
+            {
+              "caption": "Table 9 Training configuration of Stage 2 trajectory-mixed distillation on Wan2.1-T2V-14B.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 814,
+              "image_path": "figures/2609.23153/table-024.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 1014
+            },
+            {
+              "caption": "Table 1 Terminal error (paired latent MSE) at 97% sparsity with rank-64 vs. full-rank (r=128) compensation (Wan2.1-T2V-14B-480P, 10,000 steps).",
+              "figure_id": "table-1-27",
+              "figure_number": "1",
+              "height": 88,
+              "image_path": "figures/2609.23153/table-025.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 465
+            },
+            {
+              "caption": "Table 5 FP8 (W8A8) versus BF16 generation quality on deployed SparkDiffusion models (3-step CFG-free inference).",
+              "figure_id": "table-5-18",
+              "figure_number": "5",
+              "height": 160,
+              "image_path": "figures/2609.23153/table-026.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 1056
+            },
+            {
+              "caption": "Table 3 Quantitative diversity comparison on Wan2.1-T2V-14B-720P. Each video is encoded by two frozen video encoders, V-JEPA 2 [1] and VideoMAE V2 [21]; we report the average pairwise cosine and ℓ2 distances among N=5 videos sampled from the same prompt with 5 noise seeds (1,000 prompts; protocol follows Shaul et al. [16]).",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 166,
+              "image_path": "figures/2609.23153/table-027.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 986
+            },
+            {
+              "caption": "Table 4 Distillation-objective ablation at 97% attention sparsity (Wan2.1-T2V-14B-720P; 3-step CFG-free student; All 3-step student rows initialize from the same Stage-1 warm-up checkpoint.)",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 139,
+              "image_path": "figures/2609.23153/table-028.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 525
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.23153/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.23153",
+          "relevance": 8,
+          "selection_reason": "Accelerates video diffusion transformers using extreme attention sparsity and distillation, fitting both video diffusion and efficient token processing.",
+          "summary_status": "generated",
+          "title": "SparkDiffusion: Mitigating the High-Sparsity Trap --- A Unified Framework for up to $265\\times$ Single-GPU Acceleration of Visual Generation",
+          "tldr": "SparkDiffusion combines sparse attention, distillation, and FP8 acceleration to enable high-quality, highly accelerated video diffusion generation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Understanding the design space of streaming video diffusion is essential to exploring its potential for generation quality and computational efficiency. We develop a unified analytical framework that relates model and sampler choices, historical conditioning, execution scheduling, and training strategies. The framework accommodates a broad family of causal context-selection policies and makes their computational dependencies and training-inference alignment explicit. Within this design space, we study three representative policies: clean, same-level, and progressive history. On the full VBench prompt set, same-level and progressive history achieve aggregate scores of 85.24 and 85.60, respectively, compared with 84.45 for the clean-history reference. Long-video comparisons further show improved subject consistency and more coherent motion with progressive history. By allowing multiple denoising nodes to be processed together, progressive-history pipelining achieves $1.57$-$2.83\\times$ steady-state DiT speedups under our evaluated conditions. We additionally find that LoRA adaptation of the DMD fake-score network improves generation quality using only 2.15% as many trainable fake-score parameters as full-parameter adaptation. Together, these findings show that fully denoised history is not a prerequisite for high-quality streaming generation and motivate the joint design of historical conditioning, execution, and training.",
+          "arxiv_id": "2609.22283",
+          "arxiv_url": "https://arxiv.org/abs/2609.22283",
+          "authors": [
+            "Hongchen Zhang (University of Chinese Academy of Sciences)"
+          ],
+          "bullets": [
+            "Analyzes how model/sampler choices, causal history policies, scheduling, and training interact in streaming video diffusion.",
+            "Evaluates clean, same-level, and progressive history; progressive history gives the highest reported VBench score (85.60).",
+            "Progressive history improves long-video subject consistency and motion coherence while enabling 1.57–2.83× steady-state DiT speedups under the evaluated conditions.",
+            "LoRA adaptation of the DMD fake-score network improves quality with 2.15% of the trainable parameters used by full adaptation.",
+            "Findings suggest fully denoised history is not required for high-quality streaming generation."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Fully serial and pipelined denoising. (a) Serial execution completes all K updates of one chunk before starting the next, yielding BK sequential rounds. (b) Pipelined execution advances multiple chunks at staggered denoising levels, yielding B +K − 1 rounds under sufficient parallel resources while preserving the same BK chunk-level updates.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 298,
+              "image_path": "figures/2609.22283/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 664
+            },
+            {
+              "caption": "Figure 1: Representative historical context policies. Columns correspond to video chunks and rows to denoising levels. Highlighted historical states condition the current denoising update shown in orange: (a) clean history, (b) same-level history, and (c) progressive history.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 298,
+              "image_path": "figures/2609.22283/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 664
+            },
+            {
+              "caption": "Table 4: Shared training configurations for clean, same-level, and progressive context adaptation with fake-score LoRA. The additional full-parameter fakescore variant is evaluated under progressive history only. The student is fully trainable in all configurations.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 768,
+              "image_path": "figures/2609.22283/table-003.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 827
+            },
+            {
+              "caption": "Table 5: Complete VBench dimension-level results on the full prompt set. Values are raw scores multiplied by 100, before normalization for aggregation. Higher is better in each dimension; the best result in each row is bold, including ties.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 530,
+              "image_path": "figures/2609.22283/table-004.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 552
+            },
+            {
+              "caption": "Table 3: Steady-state DiT latency (ms/chunk) and speedup.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 144,
+              "image_path": "figures/2609.22283/table-005.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 527
+            },
+            {
+              "caption": "Table 1: Generation quality under three context policies. Higher is better.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 118,
+              "image_path": "figures/2609.22283/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 586
+            },
+            {
+              "caption": "Table 2: Fake-score adaptation under progressive history.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 94,
+              "image_path": "figures/2609.22283/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 664
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.22283/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.22283",
+          "relevance": 7,
+          "selection_reason": "Analyzes streaming video diffusion design space including context selection, execution scheduling, and training, directly relevant to video diffusion.",
+          "summary_status": "generated",
+          "title": "Rethinking Streaming Video Diffusion Model: Context, Execution, and Training",
+          "tldr": "A unified framework shows that streaming video diffusion can improve quality and efficiency through joint design of history conditioning, execution scheduling, and training.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-20",
       "paper_count": 4,
       "papers": [
@@ -13601,5 +15454,5 @@
   "schema_version": 1,
   "subtopic_id": "video-diffusion",
   "topic_id": "video-models",
-  "total_paper_count": 78
+  "total_paper_count": 87
 }

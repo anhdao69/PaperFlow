@@ -1,6 +1,503 @@
 {
   "days": [
     {
+      "date": "2026-09-21",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Scalable simulation is essential for robot data generation, policy training, evaluation, and safe iteration, yet real-world interaction is costly and conventional simulators require labor-intensive construction. We present Uranus, a data-driven robot simulator built around a joint-trajectory-conditioned autoregressive diffusion model. Uranus offers three key capabilities: (1) streaming, open-ended rollout, which receives future joint-position trajectories online and autoregressively generates one latent frame per step, corresponding to four RGB frames, without a fixed horizon; (2) low-latency generation, achieving 24 FPS after inference optimization; and (3) scalable, extensible robot control, providing a unified interface for synchronized multi-view generation across diverse robot embodiments and camera configurations. We conduct comprehensive quantitative and qualitative evaluations on both in-distribution and out-of-distribution data, providing an objective assessment of Uranus and clearly identifying its current limitations. We release the code and model weights to empower the community with practical tools and insights.",
+          "arxiv_id": "2609.24815",
+          "arxiv_url": "https://arxiv.org/abs/2609.24815",
+          "authors": [
+            "Wenkang Qin, Yukun Zhou, Noah Shen, Jisong Cai, Dongxiao Mao, Baicheng Li, Yue Zhang, Wei Sui"
+          ],
+          "bullets": [
+            "Addresses the high cost of real-world robot interaction and labor-intensive simulator construction.",
+            "Uses a joint-trajectory-conditioned autoregressive diffusion model to generate one latent frame per step, corresponding to four RGB frames.",
+            "Supports streaming, open-ended rollouts without a fixed horizon and achieves 24 FPS after inference optimization.",
+            "Provides unified, synchronized multi-view control across diverse robot embodiments and camera configurations.",
+            "Evaluations cover in-distribution and out-of-distribution data, while also identifying current limitations; code and model weights are released."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Autoregressive Diffusion Model Framework. Uranus combines an outer causal autoregressive loop with an inner latent flow-matching diffusion process. At rollout step 𝑡, persistent multi-view reference RGB frames and clean history latent frames are encoded together with text instructions, four future joint configurations aligned with the output RGB timestamps, and per-RGB-frame camera geometry. Conditioned on this context, the DiT iteratively transports Gaussian noise toward the next clean multi-view latent, which is decoded by the pretrained VAE into a synchronized RGB chunk of four frames per view. The generated observation is then appended to the history and reused as context for subsequent predictions, enabling jointtrajectory-conditioned long-horizon rollout.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 564,
+              "image_path": "figures/2609.24815/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 823
+            },
+            {
+              "caption": "Figure 2: Overview of Uranus. Uranus is a multi-view image-to-video diffusion transformer for interactive robot simulation. It autoregressively predicts future multi-camera observations from encoded reference RGB frames and clean history latent frames, future joint-position trajectories rendered as temporally aligned skeleton maps, camera geometry encoded by Plücker ray embeddings, and text prompts. For each generated latent frame, four ordered RGB-time condition maps are compressed into one latent-time token slice by learned temporal–spatial projections and added to the video-latent tokens at the DiT input. Clean context tokens are assigned denoising timestep zero, while the current target latent frame is generated from noise with its actual diffusion timestep. Reference anchors use fixed prefix RoPE positions, whereas generated history and target latent frames use a separate latent-time index starting from zero.",
+              "figure_id": "figure-2-20",
+              "figure_number": "2",
+              "height": 695,
+              "image_path": "figures/2609.24815/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 933
+            },
+            {
+              "caption": "Figure 7: Data Storage and Loading Architecture. Left: object storage provides the durable data lake, while accelerated endpoints use NVMe caching and asynchronous prefetching. Right: multiple workers issue asynchronous range reads in parallel; each requested range is extended with a contiguous read-ahead region and decoded samples are assembled through a shared in-memory queue.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 387,
+              "image_path": "figures/2609.24815/figure-003.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 984
+            },
+            {
+              "caption": "Figure 11: Scalable Serving Architecture. A deployment control plane manages multiple serving replicas and performs cache-affinity routing, health monitoring, autoscaling, and A/B testing. Within each replica, an HTTP API layer and local request scheduler dispatch session requests to fixed multi-GPU runners. Each runner executes an optimized runtime for the DiT, VAE, and text encoder. A cluster-level KV-cache pool tracks persistent session state and cache ownership, while cache-affine routing allows subsequent requests to reuse tensors already materialized on the owning runner.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 557,
+              "image_path": "figures/2609.24815/figure-004.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 806
+            },
+            {
+              "caption": "Figure 4: Data Curation Pipeline. We first convert heterogeneous robot datasets into a common representation, then remove episodes with invalid video, incomplete robot states, or synchronization errors. Camera parameters are recalibrated when possible, and the remaining episodes are checked for geometric consistency. The final corpus contains more than 3,300 hours of real-world robot data.",
+              "figure_id": "figure-4-18",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2609.24815/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 971
+            },
+            {
+              "caption": "Figure 3: Cross-Embodiment Skeleton Conditioning. Different robot bodies are converted into a shared image-space skeleton representation through online forward kinematics and camera projection. The examples show representative robot embodiments from our data, including UR5, ALOHA, AGIBOT, ARX5, and DROID.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 864,
+              "image_path": "figures/2609.24815/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 979
+            },
+            {
+              "caption": "Figure 5: Causal Training and Streaming Attention. Left: the teacher-forcing mask packs encoded reference anchors, clean history latent frames, and noisy target latent frames so that each target attends only to valid reference and past context. Right: the streaming-inference heatmap shows the reference attention-sink mechanism, through which generated latent frames retain access to persistent visual anchors and recent latent-frame history.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 464,
+              "image_path": "figures/2609.24815/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 911
+            },
+            {
+              "caption": "Figure 8: Distributed Training Topology. The 1.3B Uranus model is trained on eight nodes with eight GPUs per node. The HSDP mesh contains eight data-parallel replicas and eight FSDP shards per replica. Within every node, the eight ranks are partitioned into two four-rank sequence-parallel groups. Distributed VAE tile encoding and decoding reuse the corresponding SP process group, avoiding an additional communication-group layout.",
+              "figure_id": "figure-8-15",
+              "figure_number": "8",
+              "height": 366,
+              "image_path": "figures/2609.24815/figure-008.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 965
+            },
+            {
+              "caption": "Figure 6: Self-Rollout DMD Fine-Tuning with PCM Regularization. The student and the two score networks are initialized from the same causal pretrained checkpoint, and the student generates training samples under self forcing history. Fine-tuning alternates a fake-score step with a student step. The student objective combines distribution-level DMD supervision with PCM consistency across adjacent diffusion phases to regularize few-step generation and improve long-horizon rollout stability.",
+              "figure_id": "figure-6-24",
+              "figure_number": "6",
+              "height": 343,
+              "image_path": "figures/2609.24815/figure-009.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 954
+            },
+            {
+              "caption": "Figure 12: DiT–VAE Serving Modes. Box widths in (a) and (b) are proportional to the measured stage latencies on H20 GPUs. The disaggregated timeline in (c) illustrates cross-request pipelining; inter-node transfer time is implementation-dependent and is not drawn to scale.",
+              "figure_id": "figure-12-4",
+              "figure_number": "12",
+              "height": 668,
+              "image_path": "figures/2609.24815/figure-010.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 964
+            },
+            {
+              "caption": "Figure 20: Novel-View Synthesis with Modified Camera Parameters. Given camera intrinsics and extrinsics corresponding to unseen or shifted viewpoints, Uranus generates observations from the requested views.",
+              "figure_id": "figure-20-19",
+              "figure_number": "20",
+              "height": 495,
+              "image_path": "figures/2609.24815/figure-011.webp",
+              "kind": "figure",
+              "page": 50,
+              "width": 962
+            },
+            {
+              "caption": "Figure 9: KV-Cache Update Semantics. An LLM reads prior keys/values and appends the current token’s keys/values in the same forward pass. In Uranus, all DiT evaluations inside the denoising loop read a frozen cache while using the current denoising timestep 𝜏𝑘; intermediate noisy latents are not cached. After denoising finishes, a separate outer-loop cache-fill pass processes the clean latent frame with timestep zero and appends its keys/values exactly once.",
+              "figure_id": "figure-9-28",
+              "figure_number": "9",
+              "height": 429,
+              "image_path": "figures/2609.24815/figure-012.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 942
+            },
+            {
+              "caption": "Figure 14: Qualitative Comparison with GE-Sim 2.0. Ground-truth, Uranus, and GE-Sim 2.0 results are generated from matched initial observations and robot-motion trajectories on the AgiBotWorld-Beta evaluation subset. The numbers above the columns indicate the timestamps of the corresponding frames.",
+              "figure_id": "figure-14-13",
+              "figure_number": "14",
+              "height": 393,
+              "image_path": "figures/2609.24815/figure-013.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 922
+            },
+            {
+              "caption": "Figure 13: Quantitative Comparison with GE-Sim 2.0. PSNR and SSIM over different rollout horizons on the 100-example AgiBotWorld-Beta evaluation subset. Results are grouped into 20-second intervals, with each point representing the mean score across all samples within the corresponding interval. Sample 1: Retrieve from the shelf. Place the held cookie biscuit into the shopping cart.",
+              "figure_id": "figure-13-14",
+              "figure_number": "13",
+              "height": 388,
+              "image_path": "figures/2609.24815/figure-014.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 921
+            },
+            {
+              "caption": "Figure 10: Latent-Frame-Aware Sliding-Window KV Cache. The cache is first prefixed with persistent encoded reference-anchor blocks 𝑅1, 𝑅2, 𝑅3. Each generated latent frame, corresponding to a four-frame RGB chunk, is appended as a history block 𝐻𝑡 and becomes available to the next decoding step. The history-window size counts latent-frame blocks. Once it reaches capacity, appending a new latent frame evicts the oldest history block (shown dashed), while all reference-anchor blocks remain pinned as stable visual anchors.",
+              "figure_id": "figure-10-17",
+              "figure_number": "10",
+              "height": 380,
+              "image_path": "figures/2609.24815/figure-015.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 773
+            },
+            {
+              "caption": "Figure 17: Task Generalization. Evaluation protocol and representative rollouts on manipulation tasks excluded from training.",
+              "figure_id": "figure-17-21",
+              "figure_number": "17",
+              "height": 1265,
+              "image_path": "figures/2609.24815/figure-016.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 962
+            },
+            {
+              "caption": "Figure 15: Scene Generalization. Evaluation protocol and representative rollouts in scenes excluded from training.",
+              "figure_id": "figure-15-1",
+              "figure_number": "15",
+              "height": 1255,
+              "image_path": "figures/2609.24815/figure-017.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 962
+            },
+            {
+              "caption": "Figure 18: Embodiment Generalization. Evaluation split and representative rollouts on the unseen G2 embodiment.",
+              "figure_id": "figure-18-27",
+              "figure_number": "18",
+              "height": 1069,
+              "image_path": "figures/2609.24815/figure-018.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 962
+            },
+            {
+              "caption": "Figure 16: Trajectory Generalization. Evaluation protocol and representative rollouts driven by previously unseen action trajectories.",
+              "figure_id": "figure-16-7",
+              "figure_number": "16",
+              "height": 961,
+              "image_path": "figures/2609.24815/figure-019.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 962
+            },
+            {
+              "caption": "Figure 19: Closed-Loop Policy Evaluation Consistency. Each point represents one policy. The horizontal axis shows its mean success rate in Uranus, while the vertical axis shows its mean success rate in the RoboTwin clean environment as the reference.",
+              "figure_id": "figure-19-11",
+              "figure_number": "19",
+              "height": 364,
+              "image_path": "figures/2609.24815/figure-020.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 382
+            },
+            {
+              "caption": "Table 1: Statistics of the utilized robotic datasets.",
+              "figure_id": "table-1-25",
+              "figure_number": "1",
+              "height": 354,
+              "image_path": "figures/2609.24815/table-021.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 906
+            },
+            {
+              "caption": "Table 5: WorldOlympiad Robotics Evaluation. The unified automatic evaluator scores physical rule adherence (Physical), geometric and camera consistency (3D Consistency), semantic instruction alignment (CLIP Score), interaction fidelity and temporal coherence (Interaction), and their aggregate score (Overall). The best score in each column is highlighted with a light-orange background, boldface, and underlining.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 292,
+              "image_path": "figures/2609.24815/table-022.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 983
+            },
+            {
+              "caption": "Table 6: Robot World-Model Capabilities. Comparison of generation interfaces and generalization support. Frames/call counts the RGB frames produced by one model invocation; “causal” denotes causal training and autoregressive inference.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 242,
+              "image_path": "figures/2609.24815/table-023.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 983
+            },
+            {
+              "caption": "Table 3: Data-Access Acceleration. Measured performance before and after enabling the NVMe cache layer. Batch-loading latency is normalized to the object-storage-only baseline.",
+              "figure_id": "table-3-31",
+              "figure_number": "3",
+              "height": 125,
+              "image_path": "figures/2609.24815/table-024.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 617
+            },
+            {
+              "caption": "Table 4: Runtime Acceleration. Left: cumulative normalized inference speedup for the complete 30-layer DiT stack under SP= 1 and SP= 2, with both columns normalized to the SP= 1 eager baseline. Right: isolated speedup of alternative RoPE implementations relative to the original complex-valued operator. Larger values indicate higher throughput.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 163,
+              "image_path": "figures/2609.24815/table-025.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 983
+            },
+            {
+              "caption": "Table 7: Embodiment-OOD Data Split.",
+              "figure_id": "table-7-26",
+              "figure_number": "7",
+              "height": 160,
+              "image_path": "figures/2609.24815/table-026.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 567
+            },
+            {
+              "caption": "Table 12: Representation Probing. Linear probes on pooled action statistics and frozen Uranus features.",
+              "figure_id": "table-12-30",
+              "figure_number": "12",
+              "height": 118,
+              "image_path": "figures/2609.24815/table-027.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 579
+            },
+            {
+              "caption": "Table 11: Feature Ablations and Controls. Alignment controls for the trained Uranus-feature judge.",
+              "figure_id": "table-11-29",
+              "figure_number": "11",
+              "height": 119,
+              "image_path": "figures/2609.24815/table-028.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 475
+            },
+            {
+              "caption": "Table 10: Local Outcome Prediction. Results on the RoboTwin test split. The Uranus-feature judge uses frozen features from the failure-aware checkpoint.",
+              "figure_id": "table-10-23",
+              "figure_number": "10",
+              "height": 96,
+              "image_path": "figures/2609.24815/table-029.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 558
+            },
+            {
+              "caption": "Table 9: Consequence-Prediction Benchmark. RoboTwin local-branch outcome benchmark used for consequence prediction.",
+              "figure_id": "table-9-22",
+              "figure_number": "9",
+              "height": 96,
+              "image_path": "figures/2609.24815/table-030.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 429
+            },
+            {
+              "caption": "Table 8: Real-World Consistency.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 93,
+              "image_path": "figures/2609.24815/table-031.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 279
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.24815/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.24815",
+          "relevance": 8,
+          "selection_reason": "Data-driven simulator using action-conditioned autoregressive diffusion to generate video frames, relevant to world models and video generation.",
+          "summary_status": "generated",
+          "title": "Uranus: Building the Next-Generation Simulation Infrastructure for Embodied AI",
+          "tldr": "Uranus is a data-driven robot simulator that enables open-ended, low-latency visual rollouts conditioned on online joint trajectories for scalable embodied-AI development.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-diffusion",
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Autoregressive video world models enable temporally coherent generation for a single observer. Extending them to multiple agents requires consistency across independently controlled views and temporal gaps under causal streaming. We present ConsistWorld, a multi-agent world model that generates camera-controlled video streams of a static scene from one shared image. We formulate consistency as routing evidence from committed multi-agent history and concurrently generated peer views to the tokens being generated. Pose Conditioned Memory Retrieval selects relevant historical observations from all agents, recovering evidence beyond the recent context window. Visibility-Gated Peer Sharing regulates current peer information according to estimated historical coverage and current-view overlap. Together, they determine which historical observations enter the context and where concurrent peer information contributes, supporting long-term recall and coordinated exploration. Both mechanisms use camera geometry and maintain a bounded active context for a fixed agent count and retrieval budget. Experiments on evidence sharing cases and video length and agent number generalizations show that ConsistWorld achieves a strong cross-time and cross-agent consistency while preserving competitive generation quality.",
+          "arxiv_id": "2609.22641",
+          "arxiv_url": "https://arxiv.org/abs/2609.22641",
+          "authors": [
+            "Qianxun Xu, Xianfang Zeng, Xinyao Liao, Wei Cheng, Gang Yu, Chi Zhang"
+          ],
+          "bullets": [
+            "Addresses cross-agent and cross-time consistency under independently controlled views and temporal gaps.",
+            "Uses Pose Conditioned Memory Retrieval to select relevant observations beyond the recent context window.",
+            "Uses Visibility-Gated Peer Sharing to regulate concurrent information based on historical coverage and view overlap.",
+            "Applies camera geometry while maintaining a bounded active context for fixed agent counts and retrieval budgets.",
+            "Experiments show strong cross-time and cross-agent consistency, with competitive generation quality across evidence-sharing, video-length, and agent-number generalizations."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Overview of ConsistWorld. Given a shared source image I0 and K camera trajectories, ConsistWorld generates K coherent agent streams with shared masked self-attention. Pose-Conditioned Memory Retrieval retrieves the most relevant committed chunk from long-term multi-agent history using camera geometry, while Visibility-Gated Peer Sharing admits synchronous peer evidence only at spatial locations not already covered by committed observations.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 371,
+              "image_path": "figures/2609.22641/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 4. Visual component ablation on asynchronous handoff and subsequent re-overlap. The left half compares earlier observations with later cross-agent revisits, while the right half shows both streams during re-overlap. Red boxes mark representative inconsistent regions. “f58” indicates frame 58 of the video.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 420,
+              "image_path": "figures/2609.22641/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 3. Representative rollouts for the three consistency settings. ”f44” indicates frame 44 of the video. (a) Self-Revisit compares an agent’s first and later observations of the same scene regions. (b) Synchronous Cross-Agent Sharing shows two agents after re-overlap and along subsequent shared camera motions. (c) Asynchronous Cross-Agent Handoff compares locations first observed by a leader agent and revisited later by a follower agent.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 464,
+              "image_path": "figures/2609.22641/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 832
+            },
+            {
+              "caption": "Figure 5. Comparison between full-history baseline and ConsistWorld. Two agents repeatedly revisit the same four directions from a shared initial observation. Full-history baseline gradually drifts across revisits, whereas ConsistWorld preserves the previously established scene appearance and cross-agent consistency.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 344,
+              "image_path": "figures/2609.22641/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1036
+            },
+            {
+              "caption": "Table 5. Agent-count generalization under a fixed focal handoff protocol and common spatial support. K = 5 lies outside the Stage-II training range.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 123,
+              "image_path": "figures/2609.22641/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 339
+            },
+            {
+              "caption": "Table 1. Shared-observation consistency and visual quality of ConsistWorld.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 156,
+              "image_path": "figures/2609.22641/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 772
+            },
+            {
+              "caption": "Table 2. Ablation of Pose Conditioned Memory Retrieval and Visibility-Gated Peer Sharing. Region LPIPS measures historical consistency, while LPIPS-MG measures revisit-specific memory after same-rollout temporal calibration.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 146,
+              "image_path": "figures/2609.22641/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 790
+            },
+            {
+              "caption": "Table 4. Asynchronous handoff consistency measured with Region LPIPS ↓ at increasing rollout lengths.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 98,
+              "image_path": "figures/2609.22641/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 509
+            },
+            {
+              "caption": "Table 3. Reference fidelity of ConsistWorld and the full-history baseline on matched rendered trajectories.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 98,
+              "image_path": "figures/2609.22641/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 400
+            }
+          ],
+          "first_seen_at": "2026-09-21T21:00:00-04:00",
+          "hero_figure": "figures/2609.22641/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.22641",
+          "relevance": 7,
+          "selection_reason": "Multi-agent autoregressive video world model with camera-controlled generation and cross-agent consistency; fits video and interactive world models.",
+          "summary_status": "generated",
+          "title": "ConsistWorld: Evidence Routing for Consistent Multi-Agent World Models",
+          "tldr": "ConsistWorld routes historical and peer-view evidence to generate consistent, causally streamed videos for multiple camera-controlled agents observing the same static scene.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-17",
       "paper_count": 1,
       "papers": [
@@ -2632,5 +3129,5 @@
   "schema_version": 1,
   "subtopic_id": "autoregressive-video-models",
   "topic_id": "video-models",
-  "total_paper_count": 14
+  "total_paper_count": 16
 }
