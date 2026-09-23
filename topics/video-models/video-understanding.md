@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**219 papers total**
+**222 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [AIGC Video Detection based on the fusion of spatial-frequency-optical flow multimodal features](https://arxiv.org/abs/2609.26274) | Video Generation and Understanding: Video Understanding | CrossAtt-VFD detects AI-generated videos by aligning spatial-frequency appearance features with optical-flow motion features to expose cross-modal inconsistencies. | 5 | 4 |
+| 2026-09-22 | [Isolated Sign Language Recognition for Icelandic Sign Language: Experiments in a Low-resource Setting](https://arxiv.org/abs/2609.25862) | Video Generation and Understanding: Video Understanding | Cross-lingual transfer substantially improves isolated Icelandic Sign Language recognition in an extremely low-resource setting, though performance remains limited for the full vocabulary. | 5 | 5 |
+| 2026-09-22 | [Video-HopChain: Multi-Hop Questions and Confidence-Gated Exploration for Video Reasoning Models](https://arxiv.org/abs/2609.25773) | Video Generation and Understanding: Video Understanding | Video-HopChain enables verifiable multi-hop video reasoning for RLVR, while Confidence-Gated Exploration improves learning from uniformly easy or hard question groups. | 8 | 7 |
 | 2026-09-21 | [GameHorizon Suite: Multi-Horizon Data and Evaluation in Gameplay](https://arxiv.org/abs/2609.25001) | Embodied AI; Video Generation and Understanding: Video Understanding | GameHorizon introduces a unified dataset, annotation pipeline, and benchmark for evaluating AI gameplay abilities across short- and long-term horizons. | 6 | 6 |
 | 2026-09-21 | [Video-based Surgical Skill Assessment Using Dynamics-and-Uncertainty-Aware Tree-based Gaussian Process Classifier](https://arxiv.org/abs/2609.24619) | Video Generation and Understanding: Video Understanding | An uncertainty- and dynamics-aware Gaussian Process pipeline assesses surgical skill accurately from video while reducing data and computational requirements. | 6 | 6 |
 | 2026-09-21 | [TReViS: Temporal Repetition Structure Aware Video Synthesis for Self-supervised Repetitive Action Counting](https://arxiv.org/abs/2609.24367) | Video Generation and Understanding: Video Understanding | TReViS enables label-free repetitive action counting by synthesizing videos that preserve the repetition structure of unlabeled footage. | 8 | 8 |

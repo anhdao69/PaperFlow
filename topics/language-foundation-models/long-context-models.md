@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**52 papers total**
+**55 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [The Sirens' Song: When Proximal Background Context Overshadows Distant Evidence](https://arxiv.org/abs/2609.26718) | Language Foundation Models: Long-Context Models | LYRA improves long-context LLM retrieval by reducing interference from abundant, irrelevant nearby context so models can use distant evidence more effectively. | 8 | 8 |
+| 2026-09-22 | [HySparse2: Hybrid Sparse Attention with Two-Level KV Sharing](https://arxiv.org/abs/2609.26368) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | HySparse2 combines two-level KV sharing with hybrid token-level sparse attention to reduce prefill computation and KV-cache storage while improving long-context retrieval for multi-turn agents. | 9 | 8 |
+| 2026-09-22 | [CompKV: Compensation-Aware KV Selection for Long-Context LLM Inference](https://arxiv.org/abs/2609.26300) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | CompKV accelerates long-context LLM inference by selecting KV blocks based on their expected compensation error, achieving up to 6.85× self-attention speedup over full attention. | 8 | 7 |
 | 2026-09-21 | [Beyond Linear Context: Graph-Guided Evidence Navigation for Long-Novel Reasoning with a Local 9B Language Model](https://arxiv.org/abs/2609.22939) | Language Foundation Models: LLM Memory, Long-Context Models | Graph-guided evidence navigation may help a frozen local 9B model reason over long detective novels, but the observed accuracy gains are exploratory and not statistically robust after correction. | 6 | 6 |
 | 2026-09-21 | [Block-Sparse Attention with Semantic-Geometric Decoupled Routing](https://arxiv.org/abs/2609.22884) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | A training-free routing method makes block-sparse attention efficient and accurate for long-context inference by separating semantic aggregation from RoPE-based geometry. | 8 | 8 |
 | 2026-09-21 | [Vox-Infinity: Benchmarking the Limits of Long-Context Spoken Language Models](https://arxiv.org/abs/2609.22452) | Language Foundation Models: Long-Context Models | Vox-Infinity benchmarks how well spoken language models retrieve and use information from increasingly long audio conversations. | 7 | 7 |

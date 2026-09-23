@@ -6,10 +6,18 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**354 papers total**
+**362 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [\\phi-RIE: From Photorealistic Reconstruction to Interactive Environments](https://arxiv.org/abs/2609.26795) | 3D Vision: 3D Foundation Models | φ-RIE converts photorealistic 3D Gaussian Splatting reconstructions into interactive environments with movable, physically executable objects while preserving the rest of the scene. | 8 | 8 |
+| 2026-09-22 | [Vision Foundation Models with Synthetic-Only Training for Monocular Spacecraft Pose Estimation](https://arxiv.org/abs/2609.26561) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision | A large DINOv3 vision foundation model adapted with LoRA substantially improves synthetic-only monocular spacecraft pose estimation while remaining feasible for embedded inference. | 6 | 6 |
+| 2026-09-22 | [ArborSplat: Online Semantic Gaussian Splatting SLAM for Orchards](https://arxiv.org/abs/2609.26315) | 3D Vision | ArborSplat is an online semantic Gaussian-splatting SLAM system that improves orchard mapping of thin structures while maintaining accurate and efficient localization. | 7 | 7 |
+| 2026-09-22 | [EMERGE: Resolution-Agnostic Point Cloud Generation with Equivariant Graph-Based Diffusion](https://arxiv.org/abs/2609.26039) | 3D Vision | EMERGE is an SE(3)-equivariant graph-based diffusion model that generates point clouds at arbitrary resolutions while preserving 3D geometric structure. | 7 | 8 |
+| 2026-09-22 | [CODA: Depth-Aligned Scene Completion and Object Decomposition from a Single RGB-D Image](https://arxiv.org/abs/2609.25654) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | CODA reconstructs a complete, physically coherent 3D scene from one RGB-D image before decomposing it into environment and movable objects. | 7 | 7 |
+| 2026-09-22 | [PARTE: Plane-Assisted Robust Transformation Estimation for Point Cloud Registration](https://arxiv.org/abs/2609.25375) | 3D Vision | PARTE improves global point-cloud registration by using planar regions as robust complementary evidence alongside point correspondences. | 7 | 7 |
+| 2026-09-22 | [Geometric and Semantic Coupling for Interaction Understanding in 3D Scenes](https://arxiv.org/abs/2609.25247) | 3D Vision | Segment-Snap improves 3D interaction understanding by coupling part, handle, and motion predictions through geometric and semantic relationships. | 7 | 7 |
+| 2026-09-22 | [RegVGGT: Sustainable Visual Geometry Grounding for Streaming via Regulated Memory](https://arxiv.org/abs/2609.23286) | 3D Vision: 3D Foundation Models; Efficient AI: Token Pruning and Eviction | RegVGGT enables long-video 3D reconstruction on limited-memory GPUs by regulating which incoming-frame tokens update the model’s context memory. | 7 | 7 |
 | 2026-09-21 | [GAE: Learning a Geometry-Native Latent Space for 3D-Consistent World Generation](https://arxiv.org/abs/2609.24981) | World Models: Video World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | GAE reparameterizes geometry-aware features into a compact latent space that improves both visual quality and 3D consistency in world generation. | 7 | 8 |
 | 2026-09-21 | [Revisiting Multi-View Stereo: A Sequence-to-Sequence Formulation](https://arxiv.org/abs/2609.24850) | 3D Vision | A camera-aware sequence-to-sequence transformer jointly reconstructs geometry across all views, improving multi-view stereo performance over existing MVS and feed-forward approaches. | 6 | 7 |
 | 2026-09-21 | [When Wider Views Fail: Stress-Testing Feed-Forward 3D Reconstruction](https://arxiv.org/abs/2609.24839) | 3D Vision | Feed-forward 3D reconstruction models can fail sharply when sparse input views span wider angles, producing incomplete and unsupported geometry. | 5 | 6 |

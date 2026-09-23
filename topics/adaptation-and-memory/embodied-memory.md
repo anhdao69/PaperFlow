@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**64 papers total**
+**67 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [Beyond End-Task Success: How to Audit Visual Experience Retrieval in Robotics](https://arxiv.org/abs/2609.26567) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Evaluating only end-task success can hide poor visual experience retrieval, so the paper proposes audits that separate selection quality from experience-library quality. | 7 | 8 |
+| 2026-09-22 | [Minimal Recurrent Behavioral Memory for Imitation under Partial Observability](https://arxiv.org/abs/2609.25757) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | The paper characterizes the minimum recurrent memory needed for imitation under partial observability and proposes measurements and learning methods to approach it. | 8 | 8 |
+| 2026-09-22 | [AkasicMEM: Governed Enterprise Memory for Agents](https://arxiv.org/abs/2609.25563) | Adaptation and Memory: Continual and Online Learning, Embodied Memory; Language Foundation Models: LLM Memory | AkasicMEM is a governed enterprise-agent memory design that preserves source-level authorization as information is stored, derived, and reused. | 7 | 7 |
 | 2026-09-21 | [ActiveArena: Benchmarking and Understanding Active Perception in Robotic Manipulation](https://arxiv.org/abs/2609.24124) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | ActiveArena introduces a simulator, benchmark, and model suite for evaluating how robots actively gather, store, and use visual information during manipulation. | 9 | 8 |
 | 2026-09-21 | [RopeFormer: Cross-Trial Adaptation from Interaction History for Dynamic Rope Manipulation](https://arxiv.org/abs/2609.23432) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RopeFormer improves dynamic rope manipulation by using action–response history from prior trials as context, without updating policy weights or explicitly estimating rope parameters. | 8 | 8 |
 | 2026-09-21 | [Identity Continuity in Long-Term Embodied AI Relationships: From Agent-Specific Identity Representation to Identity-Continuity Appraisal](https://arxiv.org/abs/2609.23356) | Adaptation and Memory: Embodied Memory | The article proposes a user-side framework for judging whether a changing embodied AI is still experienced as the same agent over time. | 5 | 6 |

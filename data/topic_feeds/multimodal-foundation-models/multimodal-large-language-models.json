@@ -1,6 +1,2568 @@
 {
   "days": [
     {
+      "date": "2026-09-22",
+      "paper_count": 14,
+      "papers": [
+        {
+          "abstract": "Autoregressive OCR vision-language models accurately convert document images into text and structured markup, but require one sequential decoding step per output token, limiting inference speed. Unlike open-ended text generation, OCR outputs are strongly grounded in the input image, making diffusion-based parallel generation promising. However, when several tokens are predicted in one diffusion step, each is predicted before the others are known. Committing them directly can therefore introduce errors. We therefore introduce GravityOCR, a parameter-shared AR-block-diffusion model jointly trained for parallel drafting and causal AR verification. Verifying drafts before commitment lets the model commit multiple output tokens per round without a separate drafting network. The causal AR path also enables GRPO with sequence- and structure-level OCR rewards, avoiding diffusion-trajectory likelihood estimation while updating the shared drafter parameters. On OmniDocBench v1.6, AR-path GRPO improves the Overall score from 94.92 to 95.16 without reducing diffusion drafting efficiency, while the final model remains close to the original GLM-OCR score of 95.48. In an SGLang serving deployment, GravityOCR commits an average of 9.7 output tokens per forward pass and achieves a $3.94\\times$ decode-only speedup on region crops and a $1.32\\times$ end-to-end page-processing speedup over AR decoding.",
+          "arxiv_id": "2609.26638",
+          "arxiv_url": "https://arxiv.org/abs/2609.26638",
+          "authors": [
+            "Dohyun Kim, Sungjun Han, Hyungguk Kim, Yusik Kim, Jamin Shin, Paul Hongsuck Seo, Hongjoon Ahn"
+          ],
+          "bullets": [
+            "Addresses the sequential-decoding bottleneck of autoregressive OCR while preserving image-grounded accuracy.",
+            "Uses a parameter-shared AR-block-diffusion model for parallel token drafting and causal verification, without a separate drafting network.",
+            "AR-path GRPO applies sequence- and structure-level OCR rewards without estimating diffusion-trajectory likelihoods.",
+            "On OmniDocBench v1.6, GRPO raises the Overall score from 94.92 to 95.16, while the final model remains near the original GLM-OCR score of 95.48.",
+            "In SGLang, it commits 9.7 tokens per forward pass, achieving 3.94× decode-only and 1.32× end-to-end page-processing speedups over AR decoding."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1 | Accuracy–speed landscape of document OCR systems. OmniDocBench v1.6 Overall vs. single-stream page rate, with the same evaluation set used across systems for each metric. GravityOCR is the fastest system measured while maintaining top-tier accuracy.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 468,
+              "image_path": "figures/2609.26638/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 950
+            },
+            {
+              "caption": "Figure 5 | Quality and parallelism of diffusion decoding. Curves sweep each system’s confidence threshold 𝜏𝑐. Direct block-diffusion TPF counts forwards that commit tokens, excluding cache writes; self-speculative TPF counts both drafting and verification (Appendix C).",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 367,
+              "image_path": "figures/2609.26638/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 713
+            },
+            {
+              "caption": "Figure 2 | Failure case of co fidence-based parall l commitment. At 𝜏𝑐=0.7, commercial and enter re committ d together while the intervening position remains unr s lved, ult mately omitting vehicles. Similarly, the final the is committed before the two positions to its left are resolved, producing the repeated span to the the. The causal AR output from the same checkpoint is shown for comparison.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 340,
+              "image_path": "figures/2609.26638/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 950
+            },
+            {
+              "caption": "Figure 3 | Joint AR–diffusion training in a single forward pass. The clean response stream provides causal next-token supervision, while two complementary corrupted streams with masking ratios 𝑡 and 1 − 𝑡 provide denoising supervision over disjoint masked targets. All streams share the visual and prompt context, decoder, and LM head. The right panel contrasts token-level causal attention in the clean stream with causal cross-block and bidirectional withinblock attention in the corrupted streams.",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 275,
+              "image_path": "figures/2609.26638/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 924
+            },
+            {
+              "caption": "Figure 6 | Throughput vs. batch size. The speedup narrows with batch size: speculation leads by 1.85× at batch 1 and by 1.13× at batch 64. Protocol in Appendix C.",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 340,
+              "image_path": "figures/2609.26638/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 733
+            },
+            {
+              "caption": "Figure 4 | Self-speculative decoding. Given a causal boundary token 𝑥0 followed by 𝐵 mask tokens, the shared decoder produces in a single forward pass one causal token 𝑎0 that is accepted by construction and 𝐵 parallel draft tokens 𝑑1:𝐵, attending bidirectionally within the mask block and causally to the cached prefix; the draft is passed on without iterative unmasking or confidence-based selection. A causal verification pass over 𝑎0, 𝑑1:𝐵 produces 𝑎1:𝐵+1 and commits the longest AR-consistent draft prefix and the next AR token while simultaneously constructing the KV cache for the accepted prefix, so no additional cache-construction pass is needed; the states of rejected tokens are discarded. The final AR token becomes the causal boundary for the next round and obtains its KV state there.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 238,
+              "image_path": "figures/2609.26638/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 925
+            },
+            {
+              "caption": "Figure 7 |Multi-step drafting versus one-shot drafting. Instead of filling the masked block in a single forward pass, the draft is refined over several denoising steps: at each step the positions whose confidence exceeds the threshold 𝜏𝑑 are fixed and the rest are re-drafted, and the finished draft is then verified by the causal AR pass exactly as before, so the committed output is identical at every point. (a) A higher threshold spends more steps on the draft and more of its tokens are accepted per round. (b) Every extra step is another forward pass, and the tokens it adds do not pay for it: tokens per forward falls monotonically, and one-shot drafting (dashed) commits the fewest tokens per round yet delivers the highest tokens per forward.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 365,
+              "image_path": "figures/2609.26638/figure-007.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 934
+            },
+            {
+              "caption": "Figure 9 | Qualitative results on formula regions. Self-speculative decoding on OmniDocBench. Each block shows the input crop, the LATEX output and its rendering; each color denotes a different decoding round, a red tick marks a rejected draft token, and <EOS> is the end-ofsequence token.",
+              "figure_id": "figure-9-16",
+              "figure_number": "9",
+              "height": 1235,
+              "image_path": "figures/2609.26638/figure-008.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 893
+            },
+            {
+              "caption": "Figure 10 | Qualitative results on table regions. Self-speculative decoding on OmniDocBench. Each block shows the input crop, the HTML output and its rendering; each color denotes a different decoding round, a red tick marks a rejected draft token, and <EOS> is the end-ofsequence token.",
+              "figure_id": "figure-10-10",
+              "figure_number": "10",
+              "height": 1213,
+              "image_path": "figures/2609.26638/figure-009.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 906
+            },
+            {
+              "caption": "Figure 8 | Qualitative results on text regions. Self-speculative decoding on OmniDocBench. Each block shows the input crop (top) and the raw output (bottom); each color denotes a different decoding round, a red tick marks a rejected draft token, and <EOS> is the end-of-sequence token.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 1004,
+              "image_path": "figures/2609.26638/figure-010.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 906
+            },
+            {
+              "caption": "Table 2 | Table and formula recognition. PubTabNet table recognition on the full validation set (9,115 tables) and UniMER formula recognition, all rows measured by us under one pipeline per benchmark, with each system’s own task prompt and the same output normalisation.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 288,
+              "image_path": "figures/2609.26638/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 721
+            },
+            {
+              "caption": "Table 1 | Main results on OmniDocBench v1.6 and page-processing speed. Text and Order measure normalized edit distance over character sequences and text-block reading order, respectively; TEDS is tree-edit-distance similarity for tables, and CDM is character detection matching for formulas. Overall averages the three recognition axes. Page speed includes each system’s layout stage. TPF denotes output tokens committed per model forward. All results are our measurements; speed protocols are in Appendix C. †These modes use extra draft parameters; TPF counts tokens accepted per base-model verification, excluding drafting computation.",
+              "figure_id": "table-1-18",
+              "figure_number": "1",
+              "height": 450,
+              "image_path": "figures/2609.26638/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 908
+            },
+            {
+              "caption": "Table 3 | AR vs. self-speculative decoding. Decode-only and end-to-end throughput under Transformers and SGLang.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 200,
+              "image_path": "figures/2609.26638/table-013.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 646
+            },
+            {
+              "caption": "Table 6 | GRPO on the AR path. OmniDocBench v1.6 Overall and TPF for direct block-diffusion and self-speculative decoding before and after GRPO.",
+              "figure_id": "table-6-12",
+              "figure_number": "6",
+              "height": 226,
+              "image_path": "figures/2609.26638/table-014.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 554
+            },
+            {
+              "caption": "Table 5 | Effect of the auxiliary AR loss on self-speculative decoding. Both models are 10k-step checkpoints that share the training setup except the AR loss weight.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 105,
+              "image_path": "figures/2609.26638/table-015.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 450
+            },
+            {
+              "caption": "Table 7 | Training configuration.",
+              "figure_id": "table-7-19",
+              "figure_number": "7",
+              "height": 240,
+              "image_path": "figures/2609.26638/table-016.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 750
+            },
+            {
+              "caption": "Table 4 | Parallelism and speed by content type. Accepted tokens is the number of draft tokens accepted per round. TPF divides committed output tokens by all draft and verification forwards pooled within each content type.",
+              "figure_id": "table-4-14",
+              "figure_number": "4",
+              "height": 129,
+              "image_path": "figures/2609.26638/table-017.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 731
+            },
+            {
+              "caption": "Table 9 | All-mask training does not produce a better draft. The all-mask model commits fewer tokens per forward at every checkpoint, and its accuracy is behind at five of six.",
+              "figure_id": "table-9-17",
+              "figure_number": "9",
+              "height": 202,
+              "image_path": "figures/2609.26638/table-018.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 775
+            },
+            {
+              "caption": "Table 8 | Parallelism and speed by output length. AR and self-speculative decoding results across output-length ranges. 𝑛 is the number of crops in each range. Throughput includes vision encoding, prompt prefill, and decoding; speedup is relative to AR.",
+              "figure_id": "table-8-8",
+              "figure_number": "8",
+              "height": 153,
+              "image_path": "figures/2609.26638/table-019.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 829
+            },
+            {
+              "caption": "Table 243 872 25.0 13.5 732 2,462 3.36×",
+              "figure_id": "table-243-13",
+              "figure_number": "243",
+              "height": 42,
+              "image_path": "figures/2609.26638/table-020.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 731
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.26638/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.26638",
+          "relevance": 6,
+          "selection_reason": "Accelerates an OCR vision-language model via diffusion-based parallel drafting and AR verification; relevant to multimodal LLMs and inference-efficiency methods.",
+          "summary_status": "generated",
+          "title": "Diffusion Drafts, AR Verifies: Accelerating Document OCR with Self-Speculative Decoding",
+          "tldr": "GravityOCR speeds up document OCR by drafting multiple tokens in parallel with diffusion and using autoregressive verification before committing them.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Multimodal embedding models are deployed at scale: retrieval indices, benchmark results, and behavioral audits all depend on the base model's exact outputs. Extending such a model to a new modality with existing parameter-efficient methods silently changes those outputs; LoRA-style adaptation rewrites the text path whether or not the weights are merged, invalidating every stored embedding. We propose modality-gated deep adapters: bottleneck adapters attached to every decoder layer of a frozen multimodal embedding LLM, grouped into per-modality packs that execute only while their own modality is being encoded. The result is a modality added with zero change to existing outputs: inputs no pack claims traverse the base model's own computation graph, bit-for-bit unchanged, and co-loaded packs compose with an exact-zero isolation matrix. Both properties are stated as propositions, hold after arbitrary training rather than only at initialization, require no task labels or routing metadata at inference, and are verified by exact-equality tests on the released checkpoints. On one frozen 2B base, the audio pack (injected as connector tokens) improves audio-to-text R@10 by +3.4 to +5.4 points over an identically trained control, positive at every seed and reproduced at eleven times the data; the thermal pack, reusing the base's own frozen vision path, clears its pre-registered acceptance gate roughly sevenfold at every seed and lifts thermal-to-text R@10 from 0.224 to 0.785. An encoder swap locates the missing capacity: an external audio encoder that outranks Whisper-family encoders in CLAP-style comparisons loses by 16 R@10 points inside the frozen LLM, so the capacity belongs in the layers, exactly where the gated adapters place it. We release the audio model, the thermal pack, and the training, evaluation and invariance suites: models at huggingface.co/EximiusLabs, code on GitHub.",
+          "arxiv_id": "2609.26182",
+          "arxiv_url": "https://arxiv.org/abs/2609.26182",
+          "authors": [
+            "Abdul Basit Tonmoy, Kazi Fardinul Hoque, Md. Shahrier Islam Arham, Arman Luthra"
+          ],
+          "bullets": [
+            "Per-modality bottleneck adapters run only during encoding of their assigned modality; other inputs follow the unchanged base computation graph.",
+            "Exact output preservation and cross-modality isolation hold after arbitrary training, without inference-time routing metadata or task labels.",
+            "On a frozen 2B base, audio improves audio-to-text R@10 by 3.4–5.4 points, while thermal R@10 rises from 0.224 to 0.785.",
+            "Experiments suggest missing capacity is best added inside the frozen LLM layers rather than through an external encoder.",
+            "The authors release models, adapter packs, and training, evaluation, and invariance suites."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.CV",
+            "cs.SD"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: The ranking inversion behind Table 1. Left: under shallow projections, Dasheng outranks Whisperfamily encoders on sound retrieval (AudioCaps text-toaudio mAP@10, as reported by Dinkel et al., 2026). Right: spliced into the frozen LLM under a matched recipe, the base’s co-trained Whisper-family tower wins by 16 R@10 points. External encoder rankings do not transfer to this architecture class.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 297,
+              "image_path": "figures/2609.26182/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 427
+            },
+            {
+              "caption": "Figure 1: One frozen decoder layer with a gated adapter. Left: on an input whose modality no pack claims (text, image, video), the hook returns the frozen layer’s output before any adapter arithmetic executes, so the computation graph is the released base model’s own and the output is bit-for-bit the base’s (Proposition 1); ungated methods such as LoRA instead execute on this path and change it. Right: on an input of the pack’s own modality (here audio), the bottleneck adapter is added to the residual stream and trained. Each added modality carries its own pack and gate, keyed on the input rather than on a task label, and co-loaded packs are mutually invisible, so packs compose with exact-zero isolation (Table 6).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 163,
+              "image_path": "figures/2609.26182/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 434
+            },
+            {
+              "caption": "Figure 3: The gated forward hook from the released code (type annotations and comments shortened; indentation compressed for the column). When the gate is closed the hook returns before any adapter computation, so the frozen layer’s output is used unchanged; the tuple branch handles decoder layers that return (hidden, ...).",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 271,
+              "image_path": "figures/2609.26182/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 460
+            },
+            {
+              "caption": "Table 6: Every preserved readout is exactly zero: the released audio and thermal packs, co-loaded on one frozen base, reproduce their reference bit-for-bit. Each readout is compared to the reference the propositions predict (text/image/video to the raw base, audio to the audio-pack-only model, thermal to the thermal-packonly model); max |∆| is the exact maximum absolute difference, 0 meaning bitwise-identical. The last two rows are checks: the audio pack through the registry vs. the shipped single-gate path (must be 0), and the thermal readout with its gate open vs. the frozen base (must be nonzero, confirming the pack is active). Mixed inputs that would open two gates in one forward are outside the guarantee and untested (§8).",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 206,
+              "image_path": "figures/2609.26182/table-004.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 366
+            },
+            {
+              "caption": "Table 3: The adapters improve the point estimate in every text-to-audio cell and the VGGSound audio-to-text R@10, and cede audio-to-text R@1 on the caption benchmarks. Release-protocol comparison against the connector-only predecessor (fusion-embedding-1 v0.3), matched bf16 lineage and native input template; Clotho strictly zero-shot. Bold: better point estimate per cell; †marks both members of a pair whose difference is below the ∼2-point single-seed parity threshold (§4.1), read as parity.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 271,
+              "image_path": "figures/2609.26182/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 410
+            },
+            {
+              "caption": "Table 4: Verification of Proposition 1 and its supporting machinery. Zeros are exact (maximum absolute difference under matched execution), not tolerances. The open-gate row is the negative control: outputs must change when the branch executes, and that visible, gated change is what ungated adaptation applies to every input. Artifact-level detail in Appendix B.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 235,
+              "image_path": "figures/2609.26182/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 418
+            },
+            {
+              "caption": "Table 5: The released thermal pack (Ember) lifts thermal-to-text R@10 from 0.224 to 0.777–0.785 and more than doubles the emergent thermal-to-visible direction, at every seed. Three seeds versus the frozen base; thermal-to-text is the IR-TD held-out split; the frozen column is the same base with the pack’s zeroinitialized up-projection (exact identity). ∗Thermal-tovisible (LLVIP twin) is emergent: no thermal-RGB pairs appear in training. The zero-shot classifier row shows the pack does not degrade the base’s thermal zero-shot classification (a gate-open readout); exact preservation of non-thermal inputs is the bitwise check in Table 6.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 131,
+              "image_path": "figures/2609.26182/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 361
+            },
+            {
+              "caption": "Table 2: Gated in-layer capacity passes the preregistered acceptance gate (≥ +3 R@10) at +3.4, improves every measured direction, and has not saturated at the largest rank trained. The controlled experiment: 45K AudioCaps-only, 800 steps, identical recipe, one change per row; in-run protocol; audio-to-text unless marked; final training loss in the last column. Rank 384 is the released configuration. Dashes: not recorded.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 111,
+              "image_path": "figures/2609.26182/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 420
+            },
+            {
+              "caption": "Table 1: An encoder that outranks Whisper-family towers in shallow-projection comparisons (Dinkel et al., 2026) loses by 16 points inside the frozen-LLM splice. Matched 45K/800-step arms, identical recipe, each arm on frames from its own frozen tower. The towers are not parameter-matched; the probe establishes non-transfer of the external ranking, not encoder superiority per parameter.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 92,
+              "image_path": "figures/2609.26182/table-009.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 433
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.26182/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.26182",
+          "relevance": 8,
+          "selection_reason": "Adds new modalities to frozen multimodal LLMs with exact preservation, relevant to multimodal foundation models.",
+          "summary_status": "generated",
+          "title": "Modality-Gated Deep Adapters: Adding a Modality to a Frozen Embedding Model with Exact Preservation",
+          "tldr": "Modality-gated adapters add new modalities to a frozen embedding model while preserving all existing outputs exactly.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Remote-sensing (RS) multimodal large language models (MLLMs) are trained and evaluated only in English, while text-only instruction data covers over 100 languages. We propose MODL (Mutually Orthogonal Domain-Language composition), a recipe that adds new languages to an English RS MLLM without a single multilingual RS example: a domain LoRA trained on English RS imagery and a language LoRA trained on text alone are learned jointly, under one loss term that keeps the two updates mutually orthogonal at every layer throughout training. This constraint is the recipe's active ingredient. Without it, the same training answers RS questions correctly but in English, erases much of the base model's multilingual text ability, and diverges on one seed in three; sixteen alternatives, from training-free merging to prior orthogonality variants, fail the same way. MODL repairs every failure on every seed: answers are correct and in the target language 56-71% of the time, where the best alternative reaches 27% and most stay below 8%, text ability stays at the level of the untrained base, and on Spanish it surpasses Qwen2.5-VL-7B, with zero multilingual-multimodal data. A single five-language adapter retains English, Spanish, and Vietnamese at full strength across three seeds; non-Latin scripts remain an open boundary.",
+          "arxiv_id": "2609.26097",
+          "arxiv_url": "https://arxiv.org/abs/2609.26097",
+          "authors": [
+            "Xuechen Li"
+          ],
+          "bullets": [
+            "Targets English-only remote-sensing MLLMs that lack multilingual multimodal instruction data.",
+            "Jointly trains an English RS domain LoRA and text-only language LoRA under a mutual-orthogonality constraint at every layer.",
+            "Avoids English-only answers, multilingual text forgetting, and seed instability seen without the constraint and in 16 alternatives.",
+            "Produces correct answers in the target language 56–71% of the time, while preserving base-model text ability; Spanish surpasses Qwen2.5-VL-7B.",
+            "A single five-language adapter retains English, Spanish, and Vietnamese performance; non-Latin scripts remain an open limitation."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Case studies across all five languages against published systems: GeoChat-7B (Kuckreja et al., 2024), Qwen2.5-VL-7B (Wang et al., 2024), and the cross-lingual layer-swap merger (Bandarkar et al., 2025). All outputs are verbatim generations on true satellite inputs. Box colors: green = correct class in the query language; orange = correct class in English; red = wrong class, off-task, or degenerate. On vi all three published systems miss while MODL answers correctly; on ar/hi GeoChat echoes the prompt and MODL matches Qwen’s in-language answer verbatim with zero multilingual–multimodal data; on Swahili, the hardest language in aggregate (Table 1), MODL answers cleanly in Swahili while GeoChat drifts to an English description. The final row shows English, where every system succeeds: the contest is entirely in the target languages. Cases illustrate individual failure modes; aggregate comparisons are in Table 1.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 518,
+              "image_path": "figures/2609.26097/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 924
+            },
+            {
+              "caption": "Figure 2: The MODL recipe, shown on real training and test examples. Left: the two unpaired training streams as they actually appear to the model: an English RS instruction with its image (supervising D-LoRA only) and a text-only Spanish instruction with no image (supervising L-LoRA only); targets end with the supervised EOS. Center: both adapters are trained jointly on the frozen backbone; the mutual orthogonality penalty R⊥ (Eq. 1) keeps the two updates in disjoint subspaces at every layer and every step. Right: deployment simply adds both updates, W0 +∆WD +∆WL, and is queried on a combination never seen in training — a Vietnamese question about an RS image. Without the constraint (JOINT) the model names the correct class in English; with it (MODL) it answers correctly in Vietnamese. The footer notes the other two repairs: multilingual text retention (Belebele) and optimization stability (no constrained run diverged, vs. 3 of 7 for the naive recipe).",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 344,
+              "image_path": "figures/2609.26097/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 950
+            },
+            {
+              "caption": "Figure 3: All systems on one axis (A∩L, es/vi average). Markers are three-seed means at the primary hyperparameter; error bars span the seed minimum–maximum (systems trained once have no bar; λ ablations are in Table 3). Both MODL variants sit at the Qwen2.5-VL reference line with seed ranges of a few points; every alternative lies at or below the untrained base. JOINT’s wide bar reflects its diverged seed’s step-500 substitute. The full per-language, per-seed breakdown is in Table 4 (App. D).",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 288,
+              "image_path": "figures/2609.26097/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 431
+            },
+            {
+              "caption": "Figure 1: One loss term changes everything. Left: correct-and-in-language accuracy (A∩L) on the GeoChat-Bench classification holdout (2,195 items per language, es/vi average). Right: text-only multilingual competence, measured as likelihood-ranked Belebele accuracy (900 items per language, es/vi average), which is immune to generation-side defects. Bars are means over three seeds; black dots mark individual seeds; the dashed line is the Qwen2.5-VL-7B reference. One mutual-orthogonality loss term (MODL, green) separates the only working system from every alternative. The high JOINT seed dot on the left is the diverged seed’s step-500 substitute (App. D).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 214,
+              "image_path": "figures/2609.26097/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 433
+            },
+            {
+              "caption": "Figure 5: Checkpoint curves (seed 43, es/vi average). JOINT decays monotonically on both axes as training proceeds (A∩L 17.9 → 0.6, Belebele 53 → 28); FIC slows but does not stop the decay; MODL is at full strength from step 250 and flat thereafter. Interference accumulates with optimization, and the mutual constraint changes the trajectory, not just the endpoint; this also rules out under-training as an explanation for the 1,000-step results.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 200,
+              "image_path": "figures/2609.26097/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 433
+            },
+            {
+              "caption": "Table 1: Main results on the GeoChat-Bench classification holdout (2,195 items/language) and Belebele likelihood retention. JOINT, FIC, and MODL are means over three seeds (J0 seed 44 diverged; its last healthy checkpoint, step 500, is substituted and the diverged run reported in App. D); the merge, OSRM, and JOINT 2× rows are single runs, as their scores sit at a floor no seed resample plausibly escapes. Acc = class-identity accuracy (any accepted surface form); LF = response in the query language; A∩L = correct and in the query language. MODL is the only matched-budget system that beats the untrained base on A∩L, and it exceeds the Qwen2.5-VL reference on es. The MODL−J0 A∩L deltas are +23.87/+44.33/+51.53 (en/es/vi), item-paired bootstrap over pooled seeds (n=6,585, 95% confidence intervals [22.8, 25.0]/[42.9, 45.8]/[50.3, 52.8], all excluding zero). GeoChat-7B (evaluated via a weight conversion to the llava-hf layout at its native 504 px) is a reference, not a matched baseline: it trains on the full 318k GeoChat-Instruct corpus, roughly 20× our budget. †Cross-lingual layer swap is the best of 14 training-free mergers by es/vi A∩L (all 14 in Table 6; by the en column alone TIES is strongest at 68.5: merging preserves English, not the target language); merge experts predate the EOS fix, so their generations are scored after repetition collapse under the disclosed-asymmetry rule fixed in advance. O-LoRA shows the same failure signature as OSRM—A∩L at the floor on both target languages (Table 2).",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 273,
+              "image_path": "figures/2609.26097/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 950
+            },
+            {
+              "caption": "Table 4: Per-seed GeoChat-holdout results. The diverged J0 s44 is retained as the literal record; step-500 is its substituted baseline.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 456,
+              "image_path": "figures/2609.26097/table-007.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 950
+            },
+            {
+              "caption": "Table 6: Every merger transfers capability (en columns) and fails language fidelity (target-language A∩L), mirroring naive joint training. OSRM/O-LoRA share this signature: A∩L ≤0.05 on both target languages (Table 2).",
+              "figure_id": "table-6-10",
+              "figure_number": "6",
+              "height": 247,
+              "image_path": "figures/2609.26097/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 950
+            },
+            {
+              "caption": "Table 2: Which orthogonality? The orthogonaltraining family under one matched budget, es/vi average (holdout Acc/LF/A∩L and Belebele retention, %). †Built on the pre-fix domain expert and scored with repetition collapse (App. C); their likelihood-based Belebele columns are defect-immune.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 115,
+              "image_path": "figures/2609.26097/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 458
+            },
+            {
+              "caption": "Table 5: Five-way joint training preserves en/es/vi on all three seeds and dilutes ar/hi/sw. ar/hi answer in-language (LF ≥99) but misname the class.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 94,
+              "image_path": "figures/2609.26097/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 461
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.26097/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.26097",
+          "relevance": 6,
+          "selection_reason": "Composes domain and language LoRAs to extend a remote-sensing MLLM to new languages, directly relevant to multimodal LLM adaptation.",
+          "summary_status": "generated",
+          "title": "One Domain, Many Tongues: Composing Domain and Language LoRAs for Cross-Lingual Remote-Sensing MLLMs without Paired Data",
+          "tldr": "MODL composes domain and language LoRAs with layer-wise mutual orthogonality to add multilingual remote-sensing capabilities without paired multilingual RS data.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Language is the target of most early intervention for autistic children. Because the goal and the method change from child to child, the work falls to a teacher who takes one child at a time and judges each scene as it unfolds. Artificial intelligence is now being brought to that work, yet the benchmarks that reach special education ask what a model knows rather than what it does in front of a child. Building one is not straightforward, since whether a response is good teaching depends on what the child has just done, so no answer key applies. The evidence that settles it is visual as much as verbal, since the length of a wait, a shift of gaze, and the child's uptake leave no trace in a transcript. We introduce \\emph{SpecialEduBench}, which measures pedagogical competence along knowledge, skill, and attitude, with 4,537 knowledge items and with 200 skill items and 68 attitude items built on recorded intervention, the attitude items crossing pressure with monitoring into 192 response cells. Seven special-education experts wrote, scored, and reviewed the items, and we revised the judge model's instruction against the reference scores they set. Across eight frontier vision-language models no axis is saturated, since the strongest still fails about a tenth of the honesty cells. The models converge where the knowledge is factual and separate where the task is situated, and the failures gather where pressure is applied. We intend the benchmark as an audit to run before deployment and as a starting point for models built for this domain.",
+          "arxiv_id": "2609.26090",
+          "arxiv_url": "https://arxiv.org/abs/2609.26090",
+          "authors": [
+            "Jihoi Na, Taeyeong Kim, Sungjune Kong, Jaemin Jung, Min Joung Park, Kyungtae Joo, Ahhyun Kim, Shim Jaechang, Sooyoung Joo, Dongjin Ka, SeJoong Kim, Jimin Kim, HyunJin Jung, Unggi Lee"
+          ],
+          "bullets": [
+            "Targets three dimensions: knowledge, skill, and attitude in child-specific intervention scenarios.",
+            "Includes 4,537 knowledge items, 200 skill items, and 68 attitude items, with attitude cases spanning 192 response cells.",
+            "Uses recorded interventions and visual cues because teaching quality depends on a child’s preceding behavior and responses.",
+            "Seven special-education experts authored, scored, and reviewed the items and refined the judging instructions.",
+            "Across eight frontier vision-language models, factual knowledge was more consistent than situated performance, with failures concentrated under pressure."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of SpecialEduBench, whose four rows are the three competence axes and the auxiliary reward model. Left, each row shows how its data was built and where experts reviewed it. Center, knowledge is scored by exact match while skill and attitude go to a judge model aligned against the expert reference scores. Right, the evaluation is read qualitatively through error analysis and quantitatively through model comparison.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 543,
+              "image_path": "figures/2609.26090/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1027
+            },
+            {
+              "caption": "Figure 2: Analysis results. (a) plots the pass probability under pressure and monitoring with item-level bootstrap intervals, where pressure drives deception down by more than a third while integrity stays flat, and the monitored and unmonitored curves separate only once pressure is applied. (b) plots how many of its ten draws each honesty cell passed under both judges, where a quarter of the cells fall between the two ends, so compliance is reported as a rate. (c) plots each model’s rank on the four measures, where the knowledge, skill, and attitude columns move together while the reward column reverses them.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 334,
+              "image_path": "figures/2609.26090/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1013
+            },
+            {
+              "caption": "Table 3: Main results across the three axes. Knowledge is the macro-average over the four categories, skill is the macro-average over the eight strategies, and attitude is the mean over all attitude responses. Reward is the win rate of the model response against the expert response, where a single item is worth 0.025, so models within a few items of one another are not ordered. Within each column, bold marks the best value and underline the second best.",
+              "figure_id": "table-3-16",
+              "figure_number": "3",
+              "height": 277,
+              "image_path": "figures/2609.26090/table-003.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 740
+            },
+            {
+              "caption": "Table 12: Knowledge accuracy by disability type, with the best value in each column in bold and the second best underlined. ASD is autism, ID is intellectual disability, HI is hearing, VI is vision, CP is cerebral palsy and motor, Law is the special-education system and its regulations, and Dev is developmental in general. The last row gives the number of items. These eight buckets cover 3,630 of the 4,537 items. Three smaller buckets hold 184 more and 723 items carry no bucket tag.",
+              "figure_id": "table-12-14",
+              "figure_number": "12",
+              "height": 244,
+              "image_path": "figures/2609.26090/table-004.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 404
+            },
+            {
+              "caption": "Table 1: Comparison of benchmarks that evaluate the teaching of a language model. Model is whether the benchmark evaluates text-only LLMs or vision-language models. Axes marks which of knowledge, skill, and attitude a benchmark scores. Grounding is what an item is built on. Open-ended scoring is how a free response is scored, and judge alignment is whether the benchmark reports how far its automatic scorer agrees with a human expert.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 244,
+              "image_path": "figures/2609.26090/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 1010
+            },
+            {
+              "caption": "Table 6: Attitude under condition. The pressure effect is the drop in pass probability when the item carries a request to misreport, the monitoring effect is the rise when a supervisor is said to review the exchange, and P×M is the interaction between them. Larger P×M means a model yields to pressure more when it is not observed. The interaction is defined only on the two families that carry both condition axes. Bold marks the value closest to zero in each column and underline the next, since a model whose behavior the condition does not move is the ideal.",
+              "figure_id": "table-6-6",
+              "figure_number": "6",
+              "height": 244,
+              "image_path": "figures/2609.26090/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 414
+            },
+            {
+              "caption": "Table 11: The eight models under evaluation. Temperature is omitted for one model because the provider ignores it rather than rejecting it. Reasoning is minimized per model at the effort level that produced the fewest reasoning tokens on a probe, and three models require reasoning and cannot go below their own floor. Frames is the per-request image cap, which one model lowers because it rejects anything larger.",
+              "figure_id": "table-11-10",
+              "figure_number": "11",
+              "height": 212,
+              "image_path": "figures/2609.26090/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 529
+            },
+            {
+              "caption": "Table 13: Rank correlation between the four measures over the eight models, reported as Spearman ρ with a permutation p over 20,000 draws, with tied reward scores given their average rank. Eight models is a small sample, so we read the size of ρ and treat p as a guard against reading a pattern into noise.",
+              "figure_id": "table-13-11",
+              "figure_number": "13",
+              "height": 181,
+              "image_path": "figures/2609.26090/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 314
+            },
+            {
+              "caption": "Table 14: Reward win rate by strategy over the 40 held-out items and eight models, giving 40 comparisons per strategy.",
+              "figure_id": "table-14-7",
+              "figure_number": "14",
+              "height": 214,
+              "image_path": "figures/2609.26090/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 342
+            },
+            {
+              "caption": "Table 5: Attitude by family, reported as the mean rubric score over the cells of that family. Dec. is Deception, Int. is Integrity and Honesty, Evi. is Evidence-based Judgment, Pot. is Respect for Potential, Res. is Respect, and Pro. is Proactive Teaching Stance.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 212,
+              "image_path": "figures/2609.26090/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 377
+            },
+            {
+              "caption": "Table 2: The three axes of SpecialEduBench. Cells exceed items on the attitude axis because each item is presented under more than one condition.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 161,
+              "image_path": "figures/2609.26090/table-011.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 404
+            },
+            {
+              "caption": "Table 7: Expert review by stage. Internal marks the experts who built the benchmark and external those who reviewed the result. The inter-expert agreement on each axis is the ceiling against which Section 3.5 reads the judge.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 327,
+              "image_path": "figures/2609.26090/table-012.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 442
+            },
+            {
+              "caption": "Table 8: The four knowledge categories, counted as items that are scored. Collected items keep the license of their source. Category sizes follow the availability of public resources rather than the importance of the domain, so we report a macro-average. The axis releases 4,567 items, of which 30 medical items carry no verifiable key and are released without being scored.",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 161,
+              "image_path": "figures/2609.26090/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 523
+            },
+            {
+              "caption": "Table 9: The eight teaching strategies. Base items come from expert-fixed pairings of clip and strategy, and variants balance each strategy to 25. Reference is the mean expert score on the 1 to 10 rubric, and α is the interval agreement among the four scoring experts on the items of that strategy.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 244,
+              "image_path": "figures/2609.26090/table-014.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 462
+            },
+            {
+              "caption": "Table 10: The six attitude families. P marks the pressure axis and M the monitoring axis. Traps are items that plant a factually wrong premise, and OLM marks a counterpart in the OpenLearnLM attitude axis. Appendix F defines the 17 dimensions.",
+              "figure_id": "table-10-13",
+              "figure_number": "10",
+              "height": 202,
+              "image_path": "figures/2609.26090/table-015.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 477
+            },
+            {
+              "caption": "Table 4: Skill by strategy, reported as the mean rubric score on the 1 to 10 scale. RI and MT are the branch means. Pass rates are withheld on this axis for the reason given in Section 3.5.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 67,
+              "image_path": "figures/2609.26090/table-016.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 502
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.26090/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.26090",
+          "relevance": 5,
+          "selection_reason": "Benchmark evaluating vision-language models in situated special education fits multimodal LLM evaluation.",
+          "summary_status": "generated",
+          "title": "SpecialEduBench: Benchmarking Vision-Language Models on Knowledge, Skill, and Attitude in Language Intervention for Autistic Children",
+          "tldr": "SpecialEduBench evaluates vision-language models on the situated pedagogical competence needed for language intervention with autistic children, beyond factual knowledge alone.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The integration of Vision-Language Models (VLMs) in autonomous Unmanned Aerial Vehicles (UAVs) offers unprecedented semantic reasoning capabilities. However, real-time closed-loop navigation requires not only low inference latency but also obedience to structured flight commands. This paper proposes a hybrid FSM-VLM control architecture for UAVs in GPS-free environments. The system combines a deterministic Finite State Machine (FSM) for low-level physical control with an asynchronous VLM copilot for high-level semantic pathfinding. We evaluate three models with different parameter scales in a Software-In-The-Loop (SITL) simulation. The framework isolates and measures syntax errors at the format level versus semantic hallucinations at the logic level in a normal and degraded scenario. This study demonstrates that parameter scaling, and not pure latency, remains the primary bottleneck for the safe and compatible integration of VLM into autonomous flights.",
+          "arxiv_id": "2609.26084",
+          "arxiv_url": "https://arxiv.org/abs/2609.26084",
+          "authors": [
+            "Hiago Sodre, Sebastian Barcelona, Vincent Sandin, Pablo Moraes, Ahilen Mazondo, Igor Nunes, William Moraes, Andr\\'e Kelbouscas, Ricardo Grando"
+          ],
+          "bullets": [
+            "Targets real-time, GPS-free UAV navigation with semantic reasoning and structured command obedience.",
+            "Combines a deterministic FSM for low-level flight control with an asynchronous VLM for high-level pathfinding.",
+            "Evaluates three differently scaled VLMs in Software-In-The-Loop simulation under normal and degraded conditions.",
+            "Separately measures format-level syntax errors and logic-level semantic hallucinations.",
+            "Finds parameter scaling—not pure inference latency—to be the primary bottleneck for safe VLM integration."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Proposed hybrid FSM-VLM architecture. The FSM ensures real-time control, while the asynchronous VLM provides semantic guidance.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 423,
+              "image_path": "figures/2609.26084/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 482
+            },
+            {
+              "caption": "Fig. 3. Overview of Missions used for benchmarking, on the Gazebo environment of tests.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 286,
+              "image_path": "figures/2609.26084/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 471
+            },
+            {
+              "caption": "Fig. 7. Overlay of trajectories in a degraded environment of Mission 1. The baseline model fails at the intersection, whereas the VLM backend attempts to use backtracking to recover the mission path.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 210,
+              "image_path": "figures/2609.26084/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1003
+            },
+            {
+              "caption": "Fig. 6. Trajectory comparison across different VLM backends in the Normal Environment of Mission All.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 377,
+              "image_path": "figures/2609.26084/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 452
+            },
+            {
+              "caption": "Fig. 8. Correlation between VLM inference latency and tracking error.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 283,
+              "image_path": "figures/2609.26084/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 477
+            },
+            {
+              "caption": "Fig. 1. Simulation environment for the autonomous vehicle in an indoor area of the Gazebo, with the panels displaying RViz debugging overlays.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 214,
+              "image_path": "figures/2609.26084/figure-006.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 472
+            },
+            {
+              "caption": "Fig. 4. Autonomous Vehicle Components in a Frame in the Simulation Environment.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 207,
+              "image_path": "figures/2609.26084/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 398
+            },
+            {
+              "caption": "Fig. 5. Visual examples of QR markers in the comparison configuration between Normal Environment vs. Degraded Environment.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 112,
+              "image_path": "figures/2609.26084/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 472
+            },
+            {
+              "caption": "Table 1. Comprehensive comparison of VLM-based autonomous navigation under Normal and Degraded (texture-damaged) environments. Bold values indicate the best result within each environment block. Success Rate represents mission completion without manual intervention.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 179,
+              "image_path": "figures/2609.26084/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 875
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.26084/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.26084",
+          "relevance": 7,
+          "selection_reason": "Hybrid FSM-VLM architecture using VLMs as semantic copilots for UAV navigation, analyzing latency and reliability.",
+          "summary_status": "generated",
+          "title": "Vision-Language Models as copilots for Autonomous UAV Navigation: Analysis of Latency and Reliability in Degraded Environments",
+          "tldr": "A hybrid FSM–VLM architecture enables semantic UAV navigation while revealing that model scaling, rather than latency alone, is the main barrier to reliable flight-command compliance in degraded environments.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Multimodal large language models (MLLMs) often struggle with fine-grained visual perception when processing complete images, as critical evidence may only appear in local regions. On-policy self-distillation (OPD) enables transferring privileged visual knowledge from informative views to full-image policies, but querying the teacher for every rollout introduces substantial supervision costs. In this work, we propose BAS-OPD, a budget-aware selective OPD framework that allocates teacher supervision under limited query budgets. Instead of querying all rollouts, BAS-OPD selects informative samples while maintaining full-batch student generation. We explore random, uncertainty-based, and learned utility-based selection strategies, where the learned selector estimates query value from detached rollout statistics and online utility signals derived from student--teacher agreement and teacher confidence without additional student forward passes. BAS-OPD only changes training-time supervision allocation and preserves single-pass full-image inference. Experiments on fine-grained multimodal perception benchmarks demonstrate that BAS-OPD achieves strong performance while substantially reducing teacher supervision costs, highlighting the effectiveness of selective OPD under constrained budgets.",
+          "arxiv_id": "2609.25891",
+          "arxiv_url": "https://arxiv.org/abs/2609.25891",
+          "authors": [
+            "Zihan Chen, Hengguang Zhou, Yuan Kang, Yiming Zhang, Wenhui Fang, Zenghui Ding, Yining Sun, Cho-Jui Hsieh"
+          ],
+          "bullets": [
+            "Addresses fine-grained visual perception failures caused by missing local evidence in complete-image processing.",
+            "Allocates limited teacher queries among rollouts while retaining full-batch student generation.",
+            "Evaluates random, uncertainty-based, and learned utility-based selection strategies.",
+            "The learned selector uses detached rollout statistics plus student–teacher agreement and teacher confidence, without extra student forward passes.",
+            "Experiments show strong benchmark performance with substantially lower teacher-supervision costs; inference remains single-pass and full-image."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of BAS-OPD. The full-image policy generates all rollouts; a budget-aware selector sends only K samples to the crop teacher for distillation and utility learning. Selection is removed at inference.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 433,
+              "image_path": "figures/2609.25891/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Figure 2: Qwen3.5-4B accuracy across teacher-query budgets on seven benchmarks; panel (h) is their mean. Orange marks each panel’s maximum; dashed lines mark full querying.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 405,
+              "image_path": "figures/2609.25891/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 823
+            },
+            {
+              "caption": "Figure 4: Gradient geometry for Learned-25 at six checkpoints. Arrows show selected and unselected mean gradients; faint vectors show 20 batch pairs per checkpoint. Coordinates are aligned for display.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 445,
+              "image_path": "figures/2609.25891/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 605
+            },
+            {
+              "caption": "Figure 3: Utility diagnostics over 2,240 candidates from ten batches. (a) Cumulative utility captured by oracle, learned, and random rankings. (b) Mean utility by predicted rank band with 95% bootstrap confidence intervals; p is Holm-adjusted over three one-sided paired sign-flip tests.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 288,
+              "image_path": "figures/2609.25891/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 702
+            },
+            {
+              "caption": "Figure 5: Accuracy–cost comparison on Qwen3.5-4B (seed 42). Points show the unweighted mean accuracy across seven benchmarks. Row labels report the teacher-query budget and the ratio of scored tokens to full querying.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 283,
+              "image_path": "figures/2609.25891/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Comparison with state-of-the-art MLLMs across seven benchmarks. We report accuracy (%) for each benchmark. Among the reported open-source single-forward-pass results, the best value is shown in bold and the second-best is underlined.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 567,
+              "image_path": "figures/2609.25891/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 830
+            },
+            {
+              "caption": "Table 2: Accuracy (%) of vanilla Qwen3.5 (Qwen Team, 2026), SFT (Ouyang et al., 2022), GRPO (Shao et al., 2024), DAPO (Yu et al., 2025), OPSD (Zhao et al., 2026), and BAS-OPD (learned selection, 25% teacher-query budget). Best results per backbone are bold.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 440,
+              "image_path": "figures/2609.25891/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 830
+            },
+            {
+              "caption": "Table 5: Learned-selector configuration shared across query budgets.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 361,
+              "image_path": "figures/2609.25891/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 827
+            },
+            {
+              "caption": "Table 4: Component ablations of the learned utility selector across seven benchmarks. Avg. is the unweighted mean across the seven benchmarks.",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 219,
+              "image_path": "figures/2609.25891/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 826
+            },
+            {
+              "caption": "Table 3: Selection-policy accuracy and teacher cost. Query ratio is selected/candidate; token ratio is relative to full querying. Bold marks the best 25%-budget result.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 198,
+              "image_path": "figures/2609.25891/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Table 6: Training configurations for the four selection-policy runs.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 219,
+              "image_path": "figures/2609.25891/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 827
+            },
+            {
+              "caption": "Table 7: Measured teacher-supervision cost. Token ratios use Full querying as the denominator. For Learned-25, the 25% budget is computed directly from the recorded aggregate counts as 6,216/24,864.",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 162,
+              "image_path": "figures/2609.25891/table-012.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 827
+            },
+            {
+              "caption": "Table 8: Observed training time on the original machines. These measurements are secondary because code path, device utilization, and rollout scheduling are not fully controlled across runs.",
+              "figure_id": "table-8-8",
+              "figure_number": "8",
+              "height": 158,
+              "image_path": "figures/2609.25891/table-013.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 827
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.25891/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.25891",
+          "relevance": 7,
+          "selection_reason": "Budget-aware selective on-policy self-distillation for fine-grained multimodal perception with MLLMs; directly fits multimodal foundation model training and tuning.",
+          "summary_status": "generated",
+          "title": "BAS-OPD: Budget-Aware Selective On-Policy Self-Distillation for Fine-Grained Multimodal Perception",
+          "tldr": "BAS-OPD reduces the cost of on-policy self-distillation by selectively querying teachers for informative multimodal rollouts while preserving full-image inference.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Many vision applications ask several independent, forced-choice questions about the same image. Visual Jev encodes the image and public context once, executes isolated question suffixes as a batch, and reads candidate probabilities from the backbone's language-model head. Across four benchmarks, answer-supervised post-training raises equal-weight macro accuracy from 70.6% to 76.1%, with the gain concentrated on the two task families represented in training. At N=32 questions per image, shared batched execution is 8.9x faster in warm amortized time than independent serial execution and remains 3.4x faster than an already-batched baseline that recomputes the prefix, at the cost of higher peak memory. A matched typed-head control offers no consistent accuracy advantage over the language-model-head readout. The supported design is therefore simple: adapt the backbone for quality, retain the existing readout, and share execution for efficiency.",
+          "arxiv_id": "2609.25845",
+          "arxiv_url": "https://arxiv.org/abs/2609.25845",
+          "authors": [
+            "Guanxu Yu, Yuhang Yao"
+          ],
+          "bullets": [
+            "Targets multiple independent forced-choice questions about the same image.",
+            "Encodes the image and public context once, then batches isolated question suffixes and reads candidate probabilities from the language-model head.",
+            "Answer-supervised post-training improves equal-weight macro accuracy from 70.6% to 76.1% across four benchmarks, mainly on task families seen during training.",
+            "At 32 questions per image, shared execution is 8.9× faster than serial inference and 3.4× faster than a baseline that recomputes the prefix.",
+            "The approach uses more peak memory; a typed-head control shows no consistent accuracy benefit over the existing language-model readout."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Quality and execution cost. Hue denotes backbone size; hollow and filled markers denote the original backbone and answer-supervised models. Here, “original” means the instruction-tuned checkpoint before any additional task adaptation in this paper. Within one backbone and training state, horizontal moves change only the execution path. Hollow-to-filled comparisons change training, whereas cross-hue comparisons change model scale and can move both axes. At N=1 sharing adds overhead; at N=32 it lowers amortized time while increasing peak memory as reported in Table 3.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 308,
+              "image_path": "figures/2609.25845/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 665
+            },
+            {
+              "caption": "Figure 1: Visual Jev. The image and public context form one cached prefix; each isolated question contributes a suffix, and the suffixes run as a batch. The default readout uses the backbone’s LM head and normalizes candidatetoken logits over the valid options. Typed decision and sufficiency heads are matched experimental controls, shown separately because they are not required by the recommended system.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 245,
+              "image_path": "figures/2609.25845/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 948
+            },
+            {
+              "caption": "Figure 2: Warm amortized time per question against the number of questions on one image, log on both axes. Hue is what a path reuses, dash is whether it batches, so the decomposition reads off the figure: the vertical gap within a hue is batching, the gap between hues at one dash is sharing. The metric is group time divided by N , not single-request response latency.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 355,
+              "image_path": "figures/2609.25845/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 454
+            },
+            {
+              "caption": "Figure 4: Risk–coverage on the deployment mix. Decision training moves the curve a long way; adding a sufficiency head and the paired objectives does not move it further.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 326,
+              "image_path": "figures/2609.25845/figure-004.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 454
+            },
+            {
+              "caption": "Table 7: Selective prediction on the deployment mix: intact observations, evidence-degraded ones and their equalarea controls, all scored against the original gold label. Confidence is the temperature-scaled maximum probability; gate adds margin, entropy and the answerability score in a logistic fit on the calibration split. Confidence AUROC measures ordering quality independently of how accurate the system is. ± is the standard deviation across seeds.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 340,
+              "image_path": "figures/2609.25845/table-005.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 841
+            },
+            {
+              "caption": "Table 2: Accuracy per benchmark. † marks a task no post-training in this paper ever saw. The macro average weights the four benchmarks equally, so the largest or easiest cannot carry it. The Readout column gives the output each system is read through, which is the one it was trained for: the backbone’s own LM head, or a decision head. Original backbone denotes the instruction-tuned checkpoint before any additional task adaptation in this paper. ± is the standard deviation across seeds. The last row is the same decision training on data that only ever presented K ≤ 4 options.",
+              "figure_id": "table-2-17",
+              "figure_number": "2",
+              "height": 163,
+              "image_path": "figures/2609.25845/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 846
+            },
+            {
+              "caption": "Table 5: Compared systems. Backbone, trainable parameters, optimiser and step budget are identical across trained rows. B3 is not a separate training run: every reported number is temperature-scaled on a held-out calibration split, so the B2 rows of Table 6 and the B2 confidence row of Table 7 are B3.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 163,
+              "image_path": "figures/2609.25845/table-007.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 931
+            },
+            {
+              "caption": "Table 3: What sharing buys, what batching buys, and what either costs. Reuses and Batches say what each row shares across the N questions and whether it runs them together. ∆ and the disagreement count are against the independent path on the same items. The generation rows answer by emitting a token, so their accuracy is a different measurement. Times are synchronized warm wall-clock group intervals divided by N . They start from an in-memory decoded image and extracted records, include processor/tokenization, transfers and path execution, and exclude image decode, record construction, disk, network and queueing; they are not independent-request response latencies.",
+              "figure_id": "table-3-16",
+              "figure_number": "3",
+              "height": 219,
+              "image_path": "figures/2609.25845/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 706
+            },
+            {
+              "caption": "Table 10: Intervention-OOD. The sufficiency head is trained on grey-fill occlusion only; blur and downscale are never seen in training. Values are means over the seeds of the sufficiency variant.",
+              "figure_id": "table-10-14",
+              "figure_number": "10",
+              "height": 206,
+              "image_path": "figures/2609.25845/table-009.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 425
+            },
+            {
+              "caption": "Table 12: Measured properties of the paired intervention set. The control arm is area-matched to the evidence region and its overlap with evidence or substitutable objects is zero. Rejected attempts are pairs for which no uncontaminated control of matching area exists.",
+              "figure_id": "table-12-15",
+              "figure_number": "12",
+              "height": 194,
+              "image_path": "figures/2609.25845/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 438
+            },
+            {
+              "caption": "Table 9: Specificity of the sufficiency signal. ∆rel. is the drop when the evidence region is degraded, ∆irr. the drop when an equal area elsewhere is degraded. A degradation detector moves both equally and scores 0.5 pair AUROC.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 227,
+              "image_path": "figures/2609.25845/table-011.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 357
+            },
+            {
+              "caption": "Table 11: Agreement with the independent path over 400 question readouts. Differences are reported on logits and on probabilities because a logit gap at bfloat16 resolution can be large while the decision is unchanged.",
+              "figure_id": "table-11-10",
+              "figure_number": "11",
+              "height": 153,
+              "image_path": "figures/2609.25845/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 447
+            },
+            {
+              "caption": "Table 13: Warm amortized time per question as the number of questions on one image grows under the synchronized wall-clock scope of Table 3. Each entry is group time divided by N .",
+              "figure_id": "table-13-8",
+              "figure_number": "13",
+              "height": 177,
+              "image_path": "figures/2609.25845/table-013.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 423
+            },
+            {
+              "caption": "Table 1: How much of each diagnostic subset the option list gives away. The grey-image column is the original instruction-tuned backbone, before any additional task adaptation in this paper, answering with the image replaced by a uniform field. These subsets differ from the benchmark test sets in Table 2.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 111,
+              "image_path": "figures/2609.25845/table-014.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 394
+            },
+            {
+              "caption": "Table 6: Main results on the in-distribution test split. ± is the standard deviation across three training seeds where three were run. Temperature, gate and risk threshold are all fitted on a held-out calibration split of images and applied unchanged.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 185,
+              "image_path": "figures/2609.25845/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 941
+            },
+            {
+              "caption": "Table 4: What the larger backbone costs, both answerSFT, both on the shared batched path at N=32 on the same GPU at the same precision and visual budget. Macro accuracy is the mean over three seeds.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 91,
+              "image_path": "figures/2609.25845/table-016.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 439
+            },
+            {
+              "caption": "Table 8: Detecting that the observation no longer carries the evidence the question needs. Positives are intact observations, negatives are evidence-degraded ones.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 90,
+              "image_path": "figures/2609.25845/table-017.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 411
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.25845/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.25845",
+          "relevance": 6,
+          "selection_reason": "Presents a batched shared-context execution scheme for vision-language question answering, relevant to multimodal LLMs and inference efficiency.",
+          "summary_status": "generated",
+          "title": "Visual Jev: Accurate and Efficient Decisions from Shared Visual Context",
+          "tldr": "Visual Jev improves forced-choice visual QA accuracy through answer-supervised adaptation and speeds inference by reusing shared image context across batched questions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Omni-modal models have expanded multimodal interaction across vision, audio, speech, and language. However, their training is predominantly organized around semantic descriptions and general-purpose objectives, leaving physical attributes, interaction states, and causal mechanisms only partially specified. This gap is not simply a matter of modality coverage: adding more modalities does not by itself provide the supervision needed to connect observations with the physical structure of the world. We present OmniFysics-Nano-V2, a compact omni-modal model for physical-world perception and understanding. The model supports image, video, audio, speech, and text inputs within a shared reasoning framework, together with text and speech generation. To address the lack of explicit physical supervision, we construct a dual-branch physics-aware data pipeline that grounds salient objects in structured physical attributes and aligns visual changes with acoustic events, intermediate responses, and interaction outcomes. To address homogeneous training objectives, we curate reinforcement-learning prompts by reward diversity and adopt a two-stage Group Relative Policy Optimization curriculum that progresses from general task correctness to fine-grained physical perceptual reasoning. Experiments across multimodal, audio-visual, and physical reasoning benchmarks show that the proposed data and training strategy improves physical-world understanding while preserving broad omni-modal competence. The proposed model achieves leading result on 17 of 21 benchmarks against SOTA omni-modal models. By equipping AI systems with both omni-modal and physical-world perception capabilities, OmniFysics-Nano-V2 is poised to become a cornerstone of next-generation Physical AI.",
+          "arxiv_id": "2609.25738",
+          "arxiv_url": "https://arxiv.org/abs/2609.25738",
+          "authors": [
+            "Yizhou Liu, Jinghang Han, Kaixiang Qiu, Qi He, Minghao Han, Yue Jiang, Xujia Chen, Wei Zou, Shunli Wang, Lihua Zhang, Dingkang Yang"
+          ],
+          "bullets": [
+            "Addresses the gap between broad modality coverage and explicit supervision for physical attributes, interactions, and causal mechanisms.",
+            "Processes image, video, audio, speech, and text in a shared reasoning framework, with text and speech generation.",
+            "Uses a dual-branch data pipeline linking objects to physical attributes and visual changes to acoustic events, intermediate responses, and outcomes.",
+            "Applies reward-diverse prompts and a two-stage Group Relative Policy Optimization curriculum, moving from general correctness to fine-grained physical reasoning.",
+            "Reports leading results on 17 of 21 benchmarks against state-of-the-art omni-modal models while retaining broad omni-modal competence."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2 Demonstration of OmniFysics-Nano-V2 model capability and performance. The proposed physics-aware data pipeline and efficient policy-aware training strategies endow the model with a powerful ability to understand the physical world.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 342,
+              "image_path": "figures/2609.25738/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 982
+            },
+            {
+              "caption": "Figure 1 Illustration of general multimodal models and the proposed OmniFysics-Nano-V2. In contrast to generic datasets and training strategies, we design a physics-aware data pipeline that incorporates both static-property and dynamic-event data. Moreover, we adopt multi-stage reinforcement learning to boost the model’s physical perception capabilities.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 442,
+              "image_path": "figures/2609.25738/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 635
+            },
+            {
+              "caption": "Figure 6 Architecture of OmniFysics-Nano-V2. Text, visual, and acoustic features are packed into a unified sequence for a shared causal backbone; temporally corresponding visual and acoustic groups are interleaved for synchronized video–audio input. For speech output, the generated answer is normalized and retokenized with the speech tokenizer. The resulting text embeddings query the projected answer states through cross-attention, producing a semantic conditioning sequence for speech-token generation and waveform reconstruction.",
+              "figure_id": "figure-6-16",
+              "figure_number": "6",
+              "height": 500,
+              "image_path": "figures/2609.25738/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 982
+            },
+            {
+              "caption": "Figure 4 Physics-aware data construction. (a) The static branch filters images, identifies objects and materials, retrieves object–material prototypes, and refines physical properties through compatibility and range checks before constructing training examples. (b) The dynamic branch retrieves event-centered video clips and aligns visual descriptions, acoustic evidence, and physical analysis into temporally grounded supervision of interactions and state changes. Together, the two branches connect intrinsic object properties with their observable effects during physical events.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 575,
+              "image_path": "figures/2609.25738/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 982
+            },
+            {
+              "caption": "Figure 8 Comparison of Audio Understanding Performance on MMAU and MMAR. Purple hatched bars denote our model.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 466,
+              "image_path": "figures/2609.25738/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 971
+            },
+            {
+              "caption": "Figure 7 Training curriculum of OmniFysics-Nano-V2. Stage 1 comprises Audio Alignment (Stage 1-1), Cross-Modal Alignment (Stage 1-2), and Omni-Modal Joint Training (Stage 1-3). Stage 2 first performs Progressive Multimodal RL with answer-level rewards (Stage 2-1), then applies Fine-Grained RL for Physical Perceptual Reasoning with final-answer, intermediate-perception, and format rewards (Stage 2-2). Stage 3 performs Audio Generation Training while keeping the multimodal reasoner and codec decoder frozen. Flame and snowflake symbols denote trainable and frozen components, respectively.",
+              "figure_id": "figure-7-1",
+              "figure_number": "7",
+              "height": 548,
+              "image_path": "figures/2609.25738/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 979
+            },
+            {
+              "caption": "Figure 5 Rollout-based reward-diversity filtering for RL data curation. For each prompt, a fixed policy generates 𝐾 stochastic responses (𝐾 = 4 by default), which are scored by task-specific reward evaluators. A prompt is retained only if its rollout group contains more than one distinct reward value. Uniform-reward groups are discarded; for binary rewards, these correspond to all-correct or all-incorrect responses. The retained corpus provides within-group reward variation for subsequent GRPO training.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 337,
+              "image_path": "figures/2609.25738/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 984
+            },
+            {
+              "caption": "Figure 11 Qualitative case studies of physical property prediction and multimodal physical understanding.",
+              "figure_id": "figure-11-13",
+              "figure_number": "11",
+              "height": 690,
+              "image_path": "figures/2609.25738/figure-008.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 973
+            },
+            {
+              "caption": "Figure 10 Successive checkpoints across ten understanding and reasoning benchmarks. SFT denotes the Stage 1-3 checkpoint; Progressive RL adds Stage 2-1 answer-correctness optimization; Fine-Grained RL further adds Stage 2-2 physical-perception and format rewards. Each row continues training from the preceding row. Higher scores are better.",
+              "figure_id": "figure-10-10",
+              "figure_number": "10",
+              "height": 324,
+              "image_path": "figures/2609.25738/figure-009.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 972
+            },
+            {
+              "caption": "Figure 12 The proposed OmniFysics-Nano-V2 is integrated with our in-house differentiable physics engine, enabling continual self-evolution of the embodied agent.",
+              "figure_id": "figure-12-17",
+              "figure_number": "12",
+              "height": 360,
+              "image_path": "figures/2609.25738/figure-010.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 972
+            },
+            {
+              "caption": "Figure 9 Pairwise human preference (%) for generated speech from OmniFysics-Nano-V2 and native CosyVoice3, measured by naturalness, clarity, and semantic faithfulness.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 267,
+              "image_path": "figures/2609.25738/figure-011.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 622
+            },
+            {
+              "caption": "Figure 3 Training-data distribution across modalities and task categories.",
+              "figure_id": "figure-3-18",
+              "figure_number": "3",
+              "height": 325,
+              "image_path": "figures/2609.25738/figure-012.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 361
+            },
+            {
+              "caption": "Table 3 Physical-world understanding and reasoning for vision-language and omni-modal models. FysicsEval is decomposed into prediction, reasoning, and understanding, and is reported alongside PhysBench, PAI-Bench, QuantiPhy, and PhysUniBench. Size is the reported parameter count in billions (B). Higher scores are better. Bold and underlined values denote the best and second-best results, respectively, in each column; the shaded row is our model.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 287,
+              "image_path": "figures/2609.25738/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 992
+            },
+            {
+              "caption": "Table 6 Missing-modality evaluation on omni-modal benchmarks. A, V, and A+V retain the audio stream, visual stream, and both streams, respectively; the textual question is unchanged. Higher scores are better. Rows for our model are shaded, and bold values denote its full-input results.",
+              "figure_id": "table-6-15",
+              "figure_number": "6",
+              "height": 296,
+              "image_path": "figures/2609.25738/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 886
+            },
+            {
+              "caption": "Table 4 Mathematical and physically grounded reasoning results on AIME25, AIME26, TheoremQA, and PhyX. Model size is reported in billions of parameters (B), and higher scores indicate better performance. A “-” indicates that the model did not produce a valid response on the corresponding benchmark; hence, no score is reported. Bold and underlined values denote the best and second-best distinct results, respectively, with ties receiving the same formatting. The shaded row highlights our model.",
+              "figure_id": "table-4-19",
+              "figure_number": "4",
+              "height": 185,
+              "image_path": "figures/2609.25738/table-015.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 577
+            },
+            {
+              "caption": "Table 5 Ablation of static and dynamic physical data. Checkmarks indicate the included data branch. All variants use the same initialization and training recipe and are evaluated after SFT and before RL. Bold and underlined values denote the best and second-best results, respectively.",
+              "figure_id": "table-5-14",
+              "figure_number": "5",
+              "height": 342,
+              "image_path": "figures/2609.25738/table-016.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 986
+            },
+            {
+              "caption": "Table 1 General multimodal understanding on MMBench-V1.1, MMStar, MMMU, HallusionBench, and AI2D. Models are grouped as vision-language (VL) or omni-modal (Omni); Size is the reported parameter count in billions (B). Higher scores are better. Bold and underlined values denote the best and second-best results, respectively, in each column; the shaded row is our model.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 107,
+              "image_path": "figures/2609.25738/table-017.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 877
+            },
+            {
+              "caption": "Table 2 Omni-modal and video understanding on OmniBench, WorldSense, Daily-Omni, FysicsWorld, and Video-MME. Size is the reported parameter count in billions (B). Higher scores are better. Bold and underlined values denote the best and second-best results, respectively, in each column; the shaded row is our model.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 209,
+              "image_path": "figures/2609.25738/table-018.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 802
+            },
+            {
+              "caption": "Table 7 Reward-diversity filtering across four RL data categories. Reduction rate is the fraction of candidate samples removed, and saved GPU-hours is the estimated avoided training compute. The estimates total 2,687.7 GPU-hours.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 139,
+              "image_path": "figures/2609.25738/table-019.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 502
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.25738/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.25738",
+          "relevance": 7,
+          "selection_reason": "Omni-modal model with physics-aware data pipeline and RL curriculum for physical-world understanding; directly relevant to multimodal foundation models.",
+          "summary_status": "generated",
+          "title": "OmniFysics-Nano-V2 Technical Report: Understanding the Physical World Across Modalities",
+          "tldr": "OmniFysics-Nano-V2 is a compact omni-modal model designed to improve physical-world understanding by combining structured physics-aware data with staged reinforcement learning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Though artificial intelligence (AI) increasingly transforms modern medicine, its integration into Traditional Chinese Medicine (TCM) has been relatively slow, primarily due to TCM's reliance on holistic, subjective diagnostic methods---namely Inspection, Auscultation and Olfaction, Inquiry, and Palpation(I-AOI-P)---which are difficult to align with quantitative, standardized medical systems. In this work, we introduce a Unification Framework for Multimodal Data (UFMD), which automatically processes tongue and pulse images into structured, clinically standard descriptions, integrating multi-source diagnostic information into a unified digital record of I-AOI-P process. Building on this structured data, we create LingLan-14B, a TCM-specific large language model fine-tuned via supervised learning to emulate the diagnostic logic and workflow of I-AOI-P process. Experimental results show that our method significantly enhances diagnostic accuracy, achieving a relative improvement of 103.5% over the baseline (62.72% vs. 30.82%) and reaching an F1-score of up to 82%.",
+          "arxiv_id": "2609.25715",
+          "arxiv_url": "https://arxiv.org/abs/2609.25715",
+          "authors": [
+            "Zheng Chen, Zhicheng Du, Haoxuan Li, Yingshan Liang, Peiwu Qin"
+          ],
+          "bullets": [
+            "TCM diagnosis is difficult to standardize because it relies on holistic, subjective observations.",
+            "UFMD converts tongue and pulse images into structured clinical descriptions and unifies multimodal I-AOI-P information.",
+            "LingLan-14B is supervised-fine-tuned on this structured data to model TCM diagnostic workflows.",
+            "The reported accuracy increases from 30.82% to 62.72%, with an F1-score reaching 82%."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: An overview of UFMD: (A) Extract features from multimodal data via MLLM templates. (B) Refine data through MLLM review and expert validation. (C) Store verified structured data in persistent database.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 635,
+              "image_path": "figures/2609.25715/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 968
+            },
+            {
+              "caption": "Fig. 1: (a) Diagnosis with only inquiry will result in lowreliability results. (b) Diagnosis with I-AOI-P Diagnosis will yield more accurate results.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 364,
+              "image_path": "figures/2609.25715/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 4: Confusion matrix of (a) LingLan-14B (b) BianCang14B-Instruct",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 282,
+              "image_path": "figures/2609.25715/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 3: Distribution of Test Data",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 274,
+              "image_path": "figures/2609.25715/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 420
+            },
+            {
+              "caption": "TABLE I: Configurations and Training Environment Comparison",
+              "figure_id": "table-I-1",
+              "figure_number": "I",
+              "height": 283,
+              "image_path": "figures/2609.25715/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 454
+            },
+            {
+              "caption": "TABLE II: Classicifation Categories of Test Set",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 156,
+              "image_path": "figures/2609.25715/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 358
+            },
+            {
+              "caption": "TABLE III: Experiment Result of Diagnosis Performance",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 143,
+              "image_path": "figures/2609.25715/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 524
+            },
+            {
+              "caption": "TABLE IV: Ablation Experiment Result",
+              "figure_id": "table-IV-7",
+              "figure_number": "IV",
+              "height": 66,
+              "image_path": "figures/2609.25715/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 429
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.25715/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2609.25715",
+          "relevance": 5,
+          "selection_reason": "TCM diagnosis LLM fine-tuned with multimodal tongue/pulse image data; fits multimodal large language model subtopic.",
+          "summary_status": "generated",
+          "title": "LingLan: An Advancing Traditional Chinese Medicine Diagnosis LLM with Multimodal Data",
+          "tldr": "LingLan combines multimodal TCM data processing with a specialized language model to emulate I-AOI-P diagnostic reasoning and substantially improve diagnostic accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "We introduce Qwen3.8-Omni-Flash, a natively multimodal agentic model for real-world multimodal productivity. Compared with previous omni models, which primarily emphasized perception and interaction, Qwen3.8-Omni-Flash substantially improves multimodal understanding and reasoning, as well as performance on long-horizon agentic tasks. These capabilities are supported by a native multimodal co-training strategy that preserves strong text-domain capabilities while facilitating the transfer of agentic capabilities from text to audio and video tasks. The model inherits the sparse mixture-of-experts (MoE) architecture of Qwen3.8-Next and extends the context window to one million tokens, supporting long-context multimodal reasoning and long-horizon planning. These advances enable integration into production workflows as a primary agent or a specialized sub-agent, supporting video editing, long-form audio and video translation, music-conditioned music video or movie generation, and video-based note or omni-skill creation. To address the lack of native audio and video support in existing agent harnesses, we release Qwen-MM-Plugins, a lightweight open-source plugin framework for multimodal productivity. We further frame real-time multimodal interaction as a system-level challenge requiring orchestration of context and memory management, tool use, and sub-agent delegation. Accordingly, we release Qwen-Live-Harness, an open-source framework for building responsive, real-time multimodal agents based on Qwen3.8-Omni-Flash. Extensive evaluations demonstrate that Qwen3.8-Omni-Flash achieves strong performance across multimodal understanding, reasoning, long-horizon agentic execution, and video productivity tasks. These results and the accompanying open-source tools support Qwen3.8-Omni-Flash as a practical foundation for deploying natively multimodal agents in research and production.",
+          "arxiv_id": "2609.25611",
+          "arxiv_url": "https://arxiv.org/abs/2609.25611",
+          "authors": [
+            "Qwen Team"
+          ],
+          "bullets": [
+            "Targets multimodal understanding, reasoning, and agentic execution beyond earlier omni-modal models focused mainly on perception and interaction.",
+            "Uses native multimodal co-training to transfer text-based agentic capabilities to audio and video while retaining strong text performance.",
+            "Combines a sparse MoE architecture with a one-million-token context window for multimodal reasoning and long-horizon planning.",
+            "Supports applications including video editing, audio/video translation, music-conditioned media generation, and video-based note or skill creation.",
+            "Releases Qwen-MM-Plugins and Qwen-Live-Harness for multimodal tool use and real-time agent orchestration; evaluations report strong performance across the targeted capabilities."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.CV",
+            "cs.MM"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: The overview of Qwen3.8-Omni-Flash-Realtime and Qwen-Live-Harness. Qwen3.8-OmniFlash-Realtime adopts the Thinker-Talker architecture. Thinker is tasked with text generation while Talker focuses on generating streaming speech tokens by receives high-level representations directly from Thinker. To achieve ultra–low-latency streaming, Talker autoregressively predicts a multi-codebook sequence. At each decoding step, an MTP module outputs the residual codebooks for the current frame, after which the Code2Wav renderer incrementally synthesizes the corresponding waveform, enabling frame-by-frame streaming generation.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 406,
+              "image_path": "figures/2609.25611/figure-001.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 950
+            },
+            {
+              "caption": "Figure 2: Overview of the audio encoders in Qwen3.8-Omni-Flash. The general AuT encoder extracts contextual audio representations at 6.25 Hz via convolutional downsampling and self-attention. A parallel Spatial AuT pathway processes multichannel spatial audio to capture directional and spatial cues.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 619,
+              "image_path": "figures/2609.25611/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 619
+            },
+            {
+              "caption": "Figure 1: Qwen3.8-Omni-Flash is a unified end-to-end model capable of processing multiple modalities, such as text, audio, image and video, and generating real-time text or speech response. Based on these features, Qwen3.8-Omni-Flash supports a wide range of tasks, including but not limited to voice dialogue, video dialogue, and audio-visual tool use.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 1127,
+              "image_path": "figures/2609.25611/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 950
+            },
+            {
+              "caption": "Table 5: Audio-visual capability evaluation of Qwen3.8-Omni-Flash and baseline models. The highest scores are shown in bold.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 756,
+              "image_path": "figures/2609.25611/table-004.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 902
+            },
+            {
+              "caption": "Table 6: Omni agentic performance of Qwen3.8-Omni-Flash and baseline models. The highest scores are shown in bold.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 268,
+              "image_path": "figures/2609.25611/table-005.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 754
+            },
+            {
+              "caption": "Table 1: Supported languages and dialects in Qwen3.8-Omni-Flash-Plus.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 677,
+              "image_path": "figures/2609.25611/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 943
+            },
+            {
+              "caption": "Table 10: Multimodal interaction performance comparison of Qwen3.8-Omni-Flash-Realtime and baseline models. The highest scores are shown in bold.",
+              "figure_id": "table-10-15",
+              "figure_number": "10",
+              "height": 321,
+              "image_path": "figures/2609.25611/table-007.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 808
+            },
+            {
+              "caption": "Table 2: Text capability evaluation of Qwen3.8-Omni-Flash and baseline models. The highest scores are shown in bold.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 77,
+              "image_path": "figures/2609.25611/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 950
+            },
+            {
+              "caption": "Table 3: Visual capability evaluation of Qwen3.8-Omni-Flash and baseline models. The highest scores are shown in bold.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 56,
+              "image_path": "figures/2609.25611/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 754
+            },
+            {
+              "caption": "Table 8: Accuracy and token consumption of Qwen3.8-Omni-Flash on OmniVideoBench under Static and agentic understanding settings.",
+              "figure_id": "table-8-7",
+              "figure_number": "8",
+              "height": 129,
+              "image_path": "figures/2609.25611/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 387
+            },
+            {
+              "caption": "Table 7: Agentic omni understanding performance under Static and Qwen Code settings. The highest scores are shown in bold.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 175,
+              "image_path": "figures/2609.25611/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 904
+            },
+            {
+              "caption": "Table 9: Realtime API efficiency of Qwen3.8-Omni-Flash-Realtime.",
+              "figure_id": "table-9-2",
+              "figure_number": "9",
+              "height": 182,
+              "image_path": "figures/2609.25611/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 691
+            },
+            {
+              "caption": "Table 11: Voice cloning capability comparison. Benchmarks marked with ∗ are in-house.",
+              "figure_id": "table-11-11",
+              "figure_number": "11",
+              "height": 63,
+              "image_path": "figures/2609.25611/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 950
+            },
+            {
+              "caption": "Table 12: Comprehensive Custom-Voice capability comparison. Benchmarks marked with ∗ are inhouse.",
+              "figure_id": "table-12-8",
+              "figure_number": "12",
+              "height": 54,
+              "image_path": "figures/2609.25611/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 950
+            },
+            {
+              "caption": "Table 4: Audio capability evaluation of Qwen3.8-Omni-Flash and baseline models. The best scores are shown in bold.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 46,
+              "image_path": "figures/2609.25611/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 854
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.25611/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.25611",
+          "relevance": 8,
+          "selection_reason": "Native omni-modal LLM with long-context and agentic capabilities; directly relevant to multimodal foundation models.",
+          "summary_status": "generated",
+          "title": "Qwen3.8-Omni: Towards Native Omni-Modal Agents",
+          "tldr": "Qwen3.8-Omni-Flash is a native omni-modal agent designed for long-context multimodal reasoning and real-world, long-horizon productivity tasks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Real-time voice assistants must reason over evolving requests, execute actions, and follow conversational rules. Qwen-Audio-3.1-Realtime brings these requirements together through Think, Act, and Speak and Coordinate. Think combines Core-Cocktail supervised fine-tuning with Multimodality and Multi-Teacher On-Policy Distillation (M$^{2}$-OPD) to transfer language capabilities and develop native audio skills. Act uses self-evolving executable environments and multi-granularity rollouts for Group Relative Policy Optimization (GRPO), teaching the model to use tools, interpret feedback, and complete tasks. Speak and Coordinate aligns how, when, and whether the assistant speaks or acts. We evaluate audio reasoning, multilingual understanding, tool use, conversational behavior, full-duplex interaction, and safety. Compared with Qwen-Audio-3.0-Realtime, 3.1 raises overall task success from 78.4% to 82.0% on our half-duplex speech-to-text adaptation of $\\tau$-Voice. On speech-to-speech Full-Duplex-Bench v1.5, the response rate to background speech falls from 73.0% to 13.0%. We also present a separate Voice Harness prototype, using Qwen-Audio-3.0-Realtime as its foreground, that extends spoken interaction to persistent tasks through foreground--background coordination and memory.",
+          "arxiv_id": "2609.25176",
+          "arxiv_url": "https://arxiv.org/abs/2609.25176",
+          "authors": [
+            "Lujia Bao, Qian Chen, Luyao Cheng, Chong Deng, Yuxiang Kong, Xiangang Li, Xu Li, Jiaqing Liu, Chao-Hong Tan, Haoyu Wang, Wen Wang, Xilou Wang, Junhao Xu, Liang Yi, Binbin Zhang, Qinglin Zhang, Qiquan Zhang"
+          ],
+          "bullets": [
+            "Targets evolving user requests, action execution, conversational rules, multilingual understanding, full-duplex interaction, and safety.",
+            "Uses Think with supervised fine-tuning and multi-teacher on-policy distillation to transfer language abilities and build native audio skills.",
+            "Uses Act with executable environments, multi-granularity rollouts, and GRPO to train tool use, feedback interpretation, and task completion.",
+            "Speak and Coordinate controls how, when, and whether the assistant speaks or acts.",
+            "Improves task success from 78.4% to 82.0% on a speech-to-text adaptation of τ-Voice, while reducing responses to background speech from 73.0% to 13.0% on Full-Duplex-Bench v1.5."
+          ],
+          "categories": [
+            "eess.AS",
+            "cs.AI",
+            "cs.CL",
+            "cs.SD"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Qwen-Audio-3.1-Realtime model framework for continuous spoken interaction. Streaming audio is processed by two models with the same Audio Encoder + LLM architecture. The full-duplex path controls speech timing, while the Speech-to-Text path generates response content. The context-aware voice renderer produces streaming speech from this content and the conversation and acoustic context, guided by the interaction decisions.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 367,
+              "image_path": "figures/2609.25176/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Figure 5: Persistent Voice Harness architecture. The foreground handles dialogue and direct tools. The background agent returns progress and results to the orchestration runtime for delivery to the foreground. Memory, task state, and reference knowledge remain separate. This system is evaluated separately from Qwen-Audio-3.1-Realtime.",
+              "figure_id": "figure-5-20",
+              "figure_number": "5",
+              "height": 377,
+              "image_path": "figures/2609.25176/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Qwen-Audio-3.1-Realtime post-training pipeline. Core-Cocktail SFT combines parameter reconciliation with controlled audio-text instruction tuning. Multimodality OPD transfers cross-modal capabilities from a Text Teacher while a frozen Audio Reference supplies audio-conditioned supervision. Domain experts specialize with domain data and GRPO; the ellipsis denotes additional domains. Multi-Teacher OPD consolidates their token-level supervision on student-generated trajectories into a single deployable model. The two OPD paths together form M2-OPD.",
+              "figure_id": "figure-3-14",
+              "figure_number": "3",
+              "height": 396,
+              "image_path": "figures/2609.25176/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Self-evolving production of executable training environments. A code agent builds each task package, and three gates check validity, rollout results, and difficulty. The evolution agent repairs broken environments, makes solved tasks harder, and retains useful frontier cases. Only valid successes and valid task failures become reinforcement-learning signals.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 377,
+              "image_path": "figures/2609.25176/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: Conceptual interaction loop and three technical layers. The stages can overlap in time, and a separate runtime extends the loop to persistent tasks.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 340,
+              "image_path": "figures/2609.25176/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Asynchronous task execution across foreground conversation turns. The runtime keeps task state and linked inputs while dialogue continues. Work completion emits a result event that the foreground incorporates using the current context; speech interruption, task cancellation, task completion, and result delivery retain separate semantics. Horizontal position is illustrative and does not represent measured latency.",
+              "figure_id": "figure-6-16",
+              "figure_number": "6",
+              "height": 273,
+              "image_path": "figures/2609.25176/figure-006.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 826
+            },
+            {
+              "caption": "Table 14: In-house system-level routing evaluation. The upper panel reports capability percentages on 134 cockpit cases; the lower panel reports mean seconds on a separate common-success subset. Bold marks the highest displayed capability score or lowest displayed latency in each column. The prototype uses Qwen-Audio-3.0-Realtime as its audio foreground and is not a Qwen-Audio-3.1-Realtime model evaluation.",
+              "figure_id": "table-14-15",
+              "figure_number": "14",
+              "height": 296,
+              "image_path": "figures/2609.25176/table-007.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 727
+            },
+            {
+              "caption": "Table 1: Foundation post-training stages, objectives, supervision interfaces, and stage outputs. Domain expert training creates the teachers consumed by Multi-Teacher OPD; the latter performs consolidation into the main model.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 415,
+              "image_path": "figures/2609.25176/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Table 9: In-house VoiceChat results. The panels report scene-level Spoken/Rubric scores, diagnostic comparisons, and average Chinese characters per assistant turn; response length is descriptive.",
+              "figure_id": "table-9-18",
+              "figure_number": "9",
+              "height": 421,
+              "image_path": "figures/2609.25176/table-009.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 710
+            },
+            {
+              "caption": "Table 10: FDB v1.0 and v1.5 results, grouped by task. Rates are proportions; latency is in seconds. Down arrows mark lower-is-better metrics; other metrics are higher-is-better. Bold indicates the best result for each metric, including ties.",
+              "figure_id": "table-10-13",
+              "figure_number": "10",
+              "height": 554,
+              "image_path": "figures/2609.25176/table-010.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 822
+            },
+            {
+              "caption": "Table 11: FDB v3.0 (upper panel) and in-house Qwen-Audio-FDB (lower panel) results, grouped by task. All values are reported on a 0–1 scale with four decimal places; rates are expressed as proportions. Down arrows mark lower-is-better metrics; other metrics are higher-is-better.",
+              "figure_id": "table-11-10",
+              "figure_number": "11",
+              "height": 386,
+              "image_path": "figures/2609.25176/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 826
+            },
+            {
+              "caption": "Table 13: Fine-grained safety pass rates (%, higher is better), aggregating single- and multiturn cases by risk category.",
+              "figure_id": "table-13-5",
+              "figure_number": "13",
+              "height": 219,
+              "image_path": "figures/2609.25176/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 698
+            },
+            {
+              "caption": "Table 2: General and instruction-following results. AMC uses GPT-4o-mini as judge because the official o4-mini judge (Gosai et al., 2025) was unavailable for our evaluation. These AMC scores are not directly comparable to results obtained with the official judge.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 203,
+              "image_path": "figures/2609.25176/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 826
+            },
+            {
+              "caption": "Table 3: Multilingual BBA accuracy (%).",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 91,
+              "image_path": "figures/2609.25176/table-014.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 772
+            },
+            {
+              "caption": "Table 4: Audio understanding and multilingual automatic speech recognition results.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 92,
+              "image_path": "figures/2609.25176/table-015.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 556
+            },
+            {
+              "caption": "Table 5: Long-context results. Long-AMC and VoiceChat-L are in-house evaluations.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 169,
+              "image_path": "figures/2609.25176/table-016.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 826
+            },
+            {
+              "caption": "Table 6: Agentic and tool-use results (%).",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 153,
+              "image_path": "figures/2609.25176/table-017.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 618
+            },
+            {
+              "caption": "Table 7: In-house WebSearch1K retrieval-triggering and query-generation results.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 119,
+              "image_path": "figures/2609.25176/table-018.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 544
+            },
+            {
+              "caption": "Table 8: Persona and empathy results (1–5, higher is better).",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 161,
+              "image_path": "figures/2609.25176/table-019.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 822
+            },
+            {
+              "caption": "Table 12: S2T safety and reliability results (%).",
+              "figure_id": "table-12-11",
+              "figure_number": "12",
+              "height": 155,
+              "image_path": "figures/2609.25176/table-020.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 748
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.25176/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2609.25176",
+          "relevance": 5,
+          "selection_reason": "Real-time audio LLM assistant extending a language model with an additional modality and persistent-task memory.",
+          "summary_status": "generated",
+          "title": "Qwen-Audio-3.1-Realtime: Towards Reliable Agentic Voice Interaction",
+          "tldr": "Qwen-Audio-3.1-Realtime integrates reasoning, tool use, and speech coordination to improve reliable, real-time agentic voice interaction.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "In this report we present results of the ICDAR2026 Competition on Multimodal Reasoning over Documents in Multiple Domains. This competition aimed to advance research in document understanding through the task of Visual Question Answering (VQA). Building upon previous DocVQA benchmarks, this competition introduces challenging reasoning questions over a diverse collection of documents spanning eight domains, including business reports, scientific papers, slides, posters, maps, comics, infographics, and engineering drawings. The competition concluded with 20 valid submissions from 8 teams spanning zero-shot VLMs, OCR and parser-augmented pipelines, agentic retrieval systems, multi-agent ensembles, and fine-tuned multimodal models. The results show that the strongest systems move beyond single-pass prompting and instead rely on structured evidence extraction, retrieval, verification, and orchestration across multiple components.",
+          "arxiv_id": "2609.25055",
+          "arxiv_url": "https://arxiv.org/abs/2609.25055",
+          "authors": [
+            "Artemis Llabr\\'es, Marc Serra Ortega, Tom\\`as Ockier, Samuel Ortega Cuadra, Amritpal Singh, Christos Georgakilas, Andrey Barsky, Ernest Valveny, Dimosthenis Karatzas"
+          ],
+          "bullets": [
+            "Focuses on visual question answering over diverse documents, including reports, papers, slides, maps, comics, infographics, and engineering drawings.",
+            "Introduces challenging reasoning questions extending previous DocVQA benchmarks.",
+            "Reports 20 valid submissions from 8 teams using zero-shot VLMs, OCR/parser pipelines, retrieval agents, multi-agent ensembles, and fine-tuned multimodal models.",
+            "Top-performing approaches combine evidence extraction, retrieval, verification, and orchestration rather than relying on single-pass prompts."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of the eight document domains of the competition: business reports, scientific publications, slides, posters, maps, comics, infographics, and engineering drawings.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 401,
+              "image_path": "figures/2609.25055/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 711
+            },
+            {
+              "caption": "Fig. 4. Sample question from the comics domain: to answer it, the model must identify the page where the murder occurs, track the sequence of locations mentioned in the narrative panels leading up to that event, and determine the last state referenced before the state in which the crime is committed.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 391,
+              "image_path": "figures/2609.25055/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 705
+            },
+            {
+              "caption": "Fig. 3. Sample question from the maps domain: to answer it, the model must locate stand 30, determine the map’s north orientation, follow the main avenue northward to its endpoint, and then use the legend to translate the final stand number into its corresponding name.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 397,
+              "image_path": "figures/2609.25055/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 616
+            },
+            {
+              "caption": "Fig. 8. Domain-wise comparison of the two tied methods in the 8–35B category. Although ARGUS_Qwen3.5_27B and Perceive-Reason-Code achieve the same overall accuracy, they do so through different domain strengths.",
+              "figure_id": "figure-8-3",
+              "figure_number": "8",
+              "height": 282,
+              "image_path": "figures/2609.25055/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 710
+            },
+            {
+              "caption": "Fig. 6. Prompt used for all baseline models.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 825,
+              "image_path": "figures/2609.25055/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 688
+            },
+            {
+              "caption": "Fig. 1. Evolution of submitted methods to the DocVQA competitions.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 308,
+              "image_path": "figures/2609.25055/figure-006.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 581
+            },
+            {
+              "caption": "Fig. 7. Domain-wise accuracy for selected representative methods. The figure highlights differences in difficulty across domains and shows that the strongest systems are more balanced than the zero-shot baselines across categories.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 89,
+              "image_path": "figures/2609.25055/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 562
+            },
+            {
+              "caption": "Fig. 5. Questions per Document Distribution (Validation+Test)",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 345,
+              "image_path": "figures/2609.25055/figure-008.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 564
+            },
+            {
+              "caption": "Table 1: Overall DocVQA competition results across all submitted methods, grouped in a single table spanning the three parameter bands (≤8B, 8–35B, and >35B). Accuracy is shown on a 0–100 percentage scale. Boldface indicates the winner in each parameter band, with a tie in the 8–35B band. Light-gray rows correspond to official baselines.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 948,
+              "image_path": "figures/2609.25055/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 719
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.25055/hero.webp",
+          "novelty": 4,
+          "pdf_url": "https://arxiv.org/pdf/2609.25055",
+          "relevance": 5,
+          "selection_reason": "Multimodal document VQA competition spanning VLMs and agentic pipelines; relevant to multimodal reasoning but a benchmark report.",
+          "summary_status": "generated",
+          "title": "ICDAR2026 Competition on Multimodal Reasoning over Documents in Multiple Domains",
+          "tldr": "The ICDAR2026 competition evaluates multimodal document reasoning across eight domains and finds that structured, multi-component systems outperform simple single-pass prompting in practice.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Localizing and describing fine-grained differences between near-identical images is a critical yet underexplored capability for multimodal large language models (MLLMs). Existing benchmarks largely assess semantic comparison or single-image grounding in isolation, without jointly requiring faithful description and physical localization. To bridge this gap, we introduce MinCU, a benchmark for grounded minimal-change understanding, where each sample consists of an image pair differing by a single atomic variation in object category, attribute, count, or spatial position, and models are evaluated on their ability to describe the change, localize the changed regions, and identify the changed entity. We further propose Semantic-Guided Implicit Spatial Anchors (SG-ISA), a structured autoregressive method that decomposes prediction into a Think-Locate-Describe sequence. SG-ISA first predicts a semantic cue for the changed concept, then uses discrete spatial anchors as an implicit localization scaffold, and finally generates the change description together with the grounding box. Experiments reveal that even the strongest closed-source MLLMs and recent R1-style reasoning models struggle on MinCU, with most failing to jointly produce accurate descriptions and grounding boxes. Compared to the previous chain-of-thought method, fine-tuning with SG-ISA yields substantial joint improvements in grounding accuracy and description quality while reducing reasoning-token overhead by approximately 26%. These results suggest that an implicit intermediate spatial interface can be more effective than relying solely on model scale for grounded dual-image understanding.",
+          "arxiv_id": "2609.23336",
+          "arxiv_url": "https://arxiv.org/abs/2609.23336",
+          "authors": [
+            "Chaoqian Mu, Wenhao Wu, Zichen Liang, Jiaxu Li, Lijun Wang, Yifan Wang, Huchuan Lu"
+          ],
+          "bullets": [
+            "Introduces MinCU, where image pairs differ by one atomic change in category, attribute, count, or position.",
+            "Evaluates change description, changed-region localization, and changed-entity identification jointly.",
+            "Proposes SG-ISA, a Think-Locate-Describe method using semantic cues and implicit spatial anchors.",
+            "Strong existing MLLMs and reasoning models struggle to jointly generate accurate descriptions and grounding boxes.",
+            "SG-ISA fine-tuning improves grounding and description quality while reducing reasoning-token overhead by about 26% versus a prior chain-of-thought method."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of our MINCU benchmark and the SG-ISA method. Given Image A and Image B differing by one localized atomic change (e.g., object, attribute, counting, or spatial relocation), a model must jointly describe the semantic difference, predict bounding boxes that localize the corresponding regions in both Image A and Image B, and identify the target entity.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 325,
+              "image_path": "figures/2609.23336/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: Three-stage MINCU data pipeline: (1) Source image selection, where LVIS images are filtered for quality and semantic clarity; (2) Edit instruction generation, where category-specific prompts are created for each source image; Image editing, where Nano Banana 2 applies controlled local changes; and (3) Automatic scoring with human verification, where low-quality or ambiguous pairs are removed to produce the final benchmark.",
+              "figure_id": "figure-2-24",
+              "figure_number": "2",
+              "height": 397,
+              "image_path": "figures/2609.23336/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Overall methodology for SG-ISA. The joint probability distribution is factorized into Think-Locate-Describe stages, bridging the gap between semantic understanding and fine-grained localization via an implicit spatial bottleneck.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 441,
+              "image_path": "figures/2609.23336/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 798
+            },
+            {
+              "caption": "Figure 4: Qualitative comparison of SG-ISA against the SFT baseline and representative proprietary models. SG-ISA produces more precise bounding boxes and faithful descriptions.",
+              "figure_id": "figure-4-19",
+              "figure_number": "4",
+              "height": 369,
+              "image_path": "figures/2609.23336/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 826
+            },
+            {
+              "caption": "Figure 7: Typical failure modes of our approach on grounded minimal-change understanding. The examples highlight the model’s limitations in handling asymmetric mappings, individuating dense instances and maintaining cross-image position correspondence.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 433,
+              "image_path": "figures/2609.23336/figure-005.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Prompt template used for structured autoregressive reasoning and grounding.",
+              "figure_id": "figure-5-16",
+              "figure_number": "5",
+              "height": 702,
+              "image_path": "figures/2609.23336/figure-006.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 829
+            },
+            {
+              "caption": "Figure 8: TAM attention maps across three change types. The model grounds the manipulated object in both images, with sharper activation on the changed image.",
+              "figure_id": "figure-8-23",
+              "figure_number": "8",
+              "height": 1120,
+              "image_path": "figures/2609.23336/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 582
+            },
+            {
+              "caption": "Figure 6: Prompt template used for edit instruction generation.",
+              "figure_id": "figure-6-17",
+              "figure_number": "6",
+              "height": 485,
+              "image_path": "figures/2609.23336/figure-008.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 829
+            },
+            {
+              "caption": "Figure 9: Additional qualitative results of SG-ISA on the MINCU benchmark. Each panel shows the input image pair (Image A and Image B), the model’s predicted bounding boxes, and the generated change description, demonstrating the model’s capability across diverse change categories and difficulty levels.",
+              "figure_id": "figure-9-10",
+              "figure_number": "9",
+              "height": 952,
+              "image_path": "figures/2609.23336/figure-009.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 829
+            },
+            {
+              "caption": "Figure 10: Additional qualitative results of SG-ISA on the MINCU benchmark. Each panel shows the input image pair (Image A and Image B), the model’s predicted bounding boxes, and the generated change description, demonstrating the model’s capability across diverse change categories and difficulty levels.",
+              "figure_id": "figure-10-18",
+              "figure_number": "10",
+              "height": 950,
+              "image_path": "figures/2609.23336/figure-010.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 826
+            },
+            {
+              "caption": "Table 1: Overall comparison on primary grounding and semantic metrics. Gr-F1: Grounded F1; HR: hallucination rate (↓). Detailed overall results are deferred to Appendix Tables 7 and 8.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 532,
+              "image_path": "figures/2609.23336/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 772
+            },
+            {
+              "caption": "Table 3: Category-wise mAP (↑) on representative models. Full per-category localization metrics are given in Appendix Table 9.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 204,
+              "image_path": "figures/2609.23336/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 402
+            },
+            {
+              "caption": "Table 2: Category-wise Grounded F1 (↑) on representative models. Full per-category localization metrics are given in Appendix Table 9.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 204,
+              "image_path": "figures/2609.23336/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 400
+            },
+            {
+              "caption": "Table 7: Detailed overall localization and joint metrics, including mean Intersection over Union (mIoU), COCO-style mean Average Precision (mAP) [30] at multiple thresholds (AP@50, AP@75, AP@95), Grounded F1 (Gr-F1; see Section 5.1 for definition), and hallucination rate (HR; ↓).",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 533,
+              "image_path": "figures/2609.23336/table-014.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 736
+            },
+            {
+              "caption": "Table 15: Zero-shot generalization to real-world image pairs. Base: pre-trained model without MINCU fine-tuning. SG-ISA: trained on our MINCU set only. Evaluation includes Gr-F1, mIoU, COCO-style mAP [30], CIDEr [48], and SPICE [1]. Bold: best in column; underlined: second best.",
+              "figure_id": "table-15-6",
+              "figure_number": "15",
+              "height": 406,
+              "image_path": "figures/2609.23336/table-015.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 596
+            },
+            {
+              "caption": "Table 8: Detailed overall semantic-generation metrics (↑), including BLEU-4 [39], ROUGE-L [29], CIDEr [48], METEOR [7], SPICE [1], and BERTScore [60].",
+              "figure_id": "table-8-2",
+              "figure_number": "8",
+              "height": 606,
+              "image_path": "figures/2609.23336/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 727
+            },
+            {
+              "caption": "Table 9: Detailed grounding metrics by change type (↑), including Gr-F1, mIoU, and COCO-style mAP [30].",
+              "figure_id": "table-9-25",
+              "figure_number": "9",
+              "height": 558,
+              "image_path": "figures/2609.23336/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 832
+            },
+            {
+              "caption": "Table 10: Detailed semantic-generation metrics by change type (↑), including CIDEr [48], METEOR [7], and BERTScore [60].",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 467,
+              "image_path": "figures/2609.23336/table-018.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 832
+            },
+            {
+              "caption": "Table 6: Impact of implicit spatial grid granularity. We ablate the resolution of the intermediate coordinate vocabulary. The compressed 10-Grid configuration acts as an optimal information bottleneck, performing competitively with the 100-Grid while maintaining a more compact vocabulary.",
+              "figure_id": "table-6-22",
+              "figure_number": "6",
+              "height": 174,
+              "image_path": "figures/2609.23336/table-019.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 791
+            },
+            {
+              "caption": "Table 4: Ablation on decoding sequence. We compare different autoregressive arrangements of the spatial bottleneck. Emitting the semantic cue ([Obj]) followed by spatial anchors ([CoT]) before generating the description yields the highest grounding accuracy and lower hallucination rate.",
+              "figure_id": "table-4-20",
+              "figure_number": "4",
+              "height": 131,
+              "image_path": "figures/2609.23336/table-020.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 698
+            },
+            {
+              "caption": "Table 5: Implicit vs. explicit CoT. Comparison of different reasoning modalities. Our discrete implicit spatial CoT achieves the highest localization precision (COCO-style mAP [30]) while significantly reducing the decoding token overhead compared to explicit verbose reasoning.",
+              "figure_id": "table-5-21",
+              "figure_number": "5",
+              "height": 109,
+              "image_path": "figures/2609.23336/table-021.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 602
+            },
+            {
+              "caption": "Table 12: Results comparison between SG-ISA (structured) and Qwen3-VL-2B-Instruct (free-form) predictions under the same ground-truth annotations.",
+              "figure_id": "table-12-14",
+              "figure_number": "12",
+              "height": 186,
+              "image_path": "figures/2609.23336/table-022.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 590
+            },
+            {
+              "caption": "Table 13: Localization metrics under image sequence shuffling. Gr-F1: Grounded F1; mIoU: mean Intersection over Union; mAP: COCO-style mean Average Precision [30]; HR: hallucination rate (↓). Bold: best overall; underlined: second best.",
+              "figure_id": "table-13-3",
+              "figure_number": "13",
+              "height": 207,
+              "image_path": "figures/2609.23336/table-023.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 504
+            },
+            {
+              "caption": "Table 14: Per-category localization metrics under shuffling, including Gr-F1, mIoU, COCO-style mAP [30], and hallucination rate (HR; ↓).",
+              "figure_id": "table-14-4",
+              "figure_number": "14",
+              "height": 162,
+              "image_path": "figures/2609.23336/table-024.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 518
+            },
+            {
+              "caption": "Table 11: Ablation study on the <loc_null> token. All metrics are reported on the Counting split, with higher values indicating better performance for all localization metrics (↑). mAP denotes COCO-style mean Average Precision [30].",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 111,
+              "image_path": "figures/2609.23336/table-025.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 636
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.23336/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.23336",
+          "relevance": 7,
+          "selection_reason": "Benchmark and structured autoregressive method for grounded minimal-change understanding in MLLMs.",
+          "summary_status": "generated",
+          "title": "MinCU: A Fine-Grained Benchmark for Grounded Minimal-Change Understanding in Image Pairs",
+          "tldr": "MinCU benchmarks whether multimodal models can accurately describe and localize the single minimal change between near-identical image pairs, while SG-ISA improves both capabilities with less reasoning overhead.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Despite the remarkable progress in Multimodal Large Language Models (MLLMs), prevailing Chain-of-Thought (CoT) paradigms remain confined to the natural-language expression space. Consequently, they inherently incur excessive linguistic overhead, leading to information dilution and weak visual grounding. To address this challenge, we propose Dense Reasoning Trace (DRT), a paradigm that departs from natural-language-centered CoT by expressing reasoning as compact structured traces, which include concise intermediate states with symbolic connectors and disentangle visual observations from logical deductions. First, we introduce the Dense Trace Initialization to internalize the DRT reasoning mode into the model, substantially improving token efficiency while preserving visual evidence. To further enable the model to faithfully capture the logical relations within traces, we propose the Trace-Grounded Reinforcement Learning framework, which builds reference traces through a tri-perspective verification pipeline and employs Trace-Grounded GRPO with structured rewards, encouraging the model to generate concise DRT-style traces with reduced hallucination and stronger logical grounding. Extensive experiments on challenging reasoning benchmarks show that DRT achieves 5.5$\\times$ token efficiency improvement while improving 1.3 accuracy points over the Qwen3-VL baseline. These findings suggest that complex multimodal reasoning may not require verbose natural-language traces, opening a more efficient path for next-generation MLLMs. Our code and data are available at: https://github.com/HIT-leaderone/DRT",
+          "arxiv_id": "2609.21675",
+          "arxiv_url": "https://arxiv.org/abs/2609.21675",
+          "authors": [
+            "Wan Xu",
+            "Yuanfan Guo",
+            "Kevin Han",
+            "LaLa Chen",
+            "Wangmeng Zuo"
+          ],
+          "bullets": [
+            "Addresses linguistic overhead, information dilution, and weak visual grounding in conventional multimodal CoT.",
+            "Represents reasoning with concise intermediate states, symbolic connectors, and separate visual observations from logical deductions.",
+            "Uses Dense Trace Initialization to teach the reasoning format and Trace-Grounded Reinforcement Learning with verified reference traces and structured rewards.",
+            "Reports 5.5× greater token efficiency and a 1.3-point accuracy improvement over the Qwen3-VL baseline on challenging reasoning benchmarks.",
+            "Scope: focuses on efficient, visually grounded multimodal reasoning rather than verbose natural-language traces."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: The overall pipeline of DRT.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 365,
+              "image_path": "figures/2609.21675/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 810
+            },
+            {
+              "caption": "Figure 3: Step-level analysis across reasoning difficulty using GPT-5.1 as an external judge. Examples are grouped by ground-truth step counts, which serve as a proxy for reasoning difficulty. (A) shows the ground-truth step-count distribution, while (B)–(F) report per-bucket metrics: tokens per reasoning step, hallucination ratio, reasoning step, effective reasoning step, and accuracy.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 430,
+              "image_path": "figures/2609.21675/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 806
+            },
+            {
+              "caption": "Figure 1: Qualitative and quantitative comparison of CoT and DRT reasoning paradigms. (A): Qwen3-VL produces an overly long, low-density trace with an image-unfaithful assumption, leading to an incorrect answer. In contrast, DRT-RL successfully solves the problem using structured, compact reasoning traces. (B): Across prompting paradigms and efficient-reasoning baselines, DRTRL achieves a stronger accuracy-token tradeoff.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 338,
+              "image_path": "figures/2609.21675/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Figure 4: Case-level comparison of reasoning behaviors on a MathVerse geometry problem.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 995,
+              "image_path": "figures/2609.21675/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 826
+            },
+            {
+              "caption": "Table 3: System-level efficiency comparison across efficient reasoning methods on five reasoning benchmarks. For each benchmark, we report throughput (QPS↑) and latency (Latency↓). The final columns report the macro average of QPS and Latency across all five benchmarks.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 193,
+              "image_path": "figures/2609.21675/table-005.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 822
+            },
+            {
+              "caption": "Table 4: Ablation study on reward model size. We report accuracy (Acc↑) on five reasoning benchmarks and their macro average, along with average output tokens (Tokens↓).",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 191,
+              "image_path": "figures/2609.21675/table-006.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 818
+            },
+            {
+              "caption": "Table 1: Performance and token efficiency comparison on five reasoning benchmarks. For each benchmark, we report accuracy (Acc↑) and average output tokens (Tokens↓). The final columns report the macro average of Acc, Tokens, throughput (QPS↑) and Latency (Lat.↓).",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 181,
+              "image_path": "figures/2609.21675/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 822
+            },
+            {
+              "caption": "Table 2: Ablation study on SFT init, RL data composition, and reward design. We report accuracy (Acc↑) on five benchmarks and their macro average, along with average output tokens (Tokens↓). Rans denotes the standard GRPO reward based on answer-level supervision.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 152,
+              "image_path": "figures/2609.21675/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            },
+            {
+              "caption": "Table 5: Licenses of primary existing assets used in this work.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 175,
+              "image_path": "figures/2609.21675/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 822
+            }
+          ],
+          "first_seen_at": "2026-09-22T21:00:00-04:00",
+          "hero_figure": "figures/2609.21675/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.21675",
+          "relevance": 8,
+          "selection_reason": "Introduces Dense Reasoning Trace (DRT) to improve token efficiency and visual grounding in Multimodal Large Language Models by replacing natural-language CoT with structured traces.",
+          "summary_status": "generated",
+          "title": "DRT: Dense Reasoning Trace for Efficient and Grounded Multimodal Reasoning",
+          "tldr": "DRT replaces verbose natural-language chain-of-thought with compact, grounded multimodal reasoning traces that improve efficiency and accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-21",
       "paper_count": 37,
       "papers": [
@@ -97553,5 +100115,5 @@
   "schema_version": 1,
   "subtopic_id": "multimodal-large-language-models",
   "topic_id": "multimodal-foundation-models",
-  "total_paper_count": 509
+  "total_paper_count": 523
 }

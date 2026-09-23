@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**337 papers total**
+**343 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [AIGC Video Detection based on the fusion of spatial-frequency-optical flow multimodal features](https://arxiv.org/abs/2609.26274) | Video Generation and Understanding: Video Understanding | CrossAtt-VFD detects AI-generated videos by aligning spatial-frequency appearance features with optical-flow motion features to expose cross-modal inconsistencies. | 5 | 4 |
+| 2026-09-22 | [VideoX-Qwen: Data-Centric Instruction-Based Video Editing](https://arxiv.org/abs/2609.26015) | Video Generation and Understanding: Video Diffusion | VideoX-Qwen combines large-scale synthetic instruction-editing data with a unified multimodal video editor to improve instruction following while preserving video content and temporal structure. | 8 | 7 |
+| 2026-09-22 | [Isolated Sign Language Recognition for Icelandic Sign Language: Experiments in a Low-resource Setting](https://arxiv.org/abs/2609.25862) | Video Generation and Understanding: Video Understanding | Cross-lingual transfer substantially improves isolated Icelandic Sign Language recognition in an extremely low-resource setting, though performance remains limited for the full vocabulary. | 5 | 5 |
+| 2026-09-22 | [CogenPVG: Cognitive-Enhanced Reflective Multi-Agent Framework for Persuasive Video Generation](https://arxiv.org/abs/2609.25821) | Video Generation and Understanding | CogenPVG uses reflective, theory-guided multi-agent collaboration to generate persuasive videos from a user-provided topic and stance. | 5 | 6 |
+| 2026-09-22 | [Video-HopChain: Multi-Hop Questions and Confidence-Gated Exploration for Video Reasoning Models](https://arxiv.org/abs/2609.25773) | Video Generation and Understanding: Video Understanding | Video-HopChain enables verifiable multi-hop video reasoning for RLVR, while Confidence-Gated Exploration improves learning from uniformly easy or hard question groups. | 8 | 7 |
+| 2026-09-22 | [Same Flow, Different Paths: Variance Reduction in Flow Matching](https://arxiv.org/abs/2609.17287) | Video Generation and Understanding: Video Diffusion | The choice of interpolation path in flow matching can substantially affect SGD convergence, even when it produces the same training objective and marginals. | 5 | 7 |
 | 2026-09-21 | [GameHorizon Suite: Multi-Horizon Data and Evaluation in Gameplay](https://arxiv.org/abs/2609.25001) | Embodied AI; Video Generation and Understanding: Video Understanding | GameHorizon introduces a unified dataset, annotation pipeline, and benchmark for evaluating AI gameplay abilities across short- and long-term horizons. | 6 | 6 |
 | 2026-09-21 | [Uranus: Building the Next-Generation Simulation Infrastructure for Embodied AI](https://arxiv.org/abs/2609.24815) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Uranus is a data-driven robot simulator that enables open-ended, low-latency visual rollouts conditioned on online joint trajectories for scalable embodied-AI development. | 8 | 8 |
 | 2026-09-21 | [Streaming Video Editing with Easy Adaptation](https://arxiv.org/abs/2609.24788) | Video Generation and Understanding: Video Diffusion | SVEET adapts a pretrained bidirectional video diffusion model for high-quality, autoregressive streaming video editing at real-time speed. | 8 | 8 |

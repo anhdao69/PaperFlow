@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**69 papers total**
+**73 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [MATE: Multi-Agent Virtual Teleoperation Platform for Humanoid Collaboration Data Collection](https://arxiv.org/abs/2609.26520) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | MATE enables scalable multi-humanoid collaboration data collection through shared virtual teleoperation, with EAIS improving learning from interaction-rich demonstrations and supporting zero-shot transfer to a physical humanoid. | 8 | 8 |
+| 2026-09-22 | [TimeInteract: Towards Real-Time Interactive Intelligence for Streaming Time Series](https://arxiv.org/abs/2609.26389) | Embodied AI: Learning from Human Videos; Adaptation and Memory: Test-Time Learning | TimeInteract enables time-series language models to continuously monitor streaming data, decide when to respond, and generate responses without blocking new observations. | 7 | 8 |
+| 2026-09-22 | [Learning from Humans for Proactive Assistance in Human-Robot Collaborative Transport](https://arxiv.org/abs/2609.25351) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | PROACT enables robots to proactively assist humans in collaborative object transport by predicting future motion and combining it with compliant whole-body control. | 8 | 7 |
+| 2026-09-22 | [Skel-WAM: A Hand-Skeleton-Conditioned World Action Model for Human-to-Robot Manipulation Transfer](https://arxiv.org/abs/2609.21514) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | Skel-WAM transfers manipulation skills from human videos to robots by using a shared hand-skeleton motion interface, substantially improving performance on task variations beyond robot training coverage. | 9 | 9 |
 | 2026-09-21 | [H2RBench: A Real-to-Sim Benchmark for Evaluating Human-to-Robot Transfer](https://arxiv.org/abs/2609.24778) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | H2RBench standardizes evaluation of human-to-robot transfer methods and shows that simulated performance generally predicts real-world performance. | 9 | 7 |
 | 2026-09-21 | [Touch2Robot: Robot Touch in the Human Demonstration Loop](https://arxiv.org/abs/2609.24660) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | Touch2Robot brings simulated target-robot touch feedback into human demonstrations, improving the quality and efficiency of dexterous manipulation data collection. | 9 | 9 |
 | 2026-09-21 | [Zeva-Ego: Egocentric Mid-Training with In-Context Causal Learning for Robot Manipulation](https://arxiv.org/abs/2609.24411) | Embodied AI: Vision-Language-Action, Learning from Human Videos; Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Zeva-Ego combines egocentric-video mid-training with parameter-free causal adaptation to help robots learn manipulation skills and improve through interaction. | 10 | 9 |

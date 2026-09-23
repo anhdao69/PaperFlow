@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**148 papers total**
+**151 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [\\phi-RIE: From Photorealistic Reconstruction to Interactive Environments](https://arxiv.org/abs/2609.26795) | 3D Vision: 3D Foundation Models | φ-RIE converts photorealistic 3D Gaussian Splatting reconstructions into interactive environments with movable, physically executable objects while preserving the rest of the scene. | 8 | 8 |
+| 2026-09-22 | [CODA: Depth-Aligned Scene Completion and Object Decomposition from a Single RGB-D Image](https://arxiv.org/abs/2609.25654) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | CODA reconstructs a complete, physically coherent 3D scene from one RGB-D image before decomposing it into environment and movable objects. | 7 | 7 |
+| 2026-09-22 | [RegVGGT: Sustainable Visual Geometry Grounding for Streaming via Regulated Memory](https://arxiv.org/abs/2609.23286) | 3D Vision: 3D Foundation Models; Efficient AI: Token Pruning and Eviction | RegVGGT enables long-video 3D reconstruction on limited-memory GPUs by regulating which incoming-frame tokens update the model’s context memory. | 7 | 7 |
 | 2026-09-21 | [GAE: Learning a Geometry-Native Latent Space for 3D-Consistent World Generation](https://arxiv.org/abs/2609.24981) | World Models: Video World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | GAE reparameterizes geometry-aware features into a compact latent space that improves both visual quality and 3D consistency in world generation. | 7 | 8 |
 | 2026-09-21 | [Toward a foundation model for forest point clouds](https://arxiv.org/abs/2609.24787) | 3D Vision: 3D Foundation Models | A self-supervised pretrained 3D point-cloud model improves transfer and annotation efficiency across diverse forest inventory tasks, advancing foundation models for forestry. | 8 | 8 |
 | 2026-09-21 | [Bridge3D: Enabling Vision-Language-Action Models to See and Act in 3D](https://arxiv.org/abs/2609.24525) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Bridge3D equips pretrained 2D vision-language-action models with implicit and explicit 3D geometry guidance for more precise spatial manipulation. | 10 | 8 |

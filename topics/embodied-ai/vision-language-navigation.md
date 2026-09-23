@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**55 papers total**
+**59 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [SparseNav: Instruction-conditioned Sparse Semantic Perception for Training-Free Vision-Language Navigation](https://arxiv.org/abs/2609.26408) | Embodied AI: Vision-Language Navigation | SparseNav enables training-free vision-language navigation by grounding only instruction-relevant landmarks while maintaining a lightweight geometric map. | 8 | 8 |
+| 2026-09-22 | [Hierarchical Floorplan-Guided Vision-Language Exploration for Embodied Question Answering](https://arxiv.org/abs/2609.26360) | Embodied AI: Vision-Language Navigation | HFLEX-EQA improves embodied question answering by combining VLM-based hierarchical planning with online scene understanding and floorplan-guided exploration. | 8 | 7 |
+| 2026-09-22 | [Vision-Language Models as copilots for Autonomous UAV Navigation: Analysis of Latency and Reliability in Degraded Environments](https://arxiv.org/abs/2609.26084) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Multimodal Large Language Models | A hybrid FSM–VLM architecture enables semantic UAV navigation while revealing that model scaling, rather than latency alone, is the main barrier to reliable flight-command compliance in degraded environments. | 7 | 6 |
+| 2026-09-22 | [Skytopia: Monocular Drone Navigation with Action-Conditioned Latent World Models](https://arxiv.org/abs/2609.26007) | Embodied AI: Vision-Language Navigation, Robot Navigation; World Models: Latent Action Models, Interactive World Models | Skytopia enables monocular drone navigation by learning action-conditioned latent scene representations, avoiding costly world-model prediction at inference while supporting multiple goal types. | 9 | 8 |
 | 2026-09-21 | [What do VLM-Based Vision-Language Navigation Models Rely on: Interpreting and Steering Policy Behavior](https://arxiv.org/abs/2609.24576) | Embodied AI: Vision-Language Navigation | Intervention-based analysis shows that VLM-based navigation policies integrate visual, linguistic, and memory signals, encode task progress, and can be steered via internal concepts for zero-shot transfer. | 9 | 7 |
 | 2026-09-21 | [A Topological Representation with Object-Path Graphs for Open-Vocabulary Instance Navigation](https://arxiv.org/abs/2609.24189) | Embodied AI: Vision-Language Navigation | An object–path graph unifies open-vocabulary semantic reasoning and topological navigation, enabling embodied agents to navigate without dense metric maps. | 10 | 8 |
 | 2026-09-21 | [Structured World-State Reasoning for Agentic Robotic Search](https://arxiv.org/abs/2609.23841) | Embodied AI: Vision-Language Navigation, Robot Navigation | WORLDS improves long-horizon robotic search by maintaining and testing competing world-state hypotheses with targeted multimodal observations. | 8 | 8 |

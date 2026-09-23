@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**42 papers total**
+**45 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [When Recursive Models Finish Computing](https://arxiv.org/abs/2609.26487) | World Models: Latent Action Models | Extending recursive inference reveals that many nominally incorrect outputs are unfinished computations, with completion marked by trajectory-conditioned anisotropic stability. | 6 | 7 |
+| 2026-09-22 | [GDLAM: Group-Disentangled Latent Action Model for Highly Disentangled Embodied Pretraining](https://arxiv.org/abs/2609.26118) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | GDLAM factorizes latent actions into causally distinct groups, improving disentanglement, action information, world modeling, and VLA policy performance. | 9 | 9 |
+| 2026-09-22 | [Skytopia: Monocular Drone Navigation with Action-Conditioned Latent World Models](https://arxiv.org/abs/2609.26007) | Embodied AI: Vision-Language Navigation, Robot Navigation; World Models: Latent Action Models, Interactive World Models | Skytopia enables monocular drone navigation by learning action-conditioned latent scene representations, avoiding costly world-model prediction at inference while supporting multiple goal types. | 9 | 8 |
 | 2026-09-21 | [NeuIDO: Neural Intrinsic Dynamics Operator for Physics-Informed 4D World Models](https://arxiv.org/abs/2609.24313) | World Models: Latent Action Models | NeuIDO learns intrinsic physical dynamics from visual observations, enabling zero-shot prediction in new scenes and few-shot adaptation to complex real-world dynamics. | 9 | 9 |
 | 2026-09-21 | [What Matters in Designing World Action Models: An Empirical Study](https://arxiv.org/abs/2609.24048) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | A controlled empirical study identifies how causal structure, latent representation, and training objectives influence the design and behavior of World Action Models for robot control. | 9 | 8 |
 | 2026-09-21 | [Imagine-RL: Residual-Confidence-Guided Cross-Attention for World-Model-Augmented VLA Reinforcement Learning](https://arxiv.org/abs/2609.24033) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | Imagine-RL improves reinforcement learning for contact-rich manipulation by using a frozen world model to imagine future visual-torque consequences and confidence-weight them when evaluating VLA actions. | 8 | 8 |

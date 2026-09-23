@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**87 papers total**
+**89 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [VideoX-Qwen: Data-Centric Instruction-Based Video Editing](https://arxiv.org/abs/2609.26015) | Video Generation and Understanding: Video Diffusion | VideoX-Qwen combines large-scale synthetic instruction-editing data with a unified multimodal video editor to improve instruction following while preserving video content and temporal structure. | 8 | 7 |
+| 2026-09-22 | [Same Flow, Different Paths: Variance Reduction in Flow Matching](https://arxiv.org/abs/2609.17287) | Video Generation and Understanding: Video Diffusion | The choice of interpolation path in flow matching can substantially affect SGD convergence, even when it produces the same training objective and marginals. | 5 | 7 |
 | 2026-09-21 | [Uranus: Building the Next-Generation Simulation Infrastructure for Embodied AI](https://arxiv.org/abs/2609.24815) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Uranus is a data-driven robot simulator that enables open-ended, low-latency visual rollouts conditioned on online joint trajectories for scalable embodied-AI development. | 8 | 8 |
 | 2026-09-21 | [Streaming Video Editing with Easy Adaptation](https://arxiv.org/abs/2609.24788) | Video Generation and Understanding: Video Diffusion | SVEET adapts a pretrained bidirectional video diffusion model for high-quality, autoregressive streaming video editing at real-time speed. | 8 | 8 |
 | 2026-09-21 | [Corrective Forcing: Unified Post-Training for Diffusions and Flows in Generative Speech Enhancement](https://arxiv.org/abs/2609.24651) | Video Generation and Understanding: Video Diffusion | Corrective Forcing is a unified post-training method that reduces rollout and discretization errors in diffusion- and flow-based speech enhancement. | 5 | 7 |

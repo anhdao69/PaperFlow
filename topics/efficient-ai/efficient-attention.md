@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**100 papers total**
+**105 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-22 | [GTR: Gated Token Recurrence for Efficient Dense Prediction](https://arxiv.org/abs/2609.26590) | Efficient AI: Efficient Attention | GTR replaces quadratic global softmax attention with gated recurrent token mixing for efficient high-resolution dense prediction and edge deployment. | 6 | 6 |
+| 2026-09-22 | [HySparse2: Hybrid Sparse Attention with Two-Level KV Sharing](https://arxiv.org/abs/2609.26368) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | HySparse2 combines two-level KV sharing with hybrid token-level sparse attention to reduce prefill computation and KV-cache storage while improving long-context retrieval for multi-turn agents. | 9 | 8 |
+| 2026-09-22 | [Magnitude Profile Pruning: Calibration-Free Structured Attention Head Removal for Transformer Compression](https://arxiv.org/abs/2609.26177) | Efficient AI: Efficient Attention | Magnitude Profile pruning removes dispensable Transformer attention heads using weight statistics alone, enabling calibration-free and hardware-friendly compression. | 7 | 6 |
+| 2026-09-22 | [Latest Exact Match Attention](https://arxiv.org/abs/2609.25802) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | LEMA is an exact-match attention mechanism with growing memory that closely corresponds computationally to word-RAMs and enables efficient long-range associative recall, though it still trails softmax attention on some retrieval tasks. | 7 | 8 |
+| 2026-09-22 | [RouteRelay: Event-Triggered Cross-Layer Route Reuse for Efficient Dynamic Sparse Attention](https://arxiv.org/abs/2609.07306) | Efficient AI: Token Pruning and Eviction, Efficient Attention | RouteRelay reduces dynamic sparse-attention routing overhead by selectively reusing routes across Transformer layers while preserving near-complete route recall. | 8 | 7 |
 | 2026-09-21 | [Prescriptive SVD-Inspired Attention via Spectral Energy Retention](https://arxiv.org/abs/2609.24370) | Efficient AI: Efficient Attention | SVDA turns attention’s learned spectrum into an interpretable, verifiable control mechanism, showing that retaining 90% of spectral energy can remove many score directions with minimal accuracy change. | 7 | 6 |
 | 2026-09-21 | [LiAuto-MindViT: A Hybrid Vision Backbone with Adaptive Bidirectional Mamba](https://arxiv.org/abs/2609.24337) | Efficient AI: Efficient Attention | LiAuto-MindViT combines CNNs, Mamba, and Transformers with adaptive bidirectional scanning and reparameterized convolutions for effective, efficient vision processing. | 8 | 8 |
 | 2026-09-21 | [Opinion Leader Dynamics: How Sparse Attention Shapes Token Clustering](https://arxiv.org/abs/2609.24202) | Efficient AI: Efficient Attention | A theoretical framework explains how sparse attention can drive tokens into internally aligned but mutually distinct clusters, with supporting evidence from frontier sparse-attention LLMs. | 6 | 7 |
