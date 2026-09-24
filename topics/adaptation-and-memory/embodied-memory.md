@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**67 papers total**
+**70 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](https://arxiv.org/abs/2609.28256) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | MemBodied gives vision-language-action policies fixed-size episodic memory to solve history-dependent manipulation without expanding context. | 9 | 8 |
+| 2026-09-23 | [EmbodiedMemory-Bench: Benchmarking Embodied Memory for Long-Horizon Embodied Tasks](https://arxiv.org/abs/2609.28236) | Embodied AI; Adaptation and Memory: Embodied Memory | EmbodiedMemory-Bench evaluates whether agents can build, update, and use memory for long-horizon embodied tasks, revealing substantial weaknesses in current models and gains from the proposed EMem system. | 9 | 8 |
+| 2026-09-23 | [RoadOcc Learns When to Persist, Transport, or Refresh Memory for Roadside Occupancy Prediction](https://arxiv.org/abs/2609.27677) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | RoadOcc improves roadside occupancy prediction by learning when to persist, transport, or refresh temporal evidence, achieving stronger dynamic-object performance. | 6 | 6 |
 | 2026-09-22 | [Beyond End-Task Success: How to Audit Visual Experience Retrieval in Robotics](https://arxiv.org/abs/2609.26567) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Evaluating only end-task success can hide poor visual experience retrieval, so the paper proposes audits that separate selection quality from experience-library quality. | 7 | 8 |
 | 2026-09-22 | [Minimal Recurrent Behavioral Memory for Imitation under Partial Observability](https://arxiv.org/abs/2609.25757) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | The paper characterizes the minimum recurrent memory needed for imitation under partial observability and proposes measurements and learning methods to approach it. | 8 | 8 |
 | 2026-09-22 | [AkasicMEM: Governed Enterprise Memory for Agents](https://arxiv.org/abs/2609.25563) | Adaptation and Memory: Continual and Online Learning, Embodied Memory; Language Foundation Models: LLM Memory | AkasicMEM is a governed enterprise-agent memory design that preserves source-level authorization as information is stored, derived, and reused. | 7 | 7 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**45 papers total**
+**47 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [Less Language, More Latents: Annotation-Efficient VLAs for Driving](https://arxiv.org/abs/2609.27747) | Embodied AI: Vision-Language-Action; World Models: Latent Action Models | LADA enables language-conditioned autonomous driving using fewer than 5% of the language annotations by learning discrete latent driving intents from abundant trajectories. | 9 | 8 |
+| 2026-09-23 | [Latent evolving World Action Model](https://arxiv.org/abs/2609.27455) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | LeWAM replaces costly video-diffusion backbones with JEPA embeddings and offline preference refinement, achieving strong simulated and practical real-world manipulation performance with 0.4B trainable parameters. | 10 | 9 |
 | 2026-09-22 | [When Recursive Models Finish Computing](https://arxiv.org/abs/2609.26487) | World Models: Latent Action Models | Extending recursive inference reveals that many nominally incorrect outputs are unfinished computations, with completion marked by trajectory-conditioned anisotropic stability. | 6 | 7 |
 | 2026-09-22 | [GDLAM: Group-Disentangled Latent Action Model for Highly Disentangled Embodied Pretraining](https://arxiv.org/abs/2609.26118) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | GDLAM factorizes latent actions into causally distinct groups, improving disentanglement, action information, world modeling, and VLA policy performance. | 9 | 9 |
 | 2026-09-22 | [Skytopia: Monocular Drone Navigation with Action-Conditioned Latent World Models](https://arxiv.org/abs/2609.26007) | Embodied AI: Vision-Language Navigation, Robot Navigation; World Models: Latent Action Models, Interactive World Models | Skytopia enables monocular drone navigation by learning action-conditioned latent scene representations, avoiding costly world-model prediction at inference while supporting multiple goal types. | 9 | 8 |

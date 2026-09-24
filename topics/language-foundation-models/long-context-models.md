@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**55 papers total**
+**57 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [Learning When Not to Listen: Selective Anti-Interference Pretraining for Language Models](https://arxiv.org/abs/2609.27925) | Language Foundation Models: Large Language Models, Long-Context Models | SPAR trains language models to ignore irrelevant distant prefixes when local context already suffices, improving robustness to distractor-heavy contexts. | 8 | 8 |
+| 2026-09-23 | [MWE-ECL: Recoverable Long-Range Context Does Not Always Override Local Lexical Priors](https://arxiv.org/abs/2609.27590) | Language Foundation Models: Long-Context Models | MWE-ECL shows that models can explicitly recover distant context yet still follow familiar local lexical interpretations. | 6 | 6 |
 | 2026-09-22 | [The Sirens' Song: When Proximal Background Context Overshadows Distant Evidence](https://arxiv.org/abs/2609.26718) | Language Foundation Models: Long-Context Models | LYRA improves long-context LLM retrieval by reducing interference from abundant, irrelevant nearby context so models can use distant evidence more effectively. | 8 | 8 |
 | 2026-09-22 | [HySparse2: Hybrid Sparse Attention with Two-Level KV Sharing](https://arxiv.org/abs/2609.26368) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | HySparse2 combines two-level KV sharing with hybrid token-level sparse attention to reduce prefill computation and KV-cache storage while improving long-context retrieval for multi-turn agents. | 9 | 8 |
 | 2026-09-22 | [CompKV: Compensation-Aware KV Selection for Long-Context LLM Inference](https://arxiv.org/abs/2609.26300) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | CompKV accelerates long-context LLM inference by selecting KV blocks based on their expected compensation error, achieving up to 6.85× self-attention speedup over full attention. | 8 | 7 |

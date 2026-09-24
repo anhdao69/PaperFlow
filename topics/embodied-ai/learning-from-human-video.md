@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**73 papers total**
+**74 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [Track2Art: Motion-Centric Articulated Object Model Recovery from 2D Point Trackers](https://arxiv.org/abs/2609.27675) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; 3D Vision | Track2Art recovers articulated object parts and kinematic structure directly from persistent 3D motion trajectories in RGB-D interaction videos. | 7 | 7 |
 | 2026-09-22 | [MATE: Multi-Agent Virtual Teleoperation Platform for Humanoid Collaboration Data Collection](https://arxiv.org/abs/2609.26520) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | MATE enables scalable multi-humanoid collaboration data collection through shared virtual teleoperation, with EAIS improving learning from interaction-rich demonstrations and supporting zero-shot transfer to a physical humanoid. | 8 | 8 |
 | 2026-09-22 | [TimeInteract: Towards Real-Time Interactive Intelligence for Streaming Time Series](https://arxiv.org/abs/2609.26389) | Embodied AI: Learning from Human Videos; Adaptation and Memory: Test-Time Learning | TimeInteract enables time-series language models to continuously monitor streaming data, decide when to respond, and generate responses without blocking new observations. | 7 | 8 |
 | 2026-09-22 | [Learning from Humans for Proactive Assistance in Human-Robot Collaborative Transport](https://arxiv.org/abs/2609.25351) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | PROACT enables robots to proactively assist humans in collaborative object transport by predicting future motion and combining it with compliant whole-body control. | 8 | 7 |

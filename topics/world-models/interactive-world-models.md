@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**185 papers total**
+**188 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [Agent-Editing World Model: Rethinking World Modeling for LLM Agents](https://arxiv.org/abs/2609.28416) | World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AEWM improves LLM agents by editing task-state reasoning and actions instead of simulating tool responses, yielding consistent gains across diverse tasks. | 9 | 9 |
+| 2026-09-23 | [Generalizable Robotic Insertion with World Models](https://arxiv.org/abs/2609.28258) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | A world-model-based robot learns from diverse insertion tasks to assemble unseen objects with substantially better zero-shot generalization than a model-free baseline. | 8 | 8 |
+| 2026-09-23 | [ZYT-World: A Real-Time Controllable World Model for Closed-Loop Autonomous-Driving Simulation](https://arxiv.org/abs/2609.21712) | World Models: Video World Models, Interactive World Models | ZYT-World is a fast, controllable world model for realistic, long-horizon autonomous-driving simulation across mixed camera rigs while preserving scene identity on revisits. | 9 | 9 |
 | 2026-09-22 | [QuantWM: Temporally Consistent 2-Bit KV Cache Quantization for World Models and Video Generation](https://arxiv.org/abs/2609.26425) | World Models: Video World Models, Interactive World Models; Efficient AI: KV Cache and Memory Efficiency | QuantWM is a training-free, causal 2-bit KV-cache quantization framework that reduces memory use while preserving attention stability, visual quality, and temporal consistency in world models and video generation. | 8 | 8 |
 | 2026-09-22 | [Sample, Simulate, Select: Physics-in-the-Loop Text-to-Motion for Humanoids Without Training](https://arxiv.org/abs/2609.26420) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | S$^3$ improves training-free text-to-humanoid execution by sampling motions, simulating them with the deployment controller, and selecting the best candidate. | 8 | 8 |
 | 2026-09-22 | [Dual-Frontier: When Can an Agent Trust Its World Model?](https://arxiv.org/abs/2609.26293) | World Models: Interactive World Models | Dual-Frontier lets agents trust world-model-guided decisions only when their predicted benefit exceeds certified model-error risk, otherwise directing effort toward verification. | 7 | 7 |

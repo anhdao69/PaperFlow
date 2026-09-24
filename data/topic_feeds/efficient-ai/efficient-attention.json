@@ -1,6 +1,354 @@
 {
   "days": [
     {
+      "date": "2026-09-23",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Recurrent language models repeatedly apply shared network blocks to refine latent representations, but standard inference recomputes global attention at every recurrent step. We study attention dynamics across recurrent depth and find that attention support and distributions stabilize substantially earlier than hidden states and attention outputs. This suggests a two-stage structure: early steps discover a sparse working set of relevant context, while later steps refine representations over largely the same routing support. Motivated by this structure, we introduce WISE (Working-set Inference with Support Exploitation), a training-free method that uses unrestricted global attention during early recurrence and later reuses directly discovered block-structured support while keeping recurrent depth and within-support attention computation dynamic. Controlled interventions show that recurrent discovery is important and that support-only reuse better preserves model behavior than more restrictive attention-reuse alternatives. Across multi-hop QA benchmarks, WISE largely preserves full-attention performance, while context scaling reveals increasingly sparse working sets and greater efficiency gains. Quality is largely preserved through 2K context, with a measurable loss at 4K. An optimized sparse-attention implementation achieves up to a 1.76x attention speedup over native FlashAttention at 4K and a 1.36x speedup for the full 32-step attention trajectory. Our code is available at https://github.com/tbn5pj/WISE_code.",
+          "arxiv_id": "2609.27373",
+          "arxiv_url": "https://arxiv.org/abs/2609.27373",
+          "authors": [
+            "Ke Wan, Chen Chen"
+          ],
+          "bullets": [
+            "Attention support stabilizes earlier than hidden states and attention outputs across recurrent steps.",
+            "WISE uses full global attention early, then reuses discovered block-structured support while keeping within-support attention dynamic.",
+            "Controlled studies find recurrent support discovery is important and support-only reuse preserves behavior better than more restrictive reuse strategies.",
+            "On multi-hop QA, WISE largely maintains full-attention quality and gains efficiency as context grows; quality loss appears at 4K context.",
+            "The optimized implementation reports up to 1.76× attention speedup at 4K and 1.36× across the full 32-step trajectory."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: WISE exposes a context-dependent quality–efficiency frontier and a sparsity–execution tradeoff. (a) Working-set density decreases with context length while retaining most future Fullattention mass. (b) Late-reuse speedup increases with context length, while matched HotpotQA quality shows no detected average F1 loss through 2K and degrades at 4K; quality and systems use fixed N = 100 and N = 30 cohorts, respectively. (c) Although B = 16 is sparsest, B = 32 achieves the highest setup-inclusive speedup on the matched 2K workload, forming the systems-facing knee. Full protocols and block-size results are in Appendices B and C.6.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 174,
+              "image_path": "figures/2609.27373/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 818
+            },
+            {
+              "caption": "Figure 1: Routing stabilizes before representation refinement is complete. (a) On 30 benchmarknative examples from each of HotpotQA and GSM8K, routing-related quantities—diagnostic tokenlevel attention support and attention distributions—stabilize substantially earlier than representationrelated quantities—hidden states and attention outputs. The ordering within routing is task-dependent, but the separation between routing stabilization and representation refinement is consistent across both tasks. (b) This separation motivates WISE: early recurrent steps use unrestricted global attention to discover a sparse block-structured working set, while later steps reuse only this routing support. Recurrent depth is preserved, and hidden representations, queries, keys, values, and within-support attention weights continue to evolve throughout recurrence. Thus, WISE reuses where attention may route without freezing how information within the working set is processed: discover early, reuse late.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 271,
+              "image_path": "figures/2609.27373/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 710
+            },
+            {
+              "caption": "Figure 4: The deployed block support becomes highly stable near the WISE discovery depth. (a) Adjacent-step Jaccard similarity between four-step rolling working sets constructed from the exact B = 32, η = 0.95 block supports used by WISE. The discovery depth td = 12 lies near the onset of a high-stability regime. (b) Fraction of examples whose rolling-set Jaccard satisfies the stability criterion for three consecutive transitions. All 30 examples satisfy the 0.90 criterion by t = 12, while all satisfy the stricter 0.95 criterion by t = 13.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 282,
+              "image_path": "figures/2609.27373/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 816
+            },
+            {
+              "caption": "Figure 3: Sensitivity of the convergence analysis to threshold choice. (a)–(b) Fraction of examples classified as converged by recurrent step under five matched threshold settings: very loose (VL), loose (L), default (D), strict (S), and very strict (VS). Across these matched settings, routing-related quantities consistently converge earlier than representation-related quantities, although the exact convergence times and step gaps vary with threshold strictness. (c) Mean routing–representation gap under the same matched settings on HotpotQA and GSM8K. Positive values indicate earlier routing convergence. The gap remains positive throughout the matched sweep, supporting a robust routing–representation separation under reasonable threshold perturbations, while not implying threshold-invariance under arbitrary asymmetric criteria.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 211,
+              "image_path": "figures/2609.27373/figure-004.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 823
+            },
+            {
+              "caption": "Table 2: WISE translates structured block sparsity into practical GPU acceleration at 4K context. Latency is measured on the canonical N = 30 Huginn systems cohort using an NVIDIA RTX A6000, with values reported as medians over 10 balanced timing passes. Native FlashAttention provides the optimized dense baseline. The late-reuse comparison includes one-time sparse-schedule construction, while the matched exact-B = 32 comparison uses the same optimized backend for Full-support and WISE-support execution to isolate the benefit of reducing active routing support.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 110,
+              "image_path": "figures/2609.27373/table-005.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 760
+            },
+            {
+              "caption": "Table 1: Controlled interventions validate support-only reuse. ∆Ans denotes answer changes relative to the matched Full run. TRUNCATE@12 stops recurrence at the discovery depth; SIZEMATCHED exactly matches the support cardinality of WISE; and FREEZE-A@12 uses exactly the same support as WISE but freezes its step-12 within-support attention distribution.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 224,
+              "image_path": "figures/2609.27373/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 718
+            },
+            {
+              "caption": "Table 5: Behavioral replication on Recurrent-Llama-T32. SIZEMATCHED and WISE use identical support cardinality for every routing unit. Future denotes retained late Full-attention mass. Paired confidence intervals are reported in the text.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 339,
+              "image_path": "figures/2609.27373/table-007.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 832
+            },
+            {
+              "caption": "Table 8: Block-size ablation for WISE. Quality and routing statistics use the matched N = 100 benchmark cohorts, while systems statistics use the matched N = 30 2K panel. Future denotes the fraction of future Full-attention mass retained by the discovered working set. Systems speedup is the setup-inclusive Dense/WISE attention-latency ratio under the matched block-size execution harness.",
+              "figure_id": "table-8-4",
+              "figure_number": "8",
+              "height": 151,
+              "image_path": "figures/2609.27373/table-008.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 698
+            },
+            {
+              "caption": "Table 3: Boundary of the convergence claim on HotpotQA. Matched calibration preserves the routing–representation separation, while deliberately asymmetric calibration can reverse the measured ordering.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 88,
+              "image_path": "figures/2609.27373/table-009.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 564
+            },
+            {
+              "caption": "Table 4: The routing–representation separation replicates on Recurrent-Llama-T32. Mean convergence steps use the same diagnostic definitions and thresholds as the primary Huginn analysis. A positive gap requires both routing quantities to stabilize before both representation quantities.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 139,
+              "image_path": "figures/2609.27373/table-010.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 821
+            },
+            {
+              "caption": "Table 7: Local sensitivity of WISE on HotpotQA (N = 50). Each row varies one parameter around the frozen default. Density is the retained B = 32 block fraction and Future Mass is the fraction of later unrestricted Full-attention mass covered by the frozen support.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 160,
+              "image_path": "figures/2609.27373/table-011.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 702
+            },
+            {
+              "caption": "Table 6: Early routing is more predictive on Recurrent-Llama-T32. SIZEMATCHED Future is the fraction of late unrestricted Full-attention mass retained by the exactly size-matched early-static support. Gain is the additional late-mass coverage obtained by WISE.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 129,
+              "image_path": "figures/2609.27373/table-012.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 590
+            },
+            {
+              "caption": "Table 9: Sensitivity to the working-set mass threshold η. All settings other than η are fixed. ∆F1 is measured relative to the matched Full run, and Future denotes retained future Full-attention mass.",
+              "figure_id": "table-9-5",
+              "figure_number": "9",
+              "height": 196,
+              "image_path": "figures/2609.27373/table-013.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 772
+            }
+          ],
+          "first_seen_at": "2026-09-23T21:00:00-04:00",
+          "hero_figure": "figures/2609.27373/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.27373",
+          "relevance": 8,
+          "selection_reason": "Training-free sparse working-set attention reuse for recurrent LLMs; directly addresses attention efficiency via support discovery and reuse.",
+          "summary_status": "generated",
+          "title": "Attention Routing Stabilizes Early: Working-Set Inference for Recurrent Language Models",
+          "tldr": "WISE speeds recurrent language-model inference by discovering relevant context early, then reusing its sparse attention support during later refinement.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Scaling a language model is not only a question of final quality: the architectural choice determines how much computation is spent during training, prompt processing, and autoregressive decoding to achieve certain model quality. An ideal model architecture should lower all above computation costs to facilitate scaling to a larger model, while ensure the larger model indeed outperforms smaller baselines. We introduce KV-Invariant Transformer Expansion (KITE), a scaling paradigm that achieves this goal. It trains the model from a smaller size to a larger size (i.e., saving training costs via upcycling), while places newly added parameters in regions that do not affect attention KV. Consequently, during inference, prefilling KV only relies on the smaller part of the model, so the inference costs are saved. As a concrete instantiation, we present Step Scale Transformer (SST), a two-tower decoder in which one tower produces KV and the other reads them. At comparable cumulative training compute, SST, a 67B MoE model with 2.15B active body parameters per decode token, achieves lower training loss than 47B and 63B MoE Transformers with 1.48B and 2.02B active body parameters, respectively, while reducing estimated inference cost by 6.7% and 31.6%.",
+          "arxiv_id": "2609.27294",
+          "arxiv_url": "https://arxiv.org/abs/2609.27294",
+          "authors": [
+            "Zhiheng Hu, Yixun Wei, Jian Zhou, Yizhuang Zhou, Ji Li, Xing Chen, Yang Li, Bojun Wang, Yibo Zhu, Xiangyu Zhang, Daxin Jiang"
+          ],
+          "bullets": [
+            "Motivation: Conventional scaling increases computation during training, prompt processing, and autoregressive decoding.",
+            "Method: KITE upcycles a smaller model and places new parameters outside the attention KV pathway.",
+            "Instantiation: Step Scale Transformer (SST) uses a two-tower decoder—one tower produces KV while the other reads it.",
+            "Result: At comparable cumulative training compute, a 67B MoE SST achieves lower training loss than 47B and 63B MoE baselines while reducing estimated inference cost.",
+            "Scope: The abstract reports efficiency gains for SST; broader applicability beyond this instantiation is not established here."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Estimated inference cost across P:D cost mixes, normalized to 47B classic. Shading spans the six-model OpenRouter reference range; open circles mark break-even points and the filled circle marks 75:25.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 406,
+              "image_path": "figures/2609.27294/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 885
+            },
+            {
+              "caption": "Figure 2: KITE instantiated with SST. Stage 1 trains the Prefiller; expansion adds a Decoder initialized from the source weights, and Stage 2 continues training both towers jointly. Within Stage 2, the Prefiller executes in full before the Decoder. Each Decoder block uses aligned Prefiller KV. A token-local entry bridge combines the separately normalized embedding and final Prefiller state. The final Decoder state is normalized and passed to the shared output norm and LM head for prediction.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 596,
+              "image_path": "figures/2609.27294/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 957
+            },
+            {
+              "caption": "Figure 6: Connectivity choices within KITE. (a) An SST-style backbone with optional hidden-state connections at the Decoder entry, intermediate layers, and output readout. Dashed paths indicate design choices, not connections that must be enabled together. (b) Three illustrative KV assignments: aligned layer-wise reuse, reversed pairing, and reuse of one Prefiller KV source across multiple Decoder layers. The KV-producing computation remains on the Prefiller side; the illustrated choices are not assumed to have equal cost or quality.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 550,
+              "image_path": "figures/2609.27294/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 934
+            },
+            {
+              "caption": "Figure 4: Training LM loss (EMA-200) against tokens and theoretical cumulative compute. Conversion occurs at 167.98B tokens (0.301Bref ).",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 346,
+              "image_path": "figures/2609.27294/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 3: Training route to the evaluated SST checkpoint: 13,350 source steps followed by 17,687 continuation steps.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 204,
+              "image_path": "figures/2609.27294/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 750
+            },
+            {
+              "caption": "Table 2: Model configurations.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 272,
+              "image_path": "figures/2609.27294/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1018
+            },
+            {
+              "caption": "Table 3: Scores (%) on seven downstream tasks and held-out ARXIV token NLL (lower is better), evaluated at comparable cumulative theoretical training FLOPs, including both training stages for SST. OpenBookQA combines the validation and test splits; MMLU uses the test split, and MATH uses the full test set.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 252,
+              "image_path": "figures/2609.27294/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 536
+            },
+            {
+              "caption": "Table 1: Input demand in selected OpenRouter traffic. Input includes cached tokens; output includes reasoning tokens. Charge share is uncached-input charges divided by uncached-input plus output charges, excluding cache-read charges. Estimates aggregate available standard and Batch activity within August 22–September 20, 2026 (UTC), using September 21 base prices. Details appear in Appendix A.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 224,
+              "image_path": "figures/2609.27294/table-008.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 582
+            },
+            {
+              "caption": "Table 5: Detailed geometry. Source/SST dimensions apply to each tower; both have two initial dense FFN layers. RoPE denotes rotary position embeddings [21].",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 203,
+              "image_path": "figures/2609.27294/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 632
+            },
+            {
+              "caption": "Table 4: Components underlying Table 1. Token counts are in billions; estimated charges are in millions of USD. U is uncached input, C cached input, and D output. Ratios use unrounded totals.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2609.27294/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 602
+            },
+            {
+              "caption": "Table 6: Architectural parameter counts in billions, rounded to three decimal places.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 177,
+              "image_path": "figures/2609.27294/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 598
+            },
+            {
+              "caption": "Table 7: Training budgets at the final checkpoints. Theoretical training FLOPs are normalized to the 47B classic reference.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 127,
+              "image_path": "figures/2609.27294/table-012.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 514
+            }
+          ],
+          "first_seen_at": "2026-09-23T21:00:00-04:00",
+          "hero_figure": "figures/2609.27294/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.27294",
+          "relevance": 9,
+          "selection_reason": "Introduces KV-Invariant Transformer Expansion to reduce inference costs by separating KV generation from reading, directly addressing KV cache and memory efficiency.",
+          "summary_status": "generated",
+          "title": "KITE: KV-Invariant Transformer Expansion for Efficient Agentic LLM Scaling",
+          "tldr": "KITE expands models efficiently by adding parameters that improve capacity without increasing attention KV costs, reducing both training and inference expense.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-22",
       "paper_count": 5,
       "papers": [
@@ -18334,5 +18682,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 105
+  "total_paper_count": 107
 }

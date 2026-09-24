@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**105 papers total**
+**107 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [Attention Routing Stabilizes Early: Working-Set Inference for Recurrent Language Models](https://arxiv.org/abs/2609.27373) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Large Language Models | WISE speeds recurrent language-model inference by discovering relevant context early, then reusing its sparse attention support during later refinement. | 8 | 7 |
+| 2026-09-23 | [KITE: KV-Invariant Transformer Expansion for Efficient Agentic LLM Scaling](https://arxiv.org/abs/2609.27294) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | KITE expands models efficiently by adding parameters that improve capacity without increasing attention KV costs, reducing both training and inference expense. | 9 | 9 |
 | 2026-09-22 | [GTR: Gated Token Recurrence for Efficient Dense Prediction](https://arxiv.org/abs/2609.26590) | Efficient AI: Efficient Attention | GTR replaces quadratic global softmax attention with gated recurrent token mixing for efficient high-resolution dense prediction and edge deployment. | 6 | 6 |
 | 2026-09-22 | [HySparse2: Hybrid Sparse Attention with Two-Level KV Sharing](https://arxiv.org/abs/2609.26368) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | HySparse2 combines two-level KV sharing with hybrid token-level sparse attention to reduce prefill computation and KV-cache storage while improving long-context retrieval for multi-turn agents. | 9 | 8 |
 | 2026-09-22 | [Magnitude Profile Pruning: Calibration-Free Structured Attention Head Removal for Transformer Compression](https://arxiv.org/abs/2609.26177) | Efficient AI: Efficient Attention | Magnitude Profile pruning removes dispensable Transformer attention heads using weight statistics alone, enabling calibration-free and hardware-friendly compression. | 7 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**59 papers total**
+**60 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [RoboFollow: Unveiling the Instruction Following Mirage in Embodied Agents](https://arxiv.org/abs/2609.25636) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | RoboFollow shows that high embodied-agent success can mask weak instruction following when scenes make language unnecessary. | 9 | 9 |
 | 2026-09-22 | [SparseNav: Instruction-conditioned Sparse Semantic Perception for Training-Free Vision-Language Navigation](https://arxiv.org/abs/2609.26408) | Embodied AI: Vision-Language Navigation | SparseNav enables training-free vision-language navigation by grounding only instruction-relevant landmarks while maintaining a lightweight geometric map. | 8 | 8 |
 | 2026-09-22 | [Hierarchical Floorplan-Guided Vision-Language Exploration for Embodied Question Answering](https://arxiv.org/abs/2609.26360) | Embodied AI: Vision-Language Navigation | HFLEX-EQA improves embodied question answering by combining VLM-based hierarchical planning with online scene understanding and floorplan-guided exploration. | 8 | 7 |
 | 2026-09-22 | [Vision-Language Models as copilots for Autonomous UAV Navigation: Analysis of Latency and Reliability in Degraded Environments](https://arxiv.org/abs/2609.26084) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Multimodal Large Language Models | A hybrid FSM–VLM architecture enables semantic UAV navigation while revealing that model scaling, rather than latency alone, is the main barrier to reliable flight-command compliance in degraded environments. | 7 | 6 |

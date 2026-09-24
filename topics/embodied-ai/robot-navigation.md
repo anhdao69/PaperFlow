@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**306 papers total**
+**311 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [Privacy-Preserving Semantic Segmentation from High-Resolution Depth and Ultra-Low-Resolution RGB](https://arxiv.org/abs/2609.28360) | Embodied AI: Robot Navigation | A privacy-preserving sensing and segmentation framework combines high-resolution depth with ultra-low-resolution RGB to support strong 2D/3D scene understanding while reducing visual privacy risks. | 8 | 7 |
+| 2026-09-23 | [RoadOcc Learns When to Persist, Transport, or Refresh Memory for Roadside Occupancy Prediction](https://arxiv.org/abs/2609.27677) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | RoadOcc improves roadside occupancy prediction by learning when to persist, transport, or refresh temporal evidence, achieving stronger dynamic-object performance. | 6 | 6 |
+| 2026-09-23 | [Know-Your-Scene (KYS)-SLAM: Hierarchical Semantic-Motion Priors for Feature Matching in Stereo Visual SLAM](https://arxiv.org/abs/2609.27509) | Embodied AI: Robot Navigation | KYS-SLAM improves stereo visual SLAM by continuously down-weighting semantically implausible and independently moving-object matches instead of discarding features. | 7 | 7 |
+| 2026-09-23 | [Automotive mmWave Spinning Radar Place Recognition with Spatially Gated Feature-Correlation Representation](https://arxiv.org/abs/2609.27394) | Embodied AI: Robot Navigation | SGCA-Net improves spinning-radar place recognition by handling heading changes and preserving informative spatial feature relationships. | 7 | 6 |
+| 2026-09-23 | [Geometry-Conditioned Visual Place Recognition in Natural Environments](https://arxiv.org/abs/2609.27370) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | Depth-Aware Distillation improves visual place recognition in natural environments by conditioning visual features on inferred geometry, especially when appearance changes substantially. | 7 | 7 |
 | 2026-09-22 | [Underwater Navigation in Unsteady Flows Using Measurement Histories from a Single Sensing Unit](https://arxiv.org/abs/2609.26753) | Embodied AI: Robot Navigation | A causal observer reconstructs lateral currents from single-point flow histories, enabling effective underwater navigation in unsteady wakes with substantially less sensing. | 9 | 7 |
 | 2026-09-22 | [NavSafe-$\\infty$: Benchmarking Closed-Loop Driving Safety in Photorealistic Environments](https://arxiv.org/abs/2609.26618) | Embodied AI: Robot Navigation | NavSafe-∞ shows that strong open-loop driving performance does not reliably translate into safe closed-loop behavior in photorealistic environments. | 7 | 7 |
 | 2026-09-22 | [Wheel-loader V-Cycle Automation with Deep Koopman MPC](https://arxiv.org/abs/2609.26580) | Embodied AI: Robot Navigation | A hierarchical planner and deep Koopman MPC framework enables real-time autonomous wheel-loader V-cycle maneuvers in high-fidelity simulation. | 6 | 6 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**151 papers total**
+**154 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [From Alignment to Fusion in 3D Vision-Language](https://arxiv.org/abs/2609.28222) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | An align-then-fuse framework combines point clouds, voxel grids, and multi-view images for stronger 3D vision-language performance while preserving each representation’s internal geometry. | 8 | 7 |
+| 2026-09-23 | [Hybrid Gaussians for Robust Open-Vocabulary 3D Segmentation with Multi-View Object Association and Boundary Refinement](https://arxiv.org/abs/2609.27462) | 3D Vision: 3D Foundation Models | Hybrid Gaussians improves open-vocabulary 3D segmentation by jointly enforcing multi-view object identity, language-aligned semantics, and refined boundaries. | 8 | 8 |
+| 2026-09-23 | [SatUnreal: A High-Precision Synthetic Dataset for Satellite Stereo Matching via Unreal Engine](https://arxiv.org/abs/2609.27442) | 3D Vision: 3D Foundation Models | SatUnreal is a 10,000-pair, high-resolution synthetic satellite stereo dataset designed to provide physically consistent imagery and precise occlusion labels for improved sim-to-real stereo matching. | 8 | 7 |
 | 2026-09-22 | [\\phi-RIE: From Photorealistic Reconstruction to Interactive Environments](https://arxiv.org/abs/2609.26795) | 3D Vision: 3D Foundation Models | φ-RIE converts photorealistic 3D Gaussian Splatting reconstructions into interactive environments with movable, physically executable objects while preserving the rest of the scene. | 8 | 8 |
 | 2026-09-22 | [CODA: Depth-Aligned Scene Completion and Object Decomposition from a Single RGB-D Image](https://arxiv.org/abs/2609.25654) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | CODA reconstructs a complete, physically coherent 3D scene from one RGB-D image before decomposing it into environment and movable objects. | 7 | 7 |
 | 2026-09-22 | [RegVGGT: Sustainable Visual Geometry Grounding for Streaming via Regulated Memory](https://arxiv.org/abs/2609.23286) | 3D Vision: 3D Foundation Models; Efficient AI: Token Pruning and Eviction | RegVGGT enables long-video 3D reconstruction on limited-memory GPUs by regulating which incoming-frame tokens update the model’s context memory. | 7 | 7 |

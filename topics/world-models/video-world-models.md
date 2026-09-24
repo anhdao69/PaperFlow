@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**105 papers total**
+**106 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [ZYT-World: A Real-Time Controllable World Model for Closed-Loop Autonomous-Driving Simulation](https://arxiv.org/abs/2609.21712) | World Models: Video World Models, Interactive World Models | ZYT-World is a fast, controllable world model for realistic, long-horizon autonomous-driving simulation across mixed camera rigs while preserving scene identity on revisits. | 9 | 9 |
 | 2026-09-22 | [QuantWM: Temporally Consistent 2-Bit KV Cache Quantization for World Models and Video Generation](https://arxiv.org/abs/2609.26425) | World Models: Video World Models, Interactive World Models; Efficient AI: KV Cache and Memory Efficiency | QuantWM is a training-free, causal 2-bit KV-cache quantization framework that reduces memory use while preserving attention stability, visual quality, and temporal consistency in world models and video generation. | 8 | 8 |
 | 2026-09-22 | [TriWorldBench: A Tri-View Consistency Perspective on Embodied World Models](https://arxiv.org/abs/2609.26314) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models | TriWorldBench evaluates whether embodied world models generate mutually consistent head- and wrist-camera predictions for bimanual robot tasks. | 8 | 7 |
 | 2026-09-22 | [An Action Is Worth One Patch: Unified World-Action Modeling with PatchWAM](https://arxiv.org/abs/2609.25961) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | PatchWAM unifies visual prediction and continuous action generation by representing actions as patches processed by the same generative model. | 9 | 8 |

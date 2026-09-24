@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**89 papers total**
+**94 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-23 | [MotionSpec: Spectral Trajectory Supervision for Motion-Consistent Video Generation](https://arxiv.org/abs/2609.28095) | Video Generation and Understanding: Video Diffusion | MotionSpec improves video-generation motion realism by supervising both the frequency structure and local transitions of trajectories. | 7 | 7 |
+| 2026-09-23 | [ZoomDiff: A High-Fidelity Diffusion Model for Dual-Camera Smooth Zooming](https://arxiv.org/abs/2609.28083) | Video Generation and Understanding: Video Diffusion | ZoomDiff uses diffusion with strengthened dual-camera conditioning, flow-guided detail recovery, and temporal supervision to generate high-fidelity, smooth transitions between camera views. | 5 | 6 |
+| 2026-09-23 | [All modalities are equal, but video is more equal: Closing the Cross-Attention Gap in Joint Video Generation](https://arxiv.org/abs/2609.27901) | Video Generation and Understanding: Video Diffusion | RecCAR improves joint video generation by aligning weaker modality-to-video attention with stronger video-to-modality correspondence. | 7 | 6 |
+| 2026-09-23 | [Information Capacity of Generative Video Compression: Quantifying the Rate-Compute Exchange at Identical Quality](https://arxiv.org/abs/2609.27493) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction | The paper introduces a dimensionless metric for measuring how effectively generative video decoder compute can replace transmitted bitrate at equal reconstruction quality. | 7 | 6 |
+| 2026-09-23 | [Repurposing Pre-trained LLMs as High Fidelity Continuous Text Autoencoders](https://arxiv.org/abs/2609.27248) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Diffusion | LLMAE repurposes a pretrained decoder-only LLM into a fixed-length continuous text autoencoder with near-perfect reconstruction and useful latent representations for text diffusion. | 6 | 7 |
 | 2026-09-22 | [VideoX-Qwen: Data-Centric Instruction-Based Video Editing](https://arxiv.org/abs/2609.26015) | Video Generation and Understanding: Video Diffusion | VideoX-Qwen combines large-scale synthetic instruction-editing data with a unified multimodal video editor to improve instruction following while preserving video content and temporal structure. | 8 | 7 |
 | 2026-09-22 | [Same Flow, Different Paths: Variance Reduction in Flow Matching](https://arxiv.org/abs/2609.17287) | Video Generation and Understanding: Video Diffusion | The choice of interpolation path in flow matching can substantially affect SGD convergence, even when it produces the same training objective and marginals. | 5 | 7 |
 | 2026-09-21 | [Uranus: Building the Next-Generation Simulation Infrastructure for Embodied AI](https://arxiv.org/abs/2609.24815) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Uranus is a data-driven robot simulator that enables open-ended, low-latency visual rollouts conditioned on online joint trajectories for scalable embodied-AI development. | 8 | 8 |
