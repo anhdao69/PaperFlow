@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**47 papers total**
+**51 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](https://arxiv.org/abs/2609.30264) | World Models: Latent Action Models, Interactive World Models | AD-WM trains world models to preserve action-dependent differences, substantially improving counterfactual MPC and zero-shot robotic control. | 9 | 9 |
+| 2026-09-24 | [Neural Transport Nested Sampling](https://arxiv.org/abs/2609.29413) | World Models: Latent Action Models; Efficient AI: Efficient Attention | Neural Transport Nested Sampling combines flow-based Langevin dynamics with nested sampling to efficiently sample high-dimensional molecular systems and estimate temperature-resolved partition functions. | 7 | 7 |
+| 2026-09-24 | [Representation World Model: Learning States, Transition and Executable Plans in Representation](https://arxiv.org/abs/2609.29171) | World Models: Latent Action Models | RWM learns a representation space where executable plans can be constructed directly between current and goal states, avoiding recursive rollouts and action-space search. | 9 | 8 |
+| 2026-09-24 | [UMI-Bridge: Action-Anchored Latent Alignment across Human and Robot Manipulation Data](https://arxiv.org/abs/2609.18232) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | UMI-Bridge aligns human and robot manipulation data through shared action representations, enabling more data-efficient robot learning and transfer from UMI demonstrations. | 9 | 8 |
 | 2026-09-23 | [Less Language, More Latents: Annotation-Efficient VLAs for Driving](https://arxiv.org/abs/2609.27747) | Embodied AI: Vision-Language-Action; World Models: Latent Action Models | LADA enables language-conditioned autonomous driving using fewer than 5% of the language annotations by learning discrete latent driving intents from abundant trajectories. | 9 | 8 |
 | 2026-09-23 | [Latent evolving World Action Model](https://arxiv.org/abs/2609.27455) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | LeWAM replaces costly video-diffusion backbones with JEPA embeddings and offline preference refinement, achieving strong simulated and practical real-world manipulation performance with 0.4B trainable parameters. | 10 | 9 |
 | 2026-09-22 | [When Recursive Models Finish Computing](https://arxiv.org/abs/2609.26487) | World Models: Latent Action Models | Extending recursive inference reveals that many nominally incorrect outputs are unfinished computations, with completion marked by trajectory-conditioned anisotropic stability. | 6 | 7 |

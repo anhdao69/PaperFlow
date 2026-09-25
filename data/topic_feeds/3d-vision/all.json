@@ -1,6 +1,2768 @@
 {
   "days": [
     {
+      "date": "2026-09-24",
+      "paper_count": 16,
+      "papers": [
+        {
+          "abstract": "Existing point tracking models face a fundamental tradeoff: they can either track a sparse set of query points over long horizons, or track all points across only short clips. We introduce TrackEverything, a 3D point tracker that breaks this trade-off by representing videos as persistent 3D scene tracks in world coordinates. Grounded in the insight that videos are 2D projections of an underlying 3D world, TrackEverything decouples model complexity from video duration, allowing it to scale with unique physical scene geometry instead. Our approach introduces three key innovations. First, we employ a voxelization-based de-duplication mechanism at sliding-window boundaries to merge co-located tracks, preventing repeated observations of the same surface from redundantly accumulating. Second, we decompose tracking into an endpoint refiner that predicts each point's destination and static-versus-dynamic classification, followed by a lightweight trajectory refiner that decodes dense trajectories exclusively for dynamic points. Third, we propose 3D WAFT, replacing memory-prohibitive 4D correlation volumes with efficient feature sampling in the scene cloud. To the best of our knowledge, TrackEverything is the first 3D tracker capable of tracking all visible points across videos exceeding 1000 frames within 40 GB of GPU memory. On TAPVid-3D, TrackEverything outperforms all open-source all-frame dense 3D trackers by more than 20% APD on short clips, while remaining competitive with state-of-the-art sparse trackers on long sequences, despite tracking far more points.",
+          "arxiv_id": "2609.30222",
+          "arxiv_url": "https://arxiv.org/abs/2609.30222",
+          "authors": [
+            "Ayush Jain, Sreeharsha Paruchuri, Ishita Gupta, Fan Zhang, Tanner Schmidt, Jakob Engel, Katerina Fragkiadaki, Adam W. Harley"
+          ],
+          "bullets": [
+            "Addresses the tradeoff between dense tracking over short clips and sparse tracking over long videos.",
+            "Represents videos as persistent 3D scene tracks, decoupling complexity from video duration and scaling with unique scene geometry.",
+            "Uses voxelization to merge co-located tracks at sliding-window boundaries and avoid redundant observations.",
+            "Combines endpoint and static/dynamic prediction with trajectory refinement only for dynamic points, plus efficient 3D feature sampling instead of 4D correlation volumes.",
+            "Tracks all visible points beyond 1,000 frames within 40 GB GPU memory and reports over 20% APD improvement on short TAPVid-3D clips versus open-source dense trackers."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: TrackEverything architecture. TrackEverything processes videos in sliding windows of length L. Encoding: Video frames are encoded and unprojected into a world-coordinate 3D feature cloud using depths/pointmaps from sensors or geometry predictors. Endpoint Refinement: Conditioned on source/target position embeddings and 3D WAFT feature sampling, a recurrent transformer iteratively predicts each point’s 3D offset ∆x at the target timestep, visibility, and a static/dynamic classification. Trajectory Refinement: Trajectories for dynamic points are initialized via constant-velocity interpolation and refined via within-track temporal self-attention and crossattention from track summary tokens ([CLS]) to the scene cloud. Output and De-duplication: At window boundaries, points arriving at identical 3D voxels are merged by mean-pooling before initializing the subsequent window, bounding representation size across long videos.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 440,
+              "image_path": "figures/2609.30222/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 5: Sliding-window tracking and cross-window de-duplication pipeline. Top row (Window i): A temporal window of frames is processed by TrackEverything to predict dense 3D tracks across all points. At the final timestep of the window, the predicted 3D point locations (here 46k points) are voxelized by quantizing coordinates into spatial voxels and mean-pooling co-located tokens. This cross-frame de-duplication prunes redundant surface observations (reducing point count from 46k to 16k). Bottom row (Window i + 1): When the subsequent frame window arrives, its frames are lifted into a 3D point cloud using a feedforward geometry predictor (or sensor depths). These newly observed points are concatenated with the de-duplicated points carried over from previous windows (serving as persistent 3D scene memory) to construct the active set of points to track. TrackEverything then produces dense 3D trajectories for all points across all timesteps of Window i+ 1. By chaining sliding-window processing with boundary de-duplication, TrackEverything tracks extended video sequences while bounding active token counts to unique physical scene geometry rather than video duration.",
+              "figure_id": "figure-5-13",
+              "figure_number": "5",
+              "height": 326,
+              "image_path": "figures/2609.30222/figure-002.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Qualitative comparison against baselines. TrackEverything tracks every visible point across time, including newly emerging content. Notice that only one cow is visible in the first frame, while the second cow emerges later. Sparse trackers need human-specified queries and are usually demoed with a first-frame grid; densifying queries over later frames quickly becomes prohibitive (Figure 3). First-frame dense trackers have the same blind spot by design. In all visualizations, we show trails for dynamic points only; the method tracks all points and accounts for camera motion, but we omit static-point trails in the 2D renderings for clarity.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 827,
+              "image_path": "figures/2609.30222/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 821
+            },
+            {
+              "caption": "Figure 3: Complexity analysis on PointOdyssey. Accuracy (APD-M), end-to-end latency, and peak GPU memory vs. video length at 384 query points (top row, a–c), and query point count at 120 frames (bottom row, d–f). ‘x’ marks out-of-memory. Dense baselines exceed memory in 100-200 frames; sparse baselines track only a few thousand points, and OOM at 600 frames. TrackEverything uniquely tracks all points across all frames with modest latency and under 30GB GPU memory.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 465,
+              "image_path": "figures/2609.30222/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 805
+            },
+            {
+              "caption": "Figure 7: Qualitative comparison against baselines on the Breakdance sequence (Dance-jump and hand manipulation continue on the following pages). Rows show TrackEverything, SpatialTracker-v2, CoTracker3, and DeltaV2; time advances left to right. TrackEverything tracks every visible point across time, including newly emerging content. Sparse trackers need human-specified queries and are usually demoed with a first-frame grid; densifying queries over later frames quickly becomes prohibitive (Figure 3). First-frame dense trackers have the same blind spot by design. In all visualizations, we show trails for dynamic points only; the method tracks all points and accounts for camera motion, but we omit static-point trails in the 2D renderings for clarity.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 853,
+              "image_path": "figures/2609.30222/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 821
+            },
+            {
+              "caption": "Figure 9: Static/Dynamic Classification. Points classified as dynamic are shown in red, static in blue. Time advances left to right. Notice how in the last example, the model correctly classifies some tigers as static while others as dynamic, and the static/dynamic assignment shifts as objects start or stop moving within a window.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 633,
+              "image_path": "figures/2609.30222/figure-006.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 820
+            },
+            {
+              "caption": "Figure 6: 3D WAFT projection and iterative refinement dynamics. Top: Projections across time under zero-velocity initialization. Source points initialized at frame T = 0 (red dots) are projected to future timesteps (T = 7 and T = 15) using camera extrinsics and intrinsics. Red dots denote projected 2D locations under the zero-velocity prior (x(0) tgt = xsrc in world space); green dots mark true ground-truth (GT) locations, with green arrows at T = 15 indicating displacement error. For static objects, camera projection accounts for ego-motion and aligns projected points near GT; for dynamic objects, world motion leads to significant spatial offset. Bottom: Zoomed-in patches across refinement iterations (Iter ∈ {0, 1, 2}) at T = 7 and T = 15. Static point (top): The zero-velocity initialization at Iter = 0 already places the sampled point close to the true location. The bilinearly sampled target feature gtgt closely matches the source feature gsrc, signaling to the model that no large displacement is required and maintaining stability across iterations 1 and 2. Dynamic point (bottom): At Iter = 0, the zero-velocity projection misses the moving object by multiple pixels (landing on the background), creating an appearance mismatch between gsrc and gtgt in the concatenated WAFT feature. Driven by this mismatch, the endpoint refiner iteratively updates 3D positions: by Iter = 1 the point moves substantially closer, and by Iter = 2 the sampled point locks onto the correct surface feature.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 656,
+              "image_path": "figures/2609.30222/figure-007.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 744
+            },
+            {
+              "caption": "Figure 7: Qualitative comparison against baselines (continued). Dance-jump sequence.",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 853,
+              "image_path": "figures/2609.30222/figure-008.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 821
+            },
+            {
+              "caption": "Figure 10: Complexity analysis on PointOdyssey (APD-P). Accuracy, latency, and peak GPU memory as functions of (top row, a–c) video length at 384 query points, and (bottom row, d–f) number of query points at 120 frames. ‘x’ marks out-of-memory.",
+              "figure_id": "figure-10-14",
+              "figure_number": "10",
+              "height": 465,
+              "image_path": "figures/2609.30222/figure-009.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 805
+            },
+            {
+              "caption": "Figure 7: Qualitative comparison against baselines (continued). Hand-manipulation sequence.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 853,
+              "image_path": "figures/2609.30222/figure-010.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 821
+            },
+            {
+              "caption": "Figure 8: Qualitative ablations of iterative refinement and WAFT. (a) Without iterative refinement, tracks are noisier and less coherent; with refinement, trajectories follow motion more cleanly. (b) Without WAFT, tracks drift with long stray trails on fast motion; with WAFT, trajectories remain tightly localized on the moving subject.",
+              "figure_id": "figure-8-15",
+              "figure_number": "8",
+              "height": 865,
+              "image_path": "figures/2609.30222/figure-011.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 826
+            },
+            {
+              "caption": "Table 2: Additional experiments and ablations. †reported by D4RT. TE: TrackEverything.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 318,
+              "image_path": "figures/2609.30222/table-012.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 807
+            },
+            {
+              "caption": "Table 6: TAPVid-3D detailed metrics, full-length. Bold / underline: best / second-best within the block (D4RT excluded). N/A: method cannot run on full-length video. Column definitions match Table 5.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 486,
+              "image_path": "figures/2609.30222/table-013.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 740
+            },
+            {
+              "caption": "Table 4: Early merge on full-length TAPVid-3D. APD-P uses VGGT-Ω, as in Table 1. FPS averages are the mean of ADT, DriveTrack, and PStudio.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 284,
+              "image_path": "figures/2609.30222/table-014.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 586
+            },
+            {
+              "caption": "Table 5: TAPVid-3D detailed metrics, 48-frame. Bold / underline: best / second-best within the block (D4RT excluded). P/M: APD-P/APD-M; AJ: Average Jaccard; OA: occlusion accuracy; EPE: end-point error. Ω: VGGT-Ω; Pi3: Pi3; –: native geometry.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 362,
+              "image_path": "figures/2609.30222/table-015.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 706
+            },
+            {
+              "caption": "Table 3: Tracking Performance on Dynamic Replica and PointOdyssey. DeltaV2 and TrackEverything use geometry from Pi3 in EST setups and simulator GT geometry in GT setups. All evaluations run on 48 frames.",
+              "figure_id": "table-3-17",
+              "figure_number": "3",
+              "height": 119,
+              "image_path": "figures/2609.30222/table-016.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 827
+            },
+            {
+              "caption": "Table 1: 3D point tracking on TAPVid-3D. Ω: VGGT-Ω geometry; –: native geometry. Bold = best, underline = second-best in that block. D4RT is closed-source and is excluded from ranking.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 44,
+              "image_path": "figures/2609.30222/table-017.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 829
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.30222/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.30222",
+          "relevance": 7,
+          "selection_reason": "Presents dense long-horizon 3D point tracking with 3D scene representations, directly contributing to 3D perception.",
+          "summary_status": "generated",
+          "title": "TrackEverything: Long Horizon Dense Tracking via De-Duplicating 3D Scene Representations",
+          "tldr": "TrackEverything enables dense, long-horizon 3D point tracking by de-duplicating persistent scene representations and refining trajectories efficiently in world coordinates.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Robotic novel view synthesis (NVS) must recover both visual appearance and metric 3D structure, yet most generative NVS methods rely only on images, overlooking LiDAR, a complementary sensor common on robotic platforms. We present M3GD, a Camera--LiDAR multimodal representation for generative NVS that composes independently pretrained 2D image and 3D point-cloud foundation models without separately pretraining a cross-modal translator. We show that, after camera projection, frozen LiDAR and image features exhibit substantial shared spatial structure, providing a natural cross-modal representation. M3GD conditions generation on LiDAR through this structure: it combines explicit geometry statistics with learned point-cloud descriptors into view-aligned packets on the image-latent grid, injected through a lightweight residual adapter into a multi-view flow-matching generator whose latent space, decoders, and training objective remain intact. On the GrandTour dataset, M3GD improves target-view RGB and depth synthesis over an image-only version of the same backbone. Ablations show that the gains come from pixel-aligned LiDAR content and that target-view LiDAR acts as a geometric query linking the requested view to source observations. Deployment on a ground robot demonstrates practical real-world operation, with a configurable quality--cost trade-off controlled by the number of Euler integration steps.",
+          "arxiv_id": "2609.30056",
+          "arxiv_url": "https://arxiv.org/abs/2609.30056",
+          "authors": [
+            "Yang Zhou, Jiuhong Xiao, Shizhao Ye, Long Quang, Carlos Nieto-Granda, Giuseppe Loianno"
+          ],
+          "bullets": [
+            "Addresses the limitation of image-only generative NVS, which may miss metric 3D structure available from LiDAR.",
+            "Combines independently pretrained 2D image and 3D point-cloud models without pretraining a cross-modal translator.",
+            "Projects frozen LiDAR features into the image-latent grid, combining explicit geometry with learned descriptors through a lightweight residual adapter.",
+            "Improves target-view RGB and depth synthesis over an image-only backbone on GrandTour; ablations attribute gains to pixel-aligned LiDAR and target-view geometric querying.",
+            "Demonstrates real-world ground-robot deployment with a configurable quality–cost trade-off via Euler integration steps."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 5. Qualitative RGB and depth comparison on the GrandTour evaluation split. For each scene, the two source images are shown on the left. The middle block compares RGB predictions, and is organized into three rows: feed-forward splatting baselines DepthSplat [16], MVSplat [15], and PixelSplat [14]; diffusion-based baselines Matrix3D [73] and MVGenMaster [74] together with the original GLD model [8]; and GLD∗†, our GrandTour-fine-tuned image-only GLD baseline, followed by M3GD and the ground-truth target view. The right block shows the corresponding DA3 depth estimates for the same predicted views and the ground-truth target depth, using the same method layout. Compared with splatting and image-only generative baselines, M3GD better preserves target-view appearance and produces depth maps that more closely follow the ground-truth scene geometry in challenging robot-captured scenes.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 1338,
+              "image_path": "figures/2609.30056/figure-001.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 7. Qualitative examples highlighting the effect of target-view LiDAR conditioning. Each row shows two source images, the image-only GLD∗† baseline, the raw target-view LiDAR projection, our downsampled LiDAR representation, the geometry-only (geom-only) variant, M3GD, and the ground-truth target image. These examples contain large source-target viewpoint changes where RGB-only conditioning is ambiguous and GLD∗† often fails to infer the targetfacing surface. The LiDAR-conditioned geom-only model recovers the dominant scene layout more accurately, while M3GD further improves appearance fidelity and local details such as boxes, road surfaces, walls, and vehicles by combining LiDAR geometry with Utonia features.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 539,
+              "image_path": "figures/2609.30056/figure-002.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 6. Qualitative visualization of M3GD on GrandTour evaluation samples. Each group follows the actual evaluation layout: two observed source views, two M3GD target-view predictions, and the corresponding ground-truth target views. M3GD synthesizes targets from sparse source images and target-view LiDAR geometry; target RGB is never provided. Examples are ordered from indoor scenes to semi-open structures and outdoor environments, showing that M3GD preserves dominant scene layout and reconstructs plausible target-view appearance across diverse and geometrically challenging robot-captured environments. Source 0 Source 1 GLD∗† [8] Raw LiDAR Downsampled LiDAR Geom-only M3GD Ground Truth",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 506,
+              "image_path": "figures/2609.30056/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 8. Qualitative results for two real-robot queries Q1 (rows 1–2) and Q2 (rows 3–4), using K = 10 Euler steps, N = 2 source views, and M = 2 target views. Each query forms a two-row block: in the first two columns, the upper row shows the two source RGB images and the lower row shows their corresponding projected LiDAR point clouds. The remaining columns show the ground-truth RGB, M3GD synthesized RGB, our RGB readout depth, GLD synthesized RGB, and GLD RGB readout depth (defined in Section VI-B) for target T1 in the upper row and target T2 in the lower row.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 396,
+              "image_path": "figures/2609.30056/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1070
+            },
+            {
+              "caption": "TABLE IV Sampling cost of the diffusion methods on the GrandTour evaluation split. All methods use N=2 source views and M=2 target views. Latency is measured per target pair over the full sampling procedure, including the VAE decode to RGB and, for GLD, both stages of its native cascade; for M3GD it also includes generation of the LiDAR packet. Values are averaged over three runs (± standard deviation); peak reserved GPU memory is measured on a single NVIDIA RTX A5000, following the protocol of Table VII. Best per column.",
+              "figure_id": "table-IV-2",
+              "figure_number": "IV",
+              "height": 136,
+              "image_path": "figures/2609.30056/table-005.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 414
+            },
+            {
+              "caption": "TABLE I Feature-structure similarity on GrandTour. All metrics are computed on shared 16× 24 image-grid cells with valid projected LiDAR support. The study covers 599,774 successfully processed images from 48 recordings and three HDR camera streams. Best and second-best are highlighted within each comparison block.",
+              "figure_id": "table-I-5",
+              "figure_number": "I",
+              "height": 290,
+              "image_path": "figures/2609.30056/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 796
+            },
+            {
+              "caption": "TABLE II Baseline comparison on the GrandTour evaluation split (2,400 clips). ↑/↓ indicate that higher/lower is better; best and second-best per column are highlighted. ∗ fine-tuned on the GrandTour training set; † trained on the DA3 level-0 feature.",
+              "figure_id": "table-II-3",
+              "figure_number": "II",
+              "height": 317,
+              "image_path": "figures/2609.30056/table-007.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 822
+            },
+            {
+              "caption": "TABLE VI Effect of LiDAR input mode on the hard subset (maximum camera baseline between views >1m, n=1,407; Section V-B). Each row is a separately trained model under the default recipe of Section VI-D1; only the LiDAR input changes. Highlighting follows Table II.",
+              "figure_id": "table-VI-8",
+              "figure_number": "VI",
+              "height": 171,
+              "image_path": "figures/2609.30056/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 394
+            },
+            {
+              "caption": "TABLE VII On-robot quality, latency, and memory scaling on the Warthog platform with two fixed source views (N = 2). Quality is averaged over 30 queries; latency and peak GPU reserved memory are measured over four synchronized post-warm-up queries.",
+              "figure_id": "table-VII-11",
+              "figure_number": "VII",
+              "height": 294,
+              "image_path": "figures/2609.30056/table-009.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 840
+            },
+            {
+              "caption": "TABLE III Depth readout comparison, using identical latent predictions as Table II. The native readout scores depth decoded directly from the synthesized latent (GLD-default); the RGB readout first decodes to RGB and re-encodes through the DA3 encoder (protocol of Table II). Both are scored against the same pseudo-ground truth. Notation follows Table II; best within each readout.",
+              "figure_id": "table-III-1",
+              "figure_number": "III",
+              "height": 231,
+              "image_path": "figures/2609.30056/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 404
+            },
+            {
+              "caption": "TABLE V Effect of LiDAR conditioning across training modes (multi-step, level-0 latent). Best per column. ‡ Off-the-shelf: frozen released GLD checkpoint, no LiDAR adapter. § As ‡, with the LiDAR adapter trained. tgt-only scores the loss on the target-view latents only, not on the jointly denoised source views. ¶ Classifier-free LiDAR (cfg-dropout 0.1); at evaluation a single CFG scale of 1.5 is applied to the joint camera+LiDAR condition.",
+              "figure_id": "table-V-9",
+              "figure_number": "V",
+              "height": 284,
+              "image_path": "figures/2609.30056/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 444
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.30056/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.30056",
+          "relevance": 6,
+          "selection_reason": "Composes pretrained 2D image and 3D point-cloud foundation models for camera-LiDAR novel view synthesis, fitting 3D foundation-model generation.",
+          "summary_status": "generated",
+          "title": "M3GD: Multi-Modal Multi-View Geometric Diffusion for Camera--LiDAR Novel View Synthesis",
+          "tldr": "M3GD enables camera–LiDAR novel-view synthesis by injecting view-aligned LiDAR geometry and features into an image-based diffusion generator.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Despite recent advancements in 3D generation, models often struggle to produce assets with high visual fidelity. To bridge this gap, we propose OREO, an alignment framework that enhances the realism of 3D generators by leveraging rich 2D diffusion priors. Instead of relying on static datasets, OREO establishes a dynamic optimization loop that produces on-the-fly edited renderings as 2D pseudo-targets. At its core, we introduce Reinforced Editing, which utilizes a 2D model to refine rendered views of the 3D output, enhancing their overall visual fidelity while preserving the underlying geometry, viewpoint, and content. These refined views serve as high-quality supervision targets, enabling the 3D generator to learn from its own generated samples and progressively improve its visual quality. Experiments demonstrate that OREO effectively improves upon pre-trained baselines, producing 3D assets with enhanced visual realism.",
+          "arxiv_id": "2609.29788",
+          "arxiv_url": "https://arxiv.org/abs/2609.29788",
+          "authors": [
+            "Zhiyuan Ma, Wenbo Hu, Wang Zhao, Pengfei Wang, Ying Shan, Lei Zhang"
+          ],
+          "bullets": [
+            "Targets the limited visual fidelity of existing 3D generators.",
+            "Creates edited 2D pseudo-targets dynamically rather than using static datasets.",
+            "Uses Reinforced Editing to enhance renderings while preserving geometry, viewpoint, and content.",
+            "Trains the 3D generator on its own refined outputs in an iterative optimization loop.",
+            "Experiments show improved visual realism over pre-trained baselines."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.GR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of OREO. The training generator produces a 3D asset via onpolicy ODE rollout that is rendered into a source view xsrc. Reinforced Editing turns xsrc into a high-fidelity target xtgt, and Contrastive Distillation uses (xsrc, xtgt) as a negative/positive pair to supervise the generator in the latent space.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 388,
+              "image_path": "figures/2609.29788/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 705
+            },
+            {
+              "caption": "Fig. 1: Teaser. To enhance visual fidelity of 3D generation, our framework first reinforces rendered views via image editing, then distills the gap back to the training generator with a latent contrastive objective. Detailed workflow in Fig. 2.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 276,
+              "image_path": "figures/2609.29788/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 666
+            },
+            {
+              "caption": "Fig. 6: Qualitative ablation study on RE parameters. (a) Editing Ratio: A low ratio (e.g., 0.25) limits editing capability, while a full ratio (1.0) destroys the original structure. Our choice of 0.75 strikes a balance. (b) Editing Steps: The examples show changes in appearance detail as the number of editing steps increases.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 600,
+              "image_path": "figures/2609.29788/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 7: Main qualitative comparison of 3D generation. OREO delivers higher multi-view visual fidelity than Trellis and Photo3D. Details are in Sec. 4.3.",
+              "figure_id": "figure-7-13",
+              "figure_number": "7",
+              "height": 450,
+              "image_path": "figures/2609.29788/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 3: Qualitative comparison of 2D feedback sources. An ideal xtgt keeps the viewpoint of xsrc but lifts its fidelity toward xref; we compare Reinforced Editing (Ours), NanoBanana Pro, and Qwen-Image-Edit. Details are discussed in Sec. 4.2.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 720,
+              "image_path": "figures/2609.29788/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 716
+            },
+            {
+              "caption": "Fig. 9: Qualitative ablation of the 3D generator design choices. We compare Full OREO against other training variants. Details are in Sec. 4.4.",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 394,
+              "image_path": "figures/2609.29788/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 638
+            },
+            {
+              "caption": "Fig. 8: Additional multi-view comparisons. Each example compares Trellis, Photo3D, and OREO using the input reference and five views at azimuths −90◦, −45◦, 0◦, 45◦, and 90◦.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 1052,
+              "image_path": "figures/2609.29788/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 5: Sensitivity Analysis of RE Parameters. (a) Effect of Editing Ratio (Ne/N): A ratio of 0.75 balances semantic improvement (CLIP/DINO ∆) and structural consistency (Mask IoU). (b) Effect of Editing Steps (Ne): Under a fixed ratio (≈ 0.75), more steps improve CLIP/DINO similarity but reduce Mask IoU and increase cost, motivating our choice of 9 editing steps as a balanced setting.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 271,
+              "image_path": "figures/2609.29788/figure-008.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 4: Editing trajectories with and without the source branch. Removing the source branch (top) leads to progressive color over-saturation and structural drift; keeping it (bottom, Ours) stabilizes the trajectory. Details in Sec. 4.2.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 198,
+              "image_path": "figures/2609.29788/figure-009.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 725
+            },
+            {
+              "caption": "Table 4: Ablation on the 3D generator design choices. CLIP and DINO similarity to xref on the Conceptual Design Dataset; see Sec. 4.4.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 172,
+              "image_path": "figures/2609.29788/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 475
+            },
+            {
+              "caption": "Table 1: Quantitative comparison of 2D feedback sources. We report CLIP and DINO similarity to xref for fidelity and to xsrc for content preservation, together with Mask IoU for viewpoint consistency. See Sec. 4.2.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 187,
+              "image_path": "figures/2609.29788/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 725
+            },
+            {
+              "caption": "Table 2: Ablation on key components of Reinforced Editing. We report ∆CLIP and ∆DINO, defined as the change in CLIP/DINO similarity to xref before and after editing; higher is better. Details are in Sec. 4.2.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 117,
+              "image_path": "figures/2609.29788/table-012.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 425
+            },
+            {
+              "caption": "Table 3: Main quantitative comparison of 3D generation. CLIP and DINO similarity to xref on the Conceptual Design Dataset and GSO; see Sec. 4.3.",
+              "figure_id": "table-3-12",
+              "figure_number": "3",
+              "height": 128,
+              "image_path": "figures/2609.29788/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 494
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29788/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.29788",
+          "relevance": 7,
+          "selection_reason": "On-the-fly rendering-editing optimization to improve 3D generation fidelity.",
+          "summary_status": "generated",
+          "title": "OREO: Fidelity Alignment in 3D Generation via On-the-fly Rendering-Editing Optimization",
+          "tldr": "OREO improves 3D generation realism by iteratively refining rendered views with a 2D diffusion model and using them as self-generated supervision.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Vessel segmentation is commonly optimized as voxel-wise classification, but small local errors can strongly disrupt vascular connectivity while having little effect on overlap scores. This is particularly problematic for downstream analyses that rely on centerlines, branches, connected components, or graph structure. We propose a mesh-guided post-processing framework for repairing broken vessel segmentations produced by nnU-Net. For each predicted binary mask, a deformable template mesh is fitted to the mask surface in physical space and used as a case-specific geometric scaffold. The fitted mesh is not voxelized as the final segmentation; instead, it guides conservative reconnection of disconnected components by proposing or validating thin bridge candidates under foreground-growth constraints. We evaluated this approach in three vascular anatomies using AortaSeg24 and SEGA for the aorta, TopCoW for the Circle of Willis, and PARSE for the pulmonary arteries. Performance is measured using Dice, connected-component Dice (ccDice), and the Betti-0 number. Across these datasets, repair substantially improved connectivity while preserving overlap: Dice remained nearly unchanged, whereas ccDice increased from 0.596 to 0.992 for aorta, from 0.722 to 0.835 for TopCoW, and from 0.028 to 0.862 for PARSE. The FOMAML meta-initialization further accelerated the fitting per-case, supporting practical mesh-based repair of the vascular topology. These results suggest that explicit mesh representations can provide a useful geometric prior for correcting topological failures in otherwise accurate voxel segmentations.",
+          "arxiv_id": "2609.29779",
+          "arxiv_url": "https://arxiv.org/abs/2609.29779",
+          "authors": [
+            "Gniewosz Drwiega, Wojciech Szymanski, Marek Wodzinski"
+          ],
+          "bullets": [
+            "Targets connectivity errors that voxel-wise Dice can overlook, including broken branches and disconnected components.",
+            "Fits a deformable template mesh to each predicted mask as a case-specific geometric scaffold.",
+            "Uses the mesh to propose or validate conservative thin bridges under foreground-growth constraints, rather than replacing the segmentation.",
+            "Evaluated across aorta, Circle of Willis, and pulmonary artery datasets; ccDice improved substantially while Dice remained nearly unchanged.",
+            "FOMAML meta-initialization accelerated per-case mesh fitting, supporting practical application."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of the proposed mesh-guided nnU-Net repair pipeline. A CT volume is first processed by a CNN segmentation branch based on nnU-Net, producing segmented vessel sections and an initial nnU-Net mask. When the predicted mask is fragmented or topologically inconsistent, its surface is extracted and used as the target for mesh fitting. Then, a fixed template mesh is passed through a GCN deformation branch. The mesh is progressively refined over multiple deformation stages, where each stage predicts bounded vertex offsets and forwards the updated mesh to the next refinement stage. The final overfitted mesh approximates the surface geometry of the nnU-Net prediction while preserving the template mesh connectivity. This fitted mesh is then used as a geometric prior for topology-aware mask repair, producing a repaired nnUNet mask with improved connectivity.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 806,
+              "image_path": "figures/2609.29779/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 721
+            },
+            {
+              "caption": "Fig. 3. Qualitative examples of mesh-guided repair across vascular anatomies. The method reconnects fragmented vessel components using local mesh-guided bridges while preserving the original mask away from the repaired regions. Blue arrows indicate broken vessel regions repaired by the proposed method.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 979,
+              "image_path": "figures/2609.29779/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 685
+            },
+            {
+              "caption": "Fig. 5. Effect of FOMAML meta-initialization on per-case mesh-fitting convergence for 25 held-out TopCoW cases. Lines show mean Chamfer loss across cases, and shaded regions indicate ± SEM. The black horizontal line indicates a matched Chamfer-distance level, allowing comparison of the number of optimization steps required by FOMAML and standard initialization to reach the same reconstruction error.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 361,
+              "image_path": "figures/2609.29779/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 612
+            },
+            {
+              "caption": "Fig. 1. Examples of broken-vessel failure modes across vascular anatomies. Top row: reference vessel structures. Bottom row: broken nnU-Net predictions, with missing local connections highlighted. Such small local errors can fragment otherwise accurate masks.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 765,
+              "image_path": "figures/2609.29779/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 721
+            },
+            {
+              "caption": "Fig. 4. Quantitative summary of repair effects and mesh-fitting convergence. Meshguided repair improves connectivity-oriented metrics while preserving Dice, and metainitialization accelerates per-case mesh fitting.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 734,
+              "image_path": "figures/2609.29779/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 685
+            },
+            {
+              "caption": "Table 2. Dataset-specific mask-repair hyperparameters.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 372,
+              "image_path": "figures/2609.29779/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 696
+            },
+            {
+              "caption": "Table 1. Dataset-specific mesh-fitting hyperparameters.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 98,
+              "image_path": "figures/2609.29779/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 606
+            },
+            {
+              "caption": "Table 3. Segmentation and connectivity metrics before and after repair. Values are reported as mean ± 95% confidence interval. Best values within each dataset are shown in bold. FB denotes false-branch fraction.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 175,
+              "image_path": "figures/2609.29779/table-008.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 677
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29779/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.29779",
+          "relevance": 6,
+          "selection_reason": "Mesh-guided repair of vascular segmentation topology in 3D medical images.",
+          "summary_status": "generated",
+          "title": "Mind the Gap: Mesh-Guided Repair of Broken Vessels",
+          "tldr": "A mesh-guided post-processing method repairs broken vessel connections and substantially improves vascular topology while preserving segmentation overlap.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Automated segmentation of cryo-electron tomograms routinely produces masks that are voxel-accurate but topologically broken: membranes fragment, organelles merge into one another, and enclosed cavities collapse. Existing topology-aware losses reduce these violations but cannot eliminate them, because topology is encouraged through gradient pressure rather than structurally enforced. We introduce TopoFuse, which reframes topology as a differentiable projection operator rather than a loss penalty. At each forward pass, the projection operator $\\mathrm{Proj}_T$ (a PH-guided sparse edit) identifies the critical voxels responsible for topological violations via bottleneck matching and applies sparse edits to satisfy a specified topology target (diagram feature counts and lifetime budgets) for dimensions $d \\in \\{0,2\\}$. If the projection converges, the output satisfies those constraints on the downsampled grid ($s=2$); when it does not, a repair certificate exposes this explicitly, enabling downstream filtering. A topology prior head predicts the correction target directly from input features, removing any dependence on ground-truth topology at inference. Across three cryo-ET benchmarks, TopoFuse reduces Betti number error by 54% over the strongest soft-loss baseline ($p < 0.001$), improves Dice by 4.6 points, and edits only 3.1% of voxels to achieve this.",
+          "arxiv_id": "2609.29717",
+          "arxiv_url": "https://arxiv.org/abs/2609.29717",
+          "authors": [
+            "Rohit Kumar Salla, Neelesh Gupta, Xingjian Li, Min Xu"
+          ],
+          "bullets": [
+            "Addresses fragmented membranes, merged organelles, and collapsed cavities in voxel-accurate but topologically invalid masks.",
+            "Uses a differentiable projection operator that identifies critical voxels via bottleneck matching and applies sparse edits for dimensions 0 and 2.",
+            "A topology-prior head predicts correction targets from input features, avoiding ground-truth topology at inference.",
+            "Across three cryo-ET benchmarks, it reduces Betti number error by 54% versus the strongest soft-loss baseline and improves Dice by 4.6 points.",
+            "Edits 3.1% of voxels; convergence guarantees constraints only on the downsampled grid, while failures produce repair certificates for filtering."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1: TopoFuse architecture. Tri-planar SAM encoders extract axis-specific features (i), which are fused with topology-conditioned weights (ii). The projection layer enforces persistent homology targets via sparse critical-voxel edits (iii) and outputs each prediction together with a repair certificate (iv). At inference, the topology prior head supplies the correction target without requiring ground-truth labels.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 410,
+              "image_path": "figures/2609.29717/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 2: A representative XY slice shows severe pre-edit fragmentation, with 7,090 connected components, two 2D hole artifacts and 31,071 foreground voxels. After TopoFuse projection, the post-edit prediction contains 36 connected components, removes both hole artifacts and retains 3,169 foreground voxels on the enforced s=2 grid, with edit sparsity 5.13% measured over all spatial voxels on that grid. The edit overlay shows that the correction is sparse rather than a global rewrite. Boundary IoU improves from 0.026 to 0.295 and boundary precision improves from 0.049 to 0.434. The full reference-overlay, zoomed boundary view, failure case and 3D renderings are provided in the supplement (Fig. S5–S6).",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 546,
+              "image_path": "figures/2609.29717/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 725
+            },
+            {
+              "caption": "Table 2: Results on three cryo-ET benchmarks. ↑ higher is better; ↓ lower is better. Bold: best overall; underline: second best. All topology baselines share the identical tri-planar backbone and training budget, isolating the topology mechanism. Standard deviations are below 0.3 for Dice and 0.03 for BE0; per-seed results are in the supplement. † Paired Wilcoxon p < 0.001 vs. BettiMatching on all three benchmarks.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 431,
+              "image_path": "figures/2609.29717/table-003.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 728
+            },
+            {
+              "caption": "Table 3: Component ablations (top) and projection iteration analysis (bottom) on EMPIAR-10499 (mean, 5 seeds). Projection produces the largest single gain in BE0 and the convergence rate saturates at T =5.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 363,
+              "image_path": "figures/2609.29717/table-004.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 562
+            },
+            {
+              "caption": "Table 1: Computational overhead for a single 5123 tomogram on an A100-80GB GPU (mean±std, 5 seeds). PH computation accounts for 5.9% of total FLOPs, wallclock overhead is higher due to CPU–GPU synchronisation. Per-dataset end-to-end inference timing and per-crop timing by T are in supplement Table S1.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 117,
+              "image_path": "figures/2609.29717/table-005.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 716
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29717/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.29717",
+          "relevance": 6,
+          "selection_reason": "Topology-aware 3D cryo-ET segmentation using a differentiable projection operator.",
+          "summary_status": "generated",
+          "title": "TopoFuse: Topology-Aware Tri-Planar Fusion for 3D Cryo-Electron Tomography Segmentation",
+          "tldr": "TopoFuse enforces target topology during cryo-ET segmentation through a differentiable PH-guided projection, improving topology and Dice while making sparse voxel edits.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Spectral computed tomography (CT) extends conventional CT by measuring attenuation across multiple energy channels, allowing improved modeling of physical X-ray interactions and energy-dependent material behavior and leading to richer scene understanding. We present a novel method for spectral CT reconstruction and basis material decomposition using 3D Gaussian Splatting by adding per-Gaussian basis material fractions to the set of learnable parameters, which together with a set of energy-dependent basis functions define the attenuation across the full spectral range. The basis functions represent various physical attenuation models such as photoelectric absorption and Compton scattering, and are jointly optimized across all energy channels through a differentiable polychromatic forward model, with material decomposition performed via mean-shift clustering of the resulting coefficients. We evaluate our method on a baseline real-world dataset as well as a synthetic dataset that we introduce, comparing against traditional reconstruction algorithms and state-of-the-art learning-based CT reconstruction methods. Our approach outperforms all traditional baselines in novel view synthesis and achieves the best PSNR among all compared methods for spectral CT volume reconstruction, while describing all energy channels with a single shared representation that requires a number of Gaussians comparable to single-channel Gaussian splatting-based CT reconstruction approaches. For basis material decomposition, no traditional or learning-based baseline offers one-step decomposition with direct RGB material segmentation, and our method additionally recovers the photoelectric basis with higher PSNR than traditional pipelines.",
+          "arxiv_id": "2609.29638",
+          "arxiv_url": "https://arxiv.org/abs/2609.29638",
+          "authors": [
+            "Reinout Vos, Saptarshi Neil Sinha, Michael Weinmann"
+          ],
+          "bullets": [
+            "Represents each Gaussian with learnable basis-material fractions and models attenuation using energy-dependent physical basis functions.",
+            "Jointly optimizes all energy channels through a differentiable polychromatic forward model.",
+            "Performs basis material decomposition by mean-shift clustering of recovered material coefficients.",
+            "Outperforms traditional baselines in novel-view synthesis and achieves the best reported PSNR for spectral CT volume reconstruction among compared methods.",
+            "Uses one shared representation across energy channels and enables direct RGB material segmentation; it also recovers the photoelectric basis with higher PSNR than traditional pipelines."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Spectral CT reconstruction qualitative results on the multi-energy bird chest dataset [89]. Columns show the compared methods, rows the axial slice and an outside view at each energy.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 651,
+              "image_path": "figures/2609.29638/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 1: Overview of SpectralCTGaussians. Cone-beam projections optimize a 3D Gaussian Splatting model in which each Gaussian encodes geometry, density and basis material coefficients, supervised by the difference between rendered and measured log-projections across energy channels. Mean-shift clustering of the optimized coefficients yields material maps.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 160,
+              "image_path": "figures/2609.29638/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 977
+            },
+            {
+              "caption": "Figure 2: Novel view synthesis qualitative results on the multi-energy bird chest dataset [89]. For each method the left column shows the rendered projection, the right column the absolute error w.r.t. the ground truth.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 250,
+              "image_path": "figures/2609.29638/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1028
+            },
+            {
+              "caption": "Figure 4: Basis material decomposition qualitative results on (a) our synthetic phantom, with ground truth and our prediction for two views, and (b) the real bird chest dataset [89], where no ground truth is available. Colors indicate the dominant recovered basis.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2609.29638/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 313
+            },
+            {
+              "caption": "Table 4: Ablations on the multi-energy bird chest dataset [89]. (a) One energy channel is held out from training; the marked channel is the excluded one. (b) Number of training views for Ours (3). (c) Single components of Ours (3) disabled, relative to the full model.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 360,
+              "image_path": "figures/2609.29638/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 654
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29638/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.29638",
+          "relevance": 7,
+          "selection_reason": "3D Gaussian splatting for spectral CT reconstruction and basis material decomposition.",
+          "summary_status": "generated",
+          "title": "SpectralCTGaussians: Projection-Domain Reconstruction and Basis Material Decomposition for Spectral CT using 3D Gaussian Splatting",
+          "tldr": "SpectralCTGaussians uses 3D Gaussian Splatting with physics-based spectral attenuation modeling to jointly reconstruct spectral CT volumes and decompose materials from multiple energy channels.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Computer-aided design is central to industrial manufacturing, and much of a designer's daily work consists of editing existing models from multimodal requests involving speech, sketches, and model interaction. Existing neural CAD approaches focus predominantly on unconditional or text-conditioned generation. The neuralCAD-Edit approach formalizes expert multimodal editing requests, but its iterative baseline refines a complete CAD program across attempts, executing each attempt from the original model in a stateless CAD environment. Every attempt must therefore reconstruct the entire edit from scratch, so partially correct progress is discarded rather than accumulated, and the model can neither inspect the geometry it has just produced nor selectively revert a single faulty operation. We present AgenticCADedit, which turns editing into a sequence of small, verifiable actions on a persistent CAD state instead of a single regenerated program. Rather than emitting one complete program, it applies incremental code steps that each commit to the session, inspects the resulting faces and edges, renders highlighted selections to verify that the intended region was addressed, and reverts individual operations when it was not. Subsequent actions therefore build on the geometry produced by earlier ones. Our approach improves on all metrics for all three evaluated LLMs (open-weight: qwen3.6-27b, gemma4-31b; proprietary: gpt-5.6-luna), with the largest gains for the weakest baseline model, qwen3.6-27b, whose validity rises from 51.0% to 94.8% and acceptance from 1.6% to 12.0%. A token-cost analysis with gpt-5.6-luna further shows $66.7$% fewer output tokens than neuralCAD-Edit, while $94.8$% of input tokens are served from the prompt cache.",
+          "arxiv_id": "2609.29621",
+          "arxiv_url": "https://arxiv.org/abs/2609.29621",
+          "authors": [
+            "Saptarshi Neil Sinha, Mika Silvan Goschke, Paul Julius K\\\"uhn, Arjan Kuijper, Michael Weinmann"
+          ],
+          "bullets": [
+            "Targets the limitations of stateless iterative CAD editing, where each attempt restarts from the original model and discards partial progress.",
+            "Uses small code actions that commit to a persistent session, inspect resulting geometry, visually verify selected regions, and revert faulty operations.",
+            "Improves all reported metrics across three evaluated LLMs, with the largest gains for the weakest baseline model.",
+            "For qwen3.6-27b, validity increases from 51.0% to 94.8% and acceptance from 1.6% to 12.0%.",
+            "With gpt-5.6-luna, reduces output tokens by 66.7% relative to neuralCAD-Edit; 94.8% of input tokens are served from the prompt cache."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.GR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of AgenticCADedit. Given a multimodal edit request and input CAD data, a foundation model incrementally edits a persistent CAD state. It can execute code, inspect geometry, render highlighted entities, and undo edits. Once the model declares completion, the result is exported.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 358,
+              "image_path": "figures/2609.29621/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 882
+            },
+            {
+              "caption": "Figure 6: Ablation of the agentic session. Given the starting model and the multimodal edit instruction on the left, we show the intermediate outputs of our stateful agentic loop after each operation, together with the final output of the neuralCAD-Edit full-program refinement baseline [2]. Both systems use qwen3.6-27b [67], so the difference isolates the effect of operating incrementally on a persistent CAD state instead of regenerating a complete edit program across refinement attempts.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 343,
+              "image_path": "figures/2609.29621/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 832
+            },
+            {
+              "caption": "Figure 5: Qualitative comparison across request difficulty. Each row shows one editing request of easy, medium or hard difficulty, and the columns show the resulting edits of neuralCAD-Edit [2] and of our approach, each instantiated with qwen3.6-27b [67], gemma4-31b [68] and gpt-5.6-luna [69].",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 417,
+              "image_path": "figures/2609.29621/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 882
+            },
+            {
+              "caption": "Figure 2: Two edges of the B-Rep selected, marked in red",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 202,
+              "image_path": "figures/2609.29621/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 248
+            },
+            {
+              "caption": "Table 1: MCP Tools available to the LLM during the agentic editing loop.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 486,
+              "image_path": "figures/2609.29621/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 710
+            },
+            {
+              "caption": "Table 3: Median over successful tasks. n_valid is the number of tasks that produced a valid, gradable CAD output file. Valid subsets differ across rows; Tab. 4 provides the pairwise comparison.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 152,
+              "image_path": "figures/2609.29621/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 484
+            },
+            {
+              "caption": "Table 2: Mean over all tasks (N = 192). Failed or invalid edits are scored as zero. The LLM model is given in parentheses.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 137,
+              "image_path": "figures/2609.29621/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 482
+            },
+            {
+              "caption": "Table 4: Pairwise comparison of mean scores. Both rows in a pair use the same LLM (given in parentheses), the same evaluation protocol, and are evaluated on the identical set of tasks, so any difference comes from the interaction paradigm alone.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 127,
+              "image_path": "figures/2609.29621/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 686
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29621/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.29621",
+          "relevance": 6,
+          "selection_reason": "Agentic stateful editing of 3D CAD models with incremental verifiable actions; relevant to 3D generation/editing.",
+          "summary_status": "generated",
+          "title": "AgenticCADedit: A Stateful, Tool-Mediated Agentic Approach to Multimodal 3D CAD Editing",
+          "tldr": "AgenticCADedit improves multimodal 3D CAD editing by using a persistent, inspectable CAD state with incremental, reversible actions instead of regenerating the full program each time.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Multimodal attributed graphs connect entities, visual content, language, and observed relations. Learning one foundation across such graphs requires more than compressing each node into a fused Euclidean vector. The representation must preserve entity semantics, construct interaction state from graph neighborhoods, and expose that state to prediction units with different geometry. Our empirical study shows why these requirements are inseparable. Higher-grade channels recover pair relations across the foundation graphs, specialized queries reveal information hidden by a generic readout, and rigid blade isolation removes cross-grade capacity. We therefore introduce ICE (Interaction-aware Clifford Encoder), a multimodal graph foundation model built on a node-indexed Clifford latent field. Topology, text, and images enter explicit Cl(3) addresses. Edge-aware geometric products transform these directions into scalar, bivector, and trivector relations over observed neighborhoods. A protected Grade-1 route preserves entity semantics, while the full grade and depth bank remains available to fresh node and link heads. We establish exact cross-grade reachability, node-permutation equivariance, and a bound on the task residual around the semantic score. Experiments span one shared foundation over eleven graphs, six node-classification datasets, three link-prediction datasets, and matched few-shot tasks. ICE ranks first in all 30 reported supervised and few-shot comparisons. Core removals reduce every task summary, and mechanism controls connect the gains to higher-order transport, retained multidepth structure, semantic protection, and direct field access.",
+          "arxiv_id": "2609.29398",
+          "arxiv_url": "https://arxiv.org/abs/2609.29398",
+          "authors": [
+            "Xunkai Li, Xu Wang, Yinlin Zhu, Xiong Yongfu, Yi Liu, Rong-Hua Li, Guoren Wang"
+          ],
+          "bullets": [
+            "Addresses multimodal attributed graphs by jointly representing topology, text, images, entity semantics, and graph-neighborhood interactions.",
+            "Encodes modalities as explicit Cl(3) addresses and uses edge-aware geometric products to form scalar, bivector, and trivector relations.",
+            "Protects a Grade-1 semantic route while exposing full multigrade, multidepth latent fields to node and link prediction heads.",
+            "Provides theoretical guarantees for cross-grade reachability, node-permutation equivariance, and bounded task residual around a semantic score.",
+            "Across 11 graphs and matched few-shot tasks, ICE ranks first in all 30 reported comparisons; component removals degrade every task summary."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: ICE framework. One dataset-agnostic Clifford field connects multimodal input, edgeaware graph transport, foundation learning, and fresh node and link heads.",
+              "figure_id": "figure-2-22",
+              "figure_number": "2",
+              "height": 459,
+              "image_path": "figures/2609.29398/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Mechanism behavior. (a–b) NC and LP access mass by grade and depth. (c–d) Accuracy (Acc.), Macro-F1 (F1), and MRR drops (percentage points) after edge rolling and protected Grade-1 route removal, respectively.",
+              "figure_id": "figure-3-17",
+              "figure_number": "3",
+              "height": 296,
+              "image_path": "figures/2609.29398/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 827
+            },
+            {
+              "caption": "Figure 1: Empirical study. (a) Pair-relation AUC after grade expansion and a second transport layer. (b) Accuracy and Macro-F1 gains (percentage points) from direct grade–depth access over a generic readout. (c) Rigid blade isolation reports the retained active share (“Act.”), deepest e12 energy (“e12”), and matched validation wins (“Win.”).",
+              "figure_id": "figure-1-10",
+              "figure_number": "1",
+              "height": 252,
+              "image_path": "figures/2609.29398/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 802
+            },
+            {
+              "caption": "Table 7: Model and adaptation scale. Architecture size and completed NC adaptation cost.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 204,
+              "image_path": "figures/2609.29398/table-004.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 756
+            },
+            {
+              "caption": "Table 6: Foundation and downstream configuration.",
+              "figure_id": "table-6-6",
+              "figure_number": "6",
+              "height": 384,
+              "image_path": "figures/2609.29398/table-005.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 677
+            },
+            {
+              "caption": "Table 8: Few-shot node classification. Accuracy for 5-way 3-shot, 5-shot, and 10-shot tasks.",
+              "figure_id": "table-8-3",
+              "figure_number": "8",
+              "height": 254,
+              "image_path": "figures/2609.29398/table-006.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 828
+            },
+            {
+              "caption": "Table 4: Core ablation (eight-seed mean).",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 171,
+              "image_path": "figures/2609.29398/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 458
+            },
+            {
+              "caption": "Table 5: Foundation graph inventory and pretraining exposure.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 266,
+              "image_path": "figures/2609.29398/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 527
+            },
+            {
+              "caption": "Table 3: Few-shot node classification. Focused 5-way comparison across 3, 5, and 10 shots; the complete matrix appears in Appendix Table 8.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 162,
+              "image_path": "figures/2609.29398/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 828
+            },
+            {
+              "caption": "Table 2: Link prediction and few-shot link classification. MRR for supervised link prediction and Accuracy for balanced 2-way classification over eight seeds.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 134,
+              "image_path": "figures/2609.29398/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 827
+            },
+            {
+              "caption": "Table 1: Node classification. Accuracy and Macro-F1 for each dataset over eight seeds. Best means are bold and second-best means are underlined.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 56,
+              "image_path": "figures/2609.29398/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 827
+            },
+            {
+              "caption": "Table 10: Task-access probe. Improvement over the generic query in percentage points.",
+              "figure_id": "table-10-13",
+              "figure_number": "10",
+              "height": 179,
+              "image_path": "figures/2609.29398/table-012.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 326
+            },
+            {
+              "caption": "Table 15. Node classification seed ranges. Minimum, maximum, and range in percentage points.",
+              "figure_id": "table-15-19",
+              "figure_number": "15",
+              "height": 169,
+              "image_path": "figures/2609.29398/table-013.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 390
+            },
+            {
+              "caption": "Table 19. Result reconstruction fields. Stored records for each dataset and seed.",
+              "figure_id": "table-19-1",
+              "figure_number": "19",
+              "height": 256,
+              "image_path": "figures/2609.29398/table-014.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 714
+            },
+            {
+              "caption": "Table 13. Node classification Macro-F1. Per-seed scores and aggregate statistics.",
+              "figure_id": "table-13-12",
+              "figure_number": "13",
+              "height": 146,
+              "image_path": "figures/2609.29398/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 522
+            },
+            {
+              "caption": "Table 12. Node classification Accuracy. Per-seed scores and aggregate statistics.",
+              "figure_id": "table-12-15",
+              "figure_number": "12",
+              "height": 144,
+              "image_path": "figures/2609.29398/table-016.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 522
+            },
+            {
+              "caption": "Table 11: Cross-grade capacity probe. Changes induced by permanent blade isolation.",
+              "figure_id": "table-11-11",
+              "figure_number": "11",
+              "height": 111,
+              "image_path": "figures/2609.29398/table-017.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 444
+            },
+            {
+              "caption": "Table 14. Link prediction MRR. Per-seed scores and aggregate statistics.",
+              "figure_id": "table-14-14",
+              "figure_number": "14",
+              "height": 94,
+              "image_path": "figures/2609.29398/table-018.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 510
+            },
+            {
+              "caption": "Table 9: Relation probe. Pair-relation AUC across the transport sequence.",
+              "figure_id": "table-9-4",
+              "figure_number": "9",
+              "height": 133,
+              "image_path": "figures/2609.29398/table-019.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 244
+            },
+            {
+              "caption": "Table 16. Grade and depth access. Query mass in percent.",
+              "figure_id": "table-16-20",
+              "figure_number": "16",
+              "height": 118,
+              "image_path": "figures/2609.29398/table-020.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 314
+            },
+            {
+              "caption": "Table 17. Edge controls. Values use the original metric units.",
+              "figure_id": "table-17-21",
+              "figure_number": "17",
+              "height": 97,
+              "image_path": "figures/2609.29398/table-021.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 314
+            },
+            {
+              "caption": "Table 18. Grade-1 route control. Absolute change after route removal.",
+              "figure_id": "table-18-18",
+              "figure_number": "18",
+              "height": 67,
+              "image_path": "figures/2609.29398/table-022.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 294
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29398/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2609.29398",
+          "relevance": 9,
+          "selection_reason": "Introduces ICE, a multimodal graph foundation model using Clifford latent fields to explicitly handle geometric and spatial relationships across heterogeneous data.",
+          "summary_status": "generated",
+          "title": "ICE: Task-Aligned Clifford Latent Fields for Multimodal Graph Foundation Models",
+          "tldr": "ICE is a Clifford-algebra graph foundation model that preserves entity semantics while modeling higher-order multimodal and neighborhood interactions, achieving the best result in all 30 reported supervised and few-shot comparisons.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Dense metric depth from cameras is essential to real-world 3D applications, yet achieving accuracy, faithful surface geometry, and fast inference simultaneously remains challenging. Monocular foundation models provide rich, transferable geometric priors but lack reliable metric scale, while depth-completion networks recover metric depth at the cost of geometric fidelity, cross-domain robustness, or speed. We present FounRef, a training-free method that aligns a frozen monocular foundation prior with sparse metric anchors to produce dense metric depth. FounRef is modular by design: its depth prior, anchor source, and refinement solver can each be replaced independently. We instantiate FounRef with MoGe-2 and LiDAR anchors. FounRef validates each anchor against the prior's dense depth prediction, rejecting inconsistencies caused by cross-sensor misalignment that geometry-only filters cannot detect. It then applies global and local metric corrections through a structure-preserving solver, retaining the prior's fine-grained geometry. FounRef requires no task-specific training and operates out of the box across unfamiliar cameras and scenes. On out-of-domain data, it delivers up to 24% lower depth error, 92% lower surface-normal noise, and almost 15x faster inference than DMD3C, a state-of-the-art depth-completion network. By decoupling metric alignment from geometry prediction, FounRef provides an accurate, geometrically faithful, and efficient approach to dense metric depth that can directly benefit from future advances in foundation models and metric sensors.",
+          "arxiv_id": "2609.29224",
+          "arxiv_url": "https://arxiv.org/abs/2609.29224",
+          "authors": [
+            "Dan Halperin, Mirko M\\\"ahlisch"
+          ],
+          "bullets": [
+            "Addresses the challenge of combining foundation-model geometric fidelity with reliable metric scale and efficient inference.",
+            "Validates sparse anchors against dense prior predictions to reject cross-sensor inconsistencies.",
+            "Applies global and local metric corrections with a structure-preserving refinement solver.",
+            "Its modular design allows independent replacement of the depth prior, anchor source, and solver.",
+            "With MoGe-2 and LiDAR anchors, it reports up to 24% lower depth error, 92% lower surface-normal noise, and nearly 15× faster inference than DMD3C on out-of-domain data."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 10: Predicted depth for every evaluated method on one frame of each dataset, alongside the input image. Frames are drawn at random from each dataset, except GOOSE, where a forest track was chosen over the open field the draw returned. Our sky and other pixels where the monocular prior is undefined are drawn at the depth cap, since we emit no prediction there. The supervised networks hold up on the driving scenes that resemble their training data and come apart away from them, most visibly indoors. On the driving rows every method returns a plausible map — and on those same frames their normal dispersion spans 1.7 to 56 degrees (Figure 11). What separates these methods is not visible in this representation.",
+              "figure_id": "figure-10-12",
+              "figure_number": "10",
+              "height": 508,
+              "image_path": "figures/2609.29224/figure-001.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1040
+            },
+            {
+              "caption": "Figure 12: The same depth maps, turned back into 3D. For each scene the upper row is the input image and each method’s depth map; the lower row is the anchors the solver was given, drawn over the image, and each depth map re-projected into a coloured point cloud, all seen from a direction the camera never occupied (35◦ azimuth, 18◦ elevation). From the original viewpoint all four look alike by construction, since each is consistent with the same image. The depth maps are indeed hard to separate — but only ours re-projects to continuous surfaces. On Waymo the baselines smear the buildings and trees behind the road into sheets of stray points that hang over the scene; on NYU, where OMNI-DC and Prior-DA are metrically ahead of us, the room still resolves for all three and only DMD3C disintegrates. This is what the normal-dispersion column measures, and what a downstream consumer of the depth map receives.",
+              "figure_id": "figure-12-21",
+              "figure_number": "12",
+              "height": 748,
+              "image_path": "figures/2609.29224/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1040
+            },
+            {
+              "caption": "Figure 7: The pipeline on one nuScenes frame, by row: left the state after a step, right what that step changed (blue nearer, red farther, grey unchanged, each panel on its own scale). Top: anchors in, and what survives the anchor filter (4.7% removed), dilated for legibility.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 856,
+              "image_path": "figures/2609.29224/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 486
+            },
+            {
+              "caption": "Figure 6: Qualitative bake-off across five datasets. Metric accuracy doesn’t stand on its own, without appropriate runtime and coherent structure.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 545,
+              "image_path": "figures/2609.29224/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 1: Accuracy is not the only axis. Metric error against surface dispersion on KITTI (n=500 frames, identical anchors for every method); marker area grows with runtime. A single configuration change moves our point to 0.663m at 11.2◦ without affecting runtime",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 342,
+              "image_path": "figures/2609.29224/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 500
+            },
+            {
+              "caption": "Figure 11: Surface normals of the same predictions, with each panel’s RMSE (m) and normal dispersion (deg) beneath it. The completion networks imprint the sensor into the surface: the ruling visible across the road is the LiDAR sweep pattern of the anchor column reproduced as geometry. The point metric does not register it — DMD3C and BP-Net are both more accurate than we are on the KITTI frame while carrying seven to eight times the normal error, because reproducing a measurement exactly is rewarded by RMSE whether or not the surface between measurements survives. We estimate a smooth metric correction over a prior we do not modify, so the anchor pattern cannot enter the geometry in the first place.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 578,
+              "image_path": "figures/2609.29224/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1040
+            },
+            {
+              "caption": "Figure 4: Solver comparison on a sparse-anchor nuScenes crop. All methods start from the same calibrated prior and anchors. Pixel-wise Poisson and TGV produce anchor-centred surface bumps, whereas FounRef shares corrections on a coarse bilateral grid. Depth panels share the [1, 50]m range.",
+              "figure_id": "figure-4-18",
+              "figure_number": "4",
+              "height": 157,
+              "image_path": "figures/2609.29224/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1048
+            },
+            {
+              "caption": "Figure 9: Solver sensitivity, two frames per dataset: the anchors given to the solver, depth at the default σs=16, at σs=4, and their signed difference (blue nearer, red farther, grey unchanged, each panel on its own scale). At σs=4 the correction concentrates into blobs at individual anchors instead of travelling along surfaces — the 21–33% RMSE it buys is paid for in surface damage. NYU is omitted: its two settings differ by under a centimetre.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 1208,
+              "image_path": "figures/2609.29224/figure-008.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1002
+            },
+            {
+              "caption": "Figure 2: Global calibration of four priors on the same frame. Top: raw predictions use incompatible depth scales; DA-V2 is relative. Bottom: after fitting the same sparse anchors, all priors share a metric scale while preserving their edges and relative layout. All depth panels use the 0–80m range. Pixels a prior marks invalid (sky) are drawn at the far end (MoGe-2 provides an invalid map, while depth pro predicts them at 10, 000m).",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 278,
+              "image_path": "figures/2609.29224/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 8: Anchor-density sweep.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 362,
+              "image_path": "figures/2609.29224/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 500
+            },
+            {
+              "caption": "Figure 5: One solver, four operating points on nuScenes (0–50m). σs is the bilateral grid’s spatial bandwidth in pixels; reducing it localizes corrections, improving RMSE but increasing normal dispersion.",
+              "figure_id": "figure-5-19",
+              "figure_number": "5",
+              "height": 148,
+              "image_path": "figures/2609.29224/figure-011.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1026
+            },
+            {
+              "caption": "Figure 3: Anchor filtering on a cluttered KITTI crop. RePLAy retains returns through windshields, mirrors, and moving-vehicle silhouettes, whereas FounRef rejects them because they disagree with the locally refined smooth surface D1.",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 136,
+              "image_path": "figures/2609.29224/figure-012.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1052
+            },
+            {
+              "caption": "Table 5: Pipeline ablation on the accumulated, unfiltered cloud. Anchors and held-out target are screened by the method’s own MoGe reference; no competitor appears here, so these are inference numbers rather than the cross-method protocol of the main tables.",
+              "figure_id": "table-5-9",
+              "figure_number": "5",
+              "height": 282,
+              "image_path": "figures/2609.29224/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 364
+            },
+            {
+              "caption": "Table 1: Depth completion across five validation sets (n = 500) using identical anchors for every method and no dataset-specific recalibration. KITTI and NYU use dense ground truth; the other datasets use a held-out 20% of the cloud. RMSE and far (RMSE over target depths 30 < z ≤ 50m) are in metres, surf. is normal dispersion (◦), and ms is mean latency on the Waymo validation set, our worst-case setting, on an A100 (most models cannot run at fp16 precision).",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 295,
+              "image_path": "figures/2609.29224/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1040
+            },
+            {
+              "caption": "Table 6: Anchor-density sweep: RMSE (m) as a fraction of the returns is withheld. Every method receives the identical thinned cloud on each frame, drawn once per frame and shared, and is scored against the same target. 100% is the temporally accumulated cloud: 135 351 anchors per frame on KITTI (31.6% of all pixels), 35 815 on nuScenes (2.5%), 109 119 on Waymo (4.4%) and 102 247 on GOOSE (4.2%).",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 538,
+              "image_path": "figures/2609.29224/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 472
+            },
+            {
+              "caption": "Table 4: Anchor-level filter comparison on KITTI validation (n=100). Errors are relative errors at dropped/kept anchors against dense GT or the independent reference D1. Higher drop/keep ratios indicate better separation. Runtime is the filter’s own cost on one A100 (fp16). Temporal is over 10 sweeps.The oracle measures the difference between the raw and filtered point clouds, as processed by the Authors of KITTI.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 234,
+              "image_path": "figures/2609.29224/table-016.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 500
+            },
+            {
+              "caption": "Table 3: Prior selection (KITTI val., n=100, A100, fp16). All rows: FounRef refined. Scored to 80 m so each prior’s bias beyond the 50 m trust cap is visible; anchors stop at 50 m, so the >50 m column measures unsupported extrapolation. Structure is measured in log-depth on LiDAR-derived masks: incoh = high-frequency spectral fraction on flat surfaces, detail = the same on RGB-textured regions. Read them together: low+low = washed, high detail + low incoh = clean and sharp.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 161,
+              "image_path": "figures/2609.29224/table-017.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 498
+            },
+            {
+              "caption": "Table 7: Solver operating points: the bilateral cell σs swept at constant λ, over 50 frames per dataset. RMSE in metres and normal dispersion in degrees side by side, so the accuracy–structure trade of each setting reads across a row.",
+              "figure_id": "table-7-15",
+              "figure_number": "7",
+              "height": 242,
+              "image_path": "figures/2609.29224/table-018.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 764
+            },
+            {
+              "caption": "Table 9: Anchor perturbation, ours. Only the anchors are corrupted; the evaluation target is the unperturbed held-out cloud (dense GT on KITTI/NYU), so the numbers measure damage to the prediction rather than a moved target.",
+              "figure_id": "table-9-17",
+              "figure_number": "9",
+              "height": 261,
+              "image_path": "figures/2609.29224/table-019.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 410
+            },
+            {
+              "caption": "Table 2: Solver comparison on KITTI val against accumulated dense depth. All solvers receive identical prior, calibration, anchors, and weights; only the regularizer differs. RMSE: error over all valid pixels; far: RMSE in the 30–50m band. surf.: median angle between the output normals and calibrated prior normals in smooth regions. imp.: correction at anchor pixels relative to a few pixels away, so 1.0 leaves no trace of the anchor pattern.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 126,
+              "image_path": "figures/2609.29224/table-020.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 490
+            },
+            {
+              "caption": "Table 8: Solver components, each toggled alone from the default configuration, over 50 frames per dataset; RMSE in metres and normal dispersion in degrees side by side, ‘ms’ the mean solve time. Full-resolution solve drops the half-resolution grid. CG iterations is the conjugategradient budget of the final solve. Bistochastic normalisation is the grid balancing that makes the bilateral operator well conditioned. A component is worth keeping only if switching it off costs more than the runtime it saves.",
+              "figure_id": "table-8-16",
+              "figure_number": "8",
+              "height": 195,
+              "image_path": "figures/2609.29224/table-021.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 868
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29224/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.29224",
+          "relevance": 7,
+          "selection_reason": "Metric depth refinement from frozen monocular foundation priors with sparse anchors; fits 3D vision perception scope.",
+          "summary_status": "generated",
+          "title": "FounRef: Robust, Structure-Preserving, and Fast Metric Refinement of Frozen Monocular Foundation Priors with Sparse Anchors",
+          "tldr": "FounRef converts frozen monocular foundation depth priors into dense metric depth using sparse anchors, preserving geometry while remaining training-free, robust, and fast.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "3D foundation models recover video cameras and geometry in one forward pass, but some of the strongest are up to scale. Joint people-scene reconstruction then requires two missing outputs: metric scale and persistent person identity. We ask whether one up-to-scale foundation representation can support both through lightweight adaptation. Exact metric labels are scarce, but unlabeled in-the-wild video is abundant. We use people in curated web video to initialise the solution: a posed metric body and 2D keypoints give an approximate, closed-form scale pseudo-label. These pseudo-labels pretrain a Scale Readout, which is then fine-tuned together with a lightweight adapter using exact metric supervision from standard real-video training splits. At inference the head predicts metric scale from foundation-model tokens, without the ruler or its teachers. For person identity, we probe the pretrained foundation model alone and find evidence that its intermediate query-key features encode person correspondence across frames. In most evaluated moving-person clips, a mid-layer token prefers that person over the vacated location and other people. A tiny projection reads this correspondence; together with metric pelvis motion and proposal confidence, it drives dustbin-aware Sinkhorn association of per-frame bodies. WildHSR combines both readouts to reconstruct metric cameras, scene and people from monocular video. Each window is predicted feed-forward; analytic association and Sim(3) composition connect windows. On EMDB-2, WildHSR is the first feed-forward method in the published comparison to beat the best optimization-based WA-MPJPE and RTE while leading feed-forward methods on all three world-frame metrics. On RICH, it leads feed-forward people-and-scene methods on WA-MPJPE and W-MPJPE. The complete pipeline runs at 10.1 fps on one GPU.",
+          "arxiv_id": "2609.29106",
+          "arxiv_url": "https://arxiv.org/abs/2609.29106",
+          "authors": [
+            "Jerrin Bright, John Zelek"
+          ],
+          "bullets": [
+            "Addresses missing metric scale and persistent person identity in up-to-scale foundation-model reconstructions.",
+            "Pretrains a scale readout with approximate pseudo-labels from posed bodies and 2D keypoints, then fine-tunes it with exact metric supervision.",
+            "Extracts person correspondence from intermediate foundation-model features and uses Sinkhorn association with motion and confidence cues.",
+            "Predicts each video window feed-forward and links windows through analytic association and Sim(3) composition.",
+            "Reports leading or superior results among compared methods on EMDB-2 and RICH, running at 10.1 fps on one GPU."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI",
+            "cs.CG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Overview of WildHSR. A 3D foundation model produces up-to-scale cameras, geometry and scene tokens. A mesh branch proposes people; a Pelvis Readout forms a body-localized query, and cross-attention decodes a metric SMPL-X body. The Scale Readout supplies σ; analytic association and Sim(3) composition link people and windows in one metric world.",
+              "figure_id": "figure-4-19",
+              "figure_number": "4",
+              "height": 281,
+              "image_path": "figures/2609.29106/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 808
+            },
+            {
+              "caption": "Figure 6: Scene and people in one metric world (three EMDB-2 clips), each method at its own metric scale; labels give placement error and, for UniSH and JOSH3R, view turn. WildHSR is 0.2 to 0.3m off, against 0.3 to 1.6m (Human3R), 0.9 to 3.9m (UniSH) and 1.3 to 5.8m (JOSH3R).",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 400,
+              "image_path": "figures/2609.29106/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 759
+            },
+            {
+              "caption": "Figure 7: Metric people-scene placement on nine EMDB-2 clips. Each method’s body history and scene retain predicted scale after rigid camera-path alignment. Labels report pelvis offset in metres; UniSH and JOSH3R also show the view rotation required for alignment.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 1161,
+              "image_path": "figures/2609.29106/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 760
+            },
+            {
+              "caption": "Figure 15: Measured failure modes. (a) Stair contact, (b) knee articulation, and (c) identity continuity during a burpee. Distances use each method’s own metric scale.",
+              "figure_id": "figure-15-7",
+              "figure_number": "15",
+              "height": 527,
+              "image_path": "figures/2609.29106/figure-004.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 829
+            },
+            {
+              "caption": "Figure 11: Crowded in-the-wild reconstruction on 3DPW downtown_runForBus. Top: input and persistent tracks. Bottom: metric scene, camera trajectory and bodies colored by identity. The sequence contains 14 tracks over 10 s, with 10 to 11 people reconstructed per frame.",
+              "figure_id": "figure-11-15",
+              "figure_number": "11",
+              "height": 371,
+              "image_path": "figures/2609.29106/figure-005.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 782
+            },
+            {
+              "caption": "Figure 13: Position or person? Pretrained VGGT-Ω by itself. Top: a query token on a walking person (white box) and its global attention on a later frame, at layers 4, 8, 13 and 21; dashed box, where the person was; green box, where they are. The example is the clip’s median, not its best. Bottom, means over clips, layers 10 to 16 shaded: (a) same-person retrieval on pairs where the nearest candidate in the image is the wrong person, in the attention’s query and key space and in token content; (b) attention lift after the person has moved.",
+              "figure_id": "figure-13-18",
+              "figure_number": "13",
+              "height": 414,
+              "image_path": "figures/2609.29106/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 817
+            },
+            {
+              "caption": "Figure 12: Feet on the reconstructed ground (EMDB 79), each method on its own scene, at four moments with the same viewing direction and zoom.",
+              "figure_id": "figure-12-12",
+              "figure_number": "12",
+              "height": 354,
+              "image_path": "figures/2609.29106/figure-007.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 384
+            },
+            {
+              "caption": "Figure 14: Truncation and occlusion on a 300-frame EMDB-2 clip. Top: masked input and groundtruth outline. Middle: reconstructed bodies after WA alignment, with ground truth as dots. Bottom: per-frame WA-MPJPE on a log scale; shading marks masked frames.",
+              "figure_id": "figure-14-4",
+              "figure_number": "14",
+              "height": 718,
+              "image_path": "figures/2609.29106/figure-008.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 743
+            },
+            {
+              "caption": "Figure 3: Training and deploying the Scale Readout. (1) A body ruler combines observed 2D torso extent e2, the posed body’s metric in-plane extent e3, backbone depth z̃k and focal length f to estimate σk = (fe3/e2)/z̃k; an agreement gate yields window pseudo-labels. (2) These labels pretrain the readout on web clips. (3) Exact RICH and 3DPW targets fine-tune the readout and backbone LoRA. (4) Deployment predicts σ from backbone tokens alone, without the ruler or teachers.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 227,
+              "image_path": "figures/2609.29106/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 817
+            },
+            {
+              "caption": "Figure 2: Person-patch matching at layer 13. Rows are patches on three people at t; columns are patches on the same people at t′. Color shows pre-rotation query-key probe scores, normalized only over these candidates per head and then averaged, not scene-wide attention. Dashed blocks mark same-person pairs; 82% of top matches have the right identity here.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 346,
+              "image_path": "figures/2609.29106/figure-010.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 387
+            },
+            {
+              "caption": "Figure 5: Pretrained person correspondence. At layer 13, a VGGT-Ω pelvis token attends to its own person within a frame (3.8× uniform over four clips) and across the window (5.8×). When the person moves, attention follows the person (5.0×), not the vacated location (1.2×). This probe runs the backbone alone; Appendix I gives controls and the complete sample accounting.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 145,
+              "image_path": "figures/2609.29106/figure-011.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 819
+            },
+            {
+              "caption": "Figure 10: Accuracy against video length, averaged over six EMDB-2 clips of at least 1000 frames. (a) Camera trajectory error after Sim(3) alignment. (b) Metric camera-to-person distance error without alignment. (c) World-frame person-path error after rigid alignment, retaining scale error.",
+              "figure_id": "figure-10-16",
+              "figure_number": "10",
+              "height": 215,
+              "image_path": "figures/2609.29106/figure-012.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 798
+            },
+            {
+              "caption": "Table 5: Association on 13 two-person 3DPW test sequences. WildHSR variants share fixed Multi-HMR outputs; Human3R uses its native pipeline. Assignment thresholds were tuned on four validation sequences.",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 136,
+              "image_path": "figures/2609.29106/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 594
+            },
+            {
+              "caption": "Table 9: Ablations on EMDB-2. Each row substitutes one component of the full system.",
+              "figure_id": "table-9-14",
+              "figure_number": "9",
+              "height": 176,
+              "image_path": "figures/2609.29106/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 390
+            },
+            {
+              "caption": "Table 11: Six-clip truncation and occlusion. Median WA-MPJPE (mm); body coverage is WildHSR / Human3R. Shading compares methods within each condition.",
+              "figure_id": "table-11-3",
+              "figure_number": "11",
+              "height": 176,
+              "image_path": "figures/2609.29106/table-015.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 406
+            },
+            {
+              "caption": "Table 10: People-scene consistency on EMDB-2. Five diagnostics use the first 300 frames of each sequence; WA-MPJPE uses full sequences. Shades rank methods per column, with world size ranked by distance from one.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 170,
+              "image_path": "figures/2609.29106/table-016.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 772
+            },
+            {
+              "caption": "Table 8: 7Scenes scene accuracy. Mean pointmap accuracy in cm (↓);",
+              "figure_id": "table-8-9",
+              "figure_number": "8",
+              "height": 204,
+              "image_path": "figures/2609.29106/table-017.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 235
+            },
+            {
+              "caption": "Table 4: Held-out 3DPW body reconstruction. 14-joint test errors in mm; published baselines from SHOW (Shi et al., 2026).",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 154,
+              "image_path": "figures/2609.29106/table-018.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 790
+            },
+            {
+              "caption": "Table 7: Ruler calibration on held-out RICH. Median multiplicative scale error (%).",
+              "figure_id": "table-7-8",
+              "figure_number": "7",
+              "height": 110,
+              "image_path": "figures/2609.29106/table-019.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 319
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.29106/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.29106",
+          "relevance": 6,
+          "selection_reason": "Lightweight adapters on a 3D foundation model for metric scale and person correspondence show how foundation 3D representations support spatially grounded 4D scene understanding.",
+          "summary_status": "generated",
+          "title": "WildHSR: Metric Feed-Forward 4D People-Scene Reconstruction from a 3D Foundation Model",
+          "tldr": "WildHSR adapts a 3D foundation model to produce metric-scale, persistent-identity 4D reconstructions of people and scenes from monocular video in a feed-forward pipeline.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Most of the memory of a 3D Gaussian Splatting model holds spherical-harmonic colour coefficients, yet each Gaussian is seen only from the narrow cone of directions of the training cameras. We turn this into a distortion metric that other compressors can adopt: a per-Gaussian observation Gram matrix, accumulated from viewing directions and blending weights, is the exact first-order map from coefficient changes to squared image error and needs only the model and the camera poses. Under it, degree reduction becomes a closed-form projection that generalises truncation, degree allocation a Lagrangian rate-distortion problem, and vector quantisation the matrix-weighted Lloyd algorithm, of which Compressed3D's quantiser is the scalar case. Swapped into Compressed3D with everything else unchanged, the metric raises PSNR by +0.49 dB before fine-tuning, with SSIM and LPIPS following, and at matched rate still gains +0.32 dB without a single training image. A training-free stack built on the metric alone is 15% smaller than the image-free GSICO at equal quality on Mip-NeRF 360.",
+          "arxiv_id": "2609.28997",
+          "arxiv_url": "https://arxiv.org/abs/2609.28997",
+          "authors": [
+            "Krzysztof Pietroszek"
+          ],
+          "bullets": [
+            "The method targets spherical-harmonic color coefficients, which are observed only from the training cameras’ narrow viewing directions.",
+            "Each Gaussian receives an observation Gram matrix from camera directions and blending weights, providing a first-order estimate of coefficient changes’ image-error impact.",
+            "The metric supports closed-form degree reduction, Lagrangian degree allocation, and matrix-weighted vector quantization.",
+            "Replacing Compressed3D’s distortion metric improves PSNR by 0.49 dB before fine-tuning and by 0.32 dB at matched rate, with corresponding SSIM and LPIPS gains.",
+            "A training-free compression stack is 15% smaller than GSICO at equal quality on Mip-NeRF 360."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. A trained Gaussian is only constrained where the cameras saw it. Colour function of one Gaussian of the pretrained garden model on the sphere of viewing directions (top, Mollweide projection; outside the white outline no training view observed it, shaded light) and zoomed on the observed cone (bottom; dots: the training views in which it contributed, size ∝ blending-weight statistic). Truncation to degree 1 (middle) discards the bands that carry the colour gradient running through the observed cone. The closed-form observation-Gram projection to the same degree (right, Eq. (8)) reproduces the trained function where it was observed and is free elsewhere; its predicted image error is 46× lower at identical storage.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 495,
+              "image_path": "figures/2609.28997/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1026
+            },
+            {
+              "caption": "Figure 4. Rate–distortion plane on the three datasets (dataset means). Grey: every point of the sweep over pruning fraction, SH budget and codebook size of our training-free stack; blue: its Pareto front. Published methods are plotted by class (marker), from the 3DGS.zip survey and the GSICO paper; the sizes of the trained and retrained-backbone methods are not achievable without the images and are shown as context.",
+              "figure_id": "figure-4-22",
+              "figure_number": "4",
+              "height": 324,
+              "image_path": "figures/2609.28997/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 995
+            },
+            {
+              "caption": "Figure 6. Test-view crops: ground truth, uncompressed model, truncation and projection to degree 1, truncation and projection to degree 0.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 306,
+              "image_path": "figures/2609.28997/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1025
+            },
+            {
+              "caption": "Figure 3. Predicted image-space error from the Gram metric against the measured increase of test-view MSE, over all configurations evaluated for a scene. Each point is one compressed model; hollow points lie at the noise floor of the test set.",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 183,
+              "image_path": "figures/2609.28997/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 490
+            },
+            {
+              "caption": "Figure 5. Spectral analysis of the observation Gram matrices of a pretrained model. Left: distribution of the numerical rank of Ai. Right: fraction of the AC coefficient energy ∥Ki∥2 that lies in the null space of Ai, i.e. in directions no training view observed.",
+              "figure_id": "figure-5-20",
+              "figure_number": "5",
+              "height": 143,
+              "image_path": "figures/2609.28997/figure-005.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 431
+            },
+            {
+              "caption": "Figure 2. Rate–distortion curves (test PSNR against average AC floats per Gaussian). Uniform truncation and uniform projection have three operating points each (degrees 0, 1, 2); the post-hoc Reduced-3DGS criterion sweeps its threshold; our Lagrangian allocation sweeps the budget, with either truncated or projected coefficients.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 184,
+              "image_path": "figures/2609.28997/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 489
+            },
+            {
+              "caption": "Table 5. A standard geometry stage stacked on our appearance pipeline on all three datasets (published rows: 3DGS.zip survey, retrieved 2026-09-16, dataset means; classes as in Tab. 4), and our pipeline applied to models whose primitive count was already reduced during training. The geometry stage is not a contribution of this paper: 16-bit fixed-point positions (Morton-sorted and delta-coded, as in [29]), 8-bit uniform quantisation of scales, rotations, opacities and DC colours (as in [31, 32]) and zlib coding of every stream, applied without images or fine-tuning. Sizes are the encoded bytes; metrics are rendered from the decoded values. Bit-depth variants are in the supplement.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 757,
+              "image_path": "figures/2609.28997/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 496
+            },
+            {
+              "caption": "Table 4. Mip-NeRF 360, grouped by what a method needs. Published rows are dataset means from the 3DGS.zip survey [2] (retrieved 2026-09-16) unless noted; our rows are means over 9 scenes, sizes are the encoded bytes of the training-free stack of Sec. 3.7 with the standard geometry stage, and metrics are rendered from the decoded values. Within-class comparisons are against the posthoc rows; the retrained-backbone and trained rows are cross-class references. a: MesonGS is post-hoc with an image-free importance score; the row without fine-tuning is the survey’s re-evaluation of its c3 configuration, the fine-tuned row is from the ablation table of its paper (its main table uses a different protocol). b: FCGS is a feedforward compressor with a learned prior, applied post-hoc without per-scene optimisation. c: GSICO is post-hoc, uses no training images and no fine-tuning; its published high-rate operating point takes a retrained Scaffold-GS model as input (its Table III), so only its 3DGS-input row is in our class. d: numbers from the FlexGaussian paper (training-free).",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 591,
+              "image_path": "figures/2609.28997/table-008.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 496
+            },
+            {
+              "caption": "Table 1. The observation-Gram metric as a drop-in inside a published pipeline (Mip-NeRF 360). Compressed3D is run unmodified (reproduced row) and with only its colour vector-quantisation metric replaced: the same keep mask, pruning, 4096-entry codebook, covariance quantisation, fine-tuning schedule and container. Every variant row is a paired comparison against the reproduction on the n scenes that have both; parentheses give the paired difference and the size ratio. Rows isolate the two claims: their gradient-based scalar sensitivity versus our image-free weight (scalar rows), and scalar versus full matrix; the first variant row is the algorithm control (their weights in our Lloyd iterations). Before fine-tuning the difference is what the metric alone determines, after fine-tuning what survives their 5000 image-based iterations. Time: the appearance metric plus the colour VQ on one RTX 4090, i.e. their backward pass over the training images plus their minibatch k-means, or our forward pass over the training cameras (poses only, PyTorch rasteriser) plus the generalised Lloyd iterations. The published row is the dataset mean reported in the 3DGS.zip survey.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 249,
+              "image_path": "figures/2609.28997/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 496
+            },
+            {
+              "caption": "Table 14. Stage-by-stage ablation of the appearance pipeline on Mip-NeRF 360 (mean over 9 scenes), in a plain container without entropy coding (fp32 positions; fp16 scales, rotations, opacities, DC colours and codebooks; 12-bit codes; 2-bit degree tags); all rows are rendered from the rounded values. The geometry stage of Tab. 4 is applied on top of the last Gram-VQ row.",
+              "figure_id": "table-14-19",
+              "figure_number": "14",
+              "height": 209,
+              "image_path": "figures/2609.28997/table-010.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 496
+            },
+            {
+              "caption": "Table 16. Extrapolation protocol. Models trained by the official 3DGS trainer with a contiguous 90◦ arc of the capture held out; statistics accumulated over the training cameras only; test PSNR on the held-out arc grouped by angular distance to the nearest training camera (near < 10◦, mid 10–25◦, far ≥ 25◦; garden: 4/17/28 views; kitchen: 12/25/44 views). The last two rows perturb the uncompressed model along the null space of Ai only.",
+              "figure_id": "table-16-23",
+              "figure_number": "16",
+              "height": 323,
+              "image_path": "figures/2609.28997/table-011.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 768
+            },
+            {
+              "caption": "Table 17. Uniform SH degree reduction of the official pretrained 3DGS models, averaged over each dataset (number of scenes evaluated in parentheses). Truncation drops the higher bands; OGC replaces them by the closed-form observation-Gram projection (Eq. (8)). Same storage in each column pair; no training images, gradients or fine-tuning are used.",
+              "figure_id": "table-17-6",
+              "figure_number": "17",
+              "height": 344,
+              "image_path": "figures/2609.28997/table-012.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 1036
+            },
+            {
+              "caption": "Table 10. Appearance refit on the official pretrained garden model (5.84M Gaussians, 27.32 dB uncompressed by the official rasteriser) after contribution pruning (no compaction), test split. The closed-form refit (Sec. 3.6) against fine-tuning the SH coefficients with Adam at the official learning rates (L1 + D-SSIM loss unless marked MSE); times on one A100. Twelve-by-three PCG iterations add at most a few hundredths of a decibel over eight-by-two at twice the time. Adam with the official L1 + D-SSIM loss reaches a slightly higher SSIM, the metric it optimises.",
+              "figure_id": "table-10-25",
+              "figure_number": "10",
+              "height": 235,
+              "image_path": "figures/2609.28997/table-013.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 496
+            },
+            {
+              "caption": "Table 19. Per-scene test PSNR of uniform degree reduction (truncation vs. our projection).",
+              "figure_id": "table-19-10",
+              "figure_number": "19",
+              "height": 489,
+              "image_path": "figures/2609.28997/table-014.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 1036
+            },
+            {
+              "caption": "Table 3. Uniform SH degree reduction of the official pretrained 3DGS models: test PSNR averaged over each dataset (number of scenes in parentheses; AC floats per Gaussian in the header). Truncation drops the higher bands; OGC replaces them by the closed-form projection of Eq. (8). SSIM and LPIPS, which follow the same ordering, and per-scene numbers are in the supplement.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 136,
+              "image_path": "figures/2609.28997/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 496
+            },
+            {
+              "caption": "Table 2. Host B: the SH band-selection criterion of Reduced3DGS (demote a Gaussian when the maximum colour deviation of truncation over the observed views is below τ ), applied post-hoc to the official models (test PSNR, mean over 9 Mip-NeRF 360 scenes). Same degrees: the degrees it selects, with the bands truncated (theirs) or projected under the Gram metric (ours). Same floats: its criterion against our Lagrangian allocation at the same average number of AC floats (achieved value in parentheses).",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 87,
+              "image_path": "figures/2609.28997/table-016.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 496
+            },
+            {
+              "caption": "Table 15. Geometry quantisation under the image-free Gauss– Newton sensitivities (Sec. M) against uniform bit depths, on the 50%-pruned models with the same appearance stage and the same rANS coder. Adaptive: four sensitivity classes per Gaussian (2-bit tag), bit depth per attribute group and class from a Lagrangian sweep over µ. Bjøntegaard metrics of the adaptive curve against the uniform curve over the overlapping PSNR range.",
+              "figure_id": "table-15-18",
+              "figure_number": "15",
+              "height": 523,
+              "image_path": "figures/2609.28997/table-017.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 496
+            },
+            {
+              "caption": "Table 6. Bjøntegaard metrics of the Pareto front of our trainingfree stack (sweep over pruning, SH budget and codebook size; dataset means) against published anchors with two operating points (piecewise-cubic on log-rate over the overlapping PSNR range). Negative BD-rate: ours needs fewer bytes at equal PSNR. ∗Anchor with a single published point, compared at that point: our size at its PSNR and our PSNR at its size. –: the curves do not overlap in rate or quality. GSICO and FCGS are in our class (post-hoc, no images); HAC retrains its backbone.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 202,
+              "image_path": "figures/2609.28997/table-018.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 496
+            },
+            {
+              "caption": "Table 18. Vector quantisation of AC coefficients with a 4096-entry codebook (mean of garden and kitchen). The last column is the predicted distortion (Eq. (7), summed over training views) of the quantised model.",
+              "figure_id": "table-18-5",
+              "figure_number": "18",
+              "height": 168,
+              "image_path": "figures/2609.28997/table-019.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 496
+            },
+            {
+              "caption": "Table 7. Rendering cost as a function of the SH layout in our PyTorch rasteriser (Apple M1 Max, one test view, median of repeated runs). SH evaluation: the colour stage with a zero-padded degree-3 kernel (no benefit) and with a kernel that branches on the per-Gaussian degree tag. Frame: complete frame including sorting and compositing, which dominates this implementation; its variation across rows is measurement noise.",
+              "figure_id": "table-7-3",
+              "figure_number": "7",
+              "height": 367,
+              "image_path": "figures/2609.28997/table-020.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 496
+            },
+            {
+              "caption": "Table 9. Ablations (test PSNR, mean of garden and kitchen). Left: choice of the per-view weight in the Gram matrix (λ = 10−3). Right: regularisation strength with S(2) weights; λ → ∞ is truncation.",
+              "figure_id": "table-9-24",
+              "figure_number": "9",
+              "height": 250,
+              "image_path": "figures/2609.28997/table-021.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 496
+            },
+            {
+              "caption": "Table 11. Bit-depth variants of the geometry stage of Tab. 5 (position bits / attribute bits) on garden and kitchen, with the size under both entropy coders (byte-planed zlib and the rANS coder of the supplement; the appearance-only row is the plain fp16 container). Fourteen-bit positions cost several tenths of a decibel and save little because the delta-coded positions are already cheap; six-bit attributes cost about a tenth of a decibel for a further sixth of the file.",
+              "figure_id": "table-11-21",
+              "figure_number": "11",
+              "height": 285,
+              "image_path": "figures/2609.28997/table-022.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 496
+            },
+            {
+              "caption": "Table 12. Per-scene results of Tab. 1 (Mip-NeRF 360): size after fine-tuning, test PSNR before and after fine-tuning for every colour-VQ metric inside Compressed3D.",
+              "figure_id": "table-12-14",
+              "figure_number": "12",
+              "height": 259,
+              "image_path": "figures/2609.28997/table-023.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 1036
+            },
+            {
+              "caption": "Table 13. Where the size difference between the colour-VQ metrics of Tab. 1 comes from. Every array of the container is identical in kind and shape across variants; only the colour-index stream differs. Their minibatch EMA k-means uses the 4096-entry codebook unevenly (about 10 bit of zero-order entropy per index), whereas the generalised Lloyd assignment uses it almost uniformly (about 12 bit), which is more rate for the same codebook; the smaller codebooks give the rate-matched points of the main table. Codes used counts codebook entries plus the Gaussians kept uncompressed.",
+              "figure_id": "table-13-17",
+              "figure_number": "13",
+              "height": 574,
+              "image_path": "figures/2609.28997/table-024.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 496
+            },
+            {
+              "caption": "Table 8. Cost of one training iteration (differentiable render, loss, backward, Adam step) in a pure PyTorch trainer on 1.46M Gaussians at 648×420 (Apple M1 Max, unified memory), as a function of the number of trainable SH coefficients. OGC itself is post-hoc and does not change training; this bounds what a training-time variant could gain: little time, substantial memory.",
+              "figure_id": "table-8-4",
+              "figure_number": "8",
+              "height": 79,
+              "image_path": "figures/2609.28997/table-025.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 496
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.28997/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.28997",
+          "relevance": 7,
+          "selection_reason": "Observation-Gram metric compacts view-dependent 3DGS appearance, reducing memory while preserving quality.",
+          "summary_status": "generated",
+          "title": "Only What Was Seen: Observation-Gram Compaction of View-Dependent Appearance in 3D Gaussian Splatting",
+          "tldr": "An observation-aware Gram metric compresses view-dependent 3D Gaussian Splatting appearance more accurately without training images, improving quality at matched compression rates.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Passive long-wave infrared (LWIR) hyperspectral ranging enables distance estimation in low-light and nighttime scenes by exploiting atmospheric absorption features in thermal radiance received through the atmosphere.Joint estimation of temperature, emissivity, and distance is computationally expensive. Reference-range joint inversion also uses a distance-invariant effective attenuation coefficient, which can bias range estimates.We introduce transmittance extraction and distance alignment (TEDA), which decouples range estimation from temperature--emissivity inversion. In the first stage, a baseline estimator with a data-fidelity term invariant to the known absorption direction yields two closed-form smoothing branches for the slowly varying thermal continuum. An observation-derived gate combines the branches, and subtracting the blended baseline in the log domain recovers atmospheric transmittance. The second stage estimates range by matching the recovered transmittance to sensor-domain transmittance models recomputed for each candidate distance. Monte Carlo simulations show that TEDA effectively reduces the ranging bias caused by the distance-invariant attenuation coefficient approximation. In a measured scene, TEDA's mean range estimates are closer to the LiDAR medians than those of reference-range joint inversion in both evaluated patches. TEDA processes a complete $256\\times256$ region of interest in 8.19~s versus 159.47~s for reference-range joint inversion, an approximately 20-fold speedup.",
+          "arxiv_id": "2609.28967",
+          "arxiv_url": "https://arxiv.org/abs/2609.28967",
+          "authors": [
+            "Zhihe Chen, Chen Fan, Shuo Liu, Xiaolin Huang, Yunze He, Xiaofeng He, Lilian Zhang"
+          ],
+          "bullets": [
+            "Addresses computational cost and range bias from jointly estimating temperature, emissivity, and distance with distance-invariant attenuation assumptions.",
+            "Uses two stages: closed-form baseline smoothing and gated log-domain subtraction to recover transmittance, followed by candidate-distance model matching.",
+            "Monte Carlo simulations show reduced bias from the distance-invariant attenuation approximation.",
+            "In measured scenes, mean ranges were closer to LiDAR medians than reference-range joint inversion in both evaluated patches.",
+            "Processes a 256×256 region in 8.19 s versus 159.47 s for the reference method, an approximately 20-fold speedup."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 8. Comparison of passive ranging methods in a 256× 256 region. (a)–(d) Distance maps estimated by arPLS, reference-range joint inversion, per-range joint inversion, and TEDA, respectively. The red dashed line marks column 20, and markers (f)–(h) identify the grass, foreground-tree, and background-tree evaluation patches. (e) Vertical distance profiles along the marked column, indexed from the top to the bottom of the region. (f)–(h) Distance distributions within the three marked 8 × 8 patches; the light shading in (e) marks contiguous pixel spans with valid LiDAR observations. The profile and distributions show that TEDA retains the range layering recovered by per-range joint inversion while avoiding the systematic underestimation of arPLS and reference-range joint inversion.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 848,
+              "image_path": "figures/2609.28967/figure-001.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1073
+            },
+            {
+              "caption": "Fig. 1. Transmittance extraction and distance alignment (TEDA) for passive LWIR hyperspectral ranging. A push-broom camera scans the scene through an absorbing air path, so each measured spectrum contains range-dependent atmospheric transmittance. The red-boxed tree pixel illustrates the two-stage processing applied to every pixel. In Stage I, the known absorption structure guides the separation of atmospheric transmittance from the slowly varying thermal background. In Stage II, the extracted transmittance is aligned over the water-vapor band against model spectra that account for the sensor response throughout the distance search. The output shows the hyperspectral distance estimate alongside the LiDAR reference map; the histogram compares their distance distributions over an 8 × 8 patch around the marked pixel. Molecular absorption is computed from HITRAN2020 for a model atmosphere with water-vapor volume mixing ratio (VMR) 0.012, temperature 289.7 K, and pressure 1010 mbar. The instrumental spectral response function (ISRF) is Gaussian with a full width at half maximum (FWHM) of 40 nm.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 859,
+              "image_path": "figures/2609.28967/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1057
+            },
+            {
+              "caption": "Fig. 5. Radiance-domain fits for the Rock simulation at 100 m with a target–air temperature difference of −8 K (random seed 0). Each panel compares the noisy measurement, air-blackbody radiance, and the fit from the indicated method. The Oracle baseline uses the true simulation baseline for transmittance extraction, while distance is still estimated from the noisy observation.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 439,
+              "image_path": "figures/2609.28967/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 527
+            },
+            {
+              "caption": "Fig. 6. Sensor-domain transmittance estimates for the Rock simulation at 100 m with a target–air temperature difference of −8 K (random seed 0). Each panel compares the true transmittance with the result from the indicated method. The Oracle baseline uses the true simulation baseline, while its distance estimate is still obtained from the noisy observation.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 437,
+              "image_path": "figures/2609.28967/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 528
+            },
+            {
+              "caption": "Fig. 4. Effect of excluding the absorption direction from the Stage-I datafidelity term. (a) The Euclidean data-fidelity term allows a smooth baseline to move toward the observation along the absorption direction, causing leakage. (b) The projected data-fidelity term is invariant along this direction, so the corresponding baseline component is set by smoothness alone. (c) Absolute Pearson correlation defined in (33). Boxes summarize the correlation between the true thermal-continuum baseline and the absorption prior across emissivity spectra from the ECOSTRESS spectral library for a target 5 K colder than the air. The dashed line gives the same statistic for the sensor-domain logtransmittance, the atmospheric absorption term. (d) Noise-free range bias at 100 m under operator-consistent alignment. Both PLS estimators use the same operator-consistent distance-matching procedure; the estimator with M = I − αα⊤ is the absorption-prior method used in Stage I of TEDA. Boxes show the interquartile range and whiskers the 5th–95th percentiles.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 620,
+              "image_path": "figures/2609.28967/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 496
+            },
+            {
+              "caption": "Fig. 7. Full-frame passive ranging result and LiDAR reference. (a) Distance map estimated by TEDA from the hyperspectral measurements. (b) LiDAR range map shown in the hyperspectral image coordinates for visual comparison. Both panels use the same fixed 20–200 m color scale; valid distances outside this interval are clipped to the endpoint colors. The two maps exhibit consistent near-to-far ordering across the grassland, foreground tree and background forest.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 533,
+              "image_path": "figures/2609.28967/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 3. Quantification of the distance-invariant attenuation coefficient approximation. (a) Transmittance at 50, 100, and 150 m. The rows correspond to the three distances; the columns show the full sensor band and magnified views of 8.0–8.9 µm and 12.3–13.0 µm. The solid and dashed curves denote the ISRFintegrated and approximate transmittances, respectively. The approximation derives an effective attenuation coefficient at a reference distance of 200 m and applies Beer–Lambert scaling without recalculating the spectral-response integral. (b) Distance-estimation bias of the approximate transmittance model as a function of the true distance. The bias vanishes at the reference distance of 200 m and at zero distance and attains its maximum at an intermediate distance, consistent with the convexity bound (15).",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 682,
+              "image_path": "figures/2609.28967/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 527
+            },
+            {
+              "caption": "Fig. 2. Comparison of continuous-spectrum water-vapor transmittance with the transmittance after spectral-response integration. (a) Full 8–13 µm spectrum; the shaded intervals mark the ranges enlarged below. (b) The 8–9 µm absorption structure. (c) The 12–13 µm absorption structure. The panels compare the continuous-spectrum transmittance and the spectrally integrated result. The air temperature is 289.7 K, the pressure is 1010 mbar, the watervapor volume mixing ratio is 0.012, and the propagation distance is 200 m. The sensor ISRF has a 40 nm full width at half maximum.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 513,
+              "image_path": "figures/2609.28967/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 525
+            },
+            {
+              "caption": "Fig. 9. Passive ranging results on additional DARPA Invisible Headlights scenes. Each column shows one acquisition group. (a) LWIR spectral-mean images. (b) LiDAR range references. (c) TEDA distance estimates. All scenes are processed with the same fixed hyperparameters, without per-scene tuning.",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 552,
+              "image_path": "figures/2609.28967/figure-009.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 523
+            },
+            {
+              "caption": "TABLE I DISTANCE RMSE (M) AND BATCH RUNTIME (S) COMPARISON OF SIX RANGING METHODS ON NOISY SIMULATED MEASUREMENTS OF A ROCK AT 100 M; 100 NOISE REALIZATIONS PER TEMPERATURE DIFFERENCE, TIMES INCLUDE MODEL-BANK CONSTRUCTION; FITS AND TRANSMITTANCE ESTIMATES SHOWN IN FIGS. 5 AND 6.",
+              "figure_id": "table-I-11",
+              "figure_number": "I",
+              "height": 158,
+              "image_path": "figures/2609.28967/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 512
+            },
+            {
+              "caption": "TABLE IV MEAN AND STANDARD DEVIATION OF THE DISTANCE ESTIMATES OF FOUR RANGING METHODS IN THREE 8× 8 PATCHES OF THE MEASURED SCENE (GRASS, FOREGROUND TREE, BACKGROUND TREE; MARKED IN FIG. 8); THE LIDAR MEDIAN IS THE REFERENCE, AND THE RUNTIME COVERS THE FULL REGION.",
+              "figure_id": "table-IV-1",
+              "figure_number": "IV",
+              "height": 109,
+              "image_path": "figures/2609.28967/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 523
+            },
+            {
+              "caption": "TABLE II EFFECT OF REMOVING OR REPLACING EACH TEDA COMPONENT ON RANGING ERROR, ON THE SAME ROCK-TARGET SIMULATION AT 100 M AS TABLE I; DISTANCE RMSE (M) OVER 100 NOISE REALIZATIONS PER TEMPERATURE DIFFERENCE.",
+              "figure_id": "table-II-6",
+              "figure_number": "II",
+              "height": 157,
+              "image_path": "figures/2609.28967/table-012.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 462
+            },
+            {
+              "caption": "TABLE III DISTANCE RMSE (M) OF THREE TEDA SMOOTHING-STRENGTH CONFIGURATIONS ON FOUR MATERIAL CATEGORIES; 1,528 LIBRARY SPECTRA AT 50, 100, AND 200 M AND −8, −5, AND −2 K, 100 COMMON-NOISE REALIZATIONS PER CONDITION, AND THE OVERALL COLUMN CATEGORY-BALANCED.",
+              "figure_id": "table-III-5",
+              "figure_number": "III",
+              "height": 100,
+              "image_path": "figures/2609.28967/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 496
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.28967/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.28967",
+          "relevance": 5,
+          "selection_reason": "Passive LWIR hyperspectral ranging for distance estimation, relevant to 3D perception.",
+          "summary_status": "generated",
+          "title": "Passive LWIR Hyperspectral Ranging via Transmittance Extraction and Distance Alignment",
+          "tldr": "TEDA enables faster and less biased passive LWIR hyperspectral ranging by extracting atmospheric transmittance before aligning it with distance-specific models.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Radiance field representations such as 3D Gaussian Splatting (3DGS) natively encode complex visual phenomena such as occlusions and view dependence, but they are inherently underconstrained. Independently optimized reconstructions converge to different primitive configurations, even in unchanged regions. We introduce Plenoptic CharacterIstics (PlenoCI), a novel feature built from the plenoptic field these representations approximate. PlenoCI directly captures rich visual behaviors while ignoring Lambertian textures. By deriving closed-form analytic plenoptic derivatives from a 3DGS representation, we efficiently detect these 5D structures. Our approach is robust to underconstrained representations by construction, reporting two orders of magnitude fewer false positives between independent reconstructions of unchanged scenes than concurrent work. We demonstrate PlenoCI's utility on change classification. First, we detect changes with an instance-aware 3DGS pipeline, achieving state-of-the-art results on CL-Splats with a 25.7% mIoU gain over the strongest competitor, while remaining competitive on the more challenging PASLCD benchmark. Leveraging PlenoCI, we classify changes as geometric or appearance-based with a balanced accuracy of 0.735, comparable to the best performing baseline. We believe plenoptic derivatives and PlenoCI open new directions for view dependence aware understanding in visually complex environments. Code and data are available at https://js0n-lai.github.io/plenoci.",
+          "arxiv_id": "2609.28930",
+          "arxiv_url": "https://arxiv.org/abs/2609.28930",
+          "authors": [
+            "Jason Lai, Chamuditha Jayanga Galappaththige, Niko Suenderhauf, Dimity Miller, Donald G. Dansereau"
+          ],
+          "bullets": [
+            "Addresses inconsistent primitive configurations across independently optimized 3DGS reconstructions, especially in unchanged regions.",
+            "Builds features from the approximated plenoptic field to capture view-dependent visual behavior while ignoring Lambertian textures.",
+            "Achieves two orders of magnitude fewer false positives between reconstructions of unchanged scenes than concurrent work.",
+            "Improves change detection on CL-Splats by 25.7% mIoU over the strongest competitor and remains competitive on PASLCD.",
+            "Classifies changes as geometric or appearance-based with 0.735 balanced accuracy."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3. Our PlenoCI feature extraction pipeline. Given a 3DGS representation G, we sample analytic plenoptic derivatives ∇L over a local light field to compute the structure tensor. The third eigenvalue λ2 provides an informative signal for complex visual behaviors where existing features are unreliable, while ignoring Lambertian textures. We mask pixelwise λ2 with an edge image (dilated for clarity) to yield PlenoCI Rk from view k. Repeating this over selected views yields R.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 368,
+              "image_path": "figures/2609.28930/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 1. Given two 3DGS reconstructions from different times, our method first detects scene changes. To classify changes, we draw on view-dependent plenoptic structures encoded in our novel Plenoptic CharacterIstics (PlenoCI) feature. For example, we correctly detect the sheet of paper and book as changes, and classify them using PlenoCI as occlusion edge evidence (left). Our approach is robust to the inherently underconstrained nature of 3DGS representations; two independent optimizations given the same training images yield different primitive configurations. Primitive-space comparisons [22] report false positives in static scenes while our method does not (right).",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 395,
+              "image_path": "figures/2609.28930/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 9. Comparison of independently optimized 3DGS models of the Cantina scene from PASLCD without changes. At 100% view overlap, both models receive all training views. GS-Diff [22] reports a false positive rate of 0.487% as it directly compares primitives (inset), while we correctly report no changes. At 25% view coverage, Model B receives 5 out of 20 training views. Poor reconstruction quality causes our approach to detect false positives, albeit at a lower rate than GS-Diff.",
+              "figure_id": "figure-9-1",
+              "figure_number": "9",
+              "height": 320,
+              "image_path": "figures/2609.28930/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 6. Qualitative change classification results for PASLCD [20]. Top to bottom: Porch, Lounge, Meeting Room, Zen. Our PlenoCI feature enables building explicit geometry and appearance-based change representations for rendering multi-class change masks.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 463,
+              "image_path": "figures/2609.28930/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 4. Our overall scene change detection and classification approach. Given instance-aware 3DGS scene representations G0 and G1, we aggregate per-ray change scores δ in the corresponding primitives. This yields a sparse set of anchors ∆G′ t to propagate on changed instances. For change detection, we sample edge rays Re to find changed Gaussians ∆Gall t . For change classification, we leverage PlenoCI R to find geometrically changed Gaussians ∆Ggeo t . These explicit representations can be used to render novel change masks with disambiguation between geometric and appearance changes.",
+              "figure_id": "figure-4-14",
+              "figure_number": "4",
+              "height": 452,
+              "image_path": "figures/2609.28930/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 5. Qualitative comparison of binary change masks for CL-Splats [1] (rows 1–2) and PASLCD [20] (rows 3–4). Pairwise approaches such as GeSCF [35] are susceptible to spurious detections. Our instance-aware 3DGS approach outperforms all baselines on CL-Splats, and is competitive to state-of-the-art on the challenging PASLCD benchmark.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 378,
+              "image_path": "figures/2609.28930/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 7. Pixelwise eigenvalue signals derived from the plenoptic structure tensor. Given an RGB view (column 1), we sample analytic plenoptic derivatives over a local light field to build pixelwise structure tensors M . The eigenvalues λi of M provide informative signals of scene structures, such as edges (column 2), corners (column 3) and occlusion edges as well as specular highlights (column 4).",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 915,
+              "image_path": "figures/2609.28930/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 2. Example scenario in flatland to motivate our novel PlenoCI feature. Given a 2D world (Fig. 2a), we build the 3D plenoptic field L and compute partial derivatives L∗ (Figs. 2b to 2c). These are useful signals for detecting visually complex phenomena such as occlusion edges (Fig. 2d). Brightness represents magnitude corresponding to each color channel’s plenoptic field. While we show ground truth geometry and L here, this also generalizes to radiance field representations.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 384,
+              "image_path": "figures/2609.28930/figure-008.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 496
+            },
+            {
+              "caption": "Table 1. Binary SCD results averaged over CL-Splats [1] and PASLCD [20]. PASLCD baselines are sourced from [23, 75]. Our method achieves state-of-the-art performance on CL-Splats, and",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 366,
+              "image_path": "figures/2609.28930/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 502
+            },
+            {
+              "caption": "Table 7. False positive rate from comparing two independently optimized 3DGS reconstructions of the Cantina scene from PASLCD [20] under no changes. Under varying training view overlaps and levels of coverage, our method consistently reports fewer false positives than GS-Diff [22].",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 260,
+              "image_path": "figures/2609.28930/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 450
+            },
+            {
+              "caption": "Table 6. Comparison of ray selection approaches averaged over all scenes in PASLCD [20] using 20 sample views each. Floating point operations reported for Extraction (Ext) do not include rasterization, which is shared across both methods. Retaining only edge rays (Ours) marginally improves SCD performance, but substantially reduces compute costs for change scoring (Sco).",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 222,
+              "image_path": "figures/2609.28930/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 462
+            },
+            {
+              "caption": "Table 4. CC performance averaged over PASLCD [20]. The best performance excluding Oracle is bolded. Oracle uses instances derived from ground truth masks (Sec. 5.2), driving improvements in recall of both classes. Ground truth class imbalance favoring Geo amplifies App classification errors.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 175,
+              "image_path": "figures/2609.28930/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 492
+            },
+            {
+              "caption": "Table 5. False positive rate from comparing two independently optimized 3DGS models of an unchanged scene, averaged over PASLCD [20]. Scenes with real changes contain 3.51% change pixels on average, ranging from 0.17–20.12%.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 102,
+              "image_path": "figures/2609.28930/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 494
+            },
+            {
+              "caption": "Table 2. Change scoring ablation averaged over PASLCD [20]. Incorporating all elements provides the best performance.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 151,
+              "image_path": "figures/2609.28930/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 312
+            },
+            {
+              "caption": "Table 3. SCD results averaged over PASLCD [20] varying instance segmentations. Oracle derives instances from ground truth masks while we use learned instances [43]. Recall is the main metric, improving by 20% with oracle instances as the learned instances undersegment small changed objects.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 100,
+              "image_path": "figures/2609.28930/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 466
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.28930/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.28930",
+          "relevance": 7,
+          "selection_reason": "Introduces plenoptic derivatives from 3DGS for view-dependent change classification in 3D scenes.",
+          "summary_status": "generated",
+          "title": "PlenoCI: Plenoptic CharacterIstics for View Dependence Aware Change Classification",
+          "tldr": "PlenoCI uses analytic plenoptic derivatives from 3D Gaussian Splatting to robustly detect and classify scene changes while reducing false positives from reconstruction variability.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Encoding input coordinates with sinusoidal functions into multi-layer perceptrons (MLPs) has proven effective for implicit neural representations (INRs) of surfaces defined as zero-level sets. However, existing methods often struggle to balance training efficiency, rendering speed, and noise robustness: single-MLP approaches are expensive at inference, grid-based representations are fast but can limit surface smoothness and overfit input noise, and previous multiscale approaches frequently capture noise and produce artifacts due to hard spectral truncation. To address these limitations, we propose M-plicits, a multiscale framework that models surfaces as a residual sum of MLPs trained via a sequence of nested neighborhoods. Unlike existing residual approaches that rely on standard domain-wide sampling and require costly mesh extraction for visualization, our method strictly localizes supervision to narrow bands around the previous zero-level sets. This nested design naturally provides robustness against noisy input data: the coarse network acts as a low-pass filter that establishes a clean geometric prior, while subsequent residuals progressively refine the geometry without fitting to high-frequency artifacts. We further introduce a multiscale sphere-tracing algorithm and a GEMM-based analytical normal computation that bypasses auto-differentiation entirely, yielding high-fidelity real-time rendering. On Stanford and Thingi32, M-plicits achieves the best mean Chamfer distance in the coarse configuration and the best median Chamfer distance and IoU in the fine configuration, with substantially better noise robustness than iNGP, BACON, and IDF, while using an order of magnitude fewer parameters than grid-based baselines. Code, models, and data will be released at https://github.com/dsilvavinicius/m-plicits.",
+          "arxiv_id": "2609.28684",
+          "arxiv_url": "https://arxiv.org/abs/2609.28684",
+          "authors": [
+            "Vin\\'icius da Silva, Isabelle Melo, Matheus Bessa, Guilherme Schardong, Luiz Schirmer, Andr\\'e Ara\\'ujo, Nuno Gon\\c{c}alves, H\\'elio Lopes, Alberto Raposo, Luiz Velho, Tiago Novello"
+          ],
+          "bullets": [
+            "Addresses the trade-offs among inference cost, rendering speed, surface smoothness, and robustness to noisy inputs.",
+            "Models surfaces as residual sums of MLPs trained only in narrow bands around progressively refined zero-level sets.",
+            "Uses coarse-to-fine residual learning to suppress noise and avoid artifacts from hard spectral truncation.",
+            "Introduces multiscale sphere tracing and GEMM-based analytical normals without autodifferentiation for faster rendering.",
+            "On Stanford and Thingi32, reports the best coarse mean Chamfer distance and fine median Chamfer distance and IoU, with stronger noise robustness and far fewer parameters than grid-based baselines."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.GR",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: We introduce M-plicits, a multiscale INR framework for SDFs, based on a nested neighborhood scheme. (Left) Geometry is decomposed into base and residual SIRENs, trained at progressively finer scales with localized, near-surface sampling. (Top-right) M-plicits is noise-robust while supporting real-time sphere tracing (ST), unlike grid-based methods such as iNGP that capture noise. (Bottom-right) M-plicits supports downstream tasks such as normal mapping.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 385,
+              "image_path": "figures/2609.28684/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 748
+            },
+            {
+              "caption": "Figure 2: Overview of M-plicits. Starting from an oriented point cloud with colors, we combine sampling techniques and loss regularizations (B and N) to create a base, a medium , and a fine SDF to implicitly represent the SDF in multiscale. The base SDF is defined for the entire domain, while the others are residuals, defined in (nested) neighborhoods of the surface. The colors are also trained in a neighborhood, regularized (by T) to be constant along normals. The resulting multiscale representation can be rendered using novel sphere tracing and attribute mapping algorithms.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 331,
+              "image_path": "figures/2609.28684/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 652
+            },
+            {
+              "caption": "Figure 9: Left: neural normal mapping from a finer SDF adds high-frequency detail to a coarse (64, 1) SDF (Buddha). Right: silhouette evaluation (Lucy); compared to sphere tracing the coarse SDF alone with normal mapping, adding ST iterations on a medium (256, 2) level refines the silhouette.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 283,
+              "image_path": "figures/2609.28684/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 622
+            },
+            {
+              "caption": "Figure 4: (a) Using too large δ1 = δ2 may result in holes (the ray does not reach the surface). More iterations would be needed using the finer SDF to fill those holes, defeating the idea of minimizing iterations. (b) Conversely, reducing the deltas δ1 = δ2 may miss parts of the silhouette since the target surface may not be inside the previous neighborhood (the hand). (c) Using δ1 and δ2 suited for the nesting condition implies no holes and better silhouette capture.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 217,
+              "image_path": "figures/2609.28684/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 582
+            },
+            {
+              "caption": "Figure 3: (a) Dithering-based sampling around each input point xj , where each coordinate is perturbed by a random value in (−2δi−1, 2δi−1), followed by filtering to retain only points in the valid band Ωi (green points denote those that are kept and red those rejected). (b.1) Computation of the displacement vector tjNj , where the offset point xj + tjNj lies just outside the narrow band Ωi. (b.2) Final accepted sample xj + Nj(tj − ε), located inside Ωi, used to supervise the data term.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 207,
+              "image_path": "figures/2609.28684/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 582
+            },
+            {
+              "caption": "Figure 8: Qualitative comparison of surface reconstruction on sample 354371 with 1% noise (Thingi32). Left: GT with noise. Right: reconstructions. IDF is the only baseline that does not retain noise on the surface, but it generates blobs around it.",
+              "figure_id": "figure-8-12",
+              "figure_number": "8",
+              "height": 207,
+              "image_path": "figures/2609.28684/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 481
+            },
+            {
+              "caption": "Figure 6: Coarse reconstruction of the Armadillo (Stanford). Ours vs. iNGP.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 154,
+              "image_path": "figures/2609.28684/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 266
+            },
+            {
+              "caption": "Figure 7: Qualitative comparison on a Thingi32 sample. (a) GT; (b) ours (fine); (c) iNGP fine; (d) BACON, showing blob-like artifacts; (e) IDF. All with their respectives CD values.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 146,
+              "image_path": "figures/2609.28684/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 547
+            },
+            {
+              "caption": "Figure 5: Adaptive marching cubes. For grid vertices outside the δ1 neighborhood (blue), only the coarse SDF f1 is evaluated. For points in the neighborhood (green) the residual f2 is added.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 206,
+              "image_path": "figures/2609.28684/figure-009.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 227
+            },
+            {
+              "caption": "Table 1: Differentiation of M-plicits from the methods compared in the experiments. M-plicits uniquely combines a continuous (non-grid) residual representation with strictly localized nested-band supervision and a multiscale tracing/extraction inference path that exploits this nesting. Citations in surrounding text.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 225,
+              "image_path": "figures/2609.28684/table-010.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 691
+            },
+            {
+              "caption": "Table 2: Surface reconstruction on Stanford + Thingi32 datasets. Best values are bold, second best are underlined, and third best are italic. Chamfer Distance (CD) considers 500K samples. Sampling time is measured on a 5123 grid; for our method this uses the adaptive multiscale marching cubes (Sec. 3). Renderer FPS considers 5122 images and uses multiscale sphere tracing on geometry only (without normal mapping unless explicitly noted in Tab. 4).",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 121,
+              "image_path": "figures/2609.28684/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 824
+            },
+            {
+              "caption": "Table 4: Real-time CUDA renderer ablation (multiscale ST, GEMM normals, neural normal mapping). 20 ST iterations on the first SDF, 5 on each subsequent level. (NM) denotes normal mapping without additional ST on the last SDF. Images 5122; size in KB.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 145,
+              "image_path": "figures/2609.28684/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 411
+            },
+            {
+              "caption": "Table 3: Quantitative robustness to noise. CD (↓) and IoU (↑) for Stanford and Thingi32 under vertex noise. Bold, italic, underlined = best, second, third.",
+              "figure_id": "table-3-13",
+              "figure_number": "3",
+              "height": 149,
+              "image_path": "figures/2609.28684/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 379
+            },
+            {
+              "caption": "Table 5: Marching cubes runtime (s) on Stanford. Baseline: SIREN (256, 4). Multiscale: (64, 1)▷(128, 2)▷(400, 2). Up to 5× speedup.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 92,
+              "image_path": "figures/2609.28684/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 317
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.28684/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.28684",
+          "relevance": 6,
+          "selection_reason": "Neural implicit surfaces with multiscale residuals; relevant to 3D vision and efficient rendering.",
+          "summary_status": "generated",
+          "title": "M-plicits: Neural Implicit Surfaces via Nested Multiscale Residuals",
+          "tldr": "M-plicits represents surfaces with nested multiscale MLP residuals, improving noise robustness and enabling efficient, high-fidelity real-time rendering.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent advancements in 3D Gaussian Splatting (3DGS) have extended its capabilities to multi-scale segmentation. Existing methods reconstruct a scene with Gaussian primitives and learn multi-scale segmentation features separately, which leaves the geometry unaware of semantic structure and the feature learning dependent on incomplete mask supervision. To address these limitations, we present PePESeg3D, a novel framework that injects perception priors into a multi-scale 3D Gaussian segmentation pipeline. To fully exploit perception priors, we integrate them not only into contrastive feature learning but also into the upstream geometry reconstruction. Specifically, PePE Reconstruction incorporates monocular depth and mask constraints to ensure semantically coherent object structures. Building on this aligned geometry, PePE Contrastive Learning leverages dense depth-color cues and view-consistent centroid supervision to compensate for the incompleteness of multi-scale masks obtained from a 2D foundation model. Extensive experiments on the SPIn-NeRF, LERF-Mask, and NVOS benchmarks demonstrate that PePESeg3D achieves state-of-the-art performance in both multi-scale segmentation and scene reconstruction, highlighting the importance of integrating perception priors into both geometry optimization and feature learning for accurate multi-scale 3D segmentation. Our code is available at https://github.com/BeCow5X5/PePESeg3D.",
+          "arxiv_id": "2609.28645",
+          "arxiv_url": "https://arxiv.org/abs/2609.28645",
+          "authors": [
+            "Sungjae Choi, Seunghee Koh, Junmo Kim"
+          ],
+          "bullets": [
+            "Addresses geometry–semantics misalignment and incomplete 2D mask supervision in existing 3DGS segmentation methods.",
+            "Uses monocular depth and mask constraints in PePE Reconstruction to produce semantically coherent Gaussian geometry.",
+            "Applies dense depth–color cues and view-consistent centroid supervision in PePE Contrastive Learning.",
+            "Experiments on SPIn-NeRF, LERF-Mask, and NVOS report state-of-the-art multi-scale segmentation and scene reconstruction.",
+            "Scope depends on perception priors, including monocular depth and masks from a 2D foundation model."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Qualitative visualization of multi-scale semantic clusters extracted by PePESeg3D. Distinct colors represent unique clusters identified via HDBSCAN. The clustering demonstrates accurate scale-adaptive granularity and robust view consistency.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 528,
+              "image_path": "figures/2609.28645/figure-001.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 710
+            },
+            {
+              "caption": "Figure 11: Visual comparison of segmentation results on the LERF-Mask and LERF-MaskFine datasets. OmniSeg3D-GS struggles with view consistency and tends to assign identical labels to semantically distinct objects. While SAGA shows reasonable performance on LERF-Mask despite minor over-segmentation, it often overlooks fine-grained details, such as the small tag in LERF-Mask-Fine. PePESeg3D effectively addresses these limitations, producing consistent and accurate segmentations.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 484,
+              "image_path": "figures/2609.28645/figure-002.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 684
+            },
+            {
+              "caption": "Figure 13: Automatic Decomposition Visualization on SPIn-NeRF generated by PePESeg3D. Random colors are assigned to semantic clusters derived via HDBSCAN. The results demonstrate appropriate scale-dependent granularity while maintaining robust view consistency across different perspectives.",
+              "figure_id": "figure-13-10",
+              "figure_number": "13",
+              "height": 811,
+              "image_path": "figures/2609.28645/figure-003.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 674
+            },
+            {
+              "caption": "Figure 12: SPIn-NeRF segmentation results given in multi-view generated by PePESeg3D.",
+              "figure_id": "figure-12-5",
+              "figure_number": "12",
+              "height": 896,
+              "image_path": "figures/2609.28645/figure-004.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 606
+            },
+            {
+              "caption": "Figure 9: Failure Cases in NVOS",
+              "figure_id": "figure-9-4",
+              "figure_number": "9",
+              "height": 380,
+              "image_path": "figures/2609.28645/figure-005.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 458
+            },
+            {
+              "caption": "Table 3: Segmentation results on LERF-Mask-Fine.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 152,
+              "image_path": "figures/2609.28645/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 247
+            },
+            {
+              "caption": "Table 8: Per-scale analysis of PePESeg3D on LERF-Mask-Fine under a fixed query scale. Top: fine-part mIoU. Bottom: granularity of the HDBSCAN clusters extracted from the rendered features.",
+              "figure_id": "table-8-8",
+              "figure_number": "8",
+              "height": 132,
+              "image_path": "figures/2609.28645/table-007.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 538
+            },
+            {
+              "caption": "Table 12: Sensitivity to the refinement ratio k, the centroid threshold τ , the refresh period T , and the depth backbone on LERF-Mask. The default configuration is k = 10%, τ = 0.90, T = 200, and Depth-Anything-V2.",
+              "figure_id": "table-12-3",
+              "figure_number": "12",
+              "height": 61,
+              "image_path": "figures/2609.28645/table-008.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 692
+            },
+            {
+              "caption": "Table 11: Robustness to weaker 2D supervision and limited view coverage on LERF-MaskFine, reported as mIoU / mBIoU (%).",
+              "figure_id": "table-11-2",
+              "figure_number": "11",
+              "height": 58,
+              "image_path": "figures/2609.28645/table-009.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 692
+            },
+            {
+              "caption": "Table 7: Ablation of PePESeg3D on LERFMask.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 107,
+              "image_path": "figures/2609.28645/table-010.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 363
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.28645/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.28645",
+          "relevance": 6,
+          "selection_reason": "3D Gaussian segmentation with perception priors; relevant to 3D foundation models and spatial understanding.",
+          "summary_status": "generated",
+          "title": "PePESeg3D: Perception Prior Enhances Multi-Scale Segmentation for 3D Gaussian Splatting",
+          "tldr": "PePESeg3D improves multi-scale 3D Gaussian Splatting segmentation by using perception priors to guide both geometry reconstruction and feature learning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            }
+          ]
+        },
+        {
+          "abstract": "Robots carrying out tasks in dark environments need to localize from a single RGB camera, in light so low that the per-pixel signal approaches the sensor's own noise, on a power-constrained onboard computer, in real time. Each of these constraints has matured pipelines, but the intersection does not. Offline low-light reconstruction now recovers structure below -4 dB but is far too slow to run in real time, while the real-time monocular systems a robot can actually carry (DROID-SLAM, DPV-SLAM, etc.) degrade or fail when SNR gets low. We measured how they fail: across the nine lowest darkness levels of our scenes, DROID-SLAM returns a full-length trajectory carrying no information about the camera's motion on all nine, VGGT-SLAM and CUT3R on eight, pi^3 on seven, and DPV-SLAM on four. We present SYS, a monocular pipeline built on a low-light feed-forward pointmap front end with an explicit match gate, which returns three tracked trajectories and no uninformative ones, at the lowest error of any method where it tracks (24-47% of the no-information ceiling against 56-73% for the strongest baseline), and at the narrowest coverage. On a real robot video take in which 86.5% of delivered frames are entirely black, every configuration of ours stops after the lit beginning, while DROID-SLAM and DPV-SLAM each emit a pose for all 1178 frames. Our method contribution is an embedded execution path for the Jetson AGX Orin: running the map, keyframes and backend at 384 pixels with tracking at 256, together with two fixes to the per-frame pose solve, is a replicated Pareto improvement, 1.28x throughput at 0.964x error on one scene and 1.42x at 0.68x on a second, with 47% less peak GPU memory and 29% less energy per pose. We evaluate on a calibrated, bit-exact regenerable noise ladder, on relabelled real-world dark exposures, and on a new dark-room video ladder recorded from a Boston Dynamics Spot robot.",
+          "arxiv_id": "2609.21114",
+          "arxiv_url": "https://arxiv.org/abs/2609.21114",
+          "authors": [
+            "Mihir Chauhan",
+            "Aditya Uday Abhang",
+            "Kevin Biju Mathew",
+            "Aniket Bera"
+          ],
+          "bullets": [
+            "Existing real-time monocular SLAM systems often produce uninformative trajectories or fail as image signal approaches sensor noise.",
+            "The proposed SYS pipeline uses a low-light feed-forward pointmap front end and an explicit match gate to reject unreliable tracking.",
+            "It tracks on the lowest-light scenes with lower error and narrower coverage than evaluated baselines when they successfully track.",
+            "On a robot video with 86.5% entirely black frames, the method stops after the lit segment instead of emitting poses for unusable frames.",
+            "The Jetson AGX Orin implementation improves throughput, memory use, and energy efficiency while maintaining or reducing error across evaluated scenes."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1: NOCTIF3R at a glance. (a) monocular RGB at the photon floor, no depth, stereo or IMU, shown with a display gain so the structure is visible; (b) the geometry and camera path recovered from those frames alone, on the bookshelf −5 dB rung of the calibrated ladder. Every candidate pair is gated on the match fraction ϕ of Eq. 1: pairs that clear the gate become keyframes for a bounded back end, and pairs that do not produce no pose at all. That gate is why the system stops loudly instead of returning a confident trajectory with nothing in it (Sec. V-C), and why its coverage is the narrowest of the methods we compare (Sec. VI-B).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 348,
+              "image_path": "figures/2609.21114/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 2: The Spot dark-room video ladder scene as delivered by the iPhone 15 Pro carried on the robot, with no display gain applied. (a) the lights-on control take (rung 0 of Table II); (b) the same warehouse on a dark rung, where only the ceiling fixtures remain above the codec’s black level.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 167,
+              "image_path": "figures/2609.21114/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "TABLE IV: The null-input control, 86.5% of whose delivered frames are identically black: the 1178 frames of the stride-two matrix, every method on identical input. Closure is return-to-start error over path length. No calibrated SNR.",
+              "figure_id": "table-IV-8",
+              "figure_number": "IV",
+              "height": 175,
+              "image_path": "figures/2609.21114/table-003.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 502
+            },
+            {
+              "caption": "TABLE III: Tracked / silent / loud over the nine synthetic floor rungs (−10/ − 15/ − 20 dB × three scenes); every-8 stills protocol.",
+              "figure_id": "table-III-7",
+              "figure_number": "III",
+              "height": 236,
+              "image_path": "figures/2609.21114/table-004.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 406
+            },
+            {
+              "caption": "TABLE II: Our Dark-room video ladder. Median |∇I| is the spatial gradient a matcher consumes. Rung 0 is a null-input control: 86.5% of its delivered frames are identically zero. These are H.264 with no calibrated SNR.",
+              "figure_id": "table-II-6",
+              "figure_number": "II",
+              "height": 150,
+              "image_path": "figures/2609.21114/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 454
+            },
+            {
+              "caption": "TABLE I: The deployable configuration against the previous deployment, chapel −10 dB (synthetic, tripod stills), Jetson AGX Orin, MAXN. Three runs per arm; the two distributions are disjoint on both the throughput and the accuracy axis, with three-run ranges under 3%. ATE is the all-frame trajectory as % of the no-information ceiling.",
+              "figure_id": "table-I-4",
+              "figure_number": "I",
+              "height": 151,
+              "image_path": "figures/2609.21114/table-006.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 431
+            },
+            {
+              "caption": "TABLE V: Jetson AGX Orin, MAXN, chapel −10 dB (synthetic, tripod stills). Latency is acquisition-to-pose with a freerunning source. Power is the whole-board INA3221 sum, mean over the run; ATE is the all-frame trajectory as % of the no-information ceiling. The first three rows are single runs; the last is the configuration of Sec. III-C, three-run mean.",
+              "figure_id": "table-V-3",
+              "figure_number": "V",
+              "height": 142,
+              "image_path": "figures/2609.21114/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 825
+            },
+            {
+              "caption": "TABLE VI: Config-only escape routes from the absorbing state, over six development floor rungs (synthetic, everyeighth stills), each pre-registered before its runs and fitted on development scenes only. Coverage is pooled over the six rungs. No lever clears the pre-registered endpoint, which required two additional tracked rungs with no new silent failures.",
+              "figure_id": "table-VI-2",
+              "figure_number": "VI",
+              "height": 130,
+              "image_path": "figures/2609.21114/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 481
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.21114/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.21114",
+          "relevance": 6,
+          "selection_reason": "Monocular SLAM for robots in photon-limited scenes; embodied perception and 3D reconstruction on embedded hardware.",
+          "summary_status": "generated",
+          "title": "Noctif3R: Feed-Forward Monocular Real-Time SLAM for Photon-Limited Scenes on Embedded Hardware",
+          "tldr": "Noctif3R enables real-time monocular SLAM in extremely dark, photon-limited scenes on embedded hardware by combining low-light feed-forward mapping with explicit tracking validation and efficient execution.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-23",
       "paper_count": 11,
       "papers": [
@@ -60586,5 +63348,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "3d-vision",
-  "total_paper_count": 373
+  "total_paper_count": 389
 }

@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**106 papers total**
+**111 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [Aim Short to Reach Far: Your Frozen World Model Can Plan Better Than You Think](https://arxiv.org/abs/2609.30036) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | Intermediate, experience-based targets can make a frozen visual world model plan effectively toward long-range goals that direct final-goal scoring misses. | 9 | 8 |
+| 2026-09-24 | [Visual Representation and History Modeling for Navigation World Models](https://arxiv.org/abs/2609.29555) | World Models: Video World Models, Interactive World Models | This study identifies task-dependent visual representations and introduces reusable-history architectures that make navigation world-model prediction more efficient. | 9 | 7 |
+| 2026-09-24 | [Lightweight Probabilistic Downscaling from a Deterministic Base Model](https://arxiv.org/abs/2609.29383) | World Models: Video World Models; Efficient AI: KV Cache and Memory Efficiency | Lightweight probabilistic downscaling models built on a modified U-Net improve climate-data resolution and achieve state-of-the-art RMSE through deterministic pretraining followed by probabilistic tuning. | 8 | 7 |
+| 2026-09-24 | [HelloWorld: Towards Practical Applications of Generative Driving World Models](https://arxiv.org/abs/2609.28931) | World Models: Video World Models, Interactive World Models | HelloWorld is a controllable driving world model for efficient, multi-sensor scene generation and interactive simulation. | 9 | 7 |
+| 2026-09-24 | [Training Object Permanence in World Models](https://arxiv.org/abs/2609.28654) | World Models: Video World Models | WROP trains video world models on object-permanence tasks, and the resulting PWM-WROP achieves top performance among continuation models in a 14-model evaluation. | 8 | 7 |
 | 2026-09-23 | [ZYT-World: A Real-Time Controllable World Model for Closed-Loop Autonomous-Driving Simulation](https://arxiv.org/abs/2609.21712) | World Models: Video World Models, Interactive World Models | ZYT-World is a fast, controllable world model for realistic, long-horizon autonomous-driving simulation across mixed camera rigs while preserving scene identity on revisits. | 9 | 9 |
 | 2026-09-22 | [QuantWM: Temporally Consistent 2-Bit KV Cache Quantization for World Models and Video Generation](https://arxiv.org/abs/2609.26425) | World Models: Video World Models, Interactive World Models; Efficient AI: KV Cache and Memory Efficiency | QuantWM is a training-free, causal 2-bit KV-cache quantization framework that reduces memory use while preserving attention stability, visual quality, and temporal consistency in world models and video generation. | 8 | 8 |
 | 2026-09-22 | [TriWorldBench: A Tri-View Consistency Perspective on Embodied World Models](https://arxiv.org/abs/2609.26314) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models | TriWorldBench evaluates whether embodied world models generate mutually consistent head- and wrist-camera predictions for bimanual robot tasks. | 8 | 7 |

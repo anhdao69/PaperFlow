@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**154 papers total**
+**158 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [M3GD: Multi-Modal Multi-View Geometric Diffusion for Camera--LiDAR Novel View Synthesis](https://arxiv.org/abs/2609.30056) | 3D Vision: 3D Foundation Models | M3GD enables camera–LiDAR novel-view synthesis by injecting view-aligned LiDAR geometry and features into an image-based diffusion generator. | 6 | 7 |
+| 2026-09-24 | [ICE: Task-Aligned Clifford Latent Fields for Multimodal Graph Foundation Models](https://arxiv.org/abs/2609.29398) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | ICE is a Clifford-algebra graph foundation model that preserves entity semantics while modeling higher-order multimodal and neighborhood interactions, achieving the best result in all 30 reported supervised and few-shot comparisons. | 9 | 9 |
+| 2026-09-24 | [WildHSR: Metric Feed-Forward 4D People-Scene Reconstruction from a 3D Foundation Model](https://arxiv.org/abs/2609.29106) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | WildHSR adapts a 3D foundation model to produce metric-scale, persistent-identity 4D reconstructions of people and scenes from monocular video in a feed-forward pipeline. | 6 | 6 |
+| 2026-09-24 | [PePESeg3D: Perception Prior Enhances Multi-Scale Segmentation for 3D Gaussian Splatting](https://arxiv.org/abs/2609.28645) | 3D Vision: 3D Foundation Models | PePESeg3D improves multi-scale 3D Gaussian Splatting segmentation by using perception priors to guide both geometry reconstruction and feature learning. | 6 | 7 |
 | 2026-09-23 | [From Alignment to Fusion in 3D Vision-Language](https://arxiv.org/abs/2609.28222) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | An align-then-fuse framework combines point clouds, voxel grids, and multi-view images for stronger 3D vision-language performance while preserving each representation’s internal geometry. | 8 | 7 |
 | 2026-09-23 | [Hybrid Gaussians for Robust Open-Vocabulary 3D Segmentation with Multi-View Object Association and Boundary Refinement](https://arxiv.org/abs/2609.27462) | 3D Vision: 3D Foundation Models | Hybrid Gaussians improves open-vocabulary 3D segmentation by jointly enforcing multi-view object identity, language-aligned semantics, and refined boundaries. | 8 | 8 |
 | 2026-09-23 | [SatUnreal: A High-Precision Synthetic Dataset for Satellite Stereo Matching via Unreal Engine](https://arxiv.org/abs/2609.27442) | 3D Vision: 3D Foundation Models | SatUnreal is a 10,000-pair, high-resolution synthetic satellite stereo dataset designed to provide physically consistent imagery and precise occlusion labels for improved sim-to-real stereo matching. | 8 | 7 |

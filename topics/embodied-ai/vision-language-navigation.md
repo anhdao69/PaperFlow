@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**60 papers total**
+**62 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [Beyond Spatial Benchmarks: From Spatial Reasoning to Navigation](https://arxiv.org/abs/2609.29934) | Embodied AI: Vision-Language Navigation, Robot Navigation | Aligning spatial reasoning training with navigation objectives and distilling spatially informed decisions improves navigation efficiently without requiring explicit spatial reasoning at inference. | 9 | 7 |
+| 2026-09-24 | [GPT-6-Astra Lights Up Embodied Navigation: Evaluation in Zero-Shot Vision-and-Language Navigation in Continuous Environments](https://arxiv.org/abs/2609.29861) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | GPT-6-Astra demonstrates strong zero-shot vision-and-language navigation from monocular RGB alone, while still struggling with reliable route execution and goal verification. | 9 | 8 |
 | 2026-09-23 | [RoboFollow: Unveiling the Instruction Following Mirage in Embodied Agents](https://arxiv.org/abs/2609.25636) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | RoboFollow shows that high embodied-agent success can mask weak instruction following when scenes make language unnecessary. | 9 | 9 |
 | 2026-09-22 | [SparseNav: Instruction-conditioned Sparse Semantic Perception for Training-Free Vision-Language Navigation](https://arxiv.org/abs/2609.26408) | Embodied AI: Vision-Language Navigation | SparseNav enables training-free vision-language navigation by grounding only instruction-relevant landmarks while maintaining a lightweight geometric map. | 8 | 8 |
 | 2026-09-22 | [Hierarchical Floorplan-Guided Vision-Language Exploration for Embodied Question Answering](https://arxiv.org/abs/2609.26360) | Embodied AI: Vision-Language Navigation | HFLEX-EQA improves embodied question answering by combining VLM-based hierarchical planning with online scene understanding and floorplan-guided exploration. | 8 | 7 |

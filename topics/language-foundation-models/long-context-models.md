@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**57 papers total**
+**58 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [No More Free Lunch: Corpus Task Complexity Matters as Corpora Grow](https://arxiv.org/abs/2609.29245) | Language Foundation Models: Long-Context Models | Corpus Task Complexity reveals that tasks whose difficulty grows faster than linearly with corpus size expose major weaknesses in long-context language models and efficient attention methods. | 7 | 8 |
 | 2026-09-23 | [Learning When Not to Listen: Selective Anti-Interference Pretraining for Language Models](https://arxiv.org/abs/2609.27925) | Language Foundation Models: Large Language Models, Long-Context Models | SPAR trains language models to ignore irrelevant distant prefixes when local context already suffices, improving robustness to distractor-heavy contexts. | 8 | 8 |
 | 2026-09-23 | [MWE-ECL: Recoverable Long-Range Context Does Not Always Override Local Lexical Priors](https://arxiv.org/abs/2609.27590) | Language Foundation Models: Long-Context Models | MWE-ECL shows that models can explicitly recover distant context yet still follow familiar local lexical interpretations. | 6 | 6 |
 | 2026-09-22 | [The Sirens' Song: When Proximal Background Context Overshadows Distant Evidence](https://arxiv.org/abs/2609.26718) | Language Foundation Models: Long-Context Models | LYRA improves long-context LLM retrieval by reducing interference from abundant, irrelevant nearby context so models can use distant evidence more effectively. | 8 | 8 |

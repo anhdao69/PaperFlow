@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**70 papers total**
+**75 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [ADM-Planner: LLM-Guided Long-Horizon Planning for Mobile Manipulators with Attention-Enhanced Dynamic Memory](https://arxiv.org/abs/2609.29212) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | ADM-Planner uses attention-enhanced dynamic memory to keep LLM plans consistent as mobile-manipulation environments change. | 7 | 7 |
+| 2026-09-24 | [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](https://arxiv.org/abs/2609.29204) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | AdaHVLA adaptively improves persistent task harnesses so VLA agents can execute long-horizon tasks more reliably. | 9 | 8 |
+| 2026-09-24 | [OREN-X: Octree Residual Network for Real-Time Multi-Modal Mapping](https://arxiv.org/abs/2609.29157) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | OREN-X uses a shared octree to map geometry, radiance, and vision-language features in real time with improved accuracy and lower feature-storage cost. | 8 | 8 |
+| 2026-09-24 | [Echo in the Steps: Learning Perceptive Humanoid Parkour with Gated Memory](https://arxiv.org/abs/2609.28960) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A gated-memory depth perception framework helps humanoid robots perform robust parkour across sparse footholds and narrow supports. | 7 | 7 |
+| 2026-09-24 | [OCC4M: Object-Centric 4D Memory for Spatiotemporal Reasoning in Long-Horizon Manipulation](https://arxiv.org/abs/2609.28798) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | OCC4M uses object-centric 4D memory to preserve identities, motion, and containment across time, enabling strong long-horizon manipulation despite occlusions and viewpoint changes. | 9 | 8 |
 | 2026-09-23 | [MemBodied: Recurrent Associative Memory for Vision-Language-Action Models](https://arxiv.org/abs/2609.28256) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | MemBodied gives vision-language-action policies fixed-size episodic memory to solve history-dependent manipulation without expanding context. | 9 | 8 |
 | 2026-09-23 | [EmbodiedMemory-Bench: Benchmarking Embodied Memory for Long-Horizon Embodied Tasks](https://arxiv.org/abs/2609.28236) | Embodied AI; Adaptation and Memory: Embodied Memory | EmbodiedMemory-Bench evaluates whether agents can build, update, and use memory for long-horizon embodied tasks, revealing substantial weaknesses in current models and gains from the proposed EMem system. | 9 | 8 |
 | 2026-09-23 | [RoadOcc Learns When to Persist, Transport, or Refresh Memory for Roadside Occupancy Prediction](https://arxiv.org/abs/2609.27677) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | RoadOcc improves roadside occupancy prediction by learning when to persist, transport, or refresh temporal evidence, achieving stronger dynamic-object performance. | 6 | 6 |

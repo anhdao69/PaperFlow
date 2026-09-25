@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**107 papers total**
+**110 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [Neural Transport Nested Sampling](https://arxiv.org/abs/2609.29413) | World Models: Latent Action Models; Efficient AI: Efficient Attention | Neural Transport Nested Sampling combines flow-based Langevin dynamics with nested sampling to efficiently sample high-dimensional molecular systems and estimate temperature-resolved partition functions. | 7 | 7 |
+| 2026-09-24 | [IronViT: Toward Efficient Generalist Visual Representation Learning](https://arxiv.org/abs/2609.29252) | Efficient AI: Efficient Attention | IronViT builds an efficient generalist vision encoder by consolidating specialist capabilities before converting them to a high-resolution-friendly attention architecture. | 7 | 6 |
+| 2026-09-24 | [Rethinking Heterogeneous System Disaggregation for Subquadratic Attention](https://arxiv.org/abs/2609.13134) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | SQD improves heterogeneous serving of subquadratic-attention language models by disaggregating decode according to attention behavior, delivering substantial energy and throughput gains. | 8 | 7 |
 | 2026-09-23 | [Attention Routing Stabilizes Early: Working-Set Inference for Recurrent Language Models](https://arxiv.org/abs/2609.27373) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Large Language Models | WISE speeds recurrent language-model inference by discovering relevant context early, then reusing its sparse attention support during later refinement. | 8 | 7 |
 | 2026-09-23 | [KITE: KV-Invariant Transformer Expansion for Efficient Agentic LLM Scaling](https://arxiv.org/abs/2609.27294) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | KITE expands models efficiently by adding parameters that improve capacity without increasing attention KV costs, reducing both training and inference expense. | 9 | 9 |
 | 2026-09-22 | [GTR: Gated Token Recurrence for Efficient Dense Prediction](https://arxiv.org/abs/2609.26590) | Efficient AI: Efficient Attention | GTR replaces quadratic global softmax attention with gated recurrent token mixing for efficient high-resolution dense prediction and edge deployment. | 6 | 6 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**17 papers total**
+**19 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [ViRDM: Taming Representation Distribution Matching for Few-Step Causal Video Generation](https://arxiv.org/abs/2609.28923) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | ViRDM enables efficient few-step causal video generation by replacing teacher–critic distillation with generator-only representation distribution matching. | 8 | 8 |
+| 2026-09-24 | [DreamStream: Towards Policy-Oriented Generative Simulation for End-to-End Driving](https://arxiv.org/abs/2609.26792) | World Models: Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | DreamStream is a policy-oriented generative closed-loop simulator that better preserves decision-relevant scene features for evaluating end-to-end driving policies. | 8 | 8 |
 | 2026-09-23 | [The Past Frames the Future: Memory for Autoregressive Video Generation](https://arxiv.org/abs/2609.28466) | Video Generation and Understanding: Autoregressive Video Models | This review unifies how autoregressive video generators preserve and use long-range historical information beyond bounded context windows. | 7 | 8 |
 | 2026-09-21 | [Uranus: Building the Next-Generation Simulation Infrastructure for Embodied AI](https://arxiv.org/abs/2609.24815) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Uranus is a data-driven robot simulator that enables open-ended, low-latency visual rollouts conditioned on online joint trajectories for scalable embodied-AI development. | 8 | 8 |
 | 2026-09-21 | [ConsistWorld: Evidence Routing for Consistent Multi-Agent World Models](https://arxiv.org/abs/2609.22641) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | ConsistWorld routes historical and peer-view evidence to generate consistent, causally streamed videos for multiple camera-controlled agents observing the same static scene. | 7 | 7 |

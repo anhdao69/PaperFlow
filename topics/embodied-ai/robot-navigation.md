@@ -6,10 +6,17 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**311 papers total**
+**318 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [Beyond Spatial Benchmarks: From Spatial Reasoning to Navigation](https://arxiv.org/abs/2609.29934) | Embodied AI: Vision-Language Navigation, Robot Navigation | Aligning spatial reasoning training with navigation objectives and distilling spatially informed decisions improves navigation efficiently without requiring explicit spatial reasoning at inference. | 9 | 7 |
+| 2026-09-24 | [S2Planner: Multi-Scale Semantic Planner for End-to-End Autonomous Driving](https://arxiv.org/abs/2609.29813) | Embodied AI: Robot Navigation | S2Planner is an end-to-end driving trajectory planner that combines ego-conditioned initialization with coarse-to-fine, geometry-guided multi-scale visual refinement. | 8 | 5 |
+| 2026-09-24 | [Continuous Online Fault Detection for Mobile Robots via Adaptive Edge Models](https://arxiv.org/abs/2609.29194) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An offline-to-online teacher–student framework enables fast, adaptive fault detection for mobile robots on constrained edge hardware. | 9 | 8 |
+| 2026-09-24 | [DAWN: Noise-Robust Quadruped Parkour via Depth-Denoising World Models](https://arxiv.org/abs/2609.29092) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models | DAWN builds depth-noise robustness into a world model, enabling zero-shot quadruped parkour from raw depth without hand-tuned filters or added inference cost. | 8 | 7 |
+| 2026-09-24 | [ReVNM: Learning-Based Visual Navigation from a Remote Camera](https://arxiv.org/abs/2609.28976) | Embodied AI: Robot Navigation | ReVNM enables collision-aware robot navigation using a single remote camera, without pre-built maps or onboard visual processing. | 7 | 6 |
+| 2026-09-24 | [Sim-to-Real Aware End-to-End Learning Environment for Micromobility](https://arxiv.org/abs/2609.28969) | Embodied AI: Robot Navigation | A vehicle-specific, sim-to-real-aware learning environment enables DreamerV3 policies to transfer from simulation to a WHILL Model CR for real-world obstacle avoidance without fine-tuning. | 5 | 5 |
+| 2026-09-24 | [OA-MPPI: Occlusion-Aware Model Predictive Path Integral Control for UAV Flight](https://arxiv.org/abs/2609.28709) | Embodied AI: Robot Navigation | OA-MPPI enables real-time UAV flight through clutter by penalizing paths that could intersect regions reachable by hidden moving agents. | 6 | 5 |
 | 2026-09-23 | [Privacy-Preserving Semantic Segmentation from High-Resolution Depth and Ultra-Low-Resolution RGB](https://arxiv.org/abs/2609.28360) | Embodied AI: Robot Navigation | A privacy-preserving sensing and segmentation framework combines high-resolution depth with ultra-low-resolution RGB to support strong 2D/3D scene understanding while reducing visual privacy risks. | 8 | 7 |
 | 2026-09-23 | [RoadOcc Learns When to Persist, Transport, or Refresh Memory for Roadside Occupancy Prediction](https://arxiv.org/abs/2609.27677) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | RoadOcc improves roadside occupancy prediction by learning when to persist, transport, or refresh temporal evidence, achieving stronger dynamic-object performance. | 6 | 6 |
 | 2026-09-23 | [Know-Your-Scene (KYS)-SLAM: Hierarchical Semantic-Motion Priors for Feature Matching in Stereo Visual SLAM](https://arxiv.org/abs/2609.27509) | Embodied AI: Robot Navigation | KYS-SLAM improves stereo visual SLAM by continuously down-weighting semantically implausible and independently moving-object matches instead of discarding features. | 7 | 7 |

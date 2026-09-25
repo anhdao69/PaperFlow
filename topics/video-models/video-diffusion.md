@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**94 papers total**
+**99 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [WanPE: Towards Cinematic Prompt Enhancement for Modern Text-to-Video Generation](https://arxiv.org/abs/2609.30221) | Video Generation and Understanding: Video Diffusion | WanPE enhances text prompts into cinematic, multi-shot plans that improve long-duration text-to-video generation while preserving user intent. | 6 | 6 |
+| 2026-09-24 | [Accelerating Video Diffusion via Training-Free Trajectory Routing](https://arxiv.org/abs/2609.30096) | Video Generation and Understanding: Video Diffusion; Efficient AI | TRACK accelerates video diffusion by routing each denoising step to either a large or small model based on calibrated prediction disagreement, without retraining or inference-time dual-model evaluation. | 9 | 8 |
+| 2026-09-24 | [AV-GRPO: Modality-Anchored Decoupling Diffusion Reinforcement Learning for Joint Audio-Video Generation](https://arxiv.org/abs/2609.29816) | Video Generation and Understanding: Video Diffusion | AV-GRPO, a modality-anchored diffusion RL framework with a decoupled dataset (5DAV), improves joint audio-video generation quality, semantic alignment, and cross-modal synchronization by decomposing multimodal preference learning into unimodal subproblems. | 6 | 6 |
+| 2026-09-24 | [ComplexSync: High-Fidelity and Real-Time Lip Sync in Complex Scenarios](https://arxiv.org/abs/2609.29225) | Video Generation and Understanding: Video Diffusion | ComplexSync is a diffusion-based lip-sync framework designed for high-fidelity, robust, and real-time generation in complex scenes. | 7 | 5 |
+| 2026-09-24 | [ViRDM: Taming Representation Distribution Matching for Few-Step Causal Video Generation](https://arxiv.org/abs/2609.28923) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | ViRDM enables efficient few-step causal video generation by replacing teacher–critic distillation with generator-only representation distribution matching. | 8 | 8 |
 | 2026-09-23 | [MotionSpec: Spectral Trajectory Supervision for Motion-Consistent Video Generation](https://arxiv.org/abs/2609.28095) | Video Generation and Understanding: Video Diffusion | MotionSpec improves video-generation motion realism by supervising both the frequency structure and local transitions of trajectories. | 7 | 7 |
 | 2026-09-23 | [ZoomDiff: A High-Fidelity Diffusion Model for Dual-Camera Smooth Zooming](https://arxiv.org/abs/2609.28083) | Video Generation and Understanding: Video Diffusion | ZoomDiff uses diffusion with strengthened dual-camera conditioning, flow-guided detail recovery, and temporal supervision to generate high-fidelity, smooth transitions between camera views. | 5 | 6 |
 | 2026-09-23 | [All modalities are equal, but video is more equal: Closing the Cross-Attention Gap in Joint Video Generation](https://arxiv.org/abs/2609.27901) | Video Generation and Understanding: Video Diffusion | RecCAR improves joint video generation by aligning weaker modality-to-video attention with stronger video-to-modality correspondence. | 7 | 6 |

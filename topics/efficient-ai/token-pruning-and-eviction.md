@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**161 papers total**
+**163 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-24 | [When Can Agents Forget Their Reasoning? ICLR for Long-Horizon Agent Context Compression](https://arxiv.org/abs/2609.29875) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: LLM Memory | ICLR safely compresses long-horizon agent reasoning online, reducing token usage while improving reward by preserving interaction-critical context. | 8 | 7 |
+| 2026-09-24 | [Exploiting answer-invariant redundancies in satellite imagery for efficient VLM inference on edge](https://arxiv.org/abs/2609.29029) | Efficient AI: Token Pruning and Eviction | Rift accelerates onboard VLM inference on satellite imagery by pruning answer-irrelevant tiles and tokens, reducing energy and latency while improving accuracy. | 8 | 7 |
 | 2026-09-23 | [LiAM-SAM: Lifecycle-Aware Memory for Robust SAM2-Based MOT](https://arxiv.org/abs/2609.28078) | Efficient AI: Token Pruning and Eviction | LiAM-SAM improves long-horizon SAM2-based multi-object tracking by protecting object memory across track initiation, interactions, and re-identification. | 5 | 7 |
 | 2026-09-23 | [Task-Induced Riemannian Metrics for Vision Transformer Feature Spaces](https://arxiv.org/abs/2609.27988) | Efficient AI: Token Pruning and Eviction | The paper develops task-aware Riemannian metrics for ViT features, enabling geometry-informed token importance and pruning without fine-tuning the ViT. | 7 | 8 |
 | 2026-09-23 | [Improving LLM-based Autonomous Web Agents with Filtering](https://arxiv.org/abs/2609.27770) | Efficient AI: Token Pruning and Eviction | Filtering webpage context with learned retrieval models improves the performance of LLM-based autonomous web agents. | 5 | 5 |

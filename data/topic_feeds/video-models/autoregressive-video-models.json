@@ -1,6 +1,412 @@
 {
   "days": [
     {
+      "date": "2026-09-24",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Few-step autoregressive (AR) video diffusion enables low-latency streaming generation, but existing post-training methods predominantly rely on Distribution Matching Distillation (DMD), requiring both a large pretrained teacher and an online critic to estimate distributional discrepancies through diffusion scores. In this work, we ask whether this resource-intensive teacher--critic stack can be eliminated by post-training only the generator against a precomputed target distribution. Drawing inspiration from representation distribution matching (RDM) for one-step image generation, we systematically study its transfer to few-step causal video generation and identify three key barriers: a memory-intractable gradient path, a distinct video optimization regime, and representation distributions that underconstrain temporal dynamics. We introduce ViRDM, a teacher- and critic-free video post-training recipe that addresses these barriers sequentially. By coupling RDM with stochastically truncated clean-exit supervision, a lightweight VAE decoder, and staged vector--Jacobian products, ViRDM makes representation distribution matching memory-feasible for multi-step causal video rollouts. We further establish effective generated-population and initialization regimes for video RDM, and introduce lightweight dynamics regularization to compensate for the underconstrained temporal dynamics. ViRDM turns three-network distillation into generator-only post-training, reducing GPU memory use and training time while improving video quality. With only 20 generator updates, the recipe reaches 84.87 on the official VBench evaluation, outperforming the previous best few-step causal baseline by 0.36, while requiring 16 A100 GPU-hours. We additionally report exploratory results demonstrating the potential of the same recipe for lower causal sampling budget and for one-, two-, and four-step bidirectional generation.",
+          "arxiv_id": "2609.28923",
+          "arxiv_url": "https://arxiv.org/abs/2609.28923",
+          "authors": [
+            "Zichong Meng, Chongjian Ge, Chun-Hao P. Huang, Yang Zhou, Huaizu Jiang"
+          ],
+          "bullets": [
+            "Targets low-latency autoregressive video diffusion while avoiding a large pretrained teacher and online critic.",
+            "Addresses memory-heavy gradients, video-specific optimization, and weak temporal constraints using truncated clean-exit supervision, a lightweight VAE decoder, staged vector–Jacobian products, and dynamics regularization.",
+            "Establishes suitable generated-population and initialization regimes for applying representation distribution matching to video.",
+            "Reaches 84.87 on official VBench after 20 generator updates, exceeding the prior few-step causal baseline by 0.36 with 16 A100 GPU-hours.",
+            "Also explores lower causal sampling budgets and one-, two-, and four-step bidirectional generation."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3 Qualitative comparison of different initialization. We show frames 0, 40, and 80 from two generated videos, separated by the vertical dashed line, after the same causal few-step video RDM post-training. Each row uses a different initialization. “Bid” denotes the original bidirectional model without causal adaptation, “TF” teacher forcing, “CD” consistency distillation, and “ODE” probability-flow ODE distillation. TF is a causal multi-step initialization, whereas CD and ODE are causal few-step initializations. Directly starting from the bidirectional model causes severe drift under chunkwise causal generation. Teacher forcing prevents this failure and preserves the scene, but produces substantially weaker dynamics; the few-step causal initializations maintain coherence while supporting stronger temporal evolution. This comparison visually supports the quantitative results in Table 3: causal compatibility is essential for stable causal few-step video RDM, while few-step specialization helps its final dynamics operating point.",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 371,
+              "image_path": "figures/2609.28923/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 986
+            },
+            {
+              "caption": "Figure 7 Qualitative results for the four-step bidirectional extension. We show six generated videos, with frames 0, 40, and 80 from each video displayed from left to right. The same ViRDM training recipe used for our causal model also produces high-quality videos with clear temporal evolution when applied to a bidirectional Wan2.1-1.3B generator.",
+              "figure_id": "figure-7-18",
+              "figure_number": "7",
+              "height": 321,
+              "image_path": "figures/2609.28923/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 986
+            },
+            {
+              "caption": "Figure 5 Qualitative comparison with four-step causal video generators. We compare CausVid [74], Self Forcing [30], and Causal Forcing [78], and ViRDM on four prompts. For each generated video, we show frames 0, 40, and 80. ViRDM maintains high visual quality while exhibiting strong video dynamics throughout the generated sequence.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 723,
+              "image_path": "figures/2609.28923/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 986
+            },
+            {
+              "caption": "Figure 2 Consistency-style sampling with stochastic exits for few-step video RDM. Top: Standard flow-matching sampling produces the clean latent Z0 only after all four denoising evaluations, so a terminal RDM loss retains the complete generator graph. Bottom: At every step, consistency-style sampling predicts a clean endpoint Ẑ0 and, when sampling continues, re-noises it to obtain the next noisy latent. We draw the sampled exit S ∼ U{1, . . . , K} with example K = 4 and S = 3: the first two generator evaluations advance the rollout without gradients, while the selected third evaluation receives few-step video RDM supervision.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 441,
+              "image_path": "figures/2609.28923/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 986
+            },
+            {
+              "caption": "Figure 1 Replacing the resource-intensive teacher–critic stack with direct representation distribution matching for few-step causal video post-training. DMD-based post-training requires three video diffusion networks: a heavy frozen score teacher, an online critic, and the generator itself. ViRDM instead matches generated videos directly against a fixed offline representation distribution and updates only the generator. In the same 8-A100 parallelized training setting, this reduces peak memory from 77.1 to 48.3 GB per GPU and post-training time from 22 to 2 hours, while improving the VBench Total from 84.51 to 84.87.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 1227,
+              "image_path": "figures/2609.28923/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1077
+            },
+            {
+              "caption": "Figure 4 Qualitative comparison of different representation choices and dynamics regularization. We show frames 0, 40, and 80 from two generated videos, separated by the vertical dashed line. “Image Marginals” uses independently encoded DINOv2 frame representations, whereas “Video Marginal” uses a V-JEPA 2.1 contextual representation of the complete video. The final row further adds the flow-based dynamics regularizer. Image marginals produce little temporal evolution; the video marginal provides a stronger dynamics signal, and explicit dynamics regularization further increases sustained temporal change while preserving the scene and subject.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 281,
+              "image_path": "figures/2609.28923/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 986
+            },
+            {
+              "caption": "Figure 6 User study. (a) Preference among four-step causal video generators over 20 prompts. (b) Preference between ViRDM and ViRDM without dynamics regularization over 10 prompts. Each bar reports the preference share for one criterion and sums to 100%.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 258,
+              "image_path": "figures/2609.28923/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 986
+            },
+            {
+              "caption": "Table 8 Quantitative comparison with existing video generators. We report official VBench Total, Quality, and Semantic scores. Among the four-step causal methods built on the same Wan2.1-1.3B backbone and evaluated with the same output resolution and inference interface, ViRDM achieves the best Total and Quality scores and the second-best Semantic score. Bold and underline denote the best and second-best results within the four-step causal group.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 406,
+              "image_path": "figures/2609.28923/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 790
+            },
+            {
+              "caption": "Table 4 Quantitative comparison before dynamics regularization. Total w/o Dynamic Degree recomputes the VBench [32] Total after excluding the Dynamic Degree dimension. Our cumulative ViRDM recipe combines the feasible gradient path, B = 64, causal ODE initialization, and 20 post-training updates, but does not yet include explicit dynamics regularization from Section 3.5. All methods use the same evaluation protocol. Bold marks the best value in each column, and gray marks our model.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 122,
+              "image_path": "figures/2609.28923/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 640
+            },
+            {
+              "caption": "Table 10 Extension to fewer-step causal generation. Following ASD’s First-Frame Enhancement strategy, the first autoregressive block uses four denoising steps and subsequent blocks use the indicated budget. We report official VBench scores, grouping methods by the number of denoising steps used after the first block. ViRDM achieves the best Quality score at the two-step budget and the best Total score at the one-step budget. Bold and underline denote the best and second-best results within each step budget, respectively. † denotes frame-wise autoregressive methods; all remaining methods use chunk-wise generation.",
+              "figure_id": "table-10-17",
+              "figure_number": "10",
+              "height": 244,
+              "image_path": "figures/2609.28923/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 594
+            },
+            {
+              "caption": "Table 9 Regularization-weight sweep with targeted and out-of-objective diagnostics. Dynamic Degree measures the video dynamics activity targeted by the regularizer; the remaining four temporal diagnostics are not used for training. A successful regularizer should increase dynamics without degrading the four temporal-quality metrics. Red values in parentheses denote absolute changes from Video RDM without dynamics regularization. The shaded row is our default setting. All rows follow the same official VBench evaluation protocol.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 266,
+              "image_path": "figures/2609.28923/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 836
+            },
+            {
+              "caption": "Table 6 Controlled copmarison of different representation and dynamics objectives. All rows use the feasible gradient path, causal ODE initialization, B = 64, and matched training and evaluation budgets. The first two rows differ only in the frozen representation, while the final row adds the training-only flow regularizer used by the final model. Image RDM performs well on the non-dynamics dimensions but yields low Dynamic Degree. Red values in each subsequent row denote absolute changes from the preceding row. The final two columns exclude Dynamic Degree and are diagnostic only.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 165,
+              "image_path": "figures/2609.28923/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 964
+            },
+            {
+              "caption": "Table 7 Post-training resource comparison. We measure the final distribution-matching stage on the same eight A100 GPUs, excluding the shared initialization stage. Training cost reports wall-clock time and total A100 GPU-hours. ViRDM removes both diffusion-score models and updates only the generator, which saves GPU memory and training time.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 102,
+              "image_path": "figures/2609.28923/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 886
+            },
+            {
+              "caption": "Table 11 Extension to few-step bidirectional generation. We apply the same recipe to the bidirectional Wan2.1-1.3B generator and vary only the sampling budget. All rows use the same post-training and VBench evaluation protocol. Bold denotes the best result in each column.",
+              "figure_id": "table-11-12",
+              "figure_number": "11",
+              "height": 132,
+              "image_path": "figures/2609.28923/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 398
+            },
+            {
+              "caption": "Table 3 Quantitative comparison of initialization on causal few-step video RDM. Causal-prefix supervision indicates that the initialization has been adapted to autoregressive generation from clean preceding chunks; few-step indicates that it has additionally undergone step distillation. Every row then receives the same 20-update causal few-step video RDM post-training with B = 64, so only the initialization differs. Bold marks the best value in each column, and gray marks the causal ODE initialization used thereafter. The high Dynamic Degree of Bidirectional (No Init) results from the severe incoherent drift visualized in Figure 3, rather than useful video dynamics.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 156,
+              "image_path": "figures/2609.28923/table-015.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 886
+            },
+            {
+              "caption": "Table 1 Cumulative peak-memory analysis for one complete ViRDM update. Rows progressively introduce stochastic exits, staged VJPs, and the lightweight VAE decoder. Measurements use one-video-per-GPU microbatches and generate 81-frame (21-latent-frame) videos at 832×480 resolution on 80 GB A100 GPUs; the number of GPUs is reported for each row. OOM indicates peak reserved memory above 80 GB per GPU, and gray marks the feasible final configuration.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 154,
+              "image_path": "figures/2609.28923/table-016.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 640
+            },
+            {
+              "caption": "Table 2 Effect of the fresh generated-video population. B is the global number of newly generated videos used to estimate the generated side of the RDM objective at each update. Accumulation / GPU reports the number of one-video microbatches processed by each of eight A100 GPUs. All rows use the same causal-ODE initialization, optimizer, 20 generator updates, reference bank, and evaluation protocol. Bold indicates the best score in each column; underline denotes the second-best score in each column; gray marks the B = 64 quality–efficiency setting used thereafter.",
+              "figure_id": "table-2-15",
+              "figure_number": "2",
+              "height": 133,
+              "image_path": "figures/2609.28923/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 594
+            },
+            {
+              "caption": "Table 5 Sensitivity to different degrees of frozen dynamics in video. RDM values are averaged over 20 populations of 64 videos. Red values show the percentage change from the fully frozen 0% dynamics. Lower score means better alignment with target distribution, and values should be compared within each row. The image marginal RDM loss remains essentially unchanged from 25% through 100% preserved dynamics, while the video marginal RDM loss is sensitive to the degree of dynamic changes but strictly non-linear.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 137,
+              "image_path": "figures/2609.28923/table-018.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 986
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.28923/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.28923",
+          "relevance": 8,
+          "selection_reason": "Teacher- and critic-free few-step causal video diffusion post-training via representation distribution matching.",
+          "summary_status": "generated",
+          "title": "ViRDM: Taming Representation Distribution Matching for Few-Step Causal Video Generation",
+          "tldr": "ViRDM enables efficient few-step causal video generation by replacing teacher–critic distillation with generator-only representation distribution matching.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion",
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Faithfully evaluating end-to-end driving policies in simulation requires observations that are not merely photo-realistic, but preserve the scene features a policy relies on to make decisions. Existing platforms, however, exhibit a sim-to-real visual gap that corrupts policy perception, undermining their ability to assess a policy's closed-loop decision-making. To this end, we propose DreamStream, a generative, closed-loop simulator that achieves policy-oriented fidelity using a simulator-grounded autoregressive video model. Our video model is distilled from a large pretrained video model via traffic layout guidance, varying visual appearance while preserving policy-relevant features such as scenario layout and the temporal consistency of dynamic objects. We further observe that perceptual metrics like FID misrank how well these features are preserved. To tackle this, we introduce FD$π$, a new multi-representation metric that measures the sim-to-real gap as the Fréchet distance over scene-context features from public E2E policies. Under FD$π$, DreamStream improves over the strongest prior closed-loop simulator by $1.6\\times$ on nuScenes and $4.7\\times$ on NAVSIM, and induces the least perturbation to policy's perceptual observability. Based on DreamStream, we construct Navhard-CL benchmark, which turns non-reactive real-world benchmark NAVSIM into interactive testing environments with adversarial driving behaviors and weather variations. This benchmark exposes many failure modes of driving policies, such as scorer bias and lack of recovery behaviors, that prior closed-loop benchmarks overlook. Code and data are available at https://github.com/VAIL-UCLA/DreamStream.",
+          "arxiv_id": "2609.26792",
+          "arxiv_url": "https://arxiv.org/abs/2609.26792",
+          "authors": [
+            "Ziyang Leng",
+            "Sicheng Mo",
+            "Seth Z. Zhao",
+            "Haoyuan Cai",
+            "Yu Zeng",
+            "Rowan McAllister",
+            "Bolei Zhou"
+          ],
+          "bullets": [
+            "Addresses the sim-to-real visual gap that can distort closed-loop policy evaluation.",
+            "Uses a simulator-grounded autoregressive video model distilled from a pretrained video model with traffic-layout guidance.",
+            "Introduces FDπ, a multi-representation metric based on scene-context features from public end-to-end policies.",
+            "Improves over the strongest prior closed-loop simulator by 1.6× on nuScenes and 4.7× on NAVSIM under FDπ.",
+            "Builds Navhard-CL, an interactive benchmark revealing failures such as scorer bias and weak recovery behaviors."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the DreamStream framework. At each iteration of closed-loop simulation, it performs autoregressive rollouts with layout from a physics simulator and diverse visual appearance.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2609.26792/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 807
+            },
+            {
+              "caption": "Figure 4: Qualitative comparison of our DreamStream and baselines on nuScenes val scenarios.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 392,
+              "image_path": "figures/2609.26792/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 818
+            },
+            {
+              "caption": "Figure 1: Motivation: existing benchmarks for E2E driving either omit behavioral testing or evaluate unfaithfully due to the sim-to-real gap. DreamStream bridges sim-to-real via policy-oriented visual alignment and grounded traffic for faithful closed-loop evaluation.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 264,
+              "image_path": "figures/2609.26792/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 781
+            },
+            {
+              "caption": "Figure 5: Qualitative example of closed-loop policy evaluation using DreamStream.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 206,
+              "image_path": "figures/2609.26792/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Qualitative ablation on traffic-layout guidance and diverse-scene distillation.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 159,
+              "image_path": "figures/2609.26792/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 830
+            },
+            {
+              "caption": "Figure 3: Correlation of FDπ, FID, and FVD with OL PDMS.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 255,
+              "image_path": "figures/2609.26792/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 293
+            },
+            {
+              "caption": "Figure 8: Navhard-AdvBehavior distribution over scenario categories.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 180,
+              "image_path": "figures/2609.26792/figure-007.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 329
+            },
+            {
+              "caption": "Figure 9: More visualizations of closed-loop policy evaluation using DreamStream.",
+              "figure_id": "figure-9-13",
+              "figure_number": "9",
+              "height": 206,
+              "image_path": "figures/2609.26792/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 826
+            },
+            {
+              "caption": "Table 2: Closed-loop performance and analysis on Navhard-CL. (a) E2E driving policy performance on Navhard-Base under three observation sources. Sim: simulator RGB; DA: DriveArena; Ours: DreamStream. (b) Driving score (DS) gap due to scorer bias (Oracle−Learned) and proposal coverage (AdvBehavior−Base with oracle scorer) on Navhard-AdvBehavior. † has no scoring head.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 353,
+              "image_path": "figures/2609.26792/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 811
+            },
+            {
+              "caption": "Table 1: FDπ and FDπk between original and generated/rendered frames. Bold, underline, and :::::",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 251,
+              "image_path": "figures/2609.26792/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 514
+            },
+            {
+              "caption": "Table 8: Closed-loop evaluation of DrivoR across appearance variations in Navhard-AdvWeather, comparing against the base scenarios. Gray is the DS gap versus base. The degradation mainly resides in route completion (RC) and drivable-area compliance (DAC) under road-surface-obscuring conditions.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 431,
+              "image_path": "figures/2609.26792/table-011.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 798
+            },
+            {
+              "caption": "Table 7: Decomposing the closed-loop performance gap on Navhard-CL into scorer bias and proposal coverage. For each scoring policy we report driving score (DS) under its learned scorer (Learned) and an oracle scorer that selects the proposal with the highest ground-truth EPDMS (Oracle), on the base set Navhard-Base and the adversarial set Navhard-AdvBehavior. Gray arrows mark the two gaps: ↕ scorer bias gap,←→ the proposal coverage gap. † has no scoring head.",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 329,
+              "image_path": "figures/2609.26792/table-012.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 482
+            },
+            {
+              "caption": "Table 6: Comparison of DreamStream with representative open-loop and closed-loop benchmarks. Photoreal.: renders photo-realistic, low sim-to-real-gap observations. Visual Div.: can render diverse visual appearance. Adv.: supports reactive adversarial agents.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 202,
+              "image_path": "figures/2609.26792/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 818
+            }
+          ],
+          "first_seen_at": "2026-09-24T21:00:00-04:00",
+          "hero_figure": "figures/2609.26792/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.26792",
+          "relevance": 8,
+          "selection_reason": "Generative closed-loop driving simulator using an autoregressive video model, relevant to interactive world models and video generation.",
+          "summary_status": "generated",
+          "title": "DreamStream: Towards Policy-Oriented Generative Simulation for End-to-End Driving",
+          "tldr": "DreamStream is a policy-oriented generative closed-loop simulator that better preserves decision-relevant scene features for evaluating end-to-end driving policies.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-23",
       "paper_count": 1,
       "papers": [
@@ -3352,5 +3758,5 @@
   "schema_version": 1,
   "subtopic_id": "autoregressive-video-models",
   "topic_id": "video-models",
-  "total_paper_count": 17
+  "total_paper_count": 19
 }
