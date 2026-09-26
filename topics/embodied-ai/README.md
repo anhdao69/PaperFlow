@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**1369 papers total**
+**1371 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [MA-LIPP: Cooperative Multi-Agent Load-Aware Informative Path Planning for Heterogeneous Robot Teams](https://arxiv.org/abs/2609.21167) | Embodied AI | MA-LIPP coordinates heterogeneous robot teams using asynchronous sample handoffs to improve load-aware exploration and sampling efficiency. | 6 | 6 |
+| 2026-09-25 | [PIVOT: Physically Informed Vision-Language Off-Road Traversability for Field Robot Navigation](https://arxiv.org/abs/2609.20983) | Embodied AI: Robot Navigation | PIVOT combines geometry-based planning with physically grounded vision-language terrain reasoning to improve off-road robot autonomy while preserving efficient nominal navigation. | 8 | 7 |
 | 2026-09-24 | [Temporal Gradient Inversion for Private Trajectory Reconstruction in Embodied Reinforcement Learning](https://arxiv.org/abs/2609.30258) | Embodied AI: Robot Learning and Manipulation | TRACE reconstructs private embodied-agent trajectories from sequential policy gradients, revealing that temporal gradient streams can leak observations and actions efficiently. | 6 | 8 |
 | 2026-09-24 | [RAPID: Robot Agentic Programming from Demonstrations](https://arxiv.org/abs/2609.30249) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | RAPID turns a single visual human demonstration into reusable robot programs by automatically generating, verifying, and refining code. | 9 | 8 |
 | 2026-09-24 | [Rolling-WAM: World Action Models with Rolling Imagination](https://arxiv.org/abs/2609.30247) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | Rolling-WAM accelerates closed-loop robotic manipulation by spreading video-action denoising across replanning cycles while preserving competitive performance. | 9 | 8 |

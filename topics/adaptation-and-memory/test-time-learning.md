@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**212 papers total**
+**213 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [When Online Adaptation Hurts: Parameter-Frozen Test-Time Ensembling for Continual Medical Image Segmentation](https://arxiv.org/abs/2609.21412) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Parameter-frozen test-time ensembling improves continual medical image segmentation across changing scanners without updating model weights or normalization statistics. | 7 | 6 |
 | 2026-09-24 | [Minimally Invasive Steering of Language Models](https://arxiv.org/abs/2609.30218) | Adaptation and Memory: Test-Time Learning | MISVO steers frozen language models toward test-time rewards while minimizing changes to their output distributions. | 8 | 7 |
 | 2026-09-24 | [Self-Adaptive VLA for Robust Robot Deployment](https://arxiv.org/abs/2609.30092) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | Self-Adaptive VLA lets vision-language-action policies adapt online to hardware shifts using their own rollout context, recovering over 80% of baseline performance across precision manipulation tasks. | 9 | 8 |
 | 2026-09-24 | [Online Task Adaptation via Self-Organisation](https://arxiv.org/abs/2609.29281) | Adaptation and Memory: Test-Time Learning | A meta-learned neural cellular automaton adapts to new classification tasks online using only local fast-memory updates, without gradient-based parameter changes. | 8 | 8 |

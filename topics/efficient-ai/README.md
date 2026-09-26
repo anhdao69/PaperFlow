@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**820 papers total**
+**823 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [FlashLoop: Fast and Memory-Efficient Looped Transformers via Lazy Updates](https://arxiv.org/abs/2609.29812) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | FlashLoop makes deep Looped Transformer inference faster and more memory-efficient by exploiting redundant cross-loop updates without sacrificing accuracy. | 8 | 8 |
+| 2026-09-25 | [TinyCardioUNet: IMU-to-ECG Translation with Graph-Encoded Inter-Axis Dependencies and Tensor Decomposition-Based Parameter Reduction](https://arxiv.org/abs/2609.29322) | Efficient AI | TinyCardioUNet reconstructs ECG from six-axis chest IMU data using graph-based axis modeling and tensor decomposition in a compact, noise-robust model. | 5 | 6 |
+| 2026-09-25 | [Do small language models know what they don't know?](https://arxiv.org/abs/2609.20824) | Efficient AI | Semantic entropy, not token entropy, helps small language models identify uncertain answers and route them to stronger models for substantial accuracy gains. | 6 | 6 |
 | 2026-09-24 | [PoEM: Predicting RL Outcomes from Existing Policies](https://arxiv.org/abs/2609.30226) | Efficient AI | PoEM predicts the policy that RL would produce for a new reward by combining existing reward-specialized policies, avoiding additional RL training. | 6 | 8 |
 | 2026-09-24 | [Beyond Compression: Training Latent Representations for Stable Long-Horizon Rollout in Neural Surrogate Solvers](https://arxiv.org/abs/2609.30198) | World Models; Efficient AI | Training latent representations for long-horizon dynamics—not reconstruction alone—can make neural surrogate solvers substantially more stable and efficient. | 8 | 7 |
 | 2026-09-24 | [Orbital Error Dynamics: Self-Organized Criticality, Ephemeral Parameter Resonance, and Non-Linear Biological Ontologies in Zero-Storage Neural Synthesis](https://arxiv.org/abs/2609.30115) | Efficient AI: KV Cache and Memory Efficiency | Orbital Error Dynamics proposes generating neural weights procedurally as transient complex-plane resonances rather than storing parameter matrices, achieving moderate Two-Moons accuracy with a 24-byte seed but lower performance than a conventional baseline. | 4 | 4 |

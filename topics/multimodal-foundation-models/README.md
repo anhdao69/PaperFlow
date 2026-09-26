@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**878 papers total**
+**879 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [ViCo: Visual-oriented Coding with Self-Reflection for Chart Replication](https://arxiv.org/abs/2609.16014) | Multimodal Foundation Models: Multimodal Large Language Models | ViCo trains coding agents to iteratively self-reflect and refine chart code, improving the visual and semantic fidelity of replicated academic charts. | 5 | 7 |
 | 2026-09-24 | [To Trust or Not to Trust: Retrieval-Augmented Fact Checking in Speech](https://arxiv.org/abs/2609.30227) | Multimodal Foundation Models: Multimodal Large Language Models | VeriSpeak shows that reliable fact-checking of spoken claims requires explicit reasoning over retrieved evidence, not retrieval alone. | 7 | 6 |
 | 2026-09-24 | [The Alignment Illusion in Multimodal Large Language Models](https://arxiv.org/abs/2609.30210) | Multimodal Foundation Models: Multimodal Large Language Models | Standard visual-text alignment scores can be misleading in MLLMs because shared language-model weights create apparent alignment even when visual information is corrupted. | 5 | 6 |
 | 2026-09-24 | [Do Audio Language Models Hear and Read Distinctive Features Alike?](https://arxiv.org/abs/2609.30167) | Multimodal Foundation Models: Multimodal Large Language Models | Audio-language models generally do not represent phonetic features in the same direction for speech and text, with consistent cross-stream alignment found mainly for voicing in Qwen2.5-Omni models. | 5 | 5 |

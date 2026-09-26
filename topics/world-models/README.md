@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**373 papers total**
+**374 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [WeatherDiagFlow: Evidence-Grounded Radar Nowcasting with Diagnostic Flow Refinement](https://arxiv.org/abs/2609.29772) | World Models: Video World Models | WeatherDiagFlow combines radar nowcasting with evidence-grounded operational bulletins and leakage-controlled post-event audits. | 5 | 6 |
 | 2026-09-24 | [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](https://arxiv.org/abs/2609.30264) | World Models: Latent Action Models, Interactive World Models | AD-WM trains world models to preserve action-dependent differences, substantially improving counterfactual MPC and zero-shot robotic control. | 9 | 9 |
 | 2026-09-24 | [Rolling-WAM: World Action Models with Rolling Imagination](https://arxiv.org/abs/2609.30247) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | Rolling-WAM accelerates closed-loop robotic manipulation by spreading video-action denoising across replanning cycles while preserving competitive performance. | 9 | 8 |
 | 2026-09-24 | [Underwater C3-JEPA: An Object-Centric Cross-View World Model for ROV Salvage](https://arxiv.org/abs/2609.30214) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | Underwater C³-JEPA learns a lightweight object-centric world model that predicts manipulated-object dynamics from multi-view RGB and ROV controls, enabling contact-aware planning without tactile sensors. | 9 | 8 |

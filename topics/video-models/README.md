@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**368 papers total**
+**369 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [Beneath the Scores: Rethinking Hallucination Evaluation for Video Understanding Models](https://arxiv.org/abs/2609.28991) | Video Generation and Understanding: Video Understanding | Stage-intervention tests reveal that temporal grounding—not visual observation—is the main driver of hallucinations in video-understanding agents, while existing benchmark scores are unreliable predictors. | 7 | 7 |
 | 2026-09-24 | [WanPE: Towards Cinematic Prompt Enhancement for Modern Text-to-Video Generation](https://arxiv.org/abs/2609.30221) | Video Generation and Understanding: Video Diffusion | WanPE enhances text prompts into cinematic, multi-shot plans that improve long-duration text-to-video generation while preserving user intent. | 6 | 6 |
 | 2026-09-24 | [Accelerating Video Diffusion via Training-Free Trajectory Routing](https://arxiv.org/abs/2609.30096) | Video Generation and Understanding: Video Diffusion; Efficient AI | TRACK accelerates video diffusion by routing each denoising step to either a large or small model based on calibrated prediction disagreement, without retraining or inference-time dual-model evaluation. | 9 | 8 |
 | 2026-09-24 | [AV-GRPO: Modality-Anchored Decoupling Diffusion Reinforcement Learning for Joint Audio-Video Generation](https://arxiv.org/abs/2609.29816) | Video Generation and Understanding: Video Diffusion | AV-GRPO, a modality-anchored diffusion RL framework with a decoupled dataset (5DAV), improves joint audio-video generation quality, semantic alignment, and cross-modal synchronization by decomposing multimodal preference learning into unimodal subproblems. | 6 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**110 papers total**
+**111 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [FlashLoop: Fast and Memory-Efficient Looped Transformers via Lazy Updates](https://arxiv.org/abs/2609.29812) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | FlashLoop makes deep Looped Transformer inference faster and more memory-efficient by exploiting redundant cross-loop updates without sacrificing accuracy. | 8 | 8 |
 | 2026-09-24 | [Neural Transport Nested Sampling](https://arxiv.org/abs/2609.29413) | World Models: Latent Action Models; Efficient AI: Efficient Attention | Neural Transport Nested Sampling combines flow-based Langevin dynamics with nested sampling to efficiently sample high-dimensional molecular systems and estimate temperature-resolved partition functions. | 7 | 7 |
 | 2026-09-24 | [IronViT: Toward Efficient Generalist Visual Representation Learning](https://arxiv.org/abs/2609.29252) | Efficient AI: Efficient Attention | IronViT builds an efficient generalist vision encoder by consolidating specialist capabilities before converting them to a high-resolution-friendly attention architecture. | 7 | 6 |
 | 2026-09-24 | [Rethinking Heterogeneous System Disaggregation for Subquadratic Attention](https://arxiv.org/abs/2609.13134) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | SQD improves heterogeneous serving of subquadratic-attention language models by disaggregating decode according to attention behavior, delivering substantial energy and throughput gains. | 8 | 7 |

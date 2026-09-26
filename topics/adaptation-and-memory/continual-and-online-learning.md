@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**197 papers total**
+**198 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [When Online Adaptation Hurts: Parameter-Frozen Test-Time Ensembling for Continual Medical Image Segmentation](https://arxiv.org/abs/2609.21412) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Parameter-frozen test-time ensembling improves continual medical image segmentation across changing scanners without updating model weights or normalization statistics. | 7 | 6 |
 | 2026-09-24 | [Intrinsic-Extrinsic Coupling in Learning Dynamics](https://arxiv.org/abs/2609.30185) | Adaptation and Memory: Continual and Online Learning | The paper operationalizes intrinsic–extrinsic coupling in learning by linking executable state interventions to continuation-dependent outcomes and matched interaction tests. | 4 | 7 |
 | 2026-09-24 | [Decoupling Knowledge and Privacy: Post-Task Self-Distillation Replay for LLM Continual Learning](https://arxiv.org/abs/2609.29711) | Adaptation and Memory: Continual and Online Learning | SPARK separates continual-learning retention from post-task privacy correction to suppress sensitive outputs while preserving useful knowledge across sequential tasks. | 8 | 7 |
 | 2026-09-24 | [The Sequential Price of Continual Learning](https://arxiv.org/abs/2609.29674) | Adaptation and Memory: Continual and Online Learning | The paper quantifies the lasting performance cost of sequential task updates and shows how EWC reduces this “sequential price” at the cost of slower convergence. | 8 | 7 |

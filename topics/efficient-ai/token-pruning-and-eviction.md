@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**163 papers total**
+**164 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [FlashLoop: Fast and Memory-Efficient Looped Transformers via Lazy Updates](https://arxiv.org/abs/2609.29812) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | FlashLoop makes deep Looped Transformer inference faster and more memory-efficient by exploiting redundant cross-loop updates without sacrificing accuracy. | 8 | 8 |
 | 2026-09-24 | [When Can Agents Forget Their Reasoning? ICLR for Long-Horizon Agent Context Compression](https://arxiv.org/abs/2609.29875) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: LLM Memory | ICLR safely compresses long-horizon agent reasoning online, reducing token usage while improving reward by preserving interaction-critical context. | 8 | 7 |
 | 2026-09-24 | [Exploiting answer-invariant redundancies in satellite imagery for efficient VLM inference on edge](https://arxiv.org/abs/2609.29029) | Efficient AI: Token Pruning and Eviction | Rift accelerates onboard VLM inference on satellite imagery by pruning answer-irrelevant tiles and tokens, reducing energy and latency while improving accuracy. | 8 | 7 |
 | 2026-09-23 | [LiAM-SAM: Lifecycle-Aware Memory for Robust SAM2-Based MOT](https://arxiv.org/abs/2609.28078) | Efficient AI: Token Pruning and Eviction | LiAM-SAM improves long-horizon SAM2-based multi-object tracking by protecting object memory across track initiation, interactions, and re-identification. | 5 | 7 |

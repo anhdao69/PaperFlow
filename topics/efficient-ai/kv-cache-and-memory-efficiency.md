@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**236 papers total**
+**237 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [FlashLoop: Fast and Memory-Efficient Looped Transformers via Lazy Updates](https://arxiv.org/abs/2609.29812) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | FlashLoop makes deep Looped Transformer inference faster and more memory-efficient by exploiting redundant cross-loop updates without sacrificing accuracy. | 8 | 8 |
 | 2026-09-24 | [Orbital Error Dynamics: Self-Organized Criticality, Ephemeral Parameter Resonance, and Non-Linear Biological Ontologies in Zero-Storage Neural Synthesis](https://arxiv.org/abs/2609.30115) | Efficient AI: KV Cache and Memory Efficiency | Orbital Error Dynamics proposes generating neural weights procedurally as transient complex-plane resonances rather than storing parameter matrices, achieving moderate Two-Moons accuracy with a 24-byte seed but lower performance than a conventional baseline. | 4 | 4 |
 | 2026-09-24 | [MILO: Efficient Many-shot In-Context Learning with Block-wise Low-rank Compression](https://arxiv.org/abs/2609.29913) | Efficient AI: KV Cache and Memory Efficiency | MILO reduces many-shot ICL’s KV-cache memory bottleneck through entropy-aware, block-wise low-rank compression, achieving up to 50% memory savings and 1.8× higher throughput with negligible task degradation. | 9 | 7 |
 | 2026-09-24 | [Beyond Model Size: Redesigning LiSenNet for embedded speech enhancement](https://arxiv.org/abs/2609.29866) | Efficient AI: KV Cache and Memory Efficiency | Redesigning LiSenNet around NPU-compatible operators, quantization, and persistent streaming state enables high-quality real-time speech enhancement on a microcontroller. | 5 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**111 papers total**
+**112 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [WeatherDiagFlow: Evidence-Grounded Radar Nowcasting with Diagnostic Flow Refinement](https://arxiv.org/abs/2609.29772) | World Models: Video World Models | WeatherDiagFlow combines radar nowcasting with evidence-grounded operational bulletins and leakage-controlled post-event audits. | 5 | 6 |
 | 2026-09-24 | [Aim Short to Reach Far: Your Frozen World Model Can Plan Better Than You Think](https://arxiv.org/abs/2609.30036) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | Intermediate, experience-based targets can make a frozen visual world model plan effectively toward long-range goals that direct final-goal scoring misses. | 9 | 8 |
 | 2026-09-24 | [Visual Representation and History Modeling for Navigation World Models](https://arxiv.org/abs/2609.29555) | World Models: Video World Models, Interactive World Models | This study identifies task-dependent visual representations and introduces reusable-history architectures that make navigation world-model prediction more efficient. | 9 | 7 |
 | 2026-09-24 | [Lightweight Probabilistic Downscaling from a Deterministic Base Model](https://arxiv.org/abs/2609.29383) | World Models: Video World Models; Efficient AI: KV Cache and Memory Efficiency | Lightweight probabilistic downscaling models built on a modified U-Net improve climate-data resolution and achieve state-of-the-art RMSE through deterministic pretraining followed by probabilistic tuning. | 8 | 7 |

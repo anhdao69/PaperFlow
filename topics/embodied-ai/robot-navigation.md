@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**318 papers total**
+**319 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [PIVOT: Physically Informed Vision-Language Off-Road Traversability for Field Robot Navigation](https://arxiv.org/abs/2609.20983) | Embodied AI: Robot Navigation | PIVOT combines geometry-based planning with physically grounded vision-language terrain reasoning to improve off-road robot autonomy while preserving efficient nominal navigation. | 8 | 7 |
 | 2026-09-24 | [Beyond Spatial Benchmarks: From Spatial Reasoning to Navigation](https://arxiv.org/abs/2609.29934) | Embodied AI: Vision-Language Navigation, Robot Navigation | Aligning spatial reasoning training with navigation objectives and distilling spatially informed decisions improves navigation efficiently without requiring explicit spatial reasoning at inference. | 9 | 7 |
 | 2026-09-24 | [S2Planner: Multi-Scale Semantic Planner for End-to-End Autonomous Driving](https://arxiv.org/abs/2609.29813) | Embodied AI: Robot Navigation | S2Planner is an end-to-end driving trajectory planner that combines ego-conditioned initialization with coarse-to-fine, geometry-guided multi-scale visual refinement. | 8 | 5 |
 | 2026-09-24 | [Continuous Online Fault Detection for Mobile Robots via Adaptive Edge Models](https://arxiv.org/abs/2609.29194) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An offline-to-online teacher–student framework enables fast, adaptive fault detection for mobile robots on constrained edge hardware. | 9 | 8 |

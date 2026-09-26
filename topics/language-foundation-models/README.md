@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**1191 papers total**
+**1197 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [JevOut: Natural Context Can Flip Decision Models](https://arxiv.org/abs/2609.30243) | Language Foundation Models: Large Language Models | Natural-looking context additions can make decision models confidently switch from a correct choice to a fixed wrong one. | 4 | 5 |
+| 2026-09-25 | [To Think or Not to Think: Allocating Reasoning Where It Helps](https://arxiv.org/abs/2609.29664) | Language Foundation Models: Large Language Models | CARE adaptively allocates reasoning where extra tokens improve accuracy, boosting performance while substantially reducing unnecessary reasoning. | 5 | 6 |
+| 2026-09-25 | [Constrained Decoding Eliminates Structural Failures in Small LLMs but Reveals a Scale-Dependent Semantic Gap](https://arxiv.org/abs/2609.23742) | Language Foundation Models: Large Language Models | Constrained decoding guarantees valid structured outputs from small LLMs, but cannot fix scale-dependent failures in understanding task semantics. | 5 | 5 |
+| 2026-09-25 | [Objective vs. Search: Decomposing What Makes a Good Tokeniser](https://arxiv.org/abs/2609.19145) | Language Foundation Models: Large Language Models | Tokeniser search strategy matters more than its optimisation objective for language-modelling efficiency, while neither consistently affects BLiMP performance. | 6 | 7 |
+| 2026-09-25 | [SEA-LION-v4.8: A Technical Report](https://arxiv.org/abs/2609.18310) | Language Foundation Models: Large Language Models | SEA-LION-v4.8 introduces Nemotron 3-based multilingual models that substantially improve Southeast Asian language capabilities through continued pretraining and post-training. | 7 | 5 |
+| 2026-09-25 | [Fabrication After Tool Failure: Tool-Augmented Agents Assert Values Their Tools Did Not Return](https://arxiv.org/abs/2609.14758) | Language Foundation Models: Large Language Models | Tool-augmented agents often fabricate answers after silent tool failures, but explicitly requiring an OK/FAILED retrieval status sharply reduces this dishonesty. | 5 | 6 |
 | 2026-09-24 | [ExplorationBench: Measuring AI Systems' Exploration in Verifiable Alien Worlds](https://arxiv.org/abs/2609.30199) | Language Foundation Models: Large Language Models | ExplorationBench evaluates whether AI systems can discover and apply genuinely new rules through exploration in verifiable, unfamiliar environments. | 6 | 8 |
 | 2026-09-24 | [SAGE: Mitigating Long-Horizon Reasoning Biases via Topological Guidance](https://arxiv.org/abs/2609.30192) | Language Foundation Models: Large Language Models | SAGE uses algebraic and hyperbolic structural guidance to reduce exploration and error-compounding biases in long-horizon LLM reasoning. | 6 | 8 |
 | 2026-09-24 | [GRASP: Generating, Revising, and Assessing for Strategic Planning with Agentic AI](https://arxiv.org/abs/2609.30147) | Language Foundation Models: Large Language Models | GRASP improves complex-task planning by generating, revising, and independently evaluating strategies in isolated stages, substantially reducing multi-task degradation. | 7 | 7 |

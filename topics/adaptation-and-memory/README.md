@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**456 papers total**
+**458 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [C3M: Cross-Session Multimodal Memory Maintenance for Long-Horizon Tasks](https://arxiv.org/abs/2609.29735) | Adaptation and Memory: Embodied Memory | C3M organizes persistent text-image evidence to support reliable reasoning across long-horizon, cross-session tasks under limited memory and query budgets. | 7 | 7 |
+| 2026-09-25 | [When Online Adaptation Hurts: Parameter-Frozen Test-Time Ensembling for Continual Medical Image Segmentation](https://arxiv.org/abs/2609.21412) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Parameter-frozen test-time ensembling improves continual medical image segmentation across changing scanners without updating model weights or normalization statistics. | 7 | 6 |
 | 2026-09-24 | [Minimally Invasive Steering of Language Models](https://arxiv.org/abs/2609.30218) | Adaptation and Memory: Test-Time Learning | MISVO steers frozen language models toward test-time rewards while minimizing changes to their output distributions. | 8 | 7 |
 | 2026-09-24 | [Intrinsic-Extrinsic Coupling in Learning Dynamics](https://arxiv.org/abs/2609.30185) | Adaptation and Memory: Continual and Online Learning | The paper operationalizes intrinsic–extrinsic coupling in learning by linking executable state interventions to continuation-dependent outcomes and matched interaction tests. | 4 | 7 |
 | 2026-09-24 | [Self-Adaptive VLA for Robust Robot Deployment](https://arxiv.org/abs/2609.30092) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | Self-Adaptive VLA lets vision-language-action policies adapt online to hardware shifts using their own rollout context, recovering over 80% of baseline performance across precision manipulation tasks. | 9 | 8 |

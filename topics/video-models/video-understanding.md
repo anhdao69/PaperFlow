@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**235 papers total**
+**236 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [Beneath the Scores: Rethinking Hallucination Evaluation for Video Understanding Models](https://arxiv.org/abs/2609.28991) | Video Generation and Understanding: Video Understanding | Stage-intervention tests reveal that temporal grounding—not visual observation—is the main driver of hallucinations in video-understanding agents, while existing benchmark scores are unreliable predictors. | 7 | 7 |
 | 2026-09-24 | [SALI: Shot-Aware Late Interaction for Cross-Shot Relation Matching in Text-to-Video Retrieval using Film-Grammar Knowledge](https://arxiv.org/abs/2609.29721) | Video Generation and Understanding: Video Understanding | SALI improves text-to-video retrieval of cross-shot human relations by matching query roles to individual shots with film-grammar guidance. | 7 | 6 |
 | 2026-09-24 | [STRAND: Benchmarking and Improving Object-Centric Spatio-Temporal Monitoring in Video Large Language Models](https://arxiv.org/abs/2609.29607) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | STRAND diagnoses hallucinated video reasoning by testing whether models consistently track object identities, states, and relations over time, and introduces an object-centric framework that improves this consistency. | 8 | 8 |
 | 2026-09-24 | [UNWIND: Any-Length Facial Video for Stress Detection without Temporal Windowing](https://arxiv.org/abs/2609.29553) | Video Generation and Understanding: Video Understanding | UNWIND detects stress from complete facial videos in one model input, avoiding temporal windowing while retaining competitive accuracy. | 6 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**75 papers total**
+**76 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-25 | [C3M: Cross-Session Multimodal Memory Maintenance for Long-Horizon Tasks](https://arxiv.org/abs/2609.29735) | Adaptation and Memory: Embodied Memory | C3M organizes persistent text-image evidence to support reliable reasoning across long-horizon, cross-session tasks under limited memory and query budgets. | 7 | 7 |
 | 2026-09-24 | [ADM-Planner: LLM-Guided Long-Horizon Planning for Mobile Manipulators with Attention-Enhanced Dynamic Memory](https://arxiv.org/abs/2609.29212) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | ADM-Planner uses attention-enhanced dynamic memory to keep LLM plans consistent as mobile-manipulation environments change. | 7 | 7 |
 | 2026-09-24 | [AdaHVLA: Adaptive Harnesses for Long-Horizon Vision-Language-Action Execution](https://arxiv.org/abs/2609.29204) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | AdaHVLA adaptively improves persistent task harnesses so VLA agents can execute long-horizon tasks more reliably. | 9 | 8 |
 | 2026-09-24 | [OREN-X: Octree Residual Network for Real-Time Multi-Modal Mapping](https://arxiv.org/abs/2609.29157) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | OREN-X uses a shared octree to map geometry, radiance, and vision-language features in real time with improved accuracy and lower feature-storage cost. | 8 | 8 |
