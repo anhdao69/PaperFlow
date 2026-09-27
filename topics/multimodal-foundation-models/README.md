@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**879 papers total**
+**880 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [CoAdapt: An LLM-based Framework for Adaptive Collaborative Perception in IIoT Robotic Swarms](https://arxiv.org/abs/2609.16852) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | CoAdapt uses an LLM to dynamically select participating robots and fusion algorithms, reducing communication costs while preserving detection precision in collaborative robotic perception. | 9 | 8 |
 | 2026-09-25 | [ViCo: Visual-oriented Coding with Self-Reflection for Chart Replication](https://arxiv.org/abs/2609.16014) | Multimodal Foundation Models: Multimodal Large Language Models | ViCo trains coding agents to iteratively self-reflect and refine chart code, improving the visual and semantic fidelity of replicated academic charts. | 5 | 7 |
 | 2026-09-24 | [To Trust or Not to Trust: Retrieval-Augmented Fact Checking in Speech](https://arxiv.org/abs/2609.30227) | Multimodal Foundation Models: Multimodal Large Language Models | VeriSpeak shows that reliable fact-checking of spoken claims requires explicit reasoning over retrieved evidence, not retrieval alone. | 7 | 6 |
 | 2026-09-24 | [The Alignment Illusion in Multimodal Large Language Models](https://arxiv.org/abs/2609.30210) | Multimodal Foundation Models: Multimodal Large Language Models | Standard visual-text alignment scores can be misleading in MLLMs because shared language-model weights create apparent alignment even when visual information is corrupted. | 5 | 6 |

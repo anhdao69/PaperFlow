@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**309 papers total**
+**310 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [SafeStage: Evaluating Safety Before, During, and After Vision-Language-Conditioned Robot Manipulation](https://arxiv.org/abs/2609.21223) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | SafeStage benchmarks robot-manipulation safety across the full lifecycle—before, during, and after execution—showing that task success can coexist with safety violations. | 9 | 6 |
 | 2026-09-24 | [Jev-Mobile: Jev as an Executor for Mobile GUI Agents](https://arxiv.org/abs/2609.30186) | Embodied AI: Vision-Language-Action | Jev-Mobile improves mobile GUI agent efficiency by using the VLM for infrequent planning and Jev for fast, repeated action execution. | 7 | 7 |
 | 2026-09-24 | [Self-Adaptive VLA for Robust Robot Deployment](https://arxiv.org/abs/2609.30092) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | Self-Adaptive VLA lets vision-language-action policies adapt online to hardware shifts using their own rollout context, recovering over 80% of baseline performance across precision manipulation tasks. | 9 | 8 |
 | 2026-09-24 | [World Action Agent: Harnessing VLMs for Robot Manipulation via World Action Rehearsal](https://arxiv.org/abs/2609.29964) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | World Action Agent lets VLMs manipulate robots through visual rehearsal, correction, and reusable skills, achieving strong cross-environment performance and improving smaller models via interaction traces. | 9 | 8 |

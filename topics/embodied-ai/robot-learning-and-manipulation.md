@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**813 papers total**
+**816 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [SafeStage: Evaluating Safety Before, During, and After Vision-Language-Conditioned Robot Manipulation](https://arxiv.org/abs/2609.21223) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | SafeStage benchmarks robot-manipulation safety across the full lifecycle—before, during, and after execution—showing that task success can coexist with safety violations. | 9 | 6 |
+| 2026-09-26 | [CapMem: A Benchmark for Caption-Based Episodic Memory in Egocentric Video](https://arxiv.org/abs/2609.17688) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | CapMem benchmarks caption-based episodic memory and shows that captions can improve question answering over long egocentric videos under limited visual-token budgets. | 9 | 8 |
+| 2026-09-26 | [CoAdapt: An LLM-based Framework for Adaptive Collaborative Perception in IIoT Robotic Swarms](https://arxiv.org/abs/2609.16852) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | CoAdapt uses an LLM to dynamically select participating robots and fusion algorithms, reducing communication costs while preserving detection precision in collaborative robotic perception. | 9 | 8 |
 | 2026-09-24 | [Temporal Gradient Inversion for Private Trajectory Reconstruction in Embodied Reinforcement Learning](https://arxiv.org/abs/2609.30258) | Embodied AI: Robot Learning and Manipulation | TRACE reconstructs private embodied-agent trajectories from sequential policy gradients, revealing that temporal gradient streams can leak observations and actions efficiently. | 6 | 8 |
 | 2026-09-24 | [RAPID: Robot Agentic Programming from Demonstrations](https://arxiv.org/abs/2609.30249) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | RAPID turns a single visual human demonstration into reusable robot programs by automatically generating, verifying, and refining code. | 9 | 8 |
 | 2026-09-24 | [Rolling-WAM: World Action Models with Rolling Imagination](https://arxiv.org/abs/2609.30247) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | Rolling-WAM accelerates closed-loop robotic manipulation by spreading video-action denoising across replanning cycles while preserving competitive performance. | 9 | 8 |

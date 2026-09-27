@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**1197 papers total**
+**1200 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [Breaking the Environment Wall: Evolving LLM Agent Environments for Recursive Self-Improvement](https://arxiv.org/abs/2609.29773) | Language Foundation Models: LLM Memory | Env-Rethink evolves messy, changing environments and adds structured context to enable recursive improvement of LLM agents. | 6 | 8 |
+| 2026-09-26 | [What You Can't See Is Still What You Learn: A Preregistered Sixty-Society Confirmation That Evidence Masking Drives Compositional Generalization](https://arxiv.org/abs/2609.17637) | Language Foundation Models: Large Language Models | A preregistered study finds that masking modules from foreign evidence substantially improves compositional generalization, while the mechanism’s broader applicability remains unresolved. | 7 | 7 |
+| 2026-09-26 | [Beyond Verified Answers: Solver-Informed Self-Distillation for Bootstrapping Operations Research Language Models](https://arxiv.org/abs/2609.09957) | Language Foundation Models: Large Language Models | SOLID uses solver artifacts from a model’s own rollouts to provide dense, evaluator-free self-supervision for improving OR formulation accuracy without verified answers. | 7 | 7 |
 | 2026-09-25 | [JevOut: Natural Context Can Flip Decision Models](https://arxiv.org/abs/2609.30243) | Language Foundation Models: Large Language Models | Natural-looking context additions can make decision models confidently switch from a correct choice to a fixed wrong one. | 4 | 5 |
 | 2026-09-25 | [To Think or Not to Think: Allocating Reasoning Where It Helps](https://arxiv.org/abs/2609.29664) | Language Foundation Models: Large Language Models | CARE adaptively allocates reasoning where extra tokens improve accuracy, boosting performance while substantially reducing unnecessary reasoning. | 5 | 6 |
 | 2026-09-25 | [Constrained Decoding Eliminates Structural Failures in Small LLMs but Reveals a Scale-Dependent Semantic Gap](https://arxiv.org/abs/2609.23742) | Language Foundation Models: Large Language Models | Constrained decoding guarantees valid structured outputs from small LLMs, but cannot fix scale-dependent failures in understanding task semantics. | 5 | 5 |

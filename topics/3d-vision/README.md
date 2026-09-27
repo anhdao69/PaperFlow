@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**389 papers total**
+**390 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [Spheriverse: 3D Scene Understanding from Spherical Observations in the Wild](https://arxiv.org/abs/2609.09012) | 3D Vision: 3D Foundation Models | Spheriverse introduces a large-scale spherical image–LiDAR benchmark and SphereOcc, a geometry-aware framework for semantic occupancy prediction in diverse real-world scenes. | 8 | 8 |
 | 2026-09-24 | [TrackEverything: Long Horizon Dense Tracking via De-Duplicating 3D Scene Representations](https://arxiv.org/abs/2609.30222) | 3D Vision | TrackEverything enables dense, long-horizon 3D point tracking by de-duplicating persistent scene representations and refining trajectories efficiently in world coordinates. | 7 | 8 |
 | 2026-09-24 | [M3GD: Multi-Modal Multi-View Geometric Diffusion for Camera--LiDAR Novel View Synthesis](https://arxiv.org/abs/2609.30056) | 3D Vision: 3D Foundation Models | M3GD enables camera–LiDAR novel-view synthesis by injecting view-aligned LiDAR geometry and features into an image-based diffusion generator. | 6 | 7 |
 | 2026-09-24 | [OREO: Fidelity Alignment in 3D Generation via On-the-fly Rendering-Editing Optimization](https://arxiv.org/abs/2609.29788) | 3D Vision | OREO improves 3D generation realism by iteratively refining rendered views with a 2D diffusion model and using them as self-generated supervision. | 7 | 7 |

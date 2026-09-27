@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**268 papers total**
+**269 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [Breaking the Environment Wall: Evolving LLM Agent Environments for Recursive Self-Improvement](https://arxiv.org/abs/2609.29773) | Language Foundation Models: LLM Memory | Env-Rethink evolves messy, changing environments and adds structured context to enable recursive improvement of LLM agents. | 6 | 8 |
 | 2026-09-24 | [Return or Revise? Learning When Revision Helps Retrieval-Augmented QA](https://arxiv.org/abs/2609.30087) | Language Foundation Models: LLM Memory | Predicting whether a specific revision will help is more effective than estimating draft correctness for deciding when to revise retrieval-augmented answers, but alternative answers can be better options. | 4 | 6 |
 | 2026-09-24 | [When Can Agents Forget Their Reasoning? ICLR for Long-Horizon Agent Context Compression](https://arxiv.org/abs/2609.29875) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: LLM Memory | ICLR safely compresses long-horizon agent reasoning online, reducing token usage while improving reward by preserving interaction-critical context. | 8 | 7 |
 | 2026-09-24 | [SEEK: Skill-Routed Evaluation with Evolvable Knowledge for Industrial Search](https://arxiv.org/abs/2609.29803) | Language Foundation Models: LLM Memory | SEEK improves industrial search evaluation by dynamically routing evolving evaluation skills to an LLM-based page-level evaluator without requiring retraining for every rule update. | 6 | 6 |

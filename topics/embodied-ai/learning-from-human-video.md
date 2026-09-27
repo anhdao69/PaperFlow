@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**83 papers total**
+**84 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [CapMem: A Benchmark for Caption-Based Episodic Memory in Egocentric Video](https://arxiv.org/abs/2609.17688) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | CapMem benchmarks caption-based episodic memory and shows that captions can improve question answering over long egocentric videos under limited visual-token budgets. | 9 | 8 |
 | 2026-09-24 | [RAPID: Robot Agentic Programming from Demonstrations](https://arxiv.org/abs/2609.30249) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | RAPID turns a single visual human demonstration into reusable robot programs by automatically generating, verifying, and refining code. | 9 | 8 |
 | 2026-09-24 | [Ego-Exo4D Human Meshes Dataset: 4D Human Motion Reconstruction for Ego-Exo Captures](https://arxiv.org/abs/2609.30187) | Embodied AI: Learning from Human Videos | Ego-Exo4D-HM provides dense 4D human-motion reconstructions and an accompanying pipeline for Ego-Exo4D’s synchronized ego–exo video captures. | 6 | 5 |
 | 2026-09-24 | [Training-Free Hold-Usage Detection in Sport Climbing with Foundation Pose Models](https://arxiv.org/abs/2609.30026) | Embodied AI: Learning from Human Videos | A frozen Sapiens pose foundation model can detect climbing hold usage accurately from ordinary single-camera video without climbing-specific training. | 6 | 5 |

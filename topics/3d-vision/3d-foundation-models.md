@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**158 papers total**
+**159 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [Spheriverse: 3D Scene Understanding from Spherical Observations in the Wild](https://arxiv.org/abs/2609.09012) | 3D Vision: 3D Foundation Models | Spheriverse introduces a large-scale spherical image–LiDAR benchmark and SphereOcc, a geometry-aware framework for semantic occupancy prediction in diverse real-world scenes. | 8 | 8 |
 | 2026-09-24 | [M3GD: Multi-Modal Multi-View Geometric Diffusion for Camera--LiDAR Novel View Synthesis](https://arxiv.org/abs/2609.30056) | 3D Vision: 3D Foundation Models | M3GD enables camera–LiDAR novel-view synthesis by injecting view-aligned LiDAR geometry and features into an image-based diffusion generator. | 6 | 7 |
 | 2026-09-24 | [ICE: Task-Aligned Clifford Latent Fields for Multimodal Graph Foundation Models](https://arxiv.org/abs/2609.29398) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | ICE is a Clifford-algebra graph foundation model that preserves entity semantics while modeling higher-order multimodal and neighborhood interactions, achieving the best result in all 30 reported supervised and few-shot comparisons. | 9 | 9 |
 | 2026-09-24 | [WildHSR: Metric Feed-Forward 4D People-Scene Reconstruction from a 3D Foundation Model](https://arxiv.org/abs/2609.29106) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | WildHSR adapts a 3D foundation model to produce metric-scale, persistent-identity 4D reconstructions of people and scenes from monocular video in a feed-forward pipeline. | 6 | 6 |

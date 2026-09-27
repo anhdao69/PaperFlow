@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**264 papers total**
+**265 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [CoAdapt: An LLM-based Framework for Adaptive Collaborative Perception in IIoT Robotic Swarms](https://arxiv.org/abs/2609.16852) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | CoAdapt uses an LLM to dynamically select participating robots and fusion algorithms, reducing communication costs while preserving detection precision in collaborative robotic perception. | 9 | 8 |
 | 2026-09-24 | [GPT-6-Astra Lights Up Embodied Navigation: Evaluation in Zero-Shot Vision-and-Language Navigation in Continuous Environments](https://arxiv.org/abs/2609.29861) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | GPT-6-Astra demonstrates strong zero-shot vision-and-language navigation from monocular RGB alone, while still struggling with reliable route execution and goal verification. | 9 | 8 |
 | 2026-09-24 | [Retrieve-to-Localize: Bridging Large Language Models and LiDAR Geometry for Spatial Grounding](https://arxiv.org/abs/2609.29835) | Multimodal Foundation Models: Spatial Intelligence | Retrieve-to-Localize combines LLM language reasoning with local LiDAR geometry to ground spatially referred objects and predict their coordinates. | 7 | 6 |
 | 2026-09-24 | [Free the Language Model From the Vision Encoder: Semantic Serialization as a Perception Interface for Small Language Models](https://arxiv.org/abs/2609.29601) | Multimodal Foundation Models: Spatial Intelligence | A deterministic text serialization of frozen visual perception can let small language models answer embodied scene questions more effectively than same-scale zero-shot VLMs, though gains are bounded by perception and reader capacity. | 6 | 8 |

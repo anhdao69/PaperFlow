@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**319 papers total**
+**321 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [WAVE-Go: World-Model Navigation with Adaptive Execution for Wheel-Legged Robots](https://arxiv.org/abs/2609.18193) | Embodied AI: Robot Navigation | WAVE-Go improves wheel-legged robot navigation by adaptively interrupting and executing world-model action plans in response to changing conditions. | 9 | 7 |
+| 2026-09-26 | [CoAdapt: An LLM-based Framework for Adaptive Collaborative Perception in IIoT Robotic Swarms](https://arxiv.org/abs/2609.16852) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | CoAdapt uses an LLM to dynamically select participating robots and fusion algorithms, reducing communication costs while preserving detection precision in collaborative robotic perception. | 9 | 8 |
 | 2026-09-25 | [PIVOT: Physically Informed Vision-Language Off-Road Traversability for Field Robot Navigation](https://arxiv.org/abs/2609.20983) | Embodied AI: Robot Navigation | PIVOT combines geometry-based planning with physically grounded vision-language terrain reasoning to improve off-road robot autonomy while preserving efficient nominal navigation. | 8 | 7 |
 | 2026-09-24 | [Beyond Spatial Benchmarks: From Spatial Reasoning to Navigation](https://arxiv.org/abs/2609.29934) | Embodied AI: Vision-Language Navigation, Robot Navigation | Aligning spatial reasoning training with navigation objectives and distilling spatially informed decisions improves navigation efficiently without requiring explicit spatial reasoning at inference. | 9 | 7 |
 | 2026-09-24 | [S2Planner: Multi-Scale Semantic Planner for End-to-End Autonomous Driving](https://arxiv.org/abs/2609.29813) | Embodied AI: Robot Navigation | S2Planner is an end-to-end driving trajectory planner that combines ego-conditioned initialization with coarse-to-fine, geometry-guided multi-scale visual refinement. | 8 | 5 |

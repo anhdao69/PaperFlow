@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**1371 papers total**
+**1375 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-26 | [SafeStage: Evaluating Safety Before, During, and After Vision-Language-Conditioned Robot Manipulation](https://arxiv.org/abs/2609.21223) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | SafeStage benchmarks robot-manipulation safety across the full lifecycle—before, during, and after execution—showing that task success can coexist with safety violations. | 9 | 6 |
+| 2026-09-26 | [WAVE-Go: World-Model Navigation with Adaptive Execution for Wheel-Legged Robots](https://arxiv.org/abs/2609.18193) | Embodied AI: Robot Navigation | WAVE-Go improves wheel-legged robot navigation by adaptively interrupting and executing world-model action plans in response to changing conditions. | 9 | 7 |
+| 2026-09-26 | [CapMem: A Benchmark for Caption-Based Episodic Memory in Egocentric Video](https://arxiv.org/abs/2609.17688) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | CapMem benchmarks caption-based episodic memory and shows that captions can improve question answering over long egocentric videos under limited visual-token budgets. | 9 | 8 |
+| 2026-09-26 | [CoAdapt: An LLM-based Framework for Adaptive Collaborative Perception in IIoT Robotic Swarms](https://arxiv.org/abs/2609.16852) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | CoAdapt uses an LLM to dynamically select participating robots and fusion algorithms, reducing communication costs while preserving detection precision in collaborative robotic perception. | 9 | 8 |
 | 2026-09-25 | [MA-LIPP: Cooperative Multi-Agent Load-Aware Informative Path Planning for Heterogeneous Robot Teams](https://arxiv.org/abs/2609.21167) | Embodied AI | MA-LIPP coordinates heterogeneous robot teams using asynchronous sample handoffs to improve load-aware exploration and sampling efficiency. | 6 | 6 |
 | 2026-09-25 | [PIVOT: Physically Informed Vision-Language Off-Road Traversability for Field Robot Navigation](https://arxiv.org/abs/2609.20983) | Embodied AI: Robot Navigation | PIVOT combines geometry-based planning with physically grounded vision-language terrain reasoning to improve off-road robot autonomy while preserving efficient nominal navigation. | 8 | 7 |
 | 2026-09-24 | [Temporal Gradient Inversion for Private Trajectory Reconstruction in Embodied Reinforcement Learning](https://arxiv.org/abs/2609.30258) | Embodied AI: Robot Learning and Manipulation | TRACE reconstructs private embodied-agent trajectories from sequential policy gradients, revealing that temporal gradient streams can leak observations and actions efficiently. | 6 | 8 |
