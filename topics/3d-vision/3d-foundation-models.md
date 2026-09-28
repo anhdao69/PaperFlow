@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**159 papers total**
+**165 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-27 | [How Far Can INRs Go? Cross-Domain Parameter-efficient INR-Based Semantic Segmentation for Brain MRI](https://arxiv.org/abs/2609.31573) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Continual and Online Learning | INR-based segmentation is especially effective under tight parameter and augmentation budgets, and HierINRSeg improves cross-domain brain MRI segmentation by combining representations from multiple INR layers. | 8 | 8 |
+| 2026-09-27 | [KneePreM: Towards 3D Knee MRI Foundation Models via Large-Scale Unlabeled Pretraining and Label-Efficient Fine-Tuning](https://arxiv.org/abs/2609.31461) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Test-Time Learning | KneePreM is a knee-specific 3D self-supervised MRI model that improves transfer performance and achieves competitive results with fewer labeled scans. | 8 | 7 |
+| 2026-09-27 | [AxonSynth: Domain-Randomized Synthetic Data for Zero-Shot 3D Axon Segmentation in Light-Sheet Microscopy](https://arxiv.org/abs/2609.31431) | 3D Vision: 3D Foundation Models | AxonSynth trains a 3D axon segmentation model solely on domain-randomized synthetic data and transfers zero-shot to real light-sheet microscopy volumes. | 8 | 7 |
+| 2026-09-27 | [Spackle: Completing Large View Single Image NVS with Adaptive Gaussians](https://arxiv.org/abs/2609.30941) | 3D Vision: 3D Foundation Models | Spackle improves large-view single-image novel view synthesis by adding adaptive residual 3D Gaussians to poorly reconstructed regions without reducing efficiency. | 8 | 8 |
+| 2026-09-27 | [Atelier: Learning Local Self-Supervised Features for CryoEM Volumes via Hypernetworks](https://arxiv.org/abs/2609.30569) | 3D Vision: 3D Foundation Models | Atelier amortizes implicit neural representation fitting to provide aligned, continuous local features that improve voxel-level cryoEM map annotation. | 7 | 7 |
+| 2026-09-27 | [Predicting Transmembrane Protein Topology from 3D Structure](https://arxiv.org/abs/2609.30446) | 3D Vision: 3D Foundation Models | An all-atom SchNet graph neural network shows promise for predicting transmembrane protein topology from 3D structures without pretrained weights. | 6 | 6 |
 | 2026-09-26 | [Spheriverse: 3D Scene Understanding from Spherical Observations in the Wild](https://arxiv.org/abs/2609.09012) | 3D Vision: 3D Foundation Models | Spheriverse introduces a large-scale spherical image–LiDAR benchmark and SphereOcc, a geometry-aware framework for semantic occupancy prediction in diverse real-world scenes. | 8 | 8 |
 | 2026-09-24 | [M3GD: Multi-Modal Multi-View Geometric Diffusion for Camera--LiDAR Novel View Synthesis](https://arxiv.org/abs/2609.30056) | 3D Vision: 3D Foundation Models | M3GD enables camera–LiDAR novel-view synthesis by injecting view-aligned LiDAR geometry and features into an image-based diffusion generator. | 6 | 7 |
 | 2026-09-24 | [ICE: Task-Aligned Clifford Latent Fields for Multimodal Graph Foundation Models](https://arxiv.org/abs/2609.29398) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | ICE is a Clifford-algebra graph foundation model that preserves entity semantics while modeling higher-order multimodal and neighborhood interactions, achieving the best result in all 30 reported supervised and few-shot comparisons. | 9 | 9 |

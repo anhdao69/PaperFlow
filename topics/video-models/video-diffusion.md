@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**99 papers total**
+**104 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-27 | [Where Compute Matters: Heterogeneous Attention for Efficient Video Diffusion](https://arxiv.org/abs/2609.31050) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction, Efficient Attention | HetA-DiT accelerates video diffusion by routing difficult tokens through global attention and reliable tokens through cheaper local attention, preserving competitive quality with dense attention for only about 20% of tokens. | 8 | 8 |
+| 2026-09-27 | [Does Uniform Discrete Diffusion Need Time?](https://arxiv.org/abs/2609.30977) | Video Generation and Understanding: Video Diffusion | Explicit time conditioning may be unnecessary for uniform discrete diffusion models in finite-data language settings, despite time dependence in the population optimum. | 7 | 7 |
+| 2026-09-27 | [Where and When to Force: Routed Forcing for Streaming Avatars](https://arxiv.org/abs/2609.30963) | Video Generation and Understanding: Video Diffusion | Routed Forcing improves streaming avatar motion diversity and dynamics by selectively applying different distillation objectives across semantic regions and noise stages. | 6 | 7 |
+| 2026-09-27 | [Entropy Can Flow, or It Can Guide. Be Entropy. LEDFlow: Introducing Entropy-guided Generation Order into Uniform Discrete Flow](https://arxiv.org/abs/2609.25131) | Video Generation and Understanding: Video Diffusion | LEDFlow improves uniform discrete flow by fixing low-entropy predictions first, reducing later corruption across reasoning, image-generation, and multimodal tasks. | 5 | 8 |
+| 2026-09-27 | [CompAdapt: Adaptable Composite Motion Modeling for Physics-Consistent Text-to-Video Generation](https://arxiv.org/abs/2609.21455) | Video Generation and Understanding: Video Diffusion | CompAdapt enables text-to-video generation of complex, physically consistent motions while adapting to unseen dynamics without retraining its core dynamics module. | 8 | 7 |
 | 2026-09-24 | [WanPE: Towards Cinematic Prompt Enhancement for Modern Text-to-Video Generation](https://arxiv.org/abs/2609.30221) | Video Generation and Understanding: Video Diffusion | WanPE enhances text prompts into cinematic, multi-shot plans that improve long-duration text-to-video generation while preserving user intent. | 6 | 6 |
 | 2026-09-24 | [Accelerating Video Diffusion via Training-Free Trajectory Routing](https://arxiv.org/abs/2609.30096) | Video Generation and Understanding: Video Diffusion; Efficient AI | TRACK accelerates video diffusion by routing each denoising step to either a large or small model based on calibrated prediction disagreement, without retraining or inference-time dual-model evaluation. | 9 | 8 |
 | 2026-09-24 | [AV-GRPO: Modality-Anchored Decoupling Diffusion Reinforcement Learning for Joint Audio-Video Generation](https://arxiv.org/abs/2609.29816) | Video Generation and Understanding: Video Diffusion | AV-GRPO, a modality-anchored diffusion RL framework with a decoupled dataset (5DAV), improves joint audio-video generation quality, semantic alignment, and cross-modal synchronization by decomposing multimodal preference learning into unimodal subproblems. | 6 | 6 |

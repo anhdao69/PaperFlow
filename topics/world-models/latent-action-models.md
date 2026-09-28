@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**51 papers total**
+**52 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-27 | [WALT: Learning World-Model-Aligned Latent Trajectories for Autonomous Driving](https://arxiv.org/abs/2609.30436) | Embodied AI: Robot Navigation; World Models: Latent Action Models | WALT aligns a compact trajectory latent space with a frozen driving world model, improving planning scores while reducing planner computation. | 8 | 7 |
 | 2026-09-24 | [AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control](https://arxiv.org/abs/2609.30264) | World Models: Latent Action Models, Interactive World Models | AD-WM trains world models to preserve action-dependent differences, substantially improving counterfactual MPC and zero-shot robotic control. | 9 | 9 |
 | 2026-09-24 | [Neural Transport Nested Sampling](https://arxiv.org/abs/2609.29413) | World Models: Latent Action Models; Efficient AI: Efficient Attention | Neural Transport Nested Sampling combines flow-based Langevin dynamics with nested sampling to efficiently sample high-dimensional molecular systems and estimate temperature-resolved partition functions. | 7 | 7 |
 | 2026-09-24 | [Representation World Model: Learning States, Transition and Executable Plans in Representation](https://arxiv.org/abs/2609.29171) | World Models: Latent Action Models | RWM learns a representation space where executable plans can be constructed directly between current and goal states, avoiding recursive rollouts and action-space search. | 9 | 8 |

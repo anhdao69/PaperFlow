@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**111 papers total**
+**115 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-27 | [Programs-of-Layers in LLMs through the Lens of Cortical Areas](https://arxiv.org/abs/2609.31360) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | PoLar improves LLM inference by dynamically skipping or repeating layer blocks, but its learned single-shot router does not reliably reproduce the reported gains. | 7 | 7 |
+| 2026-09-27 | [Benchmarking Attention for Tabular Foundation Models](https://arxiv.org/abs/2609.31306) | Efficient AI: Efficient Attention | A reproducible benchmark shows that the best attention backend for tabular foundation models depends on attention axis, sequence length, head dimension, and GPU generation. | 7 | 6 |
+| 2026-09-27 | [MoSAR: Mixture of Semantic Attention Regimes for Learning Adaptive and Approximable Attention Geometries](https://arxiv.org/abs/2609.31261) | Efficient AI: Efficient Attention | MoSAR learns input-dependent attention geometries that reduce long-context attention costs while preserving or improving language-modeling quality and supporting efficient discretization. | 8 | 8 |
+| 2026-09-27 | [Where Compute Matters: Heterogeneous Attention for Efficient Video Diffusion](https://arxiv.org/abs/2609.31050) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction, Efficient Attention | HetA-DiT accelerates video diffusion by routing difficult tokens through global attention and reliable tokens through cheaper local attention, preserving competitive quality with dense attention for only about 20% of tokens. | 8 | 8 |
 | 2026-09-25 | [FlashLoop: Fast and Memory-Efficient Looped Transformers via Lazy Updates](https://arxiv.org/abs/2609.29812) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | FlashLoop makes deep Looped Transformer inference faster and more memory-efficient by exploiting redundant cross-loop updates without sacrificing accuracy. | 8 | 8 |
 | 2026-09-24 | [Neural Transport Nested Sampling](https://arxiv.org/abs/2609.29413) | World Models: Latent Action Models; Efficient AI: Efficient Attention | Neural Transport Nested Sampling combines flow-based Langevin dynamics with nested sampling to efficiently sample high-dimensional molecular systems and estimate temperature-resolved partition functions. | 7 | 7 |
 | 2026-09-24 | [IronViT: Toward Efficient Generalist Visual Representation Learning](https://arxiv.org/abs/2609.29252) | Efficient AI: Efficient Attention | IronViT builds an efficient generalist vision encoder by consolidating specialist capabilities before converting them to a high-resolution-friendly attention architecture. | 7 | 6 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**62 papers total**
+**64 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-27 | [NavGen: Visual Generative Models as a Scalable Data Engine for Embodied 3D Navigation](https://arxiv.org/abs/2609.30770) | Embodied AI: Vision-Language Navigation, Robot Navigation | NavGen uses high-fidelity text-to-video generation to create scalable, diverse navigation data that improves embodied 3D navigation and transfers to real-world flight. | 9 | 8 |
+| 2026-09-27 | [Actively Resolving Contextual Uncertainty for Underspecified Tasks in Natural Language](https://arxiv.org/abs/2609.30428) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | CLUE enables robots to resolve underspecified natural-language tasks by actively gathering context and refining plans through closed-loop interaction. | 9 | 8 |
 | 2026-09-24 | [Beyond Spatial Benchmarks: From Spatial Reasoning to Navigation](https://arxiv.org/abs/2609.29934) | Embodied AI: Vision-Language Navigation, Robot Navigation | Aligning spatial reasoning training with navigation objectives and distilling spatially informed decisions improves navigation efficiently without requiring explicit spatial reasoning at inference. | 9 | 7 |
 | 2026-09-24 | [GPT-6-Astra Lights Up Embodied Navigation: Evaluation in Zero-Shot Vision-and-Language Navigation in Continuous Environments](https://arxiv.org/abs/2609.29861) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | GPT-6-Astra demonstrates strong zero-shot vision-and-language navigation from monocular RGB alone, while still struggling with reliable route execution and goal verification. | 9 | 8 |
 | 2026-09-23 | [RoboFollow: Unveiling the Instruction Following Mirage in Embodied Agents](https://arxiv.org/abs/2609.25636) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | RoboFollow shows that high embodied-agent success can mask weak instruction following when scenes make language unnecessary. | 9 | 9 |

@@ -1,6 +1,838 @@
 {
   "days": [
     {
+      "date": "2026-09-27",
+      "paper_count": 4,
+      "papers": [
+        {
+          "abstract": "Inference in LLMs is conventionally a fixed-depth, fixed-order forward pass through every layer, regardless of how difficult the input is. The human brain does not work this way: using the thalamus as a central hub, it routes information flexibly to all regions of the cortex according to demand. Li et al. (2026) recently showed, with a system they call program-of-layers (PoLar), that transformers can be given an analogous flexibility if their layers are treated as a library of functions rather than a fixed sequence. Performance improves over the standard forward pass when each input is dynamically routed through an adaptive sequence of skipped or repeated contiguous layer blocks. We reconstructed PoLar's diagnostic MCTS in more detail than the original paper and applied it across 5 models. We reproduced several of PoLar's findings: skipping outperformed the standard pass, repeating outperformed skipping, and combining both outperformed either alone. Shorter programs sufficed for easier questions, while harder questions required more layer repeats. However, we failed to replicate the main claim regarding their learned router for single-shot inference: its top-ranked prediction consistently collapsed back to the standard pass, even though its top-k predicted programs, taken together, did show a real accuracy gain. Beyond reproduction, we find that a small number of generic programs are enough to solve most of the questions. We also provide a much deeper analysis of these programs' structure and robustness: for example, we found that programs that correct errors are highly brittle: undoing even a single edit inside a program typically breaks the correction. Connecting this to the brain's routing mechanisms, PoLar mirrors principles of thalamo-cortical coordination between cortical-area-like transformer layers. We publicly release the code at https://datexis.github.io/RE-PoLar/",
+          "arxiv_id": "2609.31360",
+          "arxiv_url": "https://arxiv.org/abs/2609.31360",
+          "authors": [
+            "Justus Westerhoff, Stephan Olbrich, Hatem Oraby, Matthew Evan Larkum, Felix Alexander Gers"
+          ],
+          "bullets": [
+            "Reevaluated PoLar’s diagnostic Monte Carlo tree search across five models.",
+            "Skipping layers outperformed the standard pass; repeating layers performed better, and combining both performed best.",
+            "Easier questions used shorter programs, while harder questions benefited from more layer repeats.",
+            "A small set of generic programs solved most questions, but error-correcting programs were highly brittle to single edits.",
+            "The router’s top-k programs improved accuracy collectively, although its top-ranked program usually reverted to the standard forward pass."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: A program-of-layers (PoLar), predicted by a lightweight router, executes a schedule of skip, keep, and repeat operations over frozen, pretrained transformer layers (left). We read this coordinating role as functionally analogous to the thalamus routing computation across cortical areas (right). A transformer’s layer order is fixed only by training, not by necessity: a model trained to run its layers in order can nonetheless be usefully executed out of that order at inference time, a flexibility the brain already has by default.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 423,
+              "image_path": "figures/2609.31360/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 772
+            },
+            {
+              "caption": "Figure 7: F4 Program-editing structure by segment length, grouped by model.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 300,
+              "image_path": "figures/2609.31360/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 980
+            },
+            {
+              "caption": "Figure 2: Simply repeating a well-chosen middle block (layers 18–22), no retraining, no other intervention, already improves Qwen3-8B’s accuracy on a 6-domain subset of MMLU-Pro (Wang et al., 2024). The representational pattern in (a) and the behavioral pattern in (b) agree on two boundaries: layer 6, where mixing layers from before and after collapses accuracy under both repeat and skip, and layer 25, past which layers grow mutually redundant, so skipping there turns from harmful to roughly neutral.",
+              "figure_id": "figure-2-23",
+              "figure_number": "2",
+              "height": 386,
+              "image_path": "figures/2609.31360/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 980
+            },
+            {
+              "caption": "Figure 11: The recurrence-budget evidence behind F3 , from a depth-budget angle: best accuracy achievable using only a program (identity or found) whose executed length is at most the given budget, as a percentage of the standard forward pass depth (DART-Math difficulty 1 = easiest to 5 = hardest). We are using the same per-model panel as Li et al. (2026) for our reproduction.",
+              "figure_id": "figure-11-25",
+              "figure_number": "11",
+              "height": 540,
+              "image_path": "figures/2609.31360/figure-004.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 915
+            },
+            {
+              "caption": "Figure 17: The per-model layer-position evidence behind F3 : the earliest layers are almost never skipped in any model, consistent with the early load-bearing region we find independently in fig. 2. This panel shows the share of shortest-valid programs that skip each layer, by layer index and DART-Math difficulty. Qwen3-32B is omitted here since it already has its own dedicated figure in the main body (fig. 6).",
+              "figure_id": "figure-17-6",
+              "figure_number": "17",
+              "height": 390,
+              "image_path": "figures/2609.31360/figure-005.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 923
+            },
+            {
+              "caption": "Figure 8: F5 Coverage and visualization of the menu behavior.",
+              "figure_id": "figure-8-14",
+              "figure_number": "8",
+              "height": 262,
+              "image_path": "figures/2609.31360/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 983
+            },
+            {
+              "caption": "Figure 3: One simulation of algorithm 1, traced end to end on a toy tree (D=7). (a) N0 is already wideningcapped, so selection descends by arg max UCB into child B rather than expanding N0 further. (b) B is still under its own cap (1 of 2 children allowed at v=1), so SelectExpand expands it directly, popping a random untried edit to create G. (c) x is scored under G’s edit set ({skip[5, 6), repeat[2, 4)×2}), producing reward r. (d) r backpropagates along the traversed chain N0→B→G, and the global counter V increments once.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 259,
+              "image_path": "figures/2609.31360/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 974
+            },
+            {
+              "caption": "Figure 5: F3 Of every question that is solvable at all, the share that needed recurrence (solid) or needed skipping (dashed) to be solved. We are using the same per-model panel as Li et al. (2026) for our reproduction.",
+              "figure_id": "figure-5-29",
+              "figure_number": "5",
+              "height": 212,
+              "image_path": "figures/2609.31360/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 913
+            },
+            {
+              "caption": "Figure 6: F3 Qwen3-32B: share of shortest-valid programs that skip (a) or repeat (b) each layer, by layer index and DART-Math difficulty. Easier difficulties concentrate more on skipped layers; harder difficulties spread repeats across more of the stack. Same measurement as figs. 17 and 18, all 5 models, in the appendix.",
+              "figure_id": "figure-6-30",
+              "figure_number": "6",
+              "height": 165,
+              "image_path": "figures/2609.31360/figure-009.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 920
+            },
+            {
+              "caption": "Figure 4: F2 Occam’s razor on Qwen3-8B, by DART-Math difficulty: (a) the share of all questions admitting a program shorter than the standard forward pass; (b) that shortest program’s actual executed length, bar = mean, black dot = median, dotted line marks the identity length D. Same measurement as figs. 13 and 14, all 5 models, in the appendix.",
+              "figure_id": "figure-4-28",
+              "figure_number": "4",
+              "height": 170,
+              "image_path": "figures/2609.31360/figure-010.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 798
+            },
+            {
+              "caption": "Figure 9: F7 Each cell is the share of rescuing programs (identity wrong, this program right) whose reward breaks when one edited segment is reverted to keep, pooled over all single-segment reversions.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 217,
+              "image_path": "figures/2609.31360/figure-011.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 474
+            },
+            {
+              "caption": "Figure 18: The repeat-side counterpart to fig. 17, also part of the F3 layer-position evidence. Share of shortest-valid programs that repeat each layer, by layer index and DART-Math difficulty. Qwen3-32B again omitted (fig. 6 in the main body).",
+              "figure_id": "figure-18-10",
+              "figure_number": "18",
+              "height": 390,
+              "image_path": "figures/2609.31360/figure-012.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 915
+            },
+            {
+              "caption": "Figure 10: (a) Accuracy gained by allowing skip and repeat together, over the standard forward pass alone, at each DART-Math difficulty level (1 = easiest, 5 = hardest); same Gain column as table 16 above. (b) Share of questions with at least one valid program, as more extra latent execution steps (recurrence) are allowed beyond the standard forward pass depth, pooled over all difficulties, the recurrence-budget half of",
+              "figure_id": "figure-10-19",
+              "figure_number": "10",
+              "height": 260,
+              "image_path": "figures/2609.31360/figure-013.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 902
+            },
+            {
+              "caption": "Figure 15: The baseline/rescued/unsolved split behind F5 ’s menu coverage. Of every question: the share already answered correctly by the standard forward pass (baseline); the share the standard forward pass got wrong but for which the search found at least one valid program (rescued); the share for which nothing valid was found (unsolved). One panel per model, by DART-Math difficulty, all five sharing the leftmost panel’s y-axis.",
+              "figure_id": "figure-15-4",
+              "figure_number": "15",
+              "height": 194,
+              "image_path": "figures/2609.31360/figure-014.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 925
+            },
+            {
+              "caption": "Figure 16: The F1 solvability split by operation class. Of every solved question, whether the standard forward pass already works (identity), a program using only skips works, a program using only repeats works, and a program using both works (shortest-valid-program lens). These four checks are independent, so a single question can count toward more than one bar and the four bars do not need to sum to 100%. One panel per model, by DART-Math difficulty, all five sharing the leftmost panel’s y-axis.",
+              "figure_id": "figure-16-5",
+              "figure_number": "16",
+              "height": 194,
+              "image_path": "figures/2609.31360/figure-015.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 925
+            },
+            {
+              "caption": "Figure 12: The per-model, per-difficulty view behind F5 : menu generalization degrades with difficulty on every model, coverage still climbing at K=100 on the hardest difficulty but nearly flat by K=30 on the easiest. Menu coverage of solved questions as the menu size K grows, one line per DART-Math difficulty, one panel per model. K on a log scale.",
+              "figure_id": "figure-12-31",
+              "figure_number": "12",
+              "height": 157,
+              "image_path": "figures/2609.31360/figure-016.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 913
+            },
+            {
+              "caption": "Figure 14: The F2 split’s program-length counterpart. Same split as fig. 13, but showing the shortest valid program’s actual executed length rather than just whether it beats identity. The dotted line marks the identity (standard forward pass) length D for reference. Qwen3-8B again omitted (fig. 4 in the main body). One panel per remaining model, by DART-Math difficulty, all four sharing the leftmost panel’s y-axis.",
+              "figure_id": "figure-14-32",
+              "figure_number": "14",
+              "height": 107,
+              "image_path": "figures/2609.31360/figure-017.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 925
+            },
+            {
+              "caption": "Figure 13: The per-model, pooled-over-difficulty counterpart to F2 (Occam’s razor): share of all questions (not split by whether the standard forward pass already answered correctly) admitting a program shorter than it, by DART-Math difficulty. PoLar’s F2 uses the C→C/W→C split of this measure instead, pooled over difficulty. The prose numbers for that split are in section 4.2 and section 4. Qwen3-8B is omitted here since it already has its own dedicated figure in the main body (fig. 4). One panel per remaining model, all four sharing the leftmost panel’s y-axis (0–100%, same scale throughout).",
+              "figure_id": "figure-13-33",
+              "figure_number": "13",
+              "height": 103,
+              "image_path": "figures/2609.31360/figure-018.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 918
+            },
+            {
+              "caption": "Table 2: F0 F8 The reproduction gap against Li et al. (2026)’s own numbers is model-dependent (colored ∆ = ours − their matching tables), and Router p@1 equals Base (τ=0) exactly on every model and difficulty: the router always predicts identity. Accuracy (%) by DART-Math difficulty: Base τ=0/p@1/p@5 and Router p@1/p@5 are pass@k on the 500-question held-out test split per difficulty; MCTS is the share of samples that have at least one valid program, computed over the full 2,000-question pool.",
+              "figure_id": "table-2-22",
+              "figure_number": "2",
+              "height": 887,
+              "image_path": "figures/2609.31360/table-019.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 886
+            },
+            {
+              "caption": "Table 6: Chat template ablation: Base(τ=0) accuracy with vs. without the model’s native chat template, prompt content held fixed at polar_oneshot, 200-question pooled sample (seed 42) per model. “chat template” adds the model family’s own system message where Li et al. (2026)’s code applies one (Qwen2.5family, Qwen1.5-MoE-A2.7B); Qwen3-8B’s chat setting has no system message, matching Li et al.’s own polar/eval.py found at (https://github.com/tianyi-lab/PoLar/blob/main/polar/eval.py).",
+              "figure_id": "table-6-12",
+              "figure_number": "6",
+              "height": 185,
+              "image_path": "figures/2609.31360/table-020.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 598
+            },
+            {
+              "caption": "Table 4: Accuracy, unboxed rate, and prompt template echo rate, all 6 × 6 = 36 model/prompt-variant combinations, on our 10,000-query DART-Math split (section A.1). Bold = best accuracy for that model. Grader: polar_default/polar_oneshot use PoLar, Li et al. (2026)’s own last-\\boxed{}-match DARTMath extraction (byte-identical to their vendored copy); the four drllm variants use mathruler, Heakl et al.’s own grading library (Heakl et al., 2025) – each graded the way its own source protocol would grade it. polar_oneshot repeats the instruction-and-answer block twice inside the 50-token budget, risking a hallucinated third, incomplete \\boxed{...} span that a naive last-match extraction would grab instead of the real answer; we truncate before grading at the first complete span, so it is, in effect, graded on the first \\boxed{...} span rather than the last (polar_default’s single, unrepeated block never needs this). Superscripts are McNemar’s paired test against that model’s own polar_default row: ∗∗∗ p < 0.001, ∗ p < 0.05, unmarked = not significant. Table 5 gives the exact wording of every variant swept here.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 1064,
+              "image_path": "figures/2609.31360/table-021.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 983
+            },
+            {
+              "caption": "Table 5: The 6 prompt variants swept in table 4 (question text abbreviated as <q>), every message spelled out in full. Rows marked † are chat-templated (section A.3); the literal chat-template markup itself (special tokens etc.) is tokenizer-specific and omitted, but every turn’s exact text content is shown.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 674,
+              "image_path": "figures/2609.31360/table-022.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 926
+            },
+            {
+              "caption": "Table 12: The F9 small-fixed-menu property holds on every split: the number of distinct programs appearing anywhere across all questions’ top-5 decoded candidate sets, Drop-CE recipe, per model and DART-Math difficulty level, on training (n=1,250/difficulty), validation (n=250/difficulty), and test (n=500/difficulty) data.",
+              "figure_id": "table-12-16",
+              "figure_number": "12",
+              "height": 432,
+              "image_path": "figures/2609.31360/table-023.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 640
+            },
+            {
+              "caption": "Table 3: F8 Router training-data composition, averaged across all 5 DART-Math difficulty splits, 1,250-question train slice, showing identity examples are a small minority, not a majority-class artifact. Examples = program-examples, one per valid MCTS-discovered program, capped at 50/question; Identity % = share of the identity program; Keep % = share of keep operations, across every example",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 145,
+              "image_path": "figures/2609.31360/table-024.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 454
+            },
+            {
+              "caption": "Table 10: Router training-data composition, Drop treatment, full per-difficulty breakdown, 1,250-question train slice (data composition depends only on the data treatment, not the loss function). Solvable = questions with ≥1 MCTS-verified-correct program; no-id % = share of those with no valid identity program at all; examples = the resulting number of training program-examples; id %/Keep % as table 3.",
+              "figure_id": "table-10-8",
+              "figure_number": "10",
+              "height": 808,
+              "image_path": "figures/2609.31360/table-025.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 984
+            },
+            {
+              "caption": "Table 14: Error-category breakdown for every identity-wrong record, all 5 DART-Math difficulties pooled, per model. Taxonomy and methodology above.",
+              "figure_id": "table-14-18",
+              "figure_number": "14",
+              "height": 176,
+              "image_path": "figures/2609.31360/table-026.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 948
+            },
+            {
+              "caption": "Table 15: Rescue rate (share of wrong final answer records for which MCTS found at least one valid fixing program) by closeness label, all 5 difficulties pooled, per model. Closeness methodology above.",
+              "figure_id": "table-15-17",
+              "figure_number": "15",
+              "height": 175,
+              "image_path": "figures/2609.31360/table-027.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 718
+            },
+            {
+              "caption": "Table 8: Base(τ=0) accuracy (%): MMLU-Pro (overall, all 14 categories, forced-choice logit scoring) and OOD transfer targets ASDiv (n=2,305) and MAWPS (n=520, generation-based, same prompt/mechanism as table 7), all 6 models. Colored ∆ = ours − Li et al. (2026)’s matching table, where one exists.",
+              "figure_id": "table-8-20",
+              "figure_number": "8",
+              "height": 185,
+              "image_path": "figures/2609.31360/table-028.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 614
+            },
+            {
+              "caption": "Table 13: GPU-hours by what the compute went toward (rounded).",
+              "figure_id": "table-13-13",
+              "figure_number": "13",
+              "height": 367,
+              "image_path": "figures/2609.31360/table-029.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 702
+            },
+            {
+              "caption": "Table 16: Combining skip and repeat always beats either alone ( F1 ): Skip&Repeat’s gain over Base ranges from +31.7 to +68.7 accuracy points across all 5 models and every DART-Math difficulty. Base = identity already correct. Skip = identity or a skip-only valid program exists. Repeat = identity or a repeat-only valid program exists. Skip&Repeat = identity or any valid program exists. Gain = Skip&Repeat − Base.",
+              "figure_id": "table-16-24",
+              "figure_number": "16",
+              "height": 251,
+              "image_path": "figures/2609.31360/table-030.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 706
+            },
+            {
+              "caption": "Table 11: Cross-model recipe comparison: validation loss (winning hyperparameter configuration) and real online-execution pass@1/pass@5, averaged across all 5 difficulty splits, for the four comparable variants (Drop/Crop × CE/focal). Drop-CE is the recipe used throughout the rest of this paper. Drop-CE(pass@5) below is corrected to the real full-500-question test split (same backfill as tables 2 and 9); Crop-CE(pass@5) still uses the original n=250 half, not yet backfilled, so that one column is not apples-to-apples with the rest of the table (verified against the repo’s own result files: no full-500 Crop-CE backfill exists yet).",
+              "figure_id": "table-11-26",
+              "figure_number": "11",
+              "height": 196,
+              "image_path": "figures/2609.31360/table-031.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 606
+            },
+            {
+              "caption": "Table 9: Router’s real online-execution pass@1–5, Drop-CE recipe, averaged across all 5 DART-Math difficulty splits, all 5 models in this study; the intermediate pass@2–4 ranks here are not in table 2, which reports only pass@1/pass@5 per difficulty level rather than pooled across difficulty. Router’s pass@1 equals Base(τ=0) exactly: it always predicts identity. The pass@5 gap over pass@1 is the real, non-random rescue signal documented in section 4.4, not something Router’s own top-1 choice can access.",
+              "figure_id": "table-9-21",
+              "figure_number": "9",
+              "height": 165,
+              "image_path": "figures/2609.31360/table-032.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 632
+            },
+            {
+              "caption": "Table 18: The Drop-CE router beats a random-valid-program control at pass@5 (62.6% vs. 45.3%± 8.8%), but identically across all 5 independently seeded retrainings, a structurally fixed margin, not per-question adaptation. Qwen3-8B, 2,800-question held-out test split, same online-execution grading protocol both rows. “Random baseline” draws 5 shared valid programs from the router’s action grammar, independent of training, repeated over 5 seeds (mean±std). Drop-CE router retrains that recipe’s winning hyperparameter configuration 5 independent times (weight-init/data-order seed only); all 5 runs give the identical figure.",
+              "figure_id": "table-18-27",
+              "figure_number": "18",
+              "height": 119,
+              "image_path": "figures/2609.31360/table-033.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 968
+            }
+          ],
+          "first_seen_at": "2026-09-27T21:00:00-04:00",
+          "hero_figure": "figures/2609.31360/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.31360",
+          "relevance": 7,
+          "selection_reason": "Reconstructs and analyzes Program-of-Layers (PoLar) for dynamic LLM inference routing, improving efficiency and accuracy through adaptive layer selection.",
+          "summary_status": "generated",
+          "title": "Programs-of-Layers in LLMs through the Lens of Cortical Areas",
+          "tldr": "PoLar improves LLM inference by dynamically skipping or repeating layer blocks, but its learned single-shot router does not reliably reproduce the reported gains.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Tabular in-context learners such as TabPFN, Mitra, or ConTextTab rely on alternating row and column attention over 2D sequences of latent embeddings. These attention patterns differ markedly from the one-dimensional case in language models: row attention involves longer sequences while column attention operates on much shorter ones, and the strided memory layout of tabular data makes producing contiguous tensors costly. Moreover, the hidden dimensions used in current models are small compared to recent language models. Yet efficient attention has been studied mostly for one-dimensional sequences, leaving the two-dimensional tabular setting unexplored. To this end, we create a reproducible benchmarking setup and study the unique characteristics of tabular attention across several backends -- Torch SDPA (efficient and cuDNN), FlashAttention-2/3/4, and the inference-only backends vLLM and SageAttention -- measuring forward and backward throughput across realistic tabular shapes on three GPU generations (A100, H100, B200). We find that the optimal backend choice differs between column and row attention and varies across hardware as well as model specifics: While the FlashAttention implementations tailored for each GPU generation perform overall best, they are at times outperformed by CuDNN in the case of column attention at longer sequences with cross-over points depending on the head dimension. Among inference-only backends, SageAttention performs well for row attention and large sequences beyond 16\\,k rows. Our reproducible benchmark lays the foundation for future improvements to table-native attention. The self-contained benchmarking and evaluation code is openly available at: https://github.com/SAP-samples/tabular-attention-benchmark",
+          "arxiv_id": "2609.31306",
+          "arxiv_url": "https://arxiv.org/abs/2609.31306",
+          "authors": [
+            "Maximilian Schambach, Clemens Biehl, Sam Thelin"
+          ],
+          "bullets": [
+            "Evaluates Torch SDPA, cuDNN, FlashAttention-2/3/4, vLLM, and SageAttention for row and column attention.",
+            "Measures forward and backward throughput across realistic tabular shapes on A100, H100, and B200 GPUs.",
+            "GPU-specific FlashAttention variants are generally fastest, but cuDNN can win for longer-sequence column attention.",
+            "SageAttention performs well for inference-only row attention with sequences exceeding 16k rows.",
+            "Benchmarking and evaluation code are openly available for reproducible research."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Forward throughput for column attention (left) and row attention (right) across three GPU generations. Configuration: H=12 heads, D=64, bfloat16. Note that FA3 is unavailable on B200 and FA4 does not support D=64 on H100. Measurements beyond the row cutoff of 16k/32k are missing due to GPU memory constraints.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 848,
+              "image_path": "figures/2609.31306/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 792
+            },
+            {
+              "caption": "Figure 5: H100 column attention (left) and row attention (right) throughput for different batch sizes for H=12 heads with head dimension D=64.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 255,
+              "image_path": "figures/2609.31306/figure-002.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 817
+            },
+            {
+              "caption": "Figure 4: Roofline analysis on the H100. Left: Column attention throughput vs. the memory-bound roofline ceiling. Right: Row attention showing FA3 (no copies), cuDNN (with copies), and the estimated throughput of FA3 if degraded by a copy overhead. Configuration: H=12, D=64.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 248,
+              "image_path": "figures/2609.31306/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 792
+            },
+            {
+              "caption": "Figure 2: Forward throughput including inference-only backends (vLLM, SageAttention) on the H100. Configuration: H=12 heads, D=64, bfloat16. Error bands show ±1σ over 50 repetitions.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 240,
+              "image_path": "figures/2609.31306/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 792
+            },
+            {
+              "caption": "Figure 3: Speedup of FA3 over SDPA (cuDNN) for different head dimensions on the H100. Configuration: H=8 heads, D ∈ {16, . . . , 256}, bfloat16. Darker shades indicate larger head dimensions. Values above the dashed line indicate FA3 is faster. The relative advantage of FA3 in row attention increases with the head dimension, as the .contiguous() copy cost scales with D.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 240,
+              "image_path": "figures/2609.31306/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 789
+            },
+            {
+              "caption": "Table 2: Measured .contiguous() bandwidth for three copies (Q, K, V) on the H100 at the row attention shapes used in the benchmark. Configuration: Beff=64, H=12, N,D=64 in bfloat16.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 255,
+              "image_path": "figures/2609.31306/table-006.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 482
+            },
+            {
+              "caption": "Table 1: Microbenchmark of .contiguous() for the row-first layout (Layout A) (B,R,C,H,D) vs. the column-first layout (Layout B) (B,C,R,H,D) with B=2, H=8, D=64. The transpose(1,2) call makes the non-contiguous dimension contiguous. Times in µs; bandwidth in GB/s. All ratios are within 0.3% of unity, confirming that layout choice does not affect copy cost.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 201,
+              "image_path": "figures/2609.31306/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 610
+            }
+          ],
+          "first_seen_at": "2026-09-27T21:00:00-04:00",
+          "hero_figure": "figures/2609.31306/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.31306",
+          "relevance": 7,
+          "selection_reason": "Benchmarks efficient attention backends for tabular foundation models, directly fitting the efficient attention subtopic.",
+          "summary_status": "generated",
+          "title": "Benchmarking Attention for Tabular Foundation Models",
+          "tldr": "A reproducible benchmark shows that the best attention backend for tabular foundation models depends on attention axis, sequence length, head dimension, and GPU generation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "The quadratic complexity of dense self-attention remains a central bottleneck for long-context language modeling. Many efficient alternatives address this cost by deciding in advance where attention should be sparse or local. We argue that attention approximation should instead be approached as a geometric problem, with the relevant interaction geometry learned from data: natural-language dependencies are input-dependent and difficult to prescribe in advance, so the model should learn where positional relevance can decay and where broader interactions must be preserved. We introduce Mixture of Semantic Attention Regimes (MoSAR), which learns such an adaptive, controlled-decay geometry over query--key interactions. Input-conditioned query and key routers, applied after positional encoding, select mixtures over short, medium, and global regimes, inducing a continuous distance-dependent attention field rather than a fixed sparsity pattern. This geometry is learned during training and can subsequently be discretized through top-1 routing. In controlled pre-training experiments with matched 500M-parameter models, MoSAR learns a substantially lower-reach attention geometry without degrading language-modeling quality, improving perplexity over dense RoPE at the training context length. Under length extrapolation, MoSAR achieves the best perplexity among all evaluated variants, including strong baselines such as ALiBi. Moreover, the learned geometry remains stable under deterministic top-1 discretization, suggesting that it is not only adaptive, but also amenable to low-cost approximation at inference time.",
+          "arxiv_id": "2609.31261",
+          "arxiv_url": "https://arxiv.org/abs/2609.31261",
+          "authors": [
+            "Michele Paolicelli, Alessandro Petruzzelli, Alessandro Franceso Maria Martina, Cataldo Musto, Giovanni Semeraro"
+          ],
+          "bullets": [
+            "Targets the quadratic cost of dense self-attention and the limitations of manually prescribed sparse or local patterns.",
+            "Uses query and key routers after positional encoding to mix short-, medium-, and global-attention regimes based on the input.",
+            "Learns a continuous, distance-dependent interaction field that can later be converted to deterministic top-1 routing.",
+            "In matched 500M-parameter pretraining experiments, it learns lower-reach attention without hurting language-modeling quality and improves perplexity over dense RoPE at the training context length.",
+            "Under length extrapolation, it achieves the best perplexity among evaluated variants, while its geometry remains stable after discretization."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: MoSAR-augmented decoder-only Transformer architecture. The model follows a pre-norm decoder-only backbone, while RoPE is applied internally at each layer to queries and keys rather than added once at the input level. The MoSAR router operates only on the query–key pathway and selects the attention regime used by causal self-attention, while values V bypass the router. The overall layout is intentionally designed as a visual adaptation of the iconic Transformer schematic introduced by Vaswani et al. (2017), so as to make the architectural differences immediately comparable. The present figure is nevertheless a new, task-specific reformulation for Gemma-style decoder-only models with post-RoPE routing.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 686,
+              "image_path": "figures/2609.31261/figure-001.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 456
+            },
+            {
+              "caption": "Figure 2: Validation perplexity over pre-training checkpoints at the training context length. MoSAR remains competitive throughout training and reaches the final checkpoint within the strongest group of variants, while learning an adaptive controlled-decay geometry.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 368,
+              "image_path": "figures/2609.31261/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 785
+            },
+            {
+              "caption": "Figure 1: Illustrative MoSAR decay profiles for representative query–key regime pairs. Each pair induces a distance-dependent regime gmn(d) with an initial unit plateau, a smooth decay region, and a finite floor; pairs involving broader regimes retain interactions over longer causal distances.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 344,
+              "image_path": "figures/2609.31261/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 540
+            },
+            {
+              "caption": "Figure 4: Schematic attention regimes at sequence length 2048, rendered as explicit cell grids so that each square corresponds to a single qikj interaction. Fixed S, M , and G produce contiguous causal bands. In contrast, MoSAR activates only router-selected (i, j) regions: the resulting pattern is sparse and disconnected, with isolated attention islands rather than continuous bridges across the entire past context.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 250,
+              "image_path": "figures/2609.31261/figure-004.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 825
+            },
+            {
+              "caption": "Figure 3: Illustration of the pairwise MoSAR decay kernel gmn(d) as a function of causal distance d = i− j. Interactions remain unattenuated up to the pair-dependent threshold Tmn, decay smoothly over a transition region of length Lmn, and reach the finite floor e−B thereafter. The global–global regime is exempt from decay, with gGG(d) = 1 for all d ≥ 0.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 311,
+              "image_path": "figures/2609.31261/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 540
+            },
+            {
+              "caption": "Table 1: Comparison of methods that modify attention geometry or reduce attention computation. Columns refer to the mechanism introduced beyond standard content-based self-attention. ✓ denotes an explicit property, ✗ its absence, and △ a partial, indirect, or inference-only property.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 835,
+              "image_path": "figures/2609.31261/table-006.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 836
+            },
+            {
+              "caption": "Table 2: Performance and length extrapolation in soft/native inference mode after 610k optimization steps. Expected cost is normalized with respect to full attention. All models are evaluated on the same validation corpus, rebuilt at each context length. Lower LM loss and perplexity are better.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 213,
+              "image_path": "figures/2609.31261/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 742
+            },
+            {
+              "caption": "Table 3: Top-1 approximation of learned MoSAR geometries and Soft MoSAR routing statistics across context lengths (medium is omitted, since qM = 1− qS − qG, likewise for keys). The gap is the relative perplexity increase of discrete routing with respect to the corresponding soft geometry.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 183,
+              "image_path": "figures/2609.31261/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 810
+            }
+          ],
+          "first_seen_at": "2026-09-27T21:00:00-04:00",
+          "hero_figure": "figures/2609.31261/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.31261",
+          "relevance": 8,
+          "selection_reason": "Proposes MoSAR, a method to learn adaptive attention geometries to address the quadratic complexity of dense self-attention, falling under Efficient AI.",
+          "summary_status": "generated",
+          "title": "MoSAR: Mixture of Semantic Attention Regimes for Learning Adaptive and Approximable Attention Geometries",
+          "tldr": "MoSAR learns input-dependent attention geometries that reduce long-context attention costs while preserving or improving language-modeling quality and supporting efficient discretization.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Efficient video generation requires reducing the quadratic cost of self-attention over long spatio-temporal token sequences. Existing efficient-attention methods typically apply the same computation pattern to every token, even though denoising difficulty varies substantially across video regions and evolves throughout the generation process. We introduce HetA-DiT, a heterogeneous attention mechanism that adaptively allocates computation according to token difficulty. A lightweight uncertainty branch predicts a token-wise estimate of denoising difficulty, which is used to route uncertain tokens through dense global attention while processing more reliable tokens with efficient local attention. The resulting routing is content- and timestep-adaptive, retains global context where it matters most, and provides a single parameter for controlling the quality-efficiency trade-off. HetA-DiT is compatible with few-step distribution-matching distillation and introduces no additional Transformer evaluation at inference time by reusing uncertainty estimates from the preceding denoising step. We evaluate the method on DMD-distilled Wan2.2-5B and Wan2.1-1.3B models. Across VBench, VBench-2.0, and human preference evaluation, HetA-DiT maintains competitive generation quality while routing only approximately 20% of tokens through dense attention.",
+          "arxiv_id": "2609.31050",
+          "arxiv_url": "https://arxiv.org/abs/2609.31050",
+          "authors": [
+            "Olga Zatsarynna, Denis Korzhenkov, Juergen Gall, Amir Habibian, Mohsen Ghafoorian"
+          ],
+          "bullets": [
+            "Targets the quadratic cost of self-attention for long spatio-temporal video sequences.",
+            "Uses a lightweight uncertainty branch to estimate token-wise denoising difficulty and adapt routing by content and timestep.",
+            "Retains global context for uncertain tokens while applying efficient local attention to reliable tokens.",
+            "Supports few-step distribution-matching distillation and adds no extra Transformer evaluation at inference by reusing prior-step uncertainty estimates.",
+            "Evaluations on DMD-distilled Wan2.2-5B and Wan2.1-1.3B show competitive VBench, VBench-2.0, and human-preference quality with roughly 20% dense-attention routing."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Spend compute where it counts. Not all video tokens are equally hard to denoise; fine structures demand global context, while smooth regions are handled by cheap local attention. Our heterogeneous attention method incorporates this via an adaptive uncertainty-based token router (TR) that dispatches each token to local or dense attention.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 233,
+              "image_path": "figures/2609.31050/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 577
+            },
+            {
+              "caption": "Figure 6: Radar plot comparing HetA-DiT on VBench-2.0 [13] to the state-of-the-art efficient video generation models.",
+              "figure_id": "figure-6-18",
+              "figure_number": "6",
+              "height": 495,
+              "image_path": "figures/2609.31050/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 580
+            },
+            {
+              "caption": "Figure 5: Radar plot comparing HetA-DiT on VBench [12] to the state-of-the-art efficient video generation models.",
+              "figure_id": "figure-5-17",
+              "figure_number": "5",
+              "height": 480,
+              "image_path": "figures/2609.31050/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 580
+            },
+            {
+              "caption": "Figure 2: HetA-DiT. Our approach assigns heterogeneous self-attention computation to tokens with different denoising complexities. Given the uncertainty map 𝑢(𝜏) predicted at step 𝜏 by the dedicated branch, we construct a routing mask 𝑚(𝜏) by thresholding the predicted uncertainties. Based on this mask 𝑚(𝜏) and the latent 𝑥(𝜏), tokens with low uncertainty are processed using cheaper local self-attention in the following denoising step 𝜏 − Δ, while high-uncertainty tokens are processed with full attention. The resulting outputs are then used to determine heterogeneous self-attention processing in the next denoising step.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 393,
+              "image_path": "figures/2609.31050/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 648
+            },
+            {
+              "caption": "Figure 7: Qualitative comparison of HetA-DiT to the state-of-the-art efficient video generation models. Prompt: A 3D model of a 1800s victorian house.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 1060,
+              "image_path": "figures/2609.31050/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 979
+            },
+            {
+              "caption": "Figure 8: Qualitative comparison of HetA-DiT to the state-of-the-art efficient video generation models. Prompt: A beautiful coastal beach in spring, waves lapping on sand, Van Gogh style.",
+              "figure_id": "figure-8-11",
+              "figure_number": "8",
+              "height": 1060,
+              "image_path": "figures/2609.31050/figure-006.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 979
+            },
+            {
+              "caption": "Figure 9: Qualitative comparison of HetA-DiT to the state-of-the-art efficient video generation models. Prompt: A person is playing flute.",
+              "figure_id": "figure-9-16",
+              "figure_number": "9",
+              "height": 1060,
+              "image_path": "figures/2609.31050/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 979
+            },
+            {
+              "caption": "Figure 10: Qualitative comparison of HetA-DiT to the state-of-the-art efficient video generation models. Prompt: a giraffe.",
+              "figure_id": "figure-10-2",
+              "figure_number": "10",
+              "height": 1060,
+              "image_path": "figures/2609.31050/figure-008.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 979
+            },
+            {
+              "caption": "Figure 11: Qualitative comparison of HetA-DiT to the state-of-the-art efficient video generation models. Prompt: A jellyfish floating through the ocean, with bioluminescent tentacles.",
+              "figure_id": "figure-11-4",
+              "figure_number": "11",
+              "height": 1060,
+              "image_path": "figures/2609.31050/figure-009.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 979
+            },
+            {
+              "caption": "Figure 12: Example of the predicted uncertainty map at diffusion timestep 𝜎 = 0.6.",
+              "figure_id": "figure-12-7",
+              "figure_number": "12",
+              "height": 275,
+              "image_path": "figures/2609.31050/figure-010.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 976
+            },
+            {
+              "caption": "Figure 13: Example of the predicted uncertainty map at diffusion timestep 𝜎 = 0.6.",
+              "figure_id": "figure-13-9",
+              "figure_number": "13",
+              "height": 275,
+              "image_path": "figures/2609.31050/figure-011.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 976
+            },
+            {
+              "caption": "Figure 14: Example of the predicted uncertainty map at diffusion timestep 𝜎 = 0.6.",
+              "figure_id": "figure-14-8",
+              "figure_number": "14",
+              "height": 275,
+              "image_path": "figures/2609.31050/figure-012.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 976
+            },
+            {
+              "caption": "Figure 15: Example of the predicted uncertainty map at diffusion timestep 𝜎 = 0.6.",
+              "figure_id": "figure-15-6",
+              "figure_number": "15",
+              "height": 274,
+              "image_path": "figures/2609.31050/figure-013.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 976
+            },
+            {
+              "caption": "Figure 16: Example of the predicted uncertainty map at diffusion timestep 𝜎 = 0.6.",
+              "figure_id": "figure-16-13",
+              "figure_number": "16",
+              "height": 275,
+              "image_path": "figures/2609.31050/figure-014.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 976
+            },
+            {
+              "caption": "Table 1: Comparison with state-of-the-art video diffusion models on VBench2.0",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 191,
+              "image_path": "figures/2609.31050/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 752
+            },
+            {
+              "caption": "Table 8: Ablation study of random token percentage. Adding a random swapping component to uncertaintybased routing increases dense-attention coverage, leading to improved results.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 162,
+              "image_path": "figures/2609.31050/table-016.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 436
+            },
+            {
+              "caption": "Table 4: Results of the method-blind human visual preference study over 1,248 pairs of videos.",
+              "figure_id": "table-4-14",
+              "figure_number": "4",
+              "height": 63,
+              "image_path": "figures/2609.31050/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 445
+            },
+            {
+              "caption": "Table 5: Latency speedup of HetA-DiT relative to dense attention, including amortized BlockMask construction cost.",
+              "figure_id": "table-5-15",
+              "figure_number": "5",
+              "height": 72,
+              "image_path": "figures/2609.31050/table-018.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 445
+            }
+          ],
+          "first_seen_at": "2026-09-27T21:00:00-04:00",
+          "hero_figure": "figures/2609.31050/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.31050",
+          "relevance": 8,
+          "selection_reason": "Difficulty-adaptive token routing for efficient video diffusion; directly relevant to token pruning and efficient attention.",
+          "summary_status": "generated",
+          "title": "Where Compute Matters: Heterogeneous Attention for Efficient Video Diffusion",
+          "tldr": "HetA-DiT accelerates video diffusion by routing difficult tokens through global attention and reliable tokens through cheaper local attention, preserving competitive quality with dense attention for only about 20% of tokens.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-25",
       "paper_count": 1,
       "papers": [
@@ -19569,5 +20401,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 111
+  "total_paper_count": 115
 }
