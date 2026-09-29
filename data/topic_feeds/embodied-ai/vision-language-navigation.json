@@ -1,6 +1,2189 @@
 {
   "days": [
     {
+      "date": "2026-09-28",
+      "paper_count": 13,
+      "papers": [
+        {
+          "abstract": "Vision-language navigation (VLN) models perform well but target compute-rich platforms, limiting deployment on memory- and power-constrained robotic edge devices. Compression alone does not establish whether a VLN model fits the memory, latency, and energy budgets of an edge platform while preserving navigation behavior. We introduce EdgeVLN, a runtime-aware, deployment-ready quantized VLN model that closes this gap. EdgeVLN combines a quantized StreamVLN model with Latent Trajectory Termination Extractor (LATTE), a lightweight causal transformer that improves real-time stopping by predicting a Stop Action verifier rank. Both execute through our llama.cpp VLN driver, which reconstructs streaming context and prunes memory tokens on-board. We characterize a pretrained StreamVLN backbone across weight quantization from 8 to 2 bits and multiple inference runtimes to identify a feasible operating point. LATTE reuses backbone hidden states within the budget freed by quantization, requiring neither a second vision encoder nor an additional backbone forward pass. We evaluate six backbone precisions and seven candidate stop heads on BF16 and IQ4 NL across all 1,839 R2R VLN-CE val-unseen episodes. We measure success rate (SR) in simulation and latency, energy, and resident memory on an NVIDIA Jetson Orin NX 16 GB. LATTE achieves our highest SR, 58.02 percent on the deployed 4-bit model, exceeding the BF16 baseline with only 0.013 s additional latency per navigation step. Four-bit formats achieve nearly identical SR, but step energy varies 36.8 times by execution path. Only IQ4 NL under our VLN driver fits the board, using 11.35 GB resident memory while running 20.8 times faster and using 13.3 times less energy than storage-streamed BF16. INT2 collapses. Runtime selection, memory-token pruning, and quantization are essential for efficient edge deployment.",
+          "arxiv_id": "2609.35570",
+          "arxiv_url": "https://arxiv.org/abs/2609.35570",
+          "authors": [
+            "Rithvik Jonna, Man Namgung, Aakash Gurram, Tinoosh Mohsenin"
+          ],
+          "bullets": [
+            "Targets the memory, latency, and energy constraints that limit deployment of vision-language navigation models on edge devices.",
+            "Combines quantized StreamVLN with LATTE, a causal transformer that predicts a Stop Action verifier rank using reused backbone states.",
+            "Uses a llama.cpp-based VLN driver for streaming-context reconstruction and on-device memory-token pruning.",
+            "On a Jetson Orin NX, the deployed IQ4 NL model fits within 11.35 GB, runs 20.8× faster, and uses 13.3× less energy than storage-streamed BF16.",
+            "Four-bit formats preserve navigation performance, while INT2 causes severe degradation; execution path strongly affects energy."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Overview of EdgeVLN. EdgeVLN consists of a quantized StreamVLN model and LATTE, an inline Stop Action verifier, both executed by our llama.cpp VLN driver on the NVIDIA Jetson Orin NX 16 GB detailed below. The input is a natural-language navigation instruction, the current RGB frame, and a 32-frame KV cache of earlier frames; the output is a navigation action—move forward, turn left, turn right, or stop—together with LATTE’s Stop Action verifier rank.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 368,
+              "image_path": "figures/2609.35570/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 3. Overview of seven Stop Action verifier candidates evaluated on the R2R VLN-CE dataset validation-unseen split. All variants use a frozen StreamVLN backbone quantized to IQ4 NL and different stop-prediction strategy: MLP-Vision(1,2), MLP-VT Concat, MLP-VT FiLM, LLM-hiddenMLP(L20,L24) and LATTE (ours), the selected candidate, taps intermediate Qwen2-7B hidden states and applies causal self-attention over recent hidden states for stop prediction. Gray denotes the frozen quantized backbone, white trained components, and green LATTE modules. The stop decision determines whether action generation continues, with MSE/asymmetric-MSE losses used by the corresponding heads.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 518,
+              "image_path": "figures/2609.35570/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 2. EdgeVLN inference path. Input: a language instruction and the current camera frame. The quantized StreamVLN model encodes them into a chunk of four actions, and LATTE reads the same forward pass’s layer-24 activations to predict the Stop Action verifier rank. Output: the Stop Action verifier rank triggers STOP or the next action, which the robot executes to produce the next frame.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 589,
+              "image_path": "figures/2609.35570/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 4. On-board measurement on the Jetson Orin NX. (a) Measurement setup in MAXN power mode: the robot stands still while the frames of one recorded real-world episode (89 frames) are replayed to it, so latency, power, energy, and memory are measured without a trajectory that changes from one configuration to another. (b) Both llama.cpp configurations draw less power and finish sooner than NF4 under PyTorch. (c) Mean step latency per configuration with peak resident memory; the number inside each perchunk bar is how many chunk compressions occur in one episode. EdgeVLN improves success rate while nearly matching the quantized StreamVLN’s onboard latency, energy, and memory under our driver.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 754,
+              "image_path": "figures/2609.35570/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "TABLE I ACCURACY AND ON-BOARD MEASUREMENT RESULTS. (A) REPORTS THE SIX PRECISIONS OF THE STREAMVLN MODEL, FROM BF16 DOWN TO 2 BITS; (B) REPORTS SEVEN STOP ACTION VERIFIER CANDIDATES WITH BASELINE, EACH ON THE TWO DEPLOYABLE BACKBONES, BF16 AND IQ4 NL. SR AND OSR COME FROM 1,839 CLOSED-LOOP R2R VLN-CE DATASET VAL-UNSEEN SPLIT EPISODES EVALUATION. WE MEASURED RAM, POWER, ENERGY AND LATENCY ON AN NVIDIA JETSON ORIN NX. AS BF16 DOES NOT FIT, ONLY 20 OF THE 28 TRANSFORMER BLOCKS PLUS THE OUTPUT LAYER STAY RESIDENT, THE REST STREAMED FROM STORAGE AT EACH TOKEN.",
+              "figure_id": "table-I-4",
+              "figure_number": "I",
+              "height": 619,
+              "image_path": "figures/2609.35570/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 488
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.35570/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.35570",
+          "relevance": 9,
+          "selection_reason": "Quantized VLN model for edge deployment with token pruning and memory efficiency; directly fits VLN and efficient AI.",
+          "summary_status": "generated",
+          "title": "EdgeVLN: Runtime-Aware Deployment Ready Quantized Vision Language Navigation Model",
+          "tldr": "EdgeVLN enables practical VLN on constrained robotic edge hardware by combining 4-bit quantization, runtime-aware execution, and a lightweight stopping module.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent zero-shot Vision-and-Language Navigation (VLN) methods increasingly rely on multimodal large language models (MLLMs) to reason over visual observations, navigation instructions, and candidate actions. Although effective, repeatedly invoking autoregressive multimodal reasoning at every navigation step introduces substantial inference latency, limiting the responsiveness of embodied agents. We propose NavJev, an efficient VLN framework that reformulates online navigation from repeated multimodal generation into compact visual compression followed by lightweight typed action selection. Specifically, Action-Centric Visual Compression (ACVC) integrates waypoint geometry, BLIP captions, and RAM semantic tags into compact representations of candidate actions, while Discriminative Action-Semantic Memory (DASM) filters shared semantics and maintains discriminative action-specific evidence across navigation steps. Based on these representations, Jev directly performs structured probabilistic decisions over the available action set. Experiments on R2R-CE show that NavJev achieves 27.0% SR and 22.4% SPL with only 0.65 s per navigation step, while substantially reducing inference latency and cost compared with MLLM-based VLN methods. The project page is available at https://kai-sheng-caesar.github.io/NavJev/.",
+          "arxiv_id": "2609.34969",
+          "arxiv_url": "https://arxiv.org/abs/2609.34969",
+          "authors": [
+            "Kai Sheng, Liuyi Wang, Jinlong Li, Haojie Dai, Chengju Liu, Qijun Chen"
+          ],
+          "bullets": [
+            "Targets the high latency and cost of repeatedly using multimodal large language models at every navigation step.",
+            "Action-Centric Visual Compression combines waypoint geometry, BLIP captions, and RAM semantic tags for candidate actions.",
+            "Discriminative Action-Semantic Memory preserves action-specific evidence while filtering shared semantics across steps.",
+            "Jev performs structured probabilistic selection directly over available actions.",
+            "On R2R-CE, NavJev reports 27.0% SR, 22.4% SPL, and 0.65 seconds per navigation step, with lower latency and cost than MLLM-based methods."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Overview of NavJev. ACVC compresses candidate observations into compact action-centric representations, DASM filters shared semantics and maintains discriminative action-specific evidence across navigation steps, and Jev performs efficient typed action selection.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 443,
+              "image_path": "figures/2609.34969/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1024
+            },
+            {
+              "caption": "Figure 3. Inference efficiency analysis of NavJev. (a) Average step time compared with representative zero-shot VLN methods. NavJev requires only 0.65 s per step, achieving approximately 41.5×, 8.2×, and 7.6× speedups over Open-Nav, SmartWay, and P2DNav, respectively. (b) Wall-clock latency breakdown of NavJev. Jev API calls account for most of the inference time, while waypoint prediction, ACVC perception, and other modules introduce only limited additional overhead.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 296,
+              "image_path": "figures/2609.34969/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 862
+            },
+            {
+              "caption": "Figure 6. Real-world navigation visualization of NavJev. The agent follows natural-language instructions through sequential waypoint decisions and successfully stops at the referred vending machine and elevator. Red annotations indicate key selected actions and their corresponding action-semantic cues.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 700,
+              "image_path": "figures/2609.34969/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 1. Performance and efficiency advantages of NavJev on R2R-CE. NavJev achieves 27.0% SR and 22.4% SPL with only 0.65 s per navigation step and substantially lower inference cost than representative MLLM-based VLN methods.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 208,
+              "image_path": "figures/2609.34969/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 496
+            },
+            {
+              "caption": "Figure 4. Distribution of per-episode average step time (AST) for different decision models under the same ACVC–DASM representation on the R2R-CE 100-episode split.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 286,
+              "image_path": "figures/2609.34969/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 374
+            },
+            {
+              "caption": "Figure 5. Failure analysis of NavJev on the R2R-CE 100-episode split. Left: distribution of navigation outcomes and failure modes, where incorrect waypoint selection accounts for most failures. Middle and right: representative failure cases comparing the waypoint selected by NavJev (red) with the oracle waypoint (green). When instructions require precise spatial-relation understanding or different viewpoints exhibit similar visual semantics, NavJev may select a plausible but incorrect direction.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 273,
+              "image_path": "figures/2609.34969/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1036
+            },
+            {
+              "caption": "Table 1. Comparison with representative supervised and zero-shot methods on the R2R-CE val-unseen split.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 554,
+              "image_path": "figures/2609.34969/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 496
+            },
+            {
+              "caption": "Table 2. Inference efficiency comparison with representative taskfine-tuned MLLM-based VLN methods. These methods typically predict low-level discrete actions at each step, whereas NavJev performs waypoint-level action selection.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 152,
+              "image_path": "figures/2609.34969/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 496
+            },
+            {
+              "caption": "Table 3. Comparison of decision models under the same ACVC– DASM representation on the R2R-CE 100-episode split. Qwen3.8Max and GPT-4o are evaluated with reasoning disabled.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 113,
+              "image_path": "figures/2609.34969/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 496
+            },
+            {
+              "caption": "Table 4. Component ablation of ACVC and DASM on the R2R-CE 100-episode split, where BLIP and RAM are components of ACVC.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 112,
+              "image_path": "figures/2609.34969/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 471
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.34969/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.34969",
+          "relevance": 9,
+          "selection_reason": "Efficient zero-shot vision-language navigation with action-centric visual compression and action-semantic memory; directly relevant to VLN, embodied navigation, and efficiency.",
+          "summary_status": "generated",
+          "title": "NavJev: Efficient Vision-Language Navigation via Action-Centric Visual Compression and Discriminative Action-Semantic Memory",
+          "tldr": "NavJev speeds up zero-shot vision-language navigation by compressing visual information into action-focused representations and making lightweight structured action decisions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation",
+                "robot-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent vision-language models (VLMs) have advanced vision-and-language navigation (VLN), enabling models to predict navigation actions from visual observations and language instructions. In this work, we explore VLN with panoramic observations and introduce PanoVLN. The motivation is straightforward: more complete visual context should enable better-informed navigation decisions. For example, a panorama can reveal a passage outside a perspective camera's field of view, allowing the model to identify the intended route without additional exploration. However, we find that simply replacing perspective images with panoramas yields only limited gains. Our diagnosis suggests that fully exploiting wider visibility requires modifications to action prediction, training supervision, and visual representation. First, wider visibility supports longer-horizon action planning. We make the model predict longer action sequences, enabling larger turns and subsequent movement from a single panorama. Specifically, we introduce a confidence-guided execution (CGE) strategy that dynamically determines how many predicted actions to execute before replanning. Second, wider visibility also brings more complex route choices. We therefore construct training routes with frequent branching points and clear instructions to provide targeted supervision for route selection. Third, panoramic navigation requires understanding spatial relationships across viewing directions, beyond recognizing individual landmarks. We combine semantic and geometric features from RGB panoramas to capture both scene content and spatial layout without adding visual tokens. With a 4B backbone and RGB-only input, PanoVLN surpasses the previous SOTA by 11.9% and 8.7% in success rate on R2R-CE and RxR-CE Val-Unseen. Real-world experiments on a quadruped further demonstrate faster navigation with fewer pauses than prior VLN methods.",
+          "arxiv_id": "2609.34759",
+          "arxiv_url": "https://arxiv.org/abs/2609.34759",
+          "authors": [
+            "Zhen Wang, Changpeng Wang, Zhe Liu, Zhangyang Qi, Yuxiang Lu, Zimo Zeng, Donglian Qi, Xi Chen"
+          ],
+          "bullets": [
+            "Panoramas offer broader context but provide limited gains when used as a direct replacement for perspective images.",
+            "Confidence-guided execution predicts and executes variable-length action sequences to support longer-horizon planning.",
+            "Training routes emphasize frequent branching points and clear instructions to improve route selection.",
+            "Semantic and geometric features from RGB panoramas capture both scene content and spatial relationships without adding visual tokens.",
+            "With a 4B RGB-only model, PanoVLN reports higher success rates on R2R-CE and RxR-CE Val-Unseen, and real-world quadruped tests show faster navigation with fewer pauses."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Data construction pipeline. We construct routes with frequent branching points, generate and verify instructions, and sample training states.",
+              "figure_id": "figure-4-21",
+              "figure_number": "4",
+              "height": 440,
+              "image_path": "figures/2609.34759/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 786
+            },
+            {
+              "caption": "Figure 5: Real-world navigation. PanoVLN deployed on a quadruped robot and transfers to realworld instruction following without scene-specific fine-tuning.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 275,
+              "image_path": "figures/2609.34759/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 744
+            },
+            {
+              "caption": "Figure 2: PanoVLN pipeline. Current and historical panoramas share a fixed visual-token budget. Aligned geometric features enrich the current visual tokens, and uncertainty determines how much of the predicted action sequence to execute.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 228,
+              "image_path": "figures/2609.34759/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 824
+            },
+            {
+              "caption": "Figure 9: Navigation prompt (H = 18). Italic fields are inputs; history is omitted when unavailable.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 325,
+              "image_path": "figures/2609.34759/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 827
+            },
+            {
+              "caption": "Figure 3: Action uncertainty. Uncertainty rises after an initial dip and varies across policy calls, motivating adaptive execution.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 206,
+              "image_path": "figures/2609.34759/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 356
+            },
+            {
+              "caption": "Figure 11: Additional paired attention cases, each using the same ERP and instruction. Red bold text marks the relevant route clause; dashed lines bound the forward 90◦ sector. Each case note identifies the visible hotspot locations.",
+              "figure_id": "figure-11-14",
+              "figure_number": "11",
+              "height": 1116,
+              "image_path": "figures/2609.34759/figure-006.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 794
+            },
+            {
+              "caption": "Figure 12: Real-world navigation cases in Hallway, Office, and Campus. Each row shows the instruction and successive observations from one trial, with route annotations.",
+              "figure_id": "figure-12-20",
+              "figure_number": "12",
+              "height": 1069,
+              "image_path": "figures/2609.34759/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 818
+            },
+            {
+              "caption": "Figure 13: Navigation cases on R2R-CE Val-Unseen. Each case shows four panoramic observations in reading order and the full instruction. Numbered markers link each observation to its location on the trajectory; blue and green denote the executed and reference routes.",
+              "figure_id": "figure-13-4",
+              "figure_number": "13",
+              "height": 1119,
+              "image_path": "figures/2609.34759/figure-008.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 715
+            },
+            {
+              "caption": "Figure 14: Navigation cases on RxR-CE Val-Unseen. Four panoramic observations per case are linked to the trajectory by numbered markers. Blue and green denote the executed and reference routes. Instruction excerpts retain the original wording; ellipses mark omissions.",
+              "figure_id": "figure-14-7",
+              "figure_number": "14",
+              "height": 1119,
+              "image_path": "figures/2609.34759/figure-009.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 715
+            },
+            {
+              "caption": "Figure 10: Reference-path turn distribution in R2R-CE and RxR-CE, normalized over 54,457 turns of at least 30◦. The 45◦–180◦ categories account for 53.3% of turns.",
+              "figure_id": "figure-10-8",
+              "figure_number": "10",
+              "height": 285,
+              "image_path": "figures/2609.34759/figure-010.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 592
+            },
+            {
+              "caption": "Figure 8: Training data comparison. We compare data sources across training scales on R2R-CE Val-Unseen. Our data consistently delivers the best navigation performance.",
+              "figure_id": "figure-8-19",
+              "figure_number": "8",
+              "height": 173,
+              "image_path": "figures/2609.34759/figure-011.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 825
+            },
+            {
+              "caption": "Figure 6: Real-world navigation performance. We compare SR and NE on 20 shared instruction– route pairs each in Hallway, Office, and Campus and achieves the best navigation performance.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 159,
+              "image_path": "figures/2609.34759/figure-012.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 811
+            },
+            {
+              "caption": "Figure 7: Prediction horizon ablation. Panoramic policies benefit from longer supervision and outperform perspective policies at longer horizons.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 160,
+              "image_path": "figures/2609.34759/figure-013.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 745
+            },
+            {
+              "caption": "Table 1: Simulation benchmark comparison. We evaluate performance on R2R-CE and RxR-CE Val-Unseen with the indicated observation modalities. ∗ denotes the waypoint predictor from Hong et al. (2022); † denotes training without navigation data beyond R2R-CE and RxR-CE. NE is in meters; other scores are percentages. PanoVLN achieves the highest SR and SPL on both benchmarks.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 575,
+              "image_path": "figures/2609.34759/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 794
+            },
+            {
+              "caption": "Table 2: Real-world execution efficiency. PanoVLN achieves the best overall navigation efficiency among the compared methods.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 182,
+              "image_path": "figures/2609.34759/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 744
+            },
+            {
+              "caption": "Table 6: Default PanoVLN settings. Image dimensions are width × height.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 502,
+              "image_path": "figures/2609.34759/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 827
+            },
+            {
+              "caption": "Table 4: Execution strategy comparison. We compare fixed, random, and confidence-guided execution. CGE achieves the best navigation performance on both benchmarks.",
+              "figure_id": "table-4-17",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2609.34759/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 710
+            },
+            {
+              "caption": "Table 5: Geometry encoder comparison. We compare geometric features from different encoders. PanoVGGT yields the highest success rates on both benchmarks.",
+              "figure_id": "table-5-18",
+              "figure_number": "5",
+              "height": 190,
+              "image_path": "figures/2609.34759/table-018.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 694
+            },
+            {
+              "caption": "Table 7: Training data composition on R2R-CE and RxR-CE Val-Unseen. All settings retain PanoVGGT, CGE, and the H = 18 prediction setting.",
+              "figure_id": "table-7-15",
+              "figure_number": "7",
+              "height": 160,
+              "image_path": "figures/2609.34759/table-019.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 656
+            },
+            {
+              "caption": "Table 8: VLM backbone comparison on R2R-CE and RxR-CE Val-Unseen. All backbones use the full training-data configuration, PanoVGGT, CGE, and H = 18.",
+              "figure_id": "table-8-16",
+              "figure_number": "8",
+              "height": 160,
+              "image_path": "figures/2609.34759/table-020.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 594
+            },
+            {
+              "caption": "Table 3: Training data comparison.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 93,
+              "image_path": "figures/2609.34759/table-021.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 281
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.34759/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.34759",
+          "relevance": 9,
+          "selection_reason": "Panoramic vision-and-language navigation with action planning and real-robot validation; directly fits VLN.",
+          "summary_status": "generated",
+          "title": "PanoVLN: Towards Effective Panoramic Vision-and-Language Navigation",
+          "tldr": "PanoVLN improves panoramic vision-and-language navigation by combining adaptive multi-step action execution, branching-focused supervision, and spatially aware visual features.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Object navigation requires an embodied agent to find an object in an unseen environment under partial observability and a limited motion budget. Existing methods primarily optimize where the robot should go next by ranking candidate destinations. In contrast to these methods, we present SOR-Nav, a hierarchical navigation system that explicitly arbitrates between continuing to explore the current context and abandoning it for a more promising reachable region. First, an autonomous semantic exploration system is built that accumulates persistent 3D object clusters and organizes reachable frontiers into a cluster decision graph to provide an efficient search abstraction. Then, SOR-Nav uses a context-gated LLM-driven object-search supervisor to evaluate the suitability of the current search context and decide whether to continue exploration or perform cross-region relocation to another reachable frontier cluster. Across the complete, unfiltered validation sets of HM3D-v1, HM3D-v2, and MP3D, SOR-Nav achieves the strongest reported Success Rate (SR) and Success weighted by Path Length (SPL) on all three benchmarks. On MP3D in particular, it more than doubles the previous best SPL from 18.1\\% to 38.5\\% while increasing SR from 50.7\\% to 61.8\\%. Nested HM3D-v2 ablations validate the proposed decision structure, while a continuous three-target physical deployment demonstrates persistent ObjectNav operation in real-world scenarios.",
+          "arxiv_id": "2609.34707",
+          "arxiv_url": "https://arxiv.org/abs/2609.34707",
+          "authors": [
+            "Yuan Ji, Zirui Li, Yuxin Cai, Shuge Wu, Boon Siew Han, Chen Lv"
+          ],
+          "bullets": [
+            "Addresses object search under partial observability and limited motion budgets.",
+            "Builds persistent 3D object clusters and a reachable-frontier cluster decision graph for semantic exploration.",
+            "Uses a context-gated LLM supervisor to choose between continued exploration and cross-region relocation.",
+            "Achieves the strongest reported SR and SPL on the complete validation sets of HM3D-v1, HM3D-v2, and MP3D.",
+            "On MP3D, raises SPL from 18.1% to 38.5% and SR from 50.7% to 61.8%; ablations and physical deployment support the decision structure and persistent operation."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Overview of the SOR-Nav object-search workflow. RGB and depth observations update persistent 3D object clusters and a cluster decision graph in the autonomous semantic exploration system. The LLM-driven supervisor prioritizes confirmed target evidence; otherwise, its context gate determines whether to continue exploration or relocate to a graph-reachable frontier cluster. All outcomes share the same mission executor, and subsequent observations and mission results close the loop.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 381,
+              "image_path": "figures/2609.34707/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 842
+            },
+            {
+              "caption": "Fig. 4. Paired qualitative results for 18 successful episodes across HM3D-v2, HM3D-v1, and MP3D, with six target categories shown per dataset. Within each episode panel, the goal-facing terminal RGB observation is shown directly above its corresponding explored occupancy map and executed trajectory. The yellow overlay marks the detected target category; the title reports the target and true dataset episode index. Portrait RViz maps with width-to-height ratio below 0.95 are rotated 90◦ clockwise for compact display.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 864,
+              "image_path": "figures/2609.34707/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 944
+            },
+            {
+              "caption": "Fig. 5. Representative events from a continuous real-world ObjectNav run in which the next request was issued after each successful target confirmation. Each labeled pair shows the first-person observation (top) and accumulated map, graph, and trajectory (bottom). The sequence highlights the relocation trigger, passage through the office doorway, and terminal observations for television, trash can, and signboard; all map panels use the final viewport. The reported distance is cumulative robot travel from the beginning of the sequence, rather than geodesic distance to a target.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 556,
+              "image_path": "figures/2609.34707/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 502
+            },
+            {
+              "caption": "Fig. 3. Same-floor navigation performance versus initial geodesic distance to the closest target. SR (solid lines, left axes) is shown with Wilson 95% confidence intervals, while mean SPL (dashed lines with open markers) uses the right axes. Annotations give the number of episodes in each dataset– distance bin.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 383,
+              "image_path": "figures/2609.34707/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 479
+            },
+            {
+              "caption": "Fig. 2. Primary outcomes among failed episodes in the complete v0 runs. Percentages are normalized within each dataset’s failures; the right-side annotations report failed episodes over all evaluated episodes.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 219,
+              "image_path": "figures/2609.34707/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 468
+            },
+            {
+              "caption": "TABLE I OBJECTNAV COMPARISON BASED ON THE SYSNAV SIMULATION TABLE AND SOR-NAV EVALUATION RESULTS. SR AND SPL ARE REPORTED IN PERCENTAGES.",
+              "figure_id": "table-I-1",
+              "figure_number": "I",
+              "height": 290,
+              "image_path": "figures/2609.34707/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 948
+            },
+            {
+              "caption": "TABLE II NESTED ABLATION STUDY ON HM3D-V2. SR, SPL, STEP-LIMIT (SL), AND TIMEOUT (TO) RATES ARE PERCENTAGES; N IS THE NUMBER OF EVALUATED EPISODES.",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 172,
+              "image_path": "figures/2609.34707/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 434
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.34707/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.34707",
+          "relevance": 9,
+          "selection_reason": "Object navigation with LLM-driven context-gated exploration and cross-region relocation; directly relevant to embodied navigation and language-guided decision making.",
+          "summary_status": "generated",
+          "title": "SOR-Nav: Search or Relocate? Context-Gated Exploration and Cross-Region Relocation for Object Navigation",
+          "tldr": "SOR-Nav improves object navigation by deciding when to keep searching locally and when to relocate to a more promising region.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation",
+                "robot-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Spatial reasoning is fundamental to embodied agents, yet it remains unclear whether spatial understanding can be carried forward to guide sequential interactions. Existing spatial-reasoning benchmarks typically terminate at offline predictions, while navigation benchmarks evaluate spatial reasoning as part of instruction following and exploration. We introduce VCN-Bench, a \\textbf{V}ideo-\\textbf{C}ontextualized \\textbf{N}avigation benchmark for probing closed-loop spatial reasoning over prior visual experience in MLLMs. Given a prior video covering both the initial location and destination, the agent is tasked with reasoning out the instruction-specified target and navigating toward it with the inferred spatial context. Built on Matterport3D, VCN-Bench contains five instruction types, 100k training episodes, and 1,250 evaluation episodes. Navigation serves as the primary evaluation, while diagnostic goal identification helps distinguish destination-resolution errors from subsequent navigation failures. We further propose MV-DualVLN, a planning-oriented baseline that jointly leverages prior video and in-episode observations. Experiments reveal limited navigation performance, a substantial destination-resolution-to-navigation gap, and frequent navigation failures even after correct destination identification.",
+          "arxiv_id": "2609.34687",
+          "arxiv_url": "https://arxiv.org/abs/2609.34687",
+          "authors": [
+            "Siqi Zhang, Meng Wei, Chenyang Wan, Shaohao Zhu, Shufan Shen, Xihui Liu, Zhihua Wei, Tai Wang, Jiangmiao Pang"
+          ],
+          "bullets": [
+            "Evaluates closed-loop spatial reasoning from a prior video covering an initial location and destination.",
+            "Includes five instruction types, 100k training episodes, and 1,250 evaluation episodes built on Matterport3D.",
+            "Separates destination identification from subsequent navigation to diagnose distinct failure sources.",
+            "Introduces MV-DualVLN, a planning-oriented baseline combining prior video with in-episode observations.",
+            "Results show limited navigation ability, a large gap between destination resolution and navigation, and frequent failures despite correct destination identification."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4 Benchmark construction pipeline.",
+              "figure_id": "figure-4-21",
+              "figure_number": "4",
+              "height": 360,
+              "image_path": "figures/2609.34687/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 954
+            },
+            {
+              "caption": "Figure 5 The overall framework of MV-DualVLN.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 229,
+              "image_path": "figures/2609.34687/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 790
+            },
+            {
+              "caption": "Figure 7 Pearson correlation between model performance and prior video.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 321,
+              "image_path": "figures/2609.34687/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 642
+            },
+            {
+              "caption": "Figure 2 Demonstration of VCN-Bench. (a) Prior video with room labels. (b) Top-down view of the prior video. (c) The reasoning process during navigation. Navigation tasks (d) are conditioned on the prior video with target room labels.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 489,
+              "image_path": "figures/2609.34687/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 954
+            },
+            {
+              "caption": "Figure 1 VCN-Bench is a video-contextualized navigation benchmark tailored for probing closed-loop spatial reasoning over prior visual experience in MLLMs. The spatial context inferred from the prior video directly informs destination resolution and guides closed-loop action decisions.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 337,
+              "image_path": "figures/2609.34687/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 984
+            },
+            {
+              "caption": "Figure 3 Instruction descriptions and primary dimensions of reasoning over prior visual experience.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 314,
+              "image_path": "figures/2609.34687/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 956
+            },
+            {
+              "caption": "Figure 8 Templates and tags of instructions.",
+              "figure_id": "figure-8-16",
+              "figure_number": "8",
+              "height": 533,
+              "image_path": "figures/2609.34687/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 986
+            },
+            {
+              "caption": "Figure 11 Prompt for zero-shot goal identification.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 837,
+              "image_path": "figures/2609.34687/figure-008.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 986
+            },
+            {
+              "caption": "Figure 10 Benchmark statistics, including (a) the number of prior video frames, (b) number of rooms and (c) area (the entire area of any region visited is included) covered by the prior video, (d) number of words in instructions, (e) the shortest geodesic distance, and (f) action steps of episodes.",
+              "figure_id": "figure-10-20",
+              "figure_number": "10",
+              "height": 296,
+              "image_path": "figures/2609.34687/figure-009.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 956
+            },
+            {
+              "caption": "Figure 14 Visualization of Cognition error.",
+              "figure_id": "figure-14-3",
+              "figure_number": "14",
+              "height": 641,
+              "image_path": "figures/2609.34687/figure-010.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 984
+            },
+            {
+              "caption": "Figure 9 Example of VCN-Bench. In the top-down map, we plot the video trajectory with a green curve, which starts from the red flag and ends at the black flag. The red and yellow stars are the markers for the initialization and target positions of each episode. “FR”, “RR”, “R”, “RL”, “FL”, “F” are the abbreviations of Front-Right, Rear-Right, Rear, Rear-Left, Front-Left, Front, respectively.",
+              "figure_id": "figure-9-12",
+              "figure_number": "9",
+              "height": 898,
+              "image_path": "figures/2609.34687/figure-011.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 984
+            },
+            {
+              "caption": "Figure 13 Visualization of Disturbance and Position error.",
+              "figure_id": "figure-13-19",
+              "figure_number": "13",
+              "height": 483,
+              "image_path": "figures/2609.34687/figure-012.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 690
+            },
+            {
+              "caption": "Figure 17 MV-DualVLN visualization example.",
+              "figure_id": "figure-17-18",
+              "figure_number": "17",
+              "height": 543,
+              "image_path": "figures/2609.34687/figure-013.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 790
+            },
+            {
+              "caption": "Figure 16 MV-DualVLN visualization example.",
+              "figure_id": "figure-16-17",
+              "figure_number": "16",
+              "height": 281,
+              "image_path": "figures/2609.34687/figure-014.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 790
+            },
+            {
+              "caption": "Figure 15 MV-DualVLN visualization example.",
+              "figure_id": "figure-15-4",
+              "figure_number": "15",
+              "height": 277,
+              "image_path": "figures/2609.34687/figure-015.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 788
+            },
+            {
+              "caption": "Figure 6 Navigation and Gid results of MV-DualVLN.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 327,
+              "image_path": "figures/2609.34687/figure-016.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 298
+            },
+            {
+              "caption": "Figure 12 Error analysis of goal identification.",
+              "figure_id": "figure-12-13",
+              "figure_number": "12",
+              "height": 206,
+              "image_path": "figures/2609.34687/figure-017.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 886
+            },
+            {
+              "caption": "Table 1 Comparison of navigation performance. †: UniNavid directly outputs low-level actions. Other models utilize an oracle executor to move to the predicted waypoint.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 584,
+              "image_path": "figures/2609.34687/table-018.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 986
+            },
+            {
+              "caption": "Table 2 Comparison of goal identification performance.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 553,
+              "image_path": "figures/2609.34687/table-019.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 986
+            },
+            {
+              "caption": "Table 3 Ablation results for navigation. Variants are trained under the ablation setting.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 123,
+              "image_path": "figures/2609.34687/table-020.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 364
+            },
+            {
+              "caption": "Table 4 Navigation performance comparison on instruction types with interventions.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 212,
+              "image_path": "figures/2609.34687/table-021.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 977
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.34687/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.34687",
+          "relevance": 7,
+          "selection_reason": "Benchmarks closed-loop spatial reasoning and navigation from prior video plus instructions, directly connecting embodied navigation, MLLMs, and spatial intelligence.",
+          "summary_status": "generated",
+          "title": "VCN-Bench: A Video-Contextualized Navigation Benchmark for Spatial Reasoning over Prior Visual Experience",
+          "tldr": "VCN-Bench tests whether multimodal language models can use prior video to identify destinations and navigate to them, revealing major failures in both steps.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language navigation (VLN) is typically evaluated as a one-way task, although deployed robots may need to return after reaching a goal. We study continuous round-trip VLN and diagnose failures in directional observability, deviation recovery, and termination stability. We propose a reliability-aware sparse route memory that records the executed Outbound trajectory as ordered geometric anchors and queries them in reverse through a structured hint, action-level arbitration, and terminal verification. On 50 reverse-paired episodes using NaVILA and a simulated Unitree Go2, language-only Return succeeds in 22.0% of episodes, while our online system reaches 55.1%. With exact route information, the same interfaces achieve 86.0%, showing that effective Return requires both accurate information and consistent action on that information. The remaining online gap arises mainly from geometric evidence that is too unreliable to authorise intervention. These results distinguish information quality, behavioural consistency, and online reliability as separate limits in long-horizon navigation.",
+          "arxiv_id": "2609.34163",
+          "arxiv_url": "https://arxiv.org/abs/2609.34163",
+          "authors": [
+            "Bojun Long, Lingfan Bao, Tianhu Peng, Jingcheng Sun, Chengxu Zhou"
+          ],
+          "bullets": [
+            "Continuous round-trip VLN exposes failures in directional observability, deviation recovery, and termination stability.",
+            "The system stores executed outbound trajectories as ordered geometric anchors and queries them in reverse.",
+            "Structured hints, action-level arbitration, and terminal verification support return navigation.",
+            "Exact route information reaches 86.0% success, separating information quality from behavioral consistency and online reliability.",
+            "Remaining failures mainly stem from unreliable geometric evidence that is insufficient to justify intervention."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Reliability-aware sparse route memory. Outbound execution records ordered geometric anchors. During Return, online registration estimates a route state, a relocalisation-confidence gate for the structured hint (D1) and Hint-Action arbiter (D2), and a learned reliability guard on route-state updates and overrides. NaVILA remains the primary controller.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 339,
+              "image_path": "figures/2609.34163/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1010
+            },
+            {
+              "caption": "Fig. 2. Return trajectories under language-only (orange) and Oracle Hint (blue), one episode per combination of the two outcomes. Stars mark s0. The Outbound trajectories coincide to numerical precision, so Return starts identically and the hint is the remaining experimental difference. The rightmost case fails under both configurations, showing that the hint alters execution independently of the final outcome.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 277,
+              "image_path": "figures/2609.34163/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1010
+            },
+            {
+              "caption": "Fig. 3. Arrival and Return success conditional on Outbound success. Their gap is the termination deficit. Arbitration exposes this deficit, while terminal verification both improves arrival and closes most of the gap.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 261,
+              "image_path": "figures/2609.34163/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 494
+            },
+            {
+              "caption": "Fig. 4. Final distance to s0 for episodes that succeed Outbound but fail Return. The dashed line is the 3.0 m radius. Points to its left arrive without valid termination; those to its right fail to arrive.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 258,
+              "image_path": "figures/2609.34163/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 486
+            },
+            {
+              "caption": "TABLE II ARBITER OUTCOMES OVER RETURN DECISIONS. ONLINE USES THE FULL-RUN DENOMINATOR; ONLINE (AUTHORISED) INCLUDES ONLY THE 492 STEPS WITH AUTHORISED BEARING EVIDENCE AND THE TARGET ANCHOR OUTSIDE THE NEAR-ANCHOR EXCLUSION ZONE, ENABLING COMPARISON WITH ORACLE.",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 188,
+              "image_path": "figures/2609.34163/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 508
+            },
+            {
+              "caption": "TABLE I CONDITIONAL RETURN RESULTS ON M50. THE FIRST FOUR ROWS FORM THE ORACLE LADDER. PAIRED TESTS USE THE COMMON-OUTBOUND SUBSET AND COMPARE WITH THE PRECEDING ORACLE ROW; THE ONLINE ROW COMPARES WITH FULL ORACLE. THE SRret|out (n=31) COLUMN REPORTS SUCCESS ON THE 31 EPISODES THAT SUCCEED OUTBOUND UNDER ALL FIVE CONFIGURATIONS; ARRIVAL IS NOT SEPARATELY RECOVERABLE ON THIS SUBSET.",
+              "figure_id": "table-I-5",
+              "figure_number": "I",
+              "height": 169,
+              "image_path": "figures/2609.34163/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.34163/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.34163",
+          "relevance": 8,
+          "selection_reason": "Round-trip VLN with reliability-aware sparse route memory and reverse-query geometric anchors.",
+          "summary_status": "generated",
+          "title": "Reliability-Aware Sparse Route Memory for Round-Trip Vision-Language Navigation",
+          "tldr": "A reliability-aware sparse memory improves round-trip vision-language navigation by replaying outbound route anchors, raising online return success from 22.0% to 55.1% in 50 reverse-paired episodes.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "embodied-memory"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "Retrieval-augmented generation (RAG) gives vision--language driving systems access to external safety knowledge, yet a retrieved risk rule may be relevant without applying to the current scene. A vision--language model (VLM) receiving such knowledge must ground objects, bind entities across time, and verify relations before deciding how to act, leaving the support for risk conclusions implicit. We address this relevance--applicability gap with a Driving-Risk Knowledge Graph (DRKG) and Semantic Web Rule Language (SWRL) reasoning stage before VLM decision-making. Structured perception instantiates scene facts, from which SWRL rules derive events and directed risk relations when their antecedents are jointly satisfied. Recognized events, bound risk relations, and semantic descriptions of activated rules form compact evidence that conditions the VLM and diffusion planner. In matched comparisons on nuReasoning, our method improved the nuReasoning planning score (NPS) by 1.30 points and the non-at-fault collision score (NC) by 2.76 points over the relevance retrieval-based baseline. These gains indicate that scene-applicable risk evidence improves safety-weighted planning relative to semantically retrieved risk knowledge.",
+          "arxiv_id": "2609.34145",
+          "arxiv_url": "https://arxiv.org/abs/2609.34145",
+          "authors": [
+            "Jiaxin Liu, Ruilin Yu, Liang Peng, Jingkai Wang, Chengxiang Zhao, Zhenxin Zhu, Bing Wang, Guang Chen, Hangjun Ye, Hong Wang, Jun Li"
+          ],
+          "bullets": [
+            "Addresses the gap between retrieving relevant safety rules and verifying whether they apply to the current driving scene.",
+            "Uses structured perception with a Driving-Risk Knowledge Graph and SWRL rules to derive events and directed risk relations.",
+            "Provides the VLM and diffusion planner with compact evidence including recognized events, entity bindings, risk relations, and activated-rule descriptions.",
+            "On nuReasoning, improves NPS by 1.30 points and non-at-fault collision score by 2.76 points over relevance-based retrieval.",
+            "Scope: results are reported in matched comparisons on nuReasoning."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of the scene-grounded risk-evidence vision language-driving pipeline. Structured perception results and ego state instantiate scene facts using the ontology of the driving-risk knowledge graph (DRKG). Its Semantic Web Rule Language (SWRL) rules derive scene events and risk relations between scene entities. Recognized events, risk relations and associated rule descriptions are combined with ego and scene context in a prompt, while camera observations provide the visual input to the vision–language model (VLM). The VLM decision representation conditions a diffusion planner to generate the ego trajectory.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 438,
+              "image_path": "figures/2609.34145/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1030
+            },
+            {
+              "caption": "Fig. 1. Typical RAG-based driving methods provide semantically relevant knowledge while leaving scene grounding and applicability assessment to the VLM, whereas our DRKG-supported framework explicitly derives scene-grounded risk evidence before VLM reasoning and decision making.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 202,
+              "image_path": "figures/2609.34145/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 498
+            },
+            {
+              "caption": "Fig. 4. Qualitative comparison in an occluded pedestrian-crossing scene. The front camera shows a vehicle braking suddenly, whereas the top view reveals a pedestrian hidden from the ego view. Our method identifies the applicable risk rule and selects strong deceleration. The KnowVal-style baseline retrieves semantically related pedestrian rules (2 of top-5 are shown) and selects gentle deceleration.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 281,
+              "image_path": "figures/2609.34145/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1032
+            },
+            {
+              "caption": "Fig. 3. Closure-based SWRL risk entailment from scene facts. The initial fact set Fs is expanded by applying the ontology T and SWRL rules RG until no new assertion is derived. Intermediate events and relations lead to risk assertions in the closure Fcl s . The right panel shows the general rule form and an illustrative vehicle-interaction rule.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 427,
+              "image_path": "figures/2609.34145/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1032
+            },
+            {
+              "caption": "TABLE IV SELECTED PLANNING BASELINES REPORTED ON NUREASONING [9] AND OUR METHOD.",
+              "figure_id": "table-IV-4",
+              "figure_number": "IV",
+              "height": 188,
+              "image_path": "figures/2609.34145/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 694
+            },
+            {
+              "caption": "TABLE V COVERAGE AND COMPLEXITY OF RISK-SPECIFIC SWRL RULES.",
+              "figure_id": "table-V-8",
+              "figure_number": "V",
+              "height": 206,
+              "image_path": "figures/2609.34145/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 429
+            },
+            {
+              "caption": "TABLE I RULE RECALL AND APPLICABILITY (APPL.) AGAINST SWRL-DERIVED SCENE REFERENCES (%).",
+              "figure_id": "table-I-9",
+              "figure_number": "I",
+              "height": 179,
+              "image_path": "figures/2609.34145/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 396
+            },
+            {
+              "caption": "TABLE II PLANNING RESULTS WITH DIFFERENT RISK-INFORMATION SOURCES.",
+              "figure_id": "table-II-3",
+              "figure_number": "II",
+              "height": 140,
+              "image_path": "figures/2609.34145/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 736
+            },
+            {
+              "caption": "TABLE III PLANNING ABLATION OF SCENE-GROUNDED RISK-EVIDENCE REPRESENTATION.",
+              "figure_id": "table-III-2",
+              "figure_number": "III",
+              "height": 119,
+              "image_path": "figures/2609.34145/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 783
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.34145/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.34145",
+          "relevance": 7,
+          "selection_reason": "Scene-grounded risk entailment for vision-language driving; fits vision-language navigation and spatial intelligence.",
+          "summary_status": "generated",
+          "title": "Beyond Retrieval Relevance: Scene-Grounded Risk Entailment for Vision-Language Driving",
+          "tldr": "A scene-grounded knowledge-graph and rule-reasoning stage helps vision-language driving systems distinguish applicable risks from merely relevant retrieved knowledge, improving safety-weighted planning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Many indoor environments in which robots operate, such as warehouses, offices, and hospitals, already have cameras installed. They observe parts of the building that the robot cannot see from where it stands, yet navigation policies, including recent vision-language-action (VLA) models, do not use them. We propose InfraVLA, an end-to-end method that adapts a pretrained navigation VLA to such static infrastructure views: a closed-circuit television (CCTV) encoder turns each external view into tokens of the input sequence. Because the views matter only at rare decision points, fine-tuning alone did not make the policy use them in our experiments; we therefore train in two stages, on demonstrations with upsampled counterfactual data and then on recovery data. We evaluate on two simulated warehouse tasks, finding an object named in the instruction and rerouting around blocked aisles, where the deciding information is often visible only to the infrastructure cameras. Tested in distribution, InfraVLA reached a success rate of 100% on both, against 34.0% and 73.6% for a baseline without CCTV input. On out-of-distribution test sets it reached 88.2% and 88.9%. On a real quadruped fine-tuned with under 10 minutes of demonstrations, the policy reached 83.3% against 29.2% for the on-board-only baseline.",
+          "arxiv_id": "2609.33647",
+          "arxiv_url": "https://arxiv.org/abs/2609.33647",
+          "authors": [
+            "Lukas Vierling, Benjamin Ramtoula, Luke Robinson, Ronald Clark, Daniele De Martini"
+          ],
+          "bullets": [
+            "Targets indoor navigation scenarios where CCTV can observe areas hidden from the robot.",
+            "Encodes external camera views as tokens in a pretrained navigation VLA’s input.",
+            "Uses two-stage fine-tuning with upsampled counterfactual demonstrations and recovery data because CCTV matters mainly at rare decision points.",
+            "Achieved 100% success on two simulated warehouse tasks in distribution, versus 34.0% and 73.6% without CCTV; reached 88.2% and 88.9% out of distribution.",
+            "On a real quadruped, achieved 83.3% success with under 10 minutes of demonstrations, compared with 29.2% for an onboard-only baseline."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Architecture. Green: our extension, the infrastructure images, encoded per view, pooled from 256 to 64 tokens, and inserted after the on-board tokens. Orange: the on-board image pipeline; blue: the task specification; both as in OmniVLA [2].",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 349,
+              "image_path": "figures/2609.33647/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 446
+            },
+            {
+              "caption": "Fig. 3. Semantic task. Left: two rollouts of one scene in plan view, both instructed to reach the box (brown square) and both reaching it. From the black start dot, InfraVLA after stage 1 (gray) passes close to a shelf (dark gray) and after stage 2 (green) keeps its distance. Right: what the four ceiling cameras see in that same scene at the start; the box is top left.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 258,
+              "image_path": "figures/2609.33647/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 4. Spatial task. Left: one test scenario in plan view. From the black start dot both policies drive the same route to the middle area; the on-board-only baseline (orange) then enters the aisle sealed by a forklift (yellow), while InfraVLA (green) takes the open aisle and reaches the goal (star). Right: the four ceiling views of the same scenario at the start; the forklift that seals the aisle is visible in the bottom-right view.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 258,
+              "image_path": "figures/2609.33647/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 5. The real setup, seen from the two fixed cameras at one instant of a demonstration. Left: CCTV 1 shows the traffic cone and the fire extinguisher. Right: CCTV 2 shows the other half of the area, with the robot and the plant. A logo on the robot has been masked for anonymity.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 150,
+              "image_path": "figures/2609.33647/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 512
+            },
+            {
+              "caption": "TABLE VIII ABLATIONS OF THE ARCHITECTURE, ON THE SEMANTIC TASK WITH THE STAGE-1 RECIPE, 50 ROLLOUTS EACH. FIRST ROW: THE STAGE-1 POLICY OF TABLE II; EVERY OTHER ROW CHANGES ONE DECISION OF SECTION III-B. SR AND CLEARANCE AS IN TABLE II.",
+              "figure_id": "table-VIII-7",
+              "figure_number": "VIII",
+              "height": 169,
+              "image_path": "figures/2609.33647/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 472
+            },
+            {
+              "caption": "TABLE V SPATIAL TASK, 72 SYSTEMATIC SCENARIOS. ROUTE: SHARE OF ROLLOUTS THROUGH THE SAME AISLES AS A*. + ROWS: THE STAGE-1 POLICY TRAINED 5K MORE STEPS ON THE DATA NAMED (STAGE 2). CF: COUNTERFACTUAL.",
+              "figure_id": "table-V-3",
+              "figure_number": "V",
+              "height": 196,
+              "image_path": "figures/2609.33647/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 462
+            },
+            {
+              "caption": "TABLE I HYPERPARAMETERS OF THE THREE EXPERIMENTS: DATA, TRAINING, RECOVERY MINING, SNIPPET DETECTION, AND SUCCESS CRITERION.",
+              "figure_id": "table-I-8",
+              "figure_number": "I",
+              "height": 281,
+              "image_path": "figures/2609.33647/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 508
+            },
+            {
+              "caption": "TABLE II SEMANTIC TASK, 50 ROLLOUTS. SR: SUCCESS WITHIN 1m OF THE OBJECT. CLEARANCE: MEAN OVER ROLLOUTS OF THE CLOSEST DISTANCE TO A SHELF (DEMONSTRATIONS: 1.47m).",
+              "figure_id": "table-II-10",
+              "figure_number": "II",
+              "height": 121,
+              "image_path": "figures/2609.33647/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 489
+            },
+            {
+              "caption": "TABLE III SEMANTIC TASK, UNSEEN INSTRUCTION WORDS: SR OVER 12 ROLLOUTS PER WORD, FOR TWO SYNONYMS OF EACH TRAINING NOUN.",
+              "figure_id": "table-III-9",
+              "figure_number": "III",
+              "height": 121,
+              "image_path": "figures/2609.33647/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 441
+            },
+            {
+              "caption": "TABLE IV SEMANTIC TASK, OUT-OF-DISTRIBUTION TESTS. A SEPARATE POLICY TRAINED THROUGH STAGE 2 WITH EVERY SCENE THAT PUTS THE FORKLIFT IN THE TOP-LEFT AISLE HELD OUT.",
+              "figure_id": "table-IV-1",
+              "figure_number": "IV",
+              "height": 102,
+              "image_path": "figures/2609.33647/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 350
+            },
+            {
+              "caption": "TABLE VI SPATIAL TASK, OUT-OF-DISTRIBUTION TEST. A SEPARATE POLICY TRAINED WITH TWO OF THE NINE BLOCKING PATTERNS HELD OUT; RECOVERY DATA FROM THE SEEN PATTERNS ONLY. SR ON THE 54 SEEN AND 18 HELD-OUT SCENARIOS.",
+              "figure_id": "table-VI-4",
+              "figure_number": "VI",
+              "height": 74,
+              "image_path": "figures/2609.33647/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 460
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.33647/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.33647",
+          "relevance": 8,
+          "selection_reason": "Extends navigation VLA with infrastructure camera inputs, relevant to vision-language navigation.",
+          "summary_status": "generated",
+          "title": "InfraVLA: Extending Vision-Language-Action Navigation with Infrastructure Cameras",
+          "tldr": "InfraVLA enables navigation VLAs to use static infrastructure-camera views, substantially improving performance when critical information is outside the robot’s onboard view.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Aerial Vision-Language Navigation (AVLN) requires UAVs to maintain reliable instruction following over long trajectories in complex 3D environments. However, existing AVLN approaches are predominantly reactive or limited to single-horizon prediction, overlooking complementary future cues across different temporal horizons. To address this limitation, we propose ForeFly, a dual-horizon latent world action model that predicts both a proximal future for local continuity and an adaptive route-critical future for long-range guidance. Horizon-specific foresight queries are primed with recent and route-critical visual memories, providing history-aware context for future prediction. To exploit their distinct roles in action generation, we introduce Foresight-Guided Action Refinement (FGAR), which asymmetrically exploits proximal foresight for local action enhancement and route-critical foresight for feature-wise correction and route-level guidance. Experiments on the TravelUAV and UAV-ON benchmarks show that ForeFly consistently outperforms strong baselines across seen and unseen settings, validating the effectiveness of dual-horizon foresight and FGAR learning. The code is available at: https://github.com/kunhuiW/ForeFly",
+          "arxiv_id": "2609.33581",
+          "arxiv_url": "https://arxiv.org/abs/2609.33581",
+          "authors": [
+            "Kunhui Wang, Xintong Zhang, Junyu Gao, Changsheng Xu"
+          ],
+          "bullets": [
+            "Addresses the limitations of reactive and single-horizon AVLN methods in complex 3D environments.",
+            "Uses a dual-horizon latent world action model to predict proximal and adaptive route-critical futures.",
+            "Primes foresight queries with recent and route-critical visual memories for history-aware prediction.",
+            "Introduces Foresight-Guided Action Refinement (FGAR) to use each horizon differently for local refinement and route-level guidance.",
+            "Outperforms strong baselines across seen and unseen settings on TravelUAV and UAV-ON benchmarks."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of ForeFly. ForeFly primes dual-horizon foresight with complementary historical memories, predicts proximal and route-critical future latents, Foresight-Guided Action Refinement (FGAR) asymmetrically uses proximal foresight for local enhancement and route-critical foresight for feature-wise correction and route-level guidance.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 311,
+              "image_path": "figures/2609.33581/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 824
+            },
+            {
+              "caption": "Figure 1: (a) Reactive policies predict actions without future modeling. (b) Single-horizon methods predict a single future latent, overlooking complementary navigation roles for local continuity and route-level anticipation. (c) ForeFly jointly predicts proximal and route-critical futures, while FGAR integrates them for locally smooth and strategically consistent navigation.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 213,
+              "image_path": "figures/2609.33581/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 808
+            },
+            {
+              "caption": "Figure 3: Qualitative Results. (a) Bird’s-eye view of predicted trajectories. (b) 3D trajectory comparison showing improved route consistency of ForeFly. (c) Step-by-step navigation, where route-critical foresight helps ForeFly anticipate the upcoming turn, while the baseline deviates. The corresponding future visualization procedure is described in Sec. B.2.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 336,
+              "image_path": "figures/2609.33581/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 812
+            },
+            {
+              "caption": "Figure 5: Results on TravelUAV Unseen Map and Unseen Object subsets. The top row compares ForeFly with existing methods on the Unseen Map subset, and the bottom row reports results on the Unseen Object subset.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 239,
+              "image_path": "figures/2609.33581/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 827
+            },
+            {
+              "caption": "Figure 6: Qualitative visualization of dual-horizon future prediction. Each row shows two sampled waypoints from the same navigation trajectory. For each waypoint, we visualize the current observation together with the ground-truth and predicted proximal and route-critical futures.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 270,
+              "image_path": "figures/2609.33581/figure-005.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 823
+            },
+            {
+              "caption": "Figure 4: Visualization of route-critical anchor construction. Representative UAV trajectories of different lengths are shown. Green and black stars mark the start and end states, red stars indicate key frames at turning points, and yellow diamonds denote distance anchors. The color scale represents the Euclidean distance from the starting position.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 204,
+              "image_path": "figures/2609.33581/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 826
+            },
+            {
+              "caption": "Table 2: Results on the TravelUAV Seen dataset. Human represents the performance of human operators under manual UAV control. The best results are bold.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 313,
+              "image_path": "figures/2609.33581/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Results on the UAV-ON dataset.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 175,
+              "image_path": "figures/2609.33581/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 450
+            },
+            {
+              "caption": "Table 1: Results on the TravelUAV Unseen dataset. NE is reported in meters (m), while SR, OSR, and SPL are reported as percentages (%). For task difficulty, Easy denotes trajectories shorter than 250 meters, whereas Hard denotes those longer than 250 meters. The best results are bold.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 175,
+              "image_path": "figures/2609.33581/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: Ablation study of the main components in ForeFly. Seen and Unseen represent the Test-seen and Test-unseen sets, respectively.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 150,
+              "image_path": "figures/2609.33581/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.33581/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.33581",
+          "relevance": 9,
+          "selection_reason": "Aerial vision-language navigation with a dual-horizon latent world action model, directly fitting embodied navigation and latent-action world modeling.",
+          "summary_status": "generated",
+          "title": "ForeFly: A Dual-Horizon World Action Model for Aerial Vision-Language Navigation",
+          "tldr": "ForeFly improves aerial vision-language navigation by combining short-term and route-critical future predictions to guide UAV actions over long trajectories.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent large-scale Vision-and-Language Navigation (VLN) models deliver strong accuracy but remain costly to deploy due to their large parameter counts and computational requirements. We tackle efficient VLN in two steps. First, we build a high-performing teacher that makes navigation evidence selection explicit and compressible. The teacher introduces a small set of learnable query slots to extract global and local action-sufficient navigable evidence from panoramic observations via a Navigable Query Generator, then progressively grounds these evidence tokens to the instruction with an Instruction-Query Aligner for policy prediction. Second, using this explicit query bottleneck as a distillation interface, we train a compact student by transferring both where to attend and what to do. We distill the teacher's global and local navigable queries with a navigation-aware token-adaptive objective, then further match action distributions during fine-tuning. Experiments on standard VLN benchmarks demonstrate that our student nearly matches the teacher's navigation performance while reducing the number of parameters by 93.65% compared to the teacher.",
+          "arxiv_id": "2609.33097",
+          "arxiv_url": "https://arxiv.org/abs/2609.33097",
+          "authors": [
+            "Zhihao Chen, Yiyuan Ge, Ziyang Wang, Pu Cao, Lu Yang"
+          ],
+          "bullets": [
+            "Targets the high deployment cost of large VLN models with many parameters and heavy computation.",
+            "The teacher uses learnable global and local query slots to extract action-relevant evidence from panoramic observations.",
+            "An Instruction-Query Aligner grounds these evidence tokens in the navigation instruction for policy prediction.",
+            "A compact student distills both navigational attention (queries) and action distributions through a navigation-aware objective.",
+            "On standard VLN benchmarks, the student nearly matches the teacher while using 93.65% fewer parameters."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of Query, Align, and Distill. Following the global-planning and local-acting paradigm in Vision-and-Language Navigation, history-based global candidates support long-range planning, while current-view local candidates support fine-grained action selection. The Navigable Query Generator extracts action-sufficient global and local queries, which the Instruction–Query Aligner grounds with the instruction for policy prediction. The shallower student is trained by Navigation-aware Token-adaptive Distillation and policy distribution distillation during fine-tuning. Blue and orange dashed lines denote global and local query distillation, respectively. Flame and snowflake icons mark trainable and frozen modules, respectively.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 802,
+              "image_path": "figures/2609.33097/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 6. Step-wise visualization of the navigation process. Each row shows the panoramic observation at one navigation step, and the input instruction is provided at the bottom with key cues highlighted in red. In the left example, the green check and red cross denote correct and incorrect turning decisions, respectively. In the right example, the green and red boxes indicate correctly and incorrectly grounded visual evidence, respectively. Our student follows the highlighted cues more accurately and reaches the destination with a shorter trajectory than GOAT [36].",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 575,
+              "image_path": "figures/2609.33097/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 1. Accuracy–efficiency trade-off on R2R (test unseen). We plot success rate (SR) against model computation (GFLOPs). Our compact student achieves near-teacher performance with substantially lower computation. Bubble size represents GFLOPs, with the 5G–300G reference bubbles indicating the scale.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 258,
+              "image_path": "figures/2609.33097/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 5. Qualitative trajectory comparison on R2R. The top-down graphs show navigation trajectories, the right panels show final viewpoints, and the corresponding instruction is provided below each episode. Yellow, green, and pink trajectories denote our student, the ground truth, and GOAT [36], respectively. Green boxes with check marks indicate correct grounding by our student, whereas red boxes indicate incorrect grounding by GOAT. Our student follows the instructions more faithfully, avoids detours, and reaches the correct destinations.",
+              "figure_id": "figure-5-14",
+              "figure_number": "5",
+              "height": 260,
+              "image_path": "figures/2609.33097/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 7. Teacher–student failure cases. The teacher succeeds while the compact student fails. The left case shows a destination-room grounding error: the student fails to associate “pool room / pool table” with the correct visual evidence. The right case shows a premature STOP error: the student stops once exercise equipment becomes visible, while the teacher moves to the correct viewpoint specified by “next to the exercise equipment.”",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 254,
+              "image_path": "figures/2609.33097/figure-005.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1076
+            },
+            {
+              "caption": "Fig. 4. Sensitivity to the distillation hyper-parameter α. We sweep the α that balances query-level distillation LNTD and policy KL distillation Lπ during fine-tuning: LD = αLNTD + (1 − α)Lπ . Results are reported on R2R (test-unseen: SR/SPL) and REVERIE (test-unseen: SR/SPL). A moderate α yields the best trade-off, while overly small/large α over-emphasizes policyor query-level supervision, respectively.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2609.33097/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 3. Jetson runtime and query-number ablations on R2R. (a) Step throughput (steps/s) measured on Jetson Nano for representative VLN agents, including HOP+, BEVBert, GOAT, and our QAD teacher/student. (b) R2R test-unseen SR and SPL versus the number of navigable queries per branch Kb, where KL = KG = Kb",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 166,
+              "image_path": "figures/2609.33097/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 8. PCA visualization of teacher–student query alignment. Global and local navigable-query slots (K=32, D=768) are projected into a shared 2D PCA space across three training stages. Blue circles and orange crosses denote teacher and student slots, respectively, and each line connects a same-index pair. Shorter links indicate stronger slot-wise alignment.",
+              "figure_id": "figure-8-5",
+              "figure_number": "8",
+              "height": 340,
+              "image_path": "figures/2609.33097/figure-008.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 9. Cosine similarity matrices for teacher–student query slots. Each matrix S ∈ RK×K (K=32) measures Sij = cos(qT i ,qS j ). All panels share the same color scale. Stronger diagonal responses indicate better same-index alignment, whereas off-diagonal responses suggest slot permutation or mixing. Distillation progressively sharpens the diagonal structure for both global and local queries.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 340,
+              "image_path": "figures/2609.33097/figure-009.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 529
+            },
+            {
+              "caption": "TABLE I COMPARISON WITH STATE-OF-THE-ART METHODS ON R2R. PINK, YELLOW, AND ORANGE INDICATE THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS, RESPECTIVELY, AND “–” DENOTES UNAVAILABLE RESULTS. ‡ MARKS PARAMS/GFLOPS MEASURED FROM RELEASED CODE UNDER OUR PROTOCOL, WHEREAS † MARKS VALUES REPORTED IN THE ORIGINAL PAPERS UNDER THE SAME PROTOCOL.",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 360,
+              "image_path": "figures/2609.33097/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1064
+            },
+            {
+              "caption": "TABLE II COMPARISON WITH STATE-OF-THE-ART METHODS ON REVERIE. PINK, YELLOW, AND ORANGE INDICATE THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS, RESPECTIVELY, AND “–” DENOTES UNAVAILABLE RESULTS.",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 241,
+              "image_path": "figures/2609.33097/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1064
+            },
+            {
+              "caption": "TABLE X ARCHITECTURE-SCALING ABLATION ON R2R TEST-UNSEEN. WE VARY THE DEPTHS OF THE TEXT ENCODER, PANORAMIC ENCODER, NAVIGABLE QUERY GENERATOR, AND INSTRUCTION–QUERY ALIGNER. PERFORMANCE AND EFFICIENCY ARE EVALUATED USING SR, SPL, PARAMETER COUNT, AND GFLOPS.",
+              "figure_id": "table-X-19",
+              "figure_number": "X",
+              "height": 186,
+              "image_path": "figures/2609.33097/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE IV COMPARISON WITH STATE-OF-THE-ART METHODS ON RXR-ENGLISH. PINK, YELLOW, AND ORANGE INDICATE THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS, RESPECTIVELY, AND “–” DENOTES UNAVAILABLE RESULTS.",
+              "figure_id": "table-IV-8",
+              "figure_number": "IV",
+              "height": 198,
+              "image_path": "figures/2609.33097/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 516
+            },
+            {
+              "caption": "TABLE III COMPARISON WITH STATE-OF-THE-ART METHODS ON SOON. PINK, YELLOW, AND ORANGE INDICATE THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS, RESPECTIVELY, AND “–” DENOTES UNAVAILABLE RESULTS.",
+              "figure_id": "table-III-2",
+              "figure_number": "III",
+              "height": 129,
+              "image_path": "figures/2609.33097/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 516
+            },
+            {
+              "caption": "TABLE VIII COMPONENT AND DISTILLATION ABLATIONS ON R2R TEST-UNSEEN.",
+              "figure_id": "table-VIII-16",
+              "figure_number": "VIII",
+              "height": 198,
+              "image_path": "figures/2609.33097/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 516
+            },
+            {
+              "caption": "TABLE IX COMPONENT AND DISTILLATION ABLATIONS ON SOON TEST-UNSEEN.",
+              "figure_id": "table-IX-15",
+              "figure_number": "IX",
+              "height": 187,
+              "image_path": "figures/2609.33097/table-016.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 516
+            },
+            {
+              "caption": "TABLE VII CONTROLLED COMPARISON OF TEACHER-SIDE CROSS-MODAL INTERACTION DESIGNS ON R2R AND SOON TEST-UNSEEN. ALL NON-INTERACTION COMPONENTS AND TRAINING SETTINGS ARE HELD FIXED.",
+              "figure_id": "table-VII-13",
+              "figure_number": "VII",
+              "height": 135,
+              "image_path": "figures/2609.33097/table-017.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE V TEACHER–STUDENT PERFORMANCE ON R2R TEST-UNSEEN AND RXR-ENGLISH VALIDATION-UNSEEN. VALUES ARE REPORTED AS MEAN ± STANDARD DEVIATION OVER FIVE RUNS WITH SEEDS {0, 1, 2, 3, 4}.",
+              "figure_id": "table-V-18",
+              "figure_number": "V",
+              "height": 94,
+              "image_path": "figures/2609.33097/table-018.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE VI TEACHER–STUDENT PERFORMANCE ON THE GOAL-ORIENTED REVERIE AND SOON TEST-UNSEEN SPLITS. VALUES ARE REPORTED AS MEAN ± STANDARD DEVIATION OVER FIVE RUNS WITH SEEDS {0, 1, 2, 3, 4}.",
+              "figure_id": "table-VI-17",
+              "figure_number": "VI",
+              "height": 90,
+              "image_path": "figures/2609.33097/table-019.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE XI DISTILLATION-TARGET ABLATION ON R2R TEST-UNSEEN, COMPARING GLOBAL-ONLY, LOCAL-ONLY, AND JOINT GLOBAL/LOCAL NAVIGABLE-QUERY DISTILLATION.",
+              "figure_id": "table-XI-21",
+              "figure_number": "XI",
+              "height": 115,
+              "image_path": "figures/2609.33097/table-020.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 512
+            },
+            {
+              "caption": "TABLE XII DISTILLATION-TARGET ABLATION ON SOON TEST-UNSEEN, COMPARING GLOBAL-ONLY, LOCAL-ONLY, AND JOINT GLOBAL/LOCAL NAVIGABLE-QUERY DISTILLATION.",
+              "figure_id": "table-XII-20",
+              "figure_number": "XII",
+              "height": 108,
+              "image_path": "figures/2609.33097/table-021.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 514
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.33097/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.33097",
+          "relevance": 9,
+          "selection_reason": "Efficient vision-and-language navigation via query-based distillation; directly fits embodied VLN.",
+          "summary_status": "generated",
+          "title": "Query, Align, and Distill: Navigation-Aware Cross-Modal Interaction for Efficient Vision-and-Language Navigation",
+          "tldr": "A query-based teacher–student framework makes vision-and-language navigation much more efficient while preserving nearly the teacher’s performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-and-language navigation increasingly relies on general-purpose semantic planners, yet translating correct high-level intent into reliable physical execution remains difficult in spatially constrained transitions. Reaching a staircase, doorway, or narrow passage does not ensure traversal; the agent must identify an executable affordance pose and recover from accumulated action errors. We propose PACE (Preference-refined Affordance-Conditioned Execution), a supervised local execution module that augments frozen zero-shot semantic planners for reliable cross-floor navigation. PACE grounds transition-related semantics into a long-horizon, agent-centric traversable affordance pose and conditions short-horizon action generation on this spatial target, thereby aligning semantic goals with physical execution. We further post-train PACE through failure-aware preference refinement using rollout-derived pairs that contrast normal or recovery behaviors with deviation-amplifying behaviors, thereby improving closed-loop correction. We integrate PACE into six open-source zero-shot VLN navigators and demonstrate consistent improvements on the cross-floor subsets of R2R-CE and RxR-CE, increasing the average success rate from 16.35% to 27.65% and from 4.76% to 12.06%, respectively. Real-world experiments further demonstrate PACE's applicability in unseen environments, highlighting the potential of traversable affordances to bridge semantic intent and reliable embodied behavior.",
+          "arxiv_id": "2609.32292",
+          "arxiv_url": "https://arxiv.org/abs/2609.32292",
+          "authors": [
+            "Xuekang Yang, Lu Chen, Shuang Luo, Jialing Zhu, Qi Zhang, Yue Gao, Xiang Zhang"
+          ],
+          "bullets": [
+            "Targets the semantic–spatial gap in difficult transitions such as stairs, doorways, and narrow passages.",
+            "Adds a supervised local execution module to frozen zero-shot semantic planners.",
+            "Generates short-horizon actions conditioned on long-horizon, agent-centric traversable affordance poses.",
+            "Uses failure-aware preference refinement to favor normal and recovery behaviors over deviation-amplifying actions.",
+            "Improves average success from 16.35% to 27.65% on R2R-CE cross-floor navigation and from 4.76% to 12.06% on RxR-CE; real-world tests show applicability in unseen environments."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of PACE. PACE bridges the semantic-spatial gap through traversable affordance estimation, affordanceconditioned action generation, and rollout-derived preference refinement.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 644,
+              "image_path": "figures/2609.32292/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1031
+            },
+            {
+              "caption": "Figure 2: Model Architecture.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 197,
+              "image_path": "figures/2609.32292/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 493
+            },
+            {
+              "caption": "Figure 8: Representative failure cases across the six navigators. Blue and orange denote the executed and expert trajectories, respectively. Failures arise from both PACE-specific execution errors and limitations of the underlying navigators.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 596,
+              "image_path": "figures/2609.32292/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 846
+            },
+            {
+              "caption": "Figure 7: Representative successful navigation cases with PACE. The top row compares 3-step-Nav, Open-Nav, and STRIDER in the same scene, showing that PACE supports navigators with different internal mechanisms. The bottom row presents additional cases across CA-Nav, VLN-Zero, and HSGM. In particular, PACE completes the traversal when activated either on the staircase (VLN-Zero) or near the stair entrance (HSGM). Blue and orange denote the PACE-executed and expert trajectories, respectively.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 592,
+              "image_path": "figures/2609.32292/figure-004.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 846
+            },
+            {
+              "caption": "Figure 3: Standalone PACE predictions on R2R-CE-CF val-unseen. In (a), the center denotes zero positional error; radius and angle encode its magnitude and direction, while arrow deviation from the inward direction represents heading error.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 542,
+              "image_path": "figures/2609.32292/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 475
+            },
+            {
+              "caption": "Figure 4: Real-world two-floor stair traversal with VLNZero and PACE. Blue and orange points denote VLM- and PACE-controlled trajectory segments, respectively.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 567,
+              "image_path": "figures/2609.32292/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 454
+            },
+            {
+              "caption": "Figure 5: Additional real-world navigation examples. (a)",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 241,
+              "image_path": "figures/2609.32292/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 496
+            },
+            {
+              "caption": "Figure 6: Failure-rate decomposition across six navigation baselines on the 478 episode-aligned val-unseen episodes. Segment lengths are normalized by all episodes, such that each bar represents the overall failure rate. Blue highlights stair-transition failures.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 473,
+              "image_path": "figures/2609.32292/figure-008.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 493
+            },
+            {
+              "caption": "Table 6: Observed differences ∆ = +PACE − Alone under the main-paper protocol. The first and second lines for each method report ∆ and its percentile paired-bootstrap 95% CI, respectively, using 10,000 episode-aligned resamples.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 392,
+              "image_path": "figures/2609.32292/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1017
+            },
+            {
+              "caption": "Table 4: PACE implementation settings. Imitation learning uses cosine learning-rate decay; all test-time models are frozen.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 484,
+              "image_path": "figures/2609.32292/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 493
+            },
+            {
+              "caption": "Table 2: Takeover-subset SR, comparing Alone/+PACE on aligned episode IDs. Takeover Rate is the fraction of episodes with actual PACE takeover; ▲ denotes a pairedbootstrap 95% CI above zero.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 222,
+              "image_path": "figures/2609.32292/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 496
+            },
+            {
+              "caption": "Table 3: Standalone stair-traversal ablation of PACE. “Aff.”, “Cond.”, “Pref.”, and “F.A. Ref.” denote affordance, conditioning, preference, and failure-aware refinement, respectively. Results are reported as mean±standard deviation over three runs.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 162,
+              "image_path": "figures/2609.32292/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 496
+            },
+            {
+              "caption": "Table 5: Takeover-conditioned SR differences and their percentile paired-bootstrap 95% confidence intervals.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 221,
+              "image_path": "figures/2609.32292/table-013.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 496
+            },
+            {
+              "caption": "Table 7: Hardware and computation assignment for realworld deployment.",
+              "figure_id": "table-7-8",
+              "figure_number": "7",
+              "height": 191,
+              "image_path": "figures/2609.32292/table-014.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 493
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.32292/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.32292",
+          "relevance": 9,
+          "selection_reason": "Zero-shot cross-floor vision-and-language navigation with affordance-conditioned execution and preference refinement; directly fits embodied vision-language navigation.",
+          "summary_status": "generated",
+          "title": "Affordance-Conditioned Decision Making: Bridging the Semantic-Spatial Gap in Zero-Shot Cross-Floor Vision-and-Language Navigation",
+          "tldr": "PACE improves zero-shot vision-and-language navigation across floors by grounding semantic plans in executable affordance poses and correcting execution failures.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We explore whether Omni-Language Models (OLMs) can be directly applied to zero-shot Semantic Audio-Visual Navigation (SAVN). Recent work demonstrates that even state-of-the-art specialized models still struggle to achieve generalist multimodal navigation, despite extensive task-specific training. In this paper, we introduce RAO-Nav, short for Reasoning All-in-One OLM, a deployment pipeline for zero-shot SAVN. By leveraging the rich implicit audio-visual knowledge encoded in OLMs, the embodied agent is enabled to ``hear'', ``see'', ``reason'', and ``act'' in the environment. To further elicit the built-in thinking ability of OLMs, we propose a test-time Latent Navigation Reasoning (LNR) module that can be seamlessly integrated into the decoding space. LNR encourages the model to retrieve more target-relevant observations and make effective navigation decisions. Through comprehensive experiments, we show that our framework surpasses existing state-of-the-art baselines on public SAVN benchmarks without using any training data. Moreover, we introduce a new \\emph{Global Navigation Instruction} setting to further evaluate the ability of OLMs to serve as embodied navigation agents. Code: https://github.com/rikeilong/OmniAV\\_Nav.",
+          "arxiv_id": "2609.32224",
+          "arxiv_url": "https://arxiv.org/abs/2609.32224",
+          "authors": [
+            "Qilang Ye, Meng Liu, Yu Zhou"
+          ],
+          "bullets": [
+            "Addresses the challenge of generalist SAVN without task-specific training or training data.",
+            "Uses an OLM-based deployment pipeline to hear, see, reason, and act in navigation environments.",
+            "Introduces Latent Navigation Reasoning (LNR) to retrieve target-relevant observations and improve decisions during decoding.",
+            "Outperforms existing state-of-the-art baselines on public SAVN benchmarks.",
+            "Adds a Global Navigation Instruction setting to assess OLMs as embodied navigation agents."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the RAO-Nav Pipeline for zero-shot SAVN. Given a scene and a queried episode, the agent receives the current RGB observation and the incoming audio signal (or None if no new audio is observed). 1 The OLM first performs audio classification and predicts the target waypoint at time step t with the Localization Expert. Conditioned on multiple target waypoints and historical RGB observations, 2 the OLM performs language-driven navigation reasoning to choose a target. The selected target is executed by a low-level action compiler, 3 while the OLM continuously determines whether the agent should stop based on the current surroundings. Notably, all OLMs in the pipeline share the same model.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 210,
+              "image_path": "figures/2609.32224/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: We propose the RAO-Nav pipeline built on a single OLM to achieve zero-shot audio-visual navigation. It can be deployed in both real-world and virtual environments and iteratively performs navigation in three steps: AudioGoal Prediction, Global Reasoning, and Real-time Action.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 331,
+              "image_path": "figures/2609.32224/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Overview of the proposed LNR module.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 197,
+              "image_path": "figures/2609.32224/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 456
+            },
+            {
+              "caption": "Table 1: Comparison of four types of navigation frameworks on the Matterport3D test dataset in unheard-sound settings. Oracle† denotes a privileged-input diagnostic setting for Pure VLMs. The model is given the ground-truth audio category, the semantic map, and the ground-truth target location marked on the map. It directly predicts low-level actions.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 527,
+              "image_path": "figures/2609.32224/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 838
+            },
+            {
+              "caption": "Table 2: Experimental results on SAVN in our Global Navigation Instruction settings. Closed and Open indicate whether candidate audio categories are provided, and Map indicates whether a semantic map is provided.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 286,
+              "image_path": "figures/2609.32224/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 760
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.32224/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.32224",
+          "relevance": 9,
+          "selection_reason": "Directly addresses zero-shot semantic audio-visual navigation, an embodied navigation task that combines visual and language understanding.",
+          "summary_status": "generated",
+          "title": "RAO-Nav: Probing Omni-Language Models for Zero-shot Semantic Audio-Visual Navigation",
+          "tldr": "RAO-Nav enables omni-language models to perform zero-shot semantic audio-visual navigation by combining embodied perception, reasoning, action, and test-time latent navigation reasoning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We present LANTERN, a closed-loop benchmark for temporally grounded cooperative warnings. LANTERN separates warning onset, hazard onset, warning termination, and post-hazard recovery, and evaluates each physical event under matched warning and no-warning executions so that the warning's contribution is measured in isolation rather than confounded with onboard vision. The benchmark spans six safety-critical scenario families and provides 3,272 sequences with 236,309 frames for training, together with 120 matched route pairs for closed-loop evaluation. Each hazard route is evaluated under the warning and no-warning conditions, while its no-hazard control penalizes unconditional braking. We further introduce the Cooperative Unified Score (CUS), a safety-gated metric that jointly rewards route progress, anticipation, clearance, and recovery. Fine-tuning a representative VLM driving model raises CUS from 34.6 without warnings to 75.5 with them, demonstrating both the value of cooperative warnings and the discriminative power of the paired protocol. All resources will be made publicly available.",
+          "arxiv_id": "2609.06368",
+          "arxiv_url": "https://arxiv.org/abs/2609.06368",
+          "authors": [
+            "Yongshuo Liu",
+            "Xu Gao",
+            "Morui Zhu",
+            "Yongqi Zhu",
+            "Qi Chen",
+            "Deyuan Qu",
+            "Song Fu",
+            "Qing Yang"
+          ],
+          "bullets": [
+            "Separates warning onset, hazard onset, warning termination, and post-hazard recovery to isolate warning effects from onboard vision.",
+            "Includes six safety-critical scenario families, 3,272 training sequences, and 120 matched route pairs for closed-loop evaluation.",
+            "Uses hazard routes with warning/no-warning conditions and no-hazard controls to penalize unconditional braking.",
+            "Introduces the safety-gated Cooperative Unified Score (CUS), combining route progress, anticipation, clearance, and recovery.",
+            "A representative VLM’s CUS increases from 34.6 without warnings to 75.5 with warnings."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Driving inputs and outputs under the warning and no-warning conditions. Both conditions receive visual observations, ego state, and navigation state; the warning condition additionally receives the cooperative warning during the warning interval.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 698,
+              "image_path": "figures/2609.06368/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 6: Sequence-level distribution of the open-loop release and its environmental extension. (a) Town coverage for all 3,272 sequences. (b) Weather profiles and (c) time periods for the 859-sequence extension.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 390,
+              "image_path": "figures/2609.06368/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 10: Distance-conditioned responses on three held-out S1 control frames. Columns show no-warning, a nearby warning, and the same warning at 100 m. The nearby warning produces a stopping trajectory, whereas the distant warning preserves ordinary progress.",
+              "figure_id": "figure-10-12",
+              "figure_number": "10",
+              "height": 854,
+              "image_path": "figures/2609.06368/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 7: Matched predictions for the unseen cyclist event at simulation step 170: no warning (left), free-form warning (center), and held-out paraphrase (right). At this point, the ego speed is 10.5, 4.7, and 6.5 m/s, respectively.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 323,
+              "image_path": "figures/2609.06368/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 9: Representative high-ambiguity, position-free warnings. The Obstacle Reveal route completes successfully (left), whereas the Pedestrian Emergence route collides after an insufficient response (right).",
+              "figure_id": "figure-9-19",
+              "figure_number": "9",
+              "height": 469,
+              "image_path": "figures/2609.06368/figure-005.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 5: Paired nuScenes examples for Coop-SimLingo. Cyan and magenta show no-warning and warning predictions from the same frame; each panel reproduces the complete warning input below the image.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 438,
+              "image_path": "figures/2609.06368/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 495
+            },
+            {
+              "caption": "Figure 4: Open-loop dataset composition. Bars report Route A hazard sequences and Route B control sequences at the route and frame levels for each scenario family.",
+              "figure_id": "figure-4-20",
+              "figure_number": "4",
+              "height": 238,
+              "image_path": "figures/2609.06368/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 500
+            },
+            {
+              "caption": "Figure 3: Aligned observation formats and sensor annotations in LANTERN. The six-camera format provides surround coverage, while the front-view format provides a single 110◦ camera interface. Both support RGB, depth, point clouds, 3D bounding boxes, LiDAR BEV, and semantic segmentation.",
+              "figure_id": "figure-3-21",
+              "figure_number": "3",
+              "height": 181,
+              "image_path": "figures/2609.06368/figure-008.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 477
+            },
+            {
+              "caption": "Figure 2: Temporal organization of a LANTERN scenario. The warning begins before physical-event onset and terminates when the hazard is first directly observed through the ego vehicle’s onboard sensors.",
+              "figure_id": "figure-2-16",
+              "figure_number": "2",
+              "height": 173,
+              "image_path": "figures/2609.06368/figure-009.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 455
+            },
+            {
+              "caption": "Figure 11: Representative response to a warning about a cyclist traveling away on a physically separated path. The predicted trajectory continues along the route without sustained stopping.",
+              "figure_id": "figure-11-18",
+              "figure_number": "11",
+              "height": 583,
+              "image_path": "figures/2609.06368/figure-010.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 844
+            },
+            {
+              "caption": "Figure 8: Matched event-on predictions for the emergency crossing (top) and reversing vehicle (bottom). Left panels are from no-warning rollouts; right panels are from rollouts that received the exact warning, which may already have terminated by the displayed event-on frame. The warning-conditioned rollouts exhibit substantially reduced predicted progress.",
+              "figure_id": "figure-8-23",
+              "figure_number": "8",
+              "height": 944,
+              "image_path": "figures/2609.06368/figure-011.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1052
+            },
+            {
+              "caption": "Table 7: Temporal and behavioral specification of the six LANTERN scenario families.",
+              "figure_id": "table-7-14",
+              "figure_number": "7",
+              "height": 698,
+              "image_path": "figures/2609.06368/table-012.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 956
+            },
+            {
+              "caption": "Table 8: Worked CUS example; arrows map normalized scores to weighted contributions.",
+              "figure_id": "table-8-9",
+              "figure_number": "8",
+              "height": 688,
+              "image_path": "figures/2609.06368/table-013.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1052
+            },
+            {
+              "caption": "Table 1: Comparison of representative driving benchmarks across benchmark settings and cooperative evaluation protocols. Checkmarks indicate explicit support, while crosses indicate absence.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 323,
+              "image_path": "figures/2609.06368/table-014.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 1056
+            },
+            {
+              "caption": "Table 4: CUS decomposition over 120 matched Route A/B pairs. Continuous components and Gate Pass are higher-is-better, hard-gate failure rates are lower-is-better, and column-best values are bold.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 252,
+              "image_path": "figures/2609.06368/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1054
+            },
+            {
+              "caption": "Table 2: Cooperative warning templates for the six scenario families. Before inference,<FRONT_CAR_POS> is replaced by the hazard or conflict location (x, y) in the current ego frame, measured in meters with x forward and y right.",
+              "figure_id": "table-2-15",
+              "figure_number": "2",
+              "height": 371,
+              "image_path": "figures/2609.06368/table-016.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 488
+            },
+            {
+              "caption": "Table 3: CUS (↑) by scenario family. Shading highlights the paired warning/no-warning comparison and its gain; Overall is the macro-average, and bold marks the best score.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 333,
+              "image_path": "figures/2609.06368/table-017.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 508
+            },
+            {
+              "caption": "Table 5: Zero-shot open-loop diagnostics on nuScenes using 100 frames per scenario family. Average Displacement Error (ADE) and Final Displacement Error (FDE) are reported in meters; Drivable-Area Compliance (DAC) and Warning Response are percentages.",
+              "figure_id": "table-5-1",
+              "figure_number": "5",
+              "height": 258,
+              "image_path": "figures/2609.06368/table-018.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 500
+            },
+            {
+              "caption": "Table 10: Controlled transfer to two additional physical events. Lead and ∆v follow the definitions in Table 9; collision and blocking are route-level counts.",
+              "figure_id": "table-10-4",
+              "figure_number": "10",
+              "height": 236,
+              "image_path": "figures/2609.06368/table-019.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 714
+            },
+            {
+              "caption": "Table 12: Final predicted progress in meters for a checkpoint trained with distance-conditioned S1 counterexamples. Retention is far-warning progress divided by no-warning progress.",
+              "figure_id": "table-12-13",
+              "figure_number": "12",
+              "height": 133,
+              "image_path": "figures/2609.06368/table-020.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 444
+            },
+            {
+              "caption": "Table 9: Held-out occluded-cyclist case study. RC, collision, and blocking are percentages; ∆v is the pre-event speed reduction.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 133,
+              "image_path": "figures/2609.06368/table-021.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 586
+            },
+            {
+              "caption": "Table 11: Warning-wording ablation by ambiguity. Retention is paraphrase CUS divided by canonical-warning CUS on the same valid routes.",
+              "figure_id": "table-11-22",
+              "figure_number": "11",
+              "height": 136,
+              "image_path": "figures/2609.06368/table-022.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 1052
+            },
+            {
+              "caption": "Table 13: Response to non-actionable warnings. ∆vmax is the maximum additional speed reduction in m/s, Stop is the longest stationary duration in seconds, and RC is route completion in percent.",
+              "figure_id": "table-13-17",
+              "figure_number": "13",
+              "height": 221,
+              "image_path": "figures/2609.06368/table-023.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 776
+            }
+          ],
+          "first_seen_at": "2026-09-28T21:00:00-04:00",
+          "hero_figure": "figures/2609.06368/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.06368",
+          "relevance": 9,
+          "selection_reason": "Closed-loop benchmark for VLM-based cooperative driving with temporally grounded warnings, directly relevant to embodied vision-language navigation and action.",
+          "summary_status": "generated",
+          "title": "LANTERN: A Closed-Loop Benchmark for VLM-Based Cooperative Driving with Temporally Grounded Warnings",
+          "tldr": "LANTERN benchmarks whether VLM-based cooperative warnings improve closed-loop driving safety by evaluating temporally aligned warning and no-warning executions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-navigation",
+                "robot-navigation",
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-27",
       "paper_count": 2,
       "papers": [
@@ -10048,5 +12231,5 @@
   "schema_version": 1,
   "subtopic_id": "vision-language-navigation",
   "topic_id": "embodied-ai",
-  "total_paper_count": 64
+  "total_paper_count": 77
 }

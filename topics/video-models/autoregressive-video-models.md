@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**19 papers total**
+**22 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-28 | [From Scores to Samples: Elastic Forcing for Autoregressive Video Generation](https://arxiv.org/abs/2609.35491) | Video Generation and Understanding: Autoregressive Video Models | Elastic Forcing trains few-step autoregressive video generators directly on reference videos with MMD, avoiding auxiliary diffusion score models while improving quality and preserving speed. | 9 | 8 |
+| 2026-09-28 | [Precise Editing and Flexible Referencing for Interactable Worlds](https://arxiv.org/abs/2609.34470) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EditWorld is a video world model that supports precise, instruction- and image-guided editing of interactable worlds during generation. | 8 | 7 |
+| 2026-09-28 | [OneFixer: High-Quality and Consistent One-Step Autoregressive 3DGS Refinement for Driving Scenes](https://arxiv.org/abs/2609.32175) | 3D Vision: 3D Foundation Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | OneFixer enables high-quality, temporally consistent one-step 3DGS refinement for driving simulation through deployment-matched autoregressive training. | 8 | 8 |
 | 2026-09-24 | [ViRDM: Taming Representation Distribution Matching for Few-Step Causal Video Generation](https://arxiv.org/abs/2609.28923) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | ViRDM enables efficient few-step causal video generation by replacing teacher–critic distillation with generator-only representation distribution matching. | 8 | 8 |
 | 2026-09-24 | [DreamStream: Towards Policy-Oriented Generative Simulation for End-to-End Driving](https://arxiv.org/abs/2609.26792) | World Models: Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | DreamStream is a policy-oriented generative closed-loop simulator that better preserves decision-relevant scene features for evaluating end-to-end driving policies. | 8 | 8 |
 | 2026-09-23 | [The Past Frames the Future: Memory for Autoregressive Video Generation](https://arxiv.org/abs/2609.28466) | Video Generation and Understanding: Autoregressive Video Models | This review unifies how autoregressive video generators preserve and use long-range historical information beyond bounded context windows. | 7 | 8 |
