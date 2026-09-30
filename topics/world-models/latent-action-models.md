@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**62 papers total**
+**66 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-29 | [CrossBFM: Distilling a Shared Latent Behavior Space Across Humanoid Embodiments](https://arxiv.org/abs/2609.38087) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | CrossBFM distills a shared, transferable behavior latent space across humanoid embodiments, enabling efficient cross-robot prompting and control. | 8 | 8 |
+| 2026-09-29 | [Beyond a single latent space: a dual-latent world model for long-horizon planning](https://arxiv.org/abs/2609.37644) | World Models: Latent Action Models, Interactive World Models | Dual-WM improves long-horizon visual control by separating execution and planning into dual latent spaces trained with weighted multi-horizon rollouts. | 8 | 7 |
+| 2026-09-29 | [Anisotropic Representations Improve Planning in JEPA World Models](https://arxiv.org/abs/2609.37441) | World Models: Latent Action Models, Interactive World Models | AnisoWM improves latent-space planning by learning anisotropic representations whose geometry better aligns Euclidean planning costs with task outcomes. | 8 | 8 |
+| 2026-09-29 | [Identifying ODEs from Unstructured Data with Causal Representation Learning](https://arxiv.org/abs/2609.37083) | World Models: Latent Action Models | SPEED-AE combines causal representation learning with sparse equation discovery to recover interpretable ODEs from high-dimensional observations such as images. | 8 | 7 |
 | 2026-09-28 | [WorldGuide: Learning Success-Failure Boundaries in Latent World Models for Vision-Language-Action Policies](https://arxiv.org/abs/2609.34206) | Embodied AI: Vision-Language-Action; World Models: Latent Action Models | WorldGuide improves Vision-Language-Action policy reliability by learning latent distinctions between successful and failed interactions and using them as training guidance. | 8 | 7 |
 | 2026-09-28 | [Theory Guided and Interpretable Neural Operator Design for Partial Differential Equation Learning](https://arxiv.org/abs/2609.33715) | World Models: Latent Action Models; Adaptation and Memory: Continual and Online Learning | AFDONet uses adaptive Fourier decomposition theory to create an interpretable neural operator for solving nonlinear PDEs on smooth manifolds. | 8 | 8 |
 | 2026-09-28 | [ForeFly: A Dual-Horizon World Action Model for Aerial Vision-Language Navigation](https://arxiv.org/abs/2609.33581) | Embodied AI: Vision-Language Navigation; World Models: Latent Action Models | ForeFly improves aerial vision-language navigation by combining short-term and route-critical future predictions to guide UAV actions over long trajectories. | 9 | 8 |

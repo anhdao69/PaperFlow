@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**22 papers total**
+**25 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-29 | [Self-Aligned Forcing: Streaming Video Diffusion with Differentiable Noisy History](https://arxiv.org/abs/2609.38114) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Self-Aligned Forcing trains streaming video diffusion with differentiable, noise-matched history to reduce long-horizon drift while improving efficiency and motion–quality balance. | 9 | 8 |
+| 2026-09-29 | [Rollout-Marginal Distillation for Long-Horizon Autoregressive Video Generation](https://arxiv.org/abs/2609.37925) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Rollout-Marginal Distillation improves long-horizon autoregressive video generation by scoring chunks independently for visual quality, then restoring temporal coherence with video-level distillation. | 8 | 7 |
+| 2026-09-29 | [Salt++: Context-Aligned Post-Training for Few-Step Streaming Multimodal Generation](https://arxiv.org/abs/2609.36995) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Salt++ enables higher-quality few-step causal audio–video generation by aligning contextual representations and distillation across training and generation. | 8 | 7 |
 | 2026-09-28 | [From Scores to Samples: Elastic Forcing for Autoregressive Video Generation](https://arxiv.org/abs/2609.35491) | Video Generation and Understanding: Autoregressive Video Models | Elastic Forcing trains few-step autoregressive video generators directly on reference videos with MMD, avoiding auxiliary diffusion score models while improving quality and preserving speed. | 9 | 8 |
 | 2026-09-28 | [Precise Editing and Flexible Referencing for Interactable Worlds](https://arxiv.org/abs/2609.34470) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EditWorld is a video world model that supports precise, instruction- and image-guided editing of interactable worlds during generation. | 8 | 7 |
 | 2026-09-28 | [OneFixer: High-Quality and Consistent One-Step Autoregressive 3DGS Refinement for Driving Scenes](https://arxiv.org/abs/2609.32175) | 3D Vision: 3D Foundation Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | OneFixer enables high-quality, temporally consistent one-step 3DGS refinement for driving simulation through deployment-matched autoregressive training. | 8 | 8 |
