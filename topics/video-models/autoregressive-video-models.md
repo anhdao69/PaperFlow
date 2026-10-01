@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**25 papers total**
+**28 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-30 | [Enhancing Autoregressive Video Generation via Representation Adversarial Distillation](https://arxiv.org/abs/2609.40037) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Radian improves few-step autoregressive video generation by adding real-data adversarial supervision in frozen visual-foundation-model feature space to complement diffusion distribution matching. | 8 | 7 |
+| 2026-09-30 | [Future Video Generation Better Aligns with the Human Visual Cortex than Observed Video](https://arxiv.org/abs/2609.38819) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Video diffusion representations for predicting future frames align more closely with human visual-cortex activity than representations for reconstructing observed video. | 6 | 7 |
+| 2026-09-30 | [LongTake: Learning to Sustain Dynamics in Long-Horizon Video Generation](https://arxiv.org/abs/2609.38562) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | LongTake trains autoregressive video diffusion models with long-horizon supervision to sustain dynamic, high-quality generation over 30–60 seconds. | 8 | 8 |
 | 2026-09-29 | [Self-Aligned Forcing: Streaming Video Diffusion with Differentiable Noisy History](https://arxiv.org/abs/2609.38114) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Self-Aligned Forcing trains streaming video diffusion with differentiable, noise-matched history to reduce long-horizon drift while improving efficiency and motion–quality balance. | 9 | 8 |
 | 2026-09-29 | [Rollout-Marginal Distillation for Long-Horizon Autoregressive Video Generation](https://arxiv.org/abs/2609.37925) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Rollout-Marginal Distillation improves long-horizon autoregressive video generation by scoring chunks independently for visual quality, then restoring temporal coherence with video-level distillation. | 8 | 7 |
 | 2026-09-29 | [Salt++: Context-Aligned Post-Training for Few-Step Streaming Multimodal Generation](https://arxiv.org/abs/2609.36995) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Salt++ enables higher-quality few-step causal audio–video generation by aligning contextual representations and distillation across training and generation. | 8 | 7 |

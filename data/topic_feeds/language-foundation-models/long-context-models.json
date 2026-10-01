@@ -1,6 +1,2494 @@
 {
   "days": [
     {
+      "date": "2026-09-30",
+      "paper_count": 11,
+      "papers": [
+        {
+          "abstract": "Long-context failures of RoPE-based language models can arise from RoPE's intrinsic tradeoff between maintaining stable token preferences and distinguishing nearby positions. Determining which weakness to address, and how, requires a more precise characterization of RoPE's behavior in trained models across context lengths. We address a key limitation of prior theory by allowing unequal query-key scales across RoPE frequencies, which aligns well with practical empirical observations. Our theory makes both vulnerabilities measurable for individual heads and inputs, and quantifies how high-frequency components support positional sensitivity while potentially disrupting semantic stability. We also derive a theoretical context-length bound beyond which, under specified conditions, a fixed attention-score comparison cannot jointly avoid semantic reversal and positional insensitivity. Guided by our fresh theoretical insights, we introduce RoPE Profiler, a lightweight, plug-and-play diagnostic toolkit that augments existing evaluations with zero additional forward passes by reusing cached query and key activations. Reusing activations collected during evaluation, the toolkit incurs little overhead. It supplements standard benchmark scores with two diagnostic scores that reveal semantic and positional weaknesses and help users prioritize which aspect to address. Crucially, our evaluations across 49 long-context task settings reveal a distinct pattern where reasoning tasks predominantly suffer from semantic reversal, whereas retrieval tasks are primarily vulnerable to positional insensitivity. Guided by our theory and diagnostic profiles, targeted high-frequency rescaling achieves immediate gains without additional training, improving task accuracy by up to 20 percentage points on Qwen3-8B and 25 percentage points on Llama-3.1-8B-Instruct.",
+          "arxiv_id": "2609.39929",
+          "arxiv_url": "https://arxiv.org/abs/2609.39929",
+          "authors": [
+            "Yuyang Wu, Yufeng Du, Hao Peng"
+          ],
+          "bullets": [
+            "Identifies a tradeoff between semantic stability and sensitivity to nearby positions in RoPE attention.",
+            "Extends theory to unequal query–key scales, enabling head- and input-level measurement of both weaknesses.",
+            "Derives a context-length bound where fixed attention comparisons cannot avoid both semantic reversal and positional insensitivity.",
+            "Introduces RoPE Profiler, which reuses cached activations to add diagnostic scores without extra forward passes.",
+            "Across 49 settings, reasoning is mainly affected by semantic reversal and retrieval by positional insensitivity; targeted rescaling yields gains of up to 20–25 percentage points on two model families."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Augmenting accuracy-based evaluation with failure diagnostics. For a given model and the 49 reference task configurations (described in §E), we use query and key activations from standard evaluation to compute relative semantic failure susceptibility 𝑤𝑆. A higher 𝑤𝑆 suggests greater susceptibility to semantic reversal relative to positional insensitivity within the reference set.",
+              "figure_id": "figure-4-13",
+              "figure_number": "4",
+              "height": 434,
+              "image_path": "figures/2609.39929/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1056
+            },
+            {
+              "caption": "Figure 2: Illustrative task consequences of two RoPE failure modes. (a) For query country, the scores of keys France and chair reverse order between virtual relative distances 0 and 𝑚★. As attention directs information routing toward higher scores, this reversal favors the distractor chair over the semantically relevant France at relative distance 𝑚★ and can contribute to an incorrect prediction. (b) For query A and key B, the vertical bracket marks a marginal normalized score gap between adjacent virtual relative distances, 𝑔𝑧 (𝑚) < 𝜁. This leaves the model unable to distinguish between the two adjacent positions.",
+              "figure_id": "figure-2-16",
+              "figure_number": "2",
+              "height": 420,
+              "image_path": "figures/2609.39929/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1025
+            },
+            {
+              "caption": "Figure 3: (a) Under our high-frequency split, the predicted score distribution closely matches the empirical distribution. (b,c) Defining the high-frequency band. The curves show how randomness changes as more components are included. Our theory-guided split selects the largest band satisfying the split criterion while retaining high randomness. The trends vary with context length, and larger 𝑀 allows more high-frequency components, consistent with our theory. (See Appendix D.2.)",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 311,
+              "image_path": "figures/2609.39929/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1001
+            },
+            {
+              "caption": "Figure 5: Accuracy gains from our exploratory intervention search. Bars show the best observed intervention in each setting’s assigned semantic or positional direction minus the original baseline on identical examples within each setting. The baseline is excluded from the candidate maximum. Each model’s 49 task/configuration settings (described in Appendix E) are ordered from left to right by increasing semantic failure susceptibility, from blue to orange.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 272,
+              "image_path": "figures/2609.39929/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 990
+            },
+            {
+              "caption": "Figure 8: Head selection from the 49 reference settings. Each cell shows the sample variance of a head’s setting-level mean Common-pair 𝑟𝐻 , using a shared color scale across models. Black outlines identify the top-5% heads used by the main diagnostic and first intervention stage. Orange outlines identify the additional heads included in the top-10% set for the second stage. Layer and query-head indices start at one. All settings within a model use the same selected heads.",
+              "figure_id": "figure-8-14",
+              "figure_number": "8",
+              "height": 647,
+              "image_path": "figures/2609.39929/figure-005.webp",
+              "kind": "figure",
+              "page": 59,
+              "width": 1026
+            },
+            {
+              "caption": "Figure 6: Semantic failure susceptibility across tasks. Points compare ranks of semantic failure susceptibility𝑤𝑆 in Qwen3-8B and Llama3.1-8B-Instruct for the 49 task/configuration settings described in Appendix E. Most tasks show similar patterns across models, while three adjacent-element retrieval tasks differ.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 379,
+              "image_path": "figures/2609.39929/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 391
+            },
+            {
+              "caption": "Figure 7: Pointwise consistency and tightness audit of the sharper coefficient-specific local positional-response envelope and local-response floor from the appendix. Panels (a)–(c) form the Qwen3-8B row and panels (d)–(f) form the Llama-3.1-8B row; every point is one first-layer query–head–key coefficient vector. Left: the observed integer-window maximum gap 𝜁𝑖 against the coefficient-specific upper certificate 𝑇 (𝑎𝑖) on logarithmic axes. Middle: the observed gap (blue) and upper certificate (orange) against 𝑟𝐻 (𝑎𝑖;𝑀); solid curves and shaded regions are medians and 10–90% ranges over 32 equal-count 𝑟𝐻 bins, not an 𝑟𝐻-only predictor. Right: the pointwise lower bound 𝑓pos(𝑎𝑖;𝑀, 𝜁𝑖) against the observed certified-high norm share. Dashed diagonals indicate equality in the left and right columns. The Qwen3 row is an in-assumption geometric-grid audit, whereas the non-geometric Llama row is an out-of-assumption stress test. The right column uses the same point to set 𝜁𝑖 and therefore measures consistency and tightness rather than out-ofsample predictive accuracy.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 704,
+              "image_path": "figures/2609.39929/figure-007.webp",
+              "kind": "figure",
+              "page": 52,
+              "width": 1025
+            },
+            {
+              "caption": "Figure 1: The fundamental semantic-positional tradeoff and rotary frequency dynamics. (a) The candidate region for semantic stability and adjacent positional sensitivity shrinks with context length. The orange and blue curves represent the semantic upper limit and positional lower limit on the high-frequency norm share. The green region contains candidate values satisfying both requirements; beyond 𝑀max, no such value remains within the calibrated family. (b) RoPE rotates coordinate pairs of query and key vectors by frequency-dependent angles across relative token distances. Rapidly rotating components, when aggregated across channels, form unpredictable Gaussian noise that destabilizes token preferences. Slowly rotating components remain predictable but produce marginal score changes that fail to resolve adjacent positions. Consequently, the dominance of different frequency bands triggers distinct failure modes. Precise formulations are given in §3.2 and Appendix A.5.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 329,
+              "image_path": "figures/2609.39929/figure-008.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 75
+            },
+            {
+              "caption": "Table 1: The complete 49-setting diagnostic reference set. Each configuration in a row is a separate setting. 𝐾 is the number of settings and 𝑁 is the number of examples per setting and per model. Lengths are nominal benchmark configurations; the diagnostic uses each model’s actual input length.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 423,
+              "image_path": "figures/2609.39929/table-009.webp",
+              "kind": "table",
+              "page": 56,
+              "width": 902
+            },
+            {
+              "caption": "Table 8: Llama-3.1-8B-Instruct: positional direction on the top-5% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points).",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 656,
+              "image_path": "figures/2609.39929/table-010.webp",
+              "kind": "table",
+              "page": 69,
+              "width": 776
+            },
+            {
+              "caption": "Table 5: Qwen3-8B: positional direction on the top-10% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points). Dashes mark settings without a second-stage evaluation; † marks a generation limit that differs from the saved baseline.",
+              "figure_id": "table-5-9",
+              "figure_number": "5",
+              "height": 630,
+              "image_path": "figures/2609.39929/table-011.webp",
+              "kind": "table",
+              "page": 67,
+              "width": 794
+            },
+            {
+              "caption": "Table 3: Qwen3-8B: semantic direction on the top-10% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points). Dashes mark settings without a second-stage evaluation; † marks a generation limit that differs from the saved baseline.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 599,
+              "image_path": "figures/2609.39929/table-012.webp",
+              "kind": "table",
+              "page": 66,
+              "width": 810
+            },
+            {
+              "caption": "Table 6: Llama-3.1-8B-Instruct: semantic direction on the top-5% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points).",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 559,
+              "image_path": "figures/2609.39929/table-013.webp",
+              "kind": "table",
+              "page": 68,
+              "width": 764
+            },
+            {
+              "caption": "Table 2: Qwen3-8B: semantic direction on the top-5% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points).",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 469,
+              "image_path": "figures/2609.39929/table-014.webp",
+              "kind": "table",
+              "page": 65,
+              "width": 786
+            },
+            {
+              "caption": "Table 9: Llama-3.1-8B-Instruct: positional direction on the top-10% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points). Dashes mark settings without a second-stage evaluation; † marks a generation limit that differs from the saved baseline.",
+              "figure_id": "table-9-1",
+              "figure_number": "9",
+              "height": 742,
+              "image_path": "figures/2609.39929/table-015.webp",
+              "kind": "table",
+              "page": 70,
+              "width": 828
+            },
+            {
+              "caption": "Table 4: Qwen3-8B: positional direction on the top-5% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points).",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 162,
+              "image_path": "figures/2609.39929/table-016.webp",
+              "kind": "table",
+              "page": 66,
+              "width": 794
+            },
+            {
+              "caption": "Table 7: Llama-3.1-8B-Instruct: semantic direction on the top-10% heads. Entries give accuracy in percent and the change from the paired baseline in parentheses (percentage points). Dashes mark settings without a second-stage evaluation; † marks a generation limit that differs from the saved baseline.",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 162,
+              "image_path": "figures/2609.39929/table-017.webp",
+              "kind": "table",
+              "page": 68,
+              "width": 794
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.39929/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.39929",
+          "relevance": 8,
+          "selection_reason": "Theory, diagnosis, and mitigation of RoPE long-context failures, directly relevant to long-context language models.",
+          "summary_status": "generated",
+          "title": "RoPE at the End of Its Rope? Theory, Diagnosis, and Mitigation of Long-Context Failures",
+          "tldr": "The paper explains why RoPE-based models fail at long contexts, introduces a zero-overhead diagnostic toolkit, and shows targeted high-frequency rescaling can substantially improve accuracy without retraining.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context inference with Large Language Models (LLMs) is bottlenecked by the linearly growing memory of the key-value (KV) cache. Existing compression methods reduce the cache through token eviction or approximation, but degrade sharply at aggressive compression budgets. We propose PatchKV, a training-free framework that compensates KV cache compression methods by carrying part of the context in the model's weights. PatchKV pairs an off-the-shelf compressed KV cache with a context-specific weight patch, which is computed once at context-loading time and served for downstream queries for the context. The weight patch is derived in closed form via ridge regression, by aligning the block-wise activations of context-derived reference query tokens under the full cache and the compressed cache. Once merged into the model, the patch leaves the forward graph and per-query inference cost unchanged in the single-context, multi-query setting. Across long-context QA (SCBench with up to 170K tokens, SQuAD, NIAH) and math (GSM8K) benchmarks on three model architectures, PatchKV consistently improves cache compression methods, suggesting an alternative direction to compensate them at aggressive budgets.",
+          "arxiv_id": "2609.39329",
+          "arxiv_url": "https://arxiv.org/abs/2609.39329",
+          "authors": [
+            "Chanryeol Lee, Chanhyuk Lee, Yeonwoo Choi, Donggyun Kim, Seunghoon Hong"
+          ],
+          "bullets": [
+            "Addresses the linear memory growth of KV caches and the degradation caused by aggressive compression.",
+            "Pairs any compressed KV cache with a context-specific weight patch computed once during context loading.",
+            "Derives the patch in closed form using ridge regression to align full-cache and compressed-cache activations.",
+            "Keeps the forward graph and per-query inference cost unchanged for single-context, multi-query use.",
+            "Improves compressed-cache methods across long-context QA and math benchmarks on three model architectures."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Benchmark results using Qwen2.5-7B-1M with PatchKV applied on top of (a) an eviction based method (KVzip) and (b) an approximation based method (Attention Matching). In (b), † marks shortened (tiny) task variants for SCBench retrieval tasks.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 664,
+              "image_path": "figures/2609.39329/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 789
+            },
+            {
+              "caption": "Figure 5: Averaged score across datasets, normalized by the full-KV score, for different models.",
+              "figure_id": "figure-5-19",
+              "figure_number": "5",
+              "height": 253,
+              "image_path": "figures/2609.39329/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 817
+            },
+            {
+              "caption": "Figure 1: Overview of PatchKV. (a) Standard KV cache compression stores context information only in a compressed cache. (b) PatchKV pairs the compressed cache with a context-specific patch to the MLP output projections, compensating for part of the full-cache behavior lost during compression.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 233,
+              "image_path": "figures/2609.39329/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Figure 15: Benchmark results using LLaMA3.1-8B with PatchKV applied on top of an eviction based method (KVzip).",
+              "figure_id": "figure-15-15",
+              "figure_number": "15",
+              "height": 392,
+              "image_path": "figures/2609.39329/figure-004.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 821
+            },
+            {
+              "caption": "Figure 16: Benchmark results using Qwen3-4B with PatchKV applied on top of an eviction based method (KVzip).",
+              "figure_id": "figure-16-16",
+              "figure_number": "16",
+              "height": 392,
+              "image_path": "figures/2609.39329/figure-005.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 821
+            },
+            {
+              "caption": "Figure 3: Qualitative example of PatchKV over KVzip on SQuAD. Evicted tokens shown in red.",
+              "figure_id": "figure-3-14",
+              "figure_number": "3",
+              "height": 252,
+              "image_path": "figures/2609.39329/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 829
+            },
+            {
+              "caption": "Figure 7: Additional benchmark results across KV cache budgets using Qwen2.5-7B-1M and KVzip.",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 260,
+              "image_path": "figures/2609.39329/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 783
+            },
+            {
+              "caption": "Figure 12: Qualitative example of PatchKV over KVzip on SQuAD. Evicted tokens shown in red.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 250,
+              "image_path": "figures/2609.39329/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Figure 13: Qualitative example of PatchKV over KVzip on GSM8K. Evicted tokens shown in red.",
+              "figure_id": "figure-13-10",
+              "figure_number": "13",
+              "height": 250,
+              "image_path": "figures/2609.39329/figure-009.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Figure 6: FP32 vs. TF32 patch construction.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 244,
+              "image_path": "figures/2609.39329/figure-010.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 309
+            },
+            {
+              "caption": "Figure 9: Performance when restricting the rank of weight patch of PatchKV.",
+              "figure_id": "figure-9-23",
+              "figure_number": "9",
+              "height": 283,
+              "image_path": "figures/2609.39329/figure-011.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 402
+            },
+            {
+              "caption": "Figure 8: Performance across reference context lengths.",
+              "figure_id": "figure-8-22",
+              "figure_number": "8",
+              "height": 170,
+              "image_path": "figures/2609.39329/figure-012.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 394
+            },
+            {
+              "caption": "Figure 4: Multi-task results on RepoQA+KV and Summary+NIAH using Qwen2.5-7B-1M.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 208,
+              "image_path": "figures/2609.39329/figure-013.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 819
+            },
+            {
+              "caption": "Figure 10: Performance of PatchKV on INT4/INT8 quantized KV cache.",
+              "figure_id": "figure-10-18",
+              "figure_number": "10",
+              "height": 201,
+              "image_path": "figures/2609.39329/figure-014.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 818
+            },
+            {
+              "caption": "Figure 11: Qualitative example of PatchKV over KVzip on SQuAD. Evicted tokens shown in red.",
+              "figure_id": "figure-11-11",
+              "figure_number": "11",
+              "height": 221,
+              "image_path": "figures/2609.39329/figure-015.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Figure 14: Qualitative example of PatchKV over KVzip on GSM8K. Evicted tokens shown in red.",
+              "figure_id": "figure-14-9",
+              "figure_number": "14",
+              "height": 221,
+              "image_path": "figures/2609.39329/figure-016.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Table 5: Score (%) on the original SCBench retrieval tasks using Qwen2.5-7B-1M. Both methods achieve zero accuracy on Retr.KV and Retr.Prefix-Suffix under the evaluated cache budgets.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 195,
+              "image_path": "figures/2609.39329/table-017.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 672
+            },
+            {
+              "caption": "Table 6: Stagewise wall-clock time and peak GPU memory for PatchKV construction.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 183,
+              "image_path": "figures/2609.39329/table-018.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 560
+            },
+            {
+              "caption": "Table 7: Online evaluation on AIME 2025 using Qwen3-4B. A compaction event is triggered whenever the physical KV cache reaches 2048 entries, with the most recent 20 entries protected during compaction. 2048→ m denotes the post-compaction KV cache size.",
+              "figure_id": "table-7-17",
+              "figure_number": "7",
+              "height": 278,
+              "image_path": "figures/2609.39329/table-019.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 456
+            },
+            {
+              "caption": "Table 1: Perplexity (↓) on SQuAD across compression ratios. ref. stands for reference query.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 150,
+              "image_path": "figures/2609.39329/table-020.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 660
+            },
+            {
+              "caption": "Table 3: Effect of chunk size.",
+              "figure_id": "table-3-21",
+              "figure_number": "3",
+              "height": 109,
+              "image_path": "figures/2609.39329/table-021.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 331
+            },
+            {
+              "caption": "Table 2: Cross-evaluation of patches built from disjoint cache subsets. Rows: weight patch applied at inference. Columns: compressed cache used at inference.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 140,
+              "image_path": "figures/2609.39329/table-022.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 211
+            },
+            {
+              "caption": "Table 4: Ridge scaling results.",
+              "figure_id": "table-4-20",
+              "figure_number": "4",
+              "height": 150,
+              "image_path": "figures/2609.39329/table-023.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 195
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.39329/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.39329",
+          "relevance": 8,
+          "selection_reason": "Proposes weight-space compensation for KV cache compression in long-context LLM inference, directly matching KV cache memory efficiency and long-context model interests.",
+          "summary_status": "generated",
+          "title": "PatchKV: Weight-Space Compensation of KV Cache",
+          "tldr": "PatchKV preserves long-context performance under aggressive KV-cache compression by storing context-specific corrections in the model weights without adding per-query inference cost.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models (LLMs) have been rapidly improving in long-context tasks, powered by Chain-of-Thought (CoT) reasoning. However, the internal mechanisms underlying this improvement remain unclear. We investigate these mechanisms through a needle-in-a-haystack (NIAH) counting task, where an LLM is asked to count the number of records dispersed in a long text. Across twelve model comparison groups, Thinking (or reasoning) improves counting accuracy over Non-thinking, with pronounced gains at larger counts. This motivates our mechanistic analysis, which identifies two contrasting mechanisms: (i) broad retrieval, where Non-thinking models broadly attend to multiple needles; (ii) targeted retrieval, where Thinking models use enumeration in CoT traces to successively retrieve needles. Targeted retrieval concentrates attention on individual needles and is accompanied by more compact internal representations. Moreover, causal intervention analysis suggests that Thinking models use the CoT trace to maintain and update an internal counter as needles are successively retrieved, even without explicit numbering. In small controlled experiments, both retrieval mechanisms and counter states emerge under standard autoregressive training. Together, our results connect long-context retrieval with representation geometry of counting, supporting a state-tracking account of CoT reasoning.",
+          "arxiv_id": "2609.38958",
+          "arxiv_url": "https://arxiv.org/abs/2609.38958",
+          "authors": [
+            "Liang Twist Shan, Tianyu Hu, Hao Yan, Yiqiao Zhong"
+          ],
+          "bullets": [
+            "Thinking models outperform non-thinking models on dispersed-record counting, especially as the count increases.",
+            "Non-thinking models broadly retrieve multiple relevant items, whereas thinking models enumerate and retrieve needles one at a time.",
+            "Targeted retrieval is associated with more compact internal representations.",
+            "Causal analyses indicate that CoT traces help maintain and update an internal counter, even without explicit numbering.",
+            "Controlled experiments suggest both retrieval strategies and counter states can arise through standard autoregressive training."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL",
+            "cs.LG",
+            "stat.AP"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Broad retrieval in Non-thinking mode. A. Needle-attention shares for each model’s six highest-ranked heads, normalized within each N = 10 prompt and averaged over 20 seeds. B. Broad retrieval scores Bh across counts 2–10; highlighted points mark the frozen Qwen Top-32 and Gemma Top-6 sets. Gemma includes global-attention layers only.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 303,
+              "image_path": "figures/2609.38958/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 939
+            },
+            {
+              "caption": "Figure 5: Targeted retrieval in Thinking. A. Needle-normalized attention for one head per model (N = 10); circles mark needle k + 1 at Marker k. B. Mean Th across seeds; highlights mark Qwen Top-128 and Gemma Top-6. Gemma includes global-attention layers only.",
+              "figure_id": "figure-5-47",
+              "figure_number": "5",
+              "height": 302,
+              "image_path": "figures/2609.38958/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 913
+            },
+            {
+              "caption": "Figure 2: Counting accuracy across counts and context lengths. A,B. Median and interquartile range across 12 model groups; lines are smoothed guides. C,D. Accuracy over 30 paired seeds: Non-thinking (rose, solid) and Thinking (blue, dashed), with darker colors for larger N . Lines connect measured values. Qwen is evaluated with YaRN disabled.",
+              "figure_id": "figure-2-53",
+              "figure_number": "2",
+              "height": 284,
+              "image_path": "figures/2609.38958/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 958
+            },
+            {
+              "caption": "Figure 1: Two retrieval mechanisms and contrasting representations. A. Non-thinking distributes final-query attention across prompt needles. B. Thinking targets successive needles as its trace progresses. Marker k denotes the query before trace item k + 1. C. PCA projections of states at prompt-needle endpoints (Non-thinking) and trace-item endpoints (Thinking), colored by running index, with numbered centroids. Held-out nearest-centroid classification (NCC) accuracy after whitened 16-component PCA is 46% for Non-thinking and 98% for Thinking. Attention and representations are based on Qwen3-8B with 10k-token inputs.1See details in App. A.",
+              "figure_id": "figure-1-14",
+              "figure_number": "1",
+              "height": 758,
+              "image_path": "figures/2609.38958/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 946
+            },
+            {
+              "caption": "Figure 4: The form–retrieve–consolidate pathway. A. Schematic. B. Clean-to-corrupted restoration and reverse patching of needle spans. C. Retrieval-head ablation vs. layer-matched random and original controls. D. Proportion of predictions matching the source count after answer state patching.",
+              "figure_id": "figure-4-15",
+              "figure_number": "4",
+              "height": 461,
+              "image_path": "figures/2609.38958/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 948
+            },
+            {
+              "caption": "Figure 6: The retrieve–update–read pathway. A. Schematic. B. Retrieval-head ablation vs. layer-matched random and original controls. C. Counter state patching from a later trace item to an earlier one, using traces without indices (Qwen L19; prompted Gemma L21). Later columns report continuation success conditional on success at the preceding step and a remaining item. D. Proportion of predictions matching the source count after answer state patching.",
+              "figure_id": "figure-6-21",
+              "figure_number": "6",
+              "height": 310,
+              "image_path": "figures/2609.38958/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 964
+            },
+            {
+              "caption": "Figure 7: Learning dynamics of two synthetic counting models. A. Free-running count accuracy. B,C. Layer-wise broad retrieval scores in Non-thinking and targeted retrieval scores in Thinking. The dashed line marks the switch to task-output loss at step 1,500. See Appendix A for evaluation details.",
+              "figure_id": "figure-7-4",
+              "figure_number": "7",
+              "height": 264,
+              "image_path": "figures/2609.38958/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 956
+            },
+            {
+              "caption": "Figure 26: Head-count dependence in the frozen retrieval banks. A,B. Qwen next-item/final count effects. C,D. Gemma effects (ten transitions/model). Solid circles ablate frozen selected prefixes; dashed diamonds average three layer-matched random banks excluding the selected bank. Axes show ablated-head count and failure increases from clean continuation; shading gives pointwise 95% seed-bootstrap intervals. Masks persist through free generation.",
+              "figure_id": "figure-26-26",
+              "figure_number": "26",
+              "height": 634,
+              "image_path": "figures/2609.38958/figure-008.webp",
+              "kind": "figure",
+              "page": 46,
+              "width": 945
+            },
+            {
+              "caption": "Figure 32: Head-count dependence in the frozen retrieval banks. A,B. Qwen next-item/final count effects. C,D. Gemma effects (ten transitions/model). Solid circles ablate frozen selected prefixes; dashed diamonds average three random banks. Axes show ablated-head count and failure increases from clean continuation; shading gives pointwise 95% seed-bootstrap intervals. Masks persist through free generation. All doses and eight truncated formal generations remain (four/model); random banks match layers except at Qwen Top-128.",
+              "figure_id": "figure-32-10",
+              "figure_number": "32",
+              "height": 593,
+              "image_path": "figures/2609.38958/figure-009.webp",
+              "kind": "figure",
+              "page": 53,
+              "width": 945
+            },
+            {
+              "caption": "Figure 22: Complete targeted-retrieval scores. A. All 1,152 Qwen heads (15/20 eligible selection seeds). B. The 56 Gemma global-attention heads (19/20). Scores use the model-specific formats and queries above. Horizontal axes show heads; vertical axes show layers from shallow to deep. Both panels use a linear 0–1 scale, shared with Enumeration. Outlines mark frozen Top-128/Top-6 membership.",
+              "figure_id": "figure-22-23",
+              "figure_number": "22",
+              "height": 429,
+              "image_path": "figures/2609.38958/figure-010.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 924
+            },
+            {
+              "caption": "Figure 29: Complete targeted-retrieval scores. A. All 1,152 Qwen heads. B. The 56 Gemma global-attention heads. Scores average within seed, then across 20 selection seeds/model. Horizontal axes show heads; vertical axes show layers from shallow to deep. Both panels use a linear 0–1 scale, shared with Thinking. Outlines mark frozen Top-128/Top-6 membership.",
+              "figure_id": "figure-29-41",
+              "figure_number": "29",
+              "height": 429,
+              "image_path": "figures/2609.38958/figure-011.webp",
+              "kind": "figure",
+              "page": 51,
+              "width": 914
+            },
+            {
+              "caption": "Figure 14: Candidate length dependence of effective step failure. Dots are the free-by-length estimates from Eq. (3); curves are the five joint fits in Eq. (4). All fits use accuracy observations, not the dots. Panel A uses 1k–20k medians; B,C use each model’s complete 1k–100k data. Vertical scales differ.",
+              "figure_id": "figure-14-51",
+              "figure_number": "14",
+              "height": 369,
+              "image_path": "figures/2609.38958/figure-012.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 967
+            },
+            {
+              "caption": "Figure 31: Counter-state and answer state PCA in Bullet enumeration. A,B. All 550 Qwen/528 Gemma held-out running index states. C,D. All 100 final count states/model, including incorrect original answers. Small points show held-out states, with opacity indicating viewing depth; connected large markers show class means. Color denotes k or N . Axes use PC1–3 fitted using the selection data; percentages report their combined explained variance.",
+              "figure_id": "figure-31-52",
+              "figure_number": "31",
+              "height": 362,
+              "image_path": "figures/2609.38958/figure-013.webp",
+              "kind": "figure",
+              "page": 52,
+              "width": 918
+            },
+            {
+              "caption": "Figure 23: Count readout across layers. A. Running index at trace-item endpoints. B. Final count at the answer query. Both analyses cover N = 1–10. Curves pool predictions from five seed-grouped cross-validation folds (20 seeds/model): 1,107 Qwen/1,045 Gemma running states and 200 answer states each. Solid/dashed curves denote NCC/logistic classifiers; labeled markers identify NCC-selected layers. Blue denotes Qwen and orange Gemma; dotted lines mark 10% chance.",
+              "figure_id": "figure-23-6",
+              "figure_number": "23",
+              "height": 339,
+              "image_path": "figures/2609.38958/figure-014.webp",
+              "kind": "figure",
+              "page": 43,
+              "width": 953
+            },
+            {
+              "caption": "Figure 30: Count readout across layers. A. Running index at trace-item endpoints. B. Final count at the answer query. Curves pool predictions from five seed-grouped cross-validation folds (20 seeds/model): 1,102 Qwen/1,067 Gemma running states and 200 answer states each. Solid/dashed curves denote NCC/logistic classifiers; labeled markers identify NCC-selected layers. Blue denotes Qwen and orange Gemma; dotted lines mark 10% chance.",
+              "figure_id": "figure-30-40",
+              "figure_number": "30",
+              "height": 339,
+              "image_path": "figures/2609.38958/figure-015.webp",
+              "kind": "figure",
+              "page": 51,
+              "width": 953
+            },
+            {
+              "caption": "Figure 34: Answer state transfer and trace dependence. A. Proportion of predictions matching the source count after full-state (solid) or self (dashed) patches at the single answer-query token, 40 directed pairs/model at every layer. B. Exact-count accuracy for Original, prompt-record blanking, and whole-trace blanking (100 unfiltered inputs/model). Blue denotes Qwen and orange Gemma. Shading and error bars give pointwise 95% seed-bootstrap intervals.",
+              "figure_id": "figure-34-33",
+              "figure_number": "34",
+              "height": 333,
+              "image_path": "figures/2609.38958/figure-016.webp",
+              "kind": "figure",
+              "page": 55,
+              "width": 941
+            },
+            {
+              "caption": "Figure 9: Count-model fits to unsmoothed cross-model medians. All 14 counts and eight lengths are shown. Curves use Eqs. (2) and (3).",
+              "figure_id": "figure-9-9",
+              "figure_number": "9",
+              "height": 297,
+              "image_path": "figures/2609.38958/figure-017.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 958
+            },
+            {
+              "caption": "Figure 28: Trace dependence of final count readout. A. Qwen. B. Gemma. Exactcount accuracy for Original, prompt-record blanking, and whole-trace blanking (100 unfiltered prompts/model). Error bars give pointwise 95% seed-bootstrap intervals.",
+              "figure_id": "figure-28-39",
+              "figure_number": "28",
+              "height": 298,
+              "image_path": "figures/2609.38958/figure-018.webp",
+              "kind": "figure",
+              "page": 49,
+              "width": 940
+            },
+            {
+              "caption": "Figure 45: Top-K head ablation. Absolute accuracies for Selected (solid circles) and Random (dashed open squares; mean of three banks). A–D: Thinking targeted ablation, measuring nextentity accuracy. E–H: Non-thinking broad ablation, measuring final-answer accuracy. Columns show Qwen (blue) and Gemma (orange); rows separate tasks. Shading shows pointwise 95% CIs. Qwen’s broad axes are logarithmic. Clean accuracies for Qwen/Gemma are 100.00/97.00% for kth-record retrieval and 94.78/69.36% for category counting in the targeted assay; the corresponding broad-assay accuracies are 13.00/26.00% and 25.00/29.00%.",
+              "figure_id": "figure-45-43",
+              "figure_number": "45",
+              "height": 804,
+              "image_path": "figures/2609.38958/figure-019.webp",
+              "kind": "figure",
+              "page": 73,
+              "width": 948
+            },
+            {
+              "caption": "Figure 11: Qwen3-32B: all counts and lengths, YaRN disabled. Each panel fixes N and shows all 17 lengths from 1k to 100k. Rose circles/solid lines are Non-thinking; blue triangles/dashed lines are Thinking. Points are 30-seed means, shading shows pointwise 95% Wilson intervals, and lines connect measurements without smoothing. Truncations count as errors.",
+              "figure_id": "figure-11-31",
+              "figure_number": "11",
+              "height": 794,
+              "image_path": "figures/2609.38958/figure-020.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 957
+            },
+            {
+              "caption": "Figure 12: Gemma-4-31B: all counts and lengths. The display matches Fig. 11. Gray strips separate the 1k–20k and 25k–100k evaluation batches; lines and intervals do not cross that gap. All 14 counts and both modes are retained, including local accuracy reversals.",
+              "figure_id": "figure-12-17",
+              "figure_number": "12",
+              "height": 794,
+              "image_path": "figures/2609.38958/figure-021.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 957
+            },
+            {
+              "caption": "Figure 42: Attention and count decoding during training. All panels use a linear training-step axis and the same 100 evaluation inputs. A–D: attention scores for all 32 heads across 101 checkpoints; rows retain head identity and white lines separate layers. A/B share the broad-score scale; C/D use a fixed 0–1 scale for targeted and successor-like attention. E/F: balanced NCC accuracy for running index and final count at eleven checkpoints. Layers are selected by final-checkpoint cross-validated NCC and remain fixed; transforms and centroids are fitted on selection states at each checkpoint. Vertical dotted lines mark the objective switch at step 1,500; horizontal dotted lines in E/F mark 10% chance accuracy.",
+              "figure_id": "figure-42-20",
+              "figure_number": "42",
+              "height": 767,
+              "image_path": "figures/2609.38958/figure-022.webp",
+              "kind": "figure",
+              "page": 66,
+              "width": 944
+            },
+            {
+              "caption": "Figure 10: Complete 12-group comparison at 1k–20k. Every panel includes 14 counts, eight lengths, and both modes. Points are 30-request accuracies; solid Gaussian curves and circles denote Non-thinking, dashed step-success curves and triangles Thinking. Colors identify length. Fits are separate for each group. †Separate checkpoints.",
+              "figure_id": "figure-10-45",
+              "figure_number": "10",
+              "height": 725,
+              "image_path": "figures/2609.38958/figure-023.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 949
+            },
+            {
+              "caption": "Figure 33: Counter-state scope controls and continuation. Columns show Qwen L19 and Gemma L21. A,B. Filled/hollow points show source/self-patch successor adoption at each scope (30 trials/direction; ten seeds, k = 4, 6, 8). C,D. Item-span next-step success conditional on the entire preceding source-implied city prefix being correct and another item remaining. Steps 1–2 include k = 4, 6, 8; steps 3–4 include k = 4, 6. Circles/solid lines denote forward transfer; diamonds/dashed lines denote backward transfer. Bars and shading give pointwise 95% seed-bootstrap intervals. Failures and truncations remain in the step for which they are eligible.",
+              "figure_id": "figure-33-22",
+              "figure_number": "33",
+              "height": 670,
+              "image_path": "figures/2609.38958/figure-024.webp",
+              "kind": "figure",
+              "page": 54,
+              "width": 941
+            },
+            {
+              "caption": "Figure 27: Counter-state scope controls by direction. A,B. Forward transfer. C,D. Backward transfer. Columns show Qwen L19 and Gemma L21. Each scope uses the same 30 pairs per panel (ten seeds, k = 4, 6, 8). Filled/hollow points show source/self-patch successor adoption; bars give pointwise 95% seed-bootstrap intervals.",
+              "figure_id": "figure-27-54",
+              "figure_number": "27",
+              "height": 585,
+              "image_path": "figures/2609.38958/figure-025.webp",
+              "kind": "figure",
+              "page": 48,
+              "width": 940
+            },
+            {
+              "caption": "Figure 44: Head scores for both additional tasks. Task groups pair broad (Bh, Non-thinking) and targeted (Th, Thinking) scores; rows show Qwen (blue) and Gemma (orange). Cells represent heads, with one-based layer and head indices. Each panel has an independent, unclipped linear scale from zero to its labeled maximum; compare numerical scores using the colorbars.",
+              "figure_id": "figure-44-32",
+              "figure_number": "44",
+              "height": 569,
+              "image_path": "figures/2609.38958/figure-026.webp",
+              "kind": "figure",
+              "page": 72,
+              "width": 938
+            },
+            {
+              "caption": "Figure 8: Relative noise between adjacent counts. Non-thinking answer-query states at 10k tokens: Qwen3-8B L25 and Gemma-4-E4B L36, selected by cross-validated NCC (Appendix D.2). Relative noise is pooled within-count standard deviation divided by projected mean separation (Eq. (1)); larger values indicate poorer separation. Directions use 20 fitting seeds; estimates use ten held-out seeds per count. Lines connect observations. Shading shows pointwise 95% intervals from 10,000 bootstrap draws, independently resampling whole-seed profiles in each split, refitting directions, and fixing layers.",
+              "figure_id": "figure-8-46",
+              "figure_number": "8",
+              "height": 355,
+              "image_path": "figures/2609.38958/figure-027.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 848
+            },
+            {
+              "caption": "Figure 15: Complete broad-retrieval scores. A. All 1,152 Qwen heads. B. All 56 Gemma global-attention heads. Cells show mean Bh on 180 selection prompts. Horizontal axes show heads; vertical axes show layers from shallow to deep. Both panels use a linear 0–1 scale. Outlines mark frozen Qwen Top-32/Gemma Top-6 membership.",
+              "figure_id": "figure-15-19",
+              "figure_number": "15",
+              "height": 429,
+              "image_path": "figures/2609.38958/figure-028.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 924
+            },
+            {
+              "caption": "Figure 41: Trace continuation and final-answer interventions. A: input-averaged sourcecontinuation exact match for an L1 source-item transplant (circles), self patches/clean runs (squares), and norm-matched orthogonal controls (triangles). Conditions use the same eight inputs and 26/30/26/20 eligible pairs for lengths 1/2/3/4. Error bars on source transplants show 95% percentile intervals from 10,000 input-bootstrap resamples; control curves show means. B: Thinking answer accuracy after prompt or trace ablation on 100 generated prefixes. Controls ablate equally many non-target prompt positions; the dotted line marks clean accuracy. C: agreement with the source run’s clean prediction on 180 pairs using teacher-forced prefixes.",
+              "figure_id": "figure-41-27",
+              "figure_number": "41",
+              "height": 391,
+              "image_path": "figures/2609.38958/figure-029.webp",
+              "kind": "figure",
+              "page": 65,
+              "width": 951
+            },
+            {
+              "caption": "Figure 17: Cue and domain controls. A,B: 100 needle end states per condition at N = 10 in the first three components of a jointly fitted unwhitened PCA6 (Qwen L16/Gemma L14). C,D: 100 answer-query states per domain (city, flower, animal) in a PCA3 estimated from city examples. Small points are states; connected large markers are class means. Circles/triangles denote cue present/absent in A,B; circles/triangles/squares denote city/flower/animal in C,D. Percentages give fitting-population variance explained. Conditions share the projection and display scale within each panel.",
+              "figure_id": "figure-17-38",
+              "figure_number": "17",
+              "height": 394,
+              "image_path": "figures/2609.38958/figure-030.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 918
+            },
+            {
+              "caption": "Figure 25: Count geometry across needle domains. A,B. Qwen/Gemma running states. C,D. Final count states. Circles/triangles/squares denote city/flower/animal; small points show held-out states and connected large markers show class means. Colors encode k or N . All three domains share the projection fitted on city data within each panel; percentages give fitting-population variance explained by PC1–3.",
+              "figure_id": "figure-25-28",
+              "figure_number": "25",
+              "height": 394,
+              "image_path": "figures/2609.38958/figure-031.webp",
+              "kind": "figure",
+              "page": 45,
+              "width": 918
+            },
+            {
+              "caption": "Figure 43: Final-answer accuracy by position and category count. A: requested record position (30 inputs per point). B: true target-category count, pooling city and flower questions (60 per point). Blue denotes Qwen and orange Gemma; solid circles denote Thinking and dashed squares Non-thinking. Aggregate 95% CIs appear in Table 11.",
+              "figure_id": "figure-43-2",
+              "figure_number": "43",
+              "height": 372,
+              "image_path": "figures/2609.38958/figure-032.webp",
+              "kind": "figure",
+              "page": 70,
+              "width": 932
+            },
+            {
+              "caption": "Figure 13: Qwen3-32B long-context accuracy with and without YaRN. Panels show Non-thinking (rose) and Thinking (blue). Solid circles: YaRN disabled; dashed triangles: YaRN configured. Each point pools 14 counts with 30 seeds each (420 requests); truncations and unparseable outputs count as errors. Lines connect observations without smoothing. The runs also differ in execution settings (request batch size 2 versus 1), so gaps do not isolate YaRN’s causal effect.",
+              "figure_id": "figure-13-12",
+              "figure_number": "13",
+              "height": 352,
+              "image_path": "figures/2609.38958/figure-033.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 954
+            },
+            {
+              "caption": "Figure 36: Retrieval-head scores. A: Non-thinking broad score Bh at the final-answer query. B: Thinking targeted score Th at trace retrieval queries. Each cell shows one head’s score at step 10,000, averaged equally over 100 teacher-forced evaluation inputs. Rows are layers L1–L4; columns are heads H1–H8. The panels use separate color scales, matching Fig. 42 in Appendix G.4, with no normalization across heads.",
+              "figure_id": "figure-36-30",
+              "figure_number": "36",
+              "height": 362,
+              "image_path": "figures/2609.38958/figure-034.webp",
+              "kind": "figure",
+              "page": 60,
+              "width": 920
+            },
+            {
+              "caption": "Figure 24: Counter-state and answer state PCA in the full Thinking cohort. A,B. Qwen/Gemma running index states. C,D. Final count states. Small points show held-out states, with opacity indicating viewing depth; connected large markers show class means. Color denotes k or N . Axes use PC1–3 fitted using the selection data; percentages report their combined explained variance.",
+              "figure_id": "figure-24-44",
+              "figure_number": "24",
+              "height": 362,
+              "image_path": "figures/2609.38958/figure-035.webp",
+              "kind": "figure",
+              "page": 44,
+              "width": 918
+            },
+            {
+              "caption": "Figure 16: Count readout across layers. A. Running index at needle endpoints. B. Final count at the answer query. Both cover N = 1–10 and use five-fold seed-grouped cross-validation on 20 selection seeds: 1,100 states in A and 200 in B. Accuracy averages recall over the ten labels. Solid/dashed curves denote nearest-centroid/logistic classifiers; dotted lines mark 10% chance. Labeled markers identify the NCC-selected layers, with logistic accuracy and then earlier layers breaking ties.",
+              "figure_id": "figure-16-25",
+              "figure_number": "16",
+              "height": 339,
+              "image_path": "figures/2609.38958/figure-036.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 944
+            },
+            {
+              "caption": "Figure 35: Training and counting behavior. A/B: full-sequence, token-weighted cross-entropy on evaluation inputs generated from the training (solid) and validation (dashed) regions of the original corpus. Validation-region inputs are excluded from parameter updates. The dotted line marks the objective change at step 1,500; this evaluation metric remains fixed. C: final-checkpoint answer accuracy, with ten evaluation inputs per count and mode. Missing numeric answers are incorrect.",
+              "figure_id": "figure-35-48",
+              "figure_number": "35",
+              "height": 324,
+              "image_path": "figures/2609.38958/figure-037.webp",
+              "kind": "figure",
+              "page": 59,
+              "width": 955
+            },
+            {
+              "caption": "Figure 37: Retrieval head ablation. A: final count accuracy on all 100 Non-thinking inputs, for Top-1–4 broad heads. B: next-needle accuracy on 88 eligible Thinking inputs, for Top-1–8 targeted heads. Lines show selected sets, control means, and clean baselines; shading spans the control sets. The axes each span 40 percentage points; B is truncated to 60–100%.",
+              "figure_id": "figure-37-16",
+              "figure_number": "37",
+              "height": 326,
+              "image_path": "figures/2609.38958/figure-038.webp",
+              "kind": "figure",
+              "page": 61,
+              "width": 940
+            },
+            {
+              "caption": "Figure 40: Sources of the next needle. A: prompt and trace schematic. B: next-needle accuracy after prompt or trace ablation, with controls at non-target prompt positions. All 100 inputs are retained, including 30 without prior trace items.",
+              "figure_id": "figure-40-56",
+              "figure_number": "40",
+              "height": 322,
+              "image_path": "figures/2609.38958/figure-039.webp",
+              "kind": "figure",
+              "page": 63,
+              "width": 944
+            },
+            {
+              "caption": "Figure 20: Answer state transfer and removal. A: proportion of predictions matching the source count. B: normalized excess error from aligned removal. Seed-bootstrap intervals (50,000 draws in B).",
+              "figure_id": "figure-20-18",
+              "figure_number": "20",
+              "height": 284,
+              "image_path": "figures/2609.38958/figure-040.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 940
+            },
+            {
+              "caption": "Figure 21: Serial interventions across the three stages. A: restoration and retrieval/answer removal effects. B: interaction and remaining repair. All contrasts use absolute expected-count error divided by N before averaging; both panels share the same percentage scale. Bars show seed-bootstrap intervals.",
+              "figure_id": "figure-21-36",
+              "figure_number": "21",
+              "height": 274,
+              "image_path": "figures/2609.38958/figure-041.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 931
+            },
+            {
+              "caption": "Figure 38: Count geometry. Cross-validated NCC selects L2/L4/L4/L2 for A/B/C/D. Separate PCA projections show 550 running index states (A/B) and 100 answer states (C/D) per mode. Outlined class means are connected in label order. The three components explain 50.9/48.1/74.0/71.7% of selection variance in A/B/C/D. All panels use the same camera view and equal coordinate units within each panel.",
+              "figure_id": "figure-38-13",
+              "figure_number": "38",
+              "height": 837,
+              "image_path": "figures/2609.38958/figure-042.webp",
+              "kind": "figure",
+              "page": 62,
+              "width": 946
+            },
+            {
+              "caption": "Figure 39: Count decoding across layers. Balanced NCC accuracy for running index (A) and final count (B), using teacher-forced states. Squares mark layers selected by grouped cross-validation. Preprocessing and centroids are fitted only on selection inputs.",
+              "figure_id": "figure-39-55",
+              "figure_number": "39",
+              "height": 264,
+              "image_path": "figures/2609.38958/figure-043.webp",
+              "kind": "figure",
+              "page": 63,
+              "width": 941
+            },
+            {
+              "caption": "Figure 19: Answer state patching controls. A: Qwen; B: Gemma. Proportion of predictions matching the source count after answer state patching. Different-count (solid), same-count (dashed), and self (dotted) patches use fixed correct-input pairs across layers. Controls are scored against the corresponding different-count source. Shading gives pointwise 95% seed-bootstrap intervals.",
+              "figure_id": "figure-19-7",
+              "figure_number": "19",
+              "height": 263,
+              "image_path": "figures/2609.38958/figure-044.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 943
+            },
+            {
+              "caption": "Figure 18: Retrieval-head ablation. A: Qwen; B: Gemma. Ranked heads (solid circles) versus layer-matched random banks (dashed diamonds). Effect is the absolute change in generated count divided by the true count N . Bands show seed-bootstrap intervals.",
+              "figure_id": "figure-18-50",
+              "figure_number": "18",
+              "height": 255,
+              "image_path": "figures/2609.38958/figure-045.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 931
+            },
+            {
+              "caption": "Table 3: Length-model validation: R2/RMSE (percentage points). The first 13 rows leave out each length in the 1k–20k grid; the next two do so over 1k–100k. The final two are frozen short-to-long predictions. All five candidates have three parameters and retain all 14 counts. Higher R2 and lower RMSE indicate better predictions. †Separate checkpoints.",
+              "figure_id": "table-3-42",
+              "figure_number": "3",
+              "height": 614,
+              "image_path": "figures/2609.38958/table-046.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 825
+            },
+            {
+              "caption": "Table 1: Thinking improves counting accuracy across models. Table shows parsed exact accuracy (%), N = 5, over 30 paired seeds. †Separate checkpoints.",
+              "figure_id": "table-1-37",
+              "figure_number": "1",
+              "height": 202,
+              "image_path": "figures/2609.38958/table-047.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 914
+            },
+            {
+              "caption": "Table 10: Synthetic training and evaluation settings. Both modes use the same settings unless the output format or loss component is specified. There is one training run per mode. Learning-rate values refer to one-based optimizer steps.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 734,
+              "image_path": "figures/2609.38958/table-048.webp",
+              "kind": "table",
+              "page": 58,
+              "width": 977
+            },
+            {
+              "caption": "Table 9: Examples of synthetic inputs. Three actual test-region inputs and their expected outputs in both modes. The input characters are randomly permuted, so these excerpts do not preserve words or sentences. Within each example, both modes receive the same query prefix and 256-character input. Excerpts retain every target occurrence and nearby non-target characters; ellipses omit only non-target characters. Positions are one-based. Boldface marks target occurrences, denotes an input space, and \\n denotes an input newline.",
+              "figure_id": "table-9-5",
+              "figure_number": "9",
+              "height": 663,
+              "image_path": "figures/2609.38958/table-049.webp",
+              "kind": "table",
+              "page": 57,
+              "width": 977
+            },
+            {
+              "caption": "Table 2: Observed means and held-count fits. The 1k–20k and 1k–100k grids contain 3,360 and 7,140 requests per mode per group, respectively. RMSE: percentage points. †Separate checkpoints.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 488,
+              "image_path": "figures/2609.38958/table-050.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 777
+            },
+            {
+              "caption": "Table 7: Count readout across needle domains. Cells report state count; NCC/logistic balanced accuracy (%). Each domain contains 100 held-out trajectories per model. City-only fitting and layer selection precede transfer; chance is 10%.",
+              "figure_id": "table-7-29",
+              "figure_number": "7",
+              "height": 153,
+              "image_path": "figures/2609.38958/table-051.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 722
+            },
+            {
+              "caption": "Table 6: Data and splits for Thinking experiments, per model unless specified. Repeated conditions share seed clusters.",
+              "figure_id": "table-6-35",
+              "figure_number": "6",
+              "height": 42,
+              "image_path": "figures/2609.38958/table-052.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 977
+            },
+            {
+              "caption": "Table 8: Data and splits for Enumeration experiments, per model unless specified. Repeated conditions share seed clusters.",
+              "figure_id": "table-8-34",
+              "figure_number": "8",
+              "height": 42,
+              "image_path": "figures/2609.38958/table-053.webp",
+              "kind": "table",
+              "page": 50,
+              "width": 977
+            },
+            {
+              "caption": "Table 11: Natural final-answer accuracy (%). Each condition includes all 300 inputs from 30 seeds. Brackets give 95% confidence intervals (CIs).",
+              "figure_id": "table-11-1",
+              "figure_number": "11",
+              "height": 163,
+              "image_path": "figures/2609.38958/table-054.webp",
+              "kind": "table",
+              "page": 70,
+              "width": 977
+            },
+            {
+              "caption": "Table 4: Data and splits for Non-thinking experiments, per model unless specified. Eligibility and invalid-output rules accompany each analysis.",
+              "figure_id": "table-4-24",
+              "figure_number": "4",
+              "height": 40,
+              "image_path": "figures/2609.38958/table-055.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 977
+            },
+            {
+              "caption": "Table 5: Frozen city-trained count readout. Nearest-centroid accuracy on 100 held-out prompts per topic (N = 1–10; ten seeds). Chance is 10%.",
+              "figure_id": "table-5-49",
+              "figure_number": "5",
+              "height": 102,
+              "image_path": "figures/2609.38958/table-056.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 356
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.38958/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.38958",
+          "relevance": 7,
+          "selection_reason": "Mechanistic study of CoT and retrieval in long-context LLM counting, directly relevant to long-context and LLM reasoning research.",
+          "summary_status": "generated",
+          "title": "Targeted Retrieval, Compact Representations: How CoT Reasoning Improves Long-Context Counting",
+          "tldr": "CoT improves long-context counting by enabling targeted, sequential retrieval of items while maintaining an internal count.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "large-language-models",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models deployed as personalized assistants must reason over long, evolving interaction histories. However, in long-term dialogue reasoning, relevant evidence is scattered across sessions, preferences may be revised over time, and standard long-context training fails to address these challenges under data scarcity and prohibitive computational costs. We propose StateTree, a data-driven RL method that constructs a challenging auxiliary task from scarce dialogues with verifiable ground truth. StateTree augments multi-session dialogues with a tree-structured path-tracing task: key-value records are embedded across sessions to form a binary tree. Solving the task requires the model to traverse from root to leaf by retrieving records across sessions and comparing timestamps to resolve branches, then recover the hidden target question among distractor leaves. We apply curriculum RL training progressively increasing tree depth and introduce a compositional variant whose edges carry step-level reasoning fragments, training the model to compose partial cues into coherent queries. Trained on 10K-token contexts, StateTree generalizes to 128K tokens without full-length RL costs and exhibits capabilities including cross-session retrieval, temporal reasoning, knowledge update, and compositional multi-hop reasoning. StateTree outperforms both SFT and RL-based baselines while preserving short-context general reasoning. StateTree-7B achieves gains up to +23.60% on LongMemEval (128k), and StateTree-14B reaches 59.00% accuracy on LongMemEval, surpassing QwenLong-L1-32B (45.20%).",
+          "arxiv_id": "2609.38809",
+          "arxiv_url": "https://arxiv.org/abs/2609.38809",
+          "authors": [
+            "Naen Xu, Wanqing Cui, Yibo Hu, Shixin Hong, Hengyu An, Meiguang Jin, Junfeng Ma, Tianyu Du"
+          ],
+          "bullets": [
+            "Targets scattered evidence, changing preferences, and costly long-context training in multi-session dialogues.",
+            "Builds verifiable auxiliary tasks by embedding key-value records across sessions in binary-tree paths with distractor leaves.",
+            "Uses curriculum RL with increasing tree depth, plus a compositional variant requiring models to combine step-level reasoning fragments.",
+            "Improves cross-session retrieval, temporal reasoning, knowledge updates, and compositional multi-hop reasoning while preserving short-context reasoning.",
+            "Reported gains reach +23.60% on 128K-token LongMemEval for StateTree-7B; StateTree-14B achieves 59.00% accuracy versus 45.20% for QwenLong-L1-32B."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Model trajectories in multi-session dialogue reasoning. (i) QwenLong-L1-32B gets lost across sessions and misses information. (ii) The StateTree-trained model shows cross-session retrieval, temporal reasoning, knowledge update, and multi-hop reasoning, improving reasoning reliability.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 302,
+              "image_path": "figures/2609.38809/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: The StateTree data construction pipeline. Left: Basic StateTree embeds key-value records across sessions into a tree; the model traverses root-to-leaf to recover the target question. Right: Compositional StateTree augments edges with step-level fragments aggregates into the final question.",
+              "figure_id": "figure-3-14",
+              "figure_number": "3",
+              "height": 212,
+              "image_path": "figures/2609.38809/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Reasoning F1 score and response lengths throughout RL training on the validation set.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 318,
+              "image_path": "figures/2609.38809/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 816
+            },
+            {
+              "caption": "Figure 2: Examples of the challenges in multi-turn dialogue. For each example, we show the associated evidence statements on the left and the question with the answer on the right.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 292,
+              "image_path": "figures/2609.38809/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 824
+            },
+            {
+              "caption": "Table 3: OOD generalization accuracy (%) on LongMemEval and PersonaMem-128k benchmarks.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 346,
+              "image_path": "figures/2609.38809/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 821
+            },
+            {
+              "caption": "Table 2: Main results on the LoCoMo benchmark across different task dimensions.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 330,
+              "image_path": "figures/2609.38809/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 820
+            },
+            {
+              "caption": "Table 12: Performance comparison across different models on OOD PersonaMem-32k.",
+              "figure_id": "table-12-9",
+              "figure_number": "12",
+              "height": 294,
+              "image_path": "figures/2609.38809/table-007.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 827
+            },
+            {
+              "caption": "Table 10: Semantic decomposition example for the target question “When did Jon start expanding his studio’s social media presence?” (answer: “April, 2023”). ⋆ marks the target leaf. The correct path aggregates: step_1 = “[A] Jon”, step_2 = “[B] expanding his studio’s social media presence”, step_3 = “When did [A] start [B]?”, yielding the full question after substitution.",
+              "figure_id": "table-10-3",
+              "figure_number": "10",
+              "height": 246,
+              "image_path": "figures/2609.38809/table-008.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 822
+            },
+            {
+              "caption": "Table 5: Short-context reasoning performance (%).",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 299,
+              "image_path": "figures/2609.38809/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 400
+            },
+            {
+              "caption": "Table 4: Average accuracy (%) across context lengths.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 181,
+              "image_path": "figures/2609.38809/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 474
+            },
+            {
+              "caption": "Table 8: Reward function ablation.",
+              "figure_id": "table-8-18",
+              "figure_number": "8",
+              "height": 147,
+              "image_path": "figures/2609.38809/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 445
+            },
+            {
+              "caption": "Table 13: Category-level curriculum ablation on LoCoMo (7B).",
+              "figure_id": "table-13-8",
+              "figure_number": "13",
+              "height": 415,
+              "image_path": "figures/2609.38809/table-012.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 833
+            },
+            {
+              "caption": "Table 1: Mapping between multi-turn dialogue challenges and StateTree design choices.",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 107,
+              "image_path": "figures/2609.38809/table-013.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 822
+            },
+            {
+              "caption": "Table 6: Curriculum stage ablation.",
+              "figure_id": "table-6-19",
+              "figure_number": "6",
+              "height": 127,
+              "image_path": "figures/2609.38809/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 487
+            },
+            {
+              "caption": "Table 9: Dataset statistics and data construction parameters for each curriculum stage. “UUID format” refers to the identifier format used for tree node keys. “Insert mode” specifies where records are placed within the dialogue text.",
+              "figure_id": "table-9-2",
+              "figure_number": "9",
+              "height": 233,
+              "image_path": "figures/2609.38809/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 822
+            },
+            {
+              "caption": "Table 14: Category-level curriculum ablation on LongMemEval (7B).",
+              "figure_id": "table-14-17",
+              "figure_number": "14",
+              "height": 121,
+              "image_path": "figures/2609.38809/table-016.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 818
+            },
+            {
+              "caption": "Table 15: StateTree structure for the D=2 Basic StateTree sample (conv-26). ⋆ marks the target leaf.",
+              "figure_id": "table-15-1",
+              "figure_number": "15",
+              "height": 160,
+              "image_path": "figures/2609.38809/table-017.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 814
+            },
+            {
+              "caption": "Table 11: Entity key pool used in the w/ Entity Keys ablation.",
+              "figure_id": "table-11-15",
+              "figure_number": "11",
+              "height": 62,
+              "image_path": "figures/2609.38809/table-018.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 590
+            },
+            {
+              "caption": "Table 16: Full 2× 2× 2 tree structure for the Compositional StateTree sample (conv-26). ⋆ marks the target leaf.",
+              "figure_id": "table-16-16",
+              "figure_number": "16",
+              "height": 36,
+              "image_path": "figures/2609.38809/table-019.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.38809/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.38809",
+          "relevance": 8,
+          "selection_reason": "RL method for long-term dialogue reasoning with cross-session retrieval and long-context generalization, fitting LLM memory and long-context models.",
+          "summary_status": "generated",
+          "title": "StateTree: Enhancing Long-Term Dialogue Reasoning via Reinforcement Learning",
+          "tldr": "StateTree uses curriculum reinforcement learning on a synthetic tree-traversal task to improve long-term dialogue reasoning and generalize from 10K- to 128K-token contexts.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-horizon agentic workflows require models to sustain repeated state-dependent actions all while the context grows, sub-task complexity changes, and new data arrives. Each situation represents an independent axis along which an agent may fail. An agent reconciling a long ledger, for example, must repeatedly read its state, update the correct record, and preserve alignment across thousands of outputs. A model may accept the entire ledger yet lose its place or stop applying the operation consistently as generation proceeds. We introduce Long-Transduction, a controlled diagnostic that tests a model's ability to stay on task during long generation while continuously reading, mutating, and outputting input-context dependent operations such as arithmetic, sorting, variable lookups, and table transformations. Long-Transduction evaluation independently varies local task complexity, input data formatting, and context length isolate failures along each axis. We evaluate seven open-weight models, finding a 62.8\\% decrease when scaling context length from 4-128K, a 36.5\\% decrease when varying input format, and a 39.9\\% decrease by increasing local task complexity. Together, these failures represent critical liabilities in long-horizon agentic workflows.",
+          "arxiv_id": "2609.38712",
+          "arxiv_url": "https://arxiv.org/abs/2609.38712",
+          "authors": [
+            "Jeffrey Willette, Krishna C. Puvvada, Boris Ginsburg"
+          ],
+          "bullets": [
+            "Long-horizon workflows require repeated state reading, mutation, and output while maintaining task alignment.",
+            "Long-Transduction isolates failures across context length, input formatting, and local task complexity.",
+            "The diagnostic covers operations including arithmetic, sorting, variable lookup, and table transformations.",
+            "Across seven open-weight models, performance drops substantially with longer contexts, altered formats, and more complex local tasks.",
+            "The results identify persistent-task reliability as a critical limitation for long-horizon agents."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Calculating individual scored items throughout generation for the ‘Ordered, no IDs’ format on the UUID sorting task averaged over all context lengths and difficulties. Models tend to stay self-consistent longer than they are able to copy information from context.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 323,
+              "image_path": "figures/2609.38712/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 808
+            },
+            {
+              "caption": "Figure 8: Available task-model results at 128K nominal tokens. Complete-grid cells average four difficulties and five document samples per setting; gray dashes mark missing Olmo* cells. This view complements Fig. 6: the heatmap compares absolute performance while the curves show difficulty sensitivity.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 322,
+              "image_path": "figures/2609.38712/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 747
+            },
+            {
+              "caption": "Figure 1: The universal read, mutate, output loop underlying both transduction tasks and agentic workflows. At each step, a system reads relevant state from its context, applies a meaningful mutation, and appends the result to its output stream. Long-transduction tests whether models can repeat this loop reliably across a growing long-horizon workflow.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 203,
+              "image_path": "figures/2609.38712/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 817
+            },
+            {
+              "caption": "Figure 2: Fig. 2a shows how accuracy degrades as context length increases. The result is averaged over all tasks, input formats, and difficulties. Fig. 2b shows individual task performance at 128K averaged over input formats and difficulties. Olmo* ends at 32K because of its context limit.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 281,
+              "image_path": "figures/2609.38712/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 809
+            },
+            {
+              "caption": "Figure 4: Overall Accuracy at 128K decreases with an increasing local task complexity. Metrics are averaged over input format. Increasing local task complexity degrades overall performance. Olmo* data only up until 32K. For the corresponding variable lookup plot, see Fig. 9a",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 250,
+              "image_path": "figures/2609.38712/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 812
+            },
+            {
+              "caption": "Figure 9: Fig. 9a corresponds to the figures shown in Fig. 6. Fig.9b corresponds to the figures shown in Fig. 3.",
+              "figure_id": "figure-9-2",
+              "figure_number": "9",
+              "height": 346,
+              "image_path": "figures/2609.38712/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 793
+            },
+            {
+              "caption": "Figure 6: All local-difficulty curves at 128K nominal tokens. Olmo* has no 128K point. These figures complement what is shown in Fig. 4 which averages over all context lengths and formats.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 851,
+              "image_path": "figures/2609.38712/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 812
+            },
+            {
+              "caption": "Figure 7: Accuracy across the required generation at 128K nominal tokens for all 12 task variants. Complete-grid curves average four difficulties and five document samples per setting after withindocument binning; Olmo* has no 128K point. Figure columns compare input formats, while rows corresponds to tasks.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 850,
+              "image_path": "figures/2609.38712/figure-008.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 811
+            },
+            {
+              "caption": "Figure 3: Format sensitivity at 128K nominal tokens, averaged over four difficulties. Surprisingly, ordered transformations without row ID’s scores worse than shuffling the numbered input rows. Removing IDs removes the stable row lookup key. Olmo* only includes up to 32K. For the corresponding table transform plot, see Fig. 9b.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 238,
+              "image_path": "figures/2609.38712/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 813
+            },
+            {
+              "caption": "Table 1: Number of active adjective or noun variables in each dictionary. A value of ‘2’ means that there are 2 adjectives and 2 nouns.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 237,
+              "image_path": "figures/2609.38712/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 602
+            },
+            {
+              "caption": "Table 2: Exact document completion at 128K nominal tokens. A document needs no repair only when every required output item is correct.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 192,
+              "image_path": "figures/2609.38712/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 456
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.38712/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.38712",
+          "relevance": 7,
+          "selection_reason": "Long-context diagnostic isolating context-length, formatting, and task-complexity failures in long-horizon agentic workflows.",
+          "summary_status": "generated",
+          "title": "Staying on Task: Testing the Foundations of Long-Horizon Agent Reliability",
+          "tldr": "Long-Transduction reveals that open-weight models often lose reliability in long-horizon tasks as context length, input-format variation, and local operation complexity increase.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Language-model (LM) harnesses enable LMs to operate effectively over long contexts using additional compute. However, existing long-context evaluations are insufficient for distinguishing modern harnesses, reflected by saturated accuracy across harnesses and largely similar evaluation costs. In this paper, we introduce a benchmark for evaluating both the effectiveness and efficiency of long-context harnesses. Our tasks require diverse retrieval strategies, including lexical search and semantic matching, together with strategic and adaptive reasoning over global and local context. Much of the context is semantically relevant but only a small subset is useful at each step, creating both a challenging search problem and different accuracy--cost tradeoffs across processing strategies. For example, one task requires identifying every person satisfying several conditions using evidence scattered across documents; strategically checking the most selective condition first can narrow the search before verifying the remaining conditions. We evaluate multiple families of frontier language models with four state-of-the-art harnesses. Our benchmarks remain challenging even for strong model--harness combinations: the best reaches 68\\% macro-average accuracy across four evaluation suites. More importantly, we find that the same underlying model can exhibit markedly different efficiency under different harnesses. Our results establish efficiency as an important axis for long-context evaluation and provide a testbed for developing harnesses that process context strategically rather than exhaustively.",
+          "arxiv_id": "2609.38137",
+          "arxiv_url": "https://arxiv.org/abs/2609.38137",
+          "authors": [
+            "Quang Hieu Pham, Thuy Duong Nguyen, Jocelyn Qiaochu Chen, Xi Ye"
+          ],
+          "bullets": [
+            "Existing long-context benchmarks often saturate and fail to distinguish modern harnesses.",
+            "The benchmark combines lexical and semantic retrieval with adaptive reasoning over global and local context.",
+            "Tasks include selectively searching semantically relevant documents to solve multi-condition queries.",
+            "Across four evaluation suites, the best model–harness combination achieves 68% macro-average accuracy.",
+            "Harness choice markedly affects efficiency, motivating evaluation beyond accuracy and exhaustive context processing."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Macro-average accuracy and estimated cost across the four tasks (Table 2). Color denotes model; shape denotes harness. Callouts and larger markers mark each model’s best accuracy. ReAct appears where available.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 345,
+              "image_path": "figures/2609.38137/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 727
+            },
+            {
+              "caption": "Figure 2: Examples from our benchmark. Top left: Constraint Solving Search combines evidence from documents. Top right: Equivalent Program Pair Search distinguishes equivalent programs from near matches. Bottom left: Program Execution Tracing requires reading prior outputs and matching code semantics. Bottom right: Outlier Memo Detection identifies a conflict using supporting memos.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 577,
+              "image_path": "figures/2609.38137/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 816
+            },
+            {
+              "caption": "Figure 1: LONGHARNESS (ours) reveals harness differences in both accuracy and cost.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 360,
+              "image_path": "figures/2609.38137/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 274
+            },
+            {
+              "caption": "Table 2: Exact accuracy and estimated cost across four suites. Each cell reports accuracy (%) followed by USD per-instance cost in parentheses; macro averages the four task accuracies and per-task mean costs. Appendix A gives token counts and Appendix C gives the API rates.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 504,
+              "image_path": "figures/2609.38137/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 827
+            },
+            {
+              "caption": "Table 5: Underlying structures used to construct the four tasks. Public contexts expose only the rendered items, not their roles or provenance.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 254,
+              "image_path": "figures/2609.38137/table-005.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 798
+            },
+            {
+              "caption": "Table 4: Detailed accuracy and efficiency on Constraint Solving Search (Constraint), Outlier Memo Detection (Memos), Program Execution Tracing (Program), and Equivalent Program Pair Search (Pairs). Macro accuracy averages the four task-level accuracies. Program uses the format-tolerant answer-and-citation rescore; its original strict-format scores remain in the task report.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 891,
+              "image_path": "figures/2609.38137/table-006.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 828
+            },
+            {
+              "caption": "Table 1: Comparison of long-context benchmarks along properties relevant to evaluating LM harnesses. ✓: supported; ∼: partially supported; ×: not supported. Diverse, adaptive retrieval demand means choosing an appropriate way to access context, such as lexical search, semantic retrieval, or direct reading, as information needs change during reasoning. Step-dependent retrieval means that intermediate findings determine what must be retrieved next. The final two rows indicate whether model–harness configurations are widely separated in accuracy and cost.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 236,
+              "image_path": "figures/2609.38137/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 836
+            },
+            {
+              "caption": "Table 6: API rates in USD per million tokens. A dash indicates that we do not apply a separate rate for that token category.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 171,
+              "image_path": "figures/2609.38137/table-008.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 460
+            },
+            {
+              "caption": "Table 3: GPT-5.6-sol on existing longcontext benchmarks. Each cell reports accuracy and average USD per instance in parentheses.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 125,
+              "image_path": "figures/2609.38137/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 302
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.38137/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.38137",
+          "relevance": 6,
+          "selection_reason": "Benchmark for long-context harness effectiveness and efficiency; relevant to long-context reasoning and strategic processing.",
+          "summary_status": "generated",
+          "title": "LongHarness Bench: Stress-Testing Language Model Harnesses for Long-Context Reasoning",
+          "tldr": "LongHarness Bench evaluates whether long-context LM harnesses can reason strategically and efficiently, revealing substantial harness-dependent differences beyond accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "How many tokens from its context does a language model actually use, and what determines that number? We study this question through self-attention. Without retraining, we retain only the tokens with the highest attention weights at each head, layer, and query, keeping their original weights unchanged. By varying the selected set size and measuring the increase in negative log-likelihood (NLL), we estimate the effective attention set size needed to stay within a chosen loss tolerance. Relatively small selected sets can keep NLL close to the full-attention baseline, although the required size varies across models. Attention-based selection substantially outperforms random selection. Selected sets exhibit geometric structure, although geometric separation alone does not establish that model loss is preserved. Extending context while evaluating the same prediction targets increases the required set size, while its fraction of context decreases over the tested range. Experiments with a fixed supporting fact show that additional background pushes its tokens down the attention ranking and reduces their attention mass. Renormalizing the retained weights can substantially reduce the required set size, showing that it also depends on how selected representations are combined. Conditional theoretical models explain how competition and attention-mass retention can produce growing set sizes without more distinct information to retrieve. These results provide a way to measure effective attention set size in language models and investigate its dependence on context, competition, and aggregation.",
+          "arxiv_id": "2609.37879",
+          "arxiv_url": "https://arxiv.org/abs/2609.37879",
+          "authors": [
+            "Timur Mudarisov, Mikhail Burtsev, Radu State"
+          ],
+          "bullets": [
+            "It estimates effective attention set size by retaining only the highest-weight tokens per head, layer, and query, then measuring the resulting NLL increase.",
+            "Small selected sets can often preserve near-baseline loss, and attention-based selection is substantially better than random selection; required sizes vary across models.",
+            "Longer contexts require larger selected sets in absolute terms but a smaller fraction of the context over the tested range.",
+            "Additional background tokens can demote relevant supporting facts in the attention ranking and reduce their attention mass.",
+            "Renormalizing retained weights lowers the required set size, while geometric separation of selected tokens does not by itself guarantee loss preservation."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Longer context improves full-model prediction and increases the effective attention set size. (a) Estimated set size at a 5% relative NLL tolerance against the full model at each context length. (b) Mean full-model NLL. Both panels use 50 OpenWebText documents per model, scoring the same final 128 target tokens at every context length. Shading in (a) shows 95% paired-document bootstrap intervals conditional on the evaluated set sizes.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 287,
+              "image_path": "figures/2609.37879/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 794
+            },
+            {
+              "caption": "Figure 4: Stronger geometric separation often accompanies greater NLL degradation. Geometric FN and relative NLL degradation under attention-weight selection, using (a) Euclidean and (b) cosine geometry. Each point corresponds to one set size N , indicated by color, with both quantities averaged across OpenWebText and WikiText-103. Lines connect successive set sizes, and ρ denotes the Spearman correlation along each trajectory.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 349,
+              "image_path": "figures/2609.37879/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 818
+            },
+            {
+              "caption": "Figure 1: Useful-token hypothesis. Each attention operation has an unknown useful set whose size K(C) depends on context. Attention and contribution scores give rankings from which sets of different sizes are selected. Ranking inversions occur when tokens outside the useful set score at least as highly as useful tokens, so recovering the useful set may require retaining more than K(C) tokens.",
+              "figure_id": "figure-1-14",
+              "figure_number": "1",
+              "height": 346,
+              "image_path": "figures/2609.37879/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 798
+            },
+            {
+              "caption": "Figure 3: Attention and contribution selection produce lower NLL degradation than random selection at the same attention set sizes. Relative increase in mean NLL over the full model on OpenWebText with 1k-token contexts. Panels compare selection by attention weight (left), contribution magnitude (middle), and random selection (right). For a chosen loss tolerance, the crossing of a curve with that degradation level gives an approximate effective attention set size N∗.",
+              "figure_id": "figure-3-34",
+              "figure_number": "3",
+              "height": 222,
+              "image_path": "figures/2609.37879/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 731
+            },
+            {
+              "caption": "Figure 2: Attention-selected sets exhibit stronger Euclidean separation than random sets across all four models. Geometric precision (left), recall (middle), and extremal FN (right) on OpenWebText. Solid curves show selection by attention weight, and dash-dotted curves show random sets of the same size, each evaluated relative to its own aggregate. Measurements use the final query of 1024-token contexts and are averaged over heads, layers, and documents.",
+              "figure_id": "figure-2-33",
+              "figure_number": "2",
+              "height": 198,
+              "image_path": "figures/2609.37879/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 689
+            },
+            {
+              "caption": "Figure 12: Contribution ranking gives similar geometry–loss trajectories. Each point corresponds to a selected-set size N , with geometric FN and relative NLL degradation averaged across OpenWebText and WikiText-103. Color denotes N , lines connect successive sizes, and ρ is the Spearman correlation along each trajectory. Geometry is measured at the final query, while loss uses interventions throughout the model.",
+              "figure_id": "figure-12-12",
+              "figure_number": "12",
+              "height": 546,
+              "image_path": "figures/2609.37879/figure-006.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 689
+            },
+            {
+              "caption": "Figure 13: Matched-target set-size estimates increase on both corpora. Effective attention set size at a 5% relative NLL tolerance, using 50 documents per model and corpus. The same final 128 target tokens are scored at every length within each model–corpus pair. Bands are 95% paired-document bootstrap intervals conditional on the evaluated sizes. Both axes use logarithmic spacing.",
+              "figure_id": "figure-13-17",
+              "figure_number": "13",
+              "height": 277,
+              "image_path": "figures/2609.37879/figure-007.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 803
+            },
+            {
+              "caption": "Figure 15: Effective set size depends on which targets are scored. Matched final-target and all-token scoring use the same forward evaluations but average different target populations. The final-target protocol fixes the last 128 targets across lengths within each model–corpus pair.",
+              "figure_id": "figure-15-3",
+              "figure_number": "15",
+              "height": 287,
+              "image_path": "figures/2609.37879/figure-008.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 782
+            },
+            {
+              "caption": "Figure 20: Multi-fact loss sensitivity must be interpreted with baseline competence. Mean candidate-answer-loss degradation at 0K background. Color denotes task, and solid and dashed curves denote attention and contribution ranking. Each curve includes the full 100-example cohort, with zero degradation when N is at least the prompt length. Full-model accuracies are given in Table 8.",
+              "figure_id": "figure-20-11",
+              "figure_number": "20",
+              "height": 607,
+              "image_path": "figures/2609.37879/figure-009.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 822
+            },
+            {
+              "caption": "Figure 23: Loss-sensitive diagnostics improve exploratory prediction in this sample. Mean absolute log2 error in effective set size under leave-one-model-out evaluation. Lower is better. Labels report valid cases out of 16. Diagnostics with different unresolved-case patterns are not evaluated on identical sets of cases.",
+              "figure_id": "figure-23-15",
+              "figure_number": "23",
+              "height": 644,
+              "image_path": "figures/2609.37879/figure-010.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 755
+            },
+            {
+              "caption": "Figure 22: Sensitivity to deletion varies substantially across layers and heads. Reference selected-set sizes are 128 for Gemma, 16 for Qwen, and eight for Mistral. All scanned layers and the ten largest measured Gemma head effects are shown. Layer and head evaluations use 50 and 20 documents, respectively. Separate interventions do not form an additive decomposition of the full-model requirement.",
+              "figure_id": "figure-22-25",
+              "figure_number": "22",
+              "height": 579,
+              "image_path": "figures/2609.37879/figure-011.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 822
+            },
+            {
+              "caption": "Figure 19: Full-model answer loss increases with background. Candidate accuracy and mean candidate-normalized answer loss before intervention. Accuracy bands are 95% Wilson intervals, and loss bands use bootstrap resampling over examples. Dotted references indicate uniform six-candidate performance. Accuracy can vary nonmonotonically despite increasing loss.",
+              "figure_id": "figure-19-20",
+              "figure_number": "19",
+              "height": 287,
+              "image_path": "figures/2609.37879/figure-012.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 783
+            },
+            {
+              "caption": "Figure 16: Additional natural context improves full-model NLL. NLL on the same final 128 targets at each length. The Mistral/OpenWebText curve includes full-model measurements from its partial L = 2048 evaluation. Those measurements do not imply a completed set-size estimate.",
+              "figure_id": "figure-16-4",
+              "figure_number": "16",
+              "height": 288,
+              "image_path": "figures/2609.37879/figure-013.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 777
+            },
+            {
+              "caption": "Figure 6: Longer background text tends to lower full-model accuracy and increase the effective attention set size despite fixed annotated support. BABILong qa1 results on 100 matched examples, with six candidate answers scored using first-continuation-token logits. (a) Full-model candidate accuracy. Shading shows 95% Wilson intervals, and the dotted line indicates chance accuracy. (b) Estimated effective attention set size under attention-weight selection at a 0.10-nat mean answer-loss tolerance relative to the full model at each background. Open triangles indicate that no evaluated set size through 256 meets the tolerance.",
+              "figure_id": "figure-6-21",
+              "figure_number": "6",
+              "height": 234,
+              "image_path": "figures/2609.37879/figure-014.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 820
+            },
+            {
+              "caption": "Figure 9: Contribution ranking reproduces the geometric pattern on OpenWebText. Precision, recall, and extremal FN under Euclidean and cosine distance. Solid curves show contribution ranking and dash-dotted curves show random selection. The evaluation and aggregation follow Figure 8.",
+              "figure_id": "figure-9-24",
+              "figure_number": "9",
+              "height": 498,
+              "image_path": "figures/2609.37879/figure-015.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 689
+            },
+            {
+              "caption": "Figure 8: Attention-selected sets show stronger separation than random sets on OpenWebText. Geometric precision, recall, and extremal FN under Euclidean and cosine distance. Solid curves show attention ranking and dash-dotted curves show random sets of the same size, each evaluated around its own aggregate. Measurements use the final query of 1024-position windows and are averaged over heads, layers, and documents. The Euclidean advantage is larger.",
+              "figure_id": "figure-8-23",
+              "figure_number": "8",
+              "height": 482,
+              "image_path": "figures/2609.37879/figure-016.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 689
+            },
+            {
+              "caption": "Figure 11: Contribution-selected sets also exhibit geometric separation on WikiText-103. Precision, recall, and extremal FN under Euclidean and cosine distance. Solid curves show contribution ranking and dash-dotted curves show random selection. The evaluation and aggregation follow Figure 8.",
+              "figure_id": "figure-11-31",
+              "figure_number": "11",
+              "height": 498,
+              "image_path": "figures/2609.37879/figure-017.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 689
+            },
+            {
+              "caption": "Figure 10: Attention-selected geometry is consistent across corpora. WikiText-103 precision, recall, and extremal FN under Euclidean and cosine distance. Solid curves show attention ranking and dash-dotted curves show random selection. The evaluation and aggregation follow Figure 8.",
+              "figure_id": "figure-10-32",
+              "figure_number": "10",
+              "height": 498,
+              "image_path": "figures/2609.37879/figure-018.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 681
+            },
+            {
+              "caption": "Figure 14: The retained fraction decreases over the measured range. Attention-ranked N∗/L at a 5% relative NLL tolerance under matched final-target scoring. Bands have the same conditional bootstrap interpretation as in Figure 13. A decreasing fraction is also compatible with affine growth having a positive intercept.",
+              "figure_id": "figure-14-28",
+              "figure_number": "14",
+              "height": 279,
+              "image_path": "figures/2609.37879/figure-019.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 810
+            },
+            {
+              "caption": "Figure 21: Renormalization changes both required set size and background sensitivity. (a) Ratios of renormalized to deletion estimates on OpenWebText from Table 9. (b) Attention-ranked 4K/0K ratios at a 0.10-nat answer-loss tolerance. Mistral’s unresolved deletion result is marked at the tested endpoint and is not a resolved ratio. These controls are separate from the matched-target context-length evaluation.",
+              "figure_id": "figure-21-30",
+              "figure_number": "21",
+              "height": 290,
+              "image_path": "figures/2609.37879/figure-020.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 822
+            },
+            {
+              "caption": "Figure 24: Positional and attention-ranked selection have different functional effects. The positional mask retains one initial source and N − 1 recent sources. Both rules use deletion without renormalization at the same set sizes. At 2K and 4K, the positional control does not reach the 0.10-nat criterion within the tested grid. The experiment evaluates selection after computing dense attention.",
+              "figure_id": "figure-24-13",
+              "figure_number": "24",
+              "height": 281,
+              "image_path": "figures/2609.37879/figure-021.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 822
+            },
+            {
+              "caption": "Figure 18: Pairwise support ranking improves while total displacement grows. Mean empirical probability that a non-support context token scores at least as highly as a support token at the answer query. Background growth increases the number of competitors while this probability decreases. The 0K condition already includes non-support tokens.",
+              "figure_id": "figure-18-26",
+              "figure_number": "18",
+              "height": 390,
+              "image_path": "figures/2609.37879/figure-022.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 558
+            },
+            {
+              "caption": "Figure 7: Additional background pushes support tokens down the attention ranking and reduces their attention mass and recall. Measurements at the answer query in BABILong qa1 show support displacement, attention mass, and recall among the 64 highest-weight tokens. Statistics use 86 examples per background after tokenizer-span validation.",
+              "figure_id": "figure-7-22",
+              "figure_number": "7",
+              "height": 215,
+              "image_path": "figures/2609.37879/figure-023.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 822
+            },
+            {
+              "caption": "Figure 17: Mistral-Small-24B retains low NLL degradation with restricted attention. Adaptive refinement of relative NLL degradation for the 8-bit-weight checkpoint. Solid and dashed curves show OpenWebText and WikiText-103. Horizontal lines indicate 1%, 5%, and 10% tolerances.",
+              "figure_id": "figure-17-5",
+              "figure_number": "17",
+              "height": 211,
+              "image_path": "figures/2609.37879/figure-024.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 661
+            },
+            {
+              "caption": "Table 4: Matched final-128-target set-size estimates for the three complete models. Each cell gives N∗ 1%/N ∗ 5%/N ∗ 10%, conditional on evaluated sizes. Column headings give L. OWT denotes OpenWebText and WT denotes WikiText-103. Attn. and Contr. denote attention and contribution ranking. The sampling protocol differs from Table 2.",
+              "figure_id": "table-4-27",
+              "figure_number": "4",
+              "height": 296,
+              "image_path": "figures/2609.37879/table-025.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 682
+            },
+            {
+              "caption": "Table 2: Effective attention set-size estimates by corpus for 1024-position windows. Deletion is applied at every query, head, and layer. Entries are locally refined crossings at the stated relative NLL tolerance. Gemma-2-9B was evaluated only at 5% and 10%, so its 1% entries are unmeasured.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 450,
+              "image_path": "figures/2609.37879/table-026.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 702
+            },
+            {
+              "caption": "Table 3: Attention-ranked effective set-size estimates at a 5% relative NLL tolerance under matched final-128-target scoring. Column headings give context length L. Only complete model–corpus pairs are included. OWT denotes OpenWebText and WikiText denotes WikiText-103.",
+              "figure_id": "table-3-16",
+              "figure_number": "3",
+              "height": 171,
+              "image_path": "figures/2609.37879/table-027.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 456
+            },
+            {
+              "caption": "Table 7: Full-model qa1 candidate-normalized answer loss in nats on 100 matched examples per background. These baselines are used for the corresponding answer-loss degradation measurements.",
+              "figure_id": "table-7-18",
+              "figure_number": "7",
+              "height": 130,
+              "image_path": "figures/2609.37879/table-028.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 418
+            },
+            {
+              "caption": "Table 6: Attention-ranked BABILong qa1 set-size estimates at a 0.10-nat mean candidate-answerloss tolerance relative to each background’s full model. Adaptive extensions are included. An entry > 256 denotes no passing evaluated size through 256, with untested integers unresolved.",
+              "figure_id": "table-6-19",
+              "figure_number": "6",
+              "height": 130,
+              "image_path": "figures/2609.37879/table-029.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 382
+            },
+            {
+              "caption": "Table 8: Full-model candidate accuracy at 0K background, using 100 examples per task and model. These are the baselines for the loss curves in Figure 20.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 129,
+              "image_path": "figures/2609.37879/table-030.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 322
+            },
+            {
+              "caption": "Table 1: Attention-ranking Spearman correlations between geometric FN and relative NLL degradation after excluding small selected sets. The columns use 9, 8, and 6 measured powers-of-two sizes, respectively.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 212,
+              "image_path": "figures/2609.37879/table-031.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 464
+            },
+            {
+              "caption": "Table 5: All-token set-size estimates from the matched-suffix evaluation. Each cell gives N∗ 1%/N ∗ 5%/N ∗ 10%, conditional on evaluated sizes. Column headings give L. Abbreviations follow Table 4. All predicted positions in each window are scored, so the target population changes with L.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 294,
+              "image_path": "figures/2609.37879/table-032.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 672
+            },
+            {
+              "caption": "Table 9: OpenWebText effective set-size estimates under deletion (Primary) and renormalization (Renorm) at 5% and 10% relative NLL tolerances. Both rankings are shown. Historical document pairing is unverified, so the comparison is at the corpus-summary level.",
+              "figure_id": "table-9-8",
+              "figure_number": "9",
+              "height": 202,
+              "image_path": "figures/2609.37879/table-033.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 586
+            },
+            {
+              "caption": "Table 10: Renormalized qa1 effective set-size estimates on the evaluated sizes at 0.10- and 0.20-nat mean answer-loss tolerances. Dashes indicate background conditions that were not evaluated for this control.",
+              "figure_id": "table-10-29",
+              "figure_number": "10",
+              "height": 200,
+              "image_path": "figures/2609.37879/table-034.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 586
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.37879/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.37879",
+          "relevance": 6,
+          "selection_reason": "Analyzes effective attention set size via token selection and context scaling; relevant to token eviction and long-context efficiency.",
+          "summary_status": "generated",
+          "title": "Retrieval Capacity of Self-Attention Under Competition",
+          "tldr": "The paper introduces a way to measure how many context tokens language models effectively use through attention pruning and finds that competition, context length, and weight aggregation shape this retrieval capacity.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models (LLMs) have shown strong potential as training-free text encoders for long-context embeddings. Existing approaches primarily improve information flow under causal attention and typically construct embeddings by uniformly averaging all token representations. However, for long documents, such mean pooling can dilute salient semantic information with abundant redundant or weakly informative content. To this end, we propose SCSP, a training-free framework that leverages semantic compression for informative token selection in long-context embedding. Specifically, SCSP first partitions a document into sentence-aware chunks and appends a semantic compression prompt to each chunk. A prompt-isolated attention mask preserves information flow among document tokens while restricting each prompt to its corresponding local context. We then use the attention patterns elicited by these prompts to estimate token importance, select informative tokens, and aggregate their intermediate-layer representations into the final embedding. Extensive experiments on long-context embedding benchmarks demonstrate that SCSP can be integrated into both zero-shot and fine-tuned models in a plug-and-play manner, consistently improving their performance.",
+          "arxiv_id": "2609.37782",
+          "arxiv_url": "https://arxiv.org/abs/2609.37782",
+          "authors": [
+            "Zifeng Cheng, Jie Zheng, Zhiwei Jiang, Shuwen Wang, Fei Shen, Shiping Ge, Qing Gu"
+          ],
+          "bullets": [
+            "Targets information dilution caused by uniform mean pooling over long, redundant documents.",
+            "Partitions documents into sentence-aware chunks and adds a local semantic-compression prompt to each chunk.",
+            "Uses prompt-induced attention patterns to estimate token importance and select salient tokens.",
+            "Aggregates selected intermediate-layer token representations into the final embedding.",
+            "Works plug-and-play with zero-shot and fine-tuned models and consistently improves long-context embedding benchmark performance."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Illustration of the SCSP method.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 400,
+              "image_path": "figures/2609.37782/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 824
+            },
+            {
+              "caption": "Table 2: NDCG@10 (in percentage) on five datasets using LLaMA-3.1-8B-Instruct.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 467,
+              "image_path": "figures/2609.37782/table-002.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 816
+            },
+            {
+              "caption": "Table 1: NDCG@10 (in percentage) on five datasets using Mistral-7B-Instruct-v0.3. We report the context length of 512 and an extended length of 8192. For the first four datasets that were also evaluated in HTP, † denotes the results reported in HTP, while ‡ denotes our reproduced results, which closely match the reported results.",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 420,
+              "image_path": "figures/2609.37782/table-003.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 825
+            },
+            {
+              "caption": "Table 3: Ablation study results on Mistral-7B-Instruct-v0.3 with an 8,192-token context length.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 266,
+              "image_path": "figures/2609.37782/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 806
+            },
+            {
+              "caption": "Table 6: Generalization of SCSP to fine-tuned embedding models on five datasets with an 8,192- token context length.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 112,
+              "image_path": "figures/2609.37782/table-005.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 806
+            },
+            {
+              "caption": "Table 8: Results on the LOCOV1 dataset using Mistral-7B-Instruct-v0.3 with an 8,192-token context length.",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 244,
+              "image_path": "figures/2609.37782/table-006.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 636
+            },
+            {
+              "caption": "Table 5: Comparison of different strategies for computing token importance scores on Mistral-7BInstruct-v0.3 with an 8,192-token context length.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 136,
+              "image_path": "figures/2609.37782/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 814
+            },
+            {
+              "caption": "Table 4: Generalization across different LLM backbones on five datasets with an 8,192-token context length.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 110,
+              "image_path": "figures/2609.37782/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 806
+            },
+            {
+              "caption": "Table 7: Effects of semantic compression prompts on Mistral-7B-Instruct-v0.3 with an 8,192-token context length.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 117,
+              "image_path": "figures/2609.37782/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 806
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.37782/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.37782",
+          "relevance": 8,
+          "selection_reason": "Training-free selective pooling via semantic compression for long-context LLM embeddings; directly fits long-context models.",
+          "summary_status": "generated",
+          "title": "Selecting What Matters: Semantic Compression-Guided Selective Pooling for Long-Context Embeddings",
+          "tldr": "SCSP improves long-context embeddings by using semantic-compression prompts to select and pool informative tokens instead of averaging all tokens.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Recurrent neural networks (RNNs) compress the historical context into a memory state of fixed size, thus allowing for constant-time inference. The memory state size is a crucial factor in their performance, as exemplified by the strong performance and resurgence of linear attention, which extends the vector-valued hidden states of ordinary RNNs to matrix-valued hidden states. Crucially, linear attention does so in a parameter-efficient way, in particular by using an outer product of the key and value vectors to write to the matrix-valued hidden state. We generalize this construction and propose triadic linear attention, which writes the triadic outer product of a key, a second key, and a value, into a third-order (i.e., 3D) tensor state, and reads from it by contracting both key axes with two queries. An $E$-dimensional second key thus yields an $E$-fold increase in state size while adding only two projections. Triadic linear attention is compatible with data-dependent forgetting, the delta rule, and chunkwise-parallel training. Applied to Gated DeltaNet and scalar-gated linear attention, triadic linear attention substantially improves long-context language modeling and recall, outperforming alternatives that enlarge the state.",
+          "arxiv_id": "2609.36529",
+          "arxiv_url": "https://arxiv.org/abs/2609.36529",
+          "authors": [
+            "Oliver Sieberling, Bharat Runwal, David Jin, Ryan Chin, Rameswar Panda, Yoon Kim"
+          ],
+          "bullets": [
+            "Generalizes linear attention’s matrix-valued state to a third-order tensor state.",
+            "Writes key–second-key–value triadic outer products and reads by contracting two query axes.",
+            "An E-dimensional second key increases state capacity E-fold with only two additional projections.",
+            "Compatible with data-dependent forgetting, the delta rule, and chunkwise-parallel training.",
+            "Improves Gated DeltaNet and scalar-gated linear attention, outperforming alternative state-expansion methods."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Triadic Gated DeltaNet with a growing second key dimension E at 400M parameters (top) and 1.3B parameters (bottom). Left: Loss difference to the Transformer on PG19 by context position, with dashed lines marking where the key-value cache of the Transformer exceeds the state of each model. Right: Accuracy on six recall-intensive tasks.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 488,
+              "image_path": "figures/2609.36529/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Forward and backward time of one block of the 1.3B models per sequence, at batch size 4 on H100 GPUs. Triadic GDN with E = 8 adds moderate overhead over GDN and is faster than the Transformer beyond 4k tokens.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 342,
+              "image_path": "figures/2609.36529/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 434
+            },
+            {
+              "caption": "Figure 5: How Triadic GDN (E=8) uses the larger state compared to GDN. Left: change in loss on the final 4k tokens of a book when increasing the preceding context from 4k to 64k. Middle: distribution of delta strengths β. Dashed lines mark the means. Right: half-life of each state slice, ranked within its head.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 250,
+              "image_path": "figures/2609.36529/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: MQAR with plain linear attention (state 16×16) and triadic linear attention with E∈{2, 4, 8, 16} (state 16×E×16).",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 290,
+              "image_path": "figures/2609.36529/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 402
+            },
+            {
+              "caption": "Figure 3: RULER needle-in-a-haystack accuracy by context length at 1.3B parameters.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 233,
+              "image_path": "figures/2609.36529/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 829
+            },
+            {
+              "caption": "Table 2: Upcycling a pretrained model from E = 1 to E = 8 during long-context extension, compared with the corresponding base model and with E = 8 pretrained from scratch. Results are averaged over three seeds at 400M and reported for a single seed at 1.3B.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 294,
+              "image_path": "figures/2609.36529/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 822
+            },
+            {
+              "caption": "Table 1: Different ways of enlarging the state size of Gated DeltaNet (GDN) and scalar-gated linear attention (sGLA) by 2× and 4× at matched parameter count. State in MB (assuming 2 bytes per entry), and parameters in millions. Results are averaged over three training seeds.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 455,
+              "image_path": "figures/2609.36529/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 822
+            },
+            {
+              "caption": "Table 4: Ablations of Triadic Gated DeltaNet at 400M parameters. Top: first key dimension dk versus second key dimension E at fixed joint key dimension dk · E = 1024, using a single forget gate per head. Bottom: activation function applied to the second key and query for E = 8.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 181,
+              "image_path": "figures/2609.36529/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 822
+            },
+            {
+              "caption": "Table 3: Enlarging either the key-value cache (GQA-4) or the linear-attention state (Triadic, E = 4) in a 3:1 GDN/GQA-8 hybrid at 400M parameters. State is reported in MB at 4k and 64k tokens. NIAH is averaged over eight RULER tasks. Results are averaged over three seeds.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 147,
+              "image_path": "figures/2609.36529/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.36529/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.36529",
+          "relevance": 8,
+          "selection_reason": "Extends linear attention with higher-order recurrent states for efficient long-context modeling.",
+          "summary_status": "generated",
+          "title": "Triadic Linear Attention: Three-Dimensional Recurrent States for Long-Context Sequence Modeling",
+          "tldr": "Triadic linear attention expands recurrent memory to a 3D tensor using a second key, substantially improving long-context language modeling and recall.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "State Space Models (SSMs) compress sequence history into a bounded recurrent state, making the resulting memory law a central architectural choice for long-context performance. Most modern SSMs rely on ODE-based dynamics that lead to exponential forgetting, limiting their ability to retain information over broad temporal ranges. We introduce FRAC, a selective SSM architecture derived from fractional dynamics that replaces this exponential decay with power-law long memory. To make fractional dynamics practical, FRAC approximates the heavy-tailed target kernel with a finite-state, log-spaced sum of exponential modes. This construction turns fractional memory into an efficient recurrent module with parallel training and prefill, while retaining bounded-state autoregressive decoding. Extensive experiments, including 1.3B-parameter language modeling, demonstrate that FRAC consistently improves long-context performance over state-of-the-art SSM baselines while staying competitive on short-context. These results show that fractional dynamics provide a practical and effective prior for long-context SSMs.",
+          "arxiv_id": "2609.36314",
+          "arxiv_url": "https://arxiv.org/abs/2609.36314",
+          "authors": [
+            "Ivan Kobyzev, Abbas Ghaddar, Ali Nasiri-Sarvi, Lifeng Shang, Yufei Cui"
+          ],
+          "bullets": [
+            "Addresses exponential forgetting in conventional ODE-based SSMs, which limits broad temporal retention.",
+            "Uses fractional dynamics to replace exponential decay with power-law long memory.",
+            "Approximates the heavy-tailed kernel using a finite, log-spaced sum of exponential modes.",
+            "Supports parallel training and prefill alongside efficient recurrent autoregressive decoding.",
+            "Experiments, including 1.3B-parameter language modeling, show improved long-context performance over SSM baselines while remaining competitive on short contexts."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the FRAC layer (left), and FRACMixer block (right).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 277,
+              "image_path": "figures/2609.36314/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 447
+            },
+            {
+              "caption": "Figure 3: Model accuracies on three variants of the needle-in-a-haystack passkey retrieval task, with sequence lengths ranging from 1K to 64K. Transformer performance is zero after 4K.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 238,
+              "image_path": "figures/2609.36314/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 810
+            },
+            {
+              "caption": "Figure 2: Model performance on heavy-tail synthetic extrapolation task.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 292,
+              "image_path": "figures/2609.36314/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 443
+            },
+            {
+              "caption": "Figure 4: DNA perplexity vs. training sequence length.",
+              "figure_id": "figure-4-13",
+              "figure_number": "4",
+              "height": 161,
+              "image_path": "figures/2609.36314/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 195
+            },
+            {
+              "caption": "Table 4: Model performance on 6 real-world recall-retrieval tasks. The highest and second-highest scores are highlighted in bold and underline, respectively.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 165,
+              "image_path": "figures/2609.36314/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 489
+            },
+            {
+              "caption": "Table 3: Model performance on short-context language modeling and understanding tasks. The best and second-best scores for each metric are highlighted in bold and underline, respectively. The average is computed by excluding the first two columns.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 190,
+              "image_path": "figures/2609.36314/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 812
+            },
+            {
+              "caption": "Table 2: Model performance on 14 LongBench tasks grouped under 5 categories. The highest and second-highest scores are highlighted in bold and underline, respectively.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 154,
+              "image_path": "figures/2609.36314/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 816
+            },
+            {
+              "caption": "Table 5: Model configurations for the heavy-tail synthetic benchmarking.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 150,
+              "image_path": "figures/2609.36314/table-008.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 456
+            },
+            {
+              "caption": "Table 9: Perplexity scores of 390M-parameter FRAC models under ablations of FRAC design choices.",
+              "figure_id": "table-9-3",
+              "figure_number": "9",
+              "height": 256,
+              "image_path": "figures/2609.36314/table-009.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 432
+            },
+            {
+              "caption": "Table 1: Performance (accuracy) on the synthetic MADLab benchmark over 5 runs.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 123,
+              "image_path": "figures/2609.36314/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 456
+            },
+            {
+              "caption": "Table 7: Characteristics of the LongBench tasks, including acronym, number of examples, and evaluation metric. The last column reports the mean and standard deviation of example lengths, computed using the Llama-2 tokenizer used in our experiments. Eight out of 14 tasks have an average sequence length less than 8K.",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 830,
+              "image_path": "figures/2609.36314/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 773
+            },
+            {
+              "caption": "Table 6: Accuracy and standard deviation on heavy-tail synthetic benchmark across 512-128K sequence lengths on 10 runs. Bold indicates the best score at each sequence length.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 152,
+              "image_path": "figures/2609.36314/table-012.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 706
+            },
+            {
+              "caption": "Table 8: Inference throughput in tokens/s (higher is better) for prefill at 1K, 4K, and 16K context lengths, and single-step decoding throughput. All prefill measurements use batch size 1. *Decode throughput for the Transformer is reported at 16K, while the corresponding values at 1K and 4K are 75 and 72 tokens/s, respectively. The last column reports training throughput (also in tokens/s) following the experimental setup described in Appendix E.3.",
+              "figure_id": "table-8-2",
+              "figure_number": "8",
+              "height": 186,
+              "image_path": "figures/2609.36314/table-013.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 752
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.36314/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.36314",
+          "relevance": 8,
+          "selection_reason": "Fractional state-space dynamics for long-context sequence modeling, directly relevant to long-context language models.",
+          "summary_status": "generated",
+          "title": "Fractional State Space Transition for Long Sequence Modeling",
+          "tldr": "FRAC equips state space models with efficient power-law memory, improving long-context modeling while preserving bounded-state decoding.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Modern large language models now support context windows of more than one million tokens, which has raised the question of whether retrieval-augmented generation (RAG) is still necessary. Pure long-context (LC) processing is expensive and is known to under-attend to information placed in the middle of long inputs, while pure RAG is fast but bounded by retrieval quality and prone to errors when retrieved chunks are partially relevant or contradictory. We propose the Entropy-Driven Adaptive Router (EDAR), a framework that decides at inference time whether to answer a query from retrieved chunks or to escalate it to full long-context processing. The decision uses the predictive entropy of the token-level probability distribution computed over the first few generated tokens of the RAG response. The entropy threshold is selected on a held-out validation set by sweeping cost against accuracy. Experiments compare EDAR against pure-RAG and pure-LC baselines on LongBench v2 and Infinity-Bench. Predictive entropy correlates strongly with hallucination rate on a held-out set of 2,000 generations (Pearson r = 0.85, 95% CI [0.83, 0.87]). On the long-context benchmarks, EDAR retains 97.4% of the accuracy of the pure long-context baseline while reducing total token expenditure by 70.7%, escalating only 18.2% of incoming queries. The accuracy gap between EDAR and the pure long-context system is not statistically distinguishable from zero at standard sample sizes. Predictive entropy is a useful model-internal signal for routing between RAG and long-context inference, and a threshold-based hybrid system can recover most of the accuracy of long-context models at a small fraction of the cost. The framework does not depend on a specific retriever or LC backbone, and it does not require additional supervision beyond what is normally produced during decoding.",
+          "arxiv_id": "2609.35831",
+          "arxiv_url": "https://arxiv.org/abs/2609.35831",
+          "authors": [
+            "Isaac Olufadewa, Miracle Adesina, Ezekiel Oladejo, Owen Adeniyi, Fadare Fadekemi, Olamide Oso, Uthman Babatunde, Matthew Olawoyin"
+          ],
+          "bullets": [
+            "Motivation: RAG is efficient but retrieval-sensitive, while long-context processing is expensive and can under-attend to information in the middle of long inputs.",
+            "Method: Generate an initial RAG response, measure token-level predictive entropy, and escalate high-uncertainty queries to full long-context processing using a validation-tuned threshold.",
+            "Result: On LongBench v2 and Infinity-Bench, EDAR retained 97.4% of pure long-context accuracy while reducing token expenditure by 70.7% and escalating 18.2% of queries.",
+            "Predictive entropy strongly correlated with hallucination rate (Pearson r = 0.85) on 2,000 held-out generations.",
+            "Scope: The framework is retriever- and backbone-agnostic and requires no additional supervision beyond standard decoding outputs."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Relationship between aggregate token entropy H̄ and hallucination rate across 2,000 RAG generations on the Relational-QA held-out set. Points are subsampled for visual clarity; the orange line shows the mean hallucination rate within equal-width entropy bins, with 95% confidence intervals; the dashed line is a linear fit (r = 0.85). The shaded region marks the high-uncertainty range used as the basis for escalation.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 459,
+              "image_path": "figures/2609.35831/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 847
+            },
+            {
+              "caption": "Figure 1. End-to-end architectural workflow of the Entropy-Driven Adaptive Router (EDAR)",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 664,
+              "image_path": "figures/2609.35831/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 739
+            },
+            {
+              "caption": "Table 1. Model tier configuration used in the EDAR pipeline. The router and base models are used on every query; the escalation model is invoked only when the entropy threshold is exceeded.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 175,
+              "image_path": "figures/2609.35831/table-003.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 720
+            }
+          ],
+          "first_seen_at": "2026-09-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.35831/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.35831",
+          "relevance": 9,
+          "selection_reason": "Proposes an entropy-based routing framework (EDAR) to dynamically switch between RAG and long-context processing, improving efficiency and accuracy.",
+          "summary_status": "generated",
+          "title": "Beyond the Context Window: An Adaptive Entropy-Based Routing Framework for Hybrid Retrieval and Long-Context Language Models",
+          "tldr": "EDAR uses early-generation predictive entropy to route queries between inexpensive RAG and costly long-context inference, preserving most long-context accuracy while substantially reducing token use.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-29",
       "paper_count": 10,
       "papers": [
@@ -16519,5 +19007,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 76
+  "total_paper_count": 87
 }

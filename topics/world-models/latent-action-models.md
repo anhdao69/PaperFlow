@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**66 papers total**
+**69 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-30 | [Learning Skills from Historical Action Trajectories: Action Experience Dictionary for World Action Models](https://arxiv.org/abs/2609.40219) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | AED helps World Action Models reuse past action experience and better predict manipulation actions across tasks and embodiments. | 8 | 7 |
+| 2026-09-30 | [MEND: Label-Free Detection, Localisation, and Correction of Latent Hallucination in World Models](https://arxiv.org/abs/2609.39182) | World Models: Latent Action Models | MEND uses one denoising score field to detect, localise, and partially correct hallucinations in frozen latent world models without error labels. | 9 | 9 |
+| 2026-09-30 | [Linear Recurrent Memory Suffices to Distil a World-Model Policy for Robot Air Hockey](https://arxiv.org/abs/2609.39151) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | A compact linear recurrent memory can match GRU and DreamerV3 performance for simulated air-hockey defence under temporary puck-tracking loss. | 7 | 7 |
 | 2026-09-29 | [CrossBFM: Distilling a Shared Latent Behavior Space Across Humanoid Embodiments](https://arxiv.org/abs/2609.38087) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | CrossBFM distills a shared, transferable behavior latent space across humanoid embodiments, enabling efficient cross-robot prompting and control. | 8 | 8 |
 | 2026-09-29 | [Beyond a single latent space: a dual-latent world model for long-horizon planning](https://arxiv.org/abs/2609.37644) | World Models: Latent Action Models, Interactive World Models | Dual-WM improves long-horizon visual control by separating execution and planning into dual latent spaces trained with weighted multi-horizon rollouts. | 8 | 7 |
 | 2026-09-29 | [Anisotropic Representations Improve Planning in JEPA World Models](https://arxiv.org/abs/2609.37441) | World Models: Latent Action Models, Interactive World Models | AnisoWM improves latent-space planning by learning anisotropic representations whose geometry better aligns Euclidean planning costs with task outcomes. | 8 | 8 |

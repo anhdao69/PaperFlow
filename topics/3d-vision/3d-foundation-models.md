@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**198 papers total**
+**203 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-30 | [StreamRig: Exploiting Intra-Rig Geometry for Streaming Multi-Camera Odometry](https://arxiv.org/abs/2609.40244) | Embodied AI: Robot Navigation; 3D Vision: 3D Foundation Models | StreamRig enables efficient causal odometry for calibrated multi-camera rigs by adapting a frozen multi-view foundation model to streaming inputs. | 8 | 7 |
+| 2026-09-30 | [Emergent Multi-View Geometry Through Self-Distillation](https://arxiv.org/abs/2609.39227) | 3D Vision: 3D Foundation Models | Poincar3 learns multi-view geometric representations through self-distillation, avoiding RGB reconstruction and explicit 3D supervision. | 9 | 9 |
+| 2026-09-30 | [MeshOctave generates meshes via cascading resolution transitions](https://arxiv.org/abs/2609.38985) | 3D Vision: 3D Foundation Models | MeshOctave generates compact, artist-style meshes efficiently through parallel coarse-to-fine resolution transitions on dyadic voxel grids. | 6 | 7 |
+| 2026-09-30 | [Autoregressive Frontier Expansion: Growing Trees with Graph Machine Learning](https://arxiv.org/abs/2609.38506) | 3D Vision: 3D Foundation Models | Autoregressive Frontier Expansion generates realistic, controllable tree-like morphologies by iteratively growing branches with an SO(2)-equivariant graph neural network. | 8 | 8 |
+| 2026-09-30 | [PAMI: Part Anchored Motion for Text to Human-Object Interaction Generation](https://arxiv.org/abs/2609.38466) | 3D Vision: 3D Foundation Models | PAMI generates text-conditioned human-object interactions by anchoring object motion to body parts and refining contact geometry for more coordinated motion. | 8 | 8 |
 | 2026-09-29 | [Point2Part: Unified 3D Partitioning from Point Prompts](https://arxiv.org/abs/2609.38180) | 3D Vision: 3D Foundation Models | Point2Part enables controllable 3D shape decomposition into complete, non-overlapping parts using one 3D point prompt per desired part. | 8 | 8 |
 | 2026-09-29 | [WINGS: Reference-Free Gaussian Splatting Inpainting with 3D-Native Generative Priors](https://arxiv.org/abs/2609.37816) | 3D Vision: 3D Foundation Models | WINGS performs reference-free 3D Gaussian Splatting inpainting directly in a learned 3D generative-prior space, avoiding multi-view inconsistencies and reducing optimization time. | 8 | 8 |
 | 2026-09-29 | [Planetary Feature Fields are Scalable Earth Representations](https://arxiv.org/abs/2609.37784) | 3D Vision: 3D Foundation Models | Planetary Feature Fields compactly represent multiple evolving Earth data products with high task utility and faster access by sharing spatial-temporal features. | 7 | 8 |

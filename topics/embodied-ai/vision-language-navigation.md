@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**85 papers total**
+**89 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-09-30 | [STARS: From Spatiotemporal Dynamics to Social Representations in Human-Robot Interaction](https://arxiv.org/abs/2609.40245) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | STARS introduces SocialNav-SUB, a benchmark showing that current VLMs still struggle with the spatial, temporal, and social reasoning needed for safe human-robot navigation. | 9 | 8 |
+| 2026-09-30 | [NavHarness: Adaptive Goals for Agentic Vision-Language Navigation](https://arxiv.org/abs/2609.39915) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Adaptation and Memory: Embodied Memory | NavHarness improves long-horizon vision-language navigation by adaptively setting, verifying, and remembering local goals to keep actions aligned with the route while reducing context overhead. | 9 | 8 |
+| 2026-09-30 | [AVERT-VLN: Abstention-aware Visual Error Recovery and Training for Vision-and-Language Navigation](https://arxiv.org/abs/2609.39579) | Embodied AI: Vision-Language Navigation | AVERT-VLN enables VLN agents to detect execution errors, request targeted human recovery, and learn from those corrections to improve navigation in unseen environments. | 9 | 8 |
+| 2026-09-30 | [ASENA: Self-evolving Agents for Embodied Navigation](https://arxiv.org/abs/2609.39207) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Test-Time Learning | ASENA enables embodied agents to improve navigation and broader robot behavior through programmable tools, persistent experience, and feedback-driven self-evolution without updating model weights. | 9 | 8 |
 | 2026-09-29 | [doPlan: A Variable-Horizon Dataset for Multi-Stage Language-Conditioned Planning in Autonomous Driving](https://arxiv.org/abs/2609.38028) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | doPlan is a publicly available dataset for studying how autonomous-driving systems retain and act on multi-stage, long-horizon passenger instructions. | 8 | 7 |
 | 2026-09-29 | [Credit-Guided Policy Improvement for Test-time Adaptive Vision-Language Navigation](https://arxiv.org/abs/2609.37591) | Embodied AI: Vision-Language Navigation | CGPI improves test-time vision-language navigation by using action-induced observation changes to guide and verify safe policy updates without external feedback. | 10 | 9 |
 | 2026-09-29 | [Seek Before You Move: Evidence Seeking for Progress Grounding in Vision-Language Navigation](https://arxiv.org/abs/2609.37353) | Embodied AI: Vision-Language Navigation | SeekVLN helps vision-language navigation agents recognize when progress evidence is missing and actively seek useful observations before moving. | 9 | 8 |
