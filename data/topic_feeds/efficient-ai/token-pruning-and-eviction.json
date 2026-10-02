@@ -1,6 +1,1219 @@
 {
   "days": [
     {
+      "date": "2026-10-01",
+      "paper_count": 7,
+      "papers": [
+        {
+          "abstract": "Online vectorized HD map construction is essential for scaling safe autonomous driving and requires accurate, real-time inference. Prior methods typically rely on dense bird's-eye-view (BEV) grids as the intermediate representation. We propose \\textit{MapLightning}, which replaces the dense BEV grid with a compact set of 1D learnable map tokens. To construct map tokens from image features, we choose self-attention over vanilla cross-attention because it enables joint interactions and contextual aggregation among image and map tokens. Our transformer-based mapper concatenates map and image tokens, applies full self-attention, discards the image tokens, and retains the updated map tokens for decoding. This design offers three advantages. First, our representation is efficient, using fewer tokens, consuming less memory, and running faster. Second, the lightweight design allows the map decoder to use full rather than deformable cross-attention for better global context. Third, unlike BEV-based methods, our network does not use camera projection parameters, making it robust to camera-extrinsic perturbations. MapLightning uses up to 16.7$\\times$ fewer intermediate tokens than dense BEV-based methods and achieves state-of-the-art accuracy and efficiency on nuScenes and Argoverse~2. Its lightweight variant surpasses MapTRv2 by +10.1 mAP on nuScenes and +16.2 mAP on Argoverse~2, while delivering 1.73$\\times$ faster inference (40+ FPS) with 53\\% less memory. We further show improvements on uncertainty-aware map construction and downstream trajectory prediction. Code and models will be released.",
+          "arxiv_id": "2610.01905",
+          "arxiv_url": "https://arxiv.org/abs/2610.01905",
+          "authors": [
+            "Shen Zheng, Anurag Ghosh, Mani Ramanagopal, Srinivasa Narasimhan"
+          ],
+          "bullets": [
+            "Uses learnable 1D map tokens instead of dense BEV representations, reducing intermediate tokens by up to 16.7×.",
+            "Builds tokens by applying full self-attention jointly to image and map tokens, then decodes the retained map tokens.",
+            "Enables full cross-attention in a lightweight decoder for improved global context.",
+            "Achieves state-of-the-art results on nuScenes and Argoverse 2; its lightweight variant reports higher mAP, 1.73× faster inference, and 53% lower memory use than MapTRv2.",
+            "Also improves uncertainty-aware mapping and downstream trajectory prediction."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Aggregating multi-view image tokens into a scene representation. (a) BEV-based methods (Liao et al., 2022; 2025) geometrically project image features onto a dense grid of fixed BEV cells, few of which contain map elements. (b) Vanilla cross-attention compresses image tokens into compact map tokens, but image tokens serve only as fixed keys and values, with no image-toimage or map-to-map interaction. (c) Self-attention (ours, Section 3.3) attends over the concatenated map and image tokens, refining all tokens jointly. Gray and violet edges denote image–map and intra-group attention, respectively. In the masks, rows are queries, columns are keys/values, shaded cells mark allowed attention, and M/I denote map/image tokens. See Table 1 for comparison.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 263,
+              "image_path": "figures/2610.01905/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 691
+            },
+            {
+              "caption": "Figure 2: Overview of MapLightning. A shared image backbone encodes each of the C camera views over T timesteps into image tokens, which are flattened and augmented with learned positional, camera, and time embeddings. Instead of projecting these tokens into a dense BEV grid, we concatenate them with K learnable map tokens and jointly refine both with a self-attention mapper (Figure 1 (c)), without camera parameters or depth. The image tokens are then discarded, and the compact map tokens serve as the scene representation, which task-specific decoders attend to with full cross-attention. Beyond online vectorized HD map construction, this representation supports 3D object detection and downstream trajectory prediction from the predicted maps.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 140,
+              "image_path": "figures/2610.01905/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 814
+            },
+            {
+              "caption": "Figure 5: Qualitative comparison of uncertainty-aware online vectorized HD map construction for Dense BEV Projection (Liao et al., 2025), ours (cross-attention), and ours (self-attention) on nuScenes. Uncertainty is visualized at each predicted vector point as a semi-transparent ellipse whose size reflects the predicted Laplace variance. Self-attention produces more localized predictions with substantially less diffuse uncertainty, providing cleaner uncertainty-aware maps for downstream trajectory prediction. Orange, blue, and green denote lane dividers, pedestrian crossings, and road boundaries, respectively, while the red box marks the ego vehicle.",
+              "figure_id": "figure-5-16",
+              "figure_number": "5",
+              "height": 439,
+              "image_path": "figures/2610.01905/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 819
+            },
+            {
+              "caption": "Figure 3: Image-to-image attention in the self-attention mapper. We select one image token as the query (magenta cross) and visualize its attention scores over the other image tokens, which serve as keys (red: high, blue: low), at the first and last (L = 4) mapper layers. From left to right: (1) a query on a lane divider attends along that divider and to the parallel divider across the lane; (2) a query on a lane divider attends along the divider’s full extent toward the horizon; (3) a query on a pedestrian crossing attends across the crossing’s full width; and (4) a query on a road boundary attends along the curb. From Layer 1 to Layer 4, responses on these structures become stronger and more complete, while diffuse background responses (e.g., the sky in column 4) fade, illustrating progressive refinement of the image tokens. Such image-to-image interaction is absent in crossattention, where image tokens serve only as fixed keys and values. Best viewed zoomed in.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 412,
+              "image_path": "figures/2610.01905/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 744
+            },
+            {
+              "caption": "Figure 8: Robustness to camera extrinsic perturbations. We independently add zero-mean Gaussian noise to the rotation (θx, θy, θz) and translation (∆x,∆y,∆z) components of all camera extrinsics. Our model does not use camera extrinsics and therefore shows no degradation, whereas Dense BEV Projection (Liao et al., 2025) explicitly relies on them and suffers substantial mAP drops under increasing perturbations.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 533,
+              "image_path": "figures/2610.01905/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 802
+            },
+            {
+              "caption": "Figure 4: Qualitative comparisons of online vectorized HD map construction for Dense BEV Projection (Liao et al., 2025), ours (cross-attention), and ours (self-attention). Self-attention produces higher-quality and more consistent vectorized map reconstructions, with fewer spurious elements, more complete map geometries, and better-preserved intersection geometry. The first three rows are from nuScenes, while the last row is from Argoverse 2. Orange, blue, and green denote lane dividers, pedestrian crossings, and road boundaries, respectively. Best viewed zoomed in.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 729,
+              "image_path": "figures/2610.01905/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Figure 6: Qualitative comparisons of online vectorized HD map construction for Dense BEV Projection (Liao et al., 2025), ours (cross-attention), and ours (self-attention). Self-attention produces higher-quality and more consistent vectorized map reconstructions, with fewer spurious elements, more complete map geometries, and better-preserved intersection geometry. The top two examples are from nuScenes, while the bottom two are from Argoverse 2. Orange, blue, and green denote lane dividers, pedestrian crossings, and road boundaries, respectively. Best viewed zoomed in.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 752,
+              "image_path": "figures/2610.01905/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 818
+            },
+            {
+              "caption": "Figure 7: Visualization of train–val geographic overlap across nuScenes regions. The NearExtrapolation split (Lilja et al., 2024), used in our online vectorized HD map construction experiments as the default setting, shows almost no train–val overlap. In contrast, the original split exhibits substantial train–val geographic overlap (79.4%), and the StreamMapNet split retains residual overlap (2.1%), indicating data leakage that undermines their reliability for evaluating online vectorized HD map construction. Red dashed boxes highlight regions of train–val geographic overlap within 5 m. Best viewed zoomed in.",
+              "figure_id": "figure-7-17",
+              "figure_number": "7",
+              "height": 902,
+              "image_path": "figures/2610.01905/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 829
+            },
+            {
+              "caption": "Table 2: Quantitative comparisons of online vectorized HD map construction. Ours with selfattention outperforms both the cross-attention variant and previous state-of-the-art methods in accuracy on nuScenes and Argoverse 2, while achieving the highest inference speed. FPS is for nuScenes.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 267,
+              "image_path": "figures/2610.01905/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 818
+            },
+            {
+              "caption": "Table 1: Comparison of aggregation mechanisms under a common decoder framework in the single-frame setting (T = 1). Self-attention achieves the best accuracy with 66.7× fewer intermediate tokens than dense BEV projection (Liao et al., 2025), and matches cross-attention in token count and FPS, demonstrating effective token compression and interaction. Token counts (0.3k) are for nuScenes; Argoverse 2 uses 0.35k tokens for 7 cameras (same per-camera budget).",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 335,
+              "image_path": "figures/2610.01905/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 410
+            },
+            {
+              "caption": "Table 5: Quantitative comparisons of online vectorized HD map construction on the original split. MapTR’s Argoverse 2 result is taken from MapUnveiler (Kim et al., 2024). SparseMeXt uses a different 100-epoch training schedule and reports only nuScenes results; the remaining results are taken from each method’s original paper.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 246,
+              "image_path": "figures/2610.01905/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 818
+            },
+            {
+              "caption": "Table 8: Quantitative comparisons of 3D object detection on the nuScenes original split with a ResNet-50 backbone. Ours with self-attention surpasses both the cross-attention variant and stateof-the-art methods in accuracy, and achieves the highest inference speed (FPS) among methods that report it. Following common 3D object detection protocol, NDS and mAP are reported as fractions in [0, 1], whereas improvements in the text are in percentage points. All listed results are without perspective-view pre-training on nuImages. All methods use 256×704 inputs, except BEVFormer v2, which uses 640×1600 inputs and future frames as in its original paper. FPS of BEVFormer v2 and ours are measured on an NVIDIA RTX 3090; other FPS values are as reported in the original papers on RTX 3090. “–” indicates FPS not reported for this setting.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 284,
+              "image_path": "figures/2610.01905/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 823
+            },
+            {
+              "caption": "Table 9: Efficiency comparison with state-of-the-art methods on nuScenes. Our MapLightning uses substantially fewer intermediate tokens and achieves higher inference speed than prior methods. While existing approaches use 5k–20k tokens, ours requires only 1.2k tokens. With self-attention, our method achieves the highest FPS within each backbone: 18.9 FPS with ResNet-50, 40.2 FPS with MobileNetV3-Large, and 43.0 FPS with ResNet-18.",
+              "figure_id": "table-9-9",
+              "figure_number": "9",
+              "height": 312,
+              "image_path": "figures/2610.01905/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 822
+            },
+            {
+              "caption": "Table 3: Quantitative comparisons of uncertainty-aware online vectorized HD map construction and downstream trajectory prediction on nuScenes. Following MapUncertainty (Gu et al., 2024), we train each map construction model with an added uncertainty head, precompute its uncertainty-aware maps, and train a separate HiVT (Zhou et al., 2022) on them with identical settings for trajectory prediction. We include MapTR, StreamMapNet, and MapTRv2 because MapUncertainty provides uncertainty-head implementations for them, and we add the same uncertainty head to ours as for MapTRv2. Ours with self-attention outperforms the cross-attention variant and previous methods on map construction and downstream trajectory prediction.",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 204,
+              "image_path": "figures/2610.01905/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 818
+            },
+            {
+              "caption": "Table 11: Ablations over token count, mapper depth, and timesteps. Our final configuration of 1.2k tokens, 4 mapper layers, and 4 timesteps (current frame + 3 past frames) achieves the best accuracy across configurations. FPS varies only from 18.8 to 19.2 across all configurations and is thus omitted.",
+              "figure_id": "table-11-13",
+              "figure_number": "11",
+              "height": 150,
+              "image_path": "figures/2610.01905/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 460
+            },
+            {
+              "caption": "Table 4: Quantitative comparisons of online vectorized HD map construction on the StreamMapNet split (Yuan et al., 2024). VectorMapNet, MapTracker, and AugMapNet results are taken from their original papers, and MapTR and StreamMapNet results are from Yuan et al. (2024). AugMapNet reports no Argoverse 2 results, and MapTRv2 and DAMap report none on this split.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 215,
+              "image_path": "figures/2610.01905/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 818
+            },
+            {
+              "caption": "Table 7: Quantitative comparisons of uncertainty-aware online vectorized HD map construction and downstream trajectory prediction on nuScenes using real-time image backbones. Ours with self-attention surpasses both the cross-attention variant and MapTRv2 on both map construction and downstream trajectory prediction across both image backbones.",
+              "figure_id": "table-7-18",
+              "figure_number": "7",
+              "height": 171,
+              "image_path": "figures/2610.01905/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 818
+            },
+            {
+              "caption": "Table 6: Quantitative comparisons of online vectorized HD map construction using real-time image backbones. Ours with self-attention surpasses both the cross-attention variant and MapTRv2 on nuScenes and Argoverse 2, while also achieving the highest inference speed (FPS) on nuScenes.",
+              "figure_id": "table-6-19",
+              "figure_number": "6",
+              "height": 156,
+              "image_path": "figures/2610.01905/table-018.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 818
+            },
+            {
+              "caption": "Table 10: Component-wise runtime (ms) and allocated memory (MiB) on nuScenes. We compare MapTRv2 with ours across different backbones, intermediate token counts, and numbers of mapper layers. Our design substantially reduces the runtime and memory of both the mapper and decoder, while leaving the backbone cost unchanged. The cross-attention variant has comparable cost to our self-attention design. MapTRv2 uses LSS rather than transformer layers, so its Mapperlayer count is denoted by “–”. Components are rounded individually.",
+              "figure_id": "table-10-10",
+              "figure_number": "10",
+              "height": 65,
+              "image_path": "figures/2610.01905/table-019.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 822
+            }
+          ],
+          "first_seen_at": "2026-10-01T21:00:00-04:00",
+          "hero_figure": "figures/2610.01905/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.01905",
+          "relevance": 9,
+          "selection_reason": "Introduces an efficient method for HD map construction using 1D tokens, directly relevant to robot navigation and token-level efficiency.",
+          "summary_status": "generated",
+          "title": "MapLightning: Online Vectorized HD Map Construction with 1D Map Tokens",
+          "tldr": "MapLightning replaces dense BEV grids with compact 1D map tokens for faster, more memory-efficient, and camera-extrinsic-robust online HD map construction.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-Language Models (VLMs) enable video annotation at scale, but costs accumulate quickly: processing a typical 60-second short-form video at one frame per second requires millions of tokens. To reduce costs, researchers rely on heuristics such as sampling a subset of frames, compressing videos into image grids, or using only a single modality. However, it remains unclear which heuristics save cost, and whether they preserve the downstream conclusions these annotations enable. To address this gap, we conduct a systematic evaluation of these heuristics using short-form videos, on two computational social science (CSS) tasks: sentiment and topic classification. We evaluate each configuration along three axes the literature typically treats separately: classification accuracy, validity of downstream inference, and per-video token cost. First, we find that accuracy and validity diverge: the highest-accuracy configuration can produce wrong conclusions. Second, modality value is not guaranteed: text alone can yield strong performance, indicating that adding modalities can add cost without adding signal. Finally, we find that cost can be decoupled from video length when annotating short-form videos: a single $2\\times8$ image grid built via simple shot-transition detection approaches full-video understanding ($\\kappa$ within~.05), at $\\sim 15\\%$ of the token cost. Based on these findings, we derive guidelines that can enable cost-aware VLM annotation in CSS.",
+          "arxiv_id": "2610.00809",
+          "arxiv_url": "https://arxiv.org/abs/2610.00809",
+          "authors": [
+            "Zhixi Zhu, Kristina Gligoric"
+          ],
+          "bullets": [
+            "Evaluates sampling, image grids, and modality choices on short-form-video sentiment and topic classification.",
+            "Compares classification accuracy, validity of downstream inference, and per-video token cost together.",
+            "Finds that the most accurate setup can still produce incorrect downstream conclusions.",
+            "Text-only inputs may perform strongly, so extra modalities can add cost without adding signal.",
+            "A shot-transition-based 2×8 image grid approaches full-video understanding (κ within ~.05) at about 15% of the token cost."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.CL",
+            "cs.SI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Annotation cost vs. quality on TikTok. The x-axis shows frames per video (in units of tokens-perframe, TPF): 9 (3 × 3 grid), 16 (2 × 8 grid), and 62 (Gemini at 1 FPS, since TikTok videos average 62.3s). The dashed line at κ = .80 marks the conventional “almost perfect agreement” threshold (Landis and Koch, 1977). The ShotT 3×3 grid method exceeds this threshold at a fraction of the per-video token cost.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 410,
+              "image_path": "figures/2610.00809/figure-001.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 442
+            },
+            {
+              "caption": "Figure 2: Accuracy of TikTok video annotations by video duration (Shot Transition Detection 2× 8).",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 212,
+              "image_path": "figures/2610.00809/figure-002.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 446
+            },
+            {
+              "caption": "Figure 4: Per-hashtag PPI 95% confidence intervals vs. ground truth.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 645,
+              "image_path": "figures/2610.00809/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 429
+            },
+            {
+              "caption": "Figure 1: Evaluation framework for cost-saving VLM annotation heuristics. We evaluate cost-saving heuristics for VLM-based video annotation along three configurable choices (frame selection, grid composition, modality), evaluating each configuration on classification accuracy, downstream inferential validity, and per-video token cost. Bias correction via PPI is applied to recover valid confidence intervals from a small set of human labels.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 40,
+              "image_path": "figures/2610.00809/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 761
+            },
+            {
+              "caption": "Table 1: High classification accuracy does not guarantee valid downstream inference, but bias correction helps recover it. Downstream estimation accuracy on (a) MELD and (b) TikTok. RF = random forest on Vertex AI video embeddings; RF V+T = random forest on Vertex AI video + transcript embeddings",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 477,
+              "image_path": "figures/2610.00809/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 953
+            },
+            {
+              "caption": "Table 3: The value of the visual modality is task-dependent. Per-class accuracy across annotation configurations on MELD (sentiment, 3 classes) and TikTok (hashtag, 18 classes). On MELD, Text-only achieves the highest overall accuracy (κ=0.398), while on TikTok all multimodal grid configurations substantially outperform both unimodal",
+              "figure_id": "table-3-13",
+              "figure_number": "3",
+              "height": 433,
+              "image_path": "figures/2610.00809/table-006.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 804
+            },
+            {
+              "caption": "Table 2: Grid sampling decouples token cost from video length. Average GPT-4o-mini token cost per video by frame input method on the TikTok dataset (n=900, avg. duration 62.3s). Packing frames into a single grid costs ∼37–48k tokens regardless of video length, whereas 1 FPS sampling scales with duration and is ∼50× more expensive on average (and over 500× in the worst case). The two grids share the same max-token value (∼48k), reflecting the API’s internal per-image token cap, which bounds cost regardless of grid resolution.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 111,
+              "image_path": "figures/2610.00809/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 704
+            },
+            {
+              "caption": "Table 4: Accuracy and Cohen’s κ on 100 common videos (N=100).",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 113,
+              "image_path": "figures/2610.00809/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 388
+            },
+            {
+              "caption": "Table 5: Accuracy and Cohen’s κ across modality and frame-sampling conditions, with bootstrap CIs",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 242,
+              "image_path": "figures/2610.00809/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 639
+            },
+            {
+              "caption": "Table 6: MELD sentiment (N=100). Each cell: accuracy / Cohen’s κ. Bold = best per model.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 129,
+              "image_path": "figures/2610.00809/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 458
+            },
+            {
+              "caption": "Table 7: TikTok hashtag (N=100, 18 classes). Each cell: accuracy / Cohen’s κ. Bold = best per model.",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 128,
+              "image_path": "figures/2610.00809/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 458
+            },
+            {
+              "caption": "Table 9: PPI sensitivity to human-annotation budget (nhuman) on TikTok.",
+              "figure_id": "table-9-3",
+              "figure_number": "9",
+              "height": 203,
+              "image_path": "figures/2610.00809/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 583
+            },
+            {
+              "caption": "Table 8: PPI sensitivity analysis on MELD. For each nh, we sample nh human-labeled examples from a pool of 1,000 videos, averaged over 100 random draws. ∆ = β − βGT. GT coefficients: Pos. β=+0.13, Neu. β=−0.31, Neg. β=+0.27. Coverage is the fraction of the 100 per-draw 95% PPI intervals that contain βGT.",
+              "figure_id": "table-8-2",
+              "figure_number": "8",
+              "height": 156,
+              "image_path": "figures/2610.00809/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 756
+            }
+          ],
+          "first_seen_at": "2026-10-01T21:00:00-04:00",
+          "hero_figure": "figures/2610.00809/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.00809",
+          "relevance": 6,
+          "selection_reason": "Systematic cost-efficiency evaluation of VLM video annotation heuristics; relevant to efficient token use and video understanding.",
+          "summary_status": "generated",
+          "title": "Paying for Too Many Tokens? Valid and Cost-Efficient Multimodal LLM Annotation with Simple Heuristics",
+          "tldr": "Simple frame and modality heuristics can make VLM video annotation far cheaper while preserving useful downstream conclusions, but accuracy alone is not a reliable guide.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-video question answering is limited by the high cost of visual tokens and by the fixed context width of current VLMs. A long-video question may require broad temporal coverage, but the answer is often supported by only a compact set of moments. To locate these moments efficiently, we propose token-budgeted Video Evidence Indexing (VEI): given a dense low-resolution Video Preview, the model constructs a compact high-resolution Evidence Set for final reasoning. We treat VEI as a policy that must jointly solve \\textit{evidence localization}, which finds question-relevant moments, and \\textit{budget planning}, which decides where to spend the limited high-resolution frame budget. We implement this idea with an inference pipeline: the Video Preview provides cheap global coverage, Video Evidence Indexing constructs the Evidence Set, and Answer Generation combines both inputs for final VQA. To address missing frame-level supervision, we adopt privileged self-distillation, where an answer-aware teacher guides the normal test-time policy on student-generated indexing traces. We explore previews at 1, 6, 12, and 24 visual tokens per frame, training a single policy that supports all four resolutions. Experiments show that Video Evidence Indexing improves accuracy under limited visual budgets, and self-distillation further improves both QA accuracy and temporal evidence localization.",
+          "arxiv_id": "2610.00757",
+          "arxiv_url": "https://arxiv.org/abs/2610.00757",
+          "authors": [
+            "Haowen Guan, Shengzhi Li, Shichao Pei"
+          ],
+          "bullets": [
+            "Addresses the cost of visual tokens and limited context windows in long-video QA.",
+            "Uses a low-resolution Video Preview to localize relevant moments and plan high-resolution frame allocation.",
+            "Combines the preview and selected Evidence Set for final answer generation.",
+            "Uses privileged self-distillation to learn frame-level indexing without explicit frame supervision.",
+            "Improves QA accuracy and temporal evidence localization under limited visual budgets across multiple preview resolutions."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of Video Evidence Indexing. A densely sampled low-resolution Video Preview (VPre) provides cheap global coverage under a strict context limit. We explore how VEI can use VPre to locate complementary evidence and reserve high-resolution detail for the moments that matter.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 394,
+              "image_path": "figures/2610.00757/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: Accuracy–context trade-off. Mean accuracy across three datasets (Section 4). All methods use Qwen3-VL-8B. Comparators cover predictive compression (AdaCodec), multi-agent aggregation (MACF), encoder-based selection (AKS, AdaQ), and RL-trained video-tool acquisition (ParaVT).",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 319,
+              "image_path": "figures/2610.00757/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 396
+            },
+            {
+              "caption": "Figure 3: Privileged self-distillation for VEI. (a) The student generates observation targets and timestamp lists; the complete VEI prompt PVEI appears in fig. 6. (b) Privileged information enables the teacher to guide the student’s search toward evidence supporting the correct answer. Distilling this guidance teaches the student what to look for and how to allocate its frame budget from compressed previews, without frame-level annotations or privileged inputs at inference.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 504,
+              "image_path": "figures/2610.00757/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 822
+            },
+            {
+              "caption": "Figure 7: EvSet Case Analysis. Uniform sampling misses the close-up needed to compare decorations. CLIP retrieves repetitive tree views, while VEI includes detailed views of the completed decoration and answers correctly.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 279,
+              "image_path": "figures/2610.00757/figure-004.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 823
+            },
+            {
+              "caption": "Figure 4: Evidence localization on LVBench. Training-Free and Self-Distilled VEI are compared across four preview budgets. Evidence Recall is the key metric, which measures how much of the annotated evidence the VEI policy recovers in its indexing.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 241,
+              "image_path": "figures/2610.00757/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 825
+            },
+            {
+              "caption": "Figure 6: Video Evidence Indexing Prompt. The normal indexer receives the Video Preview, question, and answer choices. During self-distillation, the teacher additionally receives privileged information, including the question type and correct answer.",
+              "figure_id": "figure-6-19",
+              "figure_number": "6",
+              "height": 1123,
+              "image_path": "figures/2610.00757/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Rollout policy and distillation objective ablation. On-policy distillation with reverse KL achieves the highest overall VideoMME accuracy.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 377,
+              "image_path": "figures/2610.00757/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 307
+            },
+            {
+              "caption": "Table 2: Comparison with existing VLMs and evidence-acquisition methods. Prior results in (a–c) use published evaluations and budgets; methods in (c) use Qwen3-VL-8B. CLIP† is our retrieval baseline (Appendix H). Bold marks the best across (b–d).",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 681,
+              "image_path": "figures/2610.00757/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 1: Main results across preview budgets. One self-distilled policy supports all four preview resolutions, outperforming uniform sampling even at one token per frame under the same 32-frame EvSet budget. The 1 fps preview rate is reduced when the input exceeds the context limit.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 350,
+              "image_path": "figures/2610.00757/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 827
+            },
+            {
+              "caption": "Table 9: Effect of Evidence Set access under matched configured context limits. For each lowresolution preview budget, we compare training-free VEI with the same model after removing access to the selected high-resolution Evidence Set. Blue values report the absolute average-score drop caused by removing Evidence Set frames.",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 351,
+              "image_path": "figures/2610.00757/table-010.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 825
+            },
+            {
+              "caption": "Table 10: Training Configuration for Privileged Self-Distillation",
+              "figure_id": "table-10-12",
+              "figure_number": "10",
+              "height": 333,
+              "image_path": "figures/2610.00757/table-011.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 602
+            },
+            {
+              "caption": "Table 11: Question-type accuracy on VideoMME. Scores (%) compare Uniform FS (U), TrainingFree VEI (TF), and Self-Distilled VEI (SD) at each preview resolution.",
+              "figure_id": "table-11-17",
+              "figure_number": "11",
+              "height": 350,
+              "image_path": "figures/2610.00757/table-012.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 828
+            },
+            {
+              "caption": "Table 13: Question-type accuracy on MLVU. Scores (%) compare Uniform FS (U), Training-Free VEI (TF), and Self-Distilled VEI (SD) at each preview resolution.",
+              "figure_id": "table-13-2",
+              "figure_number": "13",
+              "height": 284,
+              "image_path": "figures/2610.00757/table-013.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 828
+            },
+            {
+              "caption": "Table 5: Evidence localization and QA on LVBench. Scores (%) use 24-token previews and a 5 s tolerance on 1,549 questions; recall measures generated timestamps as in Figure 4. The privileged teacher provides an empirical upper reference using answer information unavailable at inference.",
+              "figure_id": "table-5-16",
+              "figure_number": "5",
+              "height": 129,
+              "image_path": "figures/2610.00757/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 498
+            },
+            {
+              "caption": "Table 6: VEI component ablation with comparable selection counts. Accuracy (%) on shared questions within each row; every configuration uses a final 32-frame Evidence Set.",
+              "figure_id": "table-6-1",
+              "figure_number": "6",
+              "height": 109,
+              "image_path": "figures/2610.00757/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 664
+            },
+            {
+              "caption": "Table 8: Representative LVBench cases. These cases distinguish localization, incomplete event coverage, and downstream reasoning, and show that a single annotated window need not exhaust all useful evidence.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 213,
+              "image_path": "figures/2610.00757/table-016.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 764
+            },
+            {
+              "caption": "Table 7: Long-video accuracy and evaluation cost. The estimate covers 4,751 test questions across the three datasets.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 82,
+              "image_path": "figures/2610.00757/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 520
+            },
+            {
+              "caption": "Table 12: Question-type accuracy on LVBench. Scores (%) compare Uniform FS (U), Training-Free VEI (TF), and Self-Distilled VEI (SD) at each preview resolution.",
+              "figure_id": "table-12-18",
+              "figure_number": "12",
+              "height": 216,
+              "image_path": "figures/2610.00757/table-018.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 828
+            },
+            {
+              "caption": "Table 3: Evidence-budget sensitivity on VideoMME.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 90,
+              "image_path": "figures/2610.00757/table-019.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 409
+            }
+          ],
+          "first_seen_at": "2026-10-01T21:00:00-04:00",
+          "hero_figure": "figures/2610.00757/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.00757",
+          "relevance": 8,
+          "selection_reason": "Token-budgeted long-video QA with evidence localization and budget planning; directly relevant to video understanding and efficient token selection.",
+          "summary_status": "generated",
+          "title": "Video Evidence Indexing: Learning Where to Look from Video Previews for Token-Budgeted Long-Video Question Answering",
+          "tldr": "Video Evidence Indexing efficiently answers long-video questions by using a cheap global preview to select a small set of high-resolution evidence frames within a visual-token budget.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We present Gumbel Straight Flow (GSF), a continuous flow map language model that leverages the noise-data coupling of a pretrained autoregressive language (AR) model. We theoretically demonstrate that the coupling between Gumbel noise and one-hot token sequences induced by an autoregressive model yields non-intersecting linear paths connecting the noise to the sequence representations. To further enhance high-quality few-step path sampling, we use a flow map semigroup objective where the tangent (velocity) condition is guided directly by the AR teacher. Across various benchmarks, including pretraining and downstream tasks, GSF can outperform current few-step language generation baselines.",
+          "arxiv_id": "2610.00497",
+          "arxiv_url": "https://arxiv.org/abs/2610.00497",
+          "authors": [
+            "Yeongmin Kim, Arnaud Doucet, Andrew Campbell, Valentin De Bortoli, Thomas Mensink, David Ruhe"
+          ],
+          "bullets": [
+            "Uses the AR model’s coupling between Gumbel noise and one-hot token sequences.",
+            "Constructs non-intersecting linear paths from noise to sequence representations.",
+            "Applies a flow map semigroup objective with velocity guidance from the AR teacher.",
+            "Evaluations across pretraining and downstream benchmarks show gains over existing few-step generation baselines."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3 | Overview of GSF: distilling AR-induced straight paths into a flow map student.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 319,
+              "image_path": "figures/2610.00497/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 979
+            },
+            {
+              "caption": "Figure 2 | (Left) Three types of noise–data coupling and their corresponding optimally learned flow",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 366,
+              "image_path": "figures/2610.00497/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 958
+            },
+            {
+              "caption": "Figure 6 | PPL-entropy trade-offs of models with",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 275,
+              "image_path": "figures/2610.00497/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 461
+            },
+            {
+              "caption": "Figure 1 | Efficiency-performance trade-offs for",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 287,
+              "image_path": "figures/2610.00497/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 461
+            },
+            {
+              "caption": "Figure 10 | Computational requirements of baseline methods to achieve comparable GM performance",
+              "figure_id": "figure-10-13",
+              "figure_number": "10",
+              "height": 327,
+              "image_path": "figures/2610.00497/figure-005.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 479
+            },
+            {
+              "caption": "Figure 7 | Pairwise win rate with Gemini 3.6-Flash. Parentheses indicate sampling steps.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 195,
+              "image_path": "figures/2610.00497/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 970
+            },
+            {
+              "caption": "Figure 9 | Straightness (CE scale) across decoding softmax temperatures for FLM and GSF-FM.",
+              "figure_id": "figure-9-4",
+              "figure_number": "9",
+              "height": 303,
+              "image_path": "figures/2610.00497/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 479
+            },
+            {
+              "caption": "Table 6 | Few-step conditional generation on XSUM summarization (ROUGE: (↑)).",
+              "figure_id": "table-6-6",
+              "figure_number": "6",
+              "height": 288,
+              "image_path": "figures/2610.00497/table-008.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 447
+            },
+            {
+              "caption": "Table 3 | One-step generative performance among",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 233,
+              "image_path": "figures/2610.00497/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 472
+            },
+            {
+              "caption": "Table 4 | Few-step performance among continuous-",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 212,
+              "image_path": "figures/2610.00497/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 491
+            },
+            {
+              "caption": "Table 8 | Ablation of training configurations for",
+              "figure_id": "table-8-2",
+              "figure_number": "8",
+              "height": 185,
+              "image_path": "figures/2610.00497/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 470
+            },
+            {
+              "caption": "Table 20 | Extreme summarization (XSum) samples generated by GSF (Ours) at 1-Step and 2-Step.",
+              "figure_id": "table-20-5",
+              "figure_number": "20",
+              "height": 476,
+              "image_path": "figures/2610.00497/table-012.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 883
+            },
+            {
+              "caption": "Table 9 | Comparison with D-MMD (Hoogeboom et al., 2026) on unconditional OpenWebText.",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 224,
+              "image_path": "figures/2610.00497/table-013.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 748
+            },
+            {
+              "caption": "Table 10 | Gumbel prior-posterior gap analysis",
+              "figure_id": "table-10-12",
+              "figure_number": "10",
+              "height": 225,
+              "image_path": "figures/2610.00497/table-014.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 471
+            }
+          ],
+          "first_seen_at": "2026-10-01T21:00:00-04:00",
+          "hero_figure": "figures/2610.00497/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.00497",
+          "relevance": 7,
+          "selection_reason": "Distills autoregressive models into one-step flow maps to improve generation efficiency.",
+          "summary_status": "generated",
+          "title": "Gumbel Straight Flow: Distilling Autoregressive Models into One-step Flow Maps",
+          "tldr": "GSF distills a pretrained autoregressive language model into a one-step continuous flow map for fast generation while preserving high-quality sampling.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Scaling Transformers to long contexts is constrained by the quadratic cost of self-attention and the linear growth of key-value cache memory transfer. Sparse attention mitigates this by retrieving only relevant tokens, but current approaches either require large-scale training or, within the training-free regime, rely on semantically coarse heuristics or expensive clustering that is difficult to update efficiently during decoding. We introduce CommunityKV, a framework that formulates sparse attention as a community detection problem. CommunityKV constructs a token graph from the $QK^T$ scores already computed during standard prefill, and partitions the graph into communities to enable retrieval of semantically coherent token groups. A local update rule assigns newly generated tokens to communities in constant time, enabling sparse retrieval throughout streaming decoding without global re-partitioning. We evaluate CommunityKV on Qwen3 and Llama-3.1 models across three long-context benchmarks. With one graph per query head, CommunityKV delivers up to $1.25\\times$ the end-to-end generation throughput of dense attention, while query-group graph aggregation yields up to $1.71\\times$ with comparable accuracy.",
+          "arxiv_id": "2610.00418",
+          "arxiv_url": "https://arxiv.org/abs/2610.00418",
+          "authors": [
+            "Joe McKenna, Anastasios Alexandridis, Nathan Susanj, Jing Liu"
+          ],
+          "bullets": [
+            "Addresses quadratic attention cost and growing KV-cache transfer during long-context generation.",
+            "Builds a token graph from prefill-time QKᵀ scores and detects communities of semantically coherent tokens.",
+            "Assigns generated tokens to communities with a constant-time local update, avoiding global re-partitioning.",
+            "Evaluated on Qwen3 and Llama-3.1 across three long-context benchmarks.",
+            "Achieves up to 1.25× throughput with per-head graphs and 1.71× with query-group aggregation, with comparable accuracy."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the CommunityKV framework. (1) Graph Construction. During prefill, we induce a sparse graph from the attention matrix by connecting each query to its top-κ keys (gray cells, κ = 3 shown). Sink tokens (hatched) are excluded from the top-κ pool. (2) Initial Partitioning. We partition the graph into semantic communities (colored regions) using the Leiden algorithm and compute a centroid (star) per community. (3) Incremental Update. At each decoding step (token 16 shown), we score the query against community centroids to retrieve a candidate subset, run exact attention on this subset together with sink tokens, and use the resulting top-κ keys to update the new token’s edges and assign it to a community in constant time. For clarity, only direct attention w(1) relations are depicted; this corresponds to λ = 1 in the combined graph.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 607,
+              "image_path": "figures/2610.00418/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 829
+            },
+            {
+              "caption": "Figure 4: Pipeline schedule for graph partitioning during prefill. Leiden partitioning for each layer is dispatched asynchronously after its attention scores are computed, overlapping with subsequent layer execution. The red segment indicates the residual Leiden latency that remains exposed on the critical path when the final layer’s partitioning has not completed by the time it is needed.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 250,
+              "image_path": "figures/2610.00418/figure-002.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 790
+            },
+            {
+              "caption": "Figure 2: Empirical analysis of graph partition properties on LongBench v2 (Qwen3-14B). Left: Average community size as a function of the resolution parameter γ. Right: Number of communities vs. context length, confirming O( √ n) sub-linear scaling.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 337,
+              "image_path": "figures/2610.00418/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 748
+            },
+            {
+              "caption": "Figure 3: Partition stability over a 4096-token generation horizon (Qwen3-14B, LongBench v2). Left: Graph modularity Q remains stable and increases slightly as new tokens reinforce community structure. Right: Attention mass recall µ̃κ at varying retrieval budgets. At the default 4096-token budget, recall stays above 85% throughout generation.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 267,
+              "image_path": "figures/2610.00418/figure-004.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 748
+            },
+            {
+              "caption": "Table 4: Accuracy on BABILong QA1–QA5 across model families and sparse-attention baselines. Results use 64k contexts and a matched 4,096-token budget. We compare CommunityKV with direct retrieval methods (TokenSelect, FreeKV, and SparQ) and eviction/compression methods (SnapKV, H2O, and StreamingLLM).",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 263,
+              "image_path": "figures/2610.00418/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 740
+            },
+            {
+              "caption": "Table 3: Accuracy on LongBench v2 across token budgets (128–4096) at cluster size 16 for Qwen3 models (4B, 8B, 14B). CommunityKV accuracy improves with budget and reaches near dense parity at 4096 tokens across all model scales.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 341,
+              "image_path": "figures/2610.00418/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 702
+            },
+            {
+              "caption": "Table 7: CommunityKV outperforms connected-components and top-k-neighborhood controls at every budget and model scale, highlighting the importance of Leiden partitioning.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 311,
+              "image_path": "figures/2610.00418/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 768
+            },
+            {
+              "caption": "Table 11: Accuracy on LongBench v2 across matched token budgets for direct retrieval, eviction/compression, and CommunityKV methods.",
+              "figure_id": "table-11-10",
+              "figure_number": "11",
+              "height": 846,
+              "image_path": "figures/2610.00418/table-008.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 645
+            },
+            {
+              "caption": "Table 9: Sampled-generation stability over generation length. Values compare dense attention with each method on the same generated history.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 230,
+              "image_path": "figures/2610.00418/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 510
+            },
+            {
+              "caption": "Table 1: Computational complexity comparison. n is sequence length, d is hidden dimension. Note that our method achieves sub-linear retrieval O( √ nd) without expensive clustering or update costs.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 118,
+              "image_path": "figures/2610.00418/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 690
+            },
+            {
+              "caption": "Table 12: RULER accuracy for direct retrieval methods. MK-2, MQ, and VT denote Multikey-2, Multiquery, and variable tracking, respectively. Results use a matched 4,096-token retrieval budget. The average covers the three reported tasks only. Qwen3 tasks use 64k contexts; for Llama-3.1, the NIAH tasks use 64k contexts and variable tracking uses 32k.",
+              "figure_id": "table-12-11",
+              "figure_number": "12",
+              "height": 173,
+              "image_path": "figures/2610.00418/table-011.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 572
+            },
+            {
+              "caption": "Table 2: Accuracy on LongBench v2 across token budgets (4k–32k) for GraphKV and CommunityKV. Dynamic community retrieval matches dense accuracy at 8× lower budget than static eviction.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 127,
+              "image_path": "figures/2610.00418/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 444
+            },
+            {
+              "caption": "Table 8: Fixed-continuation stability over generation length. Lower NLL and KL are better; higher top-1 agreement is better.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 274,
+              "image_path": "figures/2610.00418/table-013.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 690
+            },
+            {
+              "caption": "Table 10: Latency comparison between FlashAttention-2 (Dense) and CommunityKV using Hugging Face’s DynamicCache on an NVIDIA H100 80GB at 131k context. Left: total prefill wall time with breakdown into fused top-κ selection and exposed Leiden partitioning latency. Right: average per-step decoding wall time (128 generated tokens) with breakdown into token retrieval and sparse attention. Only attention-related kernels are reported; the remaining per-step time is MLP and layer normalization.",
+              "figure_id": "table-10-8",
+              "figure_number": "10",
+              "height": 207,
+              "image_path": "figures/2610.00418/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 764
+            },
+            {
+              "caption": "Table 13: RULER accuracy across the complete 13-task suite. Results use a matched 4,096-token active-token budget. Dense attention is included as a reference; reported values are unweighted averages over all 13 tasks.",
+              "figure_id": "table-13-13",
+              "figure_number": "13",
+              "height": 96,
+              "image_path": "figures/2610.00418/table-015.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 744
+            }
+          ],
+          "first_seen_at": "2026-10-01T21:00:00-04:00",
+          "hero_figure": "figures/2610.00418/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.00418",
+          "relevance": 8,
+          "selection_reason": "Presents a graph-partitioning sparse-attention method that reduces KV-cache transfer and improves long-context decoding throughput.",
+          "summary_status": "generated",
+          "title": "CommunityKV: Efficient Long-Context Decoding via Graph Partitioning",
+          "tldr": "CommunityKV speeds up long-context decoding by partitioning tokens into dynamically updated graph communities for efficient sparse retrieval.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Visual-token compression for vision--language models is posed almost entirely as a selection problem: decide which tokens to keep and discard the rest. The criteria that work best rank tokens by the attention the language model pays them, which makes the ranking a function of the question being asked. That is invisible in a single-turn benchmark and decisive whenever a compressed representation is written once and read many times, as when it is cached across the turns of a conversation or transmitted between a device and a server. We take the other half of the classical transform-coding toolkit instead: keep every token and vary its rate. A transform code exposes each token's measured distortion--rate curve, and a fixed bit budget is distributed across tokens by exact integer rate--distortion optimisation on those curves. No text enters the pipeline, so one compressed representation serves any query. At equal bit budgets, on two datasets and two capacities, it preserves the model's output distribution and its answers better than uniform-rate coding, the closed-form water-fill and distortion-ranked pruning. It matches attention-ranked pruning on the question pruning was tuned for, and overtakes it once the compressed image must answer a different question about the same image.",
+          "arxiv_id": "2610.00204",
+          "arxiv_url": "https://arxiv.org/abs/2610.00204",
+          "authors": [
+            "Hongbo Zhang, Zihao Yang, Liuyang Song, Daqian Yang, Haoyang Yao, Yan Wen, Zhengtao Yao"
+          ],
+          "bullets": [
+            "Problem: Attention-based token selection depends on the current question, limiting representations that are cached or reused across queries.",
+            "Method: Keep every visual token and distribute a fixed bit budget using exact integer rate–distortion optimisation over each token’s distortion–rate curve.",
+            "Scope: The compression pipeline uses no text, enabling one representation to serve multiple queries.",
+            "Results: Across two datasets and model capacities, it better preserves output distributions and answers than uniform-rate coding, water-filling, and distortion-ranked pruning.",
+            "It matches attention-ranked pruning on its tuned question and outperforms it when answering a different question about the same image."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. RDTok. The codec measures each token’s distortion–rate curve and distributes a fixed bit budget across tokens by exact dynamic programming. No query enters the encoder, so one coded representation is written once and reused by any later query. The token count is unchanged; what varies is the bits each token receives.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 508,
+              "image_path": "figures/2610.00204/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1054
+            },
+            {
+              "caption": "Fig. 2. (a) Output KL against per-token rate for the two codec families on ChartQA. (b) Tokens placed at each rate index, at 160×; the legend gives the number of levels carrying 99% of the tokens.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 508,
+              "image_path": "figures/2610.00204/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 479
+            },
+            {
+              "caption": "Fig. 4. Query transfer on ChartQA (n = 288 images with two human questions each; all arms scored on the held-out question, mean output KL). Attention-ranked pruning appears twice: ranked on the question it is scored on, and on the other question of that image. The brace is the degradation.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 432,
+              "image_path": "figures/2610.00204/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 482
+            },
+            {
+              "caption": "Fig. 3. A ChartQA case at 160× on Qwen3-VL-8B (reference No, which the uncompressed model gives). Panels show the rate index each allocator assigns to each token, on the token grid. Only RDTok uses intermediate levels, and only RDTok still answers correctly.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 165,
+              "image_path": "figures/2610.00204/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1016
+            },
+            {
+              "caption": "Table 1. ChartQA, n = 288 per cell, equal bit budget; COCO is in the text. Uncompressed accuracy 75.3 (4B) / 76.7 (8B). “Pres.”: output preservation. Best per column in bold; ∗: p < 0.05 against RDTok.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 462,
+              "image_path": "figures/2610.00204/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 510
+            }
+          ],
+          "first_seen_at": "2026-10-01T21:00:00-04:00",
+          "hero_figure": "figures/2610.00204/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.00204",
+          "relevance": 7,
+          "selection_reason": "Query-independent variable-rate visual token coding for VLMs; directly relevant to token-level efficiency.",
+          "summary_status": "generated",
+          "title": "Query Independent Variable Rate Visual Token Coding",
+          "tldr": "A query-independent visual-token codec allocates variable bit rates to all tokens, improving multi-query VLM compression over uniform coding and pruning baselines at equal bit budgets.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Feedforward Spiking Neural Networks (SNNs) typically propagate every generated spike indiscriminately, disregarding whether the information is redundant from an information-theoretic perspective. This lack of selectivity induces high redundancy in inter-layer communication, creating an expensive overhead, e.g., in scenarios involving many-core neuromorphic hardware or communication-dominated Internet-of-Things (IoT) where features are transmitted wirelessly. To address this challenge, we trade localized processing for leaner network channels by introducing a minimal predictive coding framework for SNNs. We propose two layer variants sharing a predictor block: error units, which transmit signed spiking residuals, and predictive suppression, which uses residual magnitude to dynamically gate and forward only unpredictable, \"surprising\" activity. Evaluated on the N-MNIST and Spiking Heidelberg Digits (SHD) datasets using diagnostic metrics that decouple local processing from cross-layer communication, our new predictive coding layers achieve significant communication savings. Numerical results reveal a three-fold reduction in communicated activity, while increasing the task accuracy for both datasets. The latter finding is notable, and suggests that predictive coding layers not only minimize communication overhead, but also produce output feature vectors with a higher representation power.",
+          "arxiv_id": "2609.21583",
+          "arxiv_url": "https://arxiv.org/abs/2609.21583",
+          "authors": [
+            "Aidin Attar",
+            "Michele Rossi"
+          ],
+          "bullets": [
+            "SNNs normally transmit all spikes, causing redundant and costly communication.",
+            "The method adds a shared predictor with either signed residual transmission or magnitude-based suppression of predictable activity.",
+            "Experiments use N-MNIST and Spiking Heidelberg Digits with metrics separating local processing from communication.",
+            "Both variants achieve substantial communication savings, with reported three-fold lower communicated activity.",
+            "Accuracy also increases, suggesting more informative output representations; the scope is limited to the evaluated datasets and settings."
+          ],
+          "categories": [
+            "cs.NE",
+            "cs.LG",
+            "eess.SP"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: (A) Accuracy versus communicated activity proxy (summed over layers) on N-MNIST. Predictive suppression (filled circle) keeps high accuracy while communicating less than the matched baseline. (B) Communication-weighted cost sensitivity 𝐶 (𝜌) = 𝐸local + 𝜌 𝐸comm. As predictive suppression spends extra local processing to reduce communication, it becomes cheaper than the baseline once communication is weighted about 𝜌★≈2.1 times more than local computation.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 418,
+              "image_path": "figures/2609.21583/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 857
+            },
+            {
+              "caption": "Figure 2: What each layer communicates. The two schemes share the same encoder/predictor skeleton; only the forwarded message differs. (A) The error-units variant forwards the prediction error 𝑒ℓ = 𝑥ℓ − 𝑥ℓ . (B) Predictive suppression encodes 𝑧ℓ , predicts its own input 𝑥ℓ , and forwards 𝑦ℓ = 𝑔ℓ𝑧ℓ , where the gate 𝑔ℓ = 1 − 𝑒−𝛼𝑚ℓ is driven by the prediction-error magnitude.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 358,
+              "image_path": "figures/2609.21583/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 842
+            },
+            {
+              "caption": "Figure 5: Communication is selective, not merely reduced: at the first layer of predictive suppression, communicated activity rises monotonically with the pred.-error magnitude 𝑚ℓ . Inset: SSI (filled) is high and the RCF (open) is low.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 428,
+              "image_path": "figures/2609.21583/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 497
+            },
+            {
+              "caption": "Figure 4: Linear-probe decodability for predictive suppression. At every layer the communicated message (filled) is essentially as decodable as the full representation (open); the paired dots nearly coincide. The first layer message carries about 7× less weighted activity than the baseline. Inset: the communicated activity that this message costs, per layer.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 358,
+              "image_path": "figures/2609.21583/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 498
+            },
+            {
+              "caption": "Figure 1: Predictive coding layer. (A) Plain feedforward SNN forwards the entire representation to the next layer. (B) Predictive suppression keeps the layers spiking but adds a local error-driven gate that suppresses predictable spikes and forwards the surprising ones, giving less communicated activity.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 172,
+              "image_path": "figures/2609.21583/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 491
+            },
+            {
+              "caption": "Table 1: Summary of main results. Accuracy is mean ± standard deviation over five seeds. SSI and RCF are only reported for suppression-based communication. 𝐸comm is computed on the actual transmitted signal 𝑦ℓ ; it is a summed magnitude for graded channels and an event count for binary channels.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 263,
+              "image_path": "figures/2609.21583/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 682
+            }
+          ],
+          "first_seen_at": "2026-10-01T21:00:00-04:00",
+          "hero_figure": "figures/2609.21583/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.21583",
+          "relevance": 8,
+          "selection_reason": "Introduces predictive suppression layers for Spiking Neural Networks to reduce communication redundancy, a technique relevant to Efficient AI and neuromorphic hardware used in embodied systems.",
+          "summary_status": "generated",
+          "title": "Predictive Suppression Layers for Communication-Efficient Spiking Neural Networks",
+          "tldr": "Predictive coding layers reduce inter-layer spike communication by threefold while improving accuracy on N-MNIST and SHD.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-09-30",
       "paper_count": 15,
       "papers": [
@@ -45907,5 +47120,5 @@
   "schema_version": 1,
   "subtopic_id": "token-pruning-and-eviction",
   "topic_id": "efficient-ai",
-  "total_paper_count": 249
+  "total_paper_count": 256
 }

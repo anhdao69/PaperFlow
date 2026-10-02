@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**28 papers total**
+**30 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-01 | [MosaiChunk: Compositing Spatio-Temporal Memory for Autoregressive Video Generation](https://arxiv.org/abs/2610.02153) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | MosaiChunk extends long-horizon video memory by mosaically selecting historical key-value entries, improving consistency when scenes or objects reappear. | 8 | 8 |
+| 2026-10-01 | [SemanTok: Predictable Semantic Tokens for Efficient Autoregressive Video Generation](https://arxiv.org/abs/2610.00686) | World Models: Video World Models; Video Generation and Understanding: Autoregressive Video Models | SemanTok improves flexible-length video tokenization by making early tokens predictably semantic, enabling efficient autoregressive generation without sacrificing fidelity. | 8 | 8 |
 | 2026-09-30 | [Enhancing Autoregressive Video Generation via Representation Adversarial Distillation](https://arxiv.org/abs/2609.40037) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Radian improves few-step autoregressive video generation by adding real-data adversarial supervision in frozen visual-foundation-model feature space to complement diffusion distribution matching. | 8 | 7 |
 | 2026-09-30 | [Future Video Generation Better Aligns with the Human Visual Cortex than Observed Video](https://arxiv.org/abs/2609.38819) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Video diffusion representations for predicting future frames align more closely with human visual-cortex activity than representations for reconstructing observed video. | 6 | 7 |
 | 2026-09-30 | [LongTake: Learning to Sustain Dynamics in Long-Horizon Video Generation](https://arxiv.org/abs/2609.38562) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | LongTake trains autoregressive video diffusion models with long-horizon supervision to sustain dynamic, high-quality generation over 30–60 seconds. | 8 | 8 |

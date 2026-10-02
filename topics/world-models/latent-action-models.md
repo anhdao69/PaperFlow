@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**69 papers total**
+**72 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-01 | [Distributionally Robust Schr\\"odinger Bridge](https://arxiv.org/abs/2610.02043) | World Models: Latent Action Models | Distributionally Robust Schrödinger Bridge learns transport controllers that remain effective when the initial distribution shifts, improving robustness at some cost to nominal performance. | 7 | 8 |
+| 2026-10-01 | [Social-WM: Safety-Aware Latent World Models for Robot Social Navigation](https://arxiv.org/abs/2609.40177) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Interactive World Models | Social-WM enables safer robot social navigation by predicting action outcomes and estimating whether candidate actions are physically and socially realizable before execution. | 9 | 8 |
+| 2026-10-01 | [Learning Hierarchical Causal Representations of the Effects of Forcings on Temperature in Climate Models](https://arxiv.org/abs/2609.30995) | World Models: Latent Action Models | A hierarchical causal representation learning framework makes climate-model emulation more interpretable and capable of attributing temperature changes to greenhouse gases, aerosols, and internal variability. | 7 | 8 |
 | 2026-09-30 | [Learning Skills from Historical Action Trajectories: Action Experience Dictionary for World Action Models](https://arxiv.org/abs/2609.40219) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | AED helps World Action Models reuse past action experience and better predict manipulation actions across tasks and embodiments. | 8 | 7 |
 | 2026-09-30 | [MEND: Label-Free Detection, Localisation, and Correction of Latent Hallucination in World Models](https://arxiv.org/abs/2609.39182) | World Models: Latent Action Models | MEND uses one denoising score field to detect, localise, and partially correct hallucinations in frozen latent world models without error labels. | 9 | 9 |
 | 2026-09-30 | [Linear Recurrent Memory Suffices to Distil a World-Model Policy for Robot Air Hockey](https://arxiv.org/abs/2609.39151) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | A compact linear recurrent memory can match GRU and DreamerV3 performance for simulated air-hockey defence under temporary puck-tracking loss. | 7 | 7 |
