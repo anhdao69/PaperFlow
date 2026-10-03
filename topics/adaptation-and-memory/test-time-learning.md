@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**358 papers total**
+**360 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [MetaPusher: Meta Learning and Planning for Nonprehensile Manipulation of Unseen Objects with Rapid Online Adaption](https://arxiv.org/abs/2609.21122) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | MetaPusher combines rapid meta-learned dynamics adaptation with adaptive kinodynamic planning to manipulate unseen objects efficiently without separate data collection. | 8 | 7 |
+| 2026-10-02 | [BIDETA: Brain-Inspired Data-Efficient Tactile Adaptation for Unseen Sensors](https://arxiv.org/abs/2609.08673) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | BIDETA enables fast, gradient-free adaptation of tactile models to unseen sensors using only a few labeled target contacts. | 8 | 7 |
 | 2026-10-01 | [InterEvolve: Test-Time Evolution of Reward Programs for Humanoid Loco-Manipulation](https://arxiv.org/abs/2610.02196) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | InterEvolve enables humanoid controllers to solve unseen loco-manipulation tasks at test time by iteratively evolving reward programs from execution feedback, without retraining. | 8 | 8 |
 | 2026-10-01 | [Learning to Predict Distributions over Weight Updates for Test-Time Adaptation](https://arxiv.org/abs/2610.01934) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Query-conditioned hypernetworks can generate distributions over LoRA updates, enabling effective test-time adaptation and scaling by sampling multiple adapted models from a single query. | 7 | 8 |
 | 2026-10-01 | [Before It Fades: Reinforcing Temporal Representations at Inference Time in VideoLLMs](https://arxiv.org/abs/2610.01595) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding; Adaptation and Memory: Test-Time Learning | VideoLLMs acquire temporal information in intermediate layers but lose it before producing outputs; Temporal Activation Injection restores this signal at inference time without training. | 8 | 8 |

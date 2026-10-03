@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**602 papers total**
+**605 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Diffusable Latents from Structure-Agnostic Distillation](https://arxiv.org/abs/2609.39657) | Video Generation and Understanding: Video Diffusion | Structure-agnostic, pooled distillation can make autoencoder latents more diffusion-friendly without preserving the teacher’s spatial layout. | 6 | 7 |
+| 2026-10-02 | [DeCoPrune: Efficient KV-Cache Pruning for Autoregressive Video Diffusion via Denoising Consistency](https://arxiv.org/abs/2609.39096) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | DeCoPrune uses denoising consistency to prune autoregressive video-diffusion KV caches while preserving long-range visual information and accelerating generation. | 8 | 8 |
+| 2026-10-02 | [Improving Video Sparse Attention with Fine-grained Router and Sparse Rebasing](https://arxiv.org/abs/2609.32882) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VSA2 makes video diffusion transformers substantially more efficient by combining fine-grained dynamic routing with sparse rebasing while maintaining comparable or better video quality. | 8 | 8 |
 | 2026-10-01 | [HiPhy: Hierarchical Alignment for Physically-Plausible Multi-Principle Video Generation](https://arxiv.org/abs/2610.02197) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | HiPhy uses hierarchical reinforcement learning to generate videos that obey multiple physical principles coherently within the same scene. | 7 | 7 |
 | 2026-10-01 | [DMAD: Distribution Matching as Adversarial Distillation for Fast Visual Generation](https://arxiv.org/abs/2610.02188) | Video Generation and Understanding: Video Diffusion | DMAD turns distribution matching into adversarial classification, enabling fast few-step visual generation without an auxiliary student-fitted diffusion model. | 7 | 7 |
 | 2026-10-01 | [OmniSeek: Native Tool Integration for Multi-turn Audio-Visual Reasoning](https://arxiv.org/abs/2610.02181) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniSeek turns an Omni-LLM into a multi-turn agent that actively retrieves the most relevant audio and visual evidence before reasoning. | 6 | 7 |

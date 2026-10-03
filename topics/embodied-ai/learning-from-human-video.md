@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**129 papers total**
+**130 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [DexPolicy: Scheduled Exploration for Trajectory-Guided Dexterous Manipulation](https://arxiv.org/abs/2610.00360) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | DexPolicy improves trajectory-guided dexterous manipulation by explicitly annealing RL exploration from broad to narrow over training. | 9 | 7 |
 | 2026-10-01 | [UniWAM: Unified World-Action Model](https://arxiv.org/abs/2610.02054) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Interactive World Models | UniWAM unifies physical reasoning, world generation, and action prediction to improve embodied understanding, robustness, and long-horizon control. | 9 | 8 |
 | 2026-10-01 | [FlashDexRetarget: Accelerating Dexterous Manipulation Data Generation through Multi-Motion Retargeting](https://arxiv.org/abs/2610.01849) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | FlashDexRetarget efficiently retargets human dexterous manipulation demonstrations across robot hands using RL, achieving high success with substantially less training compute than evaluated baselines. | 8 | 7 |
 | 2026-10-01 | [NextMe-800: Anticipating Personal Behavior from Months of Egocentric Video](https://arxiv.org/abs/2610.01461) | Embodied AI: Learning from Human Videos | NextMe-800 introduces a months-long egocentric dataset and benchmark for predicting an individual’s future actions across multiple abstraction levels and time horizons. | 8 | 7 |

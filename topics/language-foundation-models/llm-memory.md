@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**414 papers total**
+**416 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [MemFit: Efficient Long-Term Agentic Memory](https://arxiv.org/abs/2610.00872) | Language Foundation Models: LLM Memory | MemFit makes long-term LLM-agent memory cheaper and faster by storing conversations verbatim and retrieving relevant context without LLM calls. | 8 | 7 |
+| 2026-10-02 | [Separating Stream Stability from Long-Term Recall in Language Models](https://arxiv.org/abs/2609.07282) | Language Foundation Models: LLM Memory, Long-Context Models | Stable generation over long streams does not imply that a language model can recall or use distant content. | 8 | 8 |
 | 2026-10-01 | [ScholarCatalyst: A Benchmark for Retrieving Papers That Inspire New Research](https://arxiv.org/abs/2610.02202) | Language Foundation Models: LLM Memory | ScholarCatalyst benchmarks whether AI can retrieve the prior papers that experts identify as crucial for advancing new research ideas. | 7 | 7 |
 | 2026-10-01 | [AutoCompact: Learning When to Compact Context in Long-Horizon Coding Agents](https://arxiv.org/abs/2610.02163) | Language Foundation Models: LLM Memory, Long-Context Models | AutoCompact trains coding agents to learn when and how to compact context, improving long-horizon software-engineering task success without context overflow. | 7 | 7 |
 | 2026-10-01 | [From Knowledge Access to Source Learning: Developing Source-Specific Competence](https://arxiv.org/abs/2610.02150) | Language Foundation Models: LLM Memory | SourceLearn enables LLM agents to progressively build reusable, source-specific competence instead of repeatedly accessing the same source without learning from it. | 8 | 8 |

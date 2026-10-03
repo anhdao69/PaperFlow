@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**183 papers total**
+**184 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Improving Video Sparse Attention with Fine-grained Router and Sparse Rebasing](https://arxiv.org/abs/2609.32882) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VSA2 makes video diffusion transformers substantially more efficient by combining fine-grained dynamic routing with sparse rebasing while maintaining comparable or better video quality. | 8 | 8 |
 | 2026-10-01 | [Pooling Helps, Learned Weighting Hurts In-Context: Decomposing Group Attention](https://arxiv.org/abs/2610.01831) | Efficient AI: Efficient Attention | In Chronos-2 group attention, simple cross-variate pooling generally helps, while learned weighting often harms in-context forecasting. | 5 | 7 |
 | 2026-10-01 | [MWOP: Modality-aware Width-wise Operation Pruning for Efficient MLLMs](https://arxiv.org/abs/2610.01434) | Efficient AI: Efficient Attention | MWOP accelerates MLLM inference by pruning modality-specific attention paths and FFN channels while preserving nearly all benchmark performance. | 7 | 7 |
 | 2026-10-01 | [Contrastive Attention Mitigates Spectral Bias in Spiking Transformers](https://arxiv.org/abs/2610.01403) | Efficient AI: Efficient Attention | Spiking neurons and self-attention suppress high-frequency information, so Spiking Contrastive Attention restores these details while improving Spiking Transformer performance and efficiency. | 6 | 7 |

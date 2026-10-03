@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**819 papers total**
+**821 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Read-Best Is Not Steer-Best: A Probing--Steering Layer Dissociation in Omni-Modal Large Language Models](https://arxiv.org/abs/2609.22135) | Multimodal Foundation Models: Multimodal Large Language Models | The layer that best reveals a concept is not necessarily the layer that best controls it, so probing accuracy is a poor guide for choosing steering layers in omni-modal LLMs. | 6 | 7 |
+| 2026-10-02 | [A visual large language foundational model for medical image recognition using clinician-contributed online resources](https://arxiv.org/abs/2609.06914) | Multimodal Foundation Models: Multimodal Large Language Models | Clinician-verified online medical resources enabled creation of ThoughtMed-1M, training FOLTMed to improve clinically grounded medical image understanding and VQA. | 6 | 5 |
 | 2026-10-01 | [OmniSeek: Native Tool Integration for Multi-turn Audio-Visual Reasoning](https://arxiv.org/abs/2610.02181) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniSeek turns an Omni-LLM into a multi-turn agent that actively retrieves the most relevant audio and visual evidence before reasoning. | 6 | 7 |
 | 2026-10-01 | [Harnessing Domain Specialists in Multimodal Mixture-of-Experts for Efficient Adaptation](https://arxiv.org/abs/2610.02123) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI | ExpertLens exploits naturally domain-specialized experts in pretrained multimodal MoEs to enable faster, parameter-efficient adaptation. | 8 | 7 |
 | 2026-10-01 | [Where-OPD: Spatially Guided On-Policy Self-Distillation of MLLMs with Synthetic Scenes](https://arxiv.org/abs/2610.02117) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | Where-OPD uses spatially guided self-distillation on synthetic scenes to improve MLLM visual reasoning and transfer those gains to real-world perception tasks. | 8 | 8 |

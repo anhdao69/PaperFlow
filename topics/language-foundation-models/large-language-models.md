@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**1253 papers total**
+**1254 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Overcoming Scaling Limits in On-Policy Self-Distillation for LLM Reasoning](https://arxiv.org/abs/2609.37915) | Language Foundation Models: Large Language Models | OASIS overcomes the scaling limits of on-policy self-distillation by training mainly on verified student trajectories and using the student’s own attempts as teacher context. | 7 | 7 |
 | 2026-10-01 | [TACO: Ternary Absolute-max Column-wise One-sparse Optimizer for LLM Fine-Tuning](https://arxiv.org/abs/2610.02199) | Efficient AI; Language Foundation Models: Large Language Models | TACO enables memory-efficient full-parameter LLM fine-tuning by using a ternary, column-wise one-sparse optimizer that preserves comparable accuracy and runtime to AdamW8bit. | 6 | 7 |
 | 2026-10-01 | [Hierarchical Continuous Diffusion Language Models](https://arxiv.org/abs/2610.02193) | Language Foundation Models: Large Language Models | HC-DLM combines discrete token scaffolding with a continuous latent diffusion state to preserve token dependencies during parallel generation. | 6 | 7 |
 | 2026-10-01 | [The Missing Primitive: Diagnosing and Repairing Mathematical Reasoning in Large Language Models](https://arxiv.org/abs/2610.02191) | Language Foundation Models: Large Language Models | The paper diagnoses mathematical reasoning in LLMs through four structural capabilities and improves performance by distilling primitive-guided reasoning, especially to address discovery failures. | 6 | 7 |

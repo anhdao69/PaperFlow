@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**359 papers total**
+**361 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [DeCoPrune: Efficient KV-Cache Pruning for Autoregressive Video Diffusion via Denoising Consistency](https://arxiv.org/abs/2609.39096) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | DeCoPrune uses denoising consistency to prune autoregressive video-diffusion KV caches while preserving long-range visual information and accelerating generation. | 8 | 8 |
+| 2026-10-02 | [Security-Enhanced Seed-Based Weight Quantization for Large Language Models](https://arxiv.org/abs/2609.38477) | Efficient AI: KV Cache and Memory Efficiency | Seed-Q improves seed-based LLM weight compression by allocating bits according to weight sensitivity while maintaining metadata-free decoding and enhanced bit-flip attack detectability. | 7 | 7 |
 | 2026-10-01 | [MosaiChunk: Compositing Spatio-Temporal Memory for Autoregressive Video Generation](https://arxiv.org/abs/2610.02153) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | MosaiChunk extends long-horizon video memory by mosaically selecting historical key-value entries, improving consistency when scenes or objects reappear. | 8 | 8 |
 | 2026-10-01 | [Stochastic Rounding in Low-Precision Transformer Inference: A Variable-Precision Emulation Study of a Small GPT-2](https://arxiv.org/abs/2610.01889) | Efficient AI: KV Cache and Memory Efficiency | Rounding choice should vary by transformer site: stochastic rounding helps in low-precision MLP projections, while round-to-nearest is preferable at the language-model head. | 5 | 7 |
 | 2026-10-01 | [Clock Diffusion: Efficient Semi-Autoregressive Continuous Diffusion Language Models](https://arxiv.org/abs/2610.00894) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Clock Diffusion makes continuous diffusion language models more practical and efficient by enabling variable-length, semi-autoregressive generation with key-value caching and improved samplers. | 7 | 8 |

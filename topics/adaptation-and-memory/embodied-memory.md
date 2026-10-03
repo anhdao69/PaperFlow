@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**140 papers total**
+**141 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence](https://arxiv.org/abs/2609.24271) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | ME-Brain is a self-evolving embodied system that learns from physical experience after deployment without retraining its model. | 9 | 8 |
 | 2026-10-01 | [Managing Context and Communication in Distributed Agentic UAV Swarms](https://arxiv.org/abs/2610.01569) | Embodied AI; Adaptation and Memory: Embodied Memory | A distributed UAV-swarm architecture uses structured memory and interest-aware gossip to preserve reasoning context while reducing communication and inference overhead. | 7 | 7 |
 | 2026-10-01 | [Decision Titan: Test-Time Training for Long-Term Memory in Offline Reinforcement Learning](https://arxiv.org/abs/2610.01513) | Embodied AI: Robot Navigation; Adaptation and Memory: Test-Time Learning, Embodied Memory | Decision Titan applies test-time training to a Decision Transformer, enabling offline RL agents to retain and use information over sequences far longer than their context window. | 8 | 7 |
 | 2026-10-01 | [Extreme Length Generalization in a Compact Recurrent Architecture for One-Shot Exploration](https://arxiv.org/abs/2610.01105) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | FRANK is a compact recurrent architecture that achieves extreme length generalization on algorithmic sequence tasks and transfers to waypoint navigation on a physical vehicle. | 7 | 8 |

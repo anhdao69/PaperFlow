@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**90 papers total**
+**91 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Separating Stream Stability from Long-Term Recall in Language Models](https://arxiv.org/abs/2609.07282) | Language Foundation Models: LLM Memory, Long-Context Models | Stable generation over long streams does not imply that a language model can recall or use distant content. | 8 | 8 |
 | 2026-10-01 | [AutoCompact: Learning When to Compact Context in Long-Horizon Coding Agents](https://arxiv.org/abs/2610.02163) | Language Foundation Models: LLM Memory, Long-Context Models | AutoCompact trains coding agents to learn when and how to compact context, improving long-horizon software-engineering task success without context overflow. | 7 | 7 |
 | 2026-10-01 | [Can LLMs Reason Over Long Horizons? An Empirical Evaluation of Context Strategies for Longitudinal Clinical Reasoning](https://arxiv.org/abs/2610.00562) | Language Foundation Models: Long-Context Models | Reliable longitudinal clinical reasoning depends more on selecting and presenting relevant evidence than on simply providing more patient history. | 7 | 6 |
 | 2026-10-01 | [CommunityKV: Efficient Long-Context Decoding via Graph Partitioning](https://arxiv.org/abs/2610.00418) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | CommunityKV speeds up long-context decoding by partitioning tokens into dynamically updated graph communities for efficient sparse retrieval. | 8 | 7 |

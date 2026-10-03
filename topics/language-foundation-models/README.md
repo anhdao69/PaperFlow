@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**1828 papers total**
+**1831 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [MemFit: Efficient Long-Term Agentic Memory](https://arxiv.org/abs/2610.00872) | Language Foundation Models: LLM Memory | MemFit makes long-term LLM-agent memory cheaper and faster by storing conversations verbatim and retrieving relevant context without LLM calls. | 8 | 7 |
+| 2026-10-02 | [Overcoming Scaling Limits in On-Policy Self-Distillation for LLM Reasoning](https://arxiv.org/abs/2609.37915) | Language Foundation Models: Large Language Models | OASIS overcomes the scaling limits of on-policy self-distillation by training mainly on verified student trajectories and using the student’s own attempts as teacher context. | 7 | 7 |
+| 2026-10-02 | [Separating Stream Stability from Long-Term Recall in Language Models](https://arxiv.org/abs/2609.07282) | Language Foundation Models: LLM Memory, Long-Context Models | Stable generation over long streams does not imply that a language model can recall or use distant content. | 8 | 8 |
 | 2026-10-01 | [ScholarCatalyst: A Benchmark for Retrieving Papers That Inspire New Research](https://arxiv.org/abs/2610.02202) | Language Foundation Models: LLM Memory | ScholarCatalyst benchmarks whether AI can retrieve the prior papers that experts identify as crucial for advancing new research ideas. | 7 | 7 |
 | 2026-10-01 | [TACO: Ternary Absolute-max Column-wise One-sparse Optimizer for LLM Fine-Tuning](https://arxiv.org/abs/2610.02199) | Efficient AI; Language Foundation Models: Large Language Models | TACO enables memory-efficient full-parameter LLM fine-tuning by using a ternary, column-wise one-sparse optimizer that preserves comparable accuracy and runtime to AdamW8bit. | 6 | 7 |
 | 2026-10-01 | [Hierarchical Continuous Diffusion Language Models](https://arxiv.org/abs/2610.02193) | Language Foundation Models: Large Language Models | HC-DLM combines discrete token scaffolding with a continuous latent diffusion state to preserve token dependencies during parallel generation. | 6 | 7 |

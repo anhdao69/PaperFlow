@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**308 papers total**
+**310 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence](https://arxiv.org/abs/2609.24271) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | ME-Brain is a self-evolving embodied system that learns from physical experience after deployment without retraining its model. | 9 | 8 |
+| 2026-10-02 | [BinauralVAE: Spatial Audio Reconstruction For World Models](https://arxiv.org/abs/2609.06837) | World Models: Interactive World Models | BinauralVAE develops an open-source pipeline using Variational Autoencoders to reconstruct spatial audio and support future audio-centric world models for embodied navigation. | 6 | 6 |
 | 2026-10-01 | [ROWBench: Do Video Models Render What the Program Specifies?](https://arxiv.org/abs/2610.02205) | World Models: Video World Models, Interactive World Models | PROWBench evaluates whether video models visually realize the fine-grained events and interactions specified by executable world programs. | 7 | 7 |
 | 2026-10-01 | [World Observer: Joint Actor-Observer Generation for Persistent World Modeling](https://arxiv.org/abs/2610.02162) | World Models: Video World Models, Interactive World Models | World Observer improves persistent world modeling by jointly generating an agent view and panoramic observers that track objects beyond the actor’s field of view. | 8 | 8 |
 | 2026-10-01 | [4Director: Controlling Video World Models with Rigid 3D Geometry](https://arxiv.org/abs/2610.02160) | World Models: Video World Models, Interactive World Models | 4Director enables precise, view-consistent video control by animating canonical 3D object meshes with prescribed rigid transformations and refining them into realistic video. | 8 | 8 |

@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**1300 papers total**
+**1304 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Does Gradient Conflict Predict the Understanding--Generation Trade-off? A Controlled Audit of Conflict-Metric Validity in Unified Multimodal Models](https://arxiv.org/abs/2609.38465) | Multimodal Foundation Models | A controlled audit finds that gradient-conflict metrics do not reliably predict or causally improve the understanding–generation trade-off in unified multimodal models. | 6 | 7 |
+| 2026-10-02 | [Read-Best Is Not Steer-Best: A Probing--Steering Layer Dissociation in Omni-Modal Large Language Models](https://arxiv.org/abs/2609.22135) | Multimodal Foundation Models: Multimodal Large Language Models | The layer that best reveals a concept is not necessarily the layer that best controls it, so probing accuracy is a poor guide for choosing steering layers in omni-modal LLMs. | 6 | 7 |
+| 2026-10-02 | [VoT: Vision-of-Thought for Unified Multimodal Representation Alignment](https://arxiv.org/abs/2609.07815) | Multimodal Foundation Models | VoT inserts an interpretable discrete visual-planning layer between vision-language models and diffusion transformers to improve multimodal alignment and controllable image generation. | 6 | 7 |
+| 2026-10-02 | [A visual large language foundational model for medical image recognition using clinician-contributed online resources](https://arxiv.org/abs/2609.06914) | Multimodal Foundation Models: Multimodal Large Language Models | Clinician-verified online medical resources enabled creation of ThoughtMed-1M, training FOLTMed to improve clinically grounded medical image understanding and VQA. | 6 | 5 |
 | 2026-10-01 | [VISTA: A Visual Harness for Reasoning in an Interactive World](https://arxiv.org/abs/2610.02200) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models | VISTA gives multimodal models long-horizon visual perception and lossless memory, substantially improving interactive reasoning across visual games and puzzles. | 8 | 9 |
 | 2026-10-01 | [OmniSeek: Native Tool Integration for Multi-turn Audio-Visual Reasoning](https://arxiv.org/abs/2610.02181) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniSeek turns an Omni-LLM into a multi-turn agent that actively retrieves the most relevant audio and visual evidence before reasoning. | 6 | 7 |
 | 2026-10-01 | [Omni-Embed-Mini: Binding Modalities Without Forgetting via Dense Distillation](https://arxiv.org/abs/2610.02148) | Multimodal Foundation Models | Omni-Embed-Mini extends a text embedder to five additional modalities without changing its text weights, using dense caption distillation and lightweight modality adaptation in a compact 0.9B model. | 7 | 7 |

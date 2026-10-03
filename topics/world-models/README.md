@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**605 papers total**
+**608 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Learning Chaos Without Seeing Chaos: Extrapolation of Global Dynamics in Autoregressive Transformers](https://arxiv.org/abs/2609.38814) | World Models | Small autoregressive transformers trained on limited local trajectories can reconstruct unseen global structures—including chaos, bifurcations, and attractors—when extrapolated far beyond their training regimes. | 7 | 8 |
+| 2026-10-02 | [ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence](https://arxiv.org/abs/2609.24271) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | ME-Brain is a self-evolving embodied system that learns from physical experience after deployment without retraining its model. | 9 | 8 |
+| 2026-10-02 | [BinauralVAE: Spatial Audio Reconstruction For World Models](https://arxiv.org/abs/2609.06837) | World Models: Interactive World Models | BinauralVAE develops an open-source pipeline using Variational Autoencoders to reconstruct spatial audio and support future audio-centric world models for embodied navigation. | 6 | 6 |
 | 2026-10-01 | [ROWBench: Do Video Models Render What the Program Specifies?](https://arxiv.org/abs/2610.02205) | World Models: Video World Models, Interactive World Models | PROWBench evaluates whether video models visually realize the fine-grained events and interactions specified by executable world programs. | 7 | 7 |
 | 2026-10-01 | [HiPhy: Hierarchical Alignment for Physically-Plausible Multi-Principle Video Generation](https://arxiv.org/abs/2610.02197) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | HiPhy uses hierarchical reinforcement learning to generate videos that obey multiple physical principles coherently within the same scene. | 7 | 7 |
 | 2026-10-01 | [World Observer: Joint Actor-Observer Generation for Persistent World Modeling](https://arxiv.org/abs/2610.02162) | World Models: Video World Models, Interactive World Models | World Observer improves persistent world modeling by jointly generating an agent view and panoramic observers that track objects beyond the actor’s field of view. | 8 | 8 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**767 papers total**
+**770 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence](https://arxiv.org/abs/2609.24271) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | ME-Brain is a self-evolving embodied system that learns from physical experience after deployment without retraining its model. | 9 | 8 |
+| 2026-10-02 | [MetaPusher: Meta Learning and Planning for Nonprehensile Manipulation of Unseen Objects with Rapid Online Adaption](https://arxiv.org/abs/2609.21122) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | MetaPusher combines rapid meta-learned dynamics adaptation with adaptive kinodynamic planning to manipulate unseen objects efficiently without separate data collection. | 8 | 7 |
+| 2026-10-02 | [BIDETA: Brain-Inspired Data-Efficient Tactile Adaptation for Unseen Sensors](https://arxiv.org/abs/2609.08673) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | BIDETA enables fast, gradient-free adaptation of tactile models to unseen sensors using only a few labeled target contacts. | 8 | 7 |
 | 2026-10-01 | [InterEvolve: Test-Time Evolution of Reward Programs for Humanoid Loco-Manipulation](https://arxiv.org/abs/2610.02196) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | InterEvolve enables humanoid controllers to solve unseen loco-manipulation tasks at test time by iteratively evolving reward programs from execution feedback, without retraining. | 8 | 8 |
 | 2026-10-01 | [Local Support Learning](https://arxiv.org/abs/2610.02126) | Adaptation and Memory: Continual and Online Learning | Local Support Learning reduces catastrophic forgetting by restricting each new model update to the activation regions associated with its own training data. | 8 | 8 |
 | 2026-10-01 | [Relative Transitions, Not Absolute Destinations: A Transfer-and-Ground Framework for Target-Trajectory-Free Human Mobility Generation](https://arxiv.org/abs/2610.02033) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | Nomad generates realistic human mobility trajectories in cities with no target-city trajectories by transferring relative movement patterns and grounding them on available POIs. | 9 | 9 |

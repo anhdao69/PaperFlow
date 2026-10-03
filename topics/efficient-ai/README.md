@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**1279 papers total**
+**1283 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [DeCoPrune: Efficient KV-Cache Pruning for Autoregressive Video Diffusion via Denoising Consistency](https://arxiv.org/abs/2609.39096) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | DeCoPrune uses denoising consistency to prune autoregressive video-diffusion KV caches while preserving long-range visual information and accelerating generation. | 8 | 8 |
+| 2026-10-02 | [FlexRouter: Learning Complementary Model Sets for Flexible LLM Routing](https://arxiv.org/abs/2609.38585) | Efficient AI | FlexRouter selects complementary LLM subsets by maximizing answer coverage rather than independently ranking models, enabling adaptive routing with less redundancy and flexible inference cost. | 6 | 7 |
+| 2026-10-02 | [Security-Enhanced Seed-Based Weight Quantization for Large Language Models](https://arxiv.org/abs/2609.38477) | Efficient AI: KV Cache and Memory Efficiency | Seed-Q improves seed-based LLM weight compression by allocating bits according to weight sensitivity while maintaining metadata-free decoding and enhanced bit-flip attack detectability. | 7 | 7 |
+| 2026-10-02 | [Improving Video Sparse Attention with Fine-grained Router and Sparse Rebasing](https://arxiv.org/abs/2609.32882) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VSA2 makes video diffusion transformers substantially more efficient by combining fine-grained dynamic routing with sparse rebasing while maintaining comparable or better video quality. | 8 | 8 |
 | 2026-10-01 | [TACO: Ternary Absolute-max Column-wise One-sparse Optimizer for LLM Fine-Tuning](https://arxiv.org/abs/2610.02199) | Efficient AI; Language Foundation Models: Large Language Models | TACO enables memory-efficient full-parameter LLM fine-tuning by using a ternary, column-wise one-sparse optimizer that preserves comparable accuracy and runtime to AdamW8bit. | 6 | 7 |
 | 2026-10-01 | [Decoding Looped Transformers Better for (Almost) Free](https://arxiv.org/abs/2610.02185) | Efficient AI; Language Foundation Models: Large Language Models | LoopCD uses earlier recurrent states in Looped Transformers as free weak predictions to improve decoding quality and reduce inference compute. | 6 | 7 |
 | 2026-10-01 | [MosaiChunk: Compositing Spatio-Temporal Memory for Autoregressive Video Generation](https://arxiv.org/abs/2610.02153) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | MosaiChunk extends long-horizon video memory by mosaically selecting historical key-value entries, improving consistency when scenes or objects reappear. | 8 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**181 papers total**
+**183 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-02 | [Diffusable Latents from Structure-Agnostic Distillation](https://arxiv.org/abs/2609.39657) | Video Generation and Understanding: Video Diffusion | Structure-agnostic, pooled distillation can make autoencoder latents more diffusion-friendly without preserving the teacher’s spatial layout. | 6 | 7 |
+| 2026-10-02 | [Improving Video Sparse Attention with Fine-grained Router and Sparse Rebasing](https://arxiv.org/abs/2609.32882) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VSA2 makes video diffusion transformers substantially more efficient by combining fine-grained dynamic routing with sparse rebasing while maintaining comparable or better video quality. | 8 | 8 |
 | 2026-10-01 | [HiPhy: Hierarchical Alignment for Physically-Plausible Multi-Principle Video Generation](https://arxiv.org/abs/2610.02197) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | HiPhy uses hierarchical reinforcement learning to generate videos that obey multiple physical principles coherently within the same scene. | 7 | 7 |
 | 2026-10-01 | [DMAD: Distribution Matching as Adversarial Distillation for Fast Visual Generation](https://arxiv.org/abs/2610.02188) | Video Generation and Understanding: Video Diffusion | DMAD turns distribution matching into adversarial classification, enabling fast few-step visual generation without an auxiliary student-fitted diffusion model. | 7 | 7 |
 | 2026-10-01 | [Generative Cinematographer: Composing Camera and Object Motion in 3D](https://arxiv.org/abs/2610.02180) | Video Generation and Understanding: Video Diffusion | GenCine enables joint 3D authoring of camera and object motion, translating these controls into guidance for controllable video generation. | 7 | 7 |
