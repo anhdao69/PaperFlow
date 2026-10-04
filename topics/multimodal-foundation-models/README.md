@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**1304 papers total**
+**1307 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Encoder Awakening via Adapters: Effective Domain-Adaptive Fine-tuning of Speech-LLMs](https://arxiv.org/abs/2609.17981) | Multimodal Foundation Models: Multimodal Large Language Models | EAVA improves Speech-LLM ASR adaptation to child and dialectal speech by training lightweight encoder adapters before joint LoRA fine-tuning. | 5 | 6 |
+| 2026-10-03 | [MV-STRIDE: Enabling MLLMs to Master Multi-View Spatial Reasoning via Hierarchical Capability Modeling](https://arxiv.org/abs/2609.07258) | Multimodal Foundation Models: Spatial Intelligence | MV-STRIDE improves MLLMs’ multi-view 3D spatial reasoning by organizing training around hierarchical, interdependent capabilities and cross-view reasoning tasks. | 8 | 8 |
+| 2026-10-03 | [Re-calibrated Contrastive Loss for Transformation-Aware Prompt Conditioning in Vision-Language Models](https://arxiv.org/abs/2609.06967) | Multimodal Foundation Models | ReCalCon improves vision-language model transfer by aligning transformed images with transformation-aware prompts and treating same-class samples as multiple positives. | 6 | 6 |
 | 2026-10-02 | [Does Gradient Conflict Predict the Understanding--Generation Trade-off? A Controlled Audit of Conflict-Metric Validity in Unified Multimodal Models](https://arxiv.org/abs/2609.38465) | Multimodal Foundation Models | A controlled audit finds that gradient-conflict metrics do not reliably predict or causally improve the understanding–generation trade-off in unified multimodal models. | 6 | 7 |
 | 2026-10-02 | [Read-Best Is Not Steer-Best: A Probing--Steering Layer Dissociation in Omni-Modal Large Language Models](https://arxiv.org/abs/2609.22135) | Multimodal Foundation Models: Multimodal Large Language Models | The layer that best reveals a concept is not necessarily the layer that best controls it, so probing accuracy is a poor guide for choosing steering layers in omni-modal LLMs. | 6 | 7 |
 | 2026-10-02 | [VoT: Vision-of-Thought for Unified Multimodal Representation Alignment](https://arxiv.org/abs/2609.07815) | Multimodal Foundation Models | VoT inserts an interpretable discrete visual-planning layer between vision-language models and diffusion transformers to improve multimodal alignment and controllable image generation. | 6 | 7 |

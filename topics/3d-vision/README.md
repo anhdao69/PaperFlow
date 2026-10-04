@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**546 papers total**
+**547 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Single Image to Textured 3D Object Generation in Frequency Domain: From Theory to Pipeline](https://arxiv.org/abs/2609.07085) | 3D Vision | Morpheus3D combines 3D and frequency-selective 2D diffusion priors to generate detailed, view-consistent textured 3D objects from a single in-the-wild image. | 7 | 7 |
 | 2026-10-02 | [MSSP: Multi-Scale Spatially-Constrained Partition for Unsupervised Semantic Segmentation of 3D Point Clouds](https://arxiv.org/abs/2609.06959) | 3D Vision | MSSP improves unsupervised 3D point-cloud segmentation by combining multi-scale spectral features with spatially constrained superpoint clustering. | 6 | 6 |
 | 2026-10-01 | [One Basis to Animate Them All: Gaussian Blendshape Distillation for Real-Time Avatars](https://arxiv.org/abs/2610.02207) | 3D Vision: 3D Foundation Models | GALA distills neural 3D Gaussian avatar animation into a lightweight blendshape system, enabling near-real-time animation on mobile devices with minimal quality loss. | 8 | 7 |
 | 2026-10-01 | [SILSA: Sliding-Window Slice Latents for Topology-Preserving High-Resolution 3D Generation](https://arxiv.org/abs/2610.02201) | 3D Vision: 3D Foundation Models | SILSA enables efficient high-resolution 3D generation with compact sliding-window slice latents that better preserve topology and thin structures. | 7 | 7 |

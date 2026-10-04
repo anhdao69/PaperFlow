@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**605 papers total**
+**607 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [NutriBench-Kitchen: Benchmarking Embodied AI for Nutrition Management](https://arxiv.org/abs/2609.07135) | Embodied AI; Video Generation and Understanding: Video Understanding; Adaptation and Memory: Embodied Memory | NutriBench-Kitchen benchmarks whether embodied AI can track food states over time and use nutritional knowledge for constraint-aware planning in dynamic kitchens. | 8 | 7 |
+| 2026-10-03 | [AV-SafetyBench: A Safety Benchmark for Text-to-Audio-Video Generation](https://arxiv.org/abs/2609.06991) | Video Generation and Understanding | AV-SafetyBench evaluates text-to-audio-video safety across visual, audio, and cross-modal risks that single-modality benchmarks can miss. | 5 | 7 |
 | 2026-10-02 | [Diffusable Latents from Structure-Agnostic Distillation](https://arxiv.org/abs/2609.39657) | Video Generation and Understanding: Video Diffusion | Structure-agnostic, pooled distillation can make autoencoder latents more diffusion-friendly without preserving the teacher’s spatial layout. | 6 | 7 |
 | 2026-10-02 | [DeCoPrune: Efficient KV-Cache Pruning for Autoregressive Video Diffusion via Denoising Consistency](https://arxiv.org/abs/2609.39096) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | DeCoPrune uses denoising consistency to prune autoregressive video-diffusion KV caches while preserving long-range visual information and accelerating generation. | 8 | 8 |
 | 2026-10-02 | [Improving Video Sparse Attention with Fine-grained Router and Sparse Rebasing](https://arxiv.org/abs/2609.32882) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VSA2 makes video diffusion transformers substantially more efficient by combining fine-grained dynamic routing with sparse rebasing while maintaining comparable or better video quality. | 8 | 8 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**192 papers total**
+**193 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Beyond Task Success: Stage-Wise Reliability of World Model Planning under Sensing Degradation](https://arxiv.org/abs/2609.07126) | World Models: Video World Models, Interactive World Models | Stage-wise evaluation reveals that sensing degradations can attenuate or persist unpredictably through world-model planning, so task success alone is insufficient for diagnosing reliability. | 8 | 8 |
 | 2026-10-01 | [ROWBench: Do Video Models Render What the Program Specifies?](https://arxiv.org/abs/2610.02205) | World Models: Video World Models, Interactive World Models | PROWBench evaluates whether video models visually realize the fine-grained events and interactions specified by executable world programs. | 7 | 7 |
 | 2026-10-01 | [HiPhy: Hierarchical Alignment for Physically-Plausible Multi-Principle Video Generation](https://arxiv.org/abs/2610.02197) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | HiPhy uses hierarchical reinforcement learning to generate videos that obey multiple physical principles coherently within the same scene. | 7 | 7 |
 | 2026-10-01 | [World Observer: Joint Actor-Observer Generation for Persistent World Modeling](https://arxiv.org/abs/2610.02162) | World Models: Video World Models, Interactive World Models | World Observer improves persistent world modeling by jointly generating an agent view and panoramic observers that track objects beyond the actor’s field of view. | 8 | 8 |

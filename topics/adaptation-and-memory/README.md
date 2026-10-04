@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**770 papers total**
+**775 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [ReLiveGym: Evaluating Long-Lived Agents over Weeks of Replayed Reality](https://arxiv.org/abs/2610.00710) | Adaptation and Memory: Continual and Online Learning | ReLiveGym evaluates long-lived agents on sparse, recurring tasks over weeks of replayed real-world streams, highlighting action timing, model choice, and feedback as key design factors. | 6 | 7 |
+| 2026-10-03 | [Rho: A Foundation for Efficiently Adaptable VLA Models](https://arxiv.org/abs/2609.38164) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | Rho is an open-weights bimanual VLA model family designed for strong cross-embodiment manipulation and data-efficient adaptation. | 8 | 7 |
+| 2026-10-03 | [RoboFoundry: System-as-Policy Evolution for Self-Learning Embodied Agents](https://arxiv.org/abs/2609.32862) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboFoundry treats an embodied agent’s entire supporting system as an evolving policy, converting execution experience into validated memory, context, and skill improvements that transfer across robots. | 8 | 8 |
+| 2026-10-03 | [NutriBench-Kitchen: Benchmarking Embodied AI for Nutrition Management](https://arxiv.org/abs/2609.07135) | Embodied AI; Video Generation and Understanding: Video Understanding; Adaptation and Memory: Embodied Memory | NutriBench-Kitchen benchmarks whether embodied AI can track food states over time and use nutritional knowledge for constraint-aware planning in dynamic kitchens. | 8 | 7 |
+| 2026-10-03 | [NeuCME: Toward Dynamic Multimodal Continual Learning via Neural Combinatorics of Multiple Experts](https://arxiv.org/abs/2609.07009) | Adaptation and Memory: Continual and Online Learning | NeuCME enables continual learning across tasks with changing modality sets by combining rehearsal, gated experts, and relevance-guided distillation. | 7 | 7 |
 | 2026-10-02 | [ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence](https://arxiv.org/abs/2609.24271) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | ME-Brain is a self-evolving embodied system that learns from physical experience after deployment without retraining its model. | 9 | 8 |
 | 2026-10-02 | [MetaPusher: Meta Learning and Planning for Nonprehensile Manipulation of Unseen Objects with Rapid Online Adaption](https://arxiv.org/abs/2609.21122) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | MetaPusher combines rapid meta-learned dynamics adaptation with adaptive kinodynamic planning to manipulate unseen objects efficiently without separate data collection. | 8 | 7 |
 | 2026-10-02 | [BIDETA: Brain-Inspired Data-Efficient Tactile Adaptation for Unseen Sensors](https://arxiv.org/abs/2609.08673) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | BIDETA enables fast, gradient-free adaptation of tactile models to unseen sensors using only a few labeled target contacts. | 8 | 7 |

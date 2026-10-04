@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**310 papers total**
+**313 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Kepler: Auditable World Models for ARC-AGI-3](https://arxiv.org/abs/2610.00834) | World Models: Interactive World Models | Kepler is an auditable world-model harness for ARC-AGI-3 that achieved perfect verified performance on all 25 public games while exposing important evaluation pitfalls and reporting costs and verification details. | 7 | 8 |
+| 2026-10-03 | [Do-JEPA: From Masking to Intervention in Latent World Models](https://arxiv.org/abs/2609.37378) | World Models: Interactive World Models | Do-JEPA trains latent world models on counterfactual action effects, improving their ability to predict what actions physically cause rather than merely what co-occurs with them. | 8 | 8 |
+| 2026-10-03 | [Beyond Task Success: Stage-Wise Reliability of World Model Planning under Sensing Degradation](https://arxiv.org/abs/2609.07126) | World Models: Video World Models, Interactive World Models | Stage-wise evaluation reveals that sensing degradations can attenuate or persist unpredictably through world-model planning, so task success alone is insufficient for diagnosing reliability. | 8 | 8 |
 | 2026-10-02 | [ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence](https://arxiv.org/abs/2609.24271) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | ME-Brain is a self-evolving embodied system that learns from physical experience after deployment without retraining its model. | 9 | 8 |
 | 2026-10-02 | [BinauralVAE: Spatial Audio Reconstruction For World Models](https://arxiv.org/abs/2609.06837) | World Models: Interactive World Models | BinauralVAE develops an open-source pipeline using Variational Autoencoders to reconstruct spatial audio and support future audio-centric world models for embodied navigation. | 6 | 6 |
 | 2026-10-01 | [ROWBench: Do Video Models Render What the Program Specifies?](https://arxiv.org/abs/2610.02205) | World Models: Video World Models, Interactive World Models | PROWBench evaluates whether video models visually realize the fine-grained events and interactions specified by executable world programs. | 7 | 7 |

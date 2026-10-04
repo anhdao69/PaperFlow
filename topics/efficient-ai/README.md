@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**1283 papers total**
+**1286 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [AgSpec: Pushing the Limits of Retrieval-Based Speculative Decoding in Coding Agent Pipelines](https://arxiv.org/abs/2610.01108) | Efficient AI | AgSpec improves retrieval-based speculative decoding for coding agents by using broader code corpora and adaptive draft lengths, achieving up to 4.76× higher generation throughput than autoregressive decoding. | 7 | 7 |
+| 2026-10-03 | [DynBranch: Speculative Subgraph Reuse for Dynamic Agentic LLM Serving](https://arxiv.org/abs/2609.31047) | Efficient AI | DynBranch reduces agentic LLM latency by speculatively executing and reusing subgraphs before runtime branches are resolved. | 7 | 7 |
+| 2026-10-03 | [RedKnot-MLA: Multi-Head Offline-Online Reuse for DeepSeek-V4 Long-Context Serving](https://arxiv.org/abs/2609.07008) | Efficient AI: KV Cache and Memory Efficiency | RedKnot-MLA reuses offline-computed document attention in DeepSeek-V4 serving while preserving MLA’s packed latent KV representation, reducing long-context latency and computation with modest benchmark trade-offs. | 8 | 7 |
 | 2026-10-02 | [DeCoPrune: Efficient KV-Cache Pruning for Autoregressive Video Diffusion via Denoising Consistency](https://arxiv.org/abs/2609.39096) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | DeCoPrune uses denoising consistency to prune autoregressive video-diffusion KV caches while preserving long-range visual information and accelerating generation. | 8 | 8 |
 | 2026-10-02 | [FlexRouter: Learning Complementary Model Sets for Flexible LLM Routing](https://arxiv.org/abs/2609.38585) | Efficient AI | FlexRouter selects complementary LLM subsets by maximizing answer coverage rather than independently ranking models, enabling adaptive routing with less redundancy and flexible inference cost. | 6 | 7 |
 | 2026-10-02 | [Security-Enhanced Seed-Based Weight Quantization for Large Language Models](https://arxiv.org/abs/2609.38477) | Efficient AI: KV Cache and Memory Efficiency | Seed-Q improves seed-based LLM weight compression by allocating bits according to weight sensitivity while maintaining metadata-free decoding and enhanced bit-flip attack detectability. | 7 | 7 |

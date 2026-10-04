@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**410 papers total**
+**411 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [MV-STRIDE: Enabling MLLMs to Master Multi-View Spatial Reasoning via Hierarchical Capability Modeling](https://arxiv.org/abs/2609.07258) | Multimodal Foundation Models: Spatial Intelligence | MV-STRIDE improves MLLMs’ multi-view 3D spatial reasoning by organizing training around hierarchical, interdependent capabilities and cross-view reasoning tasks. | 8 | 8 |
 | 2026-10-01 | [Where-OPD: Spatially Guided On-Policy Self-Distillation of MLLMs with Synthetic Scenes](https://arxiv.org/abs/2610.02117) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | Where-OPD uses spatially guided self-distillation on synthetic scenes to improve MLLM visual reasoning and transfer those gains to real-world perception tasks. | 8 | 8 |
 | 2026-10-01 | [GeoLatent: Geometry-Guided Latent Structuring with Routed Optimization for 3D Reasoning](https://arxiv.org/abs/2610.02091) | Multimodal Foundation Models: Spatial Intelligence | GeoLatent improves 3D spatial reasoning by structuring geometry-aware latent representations and routing answer learning through them. | 9 | 8 |
 | 2026-10-01 | [Form and Void: Entangled Composition through an Autonomous AI Agent](https://arxiv.org/abs/2610.02045) | Multimodal Foundation Models: Spatial Intelligence | FaV-A improves positive–negative space image generation by using a staged multimodal-agent workflow instead of single-pass prompting. | 5 | 6 |

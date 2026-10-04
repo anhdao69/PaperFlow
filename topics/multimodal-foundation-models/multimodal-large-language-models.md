@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**821 papers total**
+**822 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Encoder Awakening via Adapters: Effective Domain-Adaptive Fine-tuning of Speech-LLMs](https://arxiv.org/abs/2609.17981) | Multimodal Foundation Models: Multimodal Large Language Models | EAVA improves Speech-LLM ASR adaptation to child and dialectal speech by training lightweight encoder adapters before joint LoRA fine-tuning. | 5 | 6 |
 | 2026-10-02 | [Read-Best Is Not Steer-Best: A Probing--Steering Layer Dissociation in Omni-Modal Large Language Models](https://arxiv.org/abs/2609.22135) | Multimodal Foundation Models: Multimodal Large Language Models | The layer that best reveals a concept is not necessarily the layer that best controls it, so probing accuracy is a poor guide for choosing steering layers in omni-modal LLMs. | 6 | 7 |
 | 2026-10-02 | [A visual large language foundational model for medical image recognition using clinician-contributed online resources](https://arxiv.org/abs/2609.06914) | Multimodal Foundation Models: Multimodal Large Language Models | Clinician-verified online medical resources enabled creation of ThoughtMed-1M, training FOLTMed to improve clinically grounded medical image understanding and VQA. | 6 | 5 |
 | 2026-10-01 | [OmniSeek: Native Tool Integration for Multi-turn Audio-Visual Reasoning](https://arxiv.org/abs/2610.02181) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniSeek turns an Omni-LLM into a multi-turn agent that actively retrieves the most relevant audio and visual evidence before reasoning. | 6 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**366 papers total**
+**367 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [NutriBench-Kitchen: Benchmarking Embodied AI for Nutrition Management](https://arxiv.org/abs/2609.07135) | Embodied AI; Video Generation and Understanding: Video Understanding; Adaptation and Memory: Embodied Memory | NutriBench-Kitchen benchmarks whether embodied AI can track food states over time and use nutritional knowledge for constraint-aware planning in dynamic kitchens. | 8 | 7 |
 | 2026-10-01 | [OmniSeek: Native Tool Integration for Multi-turn Audio-Visual Reasoning](https://arxiv.org/abs/2610.02181) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniSeek turns an Omni-LLM into a multi-turn agent that actively retrieves the most relevant audio and visual evidence before reasoning. | 6 | 7 |
 | 2026-10-01 | [Controllable Multi-label Video Safety Detection via Adaptive Tversky Policy Optimization](https://arxiv.org/abs/2610.02019) | Video Generation and Understanding: Video Understanding | ATPO improves multi-label video safety detection while enabling controllable precision–recall trade-offs for different moderation policies. | 6 | 6 |
 | 2026-10-01 | [From Reasoning Failures to Composable Video Spatial Intelligence](https://arxiv.org/abs/2610.01999) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | CROSS diagnoses spatial reasoning failures in video VLMs and improves performance through training-free, composable geometric skills that explicitly handle spatial conventions. | 8 | 7 |

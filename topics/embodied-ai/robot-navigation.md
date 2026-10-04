@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**454 papers total**
+**458 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [OpenSpace Lab Solution to the IROS 2026 Indoor Exploration Competition](https://arxiv.org/abs/2610.01505) | Embodied AI: Robot Navigation | OpenSpace Lab combines map-completion-guided planning, time-aware homing, and utility-based multi-robot coordination for indoor exploration, achieving top competition placements. | 8 | 6 |
+| 2026-10-03 | [Systematically Exploring the Capabilities of GPT-6 Astra as Embodied Policies](https://arxiv.org/abs/2609.38537) | Embodied AI: Robot Navigation, Vision-Language-Action, Robot Learning and Manipulation | GPT-6 Astra shows promise for high-level embodied decisions and hybrid robot control, but remains unreliable and too slow for general-purpose physical control. | 9 | 7 |
+| 2026-10-03 | [Onboard Vision and MPC Navigation for Underwater Robots: An Open BlueROV2 Platform for Multi-Robot Experiments & Docking](https://arxiv.org/abs/2609.38511) | Embodied AI: Robot Navigation | An open-source BlueROV2 platform combines onboard stereo vision, state estimation, and nonlinear MPC for autonomous underwater navigation and multi-robot docking. | 5 | 4 |
+| 2026-10-03 | [Large Discrete Policy: Advancing Explicit Behavior Modeling with Stochastic Iterative Scoring](https://arxiv.org/abs/2609.07049) | Embodied AI: Robot Navigation, Vision-Language-Action, Robot Learning and Manipulation | LDiP is a discrete behavior policy that iteratively scores and prunes plausible action candidates to achieve expressive, interpretable decision-making without continuous denoising. | 9 | 8 |
 | 2026-10-01 | [Linear Programming Representations and Strongly Polynomial Algorithms for Robust Markov Decision Processes](https://arxiv.org/abs/2610.02131) | Embodied AI: Robot Navigation | The paper gives LP formulations and strongly polynomial-time algorithms for robust MDPs with rational polyhedral, state-action rectangular uncertainty. | 8 | 8 |
 | 2026-10-01 | [GlassGuard: Verified Glass Plane Mapping for Robot Navigation](https://arxiv.org/abs/2610.02110) | Embodied AI: Robot Navigation | GlassGuard reconstructs verified glass planes from vision and LiDAR cues to improve robot navigation without contaminating traversable space. | 7 | 7 |
 | 2026-10-01 | [HumanoidToolBench: Benchmarking Humanoid Tool Use from Selection to Mobile Execution](https://arxiv.org/abs/2610.02089) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | HumanoidToolBench evaluates whether humanoids can select appropriate tools and use them through coordinated manipulation and locomotion. | 9 | 7 |

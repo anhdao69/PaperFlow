@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**416 papers total**
+**418 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Causal Memory Policy: Making Memory Utility Identifiable by Intervening on Retrieval](https://arxiv.org/abs/2610.02070) | Language Foundation Models: LLM Memory | Causal Memory Policy makes memory utility identifiable by randomizing retrieval, but shows that query-specific utility still does not reliably support retention across unseen queries. | 8 | 8 |
+| 2026-10-03 | [What Should an Agent Remember? Disentangling Retention from Retrieval in Bounded-Memory Evaluation](https://arxiv.org/abs/2610.00366) | Language Foundation Models: LLM Memory | Bounded-memory evaluations should separate what an agent retains from what it retrieves, because access differences can dominate apparent retrieval gains. | 6 | 6 |
 | 2026-10-02 | [MemFit: Efficient Long-Term Agentic Memory](https://arxiv.org/abs/2610.00872) | Language Foundation Models: LLM Memory | MemFit makes long-term LLM-agent memory cheaper and faster by storing conversations verbatim and retrieving relevant context without LLM calls. | 8 | 7 |
 | 2026-10-02 | [Separating Stream Stability from Long-Term Recall in Language Models](https://arxiv.org/abs/2609.07282) | Language Foundation Models: LLM Memory, Long-Context Models | Stable generation over long streams does not imply that a language model can recall or use distant content. | 8 | 8 |
 | 2026-10-01 | [ScholarCatalyst: A Benchmark for Retrieving Papers That Inspire New Research](https://arxiv.org/abs/2610.02202) | Language Foundation Models: LLM Memory | ScholarCatalyst benchmarks whether AI can retrieve the prior papers that experts identify as crucial for advancing new research ideas. | 7 | 7 |

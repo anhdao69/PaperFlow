@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**1831 papers total**
+**1837 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Causal Memory Policy: Making Memory Utility Identifiable by Intervening on Retrieval](https://arxiv.org/abs/2610.02070) | Language Foundation Models: LLM Memory | Causal Memory Policy makes memory utility identifiable by randomizing retrieval, but shows that query-specific utility still does not reliably support retention across unseen queries. | 8 | 8 |
+| 2026-10-03 | [Scaling and Distilling Text Embeddings for Better Diffusibility](https://arxiv.org/abs/2610.01016) | Language Foundation Models | Scaling text encoders improves continuous diffusion language models, while distilling soft-label knowledge creates a more connected latent space that further improves generation. | 5 | 7 |
+| 2026-10-03 | [RPTune: Learned Context Curation for LLM Catalog Search](https://arxiv.org/abs/2610.00964) | Language Foundation Models: Long-Context Models | RPTune jointly learns how to curate product catalogs and post-train LLMs, substantially improving catalog search for small merchants. | 6 | 7 |
+| 2026-10-03 | [What Should an Agent Remember? Disentangling Retention from Retrieval in Bounded-Memory Evaluation](https://arxiv.org/abs/2610.00366) | Language Foundation Models: LLM Memory | Bounded-memory evaluations should separate what an agent retains from what it retrieves, because access differences can dominate apparent retrieval gains. | 6 | 6 |
+| 2026-10-03 | [Shifting Mechanisms: How Positional Encoding Choice Shapes In-Context Retrieval](https://arxiv.org/abs/2609.38530) | Language Foundation Models: Large Language Models, Long-Context Models | Positional encoding design changes how language models retrieve information in context, shifting hybrids from positional toward semantic retrieval with mixed effects on task performance. | 6 | 6 |
+| 2026-10-03 | [Conditioned Initialization for Attention](https://arxiv.org/abs/2609.07086) | Language Foundation Models: Large Language Models | Conditioned initialization improves Transformer attention’s optimization by initializing query, key, and value weights for better spectral conditioning. | 6 | 8 |
 | 2026-10-02 | [MemFit: Efficient Long-Term Agentic Memory](https://arxiv.org/abs/2610.00872) | Language Foundation Models: LLM Memory | MemFit makes long-term LLM-agent memory cheaper and faster by storing conversations verbatim and retrieving relevant context without LLM calls. | 8 | 7 |
 | 2026-10-02 | [Overcoming Scaling Limits in On-Policy Self-Distillation for LLM Reasoning](https://arxiv.org/abs/2609.37915) | Language Foundation Models: Large Language Models | OASIS overcomes the scaling limits of on-policy self-distillation by training mainly on verified student trajectories and using the student’s own attempts as teacher context. | 7 | 7 |
 | 2026-10-02 | [Separating Stream Stability from Long-Term Recall in Language Models](https://arxiv.org/abs/2609.07282) | Language Foundation Models: LLM Memory, Long-Context Models | Stable generation over long streams does not imply that a language model can recall or use distant content. | 8 | 8 |

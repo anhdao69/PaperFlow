@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**481 papers total**
+**486 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Systematically Exploring the Capabilities of GPT-6 Astra as Embodied Policies](https://arxiv.org/abs/2609.38537) | Embodied AI: Robot Navigation, Vision-Language-Action, Robot Learning and Manipulation | GPT-6 Astra shows promise for high-level embodied decisions and hybrid robot control, but remains unreliable and too slow for general-purpose physical control. | 9 | 7 |
+| 2026-10-03 | [Rho: A Foundation for Efficiently Adaptable VLA Models](https://arxiv.org/abs/2609.38164) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | Rho is an open-weights bimanual VLA model family designed for strong cross-embodiment manipulation and data-efficient adaptation. | 8 | 7 |
+| 2026-10-03 | [TaskAnchor: Grounding Task State in Reactive VLAs for Long-Horizon Manipulation](https://arxiv.org/abs/2609.23580) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | TaskAnchor reduces task-state ambiguity in long-horizon manipulation by adding lightweight execution-context grounding to pretrained reactive VLAs. | 8 | 7 |
+| 2026-10-03 | [Catch Me If You Can: Real-Time Feedback Denoising for Responsive VLAs](https://arxiv.org/abs/2609.21022) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | VLA-Feedback makes diffusion-based VLA policies more responsive by correcting planned actions with real-time visual feedback before execution. | 9 | 8 |
+| 2026-10-03 | [Large Discrete Policy: Advancing Explicit Behavior Modeling with Stochastic Iterative Scoring](https://arxiv.org/abs/2609.07049) | Embodied AI: Robot Navigation, Vision-Language-Action, Robot Learning and Manipulation | LDiP is a discrete behavior policy that iteratively scores and prunes plausible action candidates to achieve expressive, interpretable decision-making without continuous denoising. | 9 | 8 |
 | 2026-10-01 | [VISTA: A Visual Harness for Reasoning in an Interactive World](https://arxiv.org/abs/2610.02200) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models | VISTA gives multimodal models long-horizon visual perception and lossless memory, substantially improving interactive reasoning across visual games and puzzles. | 8 | 9 |
 | 2026-10-01 | [DuoMind: Enabling Distributed Multi-Robot Coordination with Semantic Communication](https://arxiv.org/abs/2610.02161) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | DuoMind enables distributed multi-robot coordination by combining VLM-based high-level semantic communication with VLA-based low-level action execution. | 9 | 8 |
 | 2026-10-01 | [SkeleWAM: Skeleton World-Action Modeling for Efficient Robotic Manipulation](https://arxiv.org/abs/2610.02120) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | SkeleWAM uses a compact 3D skeleton of robot–object geometry to jointly predict future states and generate manipulation actions efficiently. | 9 | 8 |

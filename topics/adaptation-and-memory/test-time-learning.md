@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**360 papers total**
+**361 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Rho: A Foundation for Efficiently Adaptable VLA Models](https://arxiv.org/abs/2609.38164) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | Rho is an open-weights bimanual VLA model family designed for strong cross-embodiment manipulation and data-efficient adaptation. | 8 | 7 |
 | 2026-10-02 | [MetaPusher: Meta Learning and Planning for Nonprehensile Manipulation of Unseen Objects with Rapid Online Adaption](https://arxiv.org/abs/2609.21122) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | MetaPusher combines rapid meta-learned dynamics adaptation with adaptive kinodynamic planning to manipulate unseen objects efficiently without separate data collection. | 8 | 7 |
 | 2026-10-02 | [BIDETA: Brain-Inspired Data-Efficient Tactile Adaptation for Unseen Sensors](https://arxiv.org/abs/2609.08673) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | BIDETA enables fast, gradient-free adaptation of tactile models to unseen sensors using only a few labeled target contacts. | 8 | 7 |
 | 2026-10-01 | [InterEvolve: Test-Time Evolution of Reward Programs for Humanoid Loco-Manipulation](https://arxiv.org/abs/2610.02196) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | InterEvolve enables humanoid controllers to solve unseen loco-manipulation tasks at test time by iteratively evolving reward programs from execution feedback, without retraining. | 8 | 8 |

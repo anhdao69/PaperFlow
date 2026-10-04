@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**321 papers total**
+**323 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [ReLiveGym: Evaluating Long-Lived Agents over Weeks of Replayed Reality](https://arxiv.org/abs/2610.00710) | Adaptation and Memory: Continual and Online Learning | ReLiveGym evaluates long-lived agents on sparse, recurring tasks over weeks of replayed real-world streams, highlighting action timing, model choice, and feedback as key design factors. | 6 | 7 |
+| 2026-10-03 | [NeuCME: Toward Dynamic Multimodal Continual Learning via Neural Combinatorics of Multiple Experts](https://arxiv.org/abs/2609.07009) | Adaptation and Memory: Continual and Online Learning | NeuCME enables continual learning across tasks with changing modality sets by combining rehearsal, gated experts, and relevance-guided distillation. | 7 | 7 |
 | 2026-10-01 | [Local Support Learning](https://arxiv.org/abs/2610.02126) | Adaptation and Memory: Continual and Online Learning | Local Support Learning reduces catastrophic forgetting by restricting each new model update to the activation regions associated with its own training data. | 8 | 8 |
 | 2026-10-01 | [Relative Transitions, Not Absolute Destinations: A Transfer-and-Ground Framework for Target-Trajectory-Free Human Mobility Generation](https://arxiv.org/abs/2610.02033) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | Nomad generates realistic human mobility trajectories in cities with no target-city trajectories by transferring relative movement patterns and grounding them on available POIs. | 9 | 9 |
 | 2026-10-01 | [Continual Concept Erasure in Diffusion Models by Suppressing Cross-Edit Interference](https://arxiv.org/abs/2610.01989) | Adaptation and Memory: Continual and Online Learning | CEASE enables continual concept erasure in diffusion models while reducing interference with prior edits and unrelated generation. | 7 | 7 |

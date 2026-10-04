@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**91 papers total**
+**93 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [RPTune: Learned Context Curation for LLM Catalog Search](https://arxiv.org/abs/2610.00964) | Language Foundation Models: Long-Context Models | RPTune jointly learns how to curate product catalogs and post-train LLMs, substantially improving catalog search for small merchants. | 6 | 7 |
+| 2026-10-03 | [Shifting Mechanisms: How Positional Encoding Choice Shapes In-Context Retrieval](https://arxiv.org/abs/2609.38530) | Language Foundation Models: Large Language Models, Long-Context Models | Positional encoding design changes how language models retrieve information in context, shifting hybrids from positional toward semantic retrieval with mixed effects on task performance. | 6 | 6 |
 | 2026-10-02 | [Separating Stream Stability from Long-Term Recall in Language Models](https://arxiv.org/abs/2609.07282) | Language Foundation Models: LLM Memory, Long-Context Models | Stable generation over long streams does not imply that a language model can recall or use distant content. | 8 | 8 |
 | 2026-10-01 | [AutoCompact: Learning When to Compact Context in Long-Horizon Coding Agents](https://arxiv.org/abs/2610.02163) | Language Foundation Models: LLM Memory, Long-Context Models | AutoCompact trains coding agents to learn when and how to compact context, improving long-horizon software-engineering task success without context overflow. | 7 | 7 |
 | 2026-10-01 | [Can LLMs Reason Over Long Horizons? An Empirical Evaluation of Context Strategies for Longitudinal Clinical Reasoning](https://arxiv.org/abs/2610.00562) | Language Foundation Models: Long-Context Models | Reliable longitudinal clinical reasoning depends more on selecting and presenting relevant evidence than on simply providing more patient history. | 7 | 6 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**1254 papers total**
+**1256 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-03 | [Shifting Mechanisms: How Positional Encoding Choice Shapes In-Context Retrieval](https://arxiv.org/abs/2609.38530) | Language Foundation Models: Large Language Models, Long-Context Models | Positional encoding design changes how language models retrieve information in context, shifting hybrids from positional toward semantic retrieval with mixed effects on task performance. | 6 | 6 |
+| 2026-10-03 | [Conditioned Initialization for Attention](https://arxiv.org/abs/2609.07086) | Language Foundation Models: Large Language Models | Conditioned initialization improves Transformer attention’s optimization by initializing query, key, and value weights for better spectral conditioning. | 6 | 8 |
 | 2026-10-02 | [Overcoming Scaling Limits in On-Policy Self-Distillation for LLM Reasoning](https://arxiv.org/abs/2609.37915) | Language Foundation Models: Large Language Models | OASIS overcomes the scaling limits of on-policy self-distillation by training mainly on verified student trajectories and using the student’s own attempts as teacher context. | 7 | 7 |
 | 2026-10-01 | [TACO: Ternary Absolute-max Column-wise One-sparse Optimizer for LLM Fine-Tuning](https://arxiv.org/abs/2610.02199) | Efficient AI; Language Foundation Models: Large Language Models | TACO enables memory-efficient full-parameter LLM fine-tuning by using a ternary, column-wise one-sparse optimizer that preserves comparable accuracy and runtime to AdamW8bit. | 6 | 7 |
 | 2026-10-01 | [Hierarchical Continuous Diffusion Language Models](https://arxiv.org/abs/2610.02193) | Language Foundation Models: Large Language Models | HC-DLM combines discrete token scaffolding with a continuous latent diffusion state to preserve token dependencies during parallel generation. | 6 | 7 |
