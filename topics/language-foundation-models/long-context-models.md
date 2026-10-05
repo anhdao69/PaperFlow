@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**93 papers total**
+**95 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-04 | [SlimKV: Joint Token-Feature KV Cache Compression with Reconstruction-Free Beacon Attention](https://arxiv.org/abs/2610.02953) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | SlimKV jointly compresses KV caches across tokens and features while avoiding KV reconstruction, enabling efficient long-context LLM decoding with strong quality retention. | 8 | 7 |
+| 2026-10-04 | [TPBench: A Turning-Point Benchmark for Dialogue Compression](https://arxiv.org/abs/2610.02736) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Long-Context Models | TPBench reveals whether dialogue compressors preserve late user corrections and changing constraints, not just initial goals or overall facts. | 6 | 6 |
 | 2026-10-03 | [RPTune: Learned Context Curation for LLM Catalog Search](https://arxiv.org/abs/2610.00964) | Language Foundation Models: Long-Context Models | RPTune jointly learns how to curate product catalogs and post-train LLMs, substantially improving catalog search for small merchants. | 6 | 7 |
 | 2026-10-03 | [Shifting Mechanisms: How Positional Encoding Choice Shapes In-Context Retrieval](https://arxiv.org/abs/2609.38530) | Language Foundation Models: Large Language Models, Long-Context Models | Positional encoding design changes how language models retrieve information in context, shifting hybrids from positional toward semantic retrieval with mixed effects on task performance. | 6 | 6 |
 | 2026-10-02 | [Separating Stream Stability from Long-Term Recall in Language Models](https://arxiv.org/abs/2609.07282) | Language Foundation Models: LLM Memory, Long-Context Models | Stable generation over long streams does not imply that a language model can recall or use distant content. | 8 | 8 |

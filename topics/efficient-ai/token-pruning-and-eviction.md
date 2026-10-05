@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**256 papers total**
+**261 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-04 | [Decoding the Functional Roles of Register and High-Norm Patch Tokens in Vision Transformers](https://arxiv.org/abs/2610.03698) | Efficient AI: Token Pruning and Eviction | Register tokens in DINOv2 encode more semantically important information than high-norm outlier patch tokens, which mainly capture structural, background, and texture patterns. | 5 | 7 |
+| 2026-10-04 | [From Patching to Pruning Visual Computation in Vision Language Models](https://arxiv.org/abs/2610.03389) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | P2P reduces VLM inference computation by bypassing unnecessary visual-token projections while preserving the original token sequence and model weights. | 8 | 7 |
+| 2026-10-04 | [Emergent Structure in the Marginal Attention Space of Language Models](https://arxiv.org/abs/2610.03109) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | Marginalizing post-softmax attention reveals text-intrinsic token signals and model-specific head signatures that enable training-free, per-head KV-cache eviction budgets. | 8 | 7 |
+| 2026-10-04 | [TPBench: A Turning-Point Benchmark for Dialogue Compression](https://arxiv.org/abs/2610.02736) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Long-Context Models | TPBench reveals whether dialogue compressors preserve late user corrections and changing constraints, not just initial goals or overall facts. | 6 | 6 |
+| 2026-10-04 | [GRAFT: Growing Agglomerative Foundation Models via Continual Teacher Distillation](https://arxiv.org/abs/2610.02597) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | GRAFT continually consolidates capabilities from an open-ended sequence of vision foundation models into one extensible backbone without full re-distillation. | 9 | 9 |
 | 2026-10-01 | [MapLightning: Online Vectorized HD Map Construction with 1D Map Tokens](https://arxiv.org/abs/2610.01905) | Embodied AI: Robot Navigation; Efficient AI: Token Pruning and Eviction | MapLightning replaces dense BEV grids with compact 1D map tokens for faster, more memory-efficient, and camera-extrinsic-robust online HD map construction. | 9 | 8 |
 | 2026-10-01 | [Paying for Too Many Tokens? Valid and Cost-Efficient Multimodal LLM Annotation with Simple Heuristics](https://arxiv.org/abs/2610.00809) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | Simple frame and modality heuristics can make VLM video annotation far cheaper while preserving useful downstream conclusions, but accuracy alone is not a reliable guide. | 6 | 6 |
 | 2026-10-01 | [Video Evidence Indexing: Learning Where to Look from Video Previews for Token-Budgeted Long-Video Question Answering](https://arxiv.org/abs/2610.00757) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | Video Evidence Indexing efficiently answers long-video questions by using a cheap global preview to select a small set of high-resolution evidence frames within a visual-token budget. | 8 | 7 |

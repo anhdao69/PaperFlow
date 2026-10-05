@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**143 papers total**
+**144 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-04 | [Spatial Memory Intelligence: Endowing World Models with Understanding-Driven Long-Term Memory](https://arxiv.org/abs/2610.02521) | World Models: Video World Models; Adaptation and Memory: Embodied Memory | Spatial Memory Intelligence uses multimodal understanding to organize and retrieve long-range spatial memories, improving the stability and consistency of long-video world models. | 9 | 9 |
 | 2026-10-03 | [RoboFoundry: System-as-Policy Evolution for Self-Learning Embodied Agents](https://arxiv.org/abs/2609.32862) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboFoundry treats an embodied agent’s entire supporting system as an evolving policy, converting execution experience into validated memory, context, and skill improvements that transfer across robots. | 8 | 8 |
 | 2026-10-03 | [NutriBench-Kitchen: Benchmarking Embodied AI for Nutrition Management](https://arxiv.org/abs/2609.07135) | Embodied AI; Video Generation and Understanding: Video Understanding; Adaptation and Memory: Embodied Memory | NutriBench-Kitchen benchmarks whether embodied AI can track food states over time and use nutritional knowledge for constraint-aware planning in dynamic kitchens. | 8 | 7 |
 | 2026-10-02 | [ME-Brain-1.0: Memory, Cognition and Action for Evolving Embodied Intelligence](https://arxiv.org/abs/2609.24271) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | ME-Brain is a self-evolving embodied system that learns from physical experience after deployment without retraining its model. | 9 | 8 |

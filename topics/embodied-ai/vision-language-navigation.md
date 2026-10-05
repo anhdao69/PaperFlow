@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**90 papers total**
+**93 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-04 | [CORNAV: Construction-Aware Reasoning for Robot Navigation on Active Worksites](https://arxiv.org/abs/2610.03622) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | CORNAV enables safer robot navigation on active construction sites by combining blueprints, project schedules, and safety-aware planning. | 8 | 7 |
+| 2026-10-04 | [GeoScaffold: Learning Compact Geometric Latents via Reconstruction for Efficient Vision-Language Navigation](https://arxiv.org/abs/2610.02697) | Embodied AI: Vision-Language Navigation | GeoScaffold teaches a vision-language navigation policy compact geometric representations during training, enabling spatially aware action prediction without costly geometry modules at inference. | 9 | 8 |
+| 2026-10-04 | [Mind the Refinement Gap: When Safe High-Level Robot Plans Produce Unsafe Executions](https://arxiv.org/abs/2610.02662) | Embodied AI: Vision-Language Navigation | High-level plans judged safe can become unsafe after graph-based refinement reveals implicit navigation and action effects, exposing a trace-completeness gap in RoboGuard. | 7 | 6 |
 | 2026-10-01 | [UniTrackPLA: Unified Panorama-Language-Action Model for Instruction-Guided Navigation and Dynamic Person Tracking](https://arxiv.org/abs/2610.00878) | Embodied AI: Vision-Language Navigation, Robot Navigation, Vision-Language-Action; World Models: Interactive World Models | UniTrackPLA unifies panoramic, language-guided navigation and dynamic person tracking with closed-loop waypoint verification, substantially improving simulated and real-world performance. | 9 | 8 |
 | 2026-09-30 | [STARS: From Spatiotemporal Dynamics to Social Representations in Human-Robot Interaction](https://arxiv.org/abs/2609.40245) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | STARS introduces SocialNav-SUB, a benchmark showing that current VLMs still struggle with the spatial, temporal, and social reasoning needed for safe human-robot navigation. | 9 | 8 |
 | 2026-09-30 | [NavHarness: Adaptive Goals for Agentic Vision-Language Navigation](https://arxiv.org/abs/2609.39915) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Adaptation and Memory: Embodied Memory | NavHarness improves long-horizon vision-language navigation by adaptively setting, verifying, and remembering local goals to keep actions aligned with the route while reducing context overhead. | 9 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**184 papers total**
+**186 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-04 | [Iterating Consistency Models: Stability, Error Bounds and Noise Schedules](https://arxiv.org/abs/2610.03414) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | This work develops a convergence theory for multistep consistency-model sampling and uses it to explain how noise schedules affect stability and error. | 8 | 9 |
+| 2026-10-04 | [Adaptive Second-Order Solvers for Fast Stochastic Diffusion Sampling](https://arxiv.org/abs/2610.03034) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | A PI-controlled second-order diffusion solver adapts sampling steps using current and previous errors, while an aggregated fixed schedule often captures most of its benefits. | 8 | 8 |
 | 2026-10-02 | [Improving Video Sparse Attention with Fine-grained Router and Sparse Rebasing](https://arxiv.org/abs/2609.32882) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | VSA2 makes video diffusion transformers substantially more efficient by combining fine-grained dynamic routing with sparse rebasing while maintaining comparable or better video quality. | 8 | 8 |
 | 2026-10-01 | [Pooling Helps, Learned Weighting Hurts In-Context: Decomposing Group Attention](https://arxiv.org/abs/2610.01831) | Efficient AI: Efficient Attention | In Chronos-2 group attention, simple cross-variate pooling generally helps, while learned weighting often harms in-context forecasting. | 5 | 7 |
 | 2026-10-01 | [MWOP: Modality-aware Width-wise Operation Pruning for Efficient MLLMs](https://arxiv.org/abs/2610.01434) | Efficient AI: Efficient Attention | MWOP accelerates MLLM inference by pruning modality-specific attention paths and FFN channels while preserving nearly all benchmark performance. | 7 | 7 |

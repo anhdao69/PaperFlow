@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**72 papers total**
+**73 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-04 | [World Action Learning via Interaction-Centric Spectral Latent Guidance](https://arxiv.org/abs/2610.03607) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | WING transfers interaction knowledge from human egocentric videos to robot policies by isolating hand–object interactions and aligning their low-frequency temporal structure with robot behaviors. | 9 | 8 |
 | 2026-10-01 | [Distributionally Robust Schr\\"odinger Bridge](https://arxiv.org/abs/2610.02043) | World Models: Latent Action Models | Distributionally Robust Schrödinger Bridge learns transport controllers that remain effective when the initial distribution shifts, improving robustness at some cost to nominal performance. | 7 | 8 |
 | 2026-10-01 | [Social-WM: Safety-Aware Latent World Models for Robot Social Navigation](https://arxiv.org/abs/2609.40177) | Embodied AI: Robot Navigation; World Models: Latent Action Models, Interactive World Models | Social-WM enables safer robot social navigation by predicting action outcomes and estimating whether candidate actions are physically and socially realizable before execution. | 9 | 8 |
 | 2026-10-01 | [Learning Hierarchical Causal Representations of the Effects of Forcings on Temperature in Climate Models](https://arxiv.org/abs/2609.30995) | World Models: Latent Action Models | A hierarchical causal representation learning framework makes climate-model emulation more interpretable and capable of attributing temperature changes to greenhouse gases, aerosols, and internal variability. | 7 | 8 |
