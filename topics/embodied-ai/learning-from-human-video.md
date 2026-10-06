@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**137 papers total**
+**140 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-05 | [InterMimicGen: Scaling Humanoid Loco-Manipulation through Self-Evolving Motion Imitation](https://arxiv.org/abs/2610.06850) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | InterMimicGen turns sparse human-object demonstrations into an expanding library of executable humanoid loco-manipulation motions through retargeting, generalist tracking, and iterative self-improvement. | 9 | 8 |
+| 2026-10-05 | [CoDance: Learning Reactive and Compliant Human-Humanoid Interaction from Video](https://arxiv.org/abs/2610.05324) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | CoDance learns force-aware humanoid dancing from a single human demonstration, enabling reactive, compliant two-hand interaction with a moving partner. | 8 | 8 |
+| 2026-10-05 | [PatternDex: Learning Interaction Patterns to Guide Reinforcement Learning of Bimanual Dexterous Manipulation of Articulated Objects](https://arxiv.org/abs/2610.04765) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | PatternDex learns object-driven interaction patterns from human demonstrations to guide embodiment-aware reinforcement learning for successful bimanual dexterous manipulation. | 9 | 8 |
 | 2026-10-04 | [World Action Learning via Interaction-Centric Spectral Latent Guidance](https://arxiv.org/abs/2610.03607) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | WING transfers interaction knowledge from human egocentric videos to robot policies by isolating hand–object interactions and aligning their low-frequency temporal structure with robot behaviors. | 9 | 8 |
 | 2026-10-04 | [Native Action-Prior Learning from Videos for World Action Models](https://arxiv.org/abs/2610.03391) | Embodied AI: Vision-Language-Action, Learning from Human Videos; World Models: Interactive World Models | NAVA-WAM directly pretrains robot action policies from observation-only videos, then adapts them with labeled demonstrations for scalable and efficient robot control. | 9 | 8 |
 | 2026-10-04 | [KungfuAthleteBot: learning high-dynamic humanoid motion from video with unified robust recovery](https://arxiv.org/abs/2610.03388) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | KungfuAthleteBot enables humanoid robots to learn high-dynamic skills from video by physically repairing motion references, using feasible initialization, and jointly learning tracking and fall recovery. | 8 | 8 |

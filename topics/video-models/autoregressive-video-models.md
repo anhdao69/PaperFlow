@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**35 papers total**
+**36 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-05 | [S2PD: Serial-to-Parallel Diffusion for Physically and Logically Consistent Video Generation](https://arxiv.org/abs/2610.06847) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | S2PD combines early autoregressive and late parallel diffusion to generate videos with more physically and logically consistent events while reducing the cost of fully serial sampling. | 7 | 8 |
 | 2026-10-04 | [ProAR: Learning Prospective Reasoning with Autoregressive Video Models](https://arxiv.org/abs/2610.03664) | Video Generation and Understanding: Autoregressive Video Models | ProAR makes autoregressive video generation goal-directed by combining future goal-frame guidance with short-term representation alignment. | 7 | 8 |
 | 2026-10-04 | [Weave Forcing: Compositional Memory Routing for Interactive Long Video Generation](https://arxiv.org/abs/2610.03510) | Video Generation and Understanding: Autoregressive Video Models | Weave Forcing enables interactive long-video generation to reuse different historical shots for specific characters and backgrounds without contaminating the new scene. | 8 | 8 |
 | 2026-10-04 | [Custom Forcing: Training-Free Subject Customization for Autoregressive Video Generation](https://arxiv.org/abs/2610.02914) | Video Generation and Understanding: Autoregressive Video Models | Custom Forcing enables training-free, causal subject customization in autoregressive video generation by adapting reference influence to prevent identity drift during long, real-time rollouts. | 8 | 8 |
