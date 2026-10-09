@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**207 papers total**
+**211 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-06 | [ALIVE: Interaction-Aligned Object Insertion for First-Frame-Guided Video Editing](https://arxiv.org/abs/2610.08779) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Diffusion | ALIVE enables inserted video objects to participate coherently in scene interactions using only an edited first frame and an object-naming instruction. | 7 | 7 |
+| 2026-10-06 | [CtrlCache: Accelerating Interactive Video World Models with Control-Aware Caching](https://arxiv.org/abs/2610.08777) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion; Efficient AI | CtrlCache speeds up interactive video world models by using upcoming user controls to decide when to reuse denoising computations while preserving generation quality. | 9 | 8 |
+| 2026-10-06 | [WorldSonus: Bringing Sound to Worlds](https://arxiv.org/abs/2610.08760) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion, Video Understanding | WorldSonus generates controllable, spatially aligned stereo sound in real time for interactive visual world models. | 7 | 8 |
+| 2026-10-06 | [Diverse Motion Customization via Control-based Dynamic Optimization](https://arxiv.org/abs/2610.07911) | Video Generation and Understanding: Video Diffusion | CMC uses stochastic optimal control to transfer motion from reference videos while preserving text-driven appearance and generation diversity. | 7 | 7 |
 | 2026-10-05 | [S2PD: Serial-to-Parallel Diffusion for Physically and Logically Consistent Video Generation](https://arxiv.org/abs/2610.06847) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | S2PD combines early autoregressive and late parallel diffusion to generate videos with more physically and logically consistent events while reducing the cost of fully serial sampling. | 7 | 8 |
 | 2026-10-05 | [MC-Sparse: Deconstructing and Closing the Dense-Sparse Attention Gap in Diffusion Transformers](https://arxiv.org/abs/2610.06801) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | MC-Sparse accelerates diffusion-transformer denoising by selectively retaining key-value tokens while preserving dense-attention fidelity with negligible quality loss. | 9 | 8 |
 | 2026-10-05 | [MEND: RL For Flow Models via Proximal Velocity Matching](https://arxiv.org/abs/2610.05954) | Video Generation and Understanding: Video Diffusion | MEND post-trains flow models with reward-driven velocity updates that only move samples when the capped reward gain justifies the displacement. | 5 | 7 |

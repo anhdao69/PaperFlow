@@ -1,6 +1,2144 @@
 {
   "days": [
     {
+      "date": "2026-10-06",
+      "paper_count": 11,
+      "papers": [
+        {
+          "abstract": "Interactive video world models need to generate each video chunk efficiently while responding faithfully to user controls. Many systems use chunk-wise autoregressive generation with few-step denoising, but each chunk still requires several costly denoising iterations. Training-free caching can reduce this cost, yet existing policies make reuse decisions primarily from model-internal denoising dynamics and do not explicitly account for control transitions. Actually, interactive generation explicitly exposes a signal they do not use: the controls for a chunk arrive before it is denoised, so a schedule derived from them costs no forward pass. To this end, we analyze adjacent chunks under different control regimes and find that structural similarity drops around action changes, while low-frequency structure remains more persistent than high-frequency detail. Motivated by these observations, we propose CtrlCache, a training-free control-aware caching framework that adapts computation to the current control sequence. Specifically, the action-aware scheduling and refresh policy detects action changes across and within chunks, and labels each chunk as initial, transition, turning, or steady state. At one selected interior denoising step, initial and transition chunks retain full computation, while turning and steady chunks reuse the transformer residual from the most recent fully computed step in the same chunk. To exploit the persistence of low-frequency structure during steady interaction, we further introduce a frequency-mixed history prior guidance that incorporates complementary information from the preceding clean latent without an additional DiT forward pass. Evaluated on Matrix-Game 2.0 and LingBot-World v1/v2, CtrlCache achieves 1.21x to 1.41x DiT-backbone speedups without model retraining while improving WBench Overall scores over original inference across all three models.",
+          "arxiv_id": "2610.08777",
+          "arxiv_url": "https://arxiv.org/abs/2610.08777",
+          "authors": [
+            "Shangye Song",
+            "Dong Gong",
+            "Hong Jia",
+            "Yun Sing Koh",
+            "Xinyu Zhang"
+          ],
+          "bullets": [
+            "Targets the high cost of repeated denoising in chunk-wise autoregressive video generation.",
+            "Uses control sequences, available before denoising, to detect action changes and classify chunks as initial, transition, turning, or steady state.",
+            "Reuses transformer residuals selectively and adds frequency-mixed history guidance to preserve persistent low-frequency structure without extra DiT passes.",
+            "Evaluated on Matrix-Game 2.0 and LingBot-World v1/v2, achieving 1.21×–1.41× DiT-backbone speedups without retraining.",
+            "Improves WBench Overall scores over original inference across all three evaluated models."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of CtrlCache. (a) Chunk-wise autoregressive denoising retains full computation at the first and final steps. (b) The action-aware policy enables residual reuse at the selected interior step for turning and steady chunks, while preserving full computation for initial and transition chunks. (c) Frequency-mixed history prior guidance transfers structure from the preceding chunk’s last clean latent frame to guide the first-step clean latent estimate during steady interaction.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 364,
+              "image_path": "figures/2610.08777/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 800
+            },
+            {
+              "caption": "Figure 4: Qualitative comparisons of CtrlCache and baselines. For each case, all methods use the same initial condition and control sequence. The blue dashed rectangles mark reference regions for comparing layout, object placement, and motion-related details across methods. The red rectangles highlight distortions in local appearance and scene structure, while the green rectangles highlight better-preserved details in our results. Control strings follow the original WBench convention, where W / S/ A / D denote translational commands and left / right / up / down denote view changes.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 1000,
+              "image_path": "figures/2610.08777/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 783
+            },
+            {
+              "caption": "Figure 1: Our CtrlCache adapts DiT computation to the incoming controls. The left panel shows how the control-aware policy selects full computation, residual reuse, or refresh across representative control states. The right panel summarizes WBench Overall and DiT-backbone speedup on Matrix-Game 2.0 (He et al., 2025), LingBot-World v1 (Robbyant Team et al., 2026), and LingBotWorld v2 (Gao et al., 2026). Here, Full denotes a regular full DiT forward, Reuse denotes residual reuse at the selected denoising step, and Refresh denotes a full forward at an action transition.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 838,
+              "image_path": "figures/2610.08777/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 986
+            },
+            {
+              "caption": "Figure 2: Cosine similarity between the clean latents of adjacent chunks under different control signals for three representative sequences. Each panel compares the full latent, low-frequency and high-frequency components. The shading background marks the control regime of each chunk, i.e., non-turning (steady), sustained turning, and action change (transition). Similarity drops at the action changes, and the low-frequency component stays more persistent than the high-frequency one.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 348,
+              "image_path": "figures/2610.08777/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 813
+            },
+            {
+              "caption": "Table 1: Quality and efficiency comparison of CtrlCache and baselines on the WBench navigation track (Ying et al., 2026). “vs. Original” compares each accelerated method with the original fullcomputation model under identical prompts, controls, and initial frames. “Efficiency” reports DiTbackbone denoising latency (mean seconds per case), excluding KV-cache commit/update time, and speedup over Original. Bold denotes the best result within each model.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 245,
+              "image_path": "figures/2610.08777/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table D.1: Hyperparameter studies on Matrix-Game 2.0 and LingBot-World v1. Each entry is WBench Overall; bold denotes the best result within each model and panel. (a) Reuse denoising step s. (b) Temporal weights wk (α = 0.5, λ = 0.5). (c) Frequency composition (λ = 0.5). (d) Blend strength λ (α = 0.5).",
+              "figure_id": "table-D.1-2",
+              "figure_number": "D.1",
+              "height": 326,
+              "image_path": "figures/2610.08777/table-006.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 814
+            },
+            {
+              "caption": "Table 2: Ablation studies on Matrix-Game 2.0 and LingBot-World v1 using WBench navigation track. The first two variants evaluate naive residual reuse (Eq. (1)) alone and with our proposed action-aware scheduling and refresh policy (abbreviated as Action-aware policy; Sec. 3.2), respectively. The last three fix both components and apply the frequency-mixed history prior guidance (abbreviated as History prior; Sec. 3.3) on steady (St.), steady and turning (St.+Tu.), or steady, turning and transition (St.+Tu.+Tr.) chunks. Efficiency reports DiT-backbone denoising latency and speedup relative to Original. Bold denotes the best result within each model.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 225,
+              "image_path": "figures/2610.08777/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.08777/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.08777",
+          "relevance": 9,
+          "selection_reason": "Control-aware caching for interactive video world models, directly addressing action-conditioned generation and efficient diffusion inference.",
+          "summary_status": "generated",
+          "title": "CtrlCache: Accelerating Interactive Video World Models with Control-Aware Caching",
+          "tldr": "CtrlCache speeds up interactive video world models by using upcoming user controls to decide when to reuse denoising computations while preserving generation quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Web agents complete user requests by reading and acting on pages that third parties write, so an instruction planted on a page can redirect the agent away from the user's goal. The agent cannot simply ignore the page, because the page also holds the values and controls the task requires. Current defenses fine-tune the agent on injections fixed before training, and attackers that adapt to the trained model bypass them. Adversarial training lets the attacker adapt but keeps the tasks fixed, so a task stops teaching once the agent solves it. We introduce AdvSim2Real, which co-evolves a task curriculum, an injection adversary, and the agent inside a frozen web world model. The curriculum is rewarded for tasks the agent solves about half of the time, and the adversary only for a success flip, an injection that turns a judged success into a failure. Training in the simulator makes a 4B agent both more capable and more robust: its completion rises with and without attacks, holds against a frontier-model adversary it never trained against, and its capability gain carries over to a real browser. On 150 web tasks, AdvSim2Real raises completion under this unseen adversary by 33.6\\% relative to the base agent.",
+          "arxiv_id": "2610.08773",
+          "arxiv_url": "https://arxiv.org/abs/2610.08773",
+          "authors": [
+            "Sarim Hashmi",
+            "Mukul Ranjan",
+            "Kshitij Mishra",
+            "Mikhail Kuznetsov",
+            "Praneeth Vepakomma",
+            "Nils Lukas"
+          ],
+          "bullets": [
+            "Web agents must follow page content to complete tasks, but that content can contain goal-hijacking prompt injections.",
+            "Fixed-injection training is vulnerable to adaptive attackers, while fixed-task adversarial training becomes uninformative after tasks are mastered.",
+            "The method jointly trains a task curriculum, injection adversary, and agent in a frozen web world model.",
+            "The curriculum targets tasks solved about half the time; the adversary is rewarded for flipping judged successes into failures.",
+            "A 4B agent improved under attacks and without attacks, transferred capability gains to a real browser, and achieved a 33.6% relative completion increase against an unseen adversary on 150 tasks."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: One round of each stage of ADVSIM2REAL. Numbered steps summarize Algorithm 1. Stage 1: the curriculum C proposes tasks, the executor E runs each several times in the world model W , and the judge J grades each run; C is rewarded for tasks E solves about half the time (Equation (3)). Stage 2: with C frozen, the adversary A is rewarded for success flips, good clean runs of E judged bad once replayed with A’s injection (Equation (5)). Both stages train E on fresh rollouts (Equation (4)). Solid arrows: data; dashed: rewards that update the policy they enter; snowflakes: frozen.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 313,
+              "image_path": "figures/2610.08773/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 804
+            },
+            {
+              "caption": "Figure 4: Where the gains come from, on all 150 tasks. (a) Completion after each Stage-2 round for the full pipeline and the Stage-2-only branch, clean (solid) and under Adv v1–v3 (dashed; Table 7). (b) Episodes with an injection request and without a final message, learned Adv v1–v3 against Kimi-K3. (c) World-model verdict against strict browser outcome per task and seed. (d) Completion under Adv v1–v3 by skill stratum. Means over seeds with ±1 SD (range over cells in (b)); values in Section C.2.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 152,
+              "image_path": "figures/2610.08773/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 824
+            },
+            {
+              "caption": "Figure 1: ADVSIM2REAL makes the agent both more capable and more robust. (a) A curriculum proposes tasks (Stage 1) and an adversary inserts one timed injection (Stage 2) into pages that a frozen world model simulates. A frozen LLM judge rewards tasks solved about half of the time and success flips. (b) Judged completion on the 150 tasks over training, clean and under the learned adversaries. (c) Base model against the final checkpoint. Mean ± SD over rollout seeds (three; two for Kimi-K3).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 857,
+              "image_path": "figures/2610.08773/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 977
+            },
+            {
+              "caption": "Figure 2: The same injected notice diverts the base agent but not the trained one. Task 34 of the 150-task benchmark, Adv v2, seed 1; numbered markers give each agent’s actions in order, fields show final values, and pages are cropped. The base agent clicks the forbidden Reset all right after the notice appears and is judged bad; Robust iter 3 sees the notice before five actions, never clicks it, and is judged good.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 433,
+              "image_path": "figures/2610.08773/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 822
+            },
+            {
+              "caption": "Figure 6: Strict browser success and failure modes of the capability checkpoints. (a) By skill stratum and (b) by tier and form: change in strict success from Base to Capability iter 3 (points), three seeds pooled. (c) Outcome of every episode, 450 per checkpoint; for Capability iter 1 and 2, wrong values 55.1% and 51.6%, rejected 2.2% and 2.0%, no submit 10.9% and 2.9%. (d) Capability iter 3: tasks (% of 150) by seeds judged good in the world model (rows) and seeds with strict browser success (columns).",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 244,
+              "image_path": "figures/2610.08773/figure-005.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 827
+            },
+            {
+              "caption": "Figure 7: Analytic difficulty shaping. (a) Curriculum shaping q(p) before the validity gate and repetition penalty of Equation (3); (b) executor scale f(p), applied after group normalization, with floor 0.1. Markers show the rates attainable with six trajectories; the curves are specified functions, not measurements.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 155,
+              "image_path": "figures/2610.08773/figure-006.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 492
+            },
+            {
+              "caption": "Figure 5: Clean completion by stratum, task changes per update, and clean wins lost under attack. (a) Clean judged completion (%) by skill stratum and checkpoint, mean over three seeds; task counts in parentheses. (b) Tasks whose number of good judgments over the three seeds increases or decreases after each update (ties omitted). (c) Share of clean-good task and seed pairs whose attacked episode is judged bad, Base against Robust iter 3.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 156,
+              "image_path": "figures/2610.08773/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 819
+            },
+            {
+              "caption": "Table 7: Stage-1 removal ablation: judged completion (%). Each cell is the mean and sample standard deviation over three rollout seeds. Both branches run three Stage-2 rounds on the same 150 tasks and face the original with-Stage-1 Adv v1–v3 at evaluation; the Stage-2-only branch initializes both the executor and the frozen curriculum from the base model. Difference rows give the complete pipeline minus the Stage-2-only branch, computed from unrounded means.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 319,
+              "image_path": "figures/2610.08773/table-008.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 828
+            },
+            {
+              "caption": "Table 4: Benchmark composition by template. Tier and burden columns count high-tier and fullform tasks within the template; Review counts tasks with a mandatory review-before-commit step; Ref. actions and Fields give the values that occur.",
+              "figure_id": "table-4-14",
+              "figure_number": "4",
+              "height": 302,
+              "image_path": "figures/2610.08773/table-009.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 818
+            },
+            {
+              "caption": "Table 5: Per-seed counts. Good episodes for seeds 0, 1, and 2, each out of 150 unless marked (†149 and ‡145 judged). Browser: strict and judge-good episodes, correct fields out of 746, episodes with a rejected action, and budget stops.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 414,
+              "image_path": "figures/2610.08773/table-010.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 572
+            },
+            {
+              "caption": "Table 6: Values plotted in Figure 4 (%). (b) Learned adversaries pooled over seven checkpoints and three seeds; Kimi-K3 per executor. (c) World-model verdict against strict browser outcome per task and seed. (d) Completion under Adv v1–v3 by skill stratum, mean and sample standard deviation over three rollout seeds.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 239,
+              "image_path": "figures/2610.08773/table-011.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 814
+            },
+            {
+              "caption": "Table 2: Sim-to-real transfer (%). Clean Chromium runs of the 150 tasks, mean and sample standard deviation over seeds. Strict success is a deterministic check of the submitted form; Correct fields counts the 746 target values per seed (Section C.3).",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 140,
+              "image_path": "figures/2610.08773/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 427
+            },
+            {
+              "caption": "Table 3: Completion under the Kimi-K3 adversary (%). Kimi-K3 replaces the learned adversary with the same prompt, observation, and one-injection budget; mean and sample standard deviation over seeds. Clean is the noadversary column of Table 1, repeated here for reference.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 140,
+              "image_path": "figures/2610.08773/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 389
+            },
+            {
+              "caption": "Table 1: Judged task completion in WebWorld-14B (%). Mean and sample standard deviation over three rollout seeds on the 150 tasks; Mean weights Adv v1–v3 equally, bold marks the best 4B value per column, and per-seed counts are in Section C.1.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 232,
+              "image_path": "figures/2610.08773/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 828
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.08773/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.08773",
+          "relevance": 6,
+          "selection_reason": "Co-evolving task curriculum, adversary, and agent inside a frozen web world model; fits interactive world models and online/continual adaptation of agents.",
+          "summary_status": "generated",
+          "title": "AdvSim2Real : Training Web Agents Against Adaptive Prompt Injection in a Web World Model",
+          "tldr": "AdvSim2Real co-evolves web tasks, adaptive prompt injections, and an agent in simulation, improving both task completion and robustness to unseen attacks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "continual-and-online-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent advances in world models have enabled increasingly realistic visual synthesis. However, these generated environments remain largely silent. Bringing sound to world models poses three core challenges: real-time generation to keep pace with interactive video streams, interactive control to respond to mid-stream sound instructions, and spatially aligned stereo to reflect scene geometry and camera motion. To address these demands, we introduce WorldSonus, an interactive video-to-audio framework designed for real-time spatial sound synthesis in world models. For real-time generation, WorldSonus employs a streaming causal autoregressive diffusion architecture that synthesizes audio chunks at a low real-time factor (RTF) of 0.41. For interactive control, we incorporate an audio-centric captioning pipeline with chunk-indexed prompt scheduling, enabling dynamic manipulation of sound events during generation. For spatial alignment, we leverage high-quality stereo supervision curated from diverse stereo and ambisonic data. Extensive experiments demonstrate that while tailored for world models, WorldSonus generalizes effectively to open-domain video-to-audio benchmarks, matching or outperforming state-of-the-art bidirectional models in both acoustic quality and spatial alignment. Project page: https://noizai.github.io/WorldSonus/",
+          "arxiv_id": "2610.08760",
+          "arxiv_url": "https://arxiv.org/abs/2610.08760",
+          "authors": [
+            "Pengjun Fang",
+            "Jingyi Fa",
+            "Kam Man Wu",
+            "Jiaming Wang",
+            "Haoyuan Huang",
+            "Yaguang Wu",
+            "Xiangjun Huang",
+            "Ziyang Ma",
+            "Weijia Chen",
+            "Hongyu Liu",
+            "Zeyue Tian",
+            "Qifeng Chen"
+          ],
+          "bullets": [
+            "Addresses three challenges: real-time synthesis, mid-stream sound control, and alignment with scene geometry and camera motion.",
+            "Uses a streaming causal autoregressive diffusion architecture for chunked audio generation.",
+            "Employs audio-centric captioning and chunk-indexed prompt scheduling to dynamically manipulate sound events.",
+            "Trains with high-quality stereo supervision curated from stereo and ambisonic data.",
+            "Generalizes to open-domain video-to-audio benchmarks, matching or outperforming bidirectional models in acoustic quality and spatial alignment. The abstract reports an RTF of 0.41."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.SD",
+            "cs.CV",
+            "eess.AS"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of WorldSonus. (a) Causal streaming pipeline: Video frames map to twotimescale visual tokens conditioning an AR transformer and a rectified-flow head. (b) Training-only ShiftNCE: A training-only frozen Synchformer teacher guides temporal alignment via contrastive window matching. (c) Spatial stereo supervision: In-the-wild stereo filtering and panoramic FOA view-decoding provide directional audio grounding. (d) Interactive prompt control: Text prompts update dynamically at chunk boundaries, preserving session state and acoustic continuity.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 502,
+              "image_path": "figures/2610.08760/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 804
+            },
+            {
+              "caption": "Figure 2: Qualitative stereo layout versus bidirectional baselines on two interactive clips. Red boxes mark sources. Energy-balance curves show left (negative) versus right (positive) channel dominance.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 371,
+              "image_path": "figures/2610.08760/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: User-study interface for gameplay and real-world clips. Participants compare samples A and B and select A, Tie, or B for spatial alignment, temporal synchronization, semantic alignment, and overall preference.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 1165,
+              "image_path": "figures/2610.08760/figure-003.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 826
+            },
+            {
+              "caption": "Table 7: Architecture ablations on Interactive 10 s.",
+              "figure_id": "table-7-14",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2610.08760/table-004.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 463
+            },
+            {
+              "caption": "Table 9: System implementation and architectural configuration of WorldSonus.",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 442,
+              "image_path": "figures/2610.08760/table-005.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 827
+            },
+            {
+              "caption": "Table 1: Quantitative comparison across five held-out splits (4,096 clips for 5 s/10 s; 1,024 for 30 s). Best results are in bold, and second-best are underlined. Acc.: Bi (Bidirectional), Str (Stream), Caus (Causal). Cond.: VT (video+text), V (video-only). Chunk/t: chunk length and compute time in ms. IB and CLAP are multiplied by 100. S-FDO is omitted for monophonic V-AURA.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 563,
+              "image_path": "figures/2610.08760/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 840
+            },
+            {
+              "caption": "Table 11: Training configuration and hyperparameter settings.",
+              "figure_id": "table-11-5",
+              "figure_number": "11",
+              "height": 339,
+              "image_path": "figures/2610.08760/table-007.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 827
+            },
+            {
+              "caption": "Table 14: Detailed stereo balance agreement results under the −60 dBFS generation-RMS gate. L/R Rec. denotes per-side recall; Bal. Acc. is Abal; RMS Cov. is the coverage of RMSgen ≥ 0.001; Act. Cov. requires both RMS and |dgen| ≥ 0.1; ∆ = Abal − µnull; BiasSkill represents the normalized effect size (%); and p indicates the one-sided permutation test value.",
+              "figure_id": "table-14-7",
+              "figure_number": "14",
+              "height": 278,
+              "image_path": "figures/2610.08760/table-008.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 844
+            },
+            {
+              "caption": "Table 4: Long-horizon stability on Interactive 30 s (1,024 clips). Final 5 s window (25–30 s) generated directly versus via continuous rollout.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 88,
+              "image_path": "figures/2610.08760/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 827
+            },
+            {
+              "caption": "Table 8: Chunk-length comparison on Interactive 10 s.",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 103,
+              "image_path": "figures/2610.08760/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 463
+            },
+            {
+              "caption": "Table 16: Stratification of paired prompt gain G across text-similarity quartiles (1,024 clips per quartile). Brackets denote 95% clip-level bootstrap percentile intervals.",
+              "figure_id": "table-16-12",
+              "figure_number": "16",
+              "height": 223,
+              "image_path": "figures/2610.08760/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 682
+            },
+            {
+              "caption": "Table 10: Training curriculum: corpora, task mixtures, and view lengths.",
+              "figure_id": "table-10-6",
+              "figure_number": "10",
+              "height": 203,
+              "image_path": "figures/2610.08760/table-012.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 826
+            },
+            {
+              "caption": "Table 12: Training corpus breakdown by pool and audio duration.",
+              "figure_id": "table-12-10",
+              "figure_number": "12",
+              "height": 161,
+              "image_path": "figures/2610.08760/table-013.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 827
+            },
+            {
+              "caption": "Table 13: Eligible 1 s window counts and retention rates for BiasSkill evaluation.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 139,
+              "image_path": "figures/2610.08760/table-014.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 706
+            },
+            {
+              "caption": "Table 15: Full paired-control intervention results (4,096 clips per set). The sij entries are raw CLAP cosine similarities. S is the mean of the aligned similarities s11 and s22, M is the mean matching advantage, and R is reported as a percentage (%). Hold is evaluated against the same reference prompt pair (P1, P2) as Switch.",
+              "figure_id": "table-15-13",
+              "figure_number": "15",
+              "height": 139,
+              "image_path": "figures/2610.08760/table-015.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 652
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.08760/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.08760",
+          "relevance": 7,
+          "selection_reason": "Interactive real-time spatial audio synthesis for world models; fits video/world model topics through action-conditioned interactive generation and video-to-audio understanding.",
+          "summary_status": "generated",
+          "title": "WorldSonus: Bringing Sound to Worlds",
+          "tldr": "WorldSonus generates controllable, spatially aligned stereo sound in real time for interactive visual world models.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-diffusion",
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-horizon world-model planning typically relies on autoregressive rollouts, where predicted states are repeatedly fed back into the model. This preserves temporal structure but creates a horizon-length sequential path and exposes later predictions to recursive decoded-state feedback. We introduce Parallel Predictive World Models (PPWM), which predict a finite-horizon trajectory in parallel while retaining causal interaction among future representations. Each horizon is conditioned on its causal action prefix, and future representations interact before decoding, separating temporal causality from state-by-state output recursion. We formalize this distinction by viewing autoregressive rollout as a causal trajectory map and identifying the decoded-state feedback pathway removed by PPWM. Across four visual-control tasks, PPWM achieves the lowest long-horizon prediction error and the highest Cross-Entropy Method (CEM) simulator success among the evaluated predictive interfaces. Meanwhile, PPWM achieves more than a 3$\\times$ average CEM planning speedup over the autoregressive LeWM baseline. These results suggest that accurate and efficient long-horizon world-model planning does not require state-by-state autoregression, but can instead be achieved through parallel causal trajectory prediction.",
+          "arxiv_id": "2610.08627",
+          "arxiv_url": "https://arxiv.org/abs/2610.08627",
+          "authors": [
+            "Wanjin Feng",
+            "Baobin Zhang",
+            "Ao Yu",
+            "Shibo Feng",
+            "Xi Wang",
+            "Xingyu Gao"
+          ],
+          "bullets": [
+            "Autoregressive rollouts are slow and can compound errors through recursive decoded-state feedback.",
+            "PPWM conditions each horizon on its causal action prefix and lets future representations interact before decoding.",
+            "Across four visual-control tasks, PPWM had the lowest long-horizon prediction error and highest CEM simulator success among evaluated interfaces.",
+            "PPWM delivered more than a 3× average CEM planning speedup over the autoregressive LeWM baseline.",
+            "The approach targets finite-horizon planning and does not eliminate the need for causal structure."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Comparison of temporal interfaces for world models. (a) Autoregressive (AR) world models predict one step at a time and feed the predicted state back as input, forming a long temporal chain. (b) Fast-LeWM uses a causal action prefix to predict multiple future states in parallel, without explicit interaction among future-state representations. (c) Our Parallel Predictive World Model (PPWM) predicts a causal finite-horizon trajectory in parallel, allowing interaction among future representations while removing output-state recursion within a span.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 344,
+              "image_path": "figures/2610.08627/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 794
+            },
+            {
+              "caption": "Figure 2: Cumulative latent prediction MSE as the open-loop prediction horizon increases. All methods use the same frozen LeWM representation (lower is better).",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 133,
+              "image_path": "figures/2610.08627/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 770
+            },
+            {
+              "caption": "Figure 3: Average CEM planning and dynamics latency across four tasks.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 168,
+              "image_path": "figures/2610.08627/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 403
+            },
+            {
+              "caption": "Table 2: Open-loop simulator success across predictive interfaces (100 episodes × 3 planner seeds; higher is better). CEM uses each model’s frozen scoring rule; see Appendix C.3.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 243,
+              "image_path": "figures/2610.08627/table-004.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 1: Controlled prediction in the shared frozen LeWM latent space. Mean MSE over the first 5, 10, or 15 prediction steps (lower is better).",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 364,
+              "image_path": "figures/2610.08627/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 827
+            },
+            {
+              "caption": "Table 3: CEM planning latency at H=10 (ms); speedup relative to LeWM is shown below.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 215,
+              "image_path": "figures/2610.08627/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 377
+            },
+            {
+              "caption": "Table 8: Effect of the native parallel prediction span K. Entries are mean latent MSE over the first h prediction steps, Ē1:h (lower is better).",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 197,
+              "image_path": "figures/2610.08627/table-007.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 444
+            },
+            {
+              "caption": "Table 6: Push-T component analysis using mean latent MSE; lower is better.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 100,
+              "image_path": "figures/2610.08627/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 498
+            },
+            {
+              "caption": "Table 5: PP-DINO-WM transfer on Push-T. DINOv2 visual-patch MSE (lower is better).",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 111,
+              "image_path": "figures/2610.08627/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 411
+            },
+            {
+              "caption": "Table 4: Closed-loop refinement with PP-LeWM under a shared CEM planner (higher is better).",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 111,
+              "image_path": "figures/2610.08627/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 409
+            },
+            {
+              "caption": "Table 7: Planner-interface diagnostic for the Fast-LeWM lifted-planner adaptations. “Virtual” is the optimized terminal latent state, “chained rollout” re-evaluates the one-step planning factor from the true initial context, and “simulator” is the realized terminal latent MSE after executing the optimized actions. All entries use the completed 300-trial evaluations. Lower is better.",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 140,
+              "image_path": "figures/2610.08627/table-011.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 522
+            },
+            {
+              "caption": "Table 9: Open-loop CEM score control and PP-LeWM tail ablation (H=10). Entries report Anytime and Terminal simulator success (%). Fast-LeWM Goal removes SC, while PP-LeWM ρ = 0 is ordinary terminal-goal CEM. Each configuration uses 100 episodes and three planner seeds.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 192,
+              "image_path": "figures/2610.08627/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.08627/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.08627",
+          "relevance": 8,
+          "selection_reason": "Parallel causal trajectory prediction for action-conditioned long-horizon planning fits interactive world models.",
+          "summary_status": "generated",
+          "title": "Parallel Predictive World Models for Accurate and Efficient Long-Horizon Planning",
+          "tldr": "PPWM enables faster long-horizon world-model planning by predicting trajectories in parallel while preserving causal interactions among future representations.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Action-chunking policies predict multi-step control sequences, but a fundamental question remains: how much of a predicted action chunk should be committed before replanning? Existing systems typically execute a fixed-length prefix, implicitly assuming that the same execution horizon remains trustworthy across states. Some adaptive methods estimate this horizon from the similarity or stability of predicted actions. However, different actions may lead to the same successful outcome, whereas similar actions can produce different futures, suggesting that commitment should be determined by agreement among imagined futures rather than by similarity in action space. To this end, we propose Consequence-Aware Adaptive Action Chunking (CA$^3$C), an inference-time framework built on a simple principle: commit while imagined futures agree, and replan when they diverge. Without modifying or retraining the base policy, CA$^3$C uses an action-conditioned world model to imagine the future consequences of multiple candidate action chunks under the same sampling noise. Using these imagined consequences, we formulate execution-horizon estimation as a Bayesian change-point inference problem and select the execution candidate through future consensus. Across multiple simulation benchmarks and real-world robot manipulation tasks, CA$^3$C consistently improves diverse action-chunking policies, achieving up to a 71.8% relative reduction in failure rate over the corresponding base policies.",
+          "arxiv_id": "2610.07949",
+          "arxiv_url": "https://arxiv.org/abs/2610.07949",
+          "authors": [
+            "Yuyan Li",
+            "Yujia Wang",
+            "Yusong Huang",
+            "Junjie Yang",
+            "Yanggang Sheng",
+            "Ziyi Shi",
+            "Wenpeng Xu",
+            "Xiaoyang Zhou",
+            "Haoang Li",
+            "Hongliang Lu",
+            "Xinhu Zheng"
+          ],
+          "bullets": [
+            "Fixed execution horizons may be unreliable because action-space similarity does not necessarily predict shared outcomes.",
+            "CA$^3$C uses an action-conditioned world model to imagine consequences for multiple candidate action chunks under shared sampling noise.",
+            "It estimates when to stop executing via Bayesian change-point inference over future agreement and selects actions through consensus.",
+            "The inference-time framework improves multiple action-chunking policies across simulation and real-world manipulation tasks.",
+            "The abstract reports up to a 71.8% relative reduction in failure rate versus corresponding base policies."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of Consequence-Aware Adaptive Action Chunking. (a) The diffusion policy samples K candidate action chunks. (b) The action-conditioned world model imagines their visual future states under shared sampling noise. (c) CA3C detects where their future latent features begin to disagree, determines the trustworthy horizon h⋆, and selects the candidate closest to future consensus. (d) The robot executes the first h⋆ actions of the selected chunk before replanning.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 402,
+              "image_path": "figures/2610.07949/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 968
+            },
+            {
+              "caption": "Figure 3: Episode-level adaptive commitment for the instruction Put the yellow and white mug in the microwave and close it. Panel (a) traces the selected horizon h⋆ across the episode and shows representative task stages; the dashed line denotes the fixed h = 5 baseline, and A/B mark the two decisions enlarged below. Panel (b) shows that disagreement increases after future step 4 at A, so only the trustworthy prefix is executed before replanning. Panel (c) shows consistently low disagreement at B, supporting execution of the full action chunk with h⋆ = 10.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 553,
+              "image_path": "figures/2610.07949/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 972
+            },
+            {
+              "caption": "Figure 1: Fixed action chunking executes a preset prefix at every decision step. In contrast, CA3C compares the imagined consequences of multiple candidates, commits longer while their futures agree, replans sooner when they diverge, and executes the candidate closest to future consensus.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 472,
+              "image_path": "figures/2610.07949/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 768
+            },
+            {
+              "caption": "Figure 4: Matched rollouts on LIBERO-Goal OOD for the instruction Open the top drawer and put the bowl inside. The top and bottom rows show π0.5 and π0.5 + CA3C, respectively, from the same OOD initial state. Columns show representative execution stages, with red and green borders denoting the final failure and success outcomes.",
+              "figure_id": "figure-4-15",
+              "figure_number": "4",
+              "height": 315,
+              "image_path": "figures/2610.07949/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 965
+            },
+            {
+              "caption": "Figure 5: Suite-level commitment-horizon distributions on LIBERO-Plus. Bars are normalized within each suite; labels show event counts, mean horizons, and frequent-horizon.",
+              "figure_id": "figure-5-16",
+              "figure_number": "5",
+              "height": 480,
+              "image_path": "figures/2610.07949/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 600
+            },
+            {
+              "caption": "Figure 8: Matched rollout comparison for the instruction Put the cream cheese in the bowl.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 326,
+              "image_path": "figures/2610.07949/figure-006.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 900
+            },
+            {
+              "caption": "Figure 7: Matched rollout comparison for the instruction Open the top drawer and put the bowl inside.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 325,
+              "image_path": "figures/2610.07949/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 900
+            },
+            {
+              "caption": "Figure 10: Matched rollout comparison for the instruction Put the wine bottle on the rack.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 326,
+              "image_path": "figures/2610.07949/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 900
+            },
+            {
+              "caption": "Figure 9: Matched rollout comparison for the instruction Put the wine bottle on top of the cabinet.",
+              "figure_id": "figure-9-8",
+              "figure_number": "9",
+              "height": 326,
+              "image_path": "figures/2610.07949/figure-009.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 900
+            },
+            {
+              "caption": "Figure 6: Execution examples for real-world tasks using CA3C.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 213,
+              "image_path": "figures/2610.07949/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 976
+            },
+            {
+              "caption": "Table 1: Success rates (%) on LIBERO ID and OOD. Baselines use regular type and rows augmented with CA3C are bold. Parentheses show absolute percentage-point changes from each baseline (red: increase; green: decrease); unchanged values are omitted. The same convention applies to subsequent main-result tables.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 285,
+              "image_path": "figures/2610.07949/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 977
+            },
+            {
+              "caption": "Table 6: Success rates (%) on real-world tasks using AgiBot G2. Each method is evaluated with 50 rollouts per task.",
+              "figure_id": "table-6-10",
+              "figure_number": "6",
+              "height": 108,
+              "image_path": "figures/2610.07949/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 977
+            },
+            {
+              "caption": "Table 2: Success rates (%) on 24 LIBERO-Plus tasks. Each suite contains three Robot Initial States tasks and three Objects Layout tasks and is evaluated with 120 rollouts.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 255,
+              "image_path": "figures/2610.07949/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 977
+            },
+            {
+              "caption": "Table 3: Success rates (%) on the 24 RoboCasa Kitchen tasks. Relocation, Container, Rotation, and Button contain 10, 6, 5, and 3 tasks, respectively; each task is evaluated with 20 rollouts.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 255,
+              "image_path": "figures/2610.07949/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 976
+            },
+            {
+              "caption": "Table 4: Component ablation on 24 LIBERO-Plus tasks. The best result in each column is shown in bold, and the second-best result is underlined. Checkmarks indicate enabled components, and values are success rates (%). All variants use the same rollout protocol as the main experiment.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 152,
+              "image_path": "figures/2610.07949/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 977
+            },
+            {
+              "caption": "Table 5: Fixed-horizon comparison for the π0.5 baseline on LIBERO-Plus (60 rollouts per suite). Best and second-best results are bold and underlined.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 129,
+              "image_path": "figures/2610.07949/table-016.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 977
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.07949/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.07949",
+          "relevance": 9,
+          "selection_reason": "Consequence-aware adaptive action chunking using an action-conditioned world model; directly relevant to robot manipulation and interactive world models.",
+          "summary_status": "generated",
+          "title": "Commit While Futures Agree: Consequence-Aware Adaptive Action Chunking for Robot Manipulation",
+          "tldr": "CA$^3$C adaptively decides how long a robot should execute an action chunk by committing while imagined future outcomes agree and replanning when they diverge.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Fully decentralized multi-agent reinforcement learning (MARL), also referred to as independent learning, requires each agent to learn and act using only its local information and experience, without a centralized critic or inter-agent communication. Such a stringent information structure renders the conventional reward signal ambiguous. A poor return may result from an ineffective ego action, an incompatible teammate response, or an effective opponent response, yet scalar rewards alone do not reveal which explanation is responsible. We argue that agents can learn more effectively by prospectively comparing the consequences of candidate actions rather than diagnosing failures only from realized returns. We introduce CASTLE (Counterfactual Action-conditioned Semantic Tokens for Local Execution in Decentralized MARL), an offline-training, online-in-context guidance framework with two complementary world models. A Local Dynamics World Model, offline pre-trained over agents' local trajectories, summarizes the agent's local trajectory dynamics and partial observability, while a Semantic-Social World Model predicts compact short-horizon task and social consequences for each candidate ego action. The latter is trained from counterfactual simulator rollouts that expose plausible teammate and opponent responses to alternative actions taken from the same logged rollout state. During online learning and execution, both world models remain frozen and are queried by agents using only locally available information. Their prediction logits provide in-context guidance to an independent PPO policy. Across 30 matched seeds on Tag, Spread, and Adversary in the benchmark multi-particle environments, our proposed CASTLE achieves the highest mean final score among the evaluated methods, exceeding the strongest baseline on each task by 10.67, 6.46, and 0.33 normalized points, respectively.",
+          "arxiv_id": "2610.07704",
+          "arxiv_url": "https://arxiv.org/abs/2610.07704",
+          "authors": [
+            "Fernando Martinez",
+            "Tao Li",
+            "Yingdong Lu",
+            "Juntao Chen"
+          ],
+          "bullets": [
+            "Addresses ambiguous scalar rewards, which do not distinguish poor ego actions from teammate or opponent effects.",
+            "Uses offline-trained Local Dynamics and Semantic-Social World Models to predict local, task, and social consequences of candidate actions.",
+            "Trains the social model with counterfactual simulator rollouts from shared logged states.",
+            "Provides frozen model predictions as in-context guidance to an independent PPO policy using only local information.",
+            "Achieves the highest mean final score among evaluated methods on Tag, Spread, and Adversary across 30 matched seeds."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.MA"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Architecture of CASTLE. Offline pretraining produces frozen LDWM checkpoints and an SSWM that emits one consequence token zit,k for each candidate ego action. During decentralized IPPO, a trainable actor combines base policy logits with an annealed gated utility branch computed from the frozen SSWM tokens. Online gradients update only the orange PPO components; blue world-model modules remain frozen.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 433,
+              "image_path": "figures/2610.07704/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1016
+            },
+            {
+              "caption": "Fig. 3. Raw online returns over 30 matched seeds. Lines show means and shaded regions 95% confidence intervals. Curves use a 25-update moving average.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 235,
+              "image_path": "figures/2610.07704/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1060
+            },
+            {
+              "caption": "Fig. 4. Raw online returns over 30 matched seeds. Lines show means and shaded regions 95% confidence intervals. Curves use a 25-update moving average.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 234,
+              "image_path": "figures/2610.07704/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1043
+            },
+            {
+              "caption": "Fig. 5. Effect of consequence guidance over 30 matched seeds. Top: KL divergence between the guided policy and the base IPPO actor. Bottom: correlation between the guidance-induced change in the sampled action’s log probability and its realized local GAE advantage.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 341,
+              "image_path": "figures/2610.07704/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 496
+            },
+            {
+              "caption": "Fig. 2. Target-task predictive accuracy over the SSWM rollout horizon. Solid lines indicate target-included pretraining and dashed lines held-out pretraining, evaluated on identical target-task histories. Correlations are computed across candidate actions; shading denotes 95% confidence intervals.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 174,
+              "image_path": "figures/2610.07704/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 964
+            },
+            {
+              "caption": "TABLE II MODEL ARCHITECTURE AND LDWM REFERENCE PRETRAINING.",
+              "figure_id": "table-II-5",
+              "figure_number": "II",
+              "height": 452,
+              "image_path": "figures/2610.07704/table-006.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 529
+            },
+            {
+              "caption": "TABLE I D4RL-NORMALIZED FINAL PERFORMANCE OVER 30 MATCHED SEEDS, REPORTED AS MEAN ± STANDARD DEVIATION. HIGHER IS BETTER. IN-DOMAIN (R) ADDS TARGET-TASK RANDOM TRAJECTORIES TO THE HELD-OUT SOURCE POOL, WHILE IN-DOMAIN (R+M) ADDS TARGET-TASK RANDOM AND INTERMEDIATE TRAJECTORIES. BOLD AND UNDERLINED ENTRIES ARE THE BEST AND SECOND-BEST MEANS IN EACH COLUMN.",
+              "figure_id": "table-I-6",
+              "figure_number": "I",
+              "height": 262,
+              "image_path": "figures/2610.07704/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE IV SSWM PRETRAINING, LABEL CONSTRUCTION, VALIDATION.",
+              "figure_id": "table-IV-3",
+              "figure_number": "IV",
+              "height": 473,
+              "image_path": "figures/2610.07704/table-008.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 529
+            },
+            {
+              "caption": "TABLE III ONLINE PPO AND CONSEQUENCE GUIDANCE.",
+              "figure_id": "table-III-2",
+              "figure_number": "III",
+              "height": 259,
+              "image_path": "figures/2610.07704/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 529
+            },
+            {
+              "caption": "TABLE VI TASK BUDGETS AND RAW NORMALIZATION REFERENCES.",
+              "figure_id": "table-VI-4",
+              "figure_number": "VI",
+              "height": 103,
+              "image_path": "figures/2610.07704/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 346
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.07704/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.07704",
+          "relevance": 7,
+          "selection_reason": "Introduces action-conditioned semantic-social and local dynamics world models for decentralized multi-agent RL.",
+          "summary_status": "generated",
+          "title": "Independent Multi-Agent Reinforcement Learning with Counterfactual Semantic-Social World Models",
+          "tldr": "CASTLE improves fully decentralized MARL by using frozen local and counterfactual social world models to guide each agent’s action choices without communication or centralized critics.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Neural simulation of high-fidelity deformable bodies is a foundational challenge in computer graphics and physical AI. Long-horizon prediction for high-resolution 3D volumetric meshes is difficult: autoregressive methods are susceptible to error accumulation, while direct multi-frame prediction at native resolution is computationally prohibitive. This motivates a compact spatiotemporal latent representation, which is largely unexplored for mesh-based volumetric physics. Meanwhile, it remains unclear whether deterministic regression or generative diffusion is the more appropriate predictive paradigm. To address these coupled challenges, we introduce PhysLDM, a unified latent-diffusion paradigm for one-shot volumetric deformable simulation. Its core is a holistic spatiotemporal VAE that avoids the \"staircase\" artifacts of standard temporal compression (as in common video VAEs), achieving ~2.48 mm reconstruction precision on meter-scale scenes at up to 78x token compression. Based on this reliable latent space, we systematically compare regression and diffusion methods. Our experiments uncover a key modeling insight: complex deformable dynamics are often chaotic, and in this regime deterministic regression tends to produce non-physical averages, whereas diffusion better models their distribution. Accordingly, we employ a latent diffusion model that effectively learns from the chaotic data to generate physically plausible trajectories. Trained purely kinematically on an Objaverse-scale dataset, a single PhysLDM generalizes zero-shot to unseen OOD datasets (GSO and Toys4K). Its differentiability further enables efficient solution of inverse problems and higher-order design optimization. To our knowledge, PhysLDM is the first high-fidelity spatiotemporal autoencoder and latent-diffusion paradigm for volumetric deformable dynamics, offering a scalable and robust approach to neural simulation.",
+          "arxiv_id": "2610.07609",
+          "arxiv_url": "https://arxiv.org/abs/2610.07609",
+          "authors": [
+            "Yu Zhang",
+            "Xudong Xu",
+            "Xingang Pan"
+          ],
+          "bullets": [
+            "Targets the computational cost and error accumulation of native-resolution autoregressive simulation for high-resolution 3D meshes.",
+            "Introduces a holistic spatiotemporal VAE that reduces tokens by up to 78× while avoiding temporal-compression staircase artifacts and achieving approximately 2.48 mm reconstruction precision on meter-scale scenes.",
+            "Finds that diffusion better captures chaotic deformable dynamics than deterministic regression, which can produce non-physical averages.",
+            "Trains purely on kinematic data and generalizes zero-shot to unseen GSO and Toys4K datasets.",
+            "Differentiability supports inverse problems and higher-order design optimization."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.GR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of PhysLDM. The framework consists of three main components: (1) A Spatial VAE (top left) that encodes the per-frame canonical mesh into a compact set of resolutionindependent latent tokens. (2) An ST-VAE (bottom) that compresses the temporal trajectory into a single joint latent Z, which serves as the training target of the LDM. (3) An LDM (top right) that predicts the entire latent trajectory from the initial state in a single diffusion pass. Dec ∗ denotes the frozen decoders, which decode the latent into the final full trajectory.",
+              "figure_id": "figure-2-32",
+              "figure_number": "2",
+              "height": 313,
+              "image_path": "figures/2610.07609/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 822
+            },
+            {
+              "caption": "Figure 1: PhysLDM overview. Top, Reconstruction: Ground truth (rose) versus ST-VAE reconstruction (blue) for an unseen high-resolution soft mug (11,621 nodes, >2× the training cap). The trajectory is compressed by ∼182× with only a 5.3 mm mean error. Far right: a cross-section of the final frame visualizing the internal tetrahedral structure. Bottom Left, Prediction: One-shot prediction of 64-frame trajectories for diverse out-of-distribution (OOD) objects (GSO/Toys4K) across varying materials and initial velocities (inset: initial state; main view: predicted settled state). Bottom Right, Differentiable Applications: A classic material estimation task: recovering Young’s modulus E (blue sequence) by matching a target state (textured) via gradient descent. Furthermore, designing the throw that best reveals the material is a second-order inverse task (Sec. 4.2). PhysLDM easily solves it with native support for higher-order derivatives. By contrast, all other differentiable simulators we tested either fail or are computationally prohibitive on this task.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 404,
+              "image_path": "figures/2610.07609/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Prediction on four scenes (a GSO punch-drop toy, a held-out Objaverse cap and bowl, and Toys4K grapes), showing three frames sampled along the time axis. Rows: ground truth, Diffusion (ours), Regression, and the MGN-style AR baseline. The regression method predicts geometry with visible artifacts and jitter. MGN-style AR drifts over time. Scene details are listed in Table 12. More visualizations of prediction are shown in Fig. 11.",
+              "figure_id": "figure-4-23",
+              "figure_number": "4",
+              "height": 281,
+              "image_path": "figures/2610.07609/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 829
+            },
+            {
+              "caption": "Figure 17: The two models on four held-out scenes (a block, a spoon, a screwdriver and a bottle; all ≤ 1,000 vertices) at the last frame of the trajectory. For each scene the full object is followed by a zoom-in view of the boxed region. Rows: ground truth (rose), our three-stage pipeline trained on the same scenes with the same budget (Table 15), and the concurrent DiT-B model. Our model preserves the geometric detail of every object. The concurrent model places the objects correctly, but its geometric detail is visibly noisy: the block bends and its faces ripple, the spoon and the shaft of the screwdriver are corrugated, and the bottle is lumpy. The zoom-in views show this noise on every surface.",
+              "figure_id": "figure-17-16",
+              "figure_number": "17",
+              "height": 291,
+              "image_path": "figures/2610.07609/figure-004.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 830
+            },
+            {
+              "caption": "Figure 3: ST-VAE reconstruction on four scenes (a held-out Objaverse phone, a GSO boot, a Toys4K chess piece, and a GSO toy), showing three frames sampled along the time axis. Rows: ground truth (rose), ours, and two baselines. The standard baseline looks reasonable in these static frames, yet it suffers from the staircase artifact, which is hard to see in snapshots but is exposed by the DCC in Table 1. The direct world-coordinate baseline produces noisy geometric detail. Scene details are listed in Table 11. More visualizations of ST-VAE reconstruction are shown in Figs. 9 and 10.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 609,
+              "image_path": "figures/2610.07609/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 832
+            },
+            {
+              "caption": "Figure 15: Basic material estimation. (a) Four matched time samples of the observed trajectory (E⋆ = 60 kPa), the initial model prediction (E0 = 250 kPa), and the prediction after 40 Adam steps (Ê = 52.4 kPa). All views share the same camera and scale. (b) Absolute log-stiffness error for seven ground-truth moduli, with the illustrated case highlighted in blue. All seven final estimates are within 0.06 dex; each optimization takes approximately 40 seconds. Curves show the recorded iterates without smoothing.",
+              "figure_id": "figure-15-10",
+              "figure_number": "15",
+              "height": 360,
+              "image_path": "figures/2610.07609/figure-006.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 807
+            },
+            {
+              "caption": "Figure 7: Chaos in a traditional GPU simulator. Five reruns (columns) of the same soft-racket scene from byte-identical inputs (same mesh, initial state, material, and solver configuration), shown at four sampled frames (rows): before the drop, just after impact, mid-bounce, and the last frame of the trajectory. The runs are indistinguishable until impact and then settle into visibly different poses. The complex dynamics are chaotic, so the post-impact outcome is not a deterministic function of the initial state.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 639,
+              "image_path": "figures/2610.07609/figure-007.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 789
+            },
+            {
+              "caption": "Figure 18: PhysLDM on real captured point clouds (Jiang et al., 2025): a plush sloth and a plush dinosaur (top), two pieces of cloth (middle), and two ropes (bottom), each at four frames sampled along the trajectory and rendered as points. Rows of each block: the tracked points (rose), the STVAE reconstruction, the LDM prediction of the pretrained model without adaptation (zero-shot), and the LDM prediction after fine-tuning (Table 17). The zero-shot prediction lets the resting object fall through the table, so it is not visible in the camera.",
+              "figure_id": "figure-18-22",
+              "figure_number": "18",
+              "height": 1254,
+              "image_path": "figures/2610.07609/figure-008.webp",
+              "kind": "figure",
+              "page": 45,
+              "width": 829
+            },
+            {
+              "caption": "Figure 9: ST-VAE reconstruction on two more scenes (a Toys4K cake and a GSO shape-sorter toy) at four frames sampled along the trajectory. Rows: ground truth (rose), Holistic (ours), the standard baseline, its two variants (velocity loss and spectral loss), the adaptive-compression baseline, and the direct world-coordinate baseline. Scene details are listed in Table 11.",
+              "figure_id": "figure-9-17",
+              "figure_number": "9",
+              "height": 717,
+              "image_path": "figures/2610.07609/figure-009.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 829
+            },
+            {
+              "caption": "Figure 10: ST-VAE reconstruction on two more scenes (a held-out Objaverse object and a GSO turboprop), with the same rows, sampled frames, and rendering as Fig. 9. Scene details are listed in Table 11.",
+              "figure_id": "figure-10-13",
+              "figure_number": "10",
+              "height": 710,
+              "image_path": "figures/2610.07609/figure-010.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 829
+            },
+            {
+              "caption": "Figure 8: The key scene of Appendix D.6 (a held-out scene) at four sampled frames (rows; ground contact at frame 31). Columns: the two runs of the GPU solver from byte-identical inputs, which fall over in different directions; the regression prediction, which settles in between and resembles neither run; and the two diffusion samples closest to run 1 and to run 2 among the eight samples.",
+              "figure_id": "figure-8-30",
+              "figure_number": "8",
+              "height": 638,
+              "image_path": "figures/2610.07609/figure-011.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 797
+            },
+            {
+              "caption": "Figure 5: The staircase artifact on five GSO scenes. Top: ground truth at the impact frame. Bottom: deformation-change curve (defined in Appendix B.3) for ground truth and the six ST-VAEs of Table 7 over the impact window. DCC in Table 1 is the correlation of this curve with the groundtruth curve. On every scene the standard baseline, its two variants, and the adaptive-compression baseline stay below ground truth for several frames and then overshoot it in one frame, while the holistic ST-VAE follows the ground-truth curve. The direct world-coordinate baseline also follows the ground-truth curve, because it uses the same holistic temporal compression.",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 348,
+              "image_path": "figures/2610.07609/figure-012.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 811
+            },
+            {
+              "caption": "Figure 6: Consecutive-frame silhouette difference on scene 4 of Fig. 5 (a cat) for five frame pairs around the impact (red: previous frame only; blue: next frame only; grey: overlap; number: XOR over union). Ground truth and the holistic ST-VAE change steadily from frame to frame. The standard baseline and its two variants change much less than the ground truth for the first three pairs and then much more in the last two: the reconstruction holds and then snaps. The adaptivecompression baseline changes too little over all five pairs and releases the motion even later. The direct world-coordinate baseline, which uses the holistic temporal compression, follows the ground truth until the last pair.",
+              "figure_id": "figure-6-21",
+              "figure_number": "6",
+              "height": 570,
+              "image_path": "figures/2610.07609/figure-013.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 744
+            },
+            {
+              "caption": "Figure 12: ST-VAE reconstruction of the extreme case, a soft birdcage (held-out Objaverse, N=9,021 nodes, 1.8× the 5,000-vertex training cap, E = 5× 104 Pa) with dozens of slender bars. Top: four frames sampled along the trajectory, ground truth (rose) and Holistic (ours). Bottom: the zoom-in view of the last frame, ground truth (left) and reconstruction (right), with the surface wireframe shown. The overall shape of the collapsed cage is recovered, while the thin bars are reconstructed distorted and tangled. Mean reconstruction error over the trajectory: 9.9mm, against 5.3mm for the compact teaser mug of 11,621 nodes.",
+              "figure_id": "figure-12-25",
+              "figure_number": "12",
+              "height": 608,
+              "image_path": "figures/2610.07609/figure-014.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 817
+            },
+            {
+              "caption": "Figure 16: Beyond material estimation: designing a more informative throw. (a) Ground-truth replays of the initial and optimized release velocities at E⋆ = 60 kPa. Orange and blue overlays represent stiffness perturbations of −0.05 and +0.05 dex. The first three columns show true motion at matched times and a shared camera scale. In the final column, rigid translation and rotation offsets from the nominal trajectory are magnified by 5×, using equal magnification in both rows. (b) Cumulative rigid-pose sensitivity, normalized by the initial throw’s final score, increases by 13.4×. This score is computed from the unamplified GT trajectories. (c) Material estimation from the same distant initial guess, E0 = 1,000 kPa. After 60 estimation steps, the initial throw remains near 901 kPa, whereas the optimized throw reaches 73.7 kPa, much closer to the true 60 kPa. Throw design uses 30 Adam steps and approximately 7 minutes.",
+              "figure_id": "figure-16-24",
+              "figure_number": "16",
+              "height": 545,
+              "image_path": "figures/2610.07609/figure-015.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 803
+            },
+            {
+              "caption": "Figure 13: Scene-level ST-VAE reconstruction on held-out multi-body scenes (two two-body and two three-body scenes, each body with a random Young’s modulus and initial velocity) at four sampled frames: just before and just after the mid-air collision, the first frame after ground impact, and a settled frame. Rows: ground truth (rose) and reconstruction.",
+              "figure_id": "figure-13-31",
+              "figure_number": "13",
+              "height": 431,
+              "image_path": "figures/2610.07609/figure-016.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 829
+            },
+            {
+              "caption": "Figure 14: One-shot prediction on held-out multi-body scenes (two two-body and two three-body scenes, each body with a random Young’s modulus and initial velocity), sampled frames as in Fig. 13. Rows: ground truth and our prediction conditioned on the initial state, rendered by driving each body’s original textured asset with the predicted tetrahedral trajectory.",
+              "figure_id": "figure-14-4",
+              "figure_number": "14",
+              "height": 431,
+              "image_path": "figures/2610.07609/figure-017.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 823
+            },
+            {
+              "caption": "Figure 11: Prediction on four more scenes (a held-out Objaverse bucket and sofa, a GSO flower pot, and a GSO plush dog) at four frames sampled along the trajectory. Rows: ground truth, Diffusion (ours), Regression, and the MGN-style AR baseline. Scene details are listed in Table 12.",
+              "figure_id": "figure-11-19",
+              "figure_number": "11",
+              "height": 827,
+              "image_path": "figures/2610.07609/figure-018.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 829
+            },
+            {
+              "caption": "Table 15: Training time of the two models on the same scenes (≤ 1,000 vertices) and the same GPUs. Even with three stages, our pipeline takes less time than the concurrent model.",
+              "figure_id": "table-15-15",
+              "figure_number": "15",
+              "height": 161,
+              "image_path": "figures/2610.07609/table-019.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 377
+            },
+            {
+              "caption": "Table 9: Training memory versus vertex count N on a 140GiB H200 (T=64, bf16, batch 1). No ST-VAE: our LDM architecture applied directly to the T×N raw vertex tokens, peak memory (GiB) of one training step. With ST-VAE: peak memory (GiB) of one ST-VAE Base training step. The LDM stage with the ST-VAE costs about 4.4GiB per trajectory at any N and is not listed. OOM: out of memory.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 294,
+              "image_path": "figures/2610.07609/table-020.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 490
+            },
+            {
+              "caption": "Table 13: Comparison of our model with two differentiable simulators on downstream applications. Our approach supports higher-order derivatives, enabling complex optimization tasks that are either computationally infeasible or numerically unstable for existing solvers.",
+              "figure_id": "table-13-3",
+              "figure_number": "13",
+              "height": 258,
+              "image_path": "figures/2610.07609/table-021.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 822
+            },
+            {
+              "caption": "Table 8: Full version of Table 2 with all six physics checks and the ST-VAE reconstruction reference row. Prediction comparison across the three evaluation sets, on the same 300 scenes per set within the training vertex range (500 ≤ N ≤ 5,000) as Table 1. Viol. %: percentage of vertices or tetrahedra, over all frames, whose predicted volume, speed, or acceleration deviates from the ground truth beyond a threshold; Self-int. is the fraction of surface triangles in a self-intersection; KEdef/KErig is the deformation-to-rigid kinetic-energy ratio relative to ground truth (closer to 1 is better); World err is the per-vertex error in world coordinates (mm); full definitions in Appendix B. ST-VAE reconstruction is the ground truth encoded and decoded by the ST-VAE behind the LDM, shown as a",
+              "figure_id": "table-8-9",
+              "figure_number": "8",
+              "height": 421,
+              "image_path": "figures/2610.07609/table-022.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 832
+            },
+            {
+              "caption": "Table 3: The two ST-VAE configurations used in this paper. ST-VAE Small is used for the reconstruction comparisons of Table 1. ST-VAE Base is the ST-VAE behind PhysLDM, i.e. the LDM experiments and the applications.",
+              "figure_id": "table-3-20",
+              "figure_number": "3",
+              "height": 255,
+              "image_path": "figures/2610.07609/table-023.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 660
+            },
+            {
+              "caption": "Table 14: Memory and resolution limits of the concurrent raw-coordinate model on a 140GiB H200: peak training memory (GiB) and GPU time per training step (ms) at batch 1, i.e., per trajectory, T=64, bf16, flash attention, for vertex counts N from 500 to 5,000. OOM: out of memory at batch 1. For reference, our LDM trains at ∼4.4GiB (Table 9) and ∼27ms per trajectory at any N .",
+              "figure_id": "table-14-14",
+              "figure_number": "14",
+              "height": 253,
+              "image_path": "figures/2610.07609/table-024.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 460
+            },
+            {
+              "caption": "Table 10: Batch-1 inference of PhysLDM on one H200 for 64-frame trajectories at different vertex counts N (held-out scenes; the last three rows exceed the 5,000-vertex training cap). Decode: time of the ST-VAE decoder. fps = 64/(condition build+ latent model+decode). Peak: maximum GPU memory allocated over the whole pass.",
+              "figure_id": "table-10-27",
+              "figure_number": "10",
+              "height": 179,
+              "image_path": "figures/2610.07609/table-025.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 760
+            },
+            {
+              "caption": "Table 4: DCC (deformation-change correlation with ground truth, computed as in Table 1) on the five GSO scenes of Fig. 5. Scenes 1 to 5 are the five columns of Fig. 5 in the same order, and scene 4 is the one shown in Fig. 6. Best per row in bold.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 149,
+              "image_path": "figures/2610.07609/table-026.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 798
+            },
+            {
+              "caption": "Table 5: Divergence between two runs of the GPU solver from byte-identical inputs on the 300 Objaverse held-out scenes of Table 1. Each entry gives the number and the percentage of scenes whose difference between the two runs exceeds the given fraction of the object size, measured (a) as the mean per-vertex error over the whole trajectory and (b) as the per-vertex error at the last frame.",
+              "figure_id": "table-5-1",
+              "figure_number": "5",
+              "height": 90,
+              "image_path": "figures/2610.07609/table-027.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 632
+            },
+            {
+              "caption": "Table 12: Scenes of Figs. 4 and 11: source dataset, tetrahedral node count N , Young’s modulus E, and initial velocity v0 (m/s, y up). The Young’s moduli were chosen to show both soft bodies with large deformation and stiff, nearly rigid ones, so some values do not match the real material of the object.",
+              "figure_id": "table-12-18",
+              "figure_number": "12",
+              "height": 224,
+              "image_path": "figures/2610.07609/table-028.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 828
+            },
+            {
+              "caption": "Table 11: Scenes of Figs. 3, 9, and 10: source dataset, tetrahedral node count N , Young’s modulus E, and initial velocity v0 (m/s, y up). The Young’s moduli were chosen to show both soft bodies with large deformation and stiff, nearly rigid ones, so some values do not match the real material of the object.",
+              "figure_id": "table-11-26",
+              "figure_number": "11",
+              "height": 223,
+              "image_path": "figures/2610.07609/table-029.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 828
+            },
+            {
+              "caption": "Table 16: The pretrained PhysLDM on three data sources without adaptation. Medians over scenes. The volume and kinetic energy metrics need tetrahedra and are not defined on the point clouds.",
+              "figure_id": "table-16-28",
+              "figure_number": "16",
+              "height": 170,
+              "image_path": "figures/2610.07609/table-030.webp",
+              "kind": "table",
+              "page": 44,
+              "width": 818
+            },
+            {
+              "caption": "Table 17: Fine-tuning the LDM of PhysLDM on each data source with the unchanged trainer. Medians over the scenes of each fine-tuning subset, before and after fine-tuning.",
+              "figure_id": "table-17-29",
+              "figure_number": "17",
+              "height": 139,
+              "image_path": "figures/2610.07609/table-031.webp",
+              "kind": "table",
+              "page": 44,
+              "width": 677
+            },
+            {
+              "caption": "Table 6: Regression versus diffusion on the 229 non-chaotic and the 71 chaotic held-out scenes (two solver runs ending less or more than 1% of the object size apart). Medians over scenes. Vol.: volume violation rate (%), KE: KEdef/KErig relative to the ground truth, Err: world-coordinate error (mm) (Appendix B.4). Best of 8 picks, per scene, the sample closest to the ground truth.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 140,
+              "image_path": "figures/2610.07609/table-032.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 572
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.07609/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.07609",
+          "relevance": 8,
+          "selection_reason": "Presents PhysLDM, a latent diffusion model for high-fidelity deformable simulation, effectively learning environment dynamics and physical interactions.",
+          "summary_status": "generated",
+          "title": "PhysLDM: Latent Diffusion for High-Fidelity Deformable Simulation",
+          "tldr": "PhysLDM uses a spatiotemporal VAE and latent diffusion to generate high-fidelity, physically plausible long-horizon simulations of deformable volumetric bodies.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "In this paper, we study robust decision-making in the latent space of world models (WMs). Robust optimization is a mathematical framework where, given explicitly specified dynamics and physically meaningful disturbances, a robot can select actions that remain effective even under worst-case disturbances. However, applying this principle to the learned latent space of WMs introduces a fundamental challenge: because WMs have fully learned state spaces and dynamics inferred from high-dimensional observations, it is unclear how to define latent-space disturbances that faithfully represent uncertainty in the underlying system. Our key idea is to model a latent-space disturbance as a perturbation to the learned latent dynamics that induces pessimistic but plausible transitions. Specifically, we construct a set of plausible latent dynamics by combining a dynamics-aware similarity metric that captures plausible transitions with out-of-distribution detection that excludes implausible latent states. We calibrate this uncertainty set over latent dynamics using conformal prediction, ensuring that WM imaginations induced by the latent disturbance remain plausible without becoming overly pessimistic. We then jointly optimize robust robot actions and the worst-case latent disturbances through game-theoretic optimization. We leverage this latent-space robust optimization to robustify policy steering, considering two paradigms: latent safety filtering and sample-and-verify steering of a generative control policy. Our controlled simulation experiments show that our latent disturbance enables robust decision-making directly in WM latent spaces, and hardware experiments with a Franka manipulator show that modeling latent disturbances enables robust policy steering, reducing failures by 70% in safety filtering and 54% in sampling-based policy steering. Project website: https://junwon.me/LatentDisturbance/.",
+          "arxiv_id": "2610.07599",
+          "arxiv_url": "https://arxiv.org/abs/2610.07599",
+          "authors": [
+            "Junwon Seo",
+            "Andrea Bajcsy"
+          ],
+          "bullets": [
+            "Addresses the challenge of defining physically meaningful uncertainty in fully learned latent dynamics.",
+            "Constructs plausible latent dynamics using a dynamics-aware similarity metric and out-of-distribution detection.",
+            "Uses conformal prediction to calibrate the uncertainty set and avoid implausibly pessimistic imagined transitions.",
+            "Jointly optimizes robot actions and worst-case latent disturbances for latent safety filtering and generative-policy steering.",
+            "Experiments show failure reductions of 70% for safety filtering and 54% for sampling-based steering on a Franka manipulator."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.RO",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3. Qualitative Results: 3D Dubins’ Car. Solid lines represent the ground-truth unsafe-set boundaries, and red regions denote the unsafe sets computed by each method. LUCID closely approximates the ground-truth unsafe sets of robust optimization under two different types of disturbances. In contrast, Nominal is overly optimistic, while the sampling-based baselines such as WoN and CVaR inaccurately approximate unsafe sets.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 460,
+              "image_path": "figures/2610.07599/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 524
+            },
+            {
+              "caption": "Fig. 5. Safety Value Function: Nominal vs. LUCID. Safeguarding the same πtask from the same initial states, the robust safety filter proactively intervenes based on a plausibly pessimistic imagination (ôd28) in which πtask can lead to failure, while the nominal imagination (ô28) predicts a non-failure outcome. The resulting robust action prevents failure. In contrast, the nominal latent safety filter overestimates safety and intervenes too late based on an optimistic imagination (ô50), leading to failure under an adverse realization.",
+              "figure_id": "figure-5-21",
+              "figure_number": "5",
+              "height": 439,
+              "image_path": "figures/2610.07599/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 10. Qualitative: Policy Steering with World Model. (a) Initial observation and sampled candidate actions. (b) For each candidate, Nominal imagines outcomes using fz , LUCID computes worst-case f πd z within the calibrated uncertainty set F , while Unconformalized f π̂d z can exploit out-ofdistribution latent states. (c) Imagined outcomes for candidate actions. LUCID selects an action that remains successful under the plausible worst-case, whereas the other schemes lose discriminability among candidate actions.",
+              "figure_id": "figure-10-17",
+              "figure_number": "10",
+              "height": 256,
+              "image_path": "figures/2610.07599/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 4. Qualitative: Naughty Dubins’ Car with Optimistic Disturbances. Solid lines show the ground-truth unsafe-set boundaries of the disturbancefree system, and dashed lines show the failure set. Without the in-distribution constraint, the disturbance exploits implausible latent states, trivially imagining trajectories that avoid failure from any non-failure state.",
+              "figure_id": "figure-4-19",
+              "figure_number": "4",
+              "height": 127,
+              "image_path": "figures/2610.07599/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 6. Block Pouring: World Model Imaginations. (a) Initial state: the orange block is tilted while πtask remains still. (b) The nominal imagination predicts a non-failure outcome. (c) With the conformalized uncertainty set, the latent disturbance imagines a plausible adverse transition in which the green block slides and falls. (d) Without the conformalized uncertainty set, the latent disturbance induces an implausible transition in which the green block falls in an infeasible manner, resulting in an overly pessimistic imagination.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 148,
+              "image_path": "figures/2610.07599/figure-005.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 7. Qualitative Results: Preventing Sunny-Side-Down Egg. LUCID preemptively identifies teleoperator actions that may cause the egg to fall or flip and intervenes with robust actions that remain safe under worst-case dynamics. In contrast, the Nominal safety filter relies on overly optimistic safety values and non-robust actions, leading to sunny-side-down outcomes.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 377,
+              "image_path": "figures/2610.07599/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 520
+            },
+            {
+              "caption": "Fig. 8. Filtering the Same πtask Across Different Surfaces. (Left) Failure rates under each spatula surface condition. (Right) Robust rate, measuring the fraction of trajectories that remain safe across all surface conditions. LUCID consistently minimizes failures and achieves a higher robust rate, whereas the Nominal safety filter prevents failures only under certain surface conditions.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 252,
+              "image_path": "figures/2610.07599/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 524
+            },
+            {
+              "caption": "Fig. 9. Quantitative Results: Success Rates. (Left) Safety filtering over 20 rollouts for Diffusion Policy and π0.5. (Right) Steering π0.5 with sample-andverify action selection, using world-model imaginations to evaluate candidate action chunks. In both settings, LUCID robustly improves success rates.",
+              "figure_id": "figure-9-16",
+              "figure_number": "9",
+              "height": 142,
+              "image_path": "figures/2610.07599/figure-008.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 518
+            },
+            {
+              "caption": "Fig. 2. Naughty 3D Dubins’ Car. (a) Environment with the vehicle and a failure set at the center. (b) For an action sequence that turns right, an adverse disturbance can instead drive the vehicle into failure, making the decision nonrobust. (c) Driving straight remains safe even in the worst case. However, an implausible imagination can make this robust action appear unsafe.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 115,
+              "image_path": "figures/2610.07599/figure-009.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 524
+            },
+            {
+              "caption": "TABLE I 3D DUBINS’ CAR WORLD MODEL: QUANTITATIVE RESULTS.",
+              "figure_id": "table-I-10",
+              "figure_number": "I",
+              "height": 164,
+              "image_path": "figures/2610.07599/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 516
+            },
+            {
+              "caption": "TABLE XI BLOCK POURING WORLD MODEL TRAINING SETTINGS.",
+              "figure_id": "table-XI-6",
+              "figure_number": "XI",
+              "height": 398,
+              "image_path": "figures/2610.07599/table-011.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 529
+            },
+            {
+              "caption": "TABLE IV QUANTITATIVE RESULTS: VISION-BASED BLOCK POURING.",
+              "figure_id": "table-IV-20",
+              "figure_number": "IV",
+              "height": 217,
+              "image_path": "figures/2610.07599/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 516
+            },
+            {
+              "caption": "TABLE III ABLATION: OPTIMISTIC LATENT DISTURBANCE.",
+              "figure_id": "table-III-18",
+              "figure_number": "III",
+              "height": 176,
+              "image_path": "figures/2610.07599/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 529
+            },
+            {
+              "caption": "TABLE VI ABLATION: DETERMINISTIC BLOCK-POURING WITH FIXED PHYSICS",
+              "figure_id": "table-VI-2",
+              "figure_number": "VI",
+              "height": 219,
+              "image_path": "figures/2610.07599/table-014.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 516
+            },
+            {
+              "caption": "TABLE VIII 3D DUBINS’ CAR LATENT WORLD MODEL SETTINGS.",
+              "figure_id": "table-VIII-24",
+              "figure_number": "VIII",
+              "height": 319,
+              "image_path": "figures/2610.07599/table-015.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 529
+            },
+            {
+              "caption": "TABLE XIV REAL WORLD: WORLD MODEL HYPERPARAMETERS.",
+              "figure_id": "table-XIV-9",
+              "figure_number": "XIV",
+              "height": 341,
+              "image_path": "figures/2610.07599/table-016.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 529
+            },
+            {
+              "caption": "TABLE II 3D DUBINS’ CAR: UNCERTAINTY SET ABLATION. DYN., CONF., AND OOD REPRESENT DYNAMICS-AWARE SIMILARITY, CONFORMAL CALIBRATION, AND IN-DISTRIBUTION CONSTRAINTS, RESPECTIVELY.",
+              "figure_id": "table-II-14",
+              "figure_number": "II",
+              "height": 136,
+              "image_path": "figures/2610.07599/table-017.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 520
+            },
+            {
+              "caption": "TABLE V RESULTS: TRAJECTORY REPLAY ACROSS 20 DIFFERENT PHYSICS.",
+              "figure_id": "table-V-12",
+              "figure_number": "V",
+              "height": 119,
+              "image_path": "figures/2610.07599/table-018.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 520
+            },
+            {
+              "caption": "TABLE IX 3D DUBINS’ CAR LATENT SAFETY FILTER SETTINGS.",
+              "figure_id": "table-IX-23",
+              "figure_number": "IX",
+              "height": 235,
+              "image_path": "figures/2610.07599/table-019.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 529
+            },
+            {
+              "caption": "TABLE VII RESIDUAL PARAMETERIZATION OF πd IN (11).",
+              "figure_id": "table-VII-22",
+              "figure_number": "VII",
+              "height": 258,
+              "image_path": "figures/2610.07599/table-020.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 416
+            },
+            {
+              "caption": "TABLE XV REAL WORLD LATENT SAFETY FILTER SETUPS.",
+              "figure_id": "table-XV-8",
+              "figure_number": "XV",
+              "height": 283,
+              "image_path": "figures/2610.07599/table-021.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 529
+            },
+            {
+              "caption": "TABLE XII SIMULATED MANIPULATION SAFETY-LEARNING SETTINGS.",
+              "figure_id": "table-XII-5",
+              "figure_number": "XII",
+              "height": 258,
+              "image_path": "figures/2610.07599/table-022.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 529
+            },
+            {
+              "caption": "TABLE XIII TRANSFORMER-BASED LATENT WORLD MODEL",
+              "figure_id": "table-XIII-7",
+              "figure_number": "XIII",
+              "height": 147,
+              "image_path": "figures/2610.07599/table-023.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 529
+            },
+            {
+              "caption": "TABLE X PHYSICAL RANDOMIZATION OF BLOCK POURING IN ISAACLAB.",
+              "figure_id": "table-X-4",
+              "figure_number": "X",
+              "height": 173,
+              "image_path": "figures/2610.07599/table-024.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 334
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.07599/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.07599",
+          "relevance": 8,
+          "selection_reason": "Models latent disturbances in world models for robust robot decision-making and policy steering.",
+          "summary_status": "generated",
+          "title": "Modeling Latent Disturbances for Robust Decision-Making in World Models",
+          "tldr": "The paper enables robust robot decision-making in learned world-model latent spaces by modeling plausible latent disturbances and optimizing against their worst cases.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Modeling 3D scene geometry and its evolution over time is essential for autonomous driving and robotics. A common paradigm is to use world models to predict future images or latent representations of the environment and subsequently recover geometry from these predictions. However, this paradigm does not explicitly model geometric structure and typically relies on recursive rollouts to reach longer prediction horizons, leading to error accumulation and increasing computational cost. To address these limitations, we present GeoWM, a geometry world model that directly forecasts future scene geometry at specified future horizons without recursive rollout. The key idea is to leverage a geometry foundation model to transform observed RGB frames into a geometric history, which conditions a flow-matching transformer to predict the scene geometry at a specified future horizon. We further show that a lightweight camera-motion predictor can accurately estimate the future viewpoint, and that projecting the observed geometry into the predicted viewpoint provides an effective geometric prior for future geometry forecasting. Extensive experiments on four datasets spanning urban driving, aerial flight, and dynamic manipulation demonstrate that GeoWM outperforms the evaluated world models in forecasting depth, camera pose, and 3D scene geometry, while substantially reducing inference time at longer horizons.",
+          "arxiv_id": "2610.07381",
+          "arxiv_url": "https://arxiv.org/abs/2610.07381",
+          "authors": [
+            "Mehrdad Noori",
+            "Guile Wu",
+            "Sam Hosseini",
+            "Dongfeng Bai"
+          ],
+          "bullets": [
+            "Targets efficient long-horizon geometry prediction for autonomous driving and robotics.",
+            "Uses a geometry foundation model to build geometric history from observed RGB frames.",
+            "A flow-matching transformer predicts future scene geometry conditioned on this history.",
+            "A lightweight camera-motion predictor enables viewpoint-aware geometric priors.",
+            "Experiments across four datasets show improved forecasting of depth, camera pose, and 3D geometry, with lower inference time at longer horizons."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2: Overview of GEOWM: (a) forecasting in explicit geometry, (b) the flow-matching transformer, and (c) independent horizon queries.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 493,
+              "image_path": "figures/2610.07381/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 964
+            },
+            {
+              "caption": "Fig. 1: Pixels, features, or explicit geometry? Video models forecast future frames and then reconstruct geometry; their photometric objective couples only loosely to 3D structure, and dynamic objects can be mislocalised [7]. Feature-space models forecast latents and decode them, where decoding can amplify errors [7] and autoregressive rollout accumulates them [8]–[10]. GEOWM forecasts explicit geometry directly and queries each horizon independently.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 389,
+              "image_path": "figures/2610.07381/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 4: Qualitative forecasts. Short/long horizons are h = 1/10 for TartanAir and h = 4/48 for DOMINO. Error maps show signed relative depth error (white is zero); boxes mark corresponding scene regions. Clouds use calibrated intrinsics, median-scaled TartanAir depths and fixed-scale DOMINO depths; colors indicate depth. All clouds share the same view without further alignment.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 277,
+              "image_path": "figures/2610.07381/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1037
+            },
+            {
+              "caption": "Fig. 3: Direct forecasting and geometric conditioning. (a) Direct prediction versus one-step recursive rollout with the same checkpoint. (b) Increase in horizon-averaged AbsRel when scaling the anchor’s predicted translation relative to α = 1; rotation is unchanged. Comparisons use matched window subsets and equal-drive averaging on KITTI.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 249,
+              "image_path": "figures/2610.07381/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 488
+            },
+            {
+              "caption": "TABLE I: Future geometry forecasting on four datasets. AbsRel (×100) and δ1 (%) score the forecast depth, CD (m) the forecast 3D geometry after similarity alignment, and ATE (m), RTE (m), RRE (deg) the forecast camera trajectory. Next is the first predicted horizon; Short, Mid, and Long average the horizons given in each block, and All averages every horizon. Depth is median-scaled per image except on DOMINO, which is evaluated at true scale. Best and second best among copy-last, VGGT-World [7], Cosmos-3 [6], and GEOWM; copy-last repeats the last observed geometry.",
+              "figure_id": "table-I-8",
+              "figure_number": "I",
+              "height": 586,
+              "image_path": "figures/2610.07381/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1052
+            },
+            {
+              "caption": "TABLE II: Generalisation on DOMINO to unseen tasks and robots. Same metrics, horizon groups, and ranking as the DOMINO block of Table I, which reports the seen tasks and robots.",
+              "figure_id": "table-II-3",
+              "figure_number": "II",
+              "height": 425,
+              "image_path": "figures/2610.07381/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 960
+            },
+            {
+              "caption": "TABLE III: Ablations on KITTI. Variants of GEOWM, evaluated on the windows and with the protocol of Table I: median-scaled AbsRel (×100) and δ1 (%), averaged over the KITTI horizon groups of that table, where All averages every horizon. N is the number of noise draws averaged at read-out.",
+              "figure_id": "table-III-2",
+              "figure_number": "III",
+              "height": 523,
+              "image_path": "figures/2610.07381/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 516
+            },
+            {
+              "caption": "TABLE IV: Inference cost. Compute, parameters and the time to obtain the forecasts of different horizons.",
+              "figure_id": "table-IV-6",
+              "figure_number": "IV",
+              "height": 147,
+              "image_path": "figures/2610.07381/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 500
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.07381/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.07381",
+          "relevance": 9,
+          "selection_reason": "Directly forecasts future 3D scene geometry conditioned on camera motion, fitting interactive world modeling for autonomous driving and robotics.",
+          "summary_status": "generated",
+          "title": "GeoWM: Efficient Direct World Modeling in Explicit Geometry",
+          "tldr": "GeoWM directly forecasts future 3D scene geometry at chosen time horizons, avoiding recursive rollouts to improve efficiency and reduce error accumulation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Deformable-object manipulation is essential for robotic tasks such as folding laundry and handling food, where robots must control shape changes as well as object motion. Predictive soft-body simulation supports these tasks by anticipating deformation under external interactions. However, spatial neighborhoods can misrepresent deformation dependencies, introducing local errors that accumulate over successive predictions. Models fitted to individual scenes must also accommodate changes in object geometry and manipulation conditions. In this work, we propose AIM, an Adaptive Interaction Modeling framework that treats real-to-sim soft-body simulation as a local-global interaction modeling problem. AIM uses motion history and geometry to adapt particle relations over current spatial neighbors and retained connections, while geometry-conditioned global communication coordinates object-wide responses. A unified kinematic control-point interface represents different manipulation configurations, and multi-step autoregressive supervision trains the model on its own predicted trajectories. Experiments on PhysTwin and PGND demonstrate improved motion accuracy and visual fidelity, with a 20.0% reduction in future-prediction tracking error relative to PhysTwin and a 22.8% reduction in mean long-horizon particle error across six object categories relative to PGND. The framework further supports transfer across actions, object instances, and scenes, including zero-shot transfer from robot interactions to human manipulation without target-domain dynamics fitting.",
+          "arxiv_id": "2610.07116",
+          "arxiv_url": "https://arxiv.org/abs/2610.07116",
+          "authors": [
+            "Tiancheng Yang",
+            "Dingshuo Chen",
+            "Tianle Chen",
+            "Zhaocheng Liu",
+            "Qiang Liu"
+          ],
+          "bullets": [
+            "Addresses deformation errors caused by relying only on spatial neighborhoods and supports changing object geometries and manipulation conditions.",
+            "Adapts particle relations using motion history, geometry, current neighbors, and retained connections, with geometry-conditioned global communication.",
+            "Uses a unified kinematic control-point interface and multi-step autoregressive supervision for varied manipulation configurations.",
+            "Reports lower future-prediction and long-horizon particle errors on PhysTwin and PGND, with improved visual fidelity.",
+            "Transfers across actions, object instances, and scenes, including zero-shot transfer from robot to human manipulation without target-domain dynamics fitting."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of AIM. Adaptive particle relations and geometry-conditioned global communication jointly predict object dynamics under kinematic controls.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 315,
+              "image_path": "figures/2610.07116/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: Challenges in real-to-sim deformable dynamics.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 444,
+              "image_path": "figures/2610.07116/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Long-Horizon Rollout Performance on Held-out Interaction Prediction.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 381,
+              "image_path": "figures/2610.07116/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 824
+            },
+            {
+              "caption": "Figure 4: Qualitative Results on Held-out Interaction Prediction.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 319,
+              "image_path": "figures/2610.07116/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 825
+            },
+            {
+              "caption": "Figure 9: Qualitative Results on Cross-Object Transfer under Matched Action Types.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 610,
+              "image_path": "figures/2610.07116/figure-005.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 825
+            },
+            {
+              "caption": "Figure 7: Additional qualitative comparisons on PhysTwin for reconstruction and resimulation (left) and future prediction (right). Red boxes highlight local deformation differences.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 801,
+              "image_path": "figures/2610.07116/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 825
+            },
+            {
+              "caption": "Figure 8: Qualitative Results on Cross-Action Transfer on the Same Object.",
+              "figure_id": "figure-8-5",
+              "figure_number": "8",
+              "height": 808,
+              "image_path": "figures/2610.07116/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 814
+            },
+            {
+              "caption": "Figure 6: Ablation study on double stretch zebra",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 194,
+              "image_path": "figures/2610.07116/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 825
+            },
+            {
+              "caption": "Table 6: Per-scene results on cross-action transfer. Each model is transferred from the source interaction to the target interaction without target-specific training. Best results within each transfer pair are shown in bold.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 361,
+              "image_path": "figures/2610.07116/table-009.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 848
+            },
+            {
+              "caption": "Table 2: Quantitative comparison on cross-action transfer and cross-object transfer on the PhysTwin benchmark. Best results are shown in bold. “–” indicates that transferring PhysTwin’s objectspecific spring-mass model requires additional adaptation beyond our evaluation protocol.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 129,
+              "image_path": "figures/2610.07116/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 826
+            },
+            {
+              "caption": "Table 4: Zero-shot transfer from PGND to PhysTwin. Best results are shown in bold.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 134,
+              "image_path": "figures/2610.07116/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 435
+            },
+            {
+              "caption": "Table 5: Quantitative comparison with PGND on unseen interaction prediction across six deformable object categories. Best results are shown in bold.",
+              "figure_id": "table-5-1",
+              "figure_number": "5",
+              "height": 380,
+              "image_path": "figures/2610.07116/table-012.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 836
+            },
+            {
+              "caption": "Table 8: Per-scene results on zero-shot transfer from PGND to PhysTwin. Best results within each scene are shown in bold.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 271,
+              "image_path": "figures/2610.07116/table-013.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 844
+            },
+            {
+              "caption": "Table 3: Generalization to held-out cloth scenes and unseen action types. Best results are shown in bold. “–” indicates unavailable ground-truth 3D tracking annotations.",
+              "figure_id": "table-3-13",
+              "figure_number": "3",
+              "height": 110,
+              "image_path": "figures/2610.07116/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 829
+            },
+            {
+              "caption": "Table 7: Per-scene results on cross-object transfer under matched action types. Best displayed results within each transfer pair are shown in bold.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 207,
+              "image_path": "figures/2610.07116/table-015.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 848
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.07116/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.07116",
+          "relevance": 8,
+          "selection_reason": "Soft-body simulation for deformable-object manipulation with learned prediction and transfer; fits robot manipulation and world-model prediction.",
+          "summary_status": "generated",
+          "title": "AIM: Adaptive Interaction Modeling Networks for Real-to-Sim Soft-Body Simulation",
+          "tldr": "AIM improves real-to-sim soft-body simulation by adaptively modeling local and global interactions, enabling more accurate and transferable deformation prediction.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "video-world-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "World action models jointly learn visual predictionand robot actions, providing a way to use observations ofscene evolution for policy learning. Their video and actionlosses, however, provide no explicit target for the geometricconsequences of a demonstrated action sequence. Moreover,visual features taken after temporal attention can contain futureobservations, making them unsuitable as the sole current visualinput to an auxiliary predictor. We introduce ACG-WAMand its auxiliary objective, the Action-Conditioned GeometricJoint-Embedding Predictive Architecture (ACG-JEPA), whichpredicts geometric features at several horizons from the currentobservation and intervening actions, using the future slot of afrozen VGGT encoding of each current and future image pairas the target. We apply this supervision from the head and wristcameras to a shared visual embedding before temporal mixing,and remove the teacher and auxiliary modules at inference.On 50 RoboTwin 2.0 tasks, ACG-WAM achieves 93.46%success in clean scenes, with the best randomized success(92.68%) and mean across both settings (93.07%) among thecompared methods; across three tasks on a real robot, itachieves 85.00% success and 91.67% partial completion score,exceeding Motus by 10.00 and 9.17 percentage points, respec-tively. Code:https://github.com/RoboOpus/ACG-WAM.Website:https://RoboOpus.github.io/ACG-WAM.",
+          "arxiv_id": "2610.06965",
+          "arxiv_url": "https://arxiv.org/abs/2610.06965",
+          "authors": [
+            "Jiangtao Liu",
+            "Zishang Xiang",
+            "Yage He",
+            "Lingguo Cui",
+            "Baihai Zhang",
+            "Runqi Chai",
+            "Senchun Chai"
+          ],
+          "bullets": [
+            "Addresses the lack of explicit geometric targets in existing world action models and avoids leakage from temporally mixed visual features.",
+            "Introduces ACG-JEPA, which predicts multi-horizon geometric features using frozen VGGT encodings of current–future image pairs as targets.",
+            "Applies the auxiliary supervision to shared head- and wrist-camera embeddings before temporal mixing; teacher and auxiliary modules are removed at inference.",
+            "Achieves 93.46% success in clean RoboTwin 2.0 scenes, 92.68% in randomized scenes, and 93.07% overall across 50 tasks.",
+            "On three real-robot tasks, reaches 85.00% success and 91.67% partial completion, outperforming Motus by 10.00 and 9.17 percentage points."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Training architecture of ACG-WAM. Motus predicts video and actions. The auxiliary predictor uses features of the current frame, demonstrated actions, and a horizon to predict the geometric target. Future images provide teacher targets without entering the student’s visual input. The auxiliary loss updates the shared patch embedding; the base losses train the backbone.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 512,
+              "image_path": "figures/2610.06965/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1049
+            },
+            {
+              "caption": "Fig. 5. Evaluation on a real robot across three manipulation tasks. The upper panels show success rate and partial completion score. Below, eight keyframes per task show execution from left to right; arrows indicate elapsed time.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 519,
+              "image_path": "figures/2610.06965/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1052
+            },
+            {
+              "caption": "Fig. 4. Successful ACG-WAM trajectories for Hanging Mug (top), Place A to B (Right) (middle), and Place Bread in Skillet (bottom) in randomized RoboTwin 2.0 scenes. Red boxes mark the manipulated objects in the first frame of each sequence.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 213,
+              "image_path": "figures/2610.06965/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 3. Construction of the geometric target with frozen VGGT. Each camera contributes an ordered pair of current and future images. The future slot is centered and pooled within each view before the three views are concatenated and normalized. The target branch is used only during training.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 173,
+              "image_path": "figures/2610.06965/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 510
+            },
+            {
+              "caption": "TABLE II SUCCESS RATE (SR) AND PARTIAL COMPLETION SCORE (PCS) ON THE REAL ROBOT (%). BEST RESULTS IN EACH COLUMN ARE BOLD.",
+              "figure_id": "table-II-5",
+              "figure_number": "II",
+              "height": 200,
+              "image_path": "figures/2610.06965/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1052
+            },
+            {
+              "caption": "TABLE III PREDICTION HORIZON ABLATION ON ROBOTWIN 2.0. VALUES ARE SUCCESS RATES (%).",
+              "figure_id": "table-III-3",
+              "figure_number": "III",
+              "height": 119,
+              "image_path": "figures/2610.06965/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 512
+            },
+            {
+              "caption": "TABLE IV TARGET AND ACTION CONDITIONING ABLATIONS ON ROBOTWIN 2.0. VALUES ARE SUCCESS RATES (%).",
+              "figure_id": "table-IV-4",
+              "figure_number": "IV",
+              "height": 119,
+              "image_path": "figures/2610.06965/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 512
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.06965/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.06965",
+          "relevance": 9,
+          "selection_reason": "Action-conditioned geometric world-action modeling for robot policy learning.",
+          "summary_status": "generated",
+          "title": "ACG-WAM: World-Action Modeling via Action-Conditioned Geometric Latent Prediction",
+          "tldr": "ACG-WAM improves robot policy learning by explicitly predicting the geometric consequences of actions from current visual observations and intervening actions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-05",
       "paper_count": 24,
       "papers": [
@@ -69503,5 +71641,5 @@
   "schema_version": 1,
   "subtopic_id": "interactive-world-models",
   "topic_id": "world-models",
-  "total_paper_count": 354
+  "total_paper_count": 365
 }

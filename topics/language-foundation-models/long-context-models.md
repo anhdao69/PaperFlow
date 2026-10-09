@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**103 papers total**
+**106 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-06 | [PHBA: Prefix-State Hybrid Block Attention](https://arxiv.org/abs/2610.08527) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | PHBA combines top-k block-sparse retrieval with compact prefix states to provide efficient, precise long-context modeling. | 8 | 8 |
+| 2026-10-06 | [UNREAL: Unifying Retrieval and Long-Context with a Single Model](https://arxiv.org/abs/2610.08463) | Language Foundation Models: LLM Memory, Long-Context Models | UNREAL uses a lightweight, model-internal evidence selector to unify corpus retrieval and long-context inference while keeping the LLM backbone frozen. | 8 | 8 |
+| 2026-10-06 | [WavePrune: One period is often enough for RoPE](https://arxiv.org/abs/2610.06963) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | WavePrune limits each RoPE channel to its first rotation period, reducing position aliasing while improving long-context quality and inference efficiency. | 8 | 8 |
 | 2026-10-05 | [Balancing Memory Pathways: Analyzing and Improving Memory Utilization in Hybrid LMs](https://arxiv.org/abs/2610.06750) | Language Foundation Models: LLM Memory, Long-Context Models | Hybrid language models underuse recurrent memory, but restricting attention’s context during auxiliary training improves coordination and benefits long-context and information-aggregation tasks. | 6 | 7 |
 | 2026-10-05 | [HLA: Expressive Hybrid Linear Attention via Chunk-Wise Dynamic Mixing](https://arxiv.org/abs/2610.05842) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | HLA makes linear attention more expressive for long contexts by dynamically routing queries to relevant historical chunks. | 8 | 8 |
 | 2026-10-05 | [Long-MDR: Long-Context Reinforcement Learning for Multimodal Deep-Research Agents](https://arxiv.org/abs/2610.05195) | Language Foundation Models: Long-Context Models | Long-MDR enables stable and efficient online RL for multimodal research agents operating across 128k-token contexts and 75+ tool interactions. | 8 | 8 |

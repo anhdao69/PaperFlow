@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**157 papers total**
+**162 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-06 | [DSV-Mem: Evaluating Multimodal Memory in Professional Workflows for MLLM Agents](https://arxiv.org/abs/2610.08102) | Adaptation and Memory: Embodied Memory | DSV-Mem benchmarks whether multimodal LLM agents can maintain and reconcile evolving visual information in professional workflows, finding that even strong baselines score below 45%. | 5 | 5 |
+| 2026-10-06 | [DAEDALUS: Bootstrapping Agent Memory from Self-Generated Tasks](https://arxiv.org/abs/2610.08048) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | DAEDALUS builds reusable agent memory through self-generated practice, improving task success without human-written tasks or oracle verifiers. | 7 | 8 |
+| 2026-10-06 | [MemCo: Memory-Centric Collaboration for Generalizing LLM Agents to Unseen Environments](https://arxiv.org/abs/2610.07376) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | MemCo helps LLM agents generalize to unseen interactive environments by combining environment-specific local memories with transferable global workflows. | 7 | 6 |
+| 2026-10-06 | [ProactiveVLA: Augmenting Embodied Memory through Proactive Environment Exploration](https://arxiv.org/abs/2610.06999) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | ProactiveVLA improves robot adaptation in new environments by proactively exploring useful object interactions and storing the verified experience in memory. | 9 | 8 |
+| 2026-10-06 | [Self-Evolving AI for Humanoids: Mechanisms, Safety, and Evaluation of Post-Deployment Self-Improvement](https://arxiv.org/abs/2609.13236) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Continual and Online Learning, Embodied Memory | This survey proposes a framework for enabling humanoid robots to improve after deployment while controlling physical risks and evaluating their evolution over time. | 8 | 6 |
 | 2026-10-05 | [MemPilot: Orchestrating On-Demand Multimodal Memory Curation for LLM Agents](https://arxiv.org/abs/2610.06830) | Adaptation and Memory: Embodied Memory; Language Foundation Models: LLM Memory | MemPilot uses reinforcement learning to dynamically curate multimodal agent memory, balancing performance, cost, and latency according to runtime preferences. | 9 | 9 |
 | 2026-10-05 | [VideoTapestry: Query-Adaptive Memory Refinement for Multi-Agent Long-Video Understanding](https://arxiv.org/abs/2610.06672) | Video Generation and Understanding: Video Understanding; Adaptation and Memory: Embodied Memory | VideoTapestry is a training-free multi-agent system that refines hierarchical video memory in response to a query, improving long-video question answering. | 7 | 7 |
 | 2026-10-05 | [From Social Reasoning to Embodied Interaction: An Agentic Framework for Social Robots](https://arxiv.org/abs/2610.05964) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | ARISE unifies social reasoning, engagement decisions, and coordinated physical expression to enable more natural human–robot interaction on the Sophia humanoid robot. | 7 | 7 |

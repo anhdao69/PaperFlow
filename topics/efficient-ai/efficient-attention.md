@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**196 papers total**
+**202 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-06 | [Backend-Agnostic Sparse Attention for Fast High-Resolution Visual Generation](https://arxiv.org/abs/2610.08772) | Efficient AI: Efficient Attention | BASA accelerates high-resolution DiT generation with shifted local-window attention that preserves cross-window communication without backend-specific kernels. | 8 | 7 |
+| 2026-10-06 | [Random Feature Gaussian Process Attention: Linear-Time Probabilistic Attention with Calibrated Uncertainty](https://arxiv.org/abs/2610.08578) | Efficient AI: Efficient Attention | RFF-GPA makes GP-based attention scalable to linear sequence-length complexity while improving uncertainty calibration without sacrificing predictive accuracy. | 7 | 7 |
+| 2026-10-06 | [PHBA: Prefix-State Hybrid Block Attention](https://arxiv.org/abs/2610.08527) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | PHBA combines top-k block-sparse retrieval with compact prefix states to provide efficient, precise long-context modeling. | 8 | 8 |
+| 2026-10-06 | [Hybrid Latent Attention for Looped Language Models](https://arxiv.org/abs/2610.07940) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Hybrid Latent Attention greatly reduces KV-cache costs in looped language models while preserving nearly all accuracy and substantially improving decoding throughput. | 8 | 8 |
+| 2026-10-06 | [Cleave: Scaling Tensor Program Optimization via Decoupled Algebraic Search and Operator Scheduling](https://arxiv.org/abs/2610.07742) | Efficient AI: Efficient Attention | Cleave speeds tensor-program optimization by separating symbolic algebraic transformation from concrete-shape operator scheduling, producing faster kernels with lower compilation cost. | 7 | 8 |
+| 2026-10-06 | [WavePrune: One period is often enough for RoPE](https://arxiv.org/abs/2610.06963) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | WavePrune limits each RoPE channel to its first rotation period, reducing position aliasing while improving long-context quality and inference efficiency. | 8 | 8 |
 | 2026-10-05 | [MC-Sparse: Deconstructing and Closing the Dense-Sparse Attention Gap in Diffusion Transformers](https://arxiv.org/abs/2610.06801) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | MC-Sparse accelerates diffusion-transformer denoising by selectively retaining key-value tokens while preserving dense-attention fidelity with negligible quality loss. | 9 | 8 |
 | 2026-10-05 | [HLA: Expressive Hybrid Linear Attention via Chunk-Wise Dynamic Mixing](https://arxiv.org/abs/2610.05842) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models, Long-Context Models | HLA makes linear attention more expressive for long contexts by dynamically routing queries to relevant historical chunks. | 8 | 8 |
 | 2026-10-05 | [LogSig-SSM: Time-Series Modelling with Multi-Scale Log-Signature Compression for State-Space Models](https://arxiv.org/abs/2610.05051) | Efficient AI: Efficient Attention | LogSig-SSM compresses irregular, high-frequency time series into multi-scale log-signature tokens before applying a selective state-space model, enabling efficient long-range modelling with reduced computational cost. | 7 | 8 |

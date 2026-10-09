@@ -1,6 +1,735 @@
 {
   "days": [
     {
+      "date": "2026-10-06",
+      "paper_count": 3,
+      "papers": [
+        {
+          "abstract": "Hybrid architectures combining linear sequence models with softmax attention provide an effective balance between efficient long-context modeling and precise token retrieval. Existing designs such as Native Hybrid Attention (NHA) combine compressed long-term states with sliding-window attention, but their exact attention is restricted to a fixed local window. In this work, we introduce Prefix-State Hybrid Block Attention (PHBA), which replaces local sliding-window attention with top-k block-sparse retrieval and couples each retrieved block with a compact prefix state summarizing its preceding context. The prefix states are constructed by a gated linear recurrence at block boundaries and retrieved together with the corresponding token blocks, allowing the model to combine precise long-range evidence with compressed historical context within a unified layer. We further develop a hardware-aware Triton implementation that streams routed token blocks and prefix states without materializing large intermediate tensors. Experiments show that PHBA improves long-context and retrieval performance over strong linear and hybrid baselines while retaining efficient training and inference.",
+          "arxiv_id": "2610.08527",
+          "arxiv_url": "https://arxiv.org/abs/2610.08527",
+          "authors": [
+            "Ruijie Li",
+            "Jiaxi Hu",
+            "Shiyu Wang",
+            "Yuxuan Liang"
+          ],
+          "bullets": [
+            "Replaces fixed sliding-window attention with top-k retrieval of relevant token blocks.",
+            "Pairs each retrieved block with a gated recurrent prefix state summarizing its preceding context.",
+            "Unifies precise long-range evidence with compressed historical context in a hybrid attention layer.",
+            "Uses a hardware-aware Triton implementation that streams blocks and states without large intermediate tensors.",
+            "Experiments report improved long-context and retrieval performance while retaining efficient training and inference."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of PHBA. The RoPE query qrope t first performs Top-K Block Routing to select relevant historical blocks. PHBA attends to the retrieved exact tokens with qrope",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 375,
+              "image_path": "figures/2610.08527/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 723
+            },
+            {
+              "caption": "Figure 3: Training efficiency on a single NVIDIA H20-96GB GPU. For MoBA and PHBA, both configurations maintain a fixed 1/8 sparse token budget: K = 4 dynamically adjusts the block size C, whereas C = 256 dynamically adjusts the number of routed blocks K. SWA (1/8) and NHA (1/8) similarly scale the window size with sequence length, while SWA and NHA use a fixed window size of 64. All state-based models use M = 128 memory slots. Zero throughput for NHA (1/8) denotes out-of-memory (OOM).",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 402,
+              "image_path": "figures/2610.08527/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 810
+            },
+            {
+              "caption": "Figure 2: Long-context results and ablations. (a)–(b) RULER/NIAH averages at 16K/32K/64K; (c) LongBench average. (d)–(f) Ablations of block granularity, prefix-state capacity, and gated state construction; (d) also reports throughput (1.3B, BS=1, 8K). Bars denote 16K/32K/64K results; shadows mark default settings.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 347,
+              "image_path": "figures/2610.08527/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 814
+            },
+            {
+              "caption": "Table 1: Short-context evaluation of 760M and 1.3B models. RULER/NIAH are evaluated at 4K and 8K and scaled by 100. Bold/underline denote best/second-best results. PHBA (default): M = C = 128, K = 8.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 839,
+              "image_path": "figures/2610.08527/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 821
+            },
+            {
+              "caption": "Table 2: Long-context evaluation on RULER, NIAH, and LongBench. Metrics are multiplied by 100. Bold and underline indicate the best and second-best results within each model scale, respectively. PHBA (origin) uses M = 128, C = 128, and K = 8.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 1250,
+              "image_path": "figures/2610.08527/table-005.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 844
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.08527/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.08527",
+          "relevance": 8,
+          "selection_reason": "Hybrid block-sparse attention with prefix states improves long-context retrieval and inference efficiency.",
+          "summary_status": "generated",
+          "title": "PHBA: Prefix-State Hybrid Block Attention",
+          "tldr": "PHBA combines top-k block-sparse retrieval with compact prefix states to provide efficient, precise long-context modeling.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context inference and Retrieval-Augmented Generation (RAG) handle evidence selection at vastly different scales, from a single long prompt to an entire corpus. We ask whether a single model-internal mechanism can select evidence across this range. We introduce UNifying REtrieval And Long-Context with a Single Model (UNREAL), a model-native evidence selection framework to span corpus retrieval and long-context inference. UNREAL encodes chunks and derives retrieval queries directly from the frozen LLM's internal representations. It adds fewer than 500K trainable parameters and leaves the backbone unchanged. On a 3B-token, 21M-chunk Wikipedia index, all four dense and hybrid UNREAL backbones outperform state-of-the-art retriever-reranker systems. The best model raises recall from 49.1% to 73.2% on HotpotQA, from 31.7% to 60.1% on 2WikiMultiHopQA, and from 8.8% to 14.4% on MuSiQue. Applied to long-context tasks, the same selection mechanism removes distractors before generation, raising NoLiMa accuracy from 1.0% to 24.83% at its maximum context length of 128K tokens, and LV-Eval's F1 score from 49.97% to 54.66% at 256K. UNREAL also reduces FLOPs and time-to-first-token relative to full-context inference from roughly 32K tokens onward, with larger gains as context grows. Together, these results establish model-internal evidence selection as a common foundation for corpus retrieval and evidence-sparse long-context inference.",
+          "arxiv_id": "2610.08463",
+          "arxiv_url": "https://arxiv.org/abs/2610.08463",
+          "authors": [
+            "Edan Kinderman",
+            "Elad Hoffer",
+            "Yochai Blau",
+            "Brian Chmiel",
+            "Ron Banner",
+            "Daniel Soudry",
+            "Boris Ginsburg"
+          ],
+          "bullets": [
+            "Addresses the challenge of selecting relevant evidence across both entire corpora and very long prompts.",
+            "Encodes document chunks and generates retrieval queries from the frozen LLM’s internal representations.",
+            "Adds fewer than 500K trainable parameters without changing the backbone.",
+            "Outperforms state-of-the-art retriever-reranker systems and substantially improves results on HotpotQA, 2WikiMultiHopQA, and MuSiQue.",
+            "Removes distractors in long-context tasks, improving NoLiMa and LV-Eval while reducing computation and time-to-first-token as context grows."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL",
+            "cs.IR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Exact match on question-answering as context length grows from 8K to 100M tokens. Full context evaluation is shown only until computationally infeasible. For retrieval-based methods, relevant context is first extracted from the input and then fed to the model to generate the answer. Unlike baselines that rely on external models, UNREAL leverages the frozen LLM’s internal representations to retrieve relevant context, maintaining the highest accuracy across long context lengths.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 886,
+              "image_path": "figures/2610.08463/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 995
+            },
+            {
+              "caption": "Figure 5: Substring exact-match on the RAG subset of the HELMET long context benchmark, with Nemotron-3.5-Lightning-30B-A3B and Qwen3.5-35B-A3B as generators. UNREAL outperforms full-context inference and other retrieval methods for both generators.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 224,
+              "image_path": "figures/2610.08463/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 655
+            },
+            {
+              "caption": "Figure 2: UNREAL trains retrieval tokens ρ and summation weights α (fire indicates training), while keeping the LLM frozen, enhancing its ability to identify relevant information in a context. Given a long context, these trained variables enable UNREAL to select relevant chunks and pass them to the same LLM for retrieval-augmented generation. Numbers indicate the order of operations.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 450,
+              "image_path": "figures/2610.08463/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 666
+            },
+            {
+              "caption": "Figure 6: Recall and accuracy on the NoLiMa benchmark for Nemotron-3-Nano. Left: The effect of the number of selected chunks n on UNREAL’s accuracy and recall. Right: Embeddings from the frozen LLM outperform random retrieval, motivating UNREAL, which is trained to enhance this capability.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 319,
+              "image_path": "figures/2610.08463/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 814
+            },
+            {
+              "caption": "Figure 4: Left: NoLiMa accuracy across context lengths (4K–128K tokens) using Nemotron-3Nano. Right: LV-Eval F1 across context lengths (16K–256K words, averaged over LooGLE-SD and MultiFieldQA-en) using Nemotron-3.5-Lightning. In both cases, full-context performance degrades as context grows, whereas UNREAL achieves the highest performance.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 280,
+              "image_path": "figures/2610.08463/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 735
+            },
+            {
+              "caption": "Figure 9: Average recall@10 on 21M Wiki-2018 chunks across 8 datasets. Bars show means with 95% BCa confidence intervals.",
+              "figure_id": "figure-9-17",
+              "figure_number": "9",
+              "height": 370,
+              "image_path": "figures/2610.08463/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 822
+            },
+            {
+              "caption": "Figure 10: Average recall@20 on 21M Wiki-2018 chunks across 8 datasets. Bars show means with 95% BCa confidence intervals.",
+              "figure_id": "figure-10-13",
+              "figure_number": "10",
+              "height": 370,
+              "image_path": "figures/2610.08463/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 820
+            },
+            {
+              "caption": "Figure 12: LOFT generation. (a) All selective budgets outperform full-context reading. (b) Performance by dataset at n = 10 against gold-only context. We use each dataset’s designated LOFT metric.",
+              "figure_id": "figure-12-7",
+              "figure_number": "12",
+              "height": 279,
+              "image_path": "figures/2610.08463/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 817
+            },
+            {
+              "caption": "Figure 13: Measured time-to-first-token, baseline vs. UNREAL, for all four backbones (random weights/inputs, served with vLLM on an NVIDIA H100, bf16). Solid markers are directly measured; the dashed baseline segment is a FLOPs-scaled projection past the point where a single fullcontext forward pass exceeds our measurement budget or the available KV cache. Dotted vertical connectors mark the speedup (baseline time / UNREAL time) at a few representative context lengths, read directly off the time gap between the two curves.",
+              "figure_id": "figure-13-3",
+              "figure_number": "13",
+              "height": 429,
+              "image_path": "figures/2610.08463/figure-009.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 812
+            },
+            {
+              "caption": "Figure 11: Distractor identity matters. With the gold chunk always present, retrieved distractors cause more interference than the same number of random distractors, and the gap grows with the budget.",
+              "figure_id": "figure-11-8",
+              "figure_number": "11",
+              "height": 262,
+              "image_path": "figures/2610.08463/figure-010.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 468
+            },
+            {
+              "caption": "Figure 8: Complete-evidence recall@20 on 21M Wiki-2018 chunks across 8 datasets; an example is correct only when all annotated evidence chunks are retrieved. Bars show means with 95% BCa confidence intervals.",
+              "figure_id": "figure-8-16",
+              "figure_number": "8",
+              "height": 159,
+              "image_path": "figures/2610.08463/figure-011.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 822
+            },
+            {
+              "caption": "Table 2: Exact match (EM) and macro-averaged F1 on three QA datasets, generated by Qwen3.535B-A3B under each retrieval method’s top-5 retrieved context. “Oracle” denotes the upper-bound result, obtained by answering the question based only on the oracle chunks.",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 331,
+              "image_path": "figures/2610.08463/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 652
+            },
+            {
+              "caption": "Table 1: Exact match (EM) and macro-averaged F1 on three multi-hop QA datasets, generated by Nemotron-3.5-Lightning under each retrieval method’s top-5 retrieved context. UNREAL achieves the highest EM and F1 scores across all three datasets while relying on a single LLM for both retrieval and generation.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 305,
+              "image_path": "figures/2610.08463/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 606
+            },
+            {
+              "caption": "Table 3: Recipe ablation for UNREAL-Nemotron-3.5-Lightning-30B-A3B, single-knob departures from the main method. R is the number of retrieval tokens; G is the number of groups they are mean-pooled into on the query side; ML (multi-layer) vs. SL (single-layer) is whether the readout combines all 6 global-attention blocks or only the block used for the corpus readout; HN is the number of hard negatives per query; |C0(x)| is the number of BM25-retrieved context chunks prepended to the query; P is the number of learnable soft prompt tokens used at the beginning of the sequence. Avg. R@10 is recall averaged over each query’s oracle chunks; All R@10 requires every oracle chunk to be retrieved.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 275,
+              "image_path": "figures/2610.08463/table-014.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 736
+            },
+            {
+              "caption": "Table 4: Ablation on the layer used to create the corpus chunk embeddings, for UNREALNemotron-3.5-Lightning-30B-A3B.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 201,
+              "image_path": "figures/2610.08463/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 656
+            },
+            {
+              "caption": "Table 5: Effect of the number of pooled vectors per corpus chunk Lp on retrieval recall@10, for UNREAL-Nemotron-3.5-Lightning-30B-A3B. Avg. R@10 is the recall averaged over each query’s oracle chunks; All R@10 requires every oracle chunk of a query to be retrieved. Recall increases monotonically with Lp, but at the cost of higher memory and compute during evaluation.",
+              "figure_id": "table-5-15",
+              "figure_number": "5",
+              "height": 159,
+              "image_path": "figures/2610.08463/table-016.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 790
+            },
+            {
+              "caption": "Table 6: Approximate break-even context length N∗ (tokens; equation 10), with T = 141, Tq = Tg = T , and |xret| = 910. Θ counts active non-embedding matrix parameters.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 144,
+              "image_path": "figures/2610.08463/table-017.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 677
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.08463/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.08463",
+          "relevance": 8,
+          "selection_reason": "Unifies retrieval and long-context evidence selection in a single LLM-native mechanism; directly relevant to long-context and LLM memory.",
+          "summary_status": "generated",
+          "title": "UNREAL: Unifying Retrieval and Long-Context with a Single Model",
+          "tldr": "UNREAL uses a lightweight, model-internal evidence selector to unify corpus retrieval and long-context inference while keeping the LLM backbone frozen.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Rotary Position Embedding (RoPE) encodes token positions by rotating each two-dimensional channel of the query and key vectors at a channel-specific frequency, making the attention logits invariant to a common shift of positions. However, this rotation is periodic, and it leads to position aliasing where relative positions separated by a full rotation period become hard to tell apart. To address this, we propose WavePrune, which restricts each channel to its first rotation period. We show that it removes the distractions in attention maps created by position aliasing and improves overall long-context performance. Specifically, WavePrune raises the HELMET score on four of five models we test without any extra tuning (e.g., 35.7 -> 40.0 on Qwen3-8B). When pretraining models from scratch, WavePrune also achieves lower validation loss at extrapolated lengths than pretraining without it. Because WavePrune restricts each channel to a sliding window, it induces a fine-grained sparsity that our hardware-aligned CUDA kernels exploit for 1.15x prefill and 1.24x decoding speedups over FlashAttention-2 at 32K context. Together, these results show that RoPE's periodic structure, widely regarded as essential, is largely redundant beyond the first rotation period.",
+          "arxiv_id": "2610.06963",
+          "arxiv_url": "https://arxiv.org/abs/2610.06963",
+          "authors": [
+            "Guancheng Du",
+            "Luotian Huang",
+            "Shaowen Wang",
+            "Si Li",
+            "Kaifeng Lyu"
+          ],
+          "bullets": [
+            "RoPE’s periodic rotations can make positions separated by a full period difficult to distinguish.",
+            "WavePrune restricts each channel to a sliding window covering only its first rotation period.",
+            "It improves HELMET scores on four of five tested models without extra tuning and lowers extrapolated-length validation loss during pretraining from scratch.",
+            "Hardware-aligned CUDA kernels achieve 1.15× faster prefilling and 1.24× faster decoding than FlashAttention-2 at 32K context.",
+            "The approach suggests RoPE information beyond the first rotation period is largely redundant; results are evaluated on five models and specific long-context settings."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.SD"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: In WavePrune, we restrict each channel to its first RoPE period, which removes several “ghost” sub-diagonals in the Qwen3-8B attention map. See Appendix I.1 for details.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 296,
+              "image_path": "figures/2610.06963/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 820
+            },
+            {
+              "caption": "Figure 6: Length-extrapolated validation loss of GPT2-large (left), GPT2-medium (middle), and GPT2-base (right) on OpenWebText during pretraining. Training data has length 2048 and validation data has length 4096. Across all model scales, the models trained and evaluated with WavePrune consistently outperform the baselines at the extrapolated context length of 4096.",
+              "figure_id": "figure-6-31",
+              "figure_number": "6",
+              "height": 248,
+              "image_path": "figures/2610.06963/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 781
+            },
+            {
+              "caption": "Figure 8: Ablation studies of WavePrune on HELMET using Qwen3-8B at 32K context length. (a) Effect of the pruning coefficient α and comparison between the exact and approximated versions of WavePrune. (b) Effect of pruning different numbers of channels on ICL performance.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 307,
+              "image_path": "figures/2610.06963/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 784
+            },
+            {
+              "caption": "Figure 10: Attention logit decay over distance for standard RoPE (left) and WavePrune (right) under the setting of Su et al. (2024). Standard RoPE exhibits chaotic fluctuations that hinder long-range modeling, whereas WavePrune yields a stable, near-monotonic decay.",
+              "figure_id": "figure-10-8",
+              "figure_number": "10",
+              "height": 315,
+              "image_path": "figures/2610.06963/figure-004.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 752
+            },
+            {
+              "caption": "Figure 2: Conceptual comparison between the conventional token-level mask (e.g., sliding window mask), WavePrune’s channel-wise mask, and its group-wise approximation. We use the group-wise approximation in our efficient implementation of WavePrune, FlashWavePrune (Section 3.3).",
+              "figure_id": "figure-2-24",
+              "figure_number": "2",
+              "height": 289,
+              "image_path": "figures/2610.06963/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 680
+            },
+            {
+              "caption": "Figure 7: Length-extrapolated validation loss curves for the Tetranacci (left, for short-range dependencies) and NIAH (right, for long-range dependencies) tasks. Training set has length 2048 and validation set has length 4096. WavePrune significantly improves length extrapolation in both tasks.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 249,
+              "image_path": "figures/2610.06963/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 584
+            },
+            {
+              "caption": "Figure 4: Illustration of position aliasing in a single RoPE channel. Left: rotated query φi(q) and keys φj(k) on the unit circle; keys three positions apart nearly coincide (e.g., φi−1(k) ≈ φi−4(k)) as their rotation angles differ by almost 2π. Right: the attention logits Li,j are therefore near-periodic with period 3 (e.g., Li,i−1 ≈ Li,i−4).",
+              "figure_id": "figure-4-36",
+              "figure_number": "4",
+              "height": 279,
+              "image_path": "figures/2610.06963/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 514
+            },
+            {
+              "caption": "Figure 3: When tuning the pruning coefficient α in the exact version of WavePrune, the HELMET score peaks slightly below α = 2 (one period) and declines beyond it. The experiment is conducted on Qwen3-8B with 32K context.",
+              "figure_id": "figure-3-25",
+              "figure_number": "3",
+              "height": 261,
+              "image_path": "figures/2610.06963/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 375
+            },
+            {
+              "caption": "Figure 16: Attention scores in Ministral3-3B’s layer 0. (a-b) Layer-wide attention scores. In the original model (a), attention is scattered across multiple ghost sub-diagonals. WavePrune (b) effectively eliminates these artifacts, allowing attention to concentrate on the intended lags. (c-d) We use head 23 as an example to illustrate the elimination of ghost sub-diagonals after applying WavePrune.",
+              "figure_id": "figure-16-26",
+              "figure_number": "16",
+              "height": 1169,
+              "image_path": "figures/2610.06963/figure-009.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 806
+            },
+            {
+              "caption": "Figure 17: Attention scores in Qwen3-8B’s layer 32. (a-b) Layer-wide attention scores. In the original model (a), attention is scattered across multiple ghost sub-diagonals. WavePrune (b) effectively eliminates these artifacts, allowing attention to concentrate on the intended lags. (c-d) We use head 12 as an example to illustrate the elimination of ghost sub-diagonals after applying WavePrune.",
+              "figure_id": "figure-17-32",
+              "figure_number": "17",
+              "height": 1169,
+              "image_path": "figures/2610.06963/figure-010.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 806
+            },
+            {
+              "caption": "Figure 18: Attention scores in Ministral3-3B’s layer 1. (a-b) Layer-wide attention scores. In the original model (a), attention is scattered across multiple ghost sub-diagonals. WavePrune (b) effectively eliminates these artifacts, allowing attention to concentrate on the intended lags. (c-d) We use head 17 as an example to illustrate the elimination of ghost sub-diagonals after applying WavePrune.",
+              "figure_id": "figure-18-3",
+              "figure_number": "18",
+              "height": 1169,
+              "image_path": "figures/2610.06963/figure-011.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 806
+            },
+            {
+              "caption": "Figure 15: Attention scores in Qwen3-8B’s layer 0. (a-b) Layer-wide attention scores. In the original model (a), attention is scattered across multiple ghost sub-diagonals. WavePrune (b) effectively eliminates these artifacts, allowing attention to concentrate on the intended lags. (c-d) We use head 20 as an example to illustrate the elimination of ghost sub-diagonals after applying WavePrune.",
+              "figure_id": "figure-15-19",
+              "figure_number": "15",
+              "height": 1168,
+              "image_path": "figures/2610.06963/figure-012.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 806
+            },
+            {
+              "caption": "Figure 9: Two example grids of (splitL,splitR) branches. Blue squares denote reachable branches; gray squares denote unreachable ones. Note that the reachable set depends on {d′g}; we set the model’s RoPE base θ to 104 here for illustration.",
+              "figure_id": "figure-9-2",
+              "figure_number": "9",
+              "height": 291,
+              "image_path": "figures/2610.06963/figure-013.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 596
+            },
+            {
+              "caption": "Figure 12: Validation loss versus sequence length under different RoPE base frequencies θ. WavePrune attains lower validation loss than the baseline across all tested θ.",
+              "figure_id": "figure-12-6",
+              "figure_number": "12",
+              "height": 294,
+              "image_path": "figures/2610.06963/figure-014.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 746
+            },
+            {
+              "caption": "Figure 11: Negative log-likelihoods (NLL) of Qwen3-8B averaged over 100 PG19 samples at (a) 32K context length without YaRN and (b) 128K context length with YaRN. In (a), the NLL curves nearly coincide; in (b), WavePrune has a lower NLL than the original model.",
+              "figure_id": "figure-11-7",
+              "figure_number": "11",
+              "height": 247,
+              "image_path": "figures/2610.06963/figure-015.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 742
+            },
+            {
+              "caption": "Figure 5: Head-dimension groups are partitioned into three regions with distinct compute paths.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 146,
+              "image_path": "figures/2610.06963/figure-016.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 790
+            },
+            {
+              "caption": "Figure 19: Channel-wise decomposition of attention logits for Qwen3-8B, layer 0 head 20 (centered by subtracting the mean logit value).",
+              "figure_id": "figure-19-12",
+              "figure_number": "19",
+              "height": 550,
+              "image_path": "figures/2610.06963/figure-017.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 548
+            },
+            {
+              "caption": "Figure 21: Channel-wise decomposition of attention logits for Qwen3-8B, layer 0 head 6 (centered by subtracting the mean logit value).",
+              "figure_id": "figure-21-23",
+              "figure_number": "21",
+              "height": 550,
+              "image_path": "figures/2610.06963/figure-018.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 548
+            },
+            {
+              "caption": "Figure 20: Channel-wise decomposition of attention logits for Qwen3-8B, layer 0 head 20 after applying WavePrune (centered by subtracting the mean logit value).",
+              "figure_id": "figure-20-13",
+              "figure_number": "20",
+              "height": 548,
+              "image_path": "figures/2610.06963/figure-019.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 548
+            },
+            {
+              "caption": "Figure 22: Channel-wise decomposition of attention logits for Qwen3-8B, layer 0 head 6 after applying WavePrune (centered by subtracting the mean logit value).",
+              "figure_id": "figure-22-22",
+              "figure_number": "22",
+              "height": 548,
+              "image_path": "figures/2610.06963/figure-020.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 548
+            },
+            {
+              "caption": "Figure 13: Training loss of GPT2-large (left), GPT2-medium (middle), and GPT2-base (right).",
+              "figure_id": "figure-13-18",
+              "figure_number": "13",
+              "height": 232,
+              "image_path": "figures/2610.06963/figure-021.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 730
+            },
+            {
+              "caption": "Figure 14: Attention maps under constant queries and keys (qi = ki = 1; N = 1024, dh = 64, θ = 104), where the intended lag is 0 (i.e., each token should attend only to itself). RoPE alone produces many ghost sub-diagonals (left); WavePrune suppresses these artifacts and recovers a clean attention map (right).",
+              "figure_id": "figure-14-14",
+              "figure_number": "14",
+              "height": 265,
+              "image_path": "figures/2610.06963/figure-022.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 582
+            },
+            {
+              "caption": "Table 1: Results on the HELMET benchmark; metrics are averaged across the 64K and 128K context splits. We report cross-task averages and standard deviations (gray) to account for task-level variance. Despite pruning a significant portion of the attention computation, WavePrune maintains or improves performance on most models (Ministral3-3B, Qwen3-8B, Gemma3-12B, Qwen3-32B). Conversely, performance degrades when applying WavePrune to Llama3.1-8B.",
+              "figure_id": "table-1-21",
+              "figure_number": "1",
+              "height": 380,
+              "image_path": "figures/2610.06963/table-023.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 766
+            },
+            {
+              "caption": "Table 14: Average attention scores to the “magic number” for each retrieval head (Wu et al., 2025), evaluated on samples from the NIAH validation set. We select the first eight retrieval heads of each model, sorted by layer and head index. For each validation set sample, we report the average attention allocated to tokens near the magic number (distance ≤ 5) from tokens in the final answer span. Notably, the WavePrune model’s retrieval heads are consistently activated across different samples, while the baseline model’s heads frequently fail to attend to the magic number at all.",
+              "figure_id": "table-14-17",
+              "figure_number": "14",
+              "height": 329,
+              "image_path": "figures/2610.06963/table-024.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 744
+            },
+            {
+              "caption": "Table 7: Results on general benchmarks.",
+              "figure_id": "table-7-33",
+              "figure_number": "7",
+              "height": 413,
+              "image_path": "figures/2610.06963/table-025.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 770
+            },
+            {
+              "caption": "Table 8: HELMET results at the 64K context split.",
+              "figure_id": "table-8-34",
+              "figure_number": "8",
+              "height": 379,
+              "image_path": "figures/2610.06963/table-026.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 688
+            },
+            {
+              "caption": "Table 9: HELMET results at the 128K context split.",
+              "figure_id": "table-9-35",
+              "figure_number": "9",
+              "height": 379,
+              "image_path": "figures/2610.06963/table-027.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 688
+            },
+            {
+              "caption": "Table 5: Properties of LLMs used in long-context evaluation.",
+              "figure_id": "table-5-20",
+              "figure_number": "5",
+              "height": 252,
+              "image_path": "figures/2610.06963/table-028.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 830
+            },
+            {
+              "caption": "Table 6: Training hyperparameters for the GPT-2 series pretraining experiments.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 681,
+              "image_path": "figures/2610.06963/table-029.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 522
+            },
+            {
+              "caption": "Table 11: Full comparison between FA2 and WavePrune latency across prefill and decode. We use the same setting as Section 4.4, except that sequence lengths extend to 128K.",
+              "figure_id": "table-11-27",
+              "figure_number": "11",
+              "height": 575,
+              "image_path": "figures/2610.06963/table-030.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 522
+            },
+            {
+              "caption": "Table 2: Percentile-based attention score statistics for Qwen3-8B layer 0 head 20 across different position lags (∆). We compute attention scores for each of the 100 PG19 samples, extract the percentiles for each sub-diagonal, and then average these percentiles. The ∆ = 1 sub-diagonal exhibits significantly higher attention scores, confirming a slash-dominant pattern with ∆ = 1.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 128,
+              "image_path": "figures/2610.06963/table-031.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 522
+            },
+            {
+              "caption": "Table 10: Validation loss of GPT2-medium and GPT2-large on OpenWebText at lengths 2048 and 4096. “Pretraining” indicates whether WavePrune is enabled during pretraining, and “Eval” indicates whether WavePrune is enabled during evaluation.",
+              "figure_id": "table-10-28",
+              "figure_number": "10",
+              "height": 209,
+              "image_path": "figures/2610.06963/table-032.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 790
+            },
+            {
+              "caption": "Table 3: Ablation of WavePrune kernel optimizations. Each entry reports the runtime ratio relative to the final optimized kernel at sequence length 32768; larger values indicate slower execution. Since our prefill implementation does not use suffix-only K loading, these entries are marked as N/A.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 153,
+              "image_path": "figures/2610.06963/table-033.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 732
+            },
+            {
+              "caption": "Table 13: Average attention scores to neighboring tokens (distance ≤ 15), averaged across all 12 GPT2-base layers, evaluated on the Tetranacci training (length 2048) and validation (length 4096) sets. WavePrune assigns more attention mass to neighboring tokens at both lengths and retains more of it at the extrapolated length, indicating it better preserves local attention under length extrapolation.",
+              "figure_id": "table-13-16",
+              "figure_number": "13",
+              "height": 101,
+              "image_path": "figures/2610.06963/table-034.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 610
+            },
+            {
+              "caption": "Table 4: Backward kernel latencies. Overhead refers to the latency increase of WavePrune over FA2.",
+              "figure_id": "table-4-30",
+              "figure_number": "4",
+              "height": 124,
+              "image_path": "figures/2610.06963/table-035.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 482
+            },
+            {
+              "caption": "Table 12: Channel IDs and their wavelengths in Qwen3-8B. These wavelengths serve as the pruning thresholds in FlashWavePrune.",
+              "figure_id": "table-12-29",
+              "figure_number": "12",
+              "height": 73,
+              "image_path": "figures/2610.06963/table-036.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 798
+            }
+          ],
+          "first_seen_at": "2026-10-06T21:00:00-04:00",
+          "hero_figure": "figures/2610.06963/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.06963",
+          "relevance": 8,
+          "selection_reason": "Improves RoPE long-context performance and yields attention sparsity speedups, directly relevant to long-context models and efficient attention.",
+          "summary_status": "generated",
+          "title": "WavePrune: One period is often enough for RoPE",
+          "tldr": "WavePrune limits each RoPE channel to its first rotation period, reducing position aliasing while improving long-context quality and inference efficiency.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-05",
       "paper_count": 8,
       "papers": [
@@ -22202,5 +22931,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 103
+  "total_paper_count": 106
 }
