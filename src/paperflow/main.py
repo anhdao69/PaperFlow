@@ -19,7 +19,11 @@ from paperflow.figures.extract import (
     FigureProductionSettings,
     resolve_executable_command,
 )
-from paperflow.llm.openrouter import OpenRouterClient, UrllibJsonTransport
+from paperflow.llm.openrouter import (
+    OpenRouterClient,
+    OpenRouterHTTPError,
+    UrllibJsonTransport,
+)
 from paperflow.observability import create_run_id, structured_event
 from paperflow.pipeline import PipelineDependencies, run_pipeline
 
@@ -71,7 +75,10 @@ def main(argv: list[str] | None = None) -> int:
             maintenance_only=arguments.maintenance_only,
         )
     except Exception as error:
-        structured_event("run_failed", error_type=type(error).__name__)
+        fields: dict[str, object] = {"error_type": type(error).__name__}
+        if isinstance(error, OpenRouterHTTPError):
+            fields["http_status"] = error.status
+        structured_event("run_failed", **fields)
         return 1
     return 0
 
