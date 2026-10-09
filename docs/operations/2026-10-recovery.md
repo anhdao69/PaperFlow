@@ -22,9 +22,10 @@ consistent with the evening announcement and delayed original runs.
 | 2026-10-08 | 1082 | 794 | Preserved live RSS, including 1630 raw entries |
 
 New and cross-listed papers are included. Replacements are retained in the
-preserved RSS snapshot but excluded by the existing normalizer. Source IDs
-preserve evidenced versions; historical metadata is refetched at its current
-version, not forcibly changed to v1.
+preserved RSS snapshot but excluded by the existing normalizer. Preserved RSS IDs retain their evidenced versions. Historical metadata is
+fetched from the official OAI-PMH bulk service after Atom queries were rate
+limited. The OAI arXiv format exposes latest metadata without a version number;
+those reconstructed source IDs remain unversioned, rather than inventing v1.
 
 The original failed runs did not archive their feeds. October 6's original log
 reported 1234 candidates versus 837 in today's dated listing. Therefore this is
@@ -34,7 +35,9 @@ log counts. All five October 9 listing ID sets also match their RSS exactly.
 
 The source archive and input manifest preserve full listing/RSS bytes,
 checksums, per-category counts, exact dated IDs and announcement types.
-Preparation runs with read-only repository access and no OpenRouter secret.
+The Atom preparation workflow runs with read-only repository access and no
+OpenRouter secret; its failed attempt published nothing. Final reconstructed
+inputs use the separately preserved OAI-PMH pages and exact-ID coverage audit.
 Require successful preparation and validation of every snapshot before use;
 a partial diagnostic artifact is not a successful preparation result.
 
