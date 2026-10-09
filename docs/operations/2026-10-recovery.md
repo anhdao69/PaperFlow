@@ -12,7 +12,7 @@ taxonomy, atomic-write and generated-output validation still apply.
 
 ## Historical inputs
 
-Publication dates October 6,7,8 map to arXiv listing dates October 7,8,9,
+Publication dates October 6, 7, 8 map to arXiv listing dates October 7, 8, 9,
 consistent with the evening announcement and delayed original runs.
 
 | Publication | Dated-list rows | Unique candidates | Input source |
@@ -43,7 +43,15 @@ a partial diagnostic artifact is not a successful preparation result.
 
 ## Execution gates
 
-Choose the explicit recovery_date in PaperFlow Daily. --source-snapshot
+Run the manual Recover October 6-8 workflow to execute all three dates in order.
+Each job reuses PaperFlow Daily, waits for the previous day to succeed, and
+checks out the latest main branch to read its committed state. GitHub Pages
+deploys after the entire recovery workflow succeeds. Normal scheduled/manual
+runs are blocked while the committed state is October 5, 6 or 7, preventing
+current RSS from interfering between recovery jobs. If a day fails, rerun the
+failed jobs; restarting the whole chain after an earlier day committed is
+intentionally rejected by the next-date check. For an individual retry,
+choose the explicit recovery_date in PaperFlow Daily. --source-snapshot
 requires scheduled semantics and validates the next due publication date,
 announcement date, configured category order and candidate count before
 publication changes. It never fetches current RSS during replay. Process and
