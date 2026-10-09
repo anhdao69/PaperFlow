@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**211 papers total**
+**215 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-07 | [GRACE: Generation-aware latent compression for efficient video generation](https://arxiv.org/abs/2610.10524) | Video Generation and Understanding: Video Diffusion; Efficient AI | GRACE compresses video latents while preserving compatibility with a pretrained diffusion transformer, enabling substantially faster generation without degrading VBench quality. | 8 | 7 |
+| 2026-10-07 | [Real-Time Joint Audio-Video Generation by Parallel Adapter Composition](https://arxiv.org/abs/2610.10343) | Video Generation and Understanding: Video Diffusion; Efficient AI | Parallel composition of causal and few-step adapters enables real-time streaming joint audio-video diffusion without joint training. | 7 | 7 |
+| 2026-10-07 | [Beyond Masks and Trajectories: Flow-Guided Latent Action Injection for Stable Surgical Video Generation](https://arxiv.org/abs/2610.09800) | World Models: Latent Action Models; Video Generation and Understanding: Video Diffusion | FLAIR enables text-only generation of clinically plausible surgical videos by injecting flow-guided latent action representations into a frozen video model. | 7 | 7 |
+| 2026-10-07 | [RobotAPO: Adversarial Physics Preference Optimization for Robotic Manipulation Video Generation](https://arxiv.org/abs/2610.09454) | Embodied AI: Robot Learning and Manipulation; Video Generation and Understanding: Video Diffusion | RobotAPO improves robotic manipulation video generation by adversarially correcting localized physics violations, yielding better physical consistency and real-robot task success. | 7 | 8 |
 | 2026-10-06 | [ALIVE: Interaction-Aligned Object Insertion for First-Frame-Guided Video Editing](https://arxiv.org/abs/2610.08779) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Diffusion | ALIVE enables inserted video objects to participate coherently in scene interactions using only an edited first frame and an object-naming instruction. | 7 | 7 |
 | 2026-10-06 | [CtrlCache: Accelerating Interactive Video World Models with Control-Aware Caching](https://arxiv.org/abs/2610.08777) | World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion; Efficient AI | CtrlCache speeds up interactive video world models by using upcoming user controls to decide when to reuse denoising computations while preserving generation quality. | 9 | 8 |
 | 2026-10-06 | [WorldSonus: Bringing Sound to Worlds](https://arxiv.org/abs/2610.08760) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion, Video Understanding | WorldSonus generates controllable, spatially aligned stereo sound in real time for interactive visual world models. | 7 | 8 |

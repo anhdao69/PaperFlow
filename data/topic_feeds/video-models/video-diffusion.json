@@ -1,6 +1,733 @@
 {
   "days": [
     {
+      "date": "2026-10-07",
+      "paper_count": 4,
+      "papers": [
+        {
+          "abstract": "Highly compressed video autoencoders offer an effective way to accelerate video diffusion models, as the Diffusion Transformer (DiT) operates on far fewer tokens. However, such autoencoders are challenging to train, since a higher compression ratio degrades reconstruction quality and recovering it requires more channels, which is known to slow the convergence of the DiT. The compressed latent also differs from the one the DiT was trained on, so the pretrained DiT must be either retrained from scratch or adapted at considerable cost. Compressing the autoencoder the DiT was trained with appears to preserve compatibility, yet optimizing it for reconstruction alone still shifts the latent away from the distribution the DiT has learned. To address this, we propose Generation-Aware Latent Compression for Efficient Video Generation (GRACE), a two-stage framework that compresses a pretrained video autoencoder while keeping it compatible with the pretrained DiT. Specifically, we keep a frozen base latent from the pretrained encoder and learn a residual latent for the information lost under stronger compression, while aligning the compressed latent with the pretrained latent in the feature space of the frozen DiT so that the autoencoder is optimized for generation. We then adapt the DiT with lightweight fine-tuning and asymmetric denoising, where the base is denoised ahead of the residual. GRACE reduces the token count of Wan2.1-I2V-14B by 8x and its latency by 11.1x at 480x832x81, while matching the generation quality of the pretrained pipeline before compression on VBench.",
+          "arxiv_id": "2610.10524",
+          "arxiv_url": "https://arxiv.org/abs/2610.10524",
+          "authors": [
+            "Jiyoung Kim",
+            "Paul Hyunbin Cho",
+            "Jisu Nam",
+            "Donghoon Lee",
+            "Hyunsung Go",
+            "Yeonkyeong Lee",
+            "Hansaem Kim",
+            "Seungryong Kim"
+          ],
+          "bullets": [
+            "Highly compressed video autoencoders reduce DiT token counts but can harm reconstruction quality and shift latents away from the pretrained DiT distribution.",
+            "GRACE preserves a frozen base latent and learns a residual latent to recover information lost through compression.",
+            "It aligns compressed latents in the frozen DiT’s feature space, optimizing the autoencoder for generation rather than reconstruction alone.",
+            "Lightweight DiT fine-tuning with asymmetric denoising processes the base latent ahead of the residual.",
+            "On Wan2.1-I2V-14B at 480×832×81, GRACE achieves 8× fewer tokens and 11.1× lower latency while matching pre-compression quality on VBench."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overall architecture. Stage 1 trains the autoencoder. The frozen encoder E maps the downsampled input to zbase, the residual encoder Eres maps the full-resolution input to zres, and D̂ decodes both, while Lalign matches the compressed latent to the pretrained latent inside the frozen DiT. The dashed box on the right of Stage 1 shows a simplified view of the blocks added to Eres and D̂. Stage 2 adapts the DiT to the compressed latent with LoRA, denoising zbase at a lower noise level than zres at every step, so the base is denoised first.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 515,
+              "image_path": "figures/2610.10524/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 806
+            },
+            {
+              "caption": "Figure A.1: Detailed autoencoder architecture. Eres adds a downsampling stage between its middle blocks and head, consisting of residual blocks and a strided causal convolution, paired with a parameter-free shortcut that folds space and time into channels.",
+              "figure_id": "figure-A.1-9",
+              "figure_number": "A.1",
+              "height": 291,
+              "image_path": "figures/2610.10524/figure-002.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 562
+            },
+            {
+              "caption": "Figure 3: Effect of the dual latent and Lalign. (a) single latent, (b) dual-latent representation without Lalign, and (c) ours, all generated at 480×832×81. (Left) latent distribution, projected with t-SNE and colored by kernel density, with its uniformity metrics (Yao et al., 2025) and the total VBench (Huang et al., 2023; 2024) score below, followed by T2V samples generated after Stage 2. (Right) spatio-temporal structure of the latent, shown as its principal components mapped to RGB under the input frames. More samples are in Figs. I.11 and I.12.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 329,
+              "image_path": "figures/2610.10524/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Denoising order. Each row shows the sampling steps of zbase and zres (Left) and the generated frames (Right), with τ = 1 pure noise and τ = 0 clean. (Top) Both parts are denoised at the same noise level. (Bottom) zbase stays δ ahead of zres in schedule time u (Eq. 11) at every step.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 199,
+              "image_path": "figures/2610.10524/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 417
+            },
+            {
+              "caption": "Figure D.1: User study interface for T2V samples.",
+              "figure_id": "figure-D.1-6",
+              "figure_number": "D.1",
+              "height": 548,
+              "image_path": "figures/2610.10524/figure-005.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 829
+            },
+            {
+              "caption": "Figure D.2: User study interface for I2V samples.",
+              "figure_id": "figure-D.2-7",
+              "figure_number": "D.2",
+              "height": 546,
+              "image_path": "figures/2610.10524/figure-006.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 829
+            },
+            {
+              "caption": "Figure 7: Convergence during DiT adaptation. With and without Lalign; solid lines show EMA.",
+              "figure_id": "figure-7-4",
+              "figure_number": "7",
+              "height": 193,
+              "image_path": "figures/2610.10524/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 221
+            },
+            {
+              "caption": "Table D.1: Per-dimension VBench (Huang et al., 2023; 2024) scores at 480×832×81. Singlelatent Baseline is our baseline without the dual latent or the alignment loss. The best score in each row is in bold. †Reported for reference only, as the official VBench-I2V quality score does not include this dimension.",
+              "figure_id": "table-D.1-10",
+              "figure_number": "D.1",
+              "height": 991,
+              "image_path": "figures/2610.10524/table-008.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 790
+            },
+            {
+              "caption": "Table A.1: Stage 1 hyperparameters. All settings follow the training recipe of the pretrained autoencoder.",
+              "figure_id": "table-A.1-11",
+              "figure_number": "A.1",
+              "height": 365,
+              "image_path": "figures/2610.10524/table-009.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 459
+            },
+            {
+              "caption": "Table 4: Ablation on design components. Row (III) keeps the autoencoder of (II) but trains the DiT from scratch for the same number of steps. Bold marks the best value in each column among rows (II) and (IV)–(VI).",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 133,
+              "image_path": "figures/2610.10524/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 826
+            },
+            {
+              "caption": "Table D.2: Per-dimension VBench (Huang et al., 2023; 2024) scores at 736×1280×81, following Tab. D.1. The best score in each row is in bold. ‡Measured with spatial tiling in the VAE encoder to avoid running out of memory when encoding the conditioning image at this resolution.",
+              "figure_id": "table-D.2-13",
+              "figure_number": "D.2",
+              "height": 1071,
+              "image_path": "figures/2610.10524/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 790
+            },
+            {
+              "caption": "Table D.3: Human evaluation. Participants compared each pair of videos without knowing which model produced which. Each cell gives the percentage of votes preferring our model (Ours), rating both videos about equal (Equal), or preferring the baseline named in the column.",
+              "figure_id": "table-D.3-5",
+              "figure_number": "D.3",
+              "height": 206,
+              "image_path": "figures/2610.10524/table-012.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 830
+            },
+            {
+              "caption": "Table 6: Ablation on denoising order.",
+              "figure_id": "table-6-12",
+              "figure_number": "6",
+              "height": 102,
+              "image_path": "figures/2610.10524/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 318
+            },
+            {
+              "caption": "Table 5: Alignment target. Asymmetric denoising is disabled in all rows.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 87,
+              "image_path": "figures/2610.10524/table-014.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 412
+            }
+          ],
+          "first_seen_at": "2026-10-07T21:00:00-04:00",
+          "hero_figure": "figures/2610.10524/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.10524",
+          "relevance": 8,
+          "selection_reason": "Latent compression accelerates pretrained video diffusion while preserving quality; directly relevant to efficient video generation.",
+          "summary_status": "generated",
+          "title": "GRACE: Generation-aware latent compression for efficient video generation",
+          "tldr": "GRACE compresses video latents while preserving compatibility with a pretrained diffusion transformer, enabling substantially faster generation without degrading VBench quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Deploying a joint audio-video diffusion transformer for real-time, interactive generation normally requires two essential modifications: block-autoregressive attention, so frames can be emitted before the whole clip is finished, and few-step sampling, so each block is cheap. Conventionally, the streaming video literature obtains both capabilities from a chained pipeline. It first distills a bidirectional teacher into a causal student, then into a few-step one, or proceeds in reverse order. Each stage of such a chain fine-tunes the weights the previous one produced, so a later objective can undo an earlier capability. Following the idea of model merging, we show that on a packed audio-video backbone the two capabilities can be acquired in parallel. A causal adapter is trained against the frozen backbone, and an off-the-shelf few-step adapter provides the few-step capability. As the two edit different functional axes, we predict, and then verify, that their weight-update directions are near-orthogonal, without any explicit orthogonality constraint during training. Orthogonal updates should combine without interfering, so parallel composition is a direct sum. The two adapters are simply added at inference, with no joint training, yielding few-step, streaming audio-video whose image quality tracks the bidirectional teacher. Compared to the chained baselines, the composed model matches or beats them on most metrics, making parallel composition a practical approach. The resulting streaming system generates joint audio-video in real time, $\\approx$26 fps at $480\\times832$ without quantization, and sustains 30 s of continuous generation with stable image quality. Demo Page: https://pac-demo-2027.github.io/demo/",
+          "arxiv_id": "2610.10343",
+          "arxiv_url": "https://arxiv.org/abs/2610.10343",
+          "authors": [
+            "Jingyu Li",
+            "Xiaoxiao Xiang",
+            "Yiwen Guo"
+          ],
+          "bullets": [
+            "Addresses the interference caused by chained training pipelines for causal streaming and few-step sampling.",
+            "Trains a causal adapter on a frozen audio-video backbone and combines it with an off-the-shelf few-step adapter.",
+            "Finds the adapters’ weight updates are near-orthogonal, supporting simple additive composition without explicit orthogonality constraints.",
+            "Produces streaming audio-video with image quality tracking the bidirectional teacher and matching or outperforming chained baselines on most metrics.",
+            "Runs at approximately 26 fps at 480×832 without quantization and maintains stable quality for 30 seconds of continuous generation."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: One clip streamed to 30 s. Rows are systems and columns are wall-clock seconds; below them the four generated soundtracks share one time axis. CHAINED-DA stops articulating well before the end while the composed routes speak throughout; Table 2 reports the same comparison over all forty clips.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 687,
+              "image_path": "figures/2610.10343/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 914
+            },
+            {
+              "caption": "Figure 3: Long-horizon consistency as a function of generation time. (a) FaceNet similarity and (b) CLIP Image similarity to the first frame of the same video. Curves are means over 40 clips with 95% confidence intervals, and terminate at each method’s actual duration.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 298,
+              "image_path": "figures/2610.10343/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 964
+            },
+            {
+              "caption": "Figure 1: Three routes to a few-step streaming model, and what the order costs. Distilling last keeps the chain viable, at two extra stages; the reverse order, trained with a plain regression loss, un-distills. The mechanisms are in §3.1.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 358,
+              "image_path": "figures/2610.10343/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 960
+            },
+            {
+              "caption": "Figure 4: Attention pattern of Eq. 2 on a three-chunk packed sequence. Clean tokens attend same-or-earlier clean tokens; a noisy chunk attends its own noisy tokens and strictly earlier clean history, never its clean copy. Conditioning is chunk −1: visible as a key to every content row, but a conditioning query cannot read later clean tokens. Audio is drawn chunkwise, as video is.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 1000,
+              "image_path": "figures/2610.10343/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 842
+            },
+            {
+              "caption": "Figure 5: Identity drift over the 30 s long-horizon runs of §4.2 (40 clips, probes every 5 s). (a) Face similarity to the reference portrait, with ArcFace. (b) Speaker similarity to the clip’s own opening segment, with CAM++. Both are the complement of Figure 3, which measures against each clip’s own first frame under different encoders. Face identity is retained equally well by DECOUPLED, DECOUPLED-50 and CHAINED-DA (and worst by CHAINED-AD); speaker identity falls furthest for DECOUPLED, the observation §5 reports as a limitation.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 262,
+              "image_path": "figures/2610.10343/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 968
+            },
+            {
+              "caption": "Table 1: Results on the held-out benchmark (§4.1). Drift rows are last window over first; CSIM-1st is identity against the clip’s first frame. Speech is transcribed with Qwen3-ASR-1.7B: WER for the English clips, CER for the Chinese ones. Among the four autoregressive systems, best results in bold, second-best underlined.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 295,
+              "image_path": "figures/2610.10343/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 856
+            },
+            {
+              "caption": "Table 4: The systems of Table 1 on three public test sets (100 clips each), scored against the real source video — so TEACHER is a system under test, not the reference. Among the four autoregressive systems, best results in bold, second-best underlined, per column and set; the GT row is a reference, not a competitor. CSIM-r is face identity against the reference portrait, not CSIM-1st. FAD is omitted on HDTF: clip-length mismatch dominates there (wholesegment generation has a 4 s minimum against ∼3.2 s sources); DeSync is undefined on HDTF (clips shorter than Synchformer’s 4.8 s context).",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 633,
+              "image_path": "figures/2610.10343/table-007.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 798
+            },
+            {
+              "caption": "Table 2: Long-horizon preservation over a 40-clip, 30 s rollout. Each cell is the score on the final 5 s and, in parentheses, its relative change from the opening 5 s. Both windows are the same length, so Sync-C is comparable between them but not with a full-clip Sync-C. Bold marks the best closing window; for RMS, which is an absolute level, it marks the smallest relative change instead.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 130,
+              "image_path": "figures/2610.10343/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 968
+            },
+            {
+              "caption": "Table 3: Geometry of each causal update against each distillation update, over all shared (block, projection) pairs, mean ± s.d. DECOUPLED and CHAINED-DA measure ∆d against ∆c and ∆′ c; CHAINED-AD measures ∆c against its two distillation increments taken together (∆cd ⊕∆dmd). Interference and projection are defined in Appendix F. Projection is a signed alignment, zero meaning none; both interference forms vanish for orthogonal subspaces, so for all three quantities the null column is the value to read against rather than zero.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 108,
+              "image_path": "figures/2610.10343/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            }
+          ],
+          "first_seen_at": "2026-10-07T21:00:00-04:00",
+          "hero_figure": "figures/2610.10343/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.10343",
+          "relevance": 7,
+          "selection_reason": "Streaming few-step joint audio-video diffusion with parallel adapters is relevant to video generation and efficient inference.",
+          "summary_status": "generated",
+          "title": "Real-Time Joint Audio-Video Generation by Parallel Adapter Composition",
+          "tldr": "Parallel composition of causal and few-step adapters enables real-time streaming joint audio-video diffusion without joint training.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Surgical video generation holds substantial potential for surgical education, simulation, and data augmentation, yet generating surgical videos with realistic and clinically plausible motion remains challenging. Most existing methods rely on auxiliary conditions, such as masks, trajectories, depth, or reference videos, to achieve visually plausible synthesis. Yet, these auxiliary conditions typically require additional manual annotation or specialized acquisition, making it difficult to scale such methods beyond small, curated datasets. This motivates the need for a reference-free architecture capable of generating high-quality surgical video without requiring auxiliary visual conditions at inference time. We propose FLAIR, a Flow-guided LatentAction Injection framework for Reference-free surgical video generation. FLAIR learns action priors from optical flow of real surgical videos, dynamically predicts corresponding latent action representation from an input prompt, and injects it into a frozen base model to generate surgical videos with improved action consistency. We further construct SurgActionClip-30K, the first large-scale surgical vision dataset comprising action-centric segmented clips and structured caption labels, addressing the persistent lack of fine-grained, action-centric surgical datasets. Lastly, we introduce SurgMetrics, the first surgical domain-specific evaluation metrics for quantifying the quality of generated surgical videos, addressing the persistent absence of clinically grounded evaluation standards in this domain. Extensive experiments demonstrate that FLAIR enables generating high-quality surgical videos using text-only inference without auxiliary conditions, and validation in SurgMetrics demonstrates its strength in alignment with human perception compared to traditional metrics.",
+          "arxiv_id": "2610.09800",
+          "arxiv_url": "https://arxiv.org/abs/2610.09800",
+          "authors": [
+            "Tsz-Yui Qin",
+            "Siyu Zhou",
+            "Chi-Keung Tang",
+            "Yuxiang Nie",
+            "Shu Yang"
+          ],
+          "bullets": [
+            "Targets scalable surgical video generation without masks, trajectories, depth, or reference videos at inference time.",
+            "Learns action priors from optical flow and dynamically predicts latent actions from text prompts.",
+            "Introduces SurgActionClip-30K, an action-centric surgical video dataset with structured captions.",
+            "Introduces SurgMetrics for domain-specific, clinically grounded evaluation of generated surgical videos.",
+            "Experiments show high-quality, action-consistent generation and stronger alignment with human perception than traditional metrics."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Overview of the SurgActionClip-30K construction pipeline. We first aggregate eleven surgical source datasets spanning laparoscopic, ophthalmic, robotic, and endoscopic domains. Actioncentric clips are extracted using available temporal annotations, instrument-aware refinement, and duration-based filtering. Each clip is then paired with a structured action-aware caption generated by a medical VLM using a shared prompt template covering surgical context, instruments, actions, anatomical targets, tissue response, and imaging conditions. Finally, quality control and consistency checks are applied to assemble the unified SurgActionClip-30K corpus.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 312,
+              "image_path": "figures/2610.09800/figure-001.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 926
+            },
+            {
+              "caption": "Figure 1: Overview of FLAIR. During training, the FAE extracts flow-derived latent action sequences Z, which supervise text-to-action prediction and adapter optimization. At inference, the FAE is removed, and the surgical prompt provides both the predicted motion prior Ẑ and the backbone-native text condition, enabling reference-free surgical video generation.",
+              "figure_id": "figure-1-15",
+              "figure_number": "1",
+              "height": 431,
+              "image_path": "figures/2610.09800/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 892
+            },
+            {
+              "caption": "Figure 2: Overview of SurgMetrics. During inference, SurgMetrics extracts SurgViSTA representation and Farneback statistics from input videos to predict six artifact scores: “semantic implausibility, appearance artifact, drift, instrument deformation, tissue deformation, and tracklet instability”. Then, SurgMetrics compute the Domain Distance of input video independently by comparing its SurgViSTA features with a real surgical reference distribution to compute how much a video belongs to the surgical domain. SurgMetrics incurs low computational overhead at inference time.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 331,
+              "image_path": "figures/2610.09800/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 976
+            },
+            {
+              "caption": "Figure 7: Qualitative visualization of the 21 controlled degradation families applied to a representative clean laparoscopic clip, grouped by their primary supervision axis (Drift, Appearance, Semantic, Instrument, and Tissue). Each tile shows three temporally ordered frames rendered at a fixed within-family severity of s = 0.75. Localized instrument and tissue degradations are shown with magnified regions of interest, while semantic action discontinuity uses a color-matched donor segment. Tracklet is not shown as a separate group because it receives auxiliary supervision from the instrument and tissue families rather than an exclusive degradation family.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 558,
+              "image_path": "figures/2610.09800/figure-004.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 960
+            },
+            {
+              "caption": "Figure 3: Qualitative temporal comparison between Wan2.1 LoRA and Wan2.1 LoRA-FLAIR motion conditioning, with key changes highlighted by bounding boxes. Under identical generation settings, Wan2.1 LoRA-FLAIR produces a more coherent motion trajectory and more sustained instrument–tissue interaction across the generated surgical video. Seven synchronized frames are shown from frame 0 to frame 80.",
+              "figure_id": "figure-3-17",
+              "figure_number": "3",
+              "height": 173,
+              "image_path": "figures/2610.09800/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 976
+            },
+            {
+              "caption": "Figure 6: Qualitative temporal comparison between CogVideoX-2B LoRA and CogVideoX-2B LoRA-FLAIR, with key changes highlighted by bounding boxes. CogVideoX-2B LoRA-FLAIR maintains a grounded, physically anchored instrument with consistent visibility and a more stable camera view throughout the sequence, while the LoRA-only baseline shows the instrument intermittently disappearing, floating detached from tissue, and increasing viewpoint instability as generation progresses. Seven synchronized frames are shown from frame 0 to frame 80.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 166,
+              "image_path": "figures/2610.09800/figure-006.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 979
+            },
+            {
+              "caption": "Figure 5: Qualitative temporal comparison between HunyuanVideo-1.5 LoRA and HunyuanVideo1.5 LoRA-FLAIR, with key changes highlighted by bounding boxes. Under identical generation settings, HunyuanVideo-1.5 LoRA-FLAIR produces visually and anatomically more plausible surgical scenes with a consistently visible, stable instrument throughout the sequence, whereas the LoRA-only baseline exhibits drifting instrument motion and localized structural artifacts in later frames. Seven synchronized frames are shown from frame 0 to frame 80.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 166,
+              "image_path": "figures/2610.09800/figure-007.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 976
+            },
+            {
+              "caption": "Table 1: Comparison of LoRA-FLAIR on three base models with baselines and related works on general video metrics and SurgMetrics. LoRA has already achieved a greater level of TI and AF owing to the great preparation of our training datasets. LoRA-FLAIR further surpasses the result of LoRA on both general metrics and SurgMetrics. “–” denotes data not comparable or not available. “V.CLIP” denotes VideoCLIP [43].",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 318,
+              "image_path": "figures/2610.09800/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 980
+            },
+            {
+              "caption": "Table 2: Next-frame prediction error under different FAE latent conditions. Percentages denote relative MSE changes compared with the nolatent baseline.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 152,
+              "image_path": "figures/2610.09800/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 461
+            },
+            {
+              "caption": "Table 3: Compact summary of the eleven source datasets, their temporal supervision, and the number of clips retained in SurgActionClip-30K.",
+              "figure_id": "table-3-19",
+              "figure_number": "3",
+              "height": 404,
+              "image_path": "figures/2610.09800/table-010.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 990
+            },
+            {
+              "caption": "Table 10: Inference configuration for the 200-prompt evaluation set across the three video backbones. Prompt set, frame count, and seed are shared; all other settings follow each backbone’s validated native configuration.",
+              "figure_id": "table-10-10",
+              "figure_number": "10",
+              "height": 394,
+              "image_path": "figures/2610.09800/table-011.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 786
+            },
+            {
+              "caption": "Table 11: Definitions of the 21 controlled degradation families used to construct SurgMetrics training supervision, grouped by primary target axis.",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 1150,
+              "image_path": "figures/2610.09800/table-012.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 1015
+            },
+            {
+              "caption": "Table 12: Routing-weight matrix from the 21 degradation families to the six SurgMetrics artifact heads. Weights denote label-routing strength used in the noisy-OR aggregation (Eq. 12 in the main paper).",
+              "figure_id": "table-12-14",
+              "figure_number": "12",
+              "height": 692,
+              "image_path": "figures/2610.09800/table-013.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 760
+            },
+            {
+              "caption": "Table 4: Distribution of the 200-prompt inference benchmark across procedures. The first 180 prompts (IDs 000–179) follow a strict 6-procedure × 10-action × 3-variant factorial design; the last 20 prompts (IDs 180–199) extend coverage to two external-validation procedures.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 313,
+              "image_path": "figures/2610.09800/table-014.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 598
+            },
+            {
+              "caption": "Table 6: Domain-distance reference values across datasets spanning in-domain, semi-in-domain, and out-of-domain video, using 100 clips per dataset. Higher values indicate greater deviation from the training laparoscopic distribution.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 211,
+              "image_path": "figures/2610.09800/table-015.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 656
+            },
+            {
+              "caption": "Table 8: Drift-axis performance under each ablation configuration, the axis most affected by the optical-flow leg.",
+              "figure_id": "table-8-18",
+              "figure_number": "8",
+              "height": 158,
+              "image_path": "figures/2610.09800/table-016.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 418
+            },
+            {
+              "caption": "Table 5: Artifact sensitivity and external generalization of SurgMetrics. Values report mean±std over three seeds. External evaluation pools SLAM and PhaKIR; single and multi denote one and multiple simultaneous degradation families.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 132,
+              "image_path": "figures/2610.09800/table-017.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 427
+            },
+            {
+              "caption": "Table 7: Ablation over SurgMetrics input branches across adapter test, internal, held-out, and external evaluation cohorts. All values are averaged over seeds 42/43/44.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2610.09800/table-018.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 996
+            },
+            {
+              "caption": "Table 9: Summary of adapter configurations and deployment settings across the three video backbones.",
+              "figure_id": "table-9-9",
+              "figure_number": "9",
+              "height": 133,
+              "image_path": "figures/2610.09800/table-019.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 882
+            }
+          ],
+          "first_seen_at": "2026-10-07T21:00:00-04:00",
+          "hero_figure": "figures/2610.09800/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.09800",
+          "relevance": 7,
+          "selection_reason": "Reference-free surgical video generation with latent action injection, relevant to video generation and latent action modeling.",
+          "summary_status": "generated",
+          "title": "Beyond Masks and Trajectories: Flow-Guided Latent Action Injection for Stable Surgical Video Generation",
+          "tldr": "FLAIR enables text-only generation of clinically plausible surgical videos by injecting flow-guided latent action representations into a frozen video model.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Robotic manipulation videos are increasingly used as visual plans for embodied agents, but optimizing purely for visual plausibility often fails to capture the fragile physical manifold of real-world interactions. Even minor physics-violating errors at the interaction boundary, such as interpenetration or premature object motion, can completely invalidate the inferred timing and pose needed for downstream execution. Because standard supervised fine-tuning lacks the direct pressure to penalize these localized failures, we introduce AgiBot-PhysPref. This rigorously curated 10,000-sample preference dataset isolates condition-matched physics violations, turning the generator's own failure distribution into a foundational signal for physical consistency. Building upon this, we propose RobotAPO, an adversarial physics preference optimization framework operating in the continuous flow-matching denoising space. To prevent the policy from merely memorizing static curated failures, RobotAPO employs a lightweight adversarial counterfactual proposer that learns a condition-dependent, physical-failure-biased direction in denoising space. This encourages the model to explore and better respect the physical interaction boundary, all while maintaining a pure prompt-and-reference inference interface without requiring external structural conditioning. Comprehensive evaluations demonstrate that explicitly correcting these localized physics violations improves downstream robot execution from generated videos. On held-out AgiBot conditions, RobotAPO outperforms the strongest controlled internal baseline in physical consistency by 6.8% hard score and 10.0% soft score. Crucially, in real-robot replay, it translates these physical-consistency gains into a 37.4% relative improvement in task success over the strongest controlled internal baseline.",
+          "arxiv_id": "2610.09454",
+          "arxiv_url": "https://arxiv.org/abs/2610.09454",
+          "authors": [
+            "Kerui Li",
+            "Zhe Jing",
+            "Chenyi Huang",
+            "Xiaofeng Wang",
+            "Zheng Zhu",
+            "Haoming Cui",
+            "Huaibo Huang"
+          ],
+          "bullets": [
+            "Addresses failures such as object interpenetration and premature motion that can make generated visual plans physically unusable.",
+            "Introduces AgiBot-PhysPref, a 10,000-sample preference dataset of condition-matched physics violations.",
+            "Uses an adversarial counterfactual proposer within continuous flow-matching denoising to guide correction of physical interaction boundaries.",
+            "On held-out AgiBot conditions, improves physical consistency by 6.8% hard score and 10.0% soft score over the strongest controlled internal baseline.",
+            "Improves real-robot replay task success by 37.4% relative to that baseline."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of RobotAPO. SFT rollouts are screened and annotated to build the condition-matched AgiBot-PhysPref . During post-training, an adversarial proposer learns a physical-failure-biased denoising direction to probe interaction boundaries, encouraging the policy to better respect the physical manifold. At inference, only the policy generator is deployed, maintaining a standard prompt-and-reference interface without any external structural conditioning. Displayed scores are schematic, while exact denoising rewards and objectives are defined in Sec. 3.3.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 534,
+              "image_path": "figures/2610.09454/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 981
+            },
+            {
+              "caption": "Figure 2: Failure-focused qualitative comparison on held-out conditions. For each task condition, all methods generate videos with the same frame length and inference settings. We visualize frames aligned to the same action-critical phase. Red boxes highlight physics-violating phenomena (e.g., interpenetration, premature object motion) frequently produced by baselines at action-critical moments. Green boxes show that RobotAPO reduces these local interaction artifacts and better preserves gripper–object geometry and contact causality. Zoom-ins isolate the key physical interactions.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 392,
+              "image_path": "figures/2610.09454/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 958
+            },
+            {
+              "caption": "Table 2: Quantitative comparison on held-out AgiBot conditions. All internal methods are controlled 5Bparameter models. RobotAPO outperforms all controlled internal baselines; the external 14B LVP reference is shown in gray to contextualize absolute performance across a different model and training setup. Bold marks the best internal method.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 226,
+              "image_path": "figures/2610.09454/table-003.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 983
+            },
+            {
+              "caption": "Table 1: AgiBot-PhysPref dataset statistics. The curated preference set isolates local physics violations via condition-matched pairs, human verification, and Qwen3-VL screening.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 332,
+              "image_path": "figures/2610.09454/table-004.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 983
+            },
+            {
+              "caption": "Table 9: Unified five-category failure taxonomy used for AgiBot-PhysPref curation, training metadata, and failure-focused evaluation. The contact-causality category covers both premature object motion and action/state changes without effective contact.",
+              "figure_id": "table-9-8",
+              "figure_number": "9",
+              "height": 477,
+              "image_path": "figures/2610.09454/table-005.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 983
+            },
+            {
+              "caption": "Table 3: Real-robot pick-and-place execution success rates via AnyPos action extraction. RobotAPO improves downstream robot execution from generated videos, raising absolute task success by 31.4 percentage points over the SFT baseline. LVP is an external, unmatched reference. (Task success 95% CI uses the Wilson score interval over 51 trials).",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 215,
+              "image_path": "figures/2610.09454/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 983
+            },
+            {
+              "caption": "Table 6: Source-matched G+G control. Both sides of every training preference pair are generated by the same SFT model under the same condition.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 152,
+              "image_path": "figures/2610.09454/table-007.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 550
+            },
+            {
+              "caption": "Table 4: Module ablation of RobotAPO. Removing the adversarial counterfactual proposer (w/o CF/Adv) reduces real-robot task success from 64.7% to 49.0%, supporting the contribution of dynamic boundary exploration in this setting.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 179,
+              "image_path": "figures/2610.09454/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 983
+            },
+            {
+              "caption": "Table 5: Sensitivity study of the adversarial coupling coefficient 𝜆adv. This coefficient controls the strength of the adversarial counterfactual term that perturbs the local physical interaction boundary during training. The dagger † marks the default setting used in RobotAPO.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 154,
+              "image_path": "figures/2610.09454/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 983
+            },
+            {
+              "caption": "Table 7: Decoded adversarial counterfactuals compared with equal-norm Gaussian controls over 64 paired held-out conditions.",
+              "figure_id": "table-7-1",
+              "figure_number": "7",
+              "height": 127,
+              "image_path": "figures/2610.09454/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 983
+            },
+            {
+              "caption": "Table 8: CogVideoX-5B evaluation. Confidence intervals are condition-clustered paired bootstrap intervals for the RobotAPO Phys-S gain over each baseline.",
+              "figure_id": "table-8-2",
+              "figure_number": "8",
+              "height": 153,
+              "image_path": "figures/2610.09454/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 748
+            }
+          ],
+          "first_seen_at": "2026-10-07T21:00:00-04:00",
+          "hero_figure": "figures/2610.09454/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.09454",
+          "relevance": 7,
+          "selection_reason": "Adversarial physics preference optimization for robotic manipulation video generation and downstream execution.",
+          "summary_status": "generated",
+          "title": "RobotAPO: Adversarial Physics Preference Optimization for Robotic Manipulation Video Generation",
+          "tldr": "RobotAPO improves robotic manipulation video generation by adversarially correcting localized physics violations, yielding better physical consistency and real-robot task success.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-06",
       "paper_count": 4,
       "papers": [
@@ -40415,5 +41142,5 @@
   "schema_version": 1,
   "subtopic_id": "video-diffusion",
   "topic_id": "video-models",
-  "total_paper_count": 211
+  "total_paper_count": 215
 }

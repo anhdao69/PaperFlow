@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**84 papers total**
+**88 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-07 | [RealtimeWAM: How Fast Can I Run My World Action Model?](https://arxiv.org/abs/2610.10079) | World Models: Latent Action Models; Efficient AI: KV Cache and Memory Efficiency | RealtimeWAM accelerates world action model inference to near-real-time robot control by combining parallel execution with adaptive, training-free computation reuse. | 9 | 8 |
+| 2026-10-07 | [Beyond Masks and Trajectories: Flow-Guided Latent Action Injection for Stable Surgical Video Generation](https://arxiv.org/abs/2610.09800) | World Models: Latent Action Models; Video Generation and Understanding: Video Diffusion | FLAIR enables text-only generation of clinically plausible surgical videos by injecting flow-guided latent action representations into a frozen video model. | 7 | 7 |
+| 2026-10-07 | [TERRA: Learning Transportable Latent Actions through Temporal Effect Representation and Relational Alignment](https://arxiv.org/abs/2610.09509) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | TERRA learns transportable latent robot actions by representing temporal effects and aligning them across different initial states. | 9 | 8 |
+| 2026-10-07 | [DSReg: Provably Recovering Individual World Latents without Reconstruction](https://arxiv.org/abs/2610.09457) | World Models: Latent Action Models | DSReg provably separates individual world latents from linearly identified representations without reconstruction, decoders, or labels. | 9 | 9 |
 | 2026-10-05 | [Benchmarking Generative Trajectory Models for Active-Inference Control](https://arxiv.org/abs/2610.05692) | World Models: Latent Action Models | GenAIF benchmarks generative trajectory models for active-inference control, finding diffusion strongest overall and CVAEs faster with comparable short-horizon prediction. | 8 | 8 |
 | 2026-10-05 | [Discrete Action Matching: Learning Stochastic Dynamics from Samples via State Graphs](https://arxiv.org/abs/2610.05071) | World Models: Latent Action Models | Discrete Action Matching learns stochastic dynamics from unpaired temporal marginals by combining discrete Wasserstein geometry, density-ratio estimation, and graph-based action potentials. | 7 | 8 |
 | 2026-10-05 | [Flow Policies as Actions of Skill-Level World Models: Learned and Symbolic Abstractions for Long-Horizon Planning](https://arxiv.org/abs/2610.04767) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | Flow-policy executions can serve as skill-level world-model actions, enabling long-horizon planning with learned or symbolic abstractions and reducing control-step search complexity. | 9 | 8 |

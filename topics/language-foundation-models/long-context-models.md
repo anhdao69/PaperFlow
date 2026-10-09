@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**106 papers total**
+**111 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-07 | [SemanticFold: Latent Sequence Compression SeparatesLanguage Modeling, Decodability, and Reasoning](https://arxiv.org/abs/2610.10304) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Long-Context Models | SemanticFold shows that latent prefix compression affects language-model fit, decodability, and reasoning differently, with no single threshold or certificate of capability preservation. | 6 | 7 |
+| 2026-10-07 | [HySPE: Positional Encoding via Symplectic Dual Shears](https://arxiv.org/abs/2610.10154) | Language Foundation Models: Long-Context Models | HySPE replaces RoPE’s rotations with stabilized hyperbolic symplectic transformations, enabling substantially more robust long-context extrapolation while retaining similar inference latency. | 8 | 9 |
+| 2026-10-07 | [Attention via Black-Box Vector Search](https://arxiv.org/abs/2610.10135) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | The paper characterizes how many keys black-box MIPS search must retrieve for accurate sparse attention and develops priority-sampling methods that reduce retrieval costs, especially with multiple indices or augmented keys and queries. | 8 | 8 |
+| 2026-10-07 | [Mechanics of Long-Context Hybrid Models Part 1.1: From Hybrid Attention to Hybrid Position](https://arxiv.org/abs/2610.10114) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | This work explains how positional biases shape long-context hybrid models and introduces Sliding-Window Linear Attention, enabling 16× training-free length extrapolation with perfect NIAH-SK1 accuracy at 64k context. | 9 | 9 |
+| 2026-10-07 | [Trained Agentic Context Management](https://arxiv.org/abs/2610.02404) | Language Foundation Models: Long-Context Models | A compact model trained to actively manage context through self-calls and token-range retrieval can handle very long documents effectively with only 8K tokens of context. | 8 | 8 |
 | 2026-10-06 | [PHBA: Prefix-State Hybrid Block Attention](https://arxiv.org/abs/2610.08527) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | PHBA combines top-k block-sparse retrieval with compact prefix states to provide efficient, precise long-context modeling. | 8 | 8 |
 | 2026-10-06 | [UNREAL: Unifying Retrieval and Long-Context with a Single Model](https://arxiv.org/abs/2610.08463) | Language Foundation Models: LLM Memory, Long-Context Models | UNREAL uses a lightweight, model-internal evidence selector to unify corpus retrieval and long-context inference while keeping the LLM backbone frozen. | 8 | 8 |
 | 2026-10-06 | [WavePrune: One period is often enough for RoPE](https://arxiv.org/abs/2610.06963) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | WavePrune limits each RoPE channel to its first rotation period, reducing position aliasing while improving long-context quality and inference efficiency. | 8 | 8 |

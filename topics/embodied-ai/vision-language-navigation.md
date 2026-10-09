@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**105 papers total**
+**108 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-07 | [AirGroundVLN: A Large-Scale Benchmark for Goal-Oriented Air-Ground Collaborative Vision-and-Language Navigation](https://arxiv.org/abs/2610.10421) | Embodied AI: Vision-Language Navigation | AirGroundVLN introduces a large-scale benchmark and reference framework for collaborative aerial-ground vision-and-language navigation toward language-specified targets. | 9 | 8 |
+| 2026-10-07 | [SPW-Nav: A Streaming Panoramic World Model for Language-Guided Navigation](https://arxiv.org/abs/2610.08941) | Embodied AI: Vision-Language Navigation; World Models: Interactive World Models | SPW-Nav generates real-time, language-guided 2K 360° video streams from a single panorama while following changing movement instructions. | 9 | 8 |
+| 2026-10-07 | [WareFly-VLA: A Vision-Language-Action Framework for UAV Navigation and Human Tracking in Smart Warehouses](https://arxiv.org/abs/2610.08526) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | WareFly-VLA introduces a simulated warehouse benchmark for language-guided UAV human search and tracking, showing that current VLA models struggle to generalize to continuous aerial control. | 9 | 7 |
 | 2026-10-06 | [Sensor-Layout-Agnostic Navigation via Geometric Observation Canonicalization](https://arxiv.org/abs/2610.08306) | Embodied AI: Vision-Language Navigation, Robot Navigation | A geometry-aware navigation policy enables zero-shot transfer across varied depth-camera layouts by canonicalizing observations into a shared robot-centric representation. | 8 | 8 |
 | 2026-10-06 | [OntoPlan: An Ontology-Grounded Scene Representation and Agentic Framework for Scalable Robot Task Planning](https://arxiv.org/abs/2610.07649) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | OntoPlan combines ontology-grounded scene representations with selective, agentic LLM planning to improve scalable, reliable robot task execution. | 8 | 7 |
 | 2026-10-06 | [Seeing the Invisible: Physics-Guided Visual Prompting for Temperature- and Radiation-Aware VLA Navigation](https://arxiv.org/abs/2610.07558) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | PG-VP enables frozen VLA navigation models to avoid invisible thermal and radiation hazards by rendering physics-guided virtual obstacles, without retraining. | 9 | 8 |
