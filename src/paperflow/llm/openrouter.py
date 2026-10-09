@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import http.client
 import json
 import random
 import time
@@ -81,12 +82,19 @@ class UrllibJsonTransport:
                     headers=dict(response.headers.items()),
                 )
         except urllib.error.HTTPError as error:
+            # The status is authoritative even if the error body is interrupted.
+            # Preserve it so, for example, a 402 cannot become a retryable failure.
+            with error:
+                try:
+                    body = error.read()
+                except (http.client.HTTPException, urllib.error.URLError, OSError):
+                    body = b""
             return HttpResponse(
                 status=error.code,
-                body=error.read(),
+                body=body,
                 headers=dict(error.headers.items()) if error.headers else {},
             )
-        except (urllib.error.URLError, TimeoutError, OSError) as error:
+        except (http.client.HTTPException, urllib.error.URLError, OSError) as error:
             message = "OpenRouter network request failed"
             raise OpenRouterTransportError(message) from error
 

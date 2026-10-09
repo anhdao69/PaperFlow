@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import http.client
 import json
+import urllib.error
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import pytest
 from pydantic import BaseModel, SecretStr
@@ -9,10 +12,12 @@ from pydantic import BaseModel, SecretStr
 from paperflow.config import load_config_bundle
 from paperflow.llm.openrouter import (
     HttpResponse,
+    JsonTransport,
     OpenRouterClient,
     OpenRouterHTTPError,
     OpenRouterSemanticError,
     OpenRouterTransportError,
+    UrllibJsonTransport,
     redact_sensitive,
 )
 from paperflow.models import SummaryContent
@@ -55,7 +60,7 @@ def _response(path: str = "success.json", *, status: int = 200) -> HttpResponse:
 
 
 def _client(
-    transport: FakeTransport,
+    transport: JsonTransport,
     *,
     retries: int = 0,
     sleeps: list[float] | None = None,
@@ -296,3 +301,57 @@ def test_yaml_only_chain_change_alters_request_routing() -> None:
         "mistralai/mistral-small-2603",
         "deepseek/deepseek-v4-flash-0731",
     ]
+
+
+@pytest.mark.parametrize("error_response", [False, True])
+@pytest.mark.parametrize("exhausted", [False, True])
+def test_interrupted_response_body_uses_bounded_transport_retries(
+    monkeypatch, error_response: bool, exhausted: bool
+) -> None:
+    partial = b"private incomplete response"
+    broken = MagicMock()
+    broken.closed = False
+    broken.__enter__.return_value = broken
+    broken.read.side_effect = http.client.IncompleteRead(partial, 100)
+    if error_response:
+        broken = urllib.error.HTTPError(
+            "https://example.test", 503, "unavailable", {}, broken
+        )
+    good = MagicMock()
+    good.__enter__.return_value = good
+    good.status = 200
+    good.read.return_value = _response().body
+    good.headers = {}
+    responses = [broken, broken if exhausted else good]
+    opener = MagicMock(side_effect=responses)
+    monkeypatch.setattr("urllib.request.urlopen", opener)
+    sleeps: list[float] = []
+    client = _client(UrllibJsonTransport(), retries=1, sleeps=sleeps)
+
+    if exhausted:
+        with pytest.raises(OpenRouterTransportError) as captured:
+            _call(client)
+        assert partial.decode() not in str(captured.value)
+    else:
+        result = _call(client)
+        assert result.parsed.answer == "ok"
+        assert result.attempt == 2
+    assert opener.call_count == 2
+    assert sleeps == [2]
+
+
+@pytest.mark.parametrize("status", [400, 401, 402, 403, 404, 422])
+def test_interrupted_http_error_body_preserves_non_retryable_status(
+    monkeypatch, status: int
+) -> None:
+    body = MagicMock()
+    body.closed = False
+    body.read.side_effect = http.client.IncompleteRead(b"private", 10)
+    error = urllib.error.HTTPError("https://example.test", status, "error", {}, body)
+    opener = MagicMock(side_effect=error)
+    monkeypatch.setattr("urllib.request.urlopen", opener)
+    with pytest.raises(OpenRouterHTTPError) as captured:
+        _call(_client(UrllibJsonTransport(), retries=2))
+    assert captured.value.status == status
+    assert opener.call_count == 1
+    assert "private" not in str(captured.value)
