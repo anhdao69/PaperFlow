@@ -1,0 +1,48 @@
+name: OpenRouter Diagnostic
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_alias:
+        description: Configured model to test with one structured-output request
+        required: true
+        default: deepseek_v4_flash
+        type: choice
+        options:
+          - deepseek_v4_flash
+          - glm_4_7_flashx
+          - gpt_5_6_luna
+          - mistral_small_4
+
+permissions:
+  contents: read
+
+concurrency:
+  group: paperflow-openrouter-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            src
+            configs
+            tests/live
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e '.[dev]'
+      - name: Test configured model without publishing
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          PAPERFLOW_LIVE_OPENROUTER: "1"
+          MODEL_ALIAS: ${{ inputs.model_alias }}
+        run: >-
+          python -m pytest tests/live/test_openrouter_smoke.py
+          -q -x --tb=short -k "$MODEL_ALIAS"
