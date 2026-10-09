@@ -1,0 +1,30 @@
+name: Prepare Recovery Inputs
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+          filter: blob:none
+          sparse-checkout: |
+            src
+            configs
+            scripts
+            recovery
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - run: python -u scripts/prepare_recovery_inputs.py --directory recovery/2026-10-09
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recovery-inputs-and-evidence
+          path: recovery/2026-10-09/
+          retention-days: 30

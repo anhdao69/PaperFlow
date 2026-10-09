@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -70,6 +71,20 @@ def test_selected_store_round_trip_preserves_every_field(tmp_path: Path) -> None
 
     assert loaded == saved
     assert loaded.papers[paper.arxiv_id] == paper
+
+
+def test_selected_store_omits_formatting_whitespace_to_fit_git(tmp_path: Path) -> None:
+    path = tmp_path / "papers.json"
+    taxonomy = load_taxonomy(ROOT / "configs/topics.yaml")
+    paper = _paper(title="Navigation — Bộ nhớ")
+
+    saved = save_selected_store(path, {paper.arxiv_id: paper}, taxonomy)
+    content = path.read_text(encoding="utf-8")
+
+    assert content.count("\n") == 1
+    assert "Bộ nhớ" in content
+    assert json.loads(content) == saved.model_dump(mode="json", exclude_none=False)
+    assert load_selected_store(path, taxonomy) == saved
 
 
 @pytest.mark.parametrize(

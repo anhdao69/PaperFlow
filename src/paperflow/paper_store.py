@@ -10,13 +10,19 @@ from paperflow.models import RunState, SelectedPaper, SelectedPaperCollection
 from paperflow.taxonomy import TaxonomyConfig, validate_assignments
 
 
-def _stable_json(model: SelectedPaperCollection | RunState) -> str:
-    return json.dumps(
-        model.model_dump(mode="json", exclude_none=False),
-        ensure_ascii=False,
-        indent=2,
-        sort_keys=True,
-    ) + "\n"
+def _stable_json(
+    model: SelectedPaperCollection | RunState, *, compact: bool = False
+) -> str:
+    return (
+        json.dumps(
+            model.model_dump(mode="json", exclude_none=False),
+            ensure_ascii=False,
+            indent=None if compact else 2,
+            separators=(",", ":") if compact else None,
+            sort_keys=True,
+        )
+        + "\n"
+    )
 
 
 def validate_selected_collection(
@@ -55,7 +61,9 @@ def save_selected_store(
         )
         validate_selected_collection(staged, taxonomy)
 
-    atomic_write_text(path, _stable_json(collection), validator=validate_staged)
+    atomic_write_text(
+        path, _stable_json(collection, compact=True), validator=validate_staged
+    )
     return collection
 
 

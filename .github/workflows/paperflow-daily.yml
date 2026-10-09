@@ -16,6 +16,16 @@ on:
         required: false
         default: false
         type: boolean
+      recovery_date:
+        description: Replay a verified historical input snapshot
+        required: false
+        default: ""
+        type: choice
+        options:
+          - ""
+          - "2026-10-06"
+          - "2026-10-07"
+          - "2026-10-08"
 
 concurrency:
   group: paperflow-daily
@@ -41,9 +51,11 @@ jobs:
       - run: python -m pip install -e .
       - name: Check publication schedule
         id: schedule
+        env:
+          RECOVERY_DATE: ${{ inputs.recovery_date }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
-             [ "${{ inputs.catch_up }}" != "true" ]; then
+             [ "${{ inputs.catch_up }}" != "true" ] && [ -z "$RECOVERY_DATE" ]; then
             python -m paperflow.schedule \
               --manual \
               --github-output "$GITHUB_OUTPUT"
@@ -72,8 +84,17 @@ jobs:
         if: steps.schedule.outputs.due == 'true'
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          RECOVERY_DATE: ${{ inputs.recovery_date }}
+          PYTHONUNBUFFERED: "1"
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+          if [ -n "$RECOVERY_DATE" ]; then
+            case "$RECOVERY_DATE" in
+              2026-10-06|2026-10-07|2026-10-08) ;;
+              *) echo "Unsupported recovery date"; exit 1 ;;
+            esac
+            python -m paperflow.main \
+              --source-snapshot "recovery/2026-10-09/$RECOVERY_DATE.json"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
              [ "${{ inputs.catch_up }}" != "true" ]; then
             python -m paperflow.main --manual
           else
@@ -82,9 +103,19 @@ jobs:
       - name: Validate generated outputs
         if: steps.schedule.outputs.due == 'true'
         run: python -m paperflow.render.validation
+      - name: Preserve source inputs for recovery
+        if: always() && steps.schedule.outputs.due == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperflow-source-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .cache/paperflow/raw/*.json
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 30
       - name: Commit generated content
         if: steps.schedule.outputs.due == 'true'
         run: |
+          python -c 'from pathlib import Path; p = Path("data/papers.json"); assert p.stat().st_size < 100 * 1024 * 1024, "Canonical paper store exceeds GitHub file limit"'
           git config user.name "paperflow-bot"
           git config user.email "paperflow-bot@users.noreply.github.com"
           python -m paperflow.cli.commit_generated \

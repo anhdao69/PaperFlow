@@ -387,3 +387,87 @@ def test_delayed_trigger_publishes_the_missed_date_not_delivery_date(
     assert (project / "data/daily_feeds/2026-08-26.json").exists()
     assert not (project / "data/daily_feeds/2026-08-27.json").exists()
     assert (project / "data/run_stats/2026-08-26.json").exists()
+
+
+def test_dated_snapshot_replay_uses_archived_entries_and_advances_once(
+    tmp_path: Path,
+) -> None:
+    project = project_copy(tmp_path)
+    entries, fixture = raw_fixture()
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "publication_date": "2026-10-06",
+                "announcement_date": "2026-10-07",
+                "categories": list(
+                    load_config_bundle(project).runtime.source.categories
+                ),
+                "captured_at": "2026-10-09T18:00:00Z",
+                "provenance": "deterministic archived fixture",
+                "candidate_count": 10,
+                "entries": [entry.model_dump(mode="json") for entry in entries],
+            }
+        )
+    )
+    llm = FixturePipelineLLM(
+        project, [fixture["primary_results"], fixture["retry_results"]]
+    )
+    dependencies = PipelineDependencies(
+        source_client=FailedSource(),
+        refetcher=FixtureRefetch(),
+        llm_client_factory=lambda: llm,
+        now=lambda: datetime(2026, 10, 7, 2, tzinfo=UTC),
+        run_id_factory=lambda now: "dated-recovery-test",
+    )
+    result = run_pipeline(project, dependencies, manual=False, source_snapshot=snapshot)
+    assert result.ran
+    assert result.stats is not None
+    assert load_run_state(
+        project / "data/state.json"
+    ).last_successful_local_date == date(2026, 10, 6)
+    before = (project / "data/papers.json").read_bytes()
+    again = run_pipeline(project, dependencies, manual=False, source_snapshot=snapshot)
+    assert not again.ran
+    assert (project / "data/papers.json").read_bytes() == before
+
+
+def test_wrong_snapshot_date_fails_before_publication_changes(tmp_path: Path) -> None:
+    project = project_copy(tmp_path)
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "publication_date": "2026-10-05",
+                "announcement_date": "2026-10-06",
+                "categories": list(
+                    load_config_bundle(project).runtime.source.categories
+                ),
+                "captured_at": "2026-10-09T18:00:00Z",
+                "provenance": "wrong date fixture",
+                "candidate_count": 0,
+                "entries": [],
+            }
+        )
+    )
+    before = {
+        p.relative_to(project): p.read_bytes()
+        for p in project.rglob("*")
+        if p.is_file()
+    }
+    dependencies = PipelineDependencies(
+        source_client=FailedSource(),
+        refetcher=FixtureRefetch(),
+        llm_client_factory=lambda: pytest.fail("must not call LLM"),
+        now=lambda: datetime(2026, 10, 7, 2, tzinfo=UTC),
+    )
+    with pytest.raises(ValueError, match="next due publication"):
+        run_pipeline(project, dependencies, manual=False, source_snapshot=snapshot)
+    after = {
+        p.relative_to(project): p.read_bytes()
+        for p in project.rglob("*")
+        if p.is_file()
+    }
+    assert after == before

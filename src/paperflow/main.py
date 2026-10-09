@@ -34,6 +34,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--manual", action="store_true")
     parser.add_argument("--paper", action="append", default=[])
     parser.add_argument("--maintenance-only", action="store_true")
+    parser.add_argument(
+        "--source-snapshot",
+        type=Path,
+        help="use a validated historical snapshot for the next due publication",
+    )
     arguments = parser.parse_args(argv)
     root = arguments.root.resolve()
     bundle = load_config_bundle(root)
@@ -73,6 +78,7 @@ def main(argv: list[str] | None = None) -> int:
             manual=arguments.manual,
             manual_override_ids=arguments.paper,
             maintenance_only=arguments.maintenance_only,
+            source_snapshot=arguments.source_snapshot,
         )
     except Exception as error:
         fields: dict[str, object] = {"error_type": type(error).__name__}

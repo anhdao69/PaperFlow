@@ -46,6 +46,7 @@ from paperflow.paper_store import (
     save_selected_store,
     validate_selected_collection,
 )
+from paperflow.recovery import load_recovery_snapshot
 from paperflow.render.contracts import FeedIndex
 from paperflow.render.validation import publish_outputs, validate_repository
 from paperflow.render.view_models import build_public_projection
@@ -109,9 +110,12 @@ def run_pipeline(
     manual: bool,
     manual_override_ids: Sequence[str] = (),
     maintenance_only: bool = False,
+    source_snapshot: Path | None = None,
 ) -> PipelineRunResult:
     """Execute one validated run; callers commit only after this returns."""
     root = root.resolve()
+    if source_snapshot is not None and (manual or maintenance_only):
+        raise ValueError("snapshot recovery requires scheduled publication semantics")
     bundle = load_config_bundle(root)
     taxonomy = load_taxonomy(root / "configs/topics.yaml")
     renderer = PromptRenderer(root / "configs/prompts", bundle.prompts)
@@ -128,6 +132,16 @@ def run_pipeline(
             reason=decision.reason,
         )
         return PipelineRunResult(False, None, None, decision.reason)
+
+    recovered_entries = (
+        load_recovery_snapshot(
+            source_snapshot,
+            publication_date=decision.local_date,
+            categories=bundle.runtime.source.categories,
+        )
+        if source_snapshot is not None
+        else None
+    )
 
     # A delayed GitHub cron trigger belongs to its missed publication date, not
     # to the wall-clock date on which GitHub eventually delivered it.
@@ -172,7 +186,9 @@ def run_pipeline(
 
     try:
         entries = (
-            []
+            recovered_entries
+            if recovered_entries is not None
+            else []
             if maintenance_only
             else dependencies.source_client.fetch_new(
                 bundle.runtime.source.categories,
