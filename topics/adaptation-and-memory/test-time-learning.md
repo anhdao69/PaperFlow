@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**470 papers total**
+**474 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts](https://arxiv.org/abs/2610.00722) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | JEPA-TTT persistently adapts a pretrained latent world model during deployment, improving prediction and planning under changed environment dynamics. | 9 | 8 |
+| 2026-10-09 | [RecastVLA: From Past Interaction to Future Control with Adaptive Policy States](https://arxiv.org/abs/2609.32155) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | RecastVLA turns a vision-language-action policy’s past action generation into a persistent adaptive state that improves sequential robot manipulation without expert labels at deployment. | 9 | 8 |
+| 2026-10-09 | [Affective Agent: On-Device Personalized Intervention Reasoning for Wearable Systems](https://arxiv.org/abs/2609.12322) | Adaptation and Memory: Test-Time Learning | Affective Agent is an on-device, memory-personalized architecture that reasons about whether, when, and how wearables should intervene under uncertainty. | 7 | 7 |
+| 2026-10-09 | [PLSP (Pre-hoc Liminal Space Profiling): OOD Prediction over Detection -- An Anticipatory Approach for Machine Learning Model Reliability](https://arxiv.org/abs/2609.12225) | Adaptation and Memory: Test-Time Learning | PLSP reframes OOD handling as pre-hoc prediction, using credibility-based analyses to anticipate model reliability before deployment. | 6 | 7 |
 | 2026-10-08 | [GenIA: Generative Reconstruction with Test-Time Input Alignment](https://arxiv.org/abs/2610.12388) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Test-Time Learning | GenIA aligns a generative 3D model with observed geometry, appearance, and pose at test time—without retraining—to improve reconstruction from sparse, monocular, and dynamic inputs. | 7 | 7 |
 | 2026-10-08 | [Prior or Feedback? What an LLM Uses When Adapting Neural Operators](https://arxiv.org/abs/2610.12325) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | The LLM adapts neural-operator fine-tuning by combining a task-dependent prior with sensitivity to experimental feedback. | 8 | 7 |
 | 2026-10-08 | [Unlocking the Regulatory Genome by ARGUS: An Evidence-Constrained Agentic Framework for Interpreting Single Nucleotide Variants](https://arxiv.org/abs/2610.12281) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | ARGUS combines deterministic genomics tools with uncertainty-aware LLM planning to interpret noncoding variants while preventing unsupported claims and enabling evidence-based abstention. | 8 | 9 |

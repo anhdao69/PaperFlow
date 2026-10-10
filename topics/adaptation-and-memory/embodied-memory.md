@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**181 papers total**
+**183 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents](https://arxiv.org/abs/2610.11707) | Adaptation and Memory: Embodied Memory | DeltaReplay enables mobile GUI agents to selectively reuse only the relevant parts of past trajectories, improving task success by up to 10.3 and 25.0 percentage points on AndroidWorld and SPA-Bench. | 5 | 6 |
+| 2026-10-09 | [Hierarchical Belief Modeling for Zero-Shot Opponent Adaptation in Partially Observable Multi-Agent Navigation](https://arxiv.org/abs/2609.12422) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | HORIZON improves zero-shot adaptation in partially observable multi-agent navigation by combining hierarchical memory, opponent modeling, and information-seeking exploration. | 7 | 6 |
 | 2026-10-08 | [RoboRSI: Stable, efficient, and reusable robot self-evolution in complex real-world environments](https://arxiv.org/abs/2610.12424) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | RoboRSI enables robots to safely improve and reuse skills by attributing execution failures to specific task branches and validating targeted revisions. | 9 | 8 |
 | 2026-10-08 | [Slot3R: Set-Associative Spatial Memory for Streaming 3D Reconstruction](https://arxiv.org/abs/2610.12282) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Embodied Memory | Slot3R improves streaming 3D reconstruction by allowing multiple distinct states to share a spatial memory address instead of prematurely fusing them. | 8 | 8 |
 | 2026-10-08 | [Recompose and Refine Latent Reasoning Flows for Vision-Language-Action Models](https://arxiv.org/abs/2610.12090) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | FLOWMEM helps vision-language-action models reuse and adapt successful latent reasoning paths to improve closed-loop robot control. | 8 | 7 |

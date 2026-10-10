@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**800 papers total**
+**802 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
+| 2026-10-09 | [JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts](https://arxiv.org/abs/2610.00722) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | JEPA-TTT persistently adapts a pretrained latent world model during deployment, improving prediction and planning under changed environment dynamics. | 9 | 8 |
 | 2026-10-08 | [DreamTrue: Action-Faithful Robot World Model with Counterfactual Post-Training](https://arxiv.org/abs/2610.12468) | World Models: Video World Models, Interactive World Models | DreamTrue improves robot world-model video prediction by calibrating action conditions and using counterfactual, human-guided post-training for more faithful and physically plausible interactions. | 9 | 8 |
 | 2026-10-08 | [What 30,000 Hours of Ego-centric Video Does Not Teach](https://arxiv.org/abs/2610.12464) | Embodied AI: Learning from Human Videos; World Models: Video World Models | Scaling 30,000 hours of ego-centric video models human agents well, but object interactions remain substantially less faithful and require better training—not just more data. | 8 | 7 |
 | 2026-10-08 | [WorldGuide: Goal-Directed Video World Model for Procedural Task Execution](https://arxiv.org/abs/2610.12459) | World Models: Video World Models, Interactive World Models | WorldGuide performs long-horizon procedural video tasks by repeatedly planning an atomic action, generating its visual outcome, and adapting or stopping based on the result. | 8 | 8 |

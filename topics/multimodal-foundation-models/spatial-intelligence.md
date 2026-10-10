@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**523 papers total**
+**525 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [GeoReform: Reflective Formalization Evolution for Multimodal Geometry Problem Solving](https://arxiv.org/abs/2610.12391) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | GeoReform improves multimodal geometry solving by iteratively refining how diagrams are formalized for reasoning, raising Qwen3VL-2B accuracy on Geometry3K from 42.0% to 56.0%. | 8 | 7 |
+| 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
 | 2026-10-08 | [SpatialHarness: Test-Time Spatial Scaffolding for Fine Robotic Manipulation](https://arxiv.org/abs/2610.12457) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | SpatialHarness improves fine robotic manipulation by giving a frozen multimodal policy complementary virtual views of task-critical spatial relationships at test time. | 9 | 9 |
 | 2026-10-08 | [Pumpire: Unified Benchmark for Metric Distance Estimation](https://arxiv.org/abs/2610.12423) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Pumpire is a benchmark for directly evaluating how accurately 3D foundation models estimate physical point-to-point distances from reconstructed image or video geometry. | 8 | 7 |
 | 2026-10-08 | [Beyond Spatio-Temporal Priors: A Generalizable Approach for Dense Correspondence Matching](https://arxiv.org/abs/2610.12421) | Multimodal Foundation Models: Spatial Intelligence | FreeMatching enables identity-preserving dense correspondence across transformations that violate conventional motion and geometry assumptions. | 5 | 7 |

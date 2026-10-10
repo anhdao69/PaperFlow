@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**221 papers total**
+**223 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [Prism: Dynamic Sparse Attention for Native 2K Joint Video-Audio Generation Model Training](https://arxiv.org/abs/2610.05416) | Efficient AI: Efficient Attention | Prism enables native 2K joint video-audio model training with dynamic, content- and audio-aware sparse attention, achieving faster training and higher generation quality than full attention. | 8 | 8 |
+| 2026-10-09 | [RiPPLE: Cross-Space Performance Prediction from Early Training for Neural Architecture Search](https://arxiv.org/abs/2609.12418) | Efficient AI: Efficient Attention | RiPPLE predicts rankings across an entire NAS search space by extrapolating early training results from a small set of anchor architectures and propagating them through architecture features. | 6 | 7 |
 | 2026-10-08 | [MSGAT: Multi-Head Spiking Graph Attention with Similarity-Space Fusion for Image-Text Retrieval](https://arxiv.org/abs/2610.11526) | Efficient AI: Efficient Attention | MSGAT improves energy-efficient spiking image-text retrieval by combining graph-based relational reasoning with similarity-space fusion, achieving competitive retrieval performance using only two time steps. | 7 | 7 |
 | 2026-10-08 | [Generative Adversarial Loops](https://arxiv.org/abs/2610.11458) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Generative Adversarial Loops automate both benchmark creation and algorithm discovery by having agents expose system weaknesses and develop methods to overcome them. | 7 | 8 |
 | 2026-10-08 | [iCATS: Fast Video Generation via Interaction-Aware Sparse Attention and Timestep-Adaptive Sparsity](https://arxiv.org/abs/2610.11302) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | iCATS accelerates video diffusion generation with interaction-aware sparse attention, timestep-adaptive sparsity, and GPU-efficient execution while preserving quality. | 9 | 8 |

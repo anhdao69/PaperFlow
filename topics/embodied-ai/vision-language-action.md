@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**599 papers total**
+**602 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [Learning from Runtime Feedback through Failure-Bank Self-Evolution for Vision-Language-Action Models](https://arxiv.org/abs/2609.39820) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | FailBank turns runtime safety feedback into persistent VLA policy improvements, increasing task success while reducing unintended contact costs. | 9 | 8 |
+| 2026-10-09 | [FineART: Fine-Grained Annotated Robotic Trajectory Dataset and Vision-Language-Action Model for Bimanual Manipulation](https://arxiv.org/abs/2609.36416) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | FineART pairs a densely subtask-annotated bimanual manipulation dataset with a vision-language-action model that uses predicted subtasks to improve long-horizon robot task execution and generalization. | 9 | 7 |
+| 2026-10-09 | [RecastVLA: From Past Interaction to Future Control with Adaptive Policy States](https://arxiv.org/abs/2609.32155) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | RecastVLA turns a vision-language-action policy’s past action generation into a persistent adaptive state that improves sequential robot manipulation without expert labels at deployment. | 9 | 8 |
 | 2026-10-08 | [VersaCamVLA: Camera-Configurable VLA Policies for Robotic Manipulation](https://arxiv.org/abs/2610.12451) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | VersaCamVLA enables robotic VLA policies to handle changing camera numbers and poses by converting arbitrary RGB views into fixed-size scene tokens. | 9 | 7 |
 | 2026-10-08 | [ARC: A Reasoning Recipe for Robot Foundation Models](https://arxiv.org/abs/2610.12386) | Embodied AI: Vision-Language-Action | ARC improves robot foundation models’ zero-shot control by adding automatically generated, action-grounded reasoning traces and adapting models to use them. | 9 | 8 |
 | 2026-10-08 | [PLaW-VLA: Predictive Latent World Modeling for Vision-Language-Action Policies](https://arxiv.org/abs/2610.12285) | Embodied AI: Vision-Language-Action; World Models | PLaW-VLA improves long-horizon and distribution-shifted robotic control by conditioning actions on predicted, task-relevant future states rather than reconstructing future images. | 9 | 8 |

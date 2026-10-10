@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**115 papers total**
+**116 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [AnchorVLN: Geometry-Anchored Vision-Language Grounding Reasoning for Open-Vocabulary Navigation](https://arxiv.org/abs/2609.12285) | Embodied AI: Vision-Language Navigation | AnchorVLN improves open-vocabulary indoor navigation by letting a VLM identify semantic targets while geometry tools handle metric spatial reasoning. | 9 | 8 |
 | 2026-10-08 | [SuperNav: An Agentic Navigation System for Any Task in Any Scene](https://arxiv.org/abs/2610.12126) | Embodied AI: Vision-Language Navigation, Robot Navigation | SuperNav enables a pretrained multimodal language model to perform general-purpose navigation by delegating motion execution to specialized tools instead of fine-tuning the model for navigation. | 9 | 8 |
 | 2026-10-08 | [Learning Language-Conditioned Traversability Representations for Adaptive Visual Navigation](https://arxiv.org/abs/2610.11622) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | LaTraNav enables adaptive visual navigation by combining language-conditioned traversability representations with asynchronous planning. | 8 | 7 |
 | 2026-10-08 | [Rendering-Free Lookahead for Question-Guided Active Vision](https://arxiv.org/abs/2610.11039) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | Rendering-Free Lookahead learns to choose camera motions by predicting how much unseen views will improve a VLM’s ability to answer viewpoint-dependent questions. | 8 | 8 |

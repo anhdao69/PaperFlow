@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**590 papers total**
+**593 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
+| 2026-10-09 | [Learning Scene-Aware Humanoid Locomotion through 3D Clutter from Immersive Human Demonstrations](https://arxiv.org/abs/2609.21107) | Embodied AI: Robot Navigation | MTC learns collision-free, scene-aware humanoid locomotion through clutter by retargeting immersive human demonstrations into robot motions and training a locomotion policy. | 7 | 7 |
+| 2026-10-09 | [Hierarchical Belief Modeling for Zero-Shot Opponent Adaptation in Partially Observable Multi-Agent Navigation](https://arxiv.org/abs/2609.12422) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | HORIZON improves zero-shot adaptation in partially observable multi-agent navigation by combining hierarchical memory, opponent modeling, and information-seeking exploration. | 7 | 6 |
 | 2026-10-08 | [Control-Ready Uncertainty for Trajectory Diffusion](https://arxiv.org/abs/2610.12431) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | SCOPE adds fast, calibrated trajectory uncertainty estimates to diffusion models for safer real-time robot control without repeated Monte Carlo sampling. | 8 | 8 |
 | 2026-10-08 | [LiteNWM: Efficient Latent World Models for Onboard Visual Navigation in the Wild](https://arxiv.org/abs/2610.12368) | Embodied AI: Robot Navigation; World Models: Interactive World Models | LiteNWM enables fast, future-aware visual navigation by predicting and scoring candidate trajectories in a shared latent space. | 9 | 8 |
 | 2026-10-08 | [Toward Lunar Legged Robots: Field Deployment Lessons at LUNA](https://arxiv.org/abs/2610.12276) | Embodied AI: Robot Navigation | A 2025 LUNA analogue campaign shows that legged robots can traverse lunar-like terrain, but sinkage, dust, and lighting-related perception failures remain key deployment barriers. | 6 | 5 |

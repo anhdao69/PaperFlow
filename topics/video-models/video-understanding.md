@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**448 papers total**
+**449 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [Mid-Training Language Models on Raw Video](https://arxiv.org/abs/2610.11019) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Mid-training a language model on raw video by predicting visual tokens improves downstream video and image understanding while preserving text performance, without captions or text supervision. | 9 | 8 |
 | 2026-10-08 | [OmniCapBench: A Deep-Structured Evaluation Framework for Fine-Grained Audio-Visual Captioning](https://arxiv.org/abs/2610.12458) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniCapBench evaluates audio-visual captioning through atomic, verifiable units to diagnose fine-grained MLLM perception and reasoning failures. | 6 | 7 |
 | 2026-10-08 | [FastBench: Can Streaming VLMs Perceive High-Dynamic Real-World Streams?](https://arxiv.org/abs/2610.12427) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | FastBench shows that current streaming VLMs struggle to perceive fast events, even with denser frame sampling or adaptive streaming strategies. | 7 | 7 |
 | 2026-10-08 | [OneSearch-VL: Unified Multimodal Deep Research Agent for Image and Video](https://arxiv.org/abs/2610.12419) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OneSearch-VL unifies image and video deep research through a visually grounded evidence graph that guides data, training, rewards, and evaluation. | 7 | 7 |

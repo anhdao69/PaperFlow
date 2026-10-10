@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**529 papers total**
+**530 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [Personalized State-Transition-Aware Memory for Clinical Agents](https://arxiv.org/abs/2609.38490) | Language Foundation Models: LLM Memory | STAM helps clinical LLM agents track evolving patient states while preserving relevant historical information. | 7 | 7 |
 | 2026-10-08 | [Use and Disuse: Intent-Structured Experience Consolidation for Memory and Learning in LLM Agents](https://arxiv.org/abs/2610.12124) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | Hippocam gives LLM agents a hierarchical, continually consolidating memory that preserves useful experience while progressively abstracting disused details—without parameter updates. | 7 | 7 |
 | 2026-10-08 | [Event-Centric Memory with Query-Aware Graph Augmentation for Long-Term Conversational Agents](https://arxiv.org/abs/2610.11920) | Language Foundation Models: LLM Memory | QGMem builds event-centric, query-aware graph memories that retrieve compact, relevant evidence for more effective long-term conversational reasoning. | 7 | 7 |
 | 2026-10-08 | [DPPM: Dual-Path Parametric Memory for Personalized Language Models](https://arxiv.org/abs/2610.11776) | Language Foundation Models: LLM Memory | DPPM combines direct evidence pooling with sequential updates to preserve and revise user preferences across sessions in personalized language models. | 8 | 7 |

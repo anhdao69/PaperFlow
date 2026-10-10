@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**752 papers total**
+**753 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [Mid-Training Language Models on Raw Video](https://arxiv.org/abs/2610.11019) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Mid-training a language model on raw video by predicting visual tokens improves downstream video and image understanding while preserving text performance, without captions or text supervision. | 9 | 8 |
 | 2026-10-08 | [OuroWorld: Bringing Any 3D World Alive as Diverse, Endlessly Looping 3D Cinemagraphs](https://arxiv.org/abs/2610.12461) | 3D Vision; Video Generation and Understanding | OuroWorld transforms static 3D Gaussian Splatting scenes into viewpoint-consistent, diverse, seamlessly looping 3D cinemagraphs with general scene motion and lighting changes. | 6 | 8 |
 | 2026-10-08 | [OmniCapBench: A Deep-Structured Evaluation Framework for Fine-Grained Audio-Visual Captioning](https://arxiv.org/abs/2610.12458) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniCapBench evaluates audio-visual captioning through atomic, verifiable units to diagnose fine-grained MLLM perception and reasoning failures. | 6 | 7 |
 | 2026-10-08 | [Hybrid Cinematography: Previsualizing and Managing Hallucination Risk in Generative Video Reshooting](https://arxiv.org/abs/2610.12455) | Video Generation and Understanding: Video Diffusion | Hybrid Cinematography helps filmmakers preview and manage the risk of hallucinated content when changing camera moves in generative video reshooting. | 6 | 7 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**1612 papers total**
+**1614 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [Prism: Dynamic Sparse Attention for Native 2K Joint Video-Audio Generation Model Training](https://arxiv.org/abs/2610.05416) | Efficient AI: Efficient Attention | Prism enables native 2K joint video-audio model training with dynamic, content- and audio-aware sparse attention, achieving faster training and higher generation quality than full attention. | 8 | 8 |
+| 2026-10-09 | [RiPPLE: Cross-Space Performance Prediction from Early Training for Neural Architecture Search](https://arxiv.org/abs/2609.12418) | Efficient AI: Efficient Attention | RiPPLE predicts rankings across an entire NAS search space by extrapolating early training results from a small set of anchor architectures and propagating them through architecture features. | 6 | 7 |
 | 2026-10-08 | [One Block, Multiple Depths: Recurrent Vision Transformers with Depth-Programmed Experts](https://arxiv.org/abs/2610.12448) | Efficient AI | reViT reuses one recurrent Transformer block while depth-programmed expert mixtures recover depth-specific behavior, matching full-depth vision encoders with far fewer stored parameters. | 5 | 8 |
 | 2026-10-08 | [Rounding in Preconditioner Space: Redesigning 4-bit AdamW Optimizer-State Quantization](https://arxiv.org/abs/2610.12444) | Efficient AI | ZIP-SR and ZE-EDEN redesign 4-bit AdamW state quantization around preconditioner-space rounding, reducing validation-loss degradation versus standard 4-bit AdamW across pretraining and fine-tuning experiments. | 6 | 6 |
 | 2026-10-08 | [VFold: Symmetry-Aware Cross-Layer Value Cache Compression](https://arxiv.org/abs/2610.12338) | Efficient AI: KV Cache and Memory Efficiency | VFold compresses LLM value caches by merging symmetry-aware representations across layers, reducing memory use without architectural changes or major decoding overhead. | 8 | 7 |

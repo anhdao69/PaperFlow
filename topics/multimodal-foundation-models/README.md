@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**1582 papers total**
+**1585 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-09 | [GeoReform: Reflective Formalization Evolution for Multimodal Geometry Problem Solving](https://arxiv.org/abs/2610.12391) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | GeoReform improves multimodal geometry solving by iteratively refining how diagrams are formalized for reasoning, raising Qwen3VL-2B accuracy on Geometry3K from 42.0% to 56.0%. | 8 | 7 |
+| 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
+| 2026-10-09 | [Mid-Training Language Models on Raw Video](https://arxiv.org/abs/2610.11019) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Mid-training a language model on raw video by predicting visual tokens improves downstream video and image understanding while preserving text performance, without captions or text supervision. | 9 | 8 |
 | 2026-10-08 | [OmniCapBench: A Deep-Structured Evaluation Framework for Fine-Grained Audio-Visual Captioning](https://arxiv.org/abs/2610.12458) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | OmniCapBench evaluates audio-visual captioning through atomic, verifiable units to diagnose fine-grained MLLM perception and reasoning failures. | 6 | 7 |
 | 2026-10-08 | [SpatialHarness: Test-Time Spatial Scaffolding for Fine Robotic Manipulation](https://arxiv.org/abs/2610.12457) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | SpatialHarness improves fine robotic manipulation by giving a frozen multimodal policy complementary virtual views of task-critical spatial relationships at test time. | 9 | 9 |
 | 2026-10-08 | [FastBench: Can Streaming VLMs Perceive High-Dynamic Real-World Streams?](https://arxiv.org/abs/2610.12427) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | FastBench shows that current streaming VLMs struggle to perceive fast events, even with denser frame sampling or adaptive streaming strategies. | 7 | 7 |
