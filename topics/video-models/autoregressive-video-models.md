@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**36 papers total**
+**40 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-08 | [Connected Self Forcing: Beyond Local Learning in Video Autoregression](https://arxiv.org/abs/2610.12156) | Video Generation and Understanding: Autoregressive Video Models | Connected Self Forcing improves long-video autoregressive generation by training earlier context using gradient feedback from later predictions, while keeping inference unchanged. | 8 | 8 |
+| 2026-10-08 | [Memory Forcing: Attendable Mid-Horizon History for Streaming Video Generation](https://arxiv.org/abs/2610.11756) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | Memory Forcing prevents mid-horizon forgetting in few-step streaming video generation by preserving diverse past events within a fixed-size attention cache. | 9 | 8 |
+| 2026-10-08 | [Conditional Residual Prediction: Improving Autoregressive Video Diffusion without a Bidirectional Teacher](https://arxiv.org/abs/2610.11479) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Conditional Residual Prediction (CRP) reduces error propagation in autoregressive video diffusion, enabling strong causal generation without a bidirectional teacher. | 9 | 8 |
+| 2026-10-08 | [SGF+: Decoupling Gradient Flows for Autoregressive Video Generation](https://arxiv.org/abs/2610.10429) | Video Generation and Understanding: Autoregressive Video Models | SGF+ separates context writing from denoising in autoregressive video models, improving visual quality and long-horizon temporal consistency without extra data or training time. | 8 | 8 |
 | 2026-10-05 | [S2PD: Serial-to-Parallel Diffusion for Physically and Logically Consistent Video Generation](https://arxiv.org/abs/2610.06847) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | S2PD combines early autoregressive and late parallel diffusion to generate videos with more physically and logically consistent events while reducing the cost of fully serial sampling. | 7 | 8 |
 | 2026-10-04 | [ProAR: Learning Prospective Reasoning with Autoregressive Video Models](https://arxiv.org/abs/2610.03664) | Video Generation and Understanding: Autoregressive Video Models | ProAR makes autoregressive video generation goal-directed by combining future goal-frame guidance with short-term representation alignment. | 7 | 8 |
 | 2026-10-04 | [Weave Forcing: Compositional Memory Routing for Interactive Long Video Generation](https://arxiv.org/abs/2610.03510) | Video Generation and Understanding: Autoregressive Video Models | Weave Forcing enables interactive long-video generation to reuse different historical shots for specific characters and backgrounds without contaminating the new scene. | 8 | 8 |

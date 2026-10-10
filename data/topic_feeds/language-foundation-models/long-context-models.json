@@ -1,6 +1,907 @@
 {
   "days": [
     {
+      "date": "2026-10-08",
+      "paper_count": 6,
+      "papers": [
+        {
+          "abstract": "Many key-value (KV) caches are compressed before anyone knows what will be asked of them: a document cached for retrieval, a prompt prefix shared across requests, the memory of a long conversation. The prevailing approach scores KV entries by rehearsal: the model rereads the context and keeps the entries it attends to, assuming that the more completely a cache rehearses its context, the better it remembers it. We show that under tight budgets this assumption backfires: rehearse everything, remember nothing. At a 3% keep ratio, rereading the whole context keeps 31.5 of 96.5 points on RULER, and on LongBench's natural-text tasks it falls below methods that rehearse nothing at all. The cause is that a cache keeps what it rehearses: rereading spreads the budget across the whole context, so the answer's own entries survive at little more than chance. Like a student before an exam, a cache remembers more by testing itself than by rereading. Two principles follow: rehearse what will be read, and rehearse as much as there is. We instantiate them as Attic-KV (Attic for short), a training-free rehearsal in which the model quizzes itself with question-answer pairs that quote the context, alongside anchor tokens in a content-adaptive amount. Changing only the rehearsal lifts three hosts that score it in three different ways: Attic alone is the best training-free method in all eight settings we test on RULER and LongBench's natural-text tasks, and plugged into the gradient-based KVgrad and the trained RestoreKV+, it raises them by up to 17.1 and 28.1 points. Its advantage grows as the budget shrinks, reaching 41.9 points over full rereading at a 3% keep ratio, and it compresses faster than rereading the whole context.",
+          "arxiv_id": "2610.12133",
+          "arxiv_url": "https://arxiv.org/abs/2610.12133",
+          "authors": [
+            "Zhiyun Shi"
+          ],
+          "bullets": [
+            "Full-context rereading spreads a tiny cache budget too broadly, causing important answer-related entries to be lost.",
+            "Attic-KV uses context-quoting question–answer pairs plus content-adaptive anchor tokens for training-free rehearsal.",
+            "Its benefit increases as the keep budget shrinks, including a reported 41.9-point gain over full rereading at a 3% keep ratio.",
+            "Attic is reported as the best training-free method across eight RULER and LongBench natural-text settings.",
+            "Adding Attic’s rehearsal to KVgrad and RestoreKV+ improves them by up to 17.1 and 28.1 points, respectively."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Overview of Attic. (Left) Attic builds the rehearsal 𝑅, the only part of compression it changes: ❶ the keys that stand out from the chunk’s average key are the anchors; ❷ the anchors are expanded to𝑚 𝑗 tokens, the length of the sentences that hold them, so a prose chunk is rehearsed briefly and a table of facts at length (Principle 2); ❸ the model writes the questions a reader is likely to ask and answers them by quoting the page (Principle 1). (Right) The host’s scorer 𝜙 reads the rehearsal back over the cached chunk, scores every KV entry by the attention it receives (heat map illustrative), and keeps the top 𝑟 . Text is from the LooGLE page of Figure 1; the Q&A pair is the first one the model wrote for it. The same rehearsal plugs into KV 2 , KVgrad and RestoreKV+, and nothing is trained.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 395,
+              "image_path": "figures/2610.12133/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1044
+            },
+            {
+              "caption": "Figure 3: A cache keeps what it rehearses (Qwen3-8B, RULER4K development split, keep ratio 5%). (Left) Share of the document that a rehearsal covers (light) and share of the kept KV entries, over all layers and heads, that fall on those positions (dark), for a semantic rehearsal (fact list) and a geometric one (KV 2 anchors). (Right) Rehearsing only the fact list: needle coverage of the list against the score. MK/MQ/MV: multikey/-query/-value needles; S: single needle; CWE: common words; QA: question answering.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 276,
+              "image_path": "figures/2610.12133/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 496
+            },
+            {
+              "caption": "Figure 2: Rehearse everything, remember nothing. Share of each answer’s KV entries, over all layers and heads, that the cache keeps (Qwen3-8B, RULER-4K development split, the eight needle tasks, keep ratio 5%).Whole-document rehearsal keeps the answer nomore often than any other token (dashed line); Attic keeps it on the tasks it answers, and an oracle that rehearses the gold answer shows how much a 5% cache can hold. Below each task: its score with whole-document rehearsal→ with Attic.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 262,
+              "image_path": "figures/2610.12133/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 494
+            },
+            {
+              "caption": "Figure 5: Tuning a fixed rehearsal ratio, even on the test split, cannot catch up withAttic (keep ratio 5%). Each line is KV 2 ’s score minus Attic’s on the same benchmark, so Attic is the zero line. Every point lies below it: no single 𝜌 gets close to Attic on both benchmarks at once.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 240,
+              "image_path": "figures/2610.12133/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 498
+            },
+            {
+              "caption": "Table 1: Main results on the test splits at a 5% keep ratio (R-4K 3% : 3%). R: RULER; LB: LongBench (14 natural-text tasks). Reh.: rehearsal length, including QA pairs, as a fraction of the context (Qwen3-8B, RULER-4K test). Attic alone uses KV 2 ’s scorer; a shaded row below a host adds Attic’s rehearsal to it; ↑x: gain over KV 2 or the host. KV 2 uses the 𝜌 selected on the development split of each model, benchmark and keep ratio; Attic uses one configuration throughout. † Restore tokens released by the RestoreKV authors (none for Qwen3-4B/14B); all other rows are training-free. Bold: above every baseline; underlined: the strongest baseline. Avg. Rank: mean rank over the columns each row has.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 310,
+              "image_path": "figures/2610.12133/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1036
+            },
+            {
+              "caption": "Table 4: LongBench test results by official category (keep ratio 5%). SD/MD: single-/multi-document QA; Sum.: summarization; FS: few-shot; Avg.: the 14 natural-text tasks, as in Table 1. Shaded rows below a host add Attic’s rehearsal to it. † Released restore tokens. Per model, bold: above every baseline; underlined: the strongest baseline.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 348,
+              "image_path": "figures/2610.12133/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 352
+            },
+            {
+              "caption": "Table 3: Ablation on RULER test splits (keep ratio 5% unless marked). Each block starts from a baseline and changes one thing per row; ↑x/↓x: change from the row above. “–”: no released restore tokens.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 192,
+              "image_path": "figures/2610.12133/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 494
+            },
+            {
+              "caption": "Table 2: Compress once, answer many on LooGLE (Qwen38B, keep ratio 5%): each document is compressed once, then answers all of its questions (ROUGE-L / METEOR, ×100). The shaded row below RestoreKV+ adds Attic’s rehearsal to it; ↑x/↓x: change over KV 2 or the host. † Released restore tokens. Bold: above every baseline; underlined: the strongest baseline.",
+              "figure_id": "table-2-20",
+              "figure_number": "2",
+              "height": 154,
+              "image_path": "figures/2610.12133/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 482
+            },
+            {
+              "caption": "Table 13: What coherent rehearsal reads (development split, keep ratio 5%). (a) Passage retrieval, first 10 questions: as rehearsal grows into coherent text, the kept fraction of “Paragraph 𝑁 ” label tokens falls to the 5% base rate and the score follows. (b) Qwen3-8B: breaking the same rehearsal into sparse passes recovers labels but loses RULER needles. Amt.: rehearsal amount (fraction of context); Label: kept fraction of label tokens; content-adaptive: Attic’s amount without QA rehearsal. PR: passage retrieval; MK2/MK3: multi-key 2/3; MV: multi-value.",
+              "figure_id": "table-13-1",
+              "figure_number": "13",
+              "height": 164,
+              "image_path": "figures/2610.12133/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 390
+            },
+            {
+              "caption": "Table 14: KV 2 development results for each candidate 𝜌 (RULER-4K development split; LB: LongBench development split, 14 natural-text tasks); the selected value is in bold.",
+              "figure_id": "table-14-17",
+              "figure_number": "14",
+              "height": 208,
+              "image_path": "figures/2610.12133/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 479
+            },
+            {
+              "caption": "Table 16: RULER-4K test score of Qwen3-8B across keep ratios. † Uses released restore tokens. Shaded rows use Attic’s rehearsal. Bold: above every baseline; underlined: the strongest baseline.",
+              "figure_id": "table-16-6",
+              "figure_number": "16",
+              "height": 135,
+              "image_path": "figures/2610.12133/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 388
+            },
+            {
+              "caption": "Table 5: Per-subtask results, Qwen3-8B, RULER-4K (test split).",
+              "figure_id": "table-5-14",
+              "figure_number": "5",
+              "height": 161,
+              "image_path": "figures/2610.12133/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 706
+            },
+            {
+              "caption": "Table 8: Per-subtask results, Llama-3.1-8B, RULER-4K (test split).",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 159,
+              "image_path": "figures/2610.12133/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 702
+            },
+            {
+              "caption": "Table 6: Per-subtask results, Qwen3-8B, RULER-16K (test split).",
+              "figure_id": "table-6-18",
+              "figure_number": "6",
+              "height": 158,
+              "image_path": "figures/2610.12133/table-014.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 706
+            },
+            {
+              "caption": "Table 7: Per-subtask results, Qwen3-8B, RULER-4K, keep ratio 3% (test split).",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 158,
+              "image_path": "figures/2610.12133/table-015.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 706
+            },
+            {
+              "caption": "Table 15: KV 2 𝜌 scan on the test splits (keep ratio 5%; LongBench: 14 natural-text tasks), the data of Figure 5. Amount: Attic’s content-adaptive amount without the QA rehearsal. “–”: not run.",
+              "figure_id": "table-15-16",
+              "figure_number": "15",
+              "height": 116,
+              "image_path": "figures/2610.12133/table-016.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 488
+            },
+            {
+              "caption": "Table 11: Per-task LongBench results, Qwen3-8B (test split, keep ratio 5%). Avg14: the 14 natural-text tasks used in Table 1; Avg16: all 16 tasks.",
+              "figure_id": "table-11-5",
+              "figure_number": "11",
+              "height": 160,
+              "image_path": "figures/2610.12133/table-017.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 960
+            },
+            {
+              "caption": "Table 12: Per-task LongBench results, Llama-3.1-8B (test split, keep ratio 5%). Avg14: the 14 natural-text tasks used in Table 1; Avg16: all 16 tasks.",
+              "figure_id": "table-12-9",
+              "figure_number": "12",
+              "height": 158,
+              "image_path": "figures/2610.12133/table-018.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 960
+            },
+            {
+              "caption": "Table 10: Per-subtask results, Qwen3-14B, RULER-4K (test split).",
+              "figure_id": "table-10-8",
+              "figure_number": "10",
+              "height": 125,
+              "image_path": "figures/2610.12133/table-019.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 694
+            },
+            {
+              "caption": "Table 9: Per-subtask results, Qwen3-4B, RULER-4K (test split).",
+              "figure_id": "table-9-7",
+              "figure_number": "9",
+              "height": 125,
+              "image_path": "figures/2610.12133/table-020.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 694
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.12133/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.12133",
+          "relevance": 9,
+          "selection_reason": "Training-free KV cache compression method for LLM long-context tasks, directly relevant to memory-efficient inference and long-context processing.",
+          "summary_status": "generated",
+          "title": "Rehearse Everything, Remember Nothing: Attic-KV Rehearses What Will Be Read",
+          "tldr": "Attic-KV improves ultra-low-budget KV-cache compression by rehearsing likely future reads with self-generated question–answer probes instead of rereading the entire context.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The genome holds the blueprint that governs the biological properties of the cell. Consequently, advancing our knowledge of genomic function is crucial both for a broader understanding of biology and for continued biomedical advances. The success of large language models on natural language and protein sequences has motivated similar efforts on genomic data. However, standard genomic language models (gLMs) often require extremely large computational resources and still fall behind traditional methods on some downstream tasks. Recently, MSA-based pretraining has been proposed as an efficient alternative, but existing models are limited to short input contexts, restricting their use to short-range tasks, such as variant effect prediction. In this work, we present RAGenome, the first retrieval-based gLM that scales pretraining to longer contexts (100$\\times$ longer than existing MSA-based gLMs), allowing it to capture both across-species evolutionary relationships and within-species longer-range interactions. Trained on whole-genome alignments from 100 vertebrates, RAGenome substantially improves the long-range capabilities of MSA-based gLMs, raising gene finding performance from 0.45 to 0.60, while remaining competitive on purely evolutionary-based tasks like prioritizing pathogenic variants. RAGenome provides competitive gLM performance at a fraction of the training cost, unifying evolutionary modeling and long-range capabilities within a single, flexible, scalable framework. Code is available at https://github.com/PanosAntoniadis/RAGenome.",
+          "arxiv_id": "2610.11761",
+          "arxiv_url": "https://arxiv.org/abs/2610.11761",
+          "authors": [
+            "Frederikke Isa Marin, Panagiotis Antoniadis, Dionysia Danai Brilli, Andreas Bjerregaard, Rachael DeVries, Yan Li, Ole Winther, Wouter Boomsma"
+          ],
+          "bullets": [
+            "Addresses the short-context limitation and high computational cost of existing genomic language models, especially MSA-based models.",
+            "Introduces a retrieval-based gLM trained on whole-genome alignments from 100 vertebrates.",
+            "Scales context length to 100× that of prior MSA-based gLMs, capturing both cross-species evolution and within-species long-range interactions.",
+            "Improves gene-finding performance from 0.45 to 0.60 and remains competitive for pathogenic-variant prioritization.",
+            "Provides a single flexible framework for evolutionary and long-range genomic modeling at a fraction of the training cost."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Per-class confusion matrices for RAGenome, NT-MS, and Evo2 on the gene finding task (Marin et al., 2024), normalized by true class. RAGenome outperforms NT-MS at identifying donor (D) and acceptor (A) splice sites on both the forward (F) and reverse (R) strand, while NT-MS is better at classifying introns (I). Evo2 outperforms both models on most classes given its much larger scale in model size, data, and compute.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 266,
+              "image_path": "figures/2610.11761/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 816
+            },
+            {
+              "caption": "Figure 2: Total number of input tokens as a function of context length L, comparing MSA-based methods (Ye et al., 2026) that keep gap tokens against our proposed retrieval-based approach, across three genome coverage levels. The shaded region indicates the reduction in tokens achieved by removing gap tokens. The percentage of gaps in each panel is the total fraction of tokens that are gaps at that coverage level.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 235,
+              "image_path": "figures/2610.11761/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 820
+            },
+            {
+              "caption": "Figure 1: Overview of the retrieval mechanism of RAGenome. For each query sequence, we retrieve aligned homologous sequences from a WGA and remove gap tokens, preserving the original alignment column of each retained token as its positional embedding. We then concatenate all sequences, add taxonomy embeddings to distinguish species, and restrict retrieval to a fixed budget B using the phylogenetic tree. Tokens are then masked per clade, and the resulting sequence is passed to the RAGenome Transformer, which predicts the masked query tokens.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 215,
+              "image_path": "figures/2610.11761/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 817
+            },
+            {
+              "caption": "Figure 4: Performance of RAGenome on gene finding (left) and variant effect prediction (right) as a function of training compute. The colored regions indicate the pretraining stages presented in Section 4.4. Gene finding performance improves gradually within each stage but increases sharply at each context-extension transition, indicating that longer input context is crucial for gene annotation. Variant effect prediction remains flat, reflecting that it relies primarily on local evolutionary conservation signals captured from the WGA.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 318,
+              "image_path": "figures/2610.11761/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 818
+            },
+            {
+              "caption": "Figure 3: RAGenome Transformer alternates between two types of attention layers. Left: Intraspecies local attention restricts each position to attend only within a local window neighborhood in the same species. Right: Inter-species cross-attention allows the query species (blue) to attend over all the retrieved sequences from the other species. For illustration, local attention windows are shown as non-overlapping blocks.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 306,
+              "image_path": "figures/2610.11761/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 824
+            },
+            {
+              "caption": "Figure 6: UMAP projection of the learned taxonomy embeddings for the 100 vertebrate species of the WGA.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 386,
+              "image_path": "figures/2610.11761/figure-006.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 827
+            },
+            {
+              "caption": "Figure 7: Performance of RAGenome on gene finding (MCC, left) and variant effect prediction (AUROC, right), evaluated at different retrieval budgets B at inference time.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 259,
+              "image_path": "figures/2610.11761/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 816
+            },
+            {
+              "caption": "Table 3: Hyperparameters of pretraining strategy.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 380,
+              "image_path": "figures/2610.11761/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 572
+            },
+            {
+              "caption": "Table 1: Results on Gene Finding from BEND (Marin et al., 2024) and Variant Effect Prediction (VEP) from ClinVar (Landrum et al., 2014). Each model is evaluated at its native context length. MSA indicates whether the model uses a whole-genome alignment. For models present in the original BEND paper (HyenaDNA, DNABERT-2, GENA-LM and NT-MS), we evaluated them again ourselves, with only minor differences from the original numbers.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 221,
+              "image_path": "figures/2610.11761/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 798
+            },
+            {
+              "caption": "Table 4: Gene finding performance of RAGenome across different pretraining stages, evaluated at different context lengths.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 207,
+              "image_path": "figures/2610.11761/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 506
+            },
+            {
+              "caption": "Table 2: Hyperparameters of RAGenome.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 112,
+              "image_path": "figures/2610.11761/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 826
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.11761/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.11761",
+          "relevance": 5,
+          "selection_reason": "Retrieval-based genomic language model scaling to long contexts; relevant to long-context and retrieval-memory methods.",
+          "summary_status": "generated",
+          "title": "RAGenome: Scaling Retrieval-Based Genomic Language Models to Long Contexts",
+          "tldr": "RAGenome uses retrieval-based pretraining on whole-genome alignments to extend genomic language models to much longer contexts while preserving evolutionary modeling capabilities.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Current frontier LLMs can theoretically process long contexts with 1M tokens or more. But to what extent can they go beyond simple retrieval and perform deeper reasoning over such long contexts? We empirically investigate long-horizon reasoning capabilities of LLMs, focusing on deductive logic expressed in Prolog. We construct ProloNg, a synthetic testbed to probe Prolog Long Reasoning, which systematically varies the complexity (reasoning depth) of problems, where the hardest case has a reasoning depth of 22 and 62k context length. We study 8 reasoning models across 5 families of frontier LLMs, and find that performance degrades substantially as reasoning depth grows, with the majority of models approaching chance beyond depth 10.",
+          "arxiv_id": "2610.11592",
+          "arxiv_url": "https://arxiv.org/abs/2610.11592",
+          "authors": [
+            "Hadeel Al-Negheimish, Jasna Ilieva, Yoon Kim"
+          ],
+          "bullets": [
+            "Evaluates whether long-context LLMs can perform multi-step deduction rather than simple retrieval.",
+            "Introduces ProloNg, a synthetic benchmark that systematically increases Prolog reasoning depth.",
+            "Tests 8 reasoning models spanning 5 frontier LLM families, including problems up to depth 22 and 62k-token contexts.",
+            "Finds substantial performance degradation as reasoning depth increases; most models approach chance beyond depth 10."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 6: Accuracy per target provability. The deterioration in performance is sharper for provable queries as complexity increases, which aligns with the models’ conservative bias.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 346,
+              "image_path": "figures/2610.11592/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 950
+            },
+            {
+              "caption": "Figure 3: Proportion of extracted answers per model at each reasoning depth. Many models develop a pronounced conservative bias, predicting that a query is unprovable (red bars), even though the dataset is balanced.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 658,
+              "image_path": "figures/2610.11592/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 412
+            },
+            {
+              "caption": "Figure 2: Model accuracy deteriorates with longer depths, with most models sharply declining after depth 10. Random chance is 0.5, since the dataset is balanced.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 317,
+              "image_path": "figures/2610.11592/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 461
+            },
+            {
+              "caption": "Figure 7: Mean number of output tokens per model. Only Qwen-3.5 continues to grow monotonically, with the rest remaining significantly below the token budget.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 256,
+              "image_path": "figures/2610.11592/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 461
+            },
+            {
+              "caption": "Figure 1: Example problem of depth-4, with an excerpt from the Qwen-3-30B-Thinking model1(left). The symbolic derivation involves backward chaining through four rules until all subgoals are satisfied (right). See Appendix B for an instantiation of this program as a policy compliance problem.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 487,
+              "image_path": "figures/2610.11592/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 373
+            },
+            {
+              "caption": "Figure 4: Boxplots for input tokens per Depth for",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 275,
+              "image_path": "figures/2610.11592/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 458
+            },
+            {
+              "caption": "Figure 5: Dependency graph of the program example in Figure 1.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 313,
+              "image_path": "figures/2610.11592/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 223
+            },
+            {
+              "caption": "Table 2: Comparison of frontier models used in this analysis based on publicly available data.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 240,
+              "image_path": "figures/2610.11592/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 950
+            },
+            {
+              "caption": "Table 6: Per-model random intercept estimates (BLUPs) from the GLMM, comparing the matched (k=4) original and disentangled settings.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 131,
+              "image_path": "figures/2610.11592/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 390
+            },
+            {
+              "caption": "Table 3: Median PROLONG data statistics by depth.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 296,
+              "image_path": "figures/2610.11592/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 439
+            },
+            {
+              "caption": "Table 1: Accuracy and median token usage across reasoning depths for the original and shared-context settings.",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 231,
+              "image_path": "figures/2610.11592/table-011.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 452
+            },
+            {
+              "caption": "Table 4: Median time and trace length by depth for provable queries.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 275,
+              "image_path": "figures/2610.11592/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 377
+            },
+            {
+              "caption": "Table 5: Median time and trace length by depth for unprovable queries.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 275,
+              "image_path": "figures/2610.11592/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 377
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.11592/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.11592",
+          "relevance": 8,
+          "selection_reason": "Probes long-horizon deductive reasoning in LLMs, directly relevant to long-context models.",
+          "summary_status": "generated",
+          "title": "Probing for Long-Horizon Deductive Reasoning Capabilities in Language Models with Prolog",
+          "tldr": "Frontier LLMs struggle with long-horizon deductive reasoning in Prolog, with most nearing chance performance beyond reasoning depth 10.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "AI research progress can be viewed as the interaction between two processes: benchmark creation and method discovery. Historically, both were driven by human intelligence. However, recent advances in AI have accelerated automated method discovery, while automated benchmark creation has received comparatively less attention. To enable self-advancing systems, we propose Generative Adversarial Loop (GAL), a generator-discriminator framework alternating between two agentic searches: (1) a discriminator that generates adversarial data to expose weaknesses in current systems, and (2) a generator that discovers algorithms to overcome them. We apply this framework to approximation algorithms for efficient inference. Unlike existing auto research systems, which primarily focus on algorithm discovery, GAL introduces a discriminator agent that automates goalpost setting by continually searching for weaknesses in the current algorithm. We demonstrate adversarial data generation across four tasks: KV compression, sparse video generation, sparse attention, and context extension, where the discriminator identifies weaknesses in state of the art techniques. We further show that GAL enables autonomous improvement, with newly discovered algorithms improving not only on adversarially generated data, but also on established benchmarks. Specifically, GAL improves CompactorPress on KV compression with Qwen3-4B at 4x, raising performance on the discriminator dataset from 0.35 to 0.97, while also outperforming RULER-HARD (+0.77 pts). For context extension, GAL boosts Dual Chunk Attention from 0.20 to 0.90 on the discriminator dataset, while yielding gains on standard benchmarks(ScienceFiction (+6 pts) and PG19 32K (-0.33 PPL)). GAL thus provides a path toward autonomous goalpost setting and algorithmic improvement, where AI systems continually discover their own weaknesses and develop methods to overcome them.",
+          "arxiv_id": "2610.11458",
+          "arxiv_url": "https://arxiv.org/abs/2610.11458",
+          "authors": [
+            "Kislay Aditya Oj, Nidhi Jain, Sri Surya Varma Datla, Priyanka Jayaswal, Kumar Krishna Agrawal, Aditya Desai"
+          ],
+          "bullets": [
+            "Targets the imbalance between increasingly automated method discovery and comparatively limited automated benchmark creation.",
+            "Alternates a discriminator that generates adversarial data with a generator that discovers algorithms addressing the exposed weaknesses.",
+            "Applied to KV compression, sparse video generation, sparse attention, and context extension.",
+            "Demonstrated autonomous improvement on adversarial datasets and established benchmarks, including KV compression and context extension.",
+            "Scope is approximation algorithms for efficient inference; the framework depends on agentic searches that can generate meaningful weaknesses and solutions."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 7: GAL on KV Compression (top) and Context Extension(Bottom) Compactor Settings: 4× compression, model= Qwen3-4B-Instruct-2507 using Cursor evolution harness. DCA Settings: 4× extension with model=Llama3 with 8K context. The generated algorithms in both cases perform well on adversarial benchmarks while maintaining, and in some cases improving, performance on standard benchmarks.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 307,
+              "image_path": "figures/2610.11458/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 814
+            },
+            {
+              "caption": "Figure 9: Cursor Blue Team loop: edit the system, evaluate on a frozen adversarial set and regression suite, then iterate from logged scores.",
+              "figure_id": "figure-9-3",
+              "figure_number": "9",
+              "height": 442,
+              "image_path": "figures/2610.11458/figure-002.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 786
+            },
+            {
+              "caption": "Figure 3 Context Extension via DCA",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 350,
+              "image_path": "figures/2610.11458/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2 Sparse Attention via SVG",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 335,
+              "image_path": "figures/2610.11458/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Best gap (τ ) versus cost for KV compression (FastKVZip, left) and context extension (DCA, right). Gap is averaged over 10 runs per setting. KVZip (Kim et al., 2026b) and its lightweight variant FastKVZip (Kim et al., 2026a) are state-of-theart approaches that retain a small subset of important keys and values to approximate the full context. They achieve up to 4× compression while maintaining performance on retrieval, contextual QA, and related tasks.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 306,
+              "image_path": "figures/2610.11458/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: Visualization and the iterative algorithm. The red area represents the benchmark set and blue area is the artifact coverage. After the first iteration C(A1) contains b1, so that benchmark is solved. The Discriminator then extends the benchmark with b2 to form B1, which is no longer contained in C(A1). The Generator then answers with A2 which covers the new set. After enough number of iterations, the cover of algorithm will approach the dataset DN .",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 267,
+              "image_path": "figures/2610.11458/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.11458/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.11458",
+          "relevance": 7,
+          "selection_reason": "Adversarial loop framework for automated algorithm discovery, demonstrated on KV compression, sparse attention, and context extension.",
+          "summary_status": "generated",
+          "title": "Generative Adversarial Loops",
+          "tldr": "Generative Adversarial Loops automate both benchmark creation and algorithm discovery by having agents expose system weaknesses and develop methods to overcome them.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "A large language model can only use the text that fits in its context window, and it recomputes its internal key-value (KV) state for a prompt every time the prompt is sent. We test a memory layer, the public package galahad-kv, that saves the KV state of each block of about 16,000 tokens to encrypted local NVMe disk and loads it back later, byte-exact, without recomputing it. We ran it on 50,000,000 tokens of real public text, served through vLLM on one NVIDIA H100, with Gemma 4 12B and Gemma 4 31B. Every block we probed was loaded back from the encrypted store with no recompute (100 of 100, at depths from 0 to 50M tokens) on both models. Loading a block was 2.8x to 4.3x faster than recomputing it and used 8.8x to 12.3x less GPU energy, and GPU memory stayed flat over the whole 50M-token stream. Asked about facts planted millions of tokens earlier, the 12B model gave the right answer 82 times out of 100 and the 31B model 98 times out of 100. Neither model made up an answer. The limits are as follows. This is reuse of stored state, not a wider attention window: one block is loaded at a time, and how well a question is answered depends on the model. Writing the memory is a one-time cost, and the store takes terabytes of local NVMe disk. We describe the test protocol, which is built to resist common ways of gaming long-context benchmarks, and give a single-GPU reproduction that uses public software and a free licence for the package.",
+          "arxiv_id": "2610.10845",
+          "arxiv_url": "https://arxiv.org/abs/2610.10845",
+          "authors": [
+            "Sietse Schelpe"
+          ],
+          "bullets": [
+            "Motivation: standard long-context inference recomputes a prompt’s KV state and is constrained by GPU context capacity.",
+            "Method: galahad-kv stores roughly 16K-token KV blocks on encrypted local NVMe and reloads them byte-exactly through vLLM.",
+            "Evaluation: tested on 50M tokens of public text with Gemma 4 12B and 31B on one NVIDIA H100.",
+            "Results: all 100 probed blocks loaded without recomputation; loading was 2.8–4.3× faster and used 8.8–12.3× less GPU energy than recompute.",
+            "Scope: this reuses stored state rather than expanding attention; only one block is loaded at a time, with a one-time write cost and terabytes of disk storage required."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI",
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "failed",
+          "figures": [],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": null,
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.10845",
+          "relevance": 7,
+          "selection_reason": "Persistent KV-state memory layer for long-context LLM inference; directly relevant to KV cache/memory efficiency and LLM memory.",
+          "summary_status": "generated",
+          "title": "Real Long-Term Memory for AI: A 50-Million-Token Window That Is Faster and Cheaper Than Recompute",
+          "tldr": "A disk-backed KV-cache memory layer enables exact reuse of context across up to 50M tokens, reducing retrieval latency and GPU energy versus recomputation while preserving flat GPU memory use.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Recurrent neural networks (RNNs) offer linear-time scaling with sequence length while requiring only constant memory, yet they struggle to capture long-range dependencies due to vanishing gradients and limited receptive fields. To address these limitations, we introduce a second-order recurrent model in which the standard neuron-to-neuron communication is replaced by a spatially evolving field governed by (discretized) partial differential equations. Drawing inspiration from the role of cortical waves in brain computation, this mechanism allows structured spatiotemporal patterns to serve as an implicit, high-capacity memory. We show that the resulting model is equivalent to a structured infinite-order RNN in which the current state depends explicitly on its entire history of past states, yielding an effectively unbounded receptive field with a fixed number of parameters. We further derive constructive conditions to ensure marginal stability, constraining the gradient spectrum on the unit circle and thereby eliminating vanishing and exploding gradients. Empirically, the proposed architecture outperforms other recurrent models on long-horizon benchmarks while using substantially fewer parameters, demonstrating that spatial dynamics can effectively bridge the gap between efficient inference and long-term memory.",
+          "arxiv_id": "2610.10690",
+          "arxiv_url": "https://arxiv.org/abs/2610.10690",
+          "authors": [
+            "Aleix Salvador-Pomarol, Arthur N. Montanari, Earl K. Miller, Adilson E. Motter, Jorge Cort\\'es"
+          ],
+          "bullets": [
+            "Targets vanishing/exploding gradients and limited receptive fields in conventional RNNs.",
+            "Replaces neuron-to-neuron communication with a second-order spatial field governed by discretized partial differential equations.",
+            "Creates structured spatiotemporal patterns that act as high-capacity implicit memory.",
+            "Is equivalent to an infinite-order RNN whose state depends on its full history, with a fixed parameter count.",
+            "Outperforms other recurrent models on long-horizon benchmarks while using substantially fewer parameters."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.SY",
+            "eess.SY",
+            "q-bio.NC"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Schematic of the model architectures. (a) SpatialRNN: The neuron states ht (represented by white nodes) are coupled through a shared spatiotemporal communication medium ψt (color coded), where information propagates locally over space and time. Each node writes to and reads from the medium, inducing wave-like interactions that encode past activity. (b) HORNN: Nodes correspond to neuron states ht, and interactions are explicitly represented by edges connecting the current state to a finite set of past states ht−k, for k = 1, . . . , d. For d = 1, the model reduces to a standard RNN. Block diagrams of the corresponding discretized computations are shown on the right of each panel.",
+              "figure_id": "figure-1-12",
+              "figure_number": "1",
+              "height": 238,
+              "image_path": "figures/2610.10690/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 968
+            },
+            {
+              "caption": "Figure 7: Frobenius norm of the exact state-to-state Jacobians Gτm = ∂hτ+m/∂hτ , propagated via Eqs. (10)– (11) along 100 psMNIST validation sequences (τ = 0, T = 784), for a trained SpatialRNN (left) and the same architecture at initialization (right). Thin lines show individual sequences, while the black line and the shaded band show the geometric mean and ±1 standard deviation (in log scale).",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 290,
+              "image_path": "figures/2610.10690/figure-002.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 964
+            },
+            {
+              "caption": "Figure 5: Evolution of the parameters {αi}ki=1 during training on the copy task with sequence length T = 128. The dashed lines show the learned values of αi for a SpatialRNN architecture with block sizes [8, 8, 8, 8], while the solid line indicates training accuracy. Performance remains at chance-level until α4 → 1, after which learning rapidly progresses.",
+              "figure_id": "figure-5-13",
+              "figure_number": "5",
+              "height": 264,
+              "image_path": "figures/2610.10690/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 460
+            },
+            {
+              "caption": "Figure 2: Gradient analysis of SpatialRNNs and HORNNs. (a) Eigenvalue spectrum of the gradient dynamics for standard RNNs (top) and SpatialRNNs (bottom). Red and green markers indicate the eigenvalues computed for D = I and D ∈ D, respectively. The spectrum of standard RNNs is sensitive to variations in D, whereas SpatialRNNs satisfying Theorem 3.3 allow for arbitrary eigenvalue placement with invariant magnitude, including on the unit circle. (b) Gradient norm versus time horizon. (c) Gradient norm (at lag m = 20) versus the number of parameters (with 8 neurons). The results in (b,c) are averaged over 10 trajectories with uniformly sampled inputs.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 502,
+              "image_path": "figures/2610.10690/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 587
+            },
+            {
+              "caption": "Figure 3: Performance of SpatialRNN and HORNNs on the copy task problem, shown as a function of sequence length T .",
+              "figure_id": "figure-3-14",
+              "figure_number": "3",
+              "height": 291,
+              "image_path": "figures/2610.10690/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 573
+            },
+            {
+              "caption": "Figure 4: SpatialRNN validation accuracy on the npCIFAR10 task for varying T .",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 253,
+              "image_path": "figures/2610.10690/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 393
+            },
+            {
+              "caption": "Figure 8: Relative Frobenius error ∥Gexact m − Grec m ∥F /∥Gexact m ∥F between the exact Jacobians Gm = ∂hT−1/∂hT−1−m, computed from the stored forward states, and those computed from the backwardreconstructed states, as a function of the time lag m, in single (float32) and double (float64) precision. (a) Non-dissipative SpatialRNN (single block, n = 40, α1 = 1): the error remains at machine precision over the entire horizon, with no exponential accumulation. (b) SpatialRNN with dissipative blocks (block sizes {22, 6, 6, 6}, α = [1, 0.5, 0.5, 0.5]): round-off is amplified exponentially, at a measured rate of 1.42 per backward step, matching the predicted α −1/2",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 314,
+              "image_path": "figures/2610.10690/figure-007.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 979
+            },
+            {
+              "caption": "Figure 6: Gradient norm ∥ ∂L ∂hT −t ∥ as a function of the time horizon, shown for the psMNIST classification task. Matrix norms are set such that ||Bi||2 < 0.4, ||Wψ,i||2 < 0.4 and ||W i||2 < 1.8.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 327,
+              "image_path": "figures/2610.10690/figure-008.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 492
+            },
+            {
+              "caption": "Table 1: psMNIST performance. Mean ± std over 3 runs when available; otherwise, maximum accuracy. Only single-layer architectures are accounted for.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 225,
+              "image_path": "figures/2610.10690/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 640
+            },
+            {
+              "caption": "Table 4: Copy task architecture configurations and performance. Mean accuracy is evaluated at the maximum sequence length T = 1024. Average and standard deviation over 10 runs.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 236,
+              "image_path": "figures/2610.10690/table-010.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 766
+            },
+            {
+              "caption": "Table 2: npCIFAR10 performance for T = 1000. Maximum test accuracy over 3 trials.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 275,
+              "image_path": "figures/2610.10690/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 606
+            },
+            {
+              "caption": "Table 6: npCIFAR10 task architecture configurations and performance. Maximum accuracy is evaluated at the sequence length T = 1000 over 3 runs.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 175,
+              "image_path": "figures/2610.10690/table-012.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 642
+            },
+            {
+              "caption": "Table 5: psMNIST task architecture configurations and performance. Mean accuracy is evaluated over 3 runs, ordered by mean accuracy.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 125,
+              "image_path": "figures/2610.10690/table-013.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 650
+            },
+            {
+              "caption": "Table 3: Empirical LTV gradient statistics over 100 psMNIST validation sequences (mean ± standard deviation across sequences). Slopes are fitted for m ≥ 50, and the coefficient of variation (CV) measures the dispersion of ∥Gτm∥F along each sequence.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 100,
+              "image_path": "figures/2610.10690/table-014.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 883
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.10690/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.10690",
+          "relevance": 9,
+          "selection_reason": "Introduces a spatial neural computing approach to RNNs to achieve infinite context windows and unbounded receptive fields, directly addressing a core challenge in long-context LLMs.",
+          "summary_status": "generated",
+          "title": "Learning infinite context windows in recurrent architectures via spatial neural computing",
+          "tldr": "A spatially evolving, PDE-based recurrent architecture provides fixed-parameter models with effectively infinite context and stable long-range memory.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-07",
       "paper_count": 5,
       "papers": [
@@ -24006,5 +24907,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 111
+  "total_paper_count": 117
 }

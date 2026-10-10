@@ -1,6 +1,1974 @@
 {
   "days": [
     {
+      "date": "2026-10-08",
+      "paper_count": 9,
+      "papers": [
+        {
+          "abstract": "The memory-bound nature of the decoding stage of large language model (LLM) inference incurs significant latency. Layer-wise training-free network pruning approaches guided by the Hessian have been a prominent solution to this problem, as pruning reduces the number of nonzero parameters read from memory during decoding. Nevertheless, typical methods in this line compute the Hessian using pre-collected natural sequences, whereas the model is fed self-generated tokens during decoding, creating a distribution shift between the two sequences. The Hessian calculated on the natural sequence is different from that calculated on the generated sequence. We observe that this discrepancy causes the activation distribution during generation to deviate from that used for pruning, further hurting the pruned model performance. Moreover, most existing LLM pruning methods that bring actual speedup primarily target the sparse matrix-matrix (SpMM) multiplication, providing limited support for the sparse matrix-vector (SpMV) operations, which dominate decoding. To solve these problems, we introduce SparseDecoding, a principled decoding-aware pruning framework tailored for accurate and efficient LLM decoding. Specifically, at the algorithmic axis, SparseDecoding constructs calibration matrices from layer-wise activations collected during the dense-model autoregressive generation, excluding prefill, thereby aligning the pruning objective with the decoding activations. At the system axis, we develop an optimized N:M sparse matrix-vector kernel with bitmask indexing and fixed-step traversal. Substantial empirical results on representative LLMs (Llama-3.1-8B, Llama-3.3-70B, Qwen3-14B / 32B) demonstrate that our method consistently outperforms standard fixed-text calibration on the long-form generation benchmarks while achieving up to 1.48x end-to-end wall-clock decoding speedup on A100 GPUs.",
+          "arxiv_id": "2610.12327",
+          "arxiv_url": "https://arxiv.org/abs/2610.12327",
+          "authors": [
+            "Qitong Wang, Xinwei Niu, Mingluo Su, Shanwei Zhao, Shiai Zhu, Huan Wang"
+          ],
+          "bullets": [
+            "Addresses distribution shift between natural-text calibration and autoregressive decoding, which can degrade pruned-model quality.",
+            "Collects layer-wise activations during dense-model generation, excluding the prefill stage, to make pruning decoding-aware.",
+            "Introduces an optimized N:M sparse matrix-vector kernel using bitmask indexing and fixed-step traversal.",
+            "Outperforms standard fixed-text calibration on long-form generation benchmarks across several representative LLMs.",
+            "Achieves up to 1.48× end-to-end decoding speedup on A100 GPUs."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of SparseDecoding. Unlike standard pruning methods collecting calibration activations from fixed corpora, SparseDecoding calibrates on the model-generated tokens from task prompts while discarding the prefill activations. Meanwhile, existing N :M sparse Tensor Core kernels accelerate prefill but often underperform dense execution during autoregressive decoding. SparseDecoding instead introduces a decoding-oriented sparse execution pipeline that converts pruned weights into an efficient N :M representation and employs an optimized sparse decoding kernel, achieving up to 1.48× decoding speedup under the experimental setup described in Sec. 4.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 335,
+              "image_path": "figures/2610.12327/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 816
+            },
+            {
+              "caption": "Figure 1: Motivating observations for decoding-aware sparse inference. (a) The relative activation discrepancy between the dense and pruned models grows rapidly during the first few decoding steps before settling into a plateau. The shaded region shows the interquartile range across transformer layers, while the curves correspond to the first (layer 0), middle (layer 16), and last (layer 31) layers. All layers reach 90% of their plateau by decoding step 12, after which the activation discrepancy remains largely unchanged. (b) Speedup of the 2:4 sparse Tensor Core path over dense execution. Existing sparse kernels provide 1.31 to 1.46× speedups during the prefill stage, but achieve only 0.85 to 0.87× of dense performance during autoregressive decoding. Results are obtained on Llama-3.18B with 2:4 sparsity on an NVIDIA A100 GPU.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 408,
+              "image_path": "figures/2610.12327/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 817
+            },
+            {
+              "caption": "Table 9: Results on WritingBench benchmark under 50% and 2:4 sparsity with different calibration data for the Qwen3 model family. Pile and RedPajama use fixed pretraining-corpus sequences; SparseDecoding calibrates on autoregressive generations conditioned on LongWriter prompts.",
+              "figure_id": "table-9-9",
+              "figure_number": "9",
+              "height": 415,
+              "image_path": "figures/2610.12327/table-003.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 825
+            },
+            {
+              "caption": "Table 1: Results on the WritingBench benchmark under 50% and 2:4 sparsity. SparseDecoding (ours) calibrates on autoregressive generations conditioned on LongWriter prompts; C4 uses fixed C4 sequences. Dense is the unpruned reference. Columns report the overall score, the six domain scores, and the three requirement scores for style (R1), format (R2), and length (R3); “C” indicates the corresponding category-specific score. The six domains are Academic & Engineering (D1), Finance & Business (D2), Politics & Law (D3), Literature & Arts (D4), Education (D5), and Advertising & Marketing (D6). All scores are on a scale of 1-10. Bold marks the better overall score between SparseDecoding and C4 within each sparsity setting, based on unrounded values.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 584,
+              "image_path": "figures/2610.12327/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 840
+            },
+            {
+              "caption": "Table 8: Results on WritingBench for Qwen3-14B and Qwen3-32B under unstructured 50% and semi-structured 8:16 sparsity. SparseDecoding (ours) calibrates on autoregressive generations conditioned on LongWriter prompts; C4 uses fixed C4 sequences. Dense is the unpruned reference. “C” indicates the corresponding category-specific score. Bold marks the best overall score within each sparsity setting.",
+              "figure_id": "table-8-8",
+              "figure_number": "8",
+              "height": 309,
+              "image_path": "figures/2610.12327/table-005.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 825
+            },
+            {
+              "caption": "Table 2: Results on the ClassEval benchmark under 50% and 2:4 sparsity.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 598,
+              "image_path": "figures/2610.12327/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 446
+            },
+            {
+              "caption": "Table 5: Results on the WritingBench benchmark under 50% and 2:4 sparsity with Wanda on the Qwen3 model family.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 105,
+              "image_path": "figures/2610.12327/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 425
+            },
+            {
+              "caption": "Table 3: End-to-end decoding throughput and speedup over the dense baseline. All of the N :M patterns retain 50% of the weights, so differences reflect kernel efficiency rather than compression. Every evaluated pattern decodes faster than the dense baseline, with speedups ranging from 1.34 to 1.48×. Measurements use a context length of 512 and report the median after 50 warmup and 50 measured iterations on NVIDIA A100 GPUs with GPT-Fast.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 199,
+              "image_path": "figures/2610.12327/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 804
+            },
+            {
+              "caption": "Table 4: Results on the WritingBench benchmark under self-generated and cross-model calibration. Qwen3-14B is pruned using activations from its own generations (self-generated) or from Qwen3-32B generations (cross-model).",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 41,
+              "image_path": "figures/2610.12327/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 419
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.12327/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.12327",
+          "relevance": 9,
+          "selection_reason": "Introduces decoding-aware pruning for LLM inference to improve efficiency and accuracy.",
+          "summary_status": "generated",
+          "title": "SparseDecoding: Decoding-Aware Pruning for Accurate and Efficient LLM Inference",
+          "tldr": "SparseDecoding improves LLM decoding accuracy and efficiency by calibrating pruning on generated-token activations and accelerating sparse matrix-vector operations.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Most image generation models rely on uniform tokenization, allocating the exact same computational budget to equally-sized image patches. This static paradigm cannot adapt to different resource constraints at inference time, and yields suboptimal quality-cost tradeoff by devoting the same effort to both plain backgrounds and intricate details. We propose BudgetPix, an adaptive tokenization framework that dynamically allocates compute based on visual complexity and spatial layout, enabling flexible computational budgeting at inference time. BudgetPix comprises three key components: (1) an adaptive encoder that maps a fixed-size image to a variable-length token sequence using an entropy-guided quadtree alongside a multi-scale patch embedder; (2) a scale-aware decoder reconstructs fixed-resolution images from multi-scale token sets; and (3) a flexible training and sampling schedule that enables pixel-space denoisers to operate across variable token counts. BudgetPix seamlessly integrates with existing pixel-space diffusion architectures, enabling a single checkpoint to be operated at a wide range of compute budgets. Evaluated on text-to-image generation, BudgetPix matches the fidelity of MiniT2I-L at $512^2$ and PixelDiT at $1024^2$ using just 25% of the original compute budget. In class-conditional generation using a MeanFlow backbone, BudgetPix requires merely 60% of the full compute budget to produce images with near-zero quality degradation, observing a marginal 0.8-point increase in FID. Comprehensive assessments by human and VLM judges confirm that BudgetPix establishes a significantly improved quality-efficiency tradeoff over prior budget-adaptive baselines. More details are available at our project page: https://karaozgur.com/BudgetPix",
+          "arxiv_id": "2610.12307",
+          "arxiv_url": "https://arxiv.org/abs/2610.12307",
+          "authors": [
+            "Ozgur Kara, Yujia Chen, Daniel Watson, David Forsyth, James Matthew Rehg, Wen-Sheng Chu, Du Tran"
+          ],
+          "bullets": [
+            "Uniform patch tokenization wastes compute on simple regions and cannot adapt to inference-time resource constraints.",
+            "An entropy-guided quadtree and multi-scale patch embedder produce variable-length token sequences based on visual complexity.",
+            "A scale-aware decoder and flexible training/sampling schedule support variable token counts in existing pixel-space diffusion models.",
+            "It matches reported baselines at 512² and 1024² using 25% of their compute budget, and achieves near-unchanged class-conditional quality at 60% compute, with a 0.8-point FID increase.",
+            "Human and VLM evaluations report better quality–efficiency tradeoffs than prior budget-adaptive methods."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: BudgetPix Architecture. The encoder receives the noisy input zt and its corresponding spatial layout L, converts the image into a sequence of multi-scale patches. The finest p × p tokens route directly through the fine path, while coarser patches navigate a dedicated coarse path in both the encoder and decoder. In the encoder, each coarse patch undergoes simultaneous downscaling (to p×p) and splitting via a Patch Aggregator (into n2 sub-patches). These streams are processed through MLP layers and a scale mixer before being fused into a single coarse token. In the decoder, each denoised coarse patch is upscaled back to its target resolution (np × np). Concurrently, a Patch Refiner splits the patch into 4 × 4 sub-patches, processes them through an MLP and a lightweight transformer, and fuses them with the upscaled patch to restore local texture. The central diffusion transformer is directly initialized from existing pixel-space models, modified only to operate across variable, dynamically determined token counts rather than a fixed count.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 270,
+              "image_path": "figures/2610.12307/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 7: Text-to-image results, MiniT2I-L/16 at 5122. (a) Each metric plotted against the wall-clock speedup over the released model (DPG: DPG-Bench; IR: ImageReward denote metrics). (b) Faithfulness to the method’s own full-budget image plotted against the token budget (Sim.: CLIP or DINOv2 feature similarity).",
+              "figure_id": "figure-7-38",
+              "figure_number": "7",
+              "height": 261,
+              "image_path": "figures/2610.12307/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Qualitative comparison across budgets, MiniT2I-L/16 at 5122. Same prompt and noise were used for all methods. BudgetPix generates image with high quality even at 10%.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 425,
+              "image_path": "figures/2610.12307/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 820
+            },
+            {
+              "caption": "Figure 3: Overview. BudgetPix enables compute-adaptive pixel-space diffusion with three components: an encoder, a decoder, and flexible training and inference across token counts. The Encoder and Decoder (purple) are trained from scratch; the Transformer (blue) is initialized from existing baselines.",
+              "figure_id": "figure-3-41",
+              "figure_number": "3",
+              "height": 141,
+              "image_path": "figures/2610.12307/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 472
+            },
+            {
+              "caption": "Figure 12: Every method across the budget: a herd of cows.",
+              "figure_id": "figure-12-62",
+              "figure_number": "12",
+              "height": 429,
+              "image_path": "figures/2610.12307/figure-005.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 829
+            },
+            {
+              "caption": "Figure 13: Every method across the budget: a seamless vector pattern.",
+              "figure_id": "figure-13-45",
+              "figure_number": "13",
+              "height": 429,
+              "image_path": "figures/2610.12307/figure-006.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 829
+            },
+            {
+              "caption": "Figure 14: Every method across the budget: a pencil case and binoculars.",
+              "figure_id": "figure-14-44",
+              "figure_number": "14",
+              "height": 427,
+              "image_path": "figures/2610.12307/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 829
+            },
+            {
+              "caption": "Figure 15: Every method across the budget: an ornate treasure chest.",
+              "figure_id": "figure-15-29",
+              "figure_number": "15",
+              "height": 429,
+              "image_path": "figures/2610.12307/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Figure 16: Every method across the budget: three birds on a branch.",
+              "figure_id": "figure-16-30",
+              "figure_number": "16",
+              "height": 427,
+              "image_path": "figures/2610.12307/figure-009.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Figure 9: User study (top) and VLMas-Judge (bottom), MiniT2I-L/16 at 5122: (a) How many percentage from the compute budget can be cut without a noticeable difference for human and VLM judges. (b) Head-to-head comparison of BudgetPix against baselines by human and VLM judges, showing our method is consistently preferred across all token budgets.",
+              "figure_id": "figure-9-54",
+              "figure_number": "9",
+              "height": 243,
+              "image_path": "figures/2610.12307/figure-010.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 513
+            },
+            {
+              "caption": "Figure 2: Uniform vs. content-adaptive tokenization. For a 512× 512 image, uniform tokenization requires 1,024 tokens with 16 × 16 patches (a) and 256 tokens with 32 × 32 patches (c). BudgetPix adapts to visual content, requiring only 307 (b) and 127 (d) tokens. Baselines in (a) and (c) represent full-budget MiniT2I-L and JiT-L; BudgetPix in (b) and (d) operates at 30% and 50% budgets, respectively.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2610.12307/figure-011.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Figure 10: BudgetPix on one-step pixel MeanFlow pMF-L/16. BudgetPix provides a better qualityefficiency trade-off compared with the base model and other token merging baselines.",
+              "figure_id": "figure-10-55",
+              "figure_number": "10",
+              "height": 169,
+              "image_path": "figures/2610.12307/figure-012.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 408
+            },
+            {
+              "caption": "Figure 8: FID and Inception Score (IS) on classconditional generation across token budgets on ImageNet, JiT-L/32 at 5122. FID is cut at 40.",
+              "figure_id": "figure-8-36",
+              "figure_number": "8",
+              "height": 152,
+              "image_path": "figures/2610.12307/figure-013.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 368
+            },
+            {
+              "caption": "Figure 18: BudgetPix on JiT-L/32 at 5122, one ImageNet class per row (continued).",
+              "figure_id": "figure-18-60",
+              "figure_number": "18",
+              "height": 1167,
+              "image_path": "figures/2610.12307/figure-014.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 814
+            },
+            {
+              "caption": "Figure 20: BudgetPix on MiniT2I-L/16 at 5122, one prompt per row (continued).",
+              "figure_id": "figure-20-17",
+              "figure_number": "20",
+              "height": 1167,
+              "image_path": "figures/2610.12307/figure-015.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 814
+            },
+            {
+              "caption": "Figure 36: Quality against measured speed-up, JiT-L/32 and MiniT2I-L/16 at 5122.",
+              "figure_id": "figure-36-4",
+              "figure_number": "36",
+              "height": 479,
+              "image_path": "figures/2610.12307/figure-016.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 821
+            },
+            {
+              "caption": "Figure 35: Wall-clock speed-up against the token budget, four parents.",
+              "figure_id": "figure-35-56",
+              "figure_number": "35",
+              "height": 457,
+              "image_path": "figures/2610.12307/figure-017.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 821
+            },
+            {
+              "caption": "Figure 32: Class-conditional generation on ImageNet, JiT-L and JiT-B.",
+              "figure_id": "figure-32-19",
+              "figure_number": "32",
+              "height": 442,
+              "image_path": "figures/2610.12307/figure-018.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 821
+            },
+            {
+              "caption": "Figure 42: Pooled budget, JiT-B/32 at 5122, a mean of 128 tokens.",
+              "figure_id": "figure-42-51",
+              "figure_number": "42",
+              "height": 402,
+              "image_path": "figures/2610.12307/figure-019.webp",
+              "kind": "figure",
+              "page": 56,
+              "width": 829
+            },
+            {
+              "caption": "Figure 33: Paired metrics against the token budget, JiT-L and JiT-B.",
+              "figure_id": "figure-33-26",
+              "figure_number": "33",
+              "height": 380,
+              "image_path": "figures/2610.12307/figure-020.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 819
+            },
+            {
+              "caption": "Figure 41: Layout evolution during sampling, JiT-B/32 at 5122.",
+              "figure_id": "figure-41-32",
+              "figure_number": "41",
+              "height": 267,
+              "image_path": "figures/2610.12307/figure-021.webp",
+              "kind": "figure",
+              "page": 55,
+              "width": 823
+            },
+            {
+              "caption": "Figure 4: Non-uniform layout construction. Given an image (the original image x during training, or the denoising image x̂ during inference), the objective is to partition it into cells across multiple scales: p × p, 2p× 2p, . . . , np× np, where n = 2j for j ≥ 1. The process begins by dividing the image into np× np cells, which is the coarsest scale. For each cell, we construct a pixel intensity histogram and compute its entropy H . If H < τnp + δ (where τnp is the scale-specific threshold and δ is a global offset), the cell remains a single token. Otherwise, it is subdivided into four cells of the next finer scale (n← n/2). This recursive subdivision terminates at n = 1, corresponding to the minimum cell size of p× p.",
+              "figure_id": "figure-4-61",
+              "figure_number": "4",
+              "height": 192,
+              "image_path": "figures/2610.12307/figure-022.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Figure 22: BudgetPix on PixelDiT-T2I at 10242, one prompt per row (continued).",
+              "figure_id": "figure-22-52",
+              "figure_number": "22",
+              "height": 990,
+              "image_path": "figures/2610.12307/figure-023.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 829
+            },
+            {
+              "caption": "Figure 24: BudgetPix on pMF-L/16 at 2562, one step, one ImageNet class per row.",
+              "figure_id": "figure-24-5",
+              "figure_number": "24",
+              "height": 1167,
+              "image_path": "figures/2610.12307/figure-024.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 736
+            },
+            {
+              "caption": "Figure 25: BudgetPix on pMF-L/16 at 2562, one step, one ImageNet class per row (continued).",
+              "figure_id": "figure-25-49",
+              "figure_number": "25",
+              "height": 1167,
+              "image_path": "figures/2610.12307/figure-025.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 736
+            },
+            {
+              "caption": "Figure 27: BudgetPix on JiT-L/32 at 5122: samples and their layouts, one ImageNet class per row (continued).",
+              "figure_id": "figure-27-11",
+              "figure_number": "27",
+              "height": 1113,
+              "image_path": "figures/2610.12307/figure-026.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 736
+            },
+            {
+              "caption": "Figure 29: BudgetPix on MiniT2I-L/16 at 5122: samples and their layouts, one prompt per row (continued).",
+              "figure_id": "figure-29-58",
+              "figure_number": "29",
+              "height": 1113,
+              "image_path": "figures/2610.12307/figure-027.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 736
+            },
+            {
+              "caption": "Figure 31: BudgetPix on PixelDiT-T2I at 10242: samples and their layouts, one prompt per row (continued).",
+              "figure_id": "figure-31-24",
+              "figure_number": "31",
+              "height": 1113,
+              "image_path": "figures/2610.12307/figure-028.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 736
+            },
+            {
+              "caption": "Figure 39: User-study form on where a difference is first seen: its start and first question.",
+              "figure_id": "figure-39-43",
+              "figure_number": "39",
+              "height": 802,
+              "image_path": "figures/2610.12307/figure-029.webp",
+              "kind": "figure",
+              "page": 49,
+              "width": 664
+            },
+            {
+              "caption": "Figure 40: User-study form on which image is more faithful: its start and first question.",
+              "figure_id": "figure-40-35",
+              "figure_number": "40",
+              "height": 638,
+              "image_path": "figures/2610.12307/figure-030.webp",
+              "kind": "figure",
+              "page": 50,
+              "width": 664
+            },
+            {
+              "caption": "Figure 37: Budget mode against threshold mode, FID-50k on JiT-L/32 at 5122.",
+              "figure_id": "figure-37-48",
+              "figure_number": "37",
+              "height": 180,
+              "image_path": "figures/2610.12307/figure-031.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 304
+            },
+            {
+              "caption": "Figure 38: The layout as the budget falls, JiT-L/32 at 5122, budget mode.",
+              "figure_id": "figure-38-46",
+              "figure_number": "38",
+              "height": 182,
+              "image_path": "figures/2610.12307/figure-032.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 829
+            },
+            {
+              "caption": "Figure 34: Five metrics against the measured wall-clock speed-up, MiniT2I-B/16 at 5122.",
+              "figure_id": "figure-34-57",
+              "figure_number": "34",
+              "height": 152,
+              "image_path": "figures/2610.12307/figure-033.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 814
+            },
+            {
+              "caption": "Table 16: Architecture of the added modules, every family.",
+              "figure_id": "table-16-2",
+              "figure_number": "16",
+              "height": 673,
+              "image_path": "figures/2610.12307/table-034.webp",
+              "kind": "table",
+              "page": 43,
+              "width": 826
+            },
+            {
+              "caption": "Table 6: Wall-clock speed-up over the released model, every parent.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 580,
+              "image_path": "figures/2610.12307/table-035.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 828
+            },
+            {
+              "caption": "Table 1: Text-to-image generation with PixelDiT-T2I at 10242. BudgetPix consistently outperform the base model across different compute budgets.",
+              "figure_id": "table-1-37",
+              "figure_number": "1",
+              "height": 140,
+              "image_path": "figures/2610.12307/table-036.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 828
+            },
+            {
+              "caption": "Table 21: Conditions of the wall-clock measurements, every parent.",
+              "figure_id": "table-21-59",
+              "figure_number": "21",
+              "height": 613,
+              "image_path": "figures/2610.12307/table-037.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 822
+            },
+            {
+              "caption": "Table 19: Fine-tuning and sampling settings, text-to-image parents.",
+              "figure_id": "table-19-28",
+              "figure_number": "19",
+              "height": 457,
+              "image_path": "figures/2610.12307/table-038.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 798
+            },
+            {
+              "caption": "Table 27: Layout and sampler settings, JiT-B/32 at 5122: FID-10k.",
+              "figure_id": "table-27-20",
+              "figure_number": "27",
+              "height": 416,
+              "image_path": "figures/2610.12307/table-039.webp",
+              "kind": "table",
+              "page": 54,
+              "width": 828
+            },
+            {
+              "caption": "Table 4: Faithfulness to the dense image, JiT-B: paired metrics.",
+              "figure_id": "table-4-25",
+              "figure_number": "4",
+              "height": 365,
+              "image_path": "figures/2610.12307/table-040.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 828
+            },
+            {
+              "caption": "Table 18: Fine-tuning and sampling settings, JiT parents (ImageNet-1k).",
+              "figure_id": "table-18-27",
+              "figure_number": "18",
+              "height": 316,
+              "image_path": "figures/2610.12307/table-041.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 810
+            },
+            {
+              "caption": "Table 28: Guidance scale and timestep schedule, JiT-B/32 at 5122: FID-10k.",
+              "figure_id": "table-28-33",
+              "figure_number": "28",
+              "height": 302,
+              "image_path": "figures/2610.12307/table-042.webp",
+              "kind": "table",
+              "page": 55,
+              "width": 827
+            },
+            {
+              "caption": "Table 2: Ablation on JiT-B, FID-50k. BudgetPix with both Patch Aggregator (sec 3.2) and Refiner (sec 3.3) works best across different compute budgets.",
+              "figure_id": "table-2-53",
+              "figure_number": "2",
+              "height": 181,
+              "image_path": "figures/2610.12307/table-043.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 827
+            },
+            {
+              "caption": "Table 7: Wall-clock per image and speed-up, MiniT2I-L/16 at 5122.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 219,
+              "image_path": "figures/2610.12307/table-044.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 828
+            },
+            {
+              "caption": "Table 8: Wall-clock per image and speed-up, MiniT2I-B/16 at 5122.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 219,
+              "image_path": "figures/2610.12307/table-045.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 827
+            },
+            {
+              "caption": "Table 15: One-step generation, pMF-L/16 at 2562: FID-50k and Inception score.",
+              "figure_id": "table-15-23",
+              "figure_number": "15",
+              "height": 203,
+              "image_path": "figures/2610.12307/table-046.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 828
+            },
+            {
+              "caption": "Table 14: Budget mode against threshold mode, JiT-L/32 at 5122: every point of Figure 37.",
+              "figure_id": "table-14-47",
+              "figure_number": "14",
+              "height": 196,
+              "image_path": "figures/2610.12307/table-047.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 828
+            },
+            {
+              "caption": "Table 10: Wall-clock per image and speed-up, JiT-L/32 at 5122.",
+              "figure_id": "table-10-16",
+              "figure_number": "10",
+              "height": 186,
+              "image_path": "figures/2610.12307/table-048.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 828
+            },
+            {
+              "caption": "Table 11: Wall-clock per image and speed-up, JiT-B/32 at 5122.",
+              "figure_id": "table-11-12",
+              "figure_number": "11",
+              "height": 186,
+              "image_path": "figures/2610.12307/table-049.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 828
+            },
+            {
+              "caption": "Table 13: Wall-clock per image and speed-up, JiT-B/16 at 2562.",
+              "figure_id": "table-13-39",
+              "figure_number": "13",
+              "height": 185,
+              "image_path": "figures/2610.12307/table-050.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 828
+            },
+            {
+              "caption": "Table 12: Wall-clock per image and speed-up, JiT-L/16 at 2562.",
+              "figure_id": "table-12-40",
+              "figure_number": "12",
+              "height": 185,
+              "image_path": "figures/2610.12307/table-051.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 827
+            },
+            {
+              "caption": "Table 25: Guidance scale along the budget, JiT-B/32 at 5122: FID-10k.",
+              "figure_id": "table-25-22",
+              "figure_number": "25",
+              "height": 144,
+              "image_path": "figures/2610.12307/table-052.webp",
+              "kind": "table",
+              "page": 54,
+              "width": 827
+            },
+            {
+              "caption": "Table 17: Zero-initialisation check, every parent.",
+              "figure_id": "table-17-31",
+              "figure_number": "17",
+              "height": 139,
+              "image_path": "figures/2610.12307/table-053.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 828
+            },
+            {
+              "caption": "Table 23: Pixel-stream decoder across training length, JiT-B/32 at 5122: FID-10k.",
+              "figure_id": "table-23-6",
+              "figure_number": "23",
+              "height": 127,
+              "image_path": "figures/2610.12307/table-054.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 828
+            },
+            {
+              "caption": "Table 26: Upper bound on a better decoder, JiT-B/32 at 5122: FID-10k.",
+              "figure_id": "table-26-21",
+              "figure_number": "26",
+              "height": 127,
+              "image_path": "figures/2610.12307/table-055.webp",
+              "kind": "table",
+              "page": 54,
+              "width": 827
+            },
+            {
+              "caption": "Table 22: Reference runs, JiT-B: FID-10k.",
+              "figure_id": "table-22-7",
+              "figure_number": "22",
+              "height": 121,
+              "image_path": "figures/2610.12307/table-056.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 828
+            },
+            {
+              "caption": "Table 9: Wall-clock per image and speed-up, PixelDiT-T2I at 10242.",
+              "figure_id": "table-9-15",
+              "figure_number": "9",
+              "height": 119,
+              "image_path": "figures/2610.12307/table-057.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 828
+            },
+            {
+              "caption": "Table 24: Timestep schedule against step count, JiT-B/32 at 5122: FID-10k.",
+              "figure_id": "table-24-8",
+              "figure_number": "24",
+              "height": 94,
+              "image_path": "figures/2610.12307/table-058.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 828
+            },
+            {
+              "caption": "Table 30: Pooled against fixed budget, JiT-B/32 at 5122: FID-10k and paired fidelity.",
+              "figure_id": "table-30-50",
+              "figure_number": "30",
+              "height": 91,
+              "image_path": "figures/2610.12307/table-059.webp",
+              "kind": "table",
+              "page": 56,
+              "width": 828
+            },
+            {
+              "caption": "Table 29: Entropy-threshold skew, JiT-B/32 at 5122: FID-10k and Inception score at 128 tokens.",
+              "figure_id": "table-29-34",
+              "figure_number": "29",
+              "height": 75,
+              "image_path": "figures/2610.12307/table-060.webp",
+              "kind": "table",
+              "page": 55,
+              "width": 828
+            },
+            {
+              "caption": "Table 3: Class-conditional generation on ImageNet, JiT-L and JiT-B: FID-50k and Inception score.",
+              "figure_id": "table-3-18",
+              "figure_number": "3",
+              "height": 58,
+              "image_path": "figures/2610.12307/table-061.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 828
+            },
+            {
+              "caption": "Table 5: Text-to-image generation, MiniT2I-B/16 and MiniT2I-L/16 at 5122.",
+              "figure_id": "table-5-42",
+              "figure_number": "5",
+              "height": 58,
+              "image_path": "figures/2610.12307/table-062.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 828
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.12307/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.12307",
+          "relevance": 7,
+          "selection_reason": "Compute-adaptive tokenization for pixel-space diffusion, dynamically selecting tokens by complexity, fitting token-level efficiency methods.",
+          "summary_status": "generated",
+          "title": "BudgetPix: Compute-Adaptive Tokenization for Pixel-Space Image Diffusion",
+          "tldr": "BudgetPix adaptively allocates pixel-space diffusion compute according to image complexity, allowing one model to operate across flexible inference budgets with improved quality–efficiency tradeoffs.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Multimodal large language models have made remarkable progress in bridging vision and language, facilitating various perception tasks essential for human-machine interaction, robotics, and autonomous driving. However, existing MLLM-based perception methods predominantly rely on text-based coordinate representation, which suffers from excessive token overhead, or fixed-range quantization, which suffers from range and precision constraints, especially for 3D domains with unbounded spatial range and high localization accuracy requirements. To address these challenges, we propose a dynamic vector decoding method named DVD, which unifies the representation of 2D and 3D perception tasks. Specifically, we first transform diverse perceptual representation (i.e., 2D bounding boxes, 2D masks, and 3D bounding boxes) into 1D vector sequences, which are then mapped to compact discrete tokens in the high-dimensional space. Then, a lightweight de-tokenizer enables seamless integration with MLLMs by decoding output tokens back to original 2D and 3D perceptual representations. Extensive experiments on 2D and 3D perception benchmarks including RefCOCO series, SUN-RGBD, KITTI, Hypersim, nuScenes demonstrate that DVD achieves superior performance in 2D and 3D tasks and reduces significantly the token overhead and inference latency. DVD provides an efficient and general framework for integrating perception capabilities into MLLMs, overcoming the inherent limitations of existing methods.",
+          "arxiv_id": "2610.12266",
+          "arxiv_url": "https://arxiv.org/abs/2610.12266",
+          "authors": [
+            "Jinghua Hou, Zhe Liu, Hengshuang Zhao"
+          ],
+          "bullets": [
+            "Addresses the inefficiency of text-based coordinates and the range/precision limits of fixed quantization, particularly for unbounded 3D scenes.",
+            "Converts 2D boxes, 2D masks, and 3D boxes into 1D vector sequences mapped to compact discrete tokens.",
+            "Uses a lightweight de-tokenizer to reconstruct the original 2D or 3D representations from MLLM outputs.",
+            "Evaluated on RefCOCO, SUN-RGBD, KITTI, Hypersim, and nuScenes, with reported strong performance across 2D and 3D perception tasks.",
+            "The abstract reports reduced token overhead and inference latency, while the method unifies representation across perception tasks."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of DVD. We extend the MLLM vocabulary with learned unified tokens and train the model following standard LLM paradigms without modifications. At inference, we select tokens belonging to perception tasks and use a lightweight de-tokenizer reconstructs the original perceptual outputs from the discrete tokens with minimal overhead, drastically reducing sequence length and improving efficiency.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 393,
+              "image_path": "figures/2610.12266/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 806
+            },
+            {
+              "caption": "Figure 5: The qualitative visualization of DVD on the 2D and 3D perception tasks. The first row is the results of 3D grounding task. The second row is the result of 2D grounding task. The third row is the results of 2D RES task. The fourth row is the results of unified perception.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 489,
+              "image_path": "figures/2610.12266/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 776
+            },
+            {
+              "caption": "Figure 6: The visualization of latent space in DVD with t-SNE. (a) The vector latent space of 3D boxes. (b) The vector latent space of 3D boxes. (c) The vector latent space of 2D masks.",
+              "figure_id": "figure-6-18",
+              "figure_number": "6",
+              "height": 255,
+              "image_path": "figures/2610.12266/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 806
+            },
+            {
+              "caption": "Figure 9: The qualitative visualization of DVD on the 2D grounding task.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 541,
+              "image_path": "figures/2610.12266/figure-004.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 688
+            },
+            {
+              "caption": "Figure 8: The qualitative visualization of DVD on the 3D grounding task.",
+              "figure_id": "figure-8-5",
+              "figure_number": "8",
+              "height": 528,
+              "image_path": "figures/2610.12266/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 698
+            },
+            {
+              "caption": "Figure 4: Computation cost and performance comparison of different representations. Bubble area indicates the token count generated for per object of the representation.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 231,
+              "image_path": "figures/2610.12266/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 798
+            },
+            {
+              "caption": "Figure 10: The qualitative visualization of DVD on the 2D RES task.",
+              "figure_id": "figure-10-11",
+              "figure_number": "10",
+              "height": 551,
+              "image_path": "figures/2610.12266/figure-007.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 690
+            },
+            {
+              "caption": "Figure 2: The illustration of the dynamic vector representation learning. We first use the 1D sequence as 2D and 3D perceptual representation. Then, we use an encoder to map these sequences to high-dimensional space to adaptively quantize and compress these 1D information. Moreover, we introduce the task-agnostic geometric loss to improve the heterogeneous perception representation learning capacity. Finally, we use a decoder to recover discrete tokens to original representation.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 196,
+              "image_path": "figures/2610.12266/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 805
+            },
+            {
+              "caption": "Figure 7: The visualization of latent space in DVD with t-SNE for unifying 2D and 3D perception tasks. There are there obvious clusters, illustrating the effectiveness of our dynamic vector representation learning process.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 336,
+              "image_path": "figures/2610.12266/figure-009.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 336
+            },
+            {
+              "caption": "Table 1: Performance comparison of 2D and 3D perception.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 287,
+              "image_path": "figures/2610.12266/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 822
+            },
+            {
+              "caption": "Table 4: Performance comparison of 2D referring expression segmentation on the RefCOCO series.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2610.12266/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            },
+            {
+              "caption": "Table 3: Performance comparison of 2D grounding on the RefCOCO series.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 243,
+              "image_path": "figures/2610.12266/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Table 2: Performance comparison of 3D grounding on both indoor and outdoor datasets.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 191,
+              "image_path": "figures/2610.12266/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 822
+            },
+            {
+              "caption": "Table 9: Reconstruction Performance comparison of multi-task training.",
+              "figure_id": "table-9-14",
+              "figure_number": "9",
+              "height": 127,
+              "image_path": "figures/2610.12266/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 818
+            },
+            {
+              "caption": "Table 7: The effect of downsampling scale.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 126,
+              "image_path": "figures/2610.12266/table-015.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 448
+            },
+            {
+              "caption": "Table 10: Dataset Details.",
+              "figure_id": "table-10-1",
+              "figure_number": "10",
+              "height": 193,
+              "image_path": "figures/2610.12266/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 827
+            },
+            {
+              "caption": "Table 12: The Codebook Utilization.",
+              "figure_id": "table-12-17",
+              "figure_number": "12",
+              "height": 152,
+              "image_path": "figures/2610.12266/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 818
+            },
+            {
+              "caption": "Table 11: Computation cost and performance comparison of different representations.",
+              "figure_id": "table-11-16",
+              "figure_number": "11",
+              "height": 131,
+              "image_path": "figures/2610.12266/table-018.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 820
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.12266/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.12266",
+          "relevance": 9,
+          "selection_reason": "Addresses efficiency in MLLMs for perception tasks using dynamic vector decoding to reduce token overhead, relevant to both Multimodal Foundation Models and Efficient AI.",
+          "summary_status": "generated",
+          "title": "DVD: Dynamic Vector Decoding for Efficient MLLM-based Perception",
+          "tldr": "DVD efficiently represents 2D and 3D perceptual outputs as compact dynamic vector tokens, reducing token overhead and inference latency in MLLM-based perception.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Processing long visual token sequences from high-resolution images makes multi-step reasoning computationally expensive for multimodal Large Language Models (MLLMs). Existing one-shot pruning and aggregation methods compress visual tokens into a fixed context before decoding. However, visual evidence needs can shift as reasoning unfolds, making it difficult for a fixed compressed context to retain all the details needed across stages. To address this challenge, we propose ViMoD, a lightweight framework that maintains a compact visual context while preserving access to original fine-grained evidence as reasoning needs evolve. Deformable Aggregation of Region-wise Tokens (DART) learns content-adaptive groups and aggregation capacities, constructing compact Coarse representations linked to recoverable original Fine tokens. Temporal Routing for Adaptive Contextual Evidence (TRACE) integrates decoding history to anticipate upcoming evidence needs and select, retain, or replace active Fine-token groups. Selected Fine tokens augment the persistent Coarse context in the frozen backbone, enabling stage-specific evidence access without continuously attending to all visual tokens. On Qwen3-VL-4B, ViMoD outperforms all evaluated baselines on all eight reasoning benchmarks at a 20% target visual token budget, improving the mean normalized score by 39.0% over the strongest evaluated one-shot baseline. These gains are achieved with only 0.0546% additional trainable parameters relative to the frozen backbone.",
+          "arxiv_id": "2610.12060",
+          "arxiv_url": "https://arxiv.org/abs/2610.12060",
+          "authors": [
+            "Yicheng Xue, Han Wu, Jufeng Yang, Minjing Dong, Xinghao Chen, Hanting Chen, Jianyuan Guo"
+          ],
+          "bullets": [
+            "Addresses the limitation of fixed one-shot visual-token compression for multi-step reasoning.",
+            "DART builds compact coarse representations linked to recoverable original fine-grained tokens.",
+            "TRACE uses decoding history to select, retain, or replace fine-token groups during reasoning.",
+            "At a 20% visual-token budget, ViMoD outperforms evaluated baselines across eight reasoning benchmarks.",
+            "On Qwen3-VL-4B, it improves the mean normalized score by 39.0% over the strongest one-shot baseline with 0.0546% additional trainable parameters."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "failed",
+          "figures": [],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": null,
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.12060",
+          "relevance": 8,
+          "selection_reason": "Efficient visual token selection and memory for multimodal LLM reasoning, fitting token pruning/eviction and MLLM topics.",
+          "summary_status": "generated",
+          "title": "Look Back, Think Ahead: Visual Memory on Demand for Efficient Multimodal Reasoning",
+          "tldr": "ViMoD enables efficient multimodal reasoning by dynamically retrieving fine-grained visual evidence from a compact visual memory as reasoning needs change.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "On-policy distillation (OPD) supervises student-generated trajectories with token-level teacher signals. Its sampled-token variant avoids the cost of full-vocabulary probabilities. Yet we find that training on fewer tokens can outperform full-token OPD, challenging the intuition that more supervision improves learning. This motivates selecting tokens by learning value. Existing disagreement-based criteria ignore probability scale: tokens assigned negligible probability by both models, termed low-low tokens, can receive large log-ratio rewards and hinder learning. We propose DIAL-OPD, a token-selection method that bridges log-probability and probability spaces by weighting reward magnitude with the logarithmic mean of teacher and student probabilities. A parameter beta controls this weighting, and the highest-scoring tokens are retained. Across 4 teacher-student pairs and 7 mathematical reasoning benchmarks, we compare DIAL-OPD with 9 baselines. Retaining only 40% of tokens, it outperforms Vanilla OPD and its full-token variants, with mean accuracy gains reaching 5.25 percentage points over Vanilla OPD, and doubles AIME25 Pass@16 from 13.33% to 26.67%. It also achieves up to an 18% relative improvement in mean accuracy over the strongest token-selection baseline at matched retention ratios. With a 4B teacher, DIAL-OPD surpasses the strongest full-token baseline using an 8B teacher at both student scales, showing that effective supervision allocation can outweigh teacher scaling. Further analysis shows that moderate beta balances suppressing low-low tokens against preserving useful disagreements. Token-level evidence reveals that DIAL-OPD filters high-reward tokens with limited reasoning value while preserving supervision critical to reasoning correctness.",
+          "arxiv_id": "2610.11659",
+          "arxiv_url": "https://arxiv.org/abs/2610.11659",
+          "authors": [
+            "Anhao Zhao, Haoran Xin, Junlong Tong, Yingqi Fan, Xuan Lu, Ping Nie, Wenjie Li, Xiaoyu Shen"
+          ],
+          "bullets": [
+            "Motivation: Large log-ratio rewards from low-probability tokens assigned by both teacher and student can harm learning, so more token supervision is not always better.",
+            "Method: Scores tokens using reward magnitude weighted by the logarithmic mean of teacher and student probabilities; a parameter β controls the balance, and top-scoring tokens are retained.",
+            "Evaluation: Tested across 4 teacher–student pairs and 7 mathematical reasoning benchmarks against 9 baselines.",
+            "Results: At 40% token retention, DIAL-OPD outperforms Vanilla OPD, with mean accuracy gains up to 5.25 percentage points and AIME25 Pass@16 increasing from 13.33% to 26.67%.",
+            "Scope: Moderate β values best balance suppressing low-low tokens while preserving disagreements useful for reasoning."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 6: Learning dynamics of DIAL-OPD across β for Qwen3-0.6B and Qwen3-1.7B students, using a Qwen3-4B teacher and 40% token retention. Insets show final accuracy as a function of β.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 285,
+              "image_path": "figures/2610.11659/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 938
+            },
+            {
+              "caption": "Figure 8: Token selections and signed OPD rewards in context (β = 1, 20% retention). Blue/pink mark",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 286,
+              "image_path": "figures/2610.11659/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 931
+            },
+            {
+              "caption": "Figure 7: Token selection under varying β at 20% retention. Hexagon colors indicate selection rates; dotted lines delimit the low-low region, and teacher probabilities q ≤ 10−6 are pooled for visualization.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 235,
+              "image_path": "figures/2610.11659/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 919
+            },
+            {
+              "caption": "Figure 1: Supervision density has a nonmonotonic effect. Random selection (1–90%) vs. full-token OPD (100%), 0.6B student; inset: final accuracy.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 290,
+              "image_path": "figures/2610.11659/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 457
+            },
+            {
+              "caption": "Figure 2: The non-monotonic effect persists without a teacher–student size gap. Random selection vs. full-token OPD, 4B student; inset: final accuracy.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 290,
+              "image_path": "figures/2610.11659/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 457
+            },
+            {
+              "caption": "Figure 3: Reward-based selection; inset: final accuracy.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 217,
+              "image_path": "figures/2610.11659/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 299
+            },
+            {
+              "caption": "Figure 5: Low-low replacement improves learning.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 217,
+              "image_path": "figures/2610.11659/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 298
+            },
+            {
+              "caption": "Figure 4: Low-low token and absolute reward shares (RewardTop).",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 217,
+              "image_path": "figures/2610.11659/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 291
+            },
+            {
+              "caption": "Table 3: Probability-weighting ablation across four teacher–student pairs and seven benchmarks. Each retention ratio compares reward-only selection (β = 0) with β = 1; bold marks the higher accuracy within each pair, including ties.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 525,
+              "image_path": "figures/2610.11659/table-009.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 913
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.11659/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.11659",
+          "relevance": 6,
+          "selection_reason": "Token-level selection for distillation improves efficiency and performance; fits efficient AI token selection.",
+          "summary_status": "generated",
+          "title": "DIAL-OPD: Learning More from Fewer Tokens in On-Policy Distillation",
+          "tldr": "DIAL-OPD improves on-policy distillation by selecting tokens according to both reward magnitude and teacher–student probability scale, achieving stronger reasoning performance with only 40% of tokens.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "To adapt billion-parameter Vision Transformers for long-video understanding, recent methods freeze the backbone and train lightweight convolutional modules. While effective for parameter-efficient training, existing adapters do not reduce inference-time computation, leaving scalability with respect to video length largely unaddressed. Token selection can reduce attention cost by pruning redundant tokens, but it breaks the spatial grid structure required by convolutional adapters. This forces an expensive dense reconstruction, nullifying much of the potential speedup. We address this by introducing native sparse 2D convolutions, a primitive that allows these adapters, for the first time, to operate directly and efficiently on dynamically pruned token sets. We integrate this primitive into SV-TAD, an adapter framework for temporal action detection, reducing VideoMAEv2-L computation by up to 64% and achieving 2.2x faster inference, while maintaining state-of-the-art accuracy on THUMOS-14 and ActivityNet-1.3. When scaled to InternVideoNext-L, our approach surpasses the previous state of the art at roughly half its computational cost. Moreover, the sparse formulation naturally supports auxiliary task tokens, which improves fine-grained assembly detection on ATTACH.",
+          "arxiv_id": "2610.11579",
+          "arxiv_url": "https://arxiv.org/abs/2610.11579",
+          "authors": [
+            "Ricardo Pizarro, Roberto Valle, Jos\\'e M. Buenaposada, Luis M. Bergasa, Luis Baumela"
+          ],
+          "bullets": [
+            "Addresses the inference-cost bottleneck of frozen ViT adapters for long-video understanding.",
+            "Introduces native sparse 2D convolutions that operate directly on dynamically pruned tokens, avoiding dense spatial reconstruction.",
+            "Reduces VideoMAEv2-L computation by up to 64% and delivers 2.2× faster inference.",
+            "Maintains state-of-the-art temporal action detection accuracy on THUMOS-14 and ActivityNet-1.3.",
+            "Scales to InternVideoNext-L with stronger performance than prior work at roughly half the computational cost; also supports auxiliary task tokens for fine-grained assembly detection."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Sparse adapter architecture. Our bottleneck adapter (orange, trainable; the surrounding ViT block is frozen) is inserted after each Transformer block’s attention layer. Visual (Xvis) and auxiliary (Xaux) tokens are downprojected (DownProj1) before SparseConv2D gathers each kept token’s spatial neighbors via the precomputed neighbor index table N (−1 marks pruned/outof-bounds neighbors, top-left inset). CrossAttn then lets auxiliary tokens query the sparse visual features, updating only Xaux at no extra cost to the visual path, before UpProj1 restores the channel dimension and a learnable scalar γ modulates the adapter’s residual contribution.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 279,
+              "image_path": "figures/2610.11579/figure-001.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 610
+            },
+            {
+              "caption": "Figure 2: SV-TAD architecture. Input frames and auxiliary tokens (X) pass through a frozen pretrained ViT backbone with interleaved token selection (TS-ON) blocks. The first three blocks use standard 2D convolutions, with the rest using SparseConv2D. The expanded view shows our modified ViT block: frozen attention computes importance scores, token selection prunes uninformative patches, and the trainable sparse adapter operates directly on the sparse sequence. Timing annotations show per-block latency decreasing from 60ms to 7.6ms as the sequence progressively shrinks.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 227,
+              "image_path": "figures/2610.11579/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 720
+            },
+            {
+              "caption": "Figure 1: TFLOPs vs. accuracy on THUMOS-14. SV-TAD (red squares) matches or exceeds AdaTAD [21] (blue circles) at substantially lower compute across three backbone scales: 43% fewer TFLOPs with VMAEv2-B, 64% with VMAEv2-L, and 51% when comparing our InternVideoNext-L against AdaTAD’s VMAEv2-G.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 360,
+              "image_path": "figures/2610.11579/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 704
+            },
+            {
+              "caption": "Figure 3: Kernel Timing comparison on THUMOS-14. DenseConv2D (blue) keeps latency nearly constant across different keep rates, while our SparseConv2D (orange) scales linearly with Nkept.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 327,
+              "image_path": "figures/2610.11579/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 434
+            },
+            {
+              "caption": "Figure 5: Sparse convolution efficiency scaling at kr=0.3. (a) Our sparse convolution (orange) achieves 1.75× speedup over dense (blue) at 6,144 frames (40ms vs. 70ms). (b) Dense convolution memory grows to ∼6GB at 6,144 frames regardless of sparsity. Our sparse convolution maintains constant memory (∼800MB) via chunked processing, achieving 7.5× reduction.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 242,
+              "image_path": "figures/2610.11579/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 720
+            },
+            {
+              "caption": "Table 3: Backbone-matched comparison on THUMOS-14 with VideoMAEv2-B. All methods use identical settings. * indicates our reproduction.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 116,
+              "image_path": "figures/2610.11579/table-006.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 346
+            },
+            {
+              "caption": "Table 5: Results comparison on ActivityNet-1.3 and THUMOS14 (* indicates mAP obtained from official logs). Size-matched comparisons are highlighted.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 225,
+              "image_path": "figures/2610.11579/table-007.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 716
+            },
+            {
+              "caption": "Table 1: Effect of keep rate kr on THUMOS-14 (InternVideoNext-L backbone).",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 105,
+              "image_path": "figures/2610.11579/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 490
+            },
+            {
+              "caption": "Table 4: Ablation of auxiliary landmark supervision on ATTACH (Person Split) using VideoMAEv2-B.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 101,
+              "image_path": "figures/2610.11579/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 664
+            },
+            {
+              "caption": "Table 2: Dense vs. sparse convolution on THUMOS14.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 105,
+              "image_path": "figures/2610.11579/table-010.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 177
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.11579/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.11579",
+          "relevance": 9,
+          "selection_reason": "Introduces SV-TAD, an adapter framework for temporal action detection that uses native sparse 2D convolutions to handle pruned tokens. This directly addresses token pruning/eviction for efficiency in video understanding.",
+          "summary_status": "generated",
+          "title": "SV-TAD: Native Sparse Convs for Efficient Temporal Action Detection",
+          "tldr": "SV-TAD uses native sparse convolutions to make token-pruned video adapters computationally efficient without sacrificing detection accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion-based LLMs (dLLMs) have recently emerged as a promising alternative to autoregressive (AR) LLMs by enabling bidirectional parallel refinement, alleviating the sequential decoding bottleneck of AR generation. However, their parallel iterative refinement mismatches AR accelerators optimized for sequential decoding and their discrete token generation differs from DiT accelerators designed for continuous denoising. Recent dLLM accelerators have explored workload-specific optimizations to reduce vocabulary processing overhead and redundant computation across denoising iterations. However, these approaches retain all tokens in parallel execution, despite varying token refinement utility and execution requirements. This paper presents DynaTE, a hardware--software co-design architecture that dynamically adapts accelerator execution to evolving token states during dLLM decoding. DynaTE first enables adaptive token execution by skipping low-utility token computation, while a dimension-reconfigurable PE array maintains high utilization under varying active-token patterns. Second, DynaTE exploits dynamic token dependencies through FLDD to refine a small number of locally dependent tokens within the current iteration, reducing the overall number of denoising iterations, while a Merge--Split--Merge dataflow hides the resulting serial overhead. Third, a streaming vocabulary engine interleaves multiple token streams from the LM head to accommodate irregular output variations caused by selective token computation and uneven vocabulary-selection demands. Evaluated on two representative dLLMs, DynaTE achieves 2.05--2.78$\\times$ speedup and 2.99--3.93$\\times$ higher energy efficiency over state-of-the-art dLLM accelerators, while delivering 2.55$\\times$ speedup and 6.07$\\times$ higher energy efficiency over Jetson AGX Orin.",
+          "arxiv_id": "2610.11284",
+          "arxiv_url": "https://arxiv.org/abs/2610.11284",
+          "authors": [
+            "Minghan Jiang, Jiayi Wang, Shuaiting Li, Haibin Shen, Kejie Huang"
+          ],
+          "bullets": [
+            "Targets the mismatch between dLLM’s parallel iterative refinement and accelerators built for autoregressive or continuous-denoising workloads.",
+            "Skips low-utility token computation and uses a dimension-reconfigurable processing-element array to sustain utilization across changing active-token patterns.",
+            "Uses FLDD to refine locally dependent tokens within an iteration, reducing denoising iterations; Merge–Split–Merge hides added serial overhead.",
+            "Adds a streaming vocabulary engine to handle irregular outputs from selective token execution.",
+            "On two representative dLLMs, achieves 2.05–2.78× speedup and 2.99–3.93× energy-efficiency improvement over prior dLLM accelerators."
+          ],
+          "categories": [
+            "cs.AR",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 5. Overall architecture of DynaTE.",
+              "figure_id": "figure-5-25",
+              "figure_number": "5",
+              "height": 488,
+              "image_path": "figures/2610.11284/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 496
+            },
+            {
+              "caption": "Fig. 9. Multi-token Top-32 engine and its interleaved tournament-pipeline schedule.",
+              "figure_id": "figure-9-10",
+              "figure_number": "9",
+              "height": 372,
+              "image_path": "figures/2610.11284/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 519
+            },
+            {
+              "caption": "Fig. 6. (a) Reconfigurable PE array, (b) internal PE structure, and (c) multi-precision splittable MAC unit.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 398,
+              "image_path": "figures/2610.11284/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1065
+            },
+            {
+              "caption": "Fig. 8. Streaming vocabulary-processing engine, including output reshaping, burst-to-stream smoothing, multi-token Top-32 selection, and shared distribution-statistics generation.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 423,
+              "image_path": "figures/2610.11284/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 529
+            },
+            {
+              "caption": "Fig. 16. End-to-end comparison across LLaDA-8B and Dream-7B: (a) speedup and (b) energy-efficiency improvement.",
+              "figure_id": "figure-16-5",
+              "figure_number": "16",
+              "height": 388,
+              "image_path": "figures/2610.11284/figure-005.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1058
+            },
+            {
+              "caption": "Fig. 20. Intermediate-logit traffic and normalized HBM access energy for HBM-resident logits and streaming summaries.",
+              "figure_id": "figure-20-6",
+              "figure_number": "20",
+              "height": 405,
+              "image_path": "figures/2610.11284/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 520
+            },
+            {
+              "caption": "Fig. 3. Workload characterization of the three optimization opportunities: (a) per-token update gain across denoising iterations; (b) oracle local-conditioning gain between adjacent unresolved tokens; (c) full-logit HBM traffic; and (d) bursty per-token versus smoothed multi-token processing demand.",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 788,
+              "image_path": "figures/2610.11284/figure-007.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 2. Three inefficiencies in dLLM decoding and DynaTE’s corresponding algorithm–hardware optimizations.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 560,
+              "image_path": "figures/2610.11284/figure-008.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 518
+            },
+            {
+              "caption": "Fig. 10. Merge–Split–Merge dataflow for integrating local serial refinement into parallel dLLM decoding.",
+              "figure_id": "figure-10-17",
+              "figure_number": "10",
+              "height": 310,
+              "image_path": "figures/2610.11284/figure-009.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 498
+            },
+            {
+              "caption": "Fig. 12. Tournament-core count exploration.",
+              "figure_id": "figure-12-21",
+              "figure_number": "12",
+              "height": 274,
+              "image_path": "figures/2610.11284/figure-010.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 517
+            },
+            {
+              "caption": "Fig. 11. Survivor-buffer depth exploration.",
+              "figure_id": "figure-11-24",
+              "figure_number": "11",
+              "height": 271,
+              "image_path": "figures/2610.11284/figure-011.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 518
+            },
+            {
+              "caption": "Fig. 13. Token-pruning effectiveness across LLaDA-8B and Dream-7B: relative total Transformer MAC count before and after pruning.",
+              "figure_id": "figure-13-23",
+              "figure_number": "13",
+              "height": 255,
+              "image_path": "figures/2610.11284/figure-012.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 520
+            },
+            {
+              "caption": "Fig. 14. FLDD effectiveness across LLaDA-8B and Dream-7B.",
+              "figure_id": "figure-14-12",
+              "figure_number": "14",
+              "height": 247,
+              "image_path": "figures/2610.11284/figure-013.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 511
+            },
+            {
+              "caption": "Fig. 15. Dependency locality and FLDD capture: (a) cumulative distribution of absolute token distances among oracle dependency pairs; (b) fraction of the same oracle pairs captured by FLDD.",
+              "figure_id": "figure-15-11",
+              "figure_number": "15",
+              "height": 242,
+              "image_path": "figures/2610.11284/figure-014.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 19. Hardware cost: (a)(b) logic-area and logic energy breakdown, and (c) area comparison between the baseline and splittable MAC units.",
+              "figure_id": "figure-19-14",
+              "figure_number": "19",
+              "height": 237,
+              "image_path": "figures/2610.11284/figure-015.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 516
+            },
+            {
+              "caption": "Fig. 7. Representative PE-array reconfiguration modes: (a) canonical dataflow and (b)–(c) reshaped dataflows using left-buffer bypass and inter-subarray transfers.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 207,
+              "image_path": "figures/2610.11284/figure-016.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 523
+            },
+            {
+              "caption": "Fig. 1. (a) Iterative decoding process of a dLLM. (b) Fast-dLLM’s part-wise decoding with approximate KV-cache reuse.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 202,
+              "image_path": "figures/2610.11284/figure-017.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 514
+            },
+            {
+              "caption": "Fig. 17. Average PE utilization of the fixed and reconfigurable arrays across LLaDA-8B and Dream-7B workloads.",
+              "figure_id": "figure-17-7",
+              "figure_number": "17",
+              "height": 249,
+              "image_path": "figures/2610.11284/figure-018.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 520
+            },
+            {
+              "caption": "Fig. 18. Normalized per-iteration latency breakdown with and without the MSM dataflow.",
+              "figure_id": "figure-18-4",
+              "figure_number": "18",
+              "height": 190,
+              "image_path": "figures/2610.11284/figure-019.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 520
+            },
+            {
+              "caption": "Fig. 22. Incremental ablation of DynaTE.",
+              "figure_id": "figure-22-18",
+              "figure_number": "22",
+              "height": 368,
+              "image_path": "figures/2610.11284/figure-020.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 519
+            },
+            {
+              "caption": "Fig. 21. Top-32 scheduling and filtering effectiveness: (a) tournament-core utilization under single-token and multi-token scheduling; (b) normalized logits admitted to the tournament tree without and with Prior-ID seeding.",
+              "figure_id": "figure-21-20",
+              "figure_number": "21",
+              "height": 245,
+              "image_path": "figures/2610.11284/figure-021.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 514
+            },
+            {
+              "caption": "TABLE I DYNATE HARDWARE CONFIGURATION.",
+              "figure_id": "table-I-22",
+              "figure_number": "I",
+              "height": 318,
+              "image_path": "figures/2610.11284/table-022.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 492
+            },
+            {
+              "caption": "TABLE IV COMPARISON WITH PRIOR DLLM ACCELERATORS.",
+              "figure_id": "table-IV-19",
+              "figure_number": "IV",
+              "height": 248,
+              "image_path": "figures/2610.11284/table-023.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 529
+            },
+            {
+              "caption": "TABLE II ABLATION STUDY ON GENERATION QUALITY. EACH ENTRY REPORTS LLADA-8B / DREAM-7B.",
+              "figure_id": "table-II-15",
+              "figure_number": "II",
+              "height": 150,
+              "image_path": "figures/2610.11284/table-024.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 529
+            },
+            {
+              "caption": "TABLE III AREA AND POWER BREAKDOWN OF DYNATE.",
+              "figure_id": "table-III-13",
+              "figure_number": "III",
+              "height": 87,
+              "image_path": "figures/2610.11284/table-025.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 354
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.11284/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.11284",
+          "relevance": 7,
+          "selection_reason": "Hardware-software co-design for dynamic token execution in diffusion LLMs, reducing computation and energy through selective token skipping.",
+          "summary_status": "generated",
+          "title": "DynaTE: Accelerating Diffusion LLMs via Dynamic Token Execution",
+          "tldr": "DynaTE accelerates diffusion LLM decoding by dynamically computing only useful tokens and exploiting their dependencies through a hardware–software co-designed architecture.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language models (VLMs) have demonstrated impressive capabilities but suffer from substantial computational overhead, as vision tokens dominate the input sequence. This motivates vision token compression as a key direction to alleviate the burden. However, with the emergence of hybrid architectures incorporating linear attention (\\eg, Qwen3.5), prior methods designed for softmax attention struggle to generalize. Our analysis reveals that both attention- and similarity-based approaches suffer notable performance degradation, underscoring the urgent need for compression methods tailored to this regime. To this end, we propose \\textbf{V-CoLA}, an efficient training-free token compression framework specifically designed for linear attention. V-CoLA introduces a novel \\textit{uniqueness-aware importance criterion} for identifying critical vision tokens, coupled with an \\textit{adaptive token merging strategy} that performs compression. All components are optimized at the implementation level to remain compatible with the chunk-wise parallelism of linear attention, ensuring strong practical value. Extensive experiments across multiple benchmarks demonstrate the superiority of V-CoLA: it achieves 99.5\\% of the original performance with only 50.0\\% of vision tokens, and over 88.0\\% with as few as 12.5\\%, while delivering a 1.86$\\times$ to 6.15$\\times$ prefill speedup.",
+          "arxiv_id": "2610.11251",
+          "arxiv_url": "https://arxiv.org/abs/2610.11251",
+          "authors": [
+            "Hao Jiang, Yiru Mao, Tianpeng Bu, Hao Zhou, Hongtao Duan, Wang Jing, Bowen Xu, Xin Chen, Lulu Hu, Bin Yang, Yongliang Tao, Minying Zhang"
+          ],
+          "bullets": [
+            "Targets the computational burden caused by vision tokens in VLMs, especially hybrid models using linear attention.",
+            "Uses a uniqueness-aware importance criterion to identify critical vision tokens.",
+            "Applies adaptive token merging with implementation optimized for linear-attention chunk-wise parallelism.",
+            "Retains 99.5% of original performance with 50.0% of vision tokens and over 88.0% with 12.5%.",
+            "Achieves reported prefill speedups of 1.86×–6.15× across multiple benchmarks."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Overview of our method. (left) Original hybrid architectures. (right) Forwarding with V-CoLA, equipped with token-wise importance criterion and adaptive chunk-wise token merging.",
+              "figure_id": "figure-5-14",
+              "figure_number": "5",
+              "height": 309,
+              "image_path": "figures/2610.11251/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 953
+            },
+            {
+              "caption": "Figure 7: Parallelism algorithm of token uniqueness. (left) We extend Gated DeltaNet with bypass input and batched queries, it enables injecting additional queries when computing output. (right) We use shifted keys as pseudo queries, and calculate token uniqueness on output matrix Ut.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 392,
+              "image_path": "figures/2610.11251/figure-002.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 958
+            },
+            {
+              "caption": "Figure 1: Comparison of token selection. FastV suffers from attention bias, missing the digits at the top of the image. DART selects pivot tokens from only sparse semantic regions, leading to insufficient awareness of some primary objects. Our method successfully identifies all main regions and provides an accurate response.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 423,
+              "image_path": "figures/2610.11251/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 448
+            },
+            {
+              "caption": "Figure 6: Layer-wise retention rate (blue) and importance correlation (red) on Qwen3.5-9B.",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 197,
+              "image_path": "figures/2610.11251/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 457
+            },
+            {
+              "caption": "Figure 4: Comparison of similarity-based token selection between Qwen3-VL-8B and Qwen3.5-9B.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2610.11251/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 458
+            },
+            {
+              "caption": "Figure 3: Average proportion of attention scores allocated to vision tokens across different layers in Qwen3VL-8B and Qwen3.5-9B.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 168,
+              "image_path": "figures/2610.11251/figure-006.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 427
+            },
+            {
+              "caption": "Figure 2: FastV (attention-based) vs. DART (similaritybased) vs. random baseline on Qwen3.5-9B.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 142,
+              "image_path": "figures/2610.11251/figure-007.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 453
+            },
+            {
+              "caption": "Figure 8: Efficient implementation of adaptive token merging.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 213,
+              "image_path": "figures/2610.11251/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 461
+            },
+            {
+              "caption": "Table 1: We compare our method with state-of-the-art approaches using Qwen3.5-9B. The best results are bold.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 677,
+              "image_path": "figures/2610.11251/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 939
+            },
+            {
+              "caption": "Table 7: We extend comparison with state-of-the-art approaches to include Qwen3.5-27B and InfiniteVL, with fixed ↓ 75.0% token compression.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 258,
+              "image_path": "figures/2610.11251/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 450
+            },
+            {
+              "caption": "Table 6: Ablation of main components.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 236,
+              "image_path": "figures/2610.11251/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 447
+            },
+            {
+              "caption": "Table 3: Comparison of wall-clock runtime across different components.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 192,
+              "image_path": "figures/2610.11251/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 447
+            },
+            {
+              "caption": "Table 4: Ablation of parameter λ in Rt calculation.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 145,
+              "image_path": "figures/2610.11251/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 450
+            },
+            {
+              "caption": "Table 5: Ablation of window parameters (w1, w2).",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 139,
+              "image_path": "figures/2610.11251/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 381
+            },
+            {
+              "caption": "Table 2: Comparison of wall-clock runtime (ms) of the language model prefilling across various vision token numbers and different remain rates.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 99,
+              "image_path": "figures/2610.11251/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 451
+            },
+            {
+              "caption": "Table 8: MMDU results on Qwen3.5-9B under varying average vision token retention rates. All dimensions are scored by the official protocol (higher is better).",
+              "figure_id": "table-8-16",
+              "figure_number": "8",
+              "height": 219,
+              "image_path": "figures/2610.11251/table-016.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 447
+            },
+            {
+              "caption": "Table 9: V*-Bench accuracy on Qwen3.5-9B. “Pre-exit” denotes the average vision token retention rate before the exit layer.",
+              "figure_id": "table-9-17",
+              "figure_number": "9",
+              "height": 148,
+              "image_path": "figures/2610.11251/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 451
+            },
+            {
+              "caption": "Table 10: End-to-end latency (ms) of INT4 TensorRT Qwen3.5-9B on Jetson Thor with 2K visual input tokens and 32 output tokens. Overhead denotes V-CoLA’s compression cost, which is already included in prefill.",
+              "figure_id": "table-10-18",
+              "figure_number": "10",
+              "height": 98,
+              "image_path": "figures/2610.11251/table-018.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 452
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.11251/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.11251",
+          "relevance": 9,
+          "selection_reason": "Training-free vision token compression for linear-attention VLMs; direct fit to token pruning/eviction.",
+          "summary_status": "generated",
+          "title": "V-CoLA: Vision Token Compression with Linear Attention",
+          "tldr": "V-CoLA is a training-free vision-token compression method tailored to linear-attention VLMs, preserving most performance while substantially accelerating prefill.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Image retrieval methods often rely on a single global semantic descriptor extracted from an image, e.g., the [CLS] token in vision transformers. However, trying to squeeze all the semantic information of an image into a single descriptor can hurt downstream retrieval performance, especially for fine-grained retrieval tasks. In this work, we augment the semantic tokens in the newer visual transformers, the global [CLS] token and the four register tokens, with a carefully selected collection of spatial tokens, aiming to capture the spatial region representation that characterizes the contents captured in each of the semantic tokens. We leverage the DINOv2-reg model, which includes register tokens that emergently learn object and part-based representations. For each \"cue\" token ([CLS] and each register token), we find a \"buddy\" image patch token and extract an N x N patch region to produce a set of localized ROI tokens. Our approach automatically captures important regions of interest without any external bounding boxes or saliency modules, purely by matching semantic tokens with their spatial representation regions. Furthermore, we incorporate these tokens into a multi-vector retrieval framework inspired by ColBERT, enabling fine-grained matching via a per-token alignment mechanism while avoiding the large storage cost of keeping all patch embeddings. Through extensive experiments, we find that (1) register tokens encode useful fine-grained details that can complement the [CLS] token; (2) automatically pooled ROI tokens further improve fine-grained discrimination; and (3) multi-vector retrieval with a small set of tokens improves over a DINOv2-reg single-vector baseline while remaining tractable for large-scale search. The code is available at https://github.com/IdhcbIan/Augmenting_CLS_with_ROI_tokens.",
+          "arxiv_id": "2610.10991",
+          "arxiv_url": "https://arxiv.org/abs/2610.10991",
+          "authors": [
+            "Ian de Holanda Cavalcanti Bezerra, Vivek Trivedy, Lucas Pascotti Valem, Longin Jan Latecki"
+          ],
+          "bullets": [
+            "Single global descriptors can miss details needed for fine-grained retrieval.",
+            "The method matches each DINOv2-reg semantic token ([CLS] and registers) to a spatial patch token, then pools an N×N local region around it.",
+            "These localized ROI tokens are used in a ColBERT-inspired multi-vector retrieval framework with per-token alignment.",
+            "Experiments show register tokens and pooled ROI tokens improve fine-grained discrimination over a DINOv2-reg single-vector baseline while remaining practical for large-scale search.",
+            "The approach avoids external bounding boxes and saliency modules, but its scope is evaluated through the reported experiments only."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Distribution of most similar tokens of the database images for any given [CLS] token from queries of images in COCO’s dog class [15]. Interestingly, a [CLS] token from a query image is often most similar to one of the four register tokens of other images (64%), not their [CLS] token (36%).",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 218,
+              "image_path": "figures/2610.10991/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 494
+            },
+            {
+              "caption": "Fig. 3. The data flow of our training setup. First, the [CLS] and register tokens are extracted with DINOv2-reg. Second, for each of these cue tokens, the buddy token is identified as the most similar image patch token. Third, the ROI token is constructed by mean pooling the buddy token and the image patch tokens in the region around it. In our experiments, we use only 10 tokens per image. Finally, the standard triplet training is performed with ColBERTstyle similarity between image pairs.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 202,
+              "image_path": "figures/2610.10991/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 529
+            },
+            {
+              "caption": "TABLE I RECALL@K METRICS ON CUB-200, IN-SHOP, CARS-196, AND STANFORD ONLINE PRODUCTS. THE TABLE COMPARES REPORTED METHODS WITH DIFFERENT BACKBONES, EMBEDDING DIMENSIONS, AND TRAINING OBJECTIVES; OUR DINOV2-REG ABLATIONS ISOLATE THE CONTRIBUTION OF THE PROPOSED TOKEN SELECTION AND MULTI-VECTOR SCORING.",
+              "figure_id": "table-I-6",
+              "figure_number": "I",
+              "height": 343,
+              "image_path": "figures/2610.10991/table-003.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 1070
+            },
+            {
+              "caption": "TABLE VI COMPARISON OF OUR APPROACH WITH LOCAL FEATURE-BASED METHODS ON METRIC LEARNING BENCHMARKS IN TERMS OF RECALL@K.",
+              "figure_id": "table-VI-4",
+              "figure_number": "VI",
+              "height": 146,
+              "image_path": "figures/2610.10991/table-004.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 516
+            },
+            {
+              "caption": "TABLE II COMPARISON OF RETRIEVAL PERFORMANCE (MAP) ON THE INSTRE DATASET AGAINST STATE-OF-THE-ART METHODS.",
+              "figure_id": "table-II-7",
+              "figure_number": "II",
+              "height": 120,
+              "image_path": "figures/2610.10991/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 484
+            },
+            {
+              "caption": "TABLE IV ABLATION ON THE REGION SIZE FOR ROI TOKENS. WE REPORT RECALL@1 ON CUB AND CARS-196 WITH SINGLE PATCH VS. N ×N MEAN POOLING FOR N=3, 5, 7, 9. OUR DEFAULT SETTING IS N=3.",
+              "figure_id": "table-IV-3",
+              "figure_number": "IV",
+              "height": 125,
+              "image_path": "figures/2610.10991/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 379
+            },
+            {
+              "caption": "TABLE V THEORETICAL INDEX SIZE COMPARISONS FOR 1M IMAGES USING 384-DIMENSIONAL FLOAT32 EMBEDDINGS (4 BYTES/DIM). RECALL@1 IS MEASURED ON CUB-200 AND DOES NOT REPRESENT MILLION-SCALE RETRIEVAL PERFORMANCE. “T. DIM” AND “MEMORY” DENOTE DIMENSIONS PER IMAGE AND RAW STORAGE WITHOUT OVERHEAD, RESPECTIVELY.",
+              "figure_id": "table-V-5",
+              "figure_number": "V",
+              "height": 102,
+              "image_path": "figures/2610.10991/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 508
+            },
+            {
+              "caption": "TABLE III EFFECT OF USING REGISTER AND ROI TOKENS (BOTTOM 2 EXPERIMENTS USING MULTI-VECTOR TRAINING).",
+              "figure_id": "table-III-2",
+              "figure_number": "III",
+              "height": 86,
+              "image_path": "figures/2610.10991/table-008.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 508
+            }
+          ],
+          "first_seen_at": "2026-10-08T21:00:00-04:00",
+          "hero_figure": "figures/2610.10991/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.10991",
+          "relevance": 6,
+          "selection_reason": "Augments CLS/register tokens with selected spatial ROI tokens for fine-grained retrieval; relevant to token selection and spatial region representation.",
+          "summary_status": "generated",
+          "title": "Region-Aware CLS Token Augmentation for Fine-Grained Image Retrieval",
+          "tldr": "Augmenting global and register tokens with automatically selected local region tokens enables compact, fine-grained image retrieval without external region annotations.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-07",
       "paper_count": 13,
       "papers": [
@@ -57252,5 +59220,5 @@
   "schema_version": 1,
   "subtopic_id": "token-pruning-and-eviction",
   "topic_id": "efficient-ai",
-  "total_paper_count": 304
+  "total_paper_count": 313
 }

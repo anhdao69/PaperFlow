@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**88 papers total**
+**91 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-08 | [LeWAM: A JEPA World Action Model with Diffusion-Steering-Based MPC](https://arxiv.org/abs/2610.12407) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | LeWAM combines a decoder-free JEPA latent with bidirectional dynamics and diffusion-steered MPC to improve representation quality while supporting action prediction and planning. | 10 | 8 |
+| 2026-10-08 | [Being-M0.7: A Latent World-Action Model for Humanoid Robots](https://arxiv.org/abs/2610.11283) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | Being-M0.7 transfers large-scale human video and motion priors into executable humanoid loco-manipulation actions despite scarce robot demonstrations. | 9 | 8 |
+| 2026-10-08 | [Cross-Embodiment Robot Foundation World Models with Latent Actions](https://arxiv.org/abs/2610.10846) | World Models: Latent Action Models | LAC-WM learns a unified latent action space across robot embodiments, improving adaptation to unseen robots over explicit-action world models. | 10 | 9 |
 | 2026-10-07 | [RealtimeWAM: How Fast Can I Run My World Action Model?](https://arxiv.org/abs/2610.10079) | World Models: Latent Action Models; Efficient AI: KV Cache and Memory Efficiency | RealtimeWAM accelerates world action model inference to near-real-time robot control by combining parallel execution with adaptive, training-free computation reuse. | 9 | 8 |
 | 2026-10-07 | [Beyond Masks and Trajectories: Flow-Guided Latent Action Injection for Stable Surgical Video Generation](https://arxiv.org/abs/2610.09800) | World Models: Latent Action Models; Video Generation and Understanding: Video Diffusion | FLAIR enables text-only generation of clinically plausible surgical videos by injecting flow-guided latent action representations into a frozen video model. | 7 | 7 |
 | 2026-10-07 | [TERRA: Learning Transportable Latent Actions through Temporal Effect Representation and Relational Alignment](https://arxiv.org/abs/2610.09509) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | TERRA learns transportable latent robot actions by representing temporal effects and aligning them across different initial states. | 9 | 8 |
