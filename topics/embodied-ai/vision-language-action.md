@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**602 papers total**
+**605 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [RawVLA: Embodied Neural Image Signal Processor For Robotic Manipulation](https://arxiv.org/abs/2609.37530) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | RawVLA makes RAW image processing adaptive for VLA-based robots, improving manipulation robustness under degraded imaging while preserving standard-condition performance. | 9 | 8 |
+| 2026-10-10 | [The Linear Representation Hypothesis for Vision-Language-Action Models](https://arxiv.org/abs/2609.30996) | Embodied AI: Vision-Language-Action | This paper extends the linear representation hypothesis to vision-language-action models by linking internal representations, action policies, and evolving physical quantities for probing and steering. | 9 | 9 |
+| 2026-10-10 | [DATAFARM: Distribution-Aligned Task and Motion Planning for Fine-Tuning Vision-Language-Action Models](https://arxiv.org/abs/2609.12316) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | DATAFARM makes task-and-motion-planning demonstrations useful for fine-tuning vision-language-action models by aligning them with the models’ pretraining behavior distribution. | 9 | 8 |
 | 2026-10-09 | [Learning from Runtime Feedback through Failure-Bank Self-Evolution for Vision-Language-Action Models](https://arxiv.org/abs/2609.39820) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | FailBank turns runtime safety feedback into persistent VLA policy improvements, increasing task success while reducing unintended contact costs. | 9 | 8 |
 | 2026-10-09 | [FineART: Fine-Grained Annotated Robotic Trajectory Dataset and Vision-Language-Action Model for Bimanual Manipulation](https://arxiv.org/abs/2609.36416) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | FineART pairs a densely subtask-annotated bimanual manipulation dataset with a vision-language-action model that uses predicted subtasks to improve long-horizon robot task execution and generalization. | 9 | 7 |
 | 2026-10-09 | [RecastVLA: From Past Interaction to Future Control with Adaptive Policy States](https://arxiv.org/abs/2609.32155) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | RecastVLA turns a vision-language-action policy’s past action generation into a persistent adaptive state that improves sequential robot manipulation without expert labels at deployment. | 9 | 8 |

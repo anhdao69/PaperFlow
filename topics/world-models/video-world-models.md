@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**251 papers total**
+**252 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [Artificial intelligence pathways from weather to climate](https://arxiv.org/abs/2610.09770) | World Models: Video World Models | AI weather models could extend to climate prediction, but only if they explicitly represent external forcings and remain reliable under unseen and counterfactual conditions. | 8 | 6 |
 | 2026-10-08 | [DreamTrue: Action-Faithful Robot World Model with Counterfactual Post-Training](https://arxiv.org/abs/2610.12468) | World Models: Video World Models, Interactive World Models | DreamTrue improves robot world-model video prediction by calibrating action conditions and using counterfactual, human-guided post-training for more faithful and physically plausible interactions. | 9 | 8 |
 | 2026-10-08 | [What 30,000 Hours of Ego-centric Video Does Not Teach](https://arxiv.org/abs/2610.12464) | Embodied AI: Learning from Human Videos; World Models: Video World Models | Scaling 30,000 hours of ego-centric video models human agents well, but object interactions remain substantially less faithful and require better training—not just more data. | 8 | 7 |
 | 2026-10-08 | [WorldGuide: Goal-Directed Video World Model for Procedural Task Execution](https://arxiv.org/abs/2610.12459) | World Models: Video World Models, Interactive World Models | WorldGuide performs long-horizon procedural video tasks by repeatedly planning an atomic action, generating its visual outcome, and adapting or stopping based on the result. | 8 | 8 |

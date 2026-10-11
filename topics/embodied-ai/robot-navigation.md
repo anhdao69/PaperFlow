@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**593 papers total**
+**595 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [Behavioral Persistence and Incomplete Functional Transfer of Co-evolved Communication in Evolutionary Robotics](https://arxiv.org/abs/2609.38527) | Embodied AI: Robot Navigation | A co-evolved communication protocol transferred from 2D simulation to physical robots only partially, with behavioral changes but no reliable task success. | 6 | 6 |
+| 2026-10-10 | [A Data-Driven Distributed Control Scheme: Learning Multi-Objective Agent-Based MPC for Path-Tracking](https://arxiv.org/abs/2609.12142) | Embodied AI: Robot Navigation | A learning-enhanced distributed MPC decouples multi-objective vehicle control while matching integrated MPC performance and substantially reducing computation time. | 6 | 6 |
 | 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
 | 2026-10-09 | [Learning Scene-Aware Humanoid Locomotion through 3D Clutter from Immersive Human Demonstrations](https://arxiv.org/abs/2609.21107) | Embodied AI: Robot Navigation | MTC learns collision-free, scene-aware humanoid locomotion through clutter by retargeting immersive human demonstrations into robot motions and training a locomotion policy. | 7 | 7 |
 | 2026-10-09 | [Hierarchical Belief Modeling for Zero-Shot Opponent Adaptation in Partially Observable Multi-Agent Navigation](https://arxiv.org/abs/2609.12422) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | HORIZON improves zero-shot adaptation in partially observable multi-agent navigation by combining hierarchical memory, opponent modeling, and information-seeking exploration. | 7 | 6 |

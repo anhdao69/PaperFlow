@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**1614 papers total**
+**1616 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [Training Parallel Speculative Draft Models by Directly Minimizing Expected Decoding Rounds](https://arxiv.org/abs/2610.10411) | Efficient AI: Efficient Attention | EDR directly trains parallel speculative draft models to minimize expected decoding rounds, improving token acceptance and performance across diverse tasks. | 9 | 8 |
+| 2026-10-10 | [Clustering-Based Balanced Sampling and Allocation with Data Parallelism for High-Performance Fine-Tuning](https://arxiv.org/abs/2609.12584) | Efficient AI; Language Foundation Models | CluSTER accelerates distributed LLM instruction tuning by selecting representative, balanced data while preserving model quality. | 7 | 7 |
 | 2026-10-09 | [Prism: Dynamic Sparse Attention for Native 2K Joint Video-Audio Generation Model Training](https://arxiv.org/abs/2610.05416) | Efficient AI: Efficient Attention | Prism enables native 2K joint video-audio model training with dynamic, content- and audio-aware sparse attention, achieving faster training and higher generation quality than full attention. | 8 | 8 |
 | 2026-10-09 | [RiPPLE: Cross-Space Performance Prediction from Early Training for Neural Architecture Search](https://arxiv.org/abs/2609.12418) | Efficient AI: Efficient Attention | RiPPLE predicts rankings across an entire NAS search space by extrapolating early training results from a small set of anchor architectures and propagating them through architecture features. | 6 | 7 |
 | 2026-10-08 | [One Block, Multiple Depths: Recurrent Vision Transformers with Depth-Programmed Experts](https://arxiv.org/abs/2610.12448) | Efficient AI | reViT reuses one recurrent Transformer block while depth-programmed expert mixtures recover depth-specific behavior, matching full-depth vision encoders with far fewer stored parameters. | 5 | 8 |

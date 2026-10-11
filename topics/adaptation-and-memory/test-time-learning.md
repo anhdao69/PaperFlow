@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**474 papers total**
+**475 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [Correlation-Guided Fast Machine Unlearning via Hessian Analysis](https://arxiv.org/abs/2609.12620) | Adaptation and Memory: Test-Time Learning | A Hessian-based, correlation-guided unlearning method accelerates removal of related training points while maintaining model utility and forgetting effectiveness. | 6 | 7 |
 | 2026-10-09 | [JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts](https://arxiv.org/abs/2610.00722) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | JEPA-TTT persistently adapts a pretrained latent world model during deployment, improving prediction and planning under changed environment dynamics. | 9 | 8 |
 | 2026-10-09 | [RecastVLA: From Past Interaction to Future Control with Adaptive Policy States](https://arxiv.org/abs/2609.32155) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | RecastVLA turns a vision-language-action policy’s past action generation into a persistent adaptive state that improves sequential robot manipulation without expert labels at deployment. | 9 | 8 |
 | 2026-10-09 | [Affective Agent: On-Device Personalized Intervention Reasoning for Wearable Systems](https://arxiv.org/abs/2609.12322) | Adaptation and Memory: Test-Time Learning | Affective Agent is an on-device, memory-personalized architecture that reasons about whether, when, and how wearables should intervene under uncertainty. | 7 | 7 |

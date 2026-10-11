@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**428 papers total**
+**429 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [From a Prompt to Repertoires: Evolving Functional REpertoires Enable LLM Continual Learning](https://arxiv.org/abs/2610.11373) | Adaptation and Memory: Continual and Online Learning | EFRE enables LLMs to continually learn new tasks by evolving a repertoire of specialized functions instead of relying on one increasingly overfit prompt. | 8 | 8 |
 | 2026-10-09 | [Stability-Plasticity Balance via Singular-Vector Selection in LLM Continual Learning](https://arxiv.org/abs/2610.11076) | Adaptation and Memory: Continual and Online Learning | SVC balances learning new domains and avoiding catastrophic forgetting by selectively updating the most beneficial singular-vector channels in an LLM. | 8 | 7 |
 | 2026-10-08 | [RoboRSI: Stable, efficient, and reusable robot self-evolution in complex real-world environments](https://arxiv.org/abs/2610.12424) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | RoboRSI enables robots to safely improve and reuse skills by attributing execution failures to specific task branches and validating targeted revisions. | 9 | 8 |
 | 2026-10-08 | [ViSkill: Reinforcing VLM Agents with Evolving Visual-Native Skills](https://arxiv.org/abs/2610.12403) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | ViSkill improves VLM agents by learning and reusing visual-native skill cards in a feedback loop that jointly strengthens skills and policies. | 6 | 7 |

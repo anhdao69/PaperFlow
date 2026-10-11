@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1015 papers total**
+**1017 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [From a Prompt to Repertoires: Evolving Functional REpertoires Enable LLM Continual Learning](https://arxiv.org/abs/2610.11373) | Adaptation and Memory: Continual and Online Learning | EFRE enables LLMs to continually learn new tasks by evolving a repertoire of specialized functions instead of relying on one increasingly overfit prompt. | 8 | 8 |
+| 2026-10-10 | [Correlation-Guided Fast Machine Unlearning via Hessian Analysis](https://arxiv.org/abs/2609.12620) | Adaptation and Memory: Test-Time Learning | A Hessian-based, correlation-guided unlearning method accelerates removal of related training points while maintaining model utility and forgetting effectiveness. | 6 | 7 |
 | 2026-10-09 | [DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents](https://arxiv.org/abs/2610.11707) | Adaptation and Memory: Embodied Memory | DeltaReplay enables mobile GUI agents to selectively reuse only the relevant parts of past trajectories, improving task success by up to 10.3 and 25.0 percentage points on AndroidWorld and SPA-Bench. | 5 | 6 |
 | 2026-10-09 | [Stability-Plasticity Balance via Singular-Vector Selection in LLM Continual Learning](https://arxiv.org/abs/2610.11076) | Adaptation and Memory: Continual and Online Learning | SVC balances learning new domains and avoiding catastrophic forgetting by selectively updating the most beneficial singular-vector channels in an LLM. | 8 | 7 |
 | 2026-10-09 | [JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts](https://arxiv.org/abs/2610.00722) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | JEPA-TTT persistently adapts a pretrained latent world model during deployment, improving prediction and planning under changed environment dynamics. | 9 | 8 |

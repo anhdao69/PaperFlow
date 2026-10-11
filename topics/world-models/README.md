@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**802 papers total**
+**803 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [Artificial intelligence pathways from weather to climate](https://arxiv.org/abs/2610.09770) | World Models: Video World Models | AI weather models could extend to climate prediction, but only if they explicitly represent external forcings and remain reliable under unseen and counterfactual conditions. | 8 | 6 |
 | 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
 | 2026-10-09 | [JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts](https://arxiv.org/abs/2610.00722) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | JEPA-TTT persistently adapts a pretrained latent world model during deployment, improving prediction and planning under changed environment dynamics. | 9 | 8 |
 | 2026-10-08 | [DreamTrue: Action-Faithful Robot World Model with Counterfactual Post-Training](https://arxiv.org/abs/2610.12468) | World Models: Video World Models, Interactive World Models | DreamTrue improves robot world-model video prediction by calibrating action conditions and using counterfactual, human-guided post-training for more faithful and physically plausible interactions. | 9 | 8 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**1585 papers total**
+**1588 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-10 | [SWARM: A Multilingual Human-Annotated Dataset for Russian Propaganda Detection in Search Engine Results](https://arxiv.org/abs/2609.12653) | Multimodal Foundation Models; Language Foundation Models | SWARM is a multilingual, human-annotated dataset showing that detecting Russian propaganda in search results requires analyzing document content—not merely blocking known sources. | 6 | 6 |
+| 2026-10-10 | [Direct Preference Density Alignment for Conversational Audio Equalization](https://arxiv.org/abs/2609.12607) | Multimodal Foundation Models | Direct Preference Density Alignment combines online GRPO with offline DPO without a learned reward model, enabling a 1.5B-parameter audio-equalization model to match a prompt-engineered GPT-4o mini baseline perceptually. | 7 | 8 |
+| 2026-10-10 | [Calibrated Ambiguity in Multimodal Language Models: Humans reach for cultural references, while models describe the picture](https://arxiv.org/abs/2609.12575) | Multimodal Foundation Models: Multimodal Large Language Models | In a Dixit-inspired task, multimodal language models produce overly specific, culturally flattened clues, unlike humans who use calibrated ambiguity and cultural references. | 5 | 6 |
 | 2026-10-09 | [GeoReform: Reflective Formalization Evolution for Multimodal Geometry Problem Solving](https://arxiv.org/abs/2610.12391) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | GeoReform improves multimodal geometry solving by iteratively refining how diagrams are formalized for reasoning, raising Qwen3VL-2B accuracy on Geometry3K from 42.0% to 56.0%. | 8 | 7 |
 | 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
 | 2026-10-09 | [Mid-Training Language Models on Raw Video](https://arxiv.org/abs/2610.11019) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Mid-training a language model on raw video by predicting visual tokens improves downstream video and image understanding while preserving text performance, without captions or text supervision. | 9 | 8 |
