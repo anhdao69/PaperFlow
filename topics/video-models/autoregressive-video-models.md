@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**40 papers total**
+**41 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-11 | [CORAL-KV: Compact Cross-Layer Prediction and Residual Coding for Autoregressive Video KV Caches](https://arxiv.org/abs/2610.12514) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | Coral-KV compresses autoregressive video KV caches by predicting later-layer states from earlier layers and quantizing only the residuals, reducing memory while preserving video quality. | 8 | 7 |
 | 2026-10-08 | [Connected Self Forcing: Beyond Local Learning in Video Autoregression](https://arxiv.org/abs/2610.12156) | Video Generation and Understanding: Autoregressive Video Models | Connected Self Forcing improves long-video autoregressive generation by training earlier context using gradient feedback from later predictions, while keeping inference unchanged. | 8 | 8 |
 | 2026-10-08 | [Memory Forcing: Attendable Mid-Horizon History for Streaming Video Generation](https://arxiv.org/abs/2610.11756) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | Memory Forcing prevents mid-horizon forgetting in few-step streaming video generation by preserving diverse past events within a fixed-size attention cache. | 9 | 8 |
 | 2026-10-08 | [Conditional Residual Prediction: Improving Autoregressive Video Diffusion without a Bidirectional Teacher](https://arxiv.org/abs/2610.11479) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Conditional Residual Prediction (CRP) reduces error propagation in autoregressive video diffusion, enabling strong causal generation without a bidirectional teacher. | 9 | 8 |

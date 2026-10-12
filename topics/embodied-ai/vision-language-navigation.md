@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**116 papers total**
+**117 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-11 | [Assisted Spatial Cognition Through Vision-Language Models](https://arxiv.org/abs/2609.12747) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | A mobile-camera system combines VLMs, LLMs, SLAM, and digital twins to build 3D scene understanding for more autonomous navigation by visually impaired and neuro-divergent users. | 9 | 8 |
 | 2026-10-09 | [AnchorVLN: Geometry-Anchored Vision-Language Grounding Reasoning for Open-Vocabulary Navigation](https://arxiv.org/abs/2609.12285) | Embodied AI: Vision-Language Navigation | AnchorVLN improves open-vocabulary indoor navigation by letting a VLM identify semantic targets while geometry tools handle metric spatial reasoning. | 9 | 8 |
 | 2026-10-08 | [SuperNav: An Agentic Navigation System for Any Task in Any Scene](https://arxiv.org/abs/2610.12126) | Embodied AI: Vision-Language Navigation, Robot Navigation | SuperNav enables a pretrained multimodal language model to perform general-purpose navigation by delegating motion execution to specialized tools instead of fine-tuning the model for navigation. | 9 | 8 |
 | 2026-10-08 | [Learning Language-Conditioned Traversability Representations for Adaptive Visual Navigation](https://arxiv.org/abs/2610.11622) | Embodied AI: Vision-Language Navigation, Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | LaTraNav enables adaptive visual navigation by combining language-conditioned traversability representations with asynchronous planning. | 8 | 7 |

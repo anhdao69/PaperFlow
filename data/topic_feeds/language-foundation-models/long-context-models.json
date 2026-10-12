@@ -1,6 +1,1296 @@
 {
   "days": [
     {
+      "date": "2026-10-11",
+      "paper_count": 6,
+      "papers": [
+        {
+          "abstract": "Long-context serving runs out of KV memory before the hardware reaches its useful throughput. HiSparse stores history in host memory and fetches only the selected entries, but it uses one cache budget at every load and does not handle draft-model speculative decoding such as DSpark and DFlash2. We present Adaptive DHiSparse, which supports speculative decoding over hierarchical sparse KV and adapts residency to load. It protects the required working set, retains additional history while GPU memory is spare, and recovers the rest through exact fused retrieval. DSpark and DFlash2 keep their proposal and acceptance rules: queries share missing-row retrieval, draft KV uses a window-bounded ring, and verification staging is reused across layer groups. At 100K context and concurrency 128, GLM-5.3 with DFlash2 delivers 793 output tokens/s per decode GPU, 1.45$\\times$ HiSparse and 1.27$\\times$ non-speculative adaptive serving. Held to the same latency bounds as HiSparse, it sustains up to 4$\\times$ the concurrency and 2.3 to 3.7$\\times$ the output, depending on the per-token bound. On DeepSeek-V4.1-Flash at 500K context and concurrency 512, Adaptive DHiSparse with DSpark delivers 1.85$\\times$ the output of resident serving with DSpark. In a load step, optional residency reduces host fetches from 14.2% to 1.4% of selected rows at low load and releases memory under pressure.",
+          "arxiv_id": "2610.13708",
+          "arxiv_url": "https://arxiv.org/abs/2610.13708",
+          "authors": [
+            "Naji Alazhar, Wassel Alazhar"
+          ],
+          "bullets": [
+            "Addresses KV-memory exhaustion and fixed cache budgets in long-context serving, including compatibility with DSpark and DFlash2.",
+            "Protects the required working set, uses spare GPU memory for extra history, and exactly retrieves missing entries from host memory under pressure.",
+            "Reuses speculative-decoding mechanisms such as shared missing-row retrieval, window-bounded draft-KV caching, and verification staging across layers.",
+            "At 100K context and concurrency 128, achieves 793 output tokens/s per GPU with GLM-5.3 and DFlash2; the abstract reports higher throughput and concurrency than HiSparse and non-speculative adaptive serving.",
+            "At low load, optional residency reduces host fetches from 14.2% to 1.4% of selected rows, while memory is released as load increases."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL",
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3 | One speculative round over the KV hierarchy. The drafter, conditioned on target features, extends the anchor D into a block, and the target model verifies its 𝐾 queries in one pass. Here E and F are accepted, G is rejected, and the correction G∗ opens the next round. (1) Draft KV is held in a ring bounded by the drafter’s window. (2) For each request and KV source, the resolver handles the top-𝑘 selections of the 𝐾 queries together, so each distinct missing row is copied from host once (a is selected by three queries, b by two), and each query still attends over its own selection. (3) Rows that do not fit the hot cache go to a staging arena, reused across layer groups after its readers finish and promoted rows are copied back. (4) The target writes the rows of all 𝐾 queries to the tail. Acceptance commits the computed rows of the anchor and the accepted drafts; the rejected row is dropped and G∗ has no row until the next forward. Host backup of the committed rows follows verification. Sizes are illustrative (𝐾 = 4, 𝑘 = 3).",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 496,
+              "image_path": "figures/2610.13708/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 954
+            },
+            {
+              "caption": "Figure 9 | Output and host fetches against the hot-cache budget. (a–d) Output per decode GPU and (e–h) share of selected rows fetched from host, for HiSparse and Adaptive HiSparse as 𝐵/𝑘 varies, without speculation. GLM-5.3 runs at 100K context on one prepared prefix, and DeepSeek-V4.1-Flash at 500K on 16 prepared prefixes.",
+              "figure_id": "figure-9-11",
+              "figure_number": "9",
+              "height": 513,
+              "image_path": "figures/2610.13708/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1000
+            },
+            {
+              "caption": "Figure 2 | One decode step and where its KV lives. The indexer reads index state and emits the top-𝑘 positions, colored here by where each row is found. The resolver first takes rows that are in the tail or in optional history (1), then scans the hot cache (2). A row found in none of them is copied from host DRAM into the hot cache (3) before attention reads the selected rows. Optional history holds imported history in reclaimable capacity of the KV pools, drawn schematically as one divider that moves with load. The hot cache and the tail are kept per request and KV source and are never lent. Host backup can be deferred while HBM is spare: a row without host backing stays protected on the GPU, so every missing row has host backing. A lookup skips steps 2 and 3 only when every selected row resolves in step 1. Row positions are illustrative.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 436,
+              "image_path": "figures/2610.13708/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 954
+            },
+            {
+              "caption": "Figure 1 | GLM-5.3 at 32K input and 8K output cap, using the input and output lengths of the HiSparse evaluation. (a) Generation throughput against offered concurrency, (b) mean TTFT on a logarithmic axis and (c) mean TPOT against generation throughput.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 340,
+              "image_path": "figures/2610.13708/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1007
+            },
+            {
+              "caption": "Figure 5 | DeepSeek-V4.1-Flash serving at 500K context. Panels and encoding as in Figure 4; filled markers add DSpark. HiSparse is our optimized port to DeepSeek-V4.1-Flash.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 340,
+              "image_path": "figures/2610.13708/figure-005.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1001
+            },
+            {
+              "caption": "Figure 4 | GLM-5.3 serving at 100K context. (a) Output throughput against offered concurrency, (b) mean TTFT and (c) mean TPOT against output throughput. Color gives the KV policy and filled markers add DFlash2. TTFT in (b) is on a logarithmic axis. Adaptive DHiSparse uses static blocks of 8 at C4 to C32, 6 at C64 and 4 at C128 and C256.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 340,
+              "image_path": "figures/2610.13708/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 988
+            },
+            {
+              "caption": "Figure 6 | Residency under a load step. GLM-5.3 at 100K context, without speculation: the same build with optional residency on and off, offered C16, then C256, then C16 for five minutes each; in-flight requests drain when the load falls. (a) Allocated request slots. (b) Coverage: ready optional history over eligible history. (c) Share of selected rows fetched from host. One-second counters shown in five-second bins. Per-phase request statistics are in Table A1.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 321,
+              "image_path": "figures/2610.13708/figure-007.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1016
+            },
+            {
+              "caption": "Figure 8 | What resolution costs. (a) GLM-5.3, verification width 8, batch 32 per GPU, 𝐵 = 4,096: resolver time against the unique host-miss payload of a call, for synthetic shared, partial and disjoint selections across the eight queries, with a cold or a retained cache. The dashed line is the least-squares fit, 49.4 GB/s (𝑅2 = 0.9992). One query’s top-𝑘 over the 32 requests of a call is 37.75 MB, so disjoint selections fetch eight such payloads and shared selections one. (b) DeepSeek-V4.1-Flash at 500K, single-query resolver with no host miss: time against hot-cache size for two batch sizes. The dotted line is the direct path at batch 8. (c) The same resolver at 𝐵 = 4,096 with and without 77 host misses per request. Error bars span the minimum and maximum of nine timings in (a) and the 10th to 90th percentiles in (b) and (c). These are isolated kernel measurements with synthetic selections and real payload copies.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 329,
+              "image_path": "figures/2610.13708/figure-008.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 987
+            },
+            {
+              "caption": "Figure 7 | Block size for DFlash2 at 100K context. (a) Emitted tokens per speculative round and (b) output throughput for static blocks of 4, 6 and 8 target queries at three offered loads.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 323,
+              "image_path": "figures/2610.13708/figure-009.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 996
+            },
+            {
+              "caption": "Figure 11 | Where step time goes. (a) GLM-5.3 with DFlash2 at C64: mean profiled round time for static blocks of 4 and 6, as an exclusive partition with a separate category for overlapping kernels. (b) DeepSeek-V4.1-Flash without speculation: resolver kernel work as a share of the step interval in serving profiles, at C16 (fill, middle, drain) and C512 under pressure.",
+              "figure_id": "figure-11-13",
+              "figure_number": "11",
+              "height": 252,
+              "image_path": "figures/2610.13708/figure-010.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 848
+            },
+            {
+              "caption": "Table 1 | Memory per session for GLM-5.3, in GiB. Required GPU memory at 32K and 100K context, and the full host backup at 100K. Model weights and shared workspaces are excluded. † excludes optional residency, which only uses HBM that is spare.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 175,
+              "image_path": "figures/2610.13708/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 423
+            },
+            {
+              "caption": "Table 3 | Retrieval volume of the two models. Per generated token and request. Ranges run from the smallest to the largest budget of the sweep, for HiSparse at C128. The hot cache is that of Adaptive HiSparse at the budgets of Section 4.1.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 202,
+              "image_path": "figures/2610.13708/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 454
+            },
+            {
+              "caption": "Table 2 | GLM-5.3 at 100K context, offered concurrency 128 and 256. Output is in tokens/s per GPU. Post-wave latency excludes the first 𝐶 submitted requests. Active is the mean number of requests decoding at once over the central half of a run.",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 202,
+              "image_path": "figures/2610.13708/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 837
+            }
+          ],
+          "first_seen_at": "2026-10-11T21:00:00-04:00",
+          "hero_figure": "figures/2610.13708/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.13708",
+          "relevance": 8,
+          "selection_reason": "Proposes load-adaptive hierarchical KV cache management with speculative decoding for long-context LLM serving, directly fitting efficiency and long-context topics.",
+          "summary_status": "generated",
+          "title": "Adaptive DHiSparse: Speculative Decoding over a Load-Adaptive KV Hierarchy",
+          "tldr": "Adaptive DHiSparse combines load-adaptive hierarchical sparse KV caching with speculative decoding to improve long-context serving throughput while preserving latency bounds.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "LLM-as-a-Service has become a dominant paradigm for accessing large language models without requiring local deployment. However, the process raises severe privacy concerns when user queries may include sensitive or confidential contexts. Differential privacy (DP) provides a principled approach to protecting such inputs, but existing DP inference methods are primarily designed for short- or moderate-context settings and struggle with million-token-scale inputs due to limited context capacity and severe utility degradation under DP perturbation. In this paper, we propose DP-MIND, a memory-guided framework that scales differentially private inference to million-token contexts. DP-MIND enables private long-context inference by locally perturbing the input and processing it chunk by chunk with a compact memory that preserves task-relevant information across the sequence. To make this memory robust to DP noise, we optimize the memory construction policy directly on perturbed inputs using reinforcement learning, guided by both final answer correctness and memory consistency. We further recover perturbation-corrupted answer spans through a local denoising module without exposing the original context to the external model. We provide theoretical privacy analysis of DP-MIND and further conduct extensive empirical analysis across multiple long-context benchmarks with context lengths up to the million-token scale, demonstrating that DP-MIND consistently outperforms existing DP and long-context inference baselines in both scalability and utility.",
+          "arxiv_id": "2610.13132",
+          "arxiv_url": "https://arxiv.org/abs/2610.13132",
+          "authors": [
+            "Zhihao Liu, Yitian Cheng, Shuang Liu, Rui Wen, Yuke Hu, Zhan Qin"
+          ],
+          "bullets": [
+            "Addresses privacy and utility challenges in LLM-as-a-Service for sensitive, million-token inputs.",
+            "Processes perturbed inputs chunk by chunk while a compact memory preserves task-relevant information across the sequence.",
+            "Uses reinforcement learning to make memory construction robust to differential privacy noise, optimizing correctness and memory consistency.",
+            "Applies local denoising to recover perturbation-corrupted answer spans without revealing the original context to the external model.",
+            "Theoretical and empirical analyses across long-context benchmarks show improved scalability and utility over existing DP and long-context inference baselines."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Results on RULER-HQA under ϵ = 7. Chunk-only inference uses chunk-wise memory processing and can scale to long contexts, but its utility drops quickly without RL-based memory optimization. DP-MIND achieves the best overall performance.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 223,
+              "image_path": "figures/2610.13132/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 748
+            },
+            {
+              "caption": "Figure 5: Impact of chunk size on utility and runtime. Larger chunks reduce inference time, while moderate chunk sizes generally maintain stronger EM and SubEM across long contexts.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 238,
+              "image_path": "figures/2610.13132/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 622
+            },
+            {
+              "caption": "Figure 3: Scaling performance on RULER-HQA with Qwen2.5-14B under ϵ = 7. DP-MIND consistently achieves the best overall performance, while the advantage of memory-based inference becomes more pronounced as the context length increases.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 256,
+              "image_path": "figures/2610.13132/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 498
+            },
+            {
+              "caption": "Figure 4: NIAH results under different privacy budgets and context lengths. Results are reported on Single, Multi-Key (M-Key), and Multi-Query (M-Query) with length ranging from 32k to 512k.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 210,
+              "image_path": "figures/2610.13132/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 790
+            },
+            {
+              "caption": "Table 1: Sub-EM comparison on RULER-HQA under different privacy budgets and context lengths. Qwen2.5-7B denotes the standard baseline, Sparse Attention denotes Longformer-style local slidingwindow attention (Beltagy et al., 2020), Long-Context Scaling denotes direct inference with Qwen2.57B-Instruct-1M (Yang et al., 2025), which is a variant designed for up to one million tokens of context, and Memory-Augmented denotes direct chunk-wise querying with recurrent memory propagation.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 369,
+              "image_path": "figures/2610.13132/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 768
+            },
+            {
+              "caption": "Table 3: Ablation study of DP-MIND on RULER-HQA under ε = 7, measured by SubEM. Chunkonly splits the context into chunks and queries them without memory propagation. RL MemoryAgent denotes the original memory-based inference method (Yu et al., 2026). DP-RL MemoryAgent is trained on DP-perturbed data. DP-MIND is our full method with local answer denoising. Numbers in parentheses denote improvements over RL MemoryAgent.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 296,
+              "image_path": "figures/2610.13132/table-006.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 672
+            },
+            {
+              "caption": "Table 4: F1 comparison on RULER-HQA under different privacy budgets and context lengths. All values are percentages.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 370,
+              "image_path": "figures/2610.13132/table-007.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 768
+            },
+            {
+              "caption": "Table 5: Exact Match (EM) comparison on RULER-HQA under different privacy budgets and context lengths. All values are percentages.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 371,
+              "image_path": "figures/2610.13132/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 768
+            },
+            {
+              "caption": "Table 9: NIAH results under different privacy budgets and context lengths. Results are reported on Single, Multi-Key (M-Key), and Multi-Query (M-Query) settings, where ↑ indicates higher is better.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 269,
+              "image_path": "figures/2610.13132/table-009.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 794
+            },
+            {
+              "caption": "Table 2: Robustness of DP-MIND under different DP perturbation mechanisms.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 291,
+              "image_path": "figures/2610.13132/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 364
+            },
+            {
+              "caption": "Table 6: F1 comparison on RULER-HQA for Qwen2.5-14B series under ϵ = 7.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 143,
+              "image_path": "figures/2610.13132/table-011.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 682
+            },
+            {
+              "caption": "Table 7: Exact Match (EM) comparison on RULER-HQA for Qwen2.5-14B series under ϵ = 7.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 144,
+              "image_path": "figures/2610.13132/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 660
+            },
+            {
+              "caption": "Table 8: Sub-Exact Match (Sub-EM) comparison on RULER-HQA for Qwen2.5-14B series under ϵ = 7.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 144,
+              "image_path": "figures/2610.13132/table-013.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 660
+            }
+          ],
+          "first_seen_at": "2026-10-11T21:00:00-04:00",
+          "hero_figure": "figures/2610.13132/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.13132",
+          "relevance": 7,
+          "selection_reason": "Memory-guided differentially private inference for million-token contexts, fitting long-context and LLM memory.",
+          "summary_status": "generated",
+          "title": "DP-MIND: Differentially private memory-guided Long context Inference",
+          "tldr": "DP-MIND enables differentially private inference over million-token contexts by combining input perturbation, chunk-wise memory, reinforcement-learned memory construction, and local answer denoising.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Corpus-level long-context reasoning requires agents to acquire and integrate evidence across document collections that exceed their context windows. Existing agent harnesses enable incremental access to these corpora, but acquired evidence and evolving conclusions often remain entangled in a growing interaction history. This implicit state management can lead to two coupled failure modes: unbounded exploration, where retrieval expands the interaction history without resolving decision-relevant information gaps, and evidence-state drift, where previously acquired evidence or subsequent corrections fail to inform the current conclusion. We present LongHarness, a model-agnostic harness that makes the interaction between acquired evidence and evolving conclusions explicit. Its core mechanism, Evidence-Conclusion Coevolution, uses unresolved conclusions to guide exploration toward missing information, while newly acquired evidence strengthens or revises the conclusions that directed the search. LongHarness couples this process with Evidence Lifecycle Management, which keeps accumulated evidence current and traceable throughout the interaction. Together, these mechanisms focus retrieval on remaining information needs and keep conclusions aligned with current evidence. We evaluate LongHarness on OfficeQA Pro V1 and V2, AA-LCR, and LongBench v2 using GLM-5.3-Flash and Qwen3.8-Flash. Compared with direct reasoning using the same backbone, LongHarness improves GLM-5.3-Flash exact match on OfficeQA Pro from 15.8% to 60.2% on V1 and from 4.4% to 61.1% on V2. Against state-of-the-art agent harnesses, it surpasses Claude Code by 12.0 percentage points on V1 and Codex by 18.9 points on V2. With Qwen3.8-Flash, LongHarness reaches 61.7% on V1, outperforming Claude Code by 8.3 points and Codex by 12.0 points.",
+          "arxiv_id": "2610.13075",
+          "arxiv_url": "https://arxiv.org/abs/2610.13075",
+          "authors": [
+            "Songtao Huang, Zhijie Zhong, Xiaohan He, Shuaiyu Zhang, Zhiyin Yu, Li Kang, Heng Zhou, Yutao Fan, Xiangchao Yan, Bo Zhang, Shiyang Feng"
+          ],
+          "bullets": [
+            "Targets unbounded exploration and evidence-state drift in corpus-level reasoning.",
+            "Uses Evidence–Conclusion Coevolution to direct retrieval toward unresolved information gaps and revise conclusions as evidence changes.",
+            "Adds Evidence Lifecycle Management to keep acquired evidence current and traceable.",
+            "Evaluated on OfficeQA Pro V1/V2, AA-LCR, and LongBench v2 with GLM-5.3-Flash and Qwen3.8-Flash.",
+            "On OfficeQA Pro, improves GLM-5.3-Flash exact match from 15.8% to 60.2% on V1 and 4.4% to 61.1% on V2; it also outperforms cited agent harnesses."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2 Overview of LongHarness. A single agent maintains an EvidenceBank and a Conclusion State while interacting with external documents. Evidence–Conclusion Coevolution uses unresolved conclusions to guide exploration and accepted evidence to revise those conclusions, while Evidence Lifecycle Management governs which statements remain active and preserves their source references throughout the interaction.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 577,
+              "image_path": "figures/2610.13075/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 968
+            },
+            {
+              "caption": "Figure 3 Distributions of model turns per question on OfficeQA Pro V1 and V2 with GLM-5.3-Flash. Each panel compares the two versions for one harness. Curves show kernel density estimates, and circles indicate medians.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 294,
+              "image_path": "figures/2610.13075/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 972
+            },
+            {
+              "caption": "Figure 1 Evidence lifecycle management for corpus-level long-context reasoning. The left panel illustrates how an agent loses an earlier constraint and continues searching, while LongHarness retains the evidence, uses an unresolved conclusion to guide retrieval, and revises its decision when new evidence arrives. The right panel compares exact accuracy (%) on OfficeQA Pro V1 and V2 for direct models and agent harnesses using GLM-5.3-Flash.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 1192,
+              "image_path": "figures/2610.13075/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1077
+            },
+            {
+              "caption": "Figure 4 Evidence lifecycle comparison with GLM-5.3-Flash on OfficeQA Pro V1. For the geometric mean of 80 monthly Treasury expenditures, Codex continues searching and omits a recognized correction; LongHarness updates its evidence and returns the reference answer, 4962.46 million dollars. Circles mark Codex’s incorrect input, correction, and final answer.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 382,
+              "image_path": "figures/2610.13075/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 964
+            },
+            {
+              "caption": "Table 1 Main results (%) across four benchmarks. OfficeQA Pro reports exact match (Ex.) and accuracy within 5% relative error (@5%), while AA-LCR and the LongBench v2 Long subset report Exact accuracy. Direct baselines use BM25 retrieval into a 256K-token window on OfficeQA Pro. “-” denotes direct reasoning without a harness, and “Avg.” averages the Exact scores across benchmarks. Each harness result is from one run per setting. Direct AA-LCR scores are reported by Artificial Analysis; harness AA-LCR scores are evaluated in this work.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 613,
+              "image_path": "figures/2610.13075/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 986
+            },
+            {
+              "caption": "Table 2 Ablation results with GLM-5.3-Flash on OfficeQA Pro V1 and V2. Ex. denotes exact-match accuracy (%), and ∆ denotes the decrease from full LongHarness in percentage points, computed before rounding.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 262,
+              "image_path": "figures/2610.13075/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 698
+            },
+            {
+              "caption": "Table 7 Interaction and reading limits used in the LongHarness evaluations.",
+              "figure_id": "table-7-3",
+              "figure_number": "7",
+              "height": 163,
+              "image_path": "figures/2610.13075/table-007.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 406
+            },
+            {
+              "caption": "Table 3 Success rates (%) for evidence retrieval, editing, and transformation on OfficeQA Pro V1 and V2 with GLM-5.3-Flash. Retrieval measures whether the required evidence is found, editing measures whether retrieved evidence is retained and adopted in the final decision, and transformation measures whether the adopted evidence yields an exactly correct answer. Editing and transformation rates are calculated only over cases that pass the preceding stages. Each harness is evaluated on one run per split.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 168,
+              "image_path": "figures/2610.13075/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 844
+            },
+            {
+              "caption": "Table 9 Three-run Exact accuracy with GLM-5.3-Flash. Run scores, means, and maxima are percentages. Standard deviations are in percentage points.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 663,
+              "image_path": "figures/2610.13075/table-009.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 636
+            },
+            {
+              "caption": "Table 4 Benchmark sizes, evidence access, and evaluation metrics. The AA-LCR document count covers all document sets, and LongBench v2 lengths are measured in words from the preprocessed contexts used in our experiments.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 161,
+              "image_path": "figures/2610.13075/table-010.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 614
+            },
+            {
+              "caption": "Table 5 LongHarness interaction interface, showing the purpose and returned observation of each operation.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 40,
+              "image_path": "figures/2610.13075/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1002
+            },
+            {
+              "caption": "Table 6 EvidenceBank operations for admitting, correcting, and retracting source-linked statements.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 40,
+              "image_path": "figures/2610.13075/table-012.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1002
+            },
+            {
+              "caption": "Table 8 Available operations and resource limits for direct reasoning and the agent harnesses in the main comparison.",
+              "figure_id": "table-8-13",
+              "figure_number": "8",
+              "height": 40,
+              "image_path": "figures/2610.13075/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 1002
+            }
+          ],
+          "first_seen_at": "2026-10-11T21:00:00-04:00",
+          "hero_figure": "figures/2610.13075/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.13075",
+          "relevance": 8,
+          "selection_reason": "Agentic harness for corpus-level long-context reasoning with explicit evidence-conclusion coevolution, directly relevant to long-context and memory management.",
+          "summary_status": "generated",
+          "title": "LongHarness: Advancing Agentic Reasoning over 100M-Token Corpora via Stateful Evidence Management",
+          "tldr": "LongHarness improves agentic reasoning over 100M-token corpora by explicitly coevolving conclusions with traceable evidence, substantially boosting long-context QA performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Processing a long sequence does not guarantee that distant information remains usable. As context grows, a fixed-size memory must retain many associations, connect information across positions, and preserve relevant structure without being overwhelmed by everything it observes. These are distinct requirements: a memory may store more information without representing the relationships needed for retrieval, and it may transport those relationships without preserving the ones that matter. Thus, the challenge is not simply extending context length, but constructing a memory that remains usable as context grows. We study this problem in large-chunk test-time training (TTT) and identify two basic failures: single-step writes accumulate interference, limiting capacity, while self-associative writes cannot form cross-position bindings. We introduce Double-Take (DT), which repairs these failures with multi-step unpinned updates and cross-position mixing, and adds bidirectional change-sensitive writes for selective retention. Capacity alone leaves end-to-end recall at the $0.10$ chance floor; adding binding raises it to $0.92$. Trained only on $32\\,\\mathrm{kb}$ genomic contexts, DT reaches $0.927$ AUROC at $131\\,\\mathrm{kb}$ and $0.856$ near $1\\,\\mathrm{Mb}$, while transferring zero-shot from human to mouse. Together, these results identify capacity, binding, and selectivity as three requirements for usable long-range memory.",
+          "arxiv_id": "2610.13073",
+          "arxiv_url": "https://arxiv.org/abs/2610.13073",
+          "authors": [
+            "Vakul Raghavan, Utkarsh Grover, Mingyang Mao, Chengwen Wang, Xiaomin Lin"
+          ],
+          "bullets": [
+            "The work argues that extending context is insufficient: memory must retain information, bind distant positions, and selectively preserve relevant structure.",
+            "It identifies interference from single-step writes and the inability of self-associative writes to form cross-position bindings.",
+            "Double-Take addresses these issues with multi-step unpinned updates, cross-position mixing, and bidirectional change-sensitive writes.",
+            "Adding binding improves end-to-end recall from the 0.10 chance floor to 0.92, while models trained on 32 kb genomic contexts generalize to 131 kb and nearly 1 Mb.",
+            "The method also transfers zero-shot from human to mouse, supporting the role of capacity, binding, and selectivity in long-range memory."
+          ],
+          "categories": [
+            "cs.LG",
+            "q-bio.GN",
+            "q-bio.QM"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: TAD-boundary context scaling. AUROC of frozen encoder features under a shared logistic-probe protocol from 2 kb to approximately 1Mb. Matched controls use the same encoder architecture, while HyenaDNA and Caduceus serve as external long-context references. “cap” denotes contexts beyond a model’s native limit. Values are means over three seeds (0.014 < std < 0.043).",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 378,
+              "image_path": "figures/2610.13073/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 820
+            },
+            {
+              "caption": "Figure 1: Double-Take architecture. Each block combines depthwise local convolution, slidingwindow attention, and a persistent fast-weight memory. Local attention handles nearby interactions, while DT carries information across chunks through a fixed-size memory updated during the forward pass.",
+              "figure_id": "figure-1-11",
+              "figure_number": "1",
+              "height": 229,
+              "image_path": "figures/2610.13073/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 818
+            },
+            {
+              "caption": "Figure 2: Capacity and binding are separate requirements for usable memory. a, Increasing associative load exposes the capacity limit of the stock and renormalized writes, while DT remains effective up to the memory-head dimension. b, Greater capacity alone does not enable cross-position retrieval; adding binding raises recall from chance to 0.92. c, Once formed, the relationship remains available over distance through the persistent memory, while the local attention path degrades sharply.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 246,
+              "image_path": "figures/2610.13073/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 804
+            },
+            {
+              "caption": "Figure 4: Selective transport of structural contrast. a, Boundary deletion changes the readout. b, Associative transport is not selective. c, The change-point write increases selectivity on controlled and real gnomAD variants. d, It also preferentially propagates rare constrained deletions.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 206,
+              "image_path": "figures/2610.13073/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 821
+            },
+            {
+              "caption": "Table 4: Encoder architecture. Architecture shared by the matched DT and stock-memory models.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 400,
+              "image_path": "figures/2610.13073/table-005.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 522
+            },
+            {
+              "caption": "Table 6: Comparison models. Matched controls preserve the DT architecture; public models serve as external long-context references.",
+              "figure_id": "table-6-19",
+              "figure_number": "6",
+              "height": 255,
+              "image_path": "figures/2610.13073/table-006.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 732
+            },
+            {
+              "caption": "Table 2: Zero-shot cross-species transfer. TAD-boundary AUROC from frozen human-pretrained encoders under a matched logistic-probe protocol. Human results use held-out chromosomes 8/9; mouse results use mm10 chromosomes 1-5 without adaptation. “cap” denotes context beyond a model’s native limit.",
+              "figure_id": "table-2-15",
+              "figure_number": "2",
+              "height": 222,
+              "image_path": "figures/2610.13073/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 614
+            },
+            {
+              "caption": "Table 11: Full TAD-boundary context sweep. AUROC of frozen encoder features under the common logistic-probe protocol. “cap” denotes contexts beyond a model’s native maximum length.",
+              "figure_id": "table-11-16",
+              "figure_number": "11",
+              "height": 296,
+              "image_path": "figures/2610.13073/table-008.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 606
+            },
+            {
+              "caption": "Table 15: Zero-shot human-to-mouse transfer. TAD-boundary AUROC from human-pretrained frozen encoders under the matched logistic-probe protocol. “cap” denotes context beyond a model’s native maximum length.",
+              "figure_id": "table-15-7",
+              "figure_number": "15",
+              "height": 224,
+              "image_path": "figures/2610.13073/table-009.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 614
+            },
+            {
+              "caption": "Table 5: Memory configurations. Matched variants share the encoder and differ only in the marked operations. MS: multi-step; FR: free retention; LM: local mixing; CP: change-point write.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 170,
+              "image_path": "figures/2610.13073/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 577
+            },
+            {
+              "caption": "Table 1: eQTL variant-effect prediction across nine GTEx tissues. AUROC across tissue-specific tasks. DT uses a frozen encoder with a logistic adapter; published baselines use their reported finetuning protocols. Bold denotes the best result in each column.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 181,
+              "image_path": "figures/2610.13073/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 779
+            },
+            {
+              "caption": "Table 3: Cross-species representation alignment. Normalized centroid distance from each species mean window embedding to the human embedding centroid, before and after test-time adaptation. Lower is closer; parentheses denote evolutionary distance from human in millions of years(M).",
+              "figure_id": "table-3-14",
+              "figure_number": "3",
+              "height": 109,
+              "image_path": "figures/2610.13073/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 560
+            },
+            {
+              "caption": "Table 7: Evaluation interfaces. The encoder remains frozen in the genomic downstream evaluations.",
+              "figure_id": "table-7-18",
+              "figure_number": "7",
+              "height": 213,
+              "image_path": "figures/2610.13073/table-013.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 790
+            },
+            {
+              "caption": "Table 8: Associative capacity. Recall as the number of simultaneously stored key–value pairs increases. The memory-head dimension is d = 32.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 109,
+              "image_path": "figures/2610.13073/table-014.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 506
+            },
+            {
+              "caption": "Table 9: Cross-position binding. End-to-end recall when the associated key and value occur at different positions. Chance performance is 0.10.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 110,
+              "image_path": "figures/2610.13073/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 252
+            },
+            {
+              "caption": "Table 10: Association transport over distance. Recall for locally created associations evaluated at near and far separations.",
+              "figure_id": "table-10-17",
+              "figure_number": "10",
+              "height": 88,
+              "image_path": "figures/2610.13073/table-016.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 340
+            },
+            {
+              "caption": "Table 13: Selectivity introduced by the change-point write. Boundary-to-random effect ratios on controlled boundaries and real structural variants.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 87,
+              "image_path": "figures/2610.13073/table-017.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 368
+            },
+            {
+              "caption": "Table 12: Selectivity of associative transport. Boundary-to-random effect ratio as perturbation distance increases.",
+              "figure_id": "table-12-5",
+              "figure_number": "12",
+              "height": 66,
+              "image_path": "figures/2610.13073/table-018.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 382
+            },
+            {
+              "caption": "Table 14: Selective transport under functional constraint. Probability that a rare constrained deletion produces a larger distal effect than a common tolerated variant.",
+              "figure_id": "table-14-8",
+              "figure_number": "14",
+              "height": 88,
+              "image_path": "figures/2610.13073/table-019.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 314
+            }
+          ],
+          "first_seen_at": "2026-10-11T21:00:00-04:00",
+          "hero_figure": "figures/2610.13073/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.13073",
+          "relevance": 9,
+          "selection_reason": "Proposes a novel mechanism (Double-Take) for long-context memory that addresses capacity, binding, and selectivity. This is directly relevant to LLM Memory and Long-Context Models.",
+          "summary_status": "generated",
+          "title": "Double-Take: Improving Capacity, Binding, and Selectivity In Long-Context Within Bidirectional Memory",
+          "tldr": "Double-Take makes long-context memory usable by combining capacity, cross-position binding, and selective retention in bidirectional test-time training.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models (LLMs) process long contexts, including long documents and lengthy conversations, but face token-level memory usage that increases proportionally to input length. Although model optimization and lossy prompt compression are widely used, these methods still fail to solve the long-context recall problem beyond pretrained and size-constrained context windows. This paper proposes a long-context recall method that maintains near-constant GPU memory usage as context length increases, without additional training. The main idea is to reconstruct facts using parameter activations in the LLM's feed-forward layers, which store residual vectors representing facts from the source document. Utilizing residual vectors allows the LLM to deterministically reconstruct query relevant facts without referencing the original document, preserving high fidelity and reducing memory usage without fine-tuning weights. Experimental results show that the proposed method enables answering single-fact questions in two-million-token story contexts where previous methods fail.",
+          "arxiv_id": "2609.12686",
+          "arxiv_url": "https://arxiv.org/abs/2609.12686",
+          "authors": [
+            "MyungHoon Ryu",
+            "XinYu Piao",
+            "Jong-Kook Kim"
+          ],
+          "bullets": [
+            "Targets long-context recall while avoiding memory growth proportional to input length.",
+            "Stores source-document facts in residual vectors from the LLM’s feed-forward layers.",
+            "Reconstructs query-relevant facts deterministically without rereading the original context or fine-tuning weights.",
+            "Answers single-fact questions in two-million-token story contexts, where prior methods fail.",
+            "Scope: demonstrated for single-fact question answering in long story contexts."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the proposed method in the two-phase flow. Memorization reads the source in bounded windows, extracts anchor key and value entries, encodes each value as a residual 𝛿 indexed by a model activation, and stores the indexed residual vector outside the frozen model before the source is discarded. At response time the question routes to stored entries, gated injection adds each selected 𝛿 at its assigned feed-forward layer, and the frozen model generates the answer from the reconstructed facts.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 438,
+              "image_path": "figures/2609.12686/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1056
+            },
+            {
+              "caption": "Figure 6: The proposed method’s exact match on the BABILong task and length grid. Cells pool every measured sample. At QA2 128K, each model uses seven samples and achieves 42.9%, whereas the length sweep uses three samples per model.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 425,
+              "image_path": "figures/2609.12686/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1056
+            },
+            {
+              "caption": "Figure 4: BABILong accuracy on one shared length axis. The shaded region lies beyond each model’s pretrained context window. The QA1 panel ends at 2M, and the QA2 panel ends at 1M.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 693,
+              "image_path": "figures/2609.12686/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1044
+            },
+            {
+              "caption": "Figure 3: The response phase in three stages. Stage 1 scores stored anchors against the question and selects the Sandra anchor after reciprocal-rank fusion. The selected anchor expands to Sandra (1). Stage 2 replays the entry-specific recall prompt, and the similarity gate injects the matching residual vector at its assigned layer to reconstruct the stored sentence. Stage 3 places reconstructed facts in source order in the answer prompt, and the frozen model generates the final answer.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 452,
+              "image_path": "figures/2609.12686/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1056
+            },
+            {
+              "caption": "Figure 7: Single-layer capacity at two fact representations. (a) is short key and numeric-code templates on Phi-3.5-mini. (b) is one shared pool of narrative sentences on three models, where solid lines show reconstruction fidelity on the left axis and dashed lines show recall EM on the right axis.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 346,
+              "image_path": "figures/2609.12686/figure-005.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1056
+            },
+            {
+              "caption": "Figure 2: The memorization phase in three stages. Stage 1 extracts query-agnostic fact records from the source and forms indexed anchor and value entries, and a fixed capacity budget caps the retained count. Stage 2 assigns each entry to a storage layer in round-robin order. Stage 3 replays an entry-specific recall prompt, records the activation key at the assigned layer, and optimizes the residual vector until the stored sentence can be regenerated. The entries and their routing index persist after the source tokens are discarded.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 404,
+              "image_path": "figures/2609.12686/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1056
+            },
+            {
+              "caption": "Figure 5: Measured peak GPU memory against input length. Solid full-context segments show measured runs, and dashed diamond continuations extrapolate KV cache growth toward the 80 GB device limit. The StreamingLLM series overlaps truncation.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 367,
+              "image_path": "figures/2609.12686/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1044
+            },
+            {
+              "caption": "Figure 8: Phi-3.5-mini accuracy against needle depth on the paraphrase set at three lengths.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 317,
+              "image_path": "figures/2609.12686/figure-008.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1056
+            },
+            {
+              "caption": "Table 2: RULERQApercentages on the threemodels, rounded to the nearest integer. Proposed-method sample counts appear in Table 1. Compression and closed book each use eight questions per model and length. A dash marks a full-context cell beyond the configured evaluation limit.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 500,
+              "image_path": "figures/2609.12686/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 410
+            },
+            {
+              "caption": "Table 1: Proposed-method sample counts in the length comparisons. Each entry lists Phi-3.5-mini, Qwen3-4B, and Llama-3.1-8B in that order. A dashmarks an unevaluated condition. The task heatmap pools additional samples in some cells. RULER compression and closed-book scores each use eight questions per model and length. Their sample counts differ from the proposed method at longer inputs.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 229,
+              "image_path": "figures/2609.12686/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 440
+            },
+            {
+              "caption": "Table 3: Proposed-method outcomes in the reported cells. BABILong rows cover 128K to 2M. RULER 16K is separated from the longer inputs and lies inside every pretrained context window. Extr., Rout., Recon., and Ans. denote the recorded extraction, routing, reconstruction, and answer-model failure categories. Each question contributes to one column. Failures from cells without surviving per-question records count as unattributed, and the released data lists the per-question labels. These questions remain included in 𝑛 and accuracy.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 127,
+              "image_path": "figures/2609.12686/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 476
+            },
+            {
+              "caption": "Table 4: Reconstructions for the same SQuAD question on Qwen3-4B at two input lengths. Fid. reports the sample-level mean of all routed facts. The conditions differ in anchor wording and storage load.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2609.12686/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 440
+            }
+          ],
+          "first_seen_at": "2026-10-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.12686/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.12686",
+          "relevance": 8,
+          "selection_reason": "Training-free long-context recall via residual vectors with near-constant memory; fits long-context and memory-efficient inference.",
+          "summary_status": "generated",
+          "title": "Residual Vector-based Reconstruction as Long-Context Recall Regardless of Context Window Size",
+          "tldr": "A training-free method uses feed-forward residual vectors to recall facts from contexts far beyond standard context-window limits with near-constant GPU memory.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Advanced large language models (LLMs) with long context windows can substantially reduce input truncation in document-level machine translation (DocMT). However, direct Doc2Doc translation remains prone to n-gram repetition and progressive quality degradation. A common remedy is to segment the document into finer-grained chunks. Nonetheless, conventional rule-based chunking approaches fail to handle the length distribution mismatch between training and inference. To address this, we introduce Fixed-Range Chunking (FRC), utilizing dynamic programming to partition documents into chunks within a predefined length interval. By consistently applying FRC during training and inference, the input documents of any length are mapped to the same length distribution, substantially reducing train-test length mismatch. Centered on FRC, we propose a lightweight dual-boundary matching algorithm for chunk alignment, alongside four distinct training strategies. Experimental results show that FRC-based fine-tuning substantially improves 7B LLMs over direct Doc2Doc fine-tuning and outperforms existing DocMT methods on IWSLT2017. We further construct GlobVDoc, a 10-language test set independent of mainstream DocMT training sources, and show that FRC improves out-of-distribution document translation.",
+          "arxiv_id": "2609.12674",
+          "arxiv_url": "https://arxiv.org/abs/2609.12674",
+          "authors": [
+            "Xiaotian Wang",
+            "Youyuan Lin",
+            "Zhan Shen",
+            "Hitomi Yanaka"
+          ],
+          "bullets": [
+            "Direct long-document translation can suffer from n-gram repetition and progressive quality loss.",
+            "Fixed-Range Chunking (FRC) uses dynamic programming to partition documents within a predefined length interval.",
+            "The same chunking distribution is applied during training and inference to reduce train–test mismatch.",
+            "The approach includes a lightweight dual-boundary chunk-alignment algorithm and four training strategies.",
+            "Experiments report gains for 7B LLMs on IWSLT2017 and improved out-of-distribution translation on the 10-language GlobVDoc test set."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: LTCR scores of various models on each dataset.",
+              "figure_id": "figure-2-20",
+              "figure_number": "2",
+              "height": 441,
+              "image_path": "figures/2609.12674/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 847
+            },
+            {
+              "caption": "Figure 1: Construction scheme of training data for four model configurations derived from a single document.",
+              "figure_id": "figure-1-21",
+              "figure_number": "1",
+              "height": 317,
+              "image_path": "figures/2609.12674/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 854
+            },
+            {
+              "caption": "Figure 3: Performance of the SEP-1c1t training strategy under the [256, 512] FRC setting across different model scales in the QWEN2.5 series.",
+              "figure_id": "figure-3-31",
+              "figure_number": "3",
+              "height": 325,
+              "image_path": "figures/2609.12674/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 458
+            },
+            {
+              "caption": "Figure 4: Pairwise one-sided significance tests on IWSLT2017 for QWEN2.5-7B and TOWER-7B. Each cell reports the paired document-bootstrap p-value for the hypothesis that the row system outperforms the column system in d-BLEU. Asterisks indicate p < 0.05.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 212,
+              "image_path": "figures/2609.12674/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 939
+            },
+            {
+              "caption": "Figure 9: Training Process of TOWER-based UNI-2c1t model.",
+              "figure_id": "figure-9-15",
+              "figure_number": "9",
+              "height": 442,
+              "image_path": "figures/2609.12674/figure-005.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 840
+            },
+            {
+              "caption": "Figure 11: A Case Study: Potential Exposure issues in the Source-MT Context Setting.",
+              "figure_id": "figure-11-26",
+              "figure_number": "11",
+              "height": 571,
+              "image_path": "figures/2609.12674/figure-006.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 950
+            },
+            {
+              "caption": "Figure 8: Training- and test-time (source-side) input length distributions. The x-axis denotes input length, and the y-axis denotes the proportion of documents or chunks in each length bin. Lengths are measured using the TOWER’s tokenizer. Training statistics are computed on DocBlocks, and test statistics are computed on IWSLT2017 en-xx.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 497,
+              "image_path": "figures/2609.12674/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 946
+            },
+            {
+              "caption": "Figure 10: Results of Source-Only Context v.s. Source-MT Context on the IWSLT2017 dataset. “RT” denotes runtime. The marker size is directly proportional to the decoding speed and inversely proportional to the runtime.",
+              "figure_id": "figure-10-2",
+              "figure_number": "10",
+              "height": 342,
+              "image_path": "figures/2609.12674/figure-008.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 931
+            },
+            {
+              "caption": "Figure 13: LTCR results of different unit selections across three models on BWB zh-en.",
+              "figure_id": "figure-13-17",
+              "figure_number": "13",
+              "height": 151,
+              "image_path": "figures/2609.12674/figure-009.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 450
+            },
+            {
+              "caption": "Figure 6: Autocorrelation distributions of all datasets across all lag values k.",
+              "figure_id": "figure-6-24",
+              "figure_number": "6",
+              "height": 251,
+              "image_path": "figures/2609.12674/figure-010.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 439
+            },
+            {
+              "caption": "Figure 7: Comparison of QWEN2.5-7B-INSTRUCT trained with SEP-1c1t on samples derived from chunk alignment using SentenceBLEU scores v.s. LaBSEbased cosine similarity.",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 287,
+              "image_path": "figures/2609.12674/figure-011.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 442
+            },
+            {
+              "caption": "Figure 14: Pairwise one-sided significance tests on BWB zh-en and GlobVDoc en-xx for QWEN2.5-7B and TOWER7B. Each cell reports the paired document-bootstrap p-value for the hypothesis that the row system outperforms the column system in d-BLEU. Asterisks indicate p < 0.05.",
+              "figure_id": "figure-14-9",
+              "figure_number": "14",
+              "height": 212,
+              "image_path": "figures/2609.12674/figure-012.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 939
+            },
+            {
+              "caption": "Figure 5: The results of d-ACF (×100) on four datasets.",
+              "figure_id": "figure-5-23",
+              "figure_number": "5",
+              "height": 443,
+              "image_path": "figures/2609.12674/figure-013.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 443
+            },
+            {
+              "caption": "Table 1: Translation results of different models under various decoding formats. Decoding formats that are consistent with the model training setup are highlighted in bold. For the four evaluation metrics, the best performance achieved under the same backbone model is also shown in bold. For each individual model, comparisons across different decoding formats are indicated by underlining the better-performing results.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 741,
+              "image_path": "figures/2609.12674/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 941
+            },
+            {
+              "caption": "Table 2: Translation Benchmark on GlobVDoc. For the two evaluation metrics, the best performance achieved under the same backbone model is shown in bold. Large-scale LLMs utilize d2d decoding, while original model follows a 0c1t format. Other fine-tuned models utilize decoding format corresponds to the training configuration. {GRAFT, DELTA}-{Q,G} denote using QWEN3-30B-A3B-INSTRUCT and GPT-4.1-mini as backbone models, respectively.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 368,
+              "image_path": "figures/2609.12674/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 941
+            },
+            {
+              "caption": "Table 3: SEP-1c1t v.s. PE-based methods. IWSLT values denote the average of en-xx and xx-en. Abbreviations: R. (RoPE), S. (SHAPE), U. (UnifPE) and L. (Linear PI). NRR denotes the n-gram repetition rate.",
+              "figure_id": "table-3-19",
+              "figure_number": "3",
+              "height": 195,
+              "image_path": "figures/2609.12674/table-016.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 458
+            },
+            {
+              "caption": "Table 4: Comparison of various chunking strategies. Bold denotes the highest score achieved on each dataset, while underline indicates the best performance for each SEP model on each dataset.",
+              "figure_id": "table-4-29",
+              "figure_number": "4",
+              "height": 248,
+              "image_path": "figures/2609.12674/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 461
+            },
+            {
+              "caption": "Table 5: Results of TOWER-based SEP models trained on fixed ranges S, M, and L, corresponding to [0, 256], [256, 512], and [512, 768], respectively. Results are reported as d-BLEU / LTCR. ∗-0 / ∗-1 denote 0c1t / 1c1t.",
+              "figure_id": "table-5-30",
+              "figure_number": "5",
+              "height": 192,
+              "image_path": "figures/2609.12674/table-018.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 458
+            },
+            {
+              "caption": "Table 7: Statistics of GlobVDoc Dataset. |D| represents the document count, |S| represents the total sentence count, and |W| indicates the total number of words in both the source language (English) and the corresponding target language (the second language listed in the Language Pair).",
+              "figure_id": "table-7-25",
+              "figure_number": "7",
+              "height": 267,
+              "image_path": "figures/2609.12674/table-019.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 837
+            },
+            {
+              "caption": "Table 19: Comparison among original, full-parameter fine-tuned SEP-2c1t and LoRA fine-tuned SEP-2c1t models. For each evaluation metric, the best performance is shown in bold.",
+              "figure_id": "table-19-7",
+              "figure_number": "19",
+              "height": 328,
+              "image_path": "figures/2609.12674/table-020.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 939
+            },
+            {
+              "caption": "Table 8: Statistics of commonly used document-level test datasets. |D| denotes the number of documents, |S| denotes the number of sentences, |W| denotes the total number of words in English, and |W|/|D| denotes the average number of words per document. For IWSLT2017, the statistics reported in the table only include en↔ {de, fr, it, ko, nl, zh} language pairs used in this work.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 333,
+              "image_path": "figures/2609.12674/table-021.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 825
+            },
+            {
+              "caption": "Table 11: The number of training data utilized for each model configuration.",
+              "figure_id": "table-11-5",
+              "figure_number": "11",
+              "height": 321,
+              "image_path": "figures/2609.12674/table-022.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 372
+            },
+            {
+              "caption": "Table 12: Hyperparameter configuration to fine-tune models.",
+              "figure_id": "table-12-11",
+              "figure_number": "12",
+              "height": 267,
+              "image_path": "figures/2609.12674/table-023.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 458
+            },
+            {
+              "caption": "Table 9: Outlier sample statistics across different similarity approaches and tokenizers. L denotes chunk alignment methods using the QWEN2.5-7B-INSTRUCT tokenizer paired with either LaBSE embedding cosine similarity. And B denotes nllb-200-distilled-600M translation based sentence-BLEU as the similarity score, respectively. Q and T represent the use of QWEN2.5-7B-INSTRUCT and TOWER-7B-INSTRUCT tokenizers while maintaining LaBSE-based cosine similarity as the alignment criterion. “en↔xx” encompasses bidirectional data, the length ratio is uniformly calculated for all pairs as the length of the non-English language relative to the English text.",
+              "figure_id": "table-9-32",
+              "figure_number": "9",
+              "height": 198,
+              "image_path": "figures/2609.12674/table-024.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 950
+            },
+            {
+              "caption": "Table 6: Comparison of different training and deployment configurations. The values ∗ / ∗ denote d-BLEU and d-COMET, respectively. Within each dataset, the highest score is highlighted in bold.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 210,
+              "image_path": "figures/2609.12674/table-025.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 941
+            },
+            {
+              "caption": "Table 17: The results obtained with different compositions of FRC units. The translation directions for the three datasets are IWSLT2017 en-xx, BWB zh-en, and GlobVDoc en-xx. Increases and decreases are calculated relative to the “line-break” within each respective model. Significant changes in performance are emphasized in bold. All the three models are TOWER-based.",
+              "figure_id": "table-17-18",
+              "figure_number": "17",
+              "height": 227,
+              "image_path": "figures/2609.12674/table-026.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 461
+            },
+            {
+              "caption": "Table 16: Distribution of broken and repetition chunks across languages on the IWSLT en-xx dataset (TOWERbased SEP-1c+1t model.",
+              "figure_id": "table-16-3",
+              "figure_number": "16",
+              "height": 189,
+              "image_path": "figures/2609.12674/table-027.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 458
+            },
+            {
+              "caption": "Table 10: Sample statistics across different fixed ranges. Data samples were curated using LaBSE-based cosine similarity for chunk alignment and processed with the TOWER-7B-INSTRUCT tokenizer. The sequence ∗ → ∗ → ∗ denotes the data corresponding to fixed-range intervals of [0, 256], [256, 512], and [512, 768], respectively.",
+              "figure_id": "table-10-33",
+              "figure_number": "10",
+              "height": 267,
+              "image_path": "figures/2609.12674/table-028.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 950
+            },
+            {
+              "caption": "Table 20: The metadata for the documents within the GlobVDoc dataset includes the document ID, source and translated titles, source and target languages, and the names of authors and translators.",
+              "figure_id": "table-20-22",
+              "figure_number": "20",
+              "height": 1177,
+              "image_path": "figures/2609.12674/table-029.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 981
+            },
+            {
+              "caption": "Table 18: Further investigation and analysis of unit selecetion results for IWSLT en-xx. NRR denotes the ngram repetition rate, and Prop. represents the proportion of problematic document lengths.",
+              "figure_id": "table-18-16",
+              "figure_number": "18",
+              "height": 312,
+              "image_path": "figures/2609.12674/table-030.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 461
+            },
+            {
+              "caption": "Table 13: d-BLEU scores under original context (Orig-C) and randomly replaced context (RDM-C). Numbers in parentheses denote the absolute performance drop after context replacement. Results are averaged over five runs.",
+              "figure_id": "table-13-27",
+              "figure_number": "13",
+              "height": 229,
+              "image_path": "figures/2609.12674/table-031.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 827
+            },
+            {
+              "caption": "Table 14: d-BLEU on sampled training instances under different decoding formats and after random context replacement. Percentages denote the relative performance drop compared with the corresponding original score.",
+              "figure_id": "table-14-28",
+              "figure_number": "14",
+              "height": 175,
+              "image_path": "figures/2609.12674/table-032.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 846
+            },
+            {
+              "caption": "Table 15: Comparison among 1c1t, 1c+1t, 2c1t, and 2c+1t across datasets. “Base” and “c+” represent 1c1t and 1c+1t, respectively. ∆1 denotes 1c+1t − 1c1t, and ∆2 denotes 2c+1t − 2c1t. The better result for each metric on each dataset in the comparison is highlighted in bold.",
+              "figure_id": "table-15-4",
+              "figure_number": "15",
+              "height": 153,
+              "image_path": "figures/2609.12674/table-033.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 945
+            }
+          ],
+          "first_seen_at": "2026-10-11T21:00:00-04:00",
+          "hero_figure": "figures/2609.12674/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.12674",
+          "relevance": 5,
+          "selection_reason": "Fixed-range chunking for length-consistent document-level MT with LLMs; relevant to long-context processing.",
+          "summary_status": "generated",
+          "title": "Doc2FRC: Length-Consistent Document-Level Machine Translation via Fixed-Range Chunking",
+          "tldr": "Doc2FRC improves document-level machine translation by consistently chunking documents into fixed-length ranges during training and inference, reducing length mismatch and translation degradation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-08",
       "paper_count": 6,
       "papers": [
@@ -24907,5 +26197,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 117
+  "total_paper_count": 123
 }

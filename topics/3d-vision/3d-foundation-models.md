@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**293 papers total**
+**297 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-11 | [Designing Protein Structures from Natural Language](https://arxiv.org/abs/2610.13917) | Multimodal Foundation Models: Multimodal Large Language Models; 3D Vision: 3D Foundation Models | Prompteina enables natural-language-guided generation of protein structures and produces designs that better satisfy structural and functional goals, including experimentally validated binders. | 8 | 8 |
+| 2026-10-11 | [GeoGR: Spatial-Semantic Token Compression and Group Routing for Efficient 3D VLMs](https://arxiv.org/abs/2610.13035) | Multimodal Foundation Models: Multimodal Large Language Models; 3D Vision: 3D Foundation Models; Efficient AI: Token Pruning and Eviction | GeoGR makes multi-view 3D vision-language models substantially faster by compressing redundant scene tokens and selectively routing visual tokens through LLM layers while preserving most performance. | 8 | 8 |
+| 2026-10-11 | [Zebra3D: Efficient Hybrid Foundation Models For Scalable 3D Reconstruction](https://arxiv.org/abs/2610.12727) | 3D Vision: 3D Foundation Models; Efficient AI: Efficient Attention | Zebra3D makes pretrained 3D reconstruction models scalable to many views by replacing dense attention with layerwise hybrid sparse-linear attention, achieving up to 7.1× speedup with limited accuracy loss. | 8 | 8 |
+| 2026-10-11 | [Geometric-to-Semantic Spherical Transfer Learning for Cortical Sulci Labeling](https://arxiv.org/abs/2609.12627) | 3D Vision: 3D Foundation Models | A spherical transfer-learning framework uses large-scale unlabeled cortical geometry to improve labeling of rare and variable sulci when expert annotations are scarce. | 5 | 7 |
 | 2026-10-08 | [Pumpire: Unified Benchmark for Metric Distance Estimation](https://arxiv.org/abs/2610.12423) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Pumpire is a benchmark for directly evaluating how accurately 3D foundation models estimate physical point-to-point distances from reconstructed image or video geometry. | 8 | 7 |
 | 2026-10-08 | [GenIA: Generative Reconstruction with Test-Time Input Alignment](https://arxiv.org/abs/2610.12388) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Test-Time Learning | GenIA aligns a generative 3D model with observed geometry, appearance, and pose at test time—without retraining—to improve reconstruction from sparse, monocular, and dynamic inputs. | 7 | 7 |
 | 2026-10-08 | [Slot3R: Set-Associative Spatial Memory for Streaming 3D Reconstruction](https://arxiv.org/abs/2610.12282) | 3D Vision: 3D Foundation Models; Adaptation and Memory: Embodied Memory | Slot3R improves streaming 3D reconstruction by allowing multiple distinct states to share a spatial memory address instead of prematurely fusing them. | 8 | 8 |

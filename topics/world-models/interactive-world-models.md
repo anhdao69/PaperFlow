@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**407 papers total**
+**411 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-11 | [SmolWAM: A Latent World-Action Model for Robotic Manipulation on Edge Devices](https://arxiv.org/abs/2610.13740) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Efficient AI | SmolWAM compresses a large world-action model into an edge-friendly latent model that rapidly predicts robot actions and future scene observations. | 9 | 7 |
+| 2026-10-11 | [Beyond Successful Robot Demonstrations: Learning from Human Interactions and Modeling Failure Dynamics](https://arxiv.org/abs/2610.13522) | Embodied AI: Learning from Human Videos; World Models: Interactive World Models | HF-WM improves robotic world modeling by learning from human interactions and synthesizing failure dynamics from perturbed successful demonstrations. | 9 | 9 |
+| 2026-10-11 | [What Visual Representations Do World Action Models Need?](https://arxiv.org/abs/2610.13024) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | A controlled study finds that strong general-purpose visual representations, especially with channel-wise joint prediction, substantially improve World Action Models for manipulation. | 8 | 7 |
+| 2026-10-11 | [LeWAM: End-to-End World and Action Modeling with JEPAs](https://arxiv.org/abs/2610.12818) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | LeWAM is an end-to-end JEPA for control that jointly learns latent dynamics and action generation, enabling both direct policy execution and fast planning. | 9 | 8 |
 | 2026-10-09 | [AffordDrive3D: Affordance-Aware World-Action Modeling with Spatial Understanding](https://arxiv.org/abs/2610.11060) | Embodied AI: Robot Navigation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | AffordDrive3D improves autonomous-driving trajectory planning by jointly predicting future driving affordances and scene geometry. | 9 | 7 |
 | 2026-10-09 | [JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts](https://arxiv.org/abs/2610.00722) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | JEPA-TTT persistently adapts a pretrained latent world model during deployment, improving prediction and planning under changed environment dynamics. | 9 | 8 |
 | 2026-10-08 | [DreamTrue: Action-Faithful Robot World Model with Counterfactual Post-Training](https://arxiv.org/abs/2610.12468) | World Models: Video World Models, Interactive World Models | DreamTrue improves robot world-model video prediction by calibrating action conditions and using counterfactual, human-guided post-training for more faithful and physically plausible interactions. | 9 | 8 |

@@ -1,6 +1,297 @@
 {
   "days": [
     {
+      "date": "2026-10-11",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "Autoregressive video diffusion models maintain a growing attention key-value (KV) cache, making memory a key bottleneck for long video generation. Recently, clustering-based quantization has emerged as an effective method to compress video KV caches by grouping similar key and value vectors then quantizing residual errors. However, when later frames attend to the compressed history, small reconstruction errors can compound as the video grows. Beyond the within-layer similarity exploited by clustering, we find strong dependencies across cache layers in video models. This motivates Coral-KV - Calibrated Offline, Residual-coded, and Adapted Locally - a KV-cache compression framework that uses cache states in each layer to predict keys and values in subsequent layers, then quantizes the remaining prediction residuals. We construct compact block-diagonal-plus-low-rank (block-DPLR) predictors: block-diagonal components model channel relationships within each attention head, while a global low-rank term models dependencies between heads. Coral-KV exposes a flexible fidelity-memory trade-off: it can reuse its predictors across videos or refit lightweight block-diagonal predictors to the current video for higher fidelity. Across extensive evaluations on both HY-WorldPlay and MAGI-1, our reusable configuration improves PSNR over QVG-4 by 0.32 dB and 4.95 dB, respectively, while using 48% and 37% less cache memory. Against QVG-Pro, our video-adapted configuration improves MAGI-1 PSNR by 3.77 dB while using 33.7% less cache memory. Coral-KV also maintains higher reconstruction fidelity over extended generation and reduces temporal discontinuities while retaining comparable generation latency.",
+          "arxiv_id": "2610.12514",
+          "arxiv_url": "https://arxiv.org/abs/2610.12514",
+          "authors": [
+            "Albert Ge, Akash Haridas, Utkarsh Saxena, Ruijing Yang, Ian Colbert, Frederic Sala, Vikram Appia, Emad Barsoum"
+          ],
+          "bullets": [
+            "Addresses growing KV-cache memory and error accumulation in long video diffusion generation.",
+            "Uses block-diagonal-plus-low-rank predictors to capture within-head channel and across-head dependencies.",
+            "Supports reusable predictors for efficiency or lightweight video-specific refitting for higher fidelity.",
+            "Improves PSNR while reducing cache memory versus QVG-4 and QVG-Pro across HY-WorldPlay and MAGI-1.",
+            "Maintains fidelity over extended generation and reduces temporal discontinuities with comparable latency."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: CORAL-KV improves the memory–quality frontier. (a) average PSNR versus total compressed KV storage across 32 prompts per model, using the same storage accounting as in Table 1; stars mark our selected reusable codec. (b) Qualitative comparisons of BF16, QVG-1, QVG-Pro, and reusable CORAL-KV on matched frames.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 732,
+              "image_path": "figures/2610.12514/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 965
+            },
+            {
+              "caption": "Figure 2: Cross-layer prediction and quantization-boundary effects. (a) Linear maps predict current-layer keys from previous-layer keys and current-layer values from previous-layer values. Adding current-layer keys improves value prediction. The key and augmented value maps explain over 80% of the variance on both models. (b) We compare reconstruction MSE from predictors and centroids on the same keys and values before residual quantization. Bars show relative MSE normalized to the centroid result. Predictors significantly reduce reconstruction MSE compared with centroids. (c) QVG fits video-specific centroids online when a cache block reaches its token limit, whereas CORAL-KV reuses offline-calibrated predictors. The yellow box highlights facial distortion in QVG’s first frame generated from compressed history; visible degradation also appears in the clothing and ski pole.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 489,
+              "image_path": "figures/2610.12514/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 958
+            },
+            {
+              "caption": "Figure 3 illustrates how Coral-KV reconstructs each layer of a compressed cache block. Once a block is full, we encode its KV states and retain quantized codes and scales. When later chunks attend to that block, we reconstruct its keys and values layer by layer. At layer ℓ > 0, a tokenwise linear map PK ℓ predicts keys from reconstructed keys at layer ℓ − 1. A second map PV ℓ predicts values from reconstructed keys at layer ℓ and reconstructed values at layer ℓ−1. Section 4.2 gives their compact parameterization. We augment both predictions with quantized residuals, where QR denotes the residual quantizer formally defined in Appendix B.1:",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 408,
+              "image_path": "figures/2610.12514/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 908
+            },
+            {
+              "caption": "Figure 3: CORAL-KV reconstruction. At layer ℓ > 0, reconstructed cache states from layer ℓ−1 feed the predictors. The key predictor maps K̂ℓ−1 to K̃ℓ; adding the quantized key residual gives K̂ℓ. The value predictor maps [K̂ℓ, V̂ℓ−1] to Ṽℓ; adding the quantized value residual gives V̂ℓ. Both predictors use a block-diagonal component and a rank-r low-rank component.",
+              "figure_id": "figure-3-24",
+              "figure_number": "3",
+              "height": 408,
+              "image_path": "figures/2610.12514/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 908
+            },
+            {
+              "caption": "Figure 4: Predictor-structure ablation. Block-DPLR outperforms block-diagonal and parameter-matched low-rank predictors. Reusable block-DPLR shares offline predictors across videos. Video-adapted block-DPLR keeps its lowrank factors fixed and refits block-diagonal terms for each filled cache block, improving fidelity at higher memory cost. The dense control is also fitted offline.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 370,
+              "image_path": "figures/2610.12514/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 950
+            },
+            {
+              "caption": "Figure 5: (a–b) Median absolute excess kurtosis across layers and two prompts; lower is closer to a unit Gaussian. Hn transforms each non-overlapping group of n residual channels independently. Wider transforms have model-dependent effects beyond H64. (c) Comparison at one shared scale per 64 values. “Variation” is the standard deviation divided by the mean of the squared magnitudes of the four 16-value subblocks; lower values indicate more uniform magnitudes.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 255,
+              "image_path": "figures/2610.12514/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 930
+            },
+            {
+              "caption": "Figure 9: EDEN-2 codebook and quantizer selection. (a) The 16 EDEN-2 reconstruction points over representative H64-transformed residual pairs from MAGI-1. (b–c) On the 32-prompt selection set, crossing H16/H64 with scalar/EDEN-2 assignment at a fixed 64-value scale group shows the highest PSNR for H64/EDEN-2 on both models.",
+              "figure_id": "figure-9-2",
+              "figure_number": "9",
+              "height": 299,
+              "image_path": "figures/2610.12514/figure-007.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 910
+            },
+            {
+              "caption": "Figure 6: Cross-layer prediction across depth. The full layerwise measurements summarized in Figure 2(a). Lines and shading show the mean and range over three held-out cache dumps.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 319,
+              "image_path": "figures/2610.12514/figure-008.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 925
+            },
+            {
+              "caption": "Figure 7: Boundary stability over long-horizon generation. BF16-normalized QBD at all eight cache-quantization boundaries on the 32-prompt HY-WorldPlay selection set. Lines are prompt means and bands are 95% bootstrap intervals. Lower is better.",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 309,
+              "image_path": "figures/2610.12514/figure-009.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 913
+            },
+            {
+              "caption": "Figures 11–12 show illustrative examples of the quality difference between QVG-Pro and video-adapted Coral-KV, alongside matched BF16 references.",
+              "figure_id": "figure-11–12-8",
+              "figure_number": "11–12",
+              "height": 569,
+              "image_path": "figures/2610.12514/figure-010.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 767
+            },
+            {
+              "caption": "Figure 13: HY-WorldPlay first-boundary reconstruction. BF16, QVG, and CORAL-KV at frames 28–30. The yellow box marks QVG’s largest local fidelity gap at frame 29; tile labels give PSNR versus BF16.",
+              "figure_id": "figure-13-21",
+              "figure_number": "13",
+              "height": 582,
+              "image_path": "figures/2610.12514/figure-011.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 743
+            },
+            {
+              "caption": "Figure 14: MAGI-1 first-boundary reconstruction. BF16, QVG, and CORAL-KV at frames 23–25. The yellow box marks QVG’s largest local fidelity gap at frame 24; tile labels give PSNR versus BF16.",
+              "figure_id": "figure-14-17",
+              "figure_number": "14",
+              "height": 582,
+              "image_path": "figures/2610.12514/figure-012.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 743
+            },
+            {
+              "caption": "Figure 10: MAGI-1 fidelity over 192 decoded frames. Across all 355 held-out prompts, (a) prompt-mean PSNR and 95% bootstrap bands are measured against matched BF16 generation for QVG-Pro and the two reported CORAL-KV configurations; (b) shows paired CORAL-minus-QVG-Pro PSNR differences and intervals. Dotted lines mark cache boundaries; the dashed line begins the continuation beyond the standard 96-frame horizon. Curves are unsmoothed.",
+              "figure_id": "figure-10-13",
+              "figure_number": "10",
+              "height": 320,
+              "image_path": "figures/2610.12514/figure-013.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 943
+            },
+            {
+              "caption": "Figure 11: Long-range reconstruction examples. MAGI-1 (top; frames 95, 143, and 191) and HY-WorldPlay (bottom; frames 47, 110, and 244). Rows compare BF16, QVG-Pro, and video-adapted CORAL-KV; tile labels report full-frame PSNR against BF16.",
+              "figure_id": "figure-11-9",
+              "figure_number": "11",
+              "height": 390,
+              "image_path": "figures/2610.12514/figure-014.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 769
+            },
+            {
+              "caption": "Figure 12: Long-range reconstruction examples. MAGI-1 (top; frames 95, 143, and 191) and HY-WorldPlay (bottom; frames 47, 110, and 244). Rows compare BF16, QVG-Pro, and video-adapted CORAL-KV; tile labels report full-frame PSNR against BF16.",
+              "figure_id": "figure-12-5",
+              "figure_number": "12",
+              "height": 1189,
+              "image_path": "figures/2610.12514/figure-015.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 960
+            },
+            {
+              "caption": "Table 1: Coral-KV improves fidelity with less total cache memory in matched comparisons against existing baselines on both models. HY-WorldPlay memory counts all completed cache blocks in the 285-frame video; its fidelity evaluations retain the most recent 48 latent frames. Shared predictors are counted once at 16 videos. Latency is generation-time overhead relative to BF16; its measurement protocol appears in Appendix F.3.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 327,
+              "image_path": "figures/2610.12514/table-016.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 982
+            },
+            {
+              "caption": "Table 2: Coral-KV improves boundary stability with less cache memory and broadly similar VBench scores relative to QVG-Pro on both models. Cache memory (GB) is the single-video total from Table 1. All results use 355 prompts.",
+              "figure_id": "table-2-20",
+              "figure_number": "2",
+              "height": 321,
+              "image_path": "figures/2610.12514/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 986
+            },
+            {
+              "caption": "Table 3: Evaluation configurations. Attention implementations are held fixed across methods within each model.",
+              "figure_id": "table-3-23",
+              "figure_number": "3",
+              "height": 94,
+              "image_path": "figures/2610.12514/table-018.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 977
+            },
+            {
+              "caption": "Table 9: At similar total compressed-state storage, reusable prediction improves PSNR over offline-trained codebooks with either residual quantizer. Online QVG-1 fits codebooks for each cache block; the offline-codebook variant reuses calibration-fitted codebooks. Storage includes anchors, residual codes and scales, assignments, and codebooks or predictors. HY totals nine generated cache blocks, although fidelity generation retains the most recent 48 latent frames; MAGI-1 retains four 12,150-token blocks. Bold marks the highest PSNR within each model and residual quantizer.",
+              "figure_id": "table-9-18",
+              "figure_number": "9",
+              "height": 378,
+              "image_path": "figures/2610.12514/table-019.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 556
+            },
+            {
+              "caption": "Table 7: Reusable Coral-KV reduces the memory cost of retaining full video history. Each block contains eight latent frames, or 7,040 visual tokens; nine blocks cover the 285-frame HY-WorldPlay video. The totals include QVG codebooks or the reusable predictor parameters.",
+              "figure_id": "table-7-19",
+              "figure_number": "7",
+              "height": 196,
+              "image_path": "figures/2610.12514/table-020.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 477
+            },
+            {
+              "caption": "Table 4: Disjoint prompt splits and their permitted uses.",
+              "figure_id": "table-4-22",
+              "figure_number": "4",
+              "height": 116,
+              "image_path": "figures/2610.12514/table-021.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 577
+            },
+            {
+              "caption": "Table 5: Relative MSE at equal BF16 parameter storage. All arms reconstruct the same held-out KV tokens before residual quantization. Lower is better. Centroid assignments require additional storage.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 140,
+              "image_path": "figures/2610.12514/table-022.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 606
+            },
+            {
+              "caption": "Table 6: Coral-KV has higher BF16-relative PSNR than both token-selection controls at matched cache memory. Mean RGB PSNR (dB; higher is better) on 16 HY-WorldPlay and 64 MAGI-1 paired prompts. Memory is the retained compressed-history budget; each control’s K/V and any selection metadata fit within it. These cohorts are separate from the 355-prompt evaluation in Table 1.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 140,
+              "image_path": "figures/2610.12514/table-023.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 978
+            },
+            {
+              "caption": "Table 10: Effect of calibration-set size. Rank-128 block-DPLR predictors fitted on 2, 8, 16, or 32 calibration prompts (one video per prompt) are evaluated on the same 32-prompt selection set. PSNR (dB) is from a separate calibrationsize experiment; MAGI-1 uses 96 frames.",
+              "figure_id": "table-10-12",
+              "figure_number": "10",
+              "height": 94,
+              "image_path": "figures/2610.12514/table-024.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 448
+            }
+          ],
+          "first_seen_at": "2026-10-11T21:00:00-04:00",
+          "hero_figure": "figures/2610.12514/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.12514",
+          "relevance": 8,
+          "selection_reason": "KV-cache compression for autoregressive video diffusion models; directly relevant to memory-efficient inference and video generation.",
+          "summary_status": "generated",
+          "title": "CORAL-KV: Compact Cross-Layer Prediction and Residual Coding for Autoregressive Video KV Caches",
+          "tldr": "Coral-KV compresses autoregressive video KV caches by predicting later-layer states from earlier layers and quantizing only the residuals, reducing memory while preserving video quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-08",
       "paper_count": 4,
       "papers": [
@@ -8320,5 +8611,5 @@
   "schema_version": 1,
   "subtopic_id": "autoregressive-video-models",
   "topic_id": "video-models",
-  "total_paper_count": 40
+  "total_paper_count": 41
 }

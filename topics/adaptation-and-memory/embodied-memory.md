@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**183 papers total**
+**188 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-11 | [MC-EvoBench: Auditing Experience-Driven Self-Improvement in Minecraft Agents](https://arxiv.org/abs/2610.13829) | Embodied AI; Adaptation and Memory: Embodied Memory | MC-EvoBench is a controlled Minecraft benchmark showing that agents’ prior experience does not yet reliably produce durable, transferable capabilities. | 7 | 7 |
+| 2026-10-11 | [Dual-Stream Memory for Vision-Language-Action Policies](https://arxiv.org/abs/2610.13262) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | Dual-stream memory improves vision-language-action manipulation by combining compressed execution history with selective retrieval of relevant past frames. | 9 | 8 |
+| 2026-10-11 | [Gamma: Grounded Multi-Agent Memory with Mechanical Audit for Memory-Intensive Manipulation](https://arxiv.org/abs/2610.12793) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | GAMMA combines grounded visual detection, structured text memory, multi-agent reasoning, and mechanical verification to help fixed VLA policies solve long-horizon memory-based manipulation tasks. | 8 | 8 |
+| 2026-10-11 | [REMM: Revisable Embodied Memory for Manipulation](https://arxiv.org/abs/2610.12710) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | REMM helps robots recover from manipulation disturbances by maintaining evidence separately from revisable task state and repairing only conclusions invalidated by new evidence. | 9 | 8 |
+| 2026-10-11 | [What Should Embodied Agents Remember? Benchmarking and Evaluating Memory Modality for Embodied Agents](https://arxiv.org/abs/2610.12561) | Embodied AI; Adaptation and Memory: Embodied Memory | MeMoREval benchmarks how different memory modalities affect embodied agents’ task success and inference costs when using past visual-spatial experience. | 9 | 8 |
 | 2026-10-09 | [DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents](https://arxiv.org/abs/2610.11707) | Adaptation and Memory: Embodied Memory | DeltaReplay enables mobile GUI agents to selectively reuse only the relevant parts of past trajectories, improving task success by up to 10.3 and 25.0 percentage points on AndroidWorld and SPA-Bench. | 5 | 6 |
 | 2026-10-09 | [Hierarchical Belief Modeling for Zero-Shot Opponent Adaptation in Partially Observable Multi-Agent Navigation](https://arxiv.org/abs/2609.12422) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | HORIZON improves zero-shot adaptation in partially observable multi-agent navigation by combining hierarchical memory, opponent modeling, and information-seeking exploration. | 7 | 6 |
 | 2026-10-08 | [RoboRSI: Stable, efficient, and reusable robot self-evolution in complex real-world environments](https://arxiv.org/abs/2610.12424) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning, Embodied Memory | RoboRSI enables robots to safely improve and reuse skills by attributing execution failures to specific task branches and validating targeted revisions. | 9 | 8 |

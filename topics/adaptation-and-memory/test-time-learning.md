@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**475 papers total**
+**481 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-11 | [Pretraining and Test-Time Training Budgets Matter for ARC: A Controlled Study of VARC and TRM](https://arxiv.org/abs/2610.13660) | Adaptation and Memory: Test-Time Learning | A controlled ARC-AGI-1 study shows that pretraining and test-time training budgets substantially influence VARC and TRM performance, complicating architecture comparisons. | 7 | 7 |
+| 2026-10-11 | [Test-Time Memory Construction](https://arxiv.org/abs/2610.13348) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | T²Mem builds query-specific memory at inference time, helping LLMs answer questions over long, scattered interaction histories with lower construction overhead. | 8 | 8 |
+| 2026-10-11 | [Evo$^2$: Evolving the Evolver through Weight-Harness Co-Evolution](https://arxiv.org/abs/2610.13025) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Evo² jointly evolves language-model weights and agent harnesses, substantially improving self-evolving coding agents and enabling transfer across models and tasks. | 8 | 8 |
+| 2026-10-11 | [EvoBelief: Falsifiable World Models for Self-Improving LLM Agents](https://arxiv.org/abs/2610.12789) | World Models; Adaptation and Memory: Test-Time Learning | EvoBelief helps frozen LLM agents self-improve by forming, testing, and revising falsifiable world-model hypotheses during deployment. | 8 | 8 |
+| 2026-10-11 | [Behind-the-Meter Photovoltaic Visibility from Net Smart Meters: Deployment Regimes and Operational Insights](https://arxiv.org/abs/2610.12527) | Adaptation and Memory: Test-Time Learning | PV disaggregation performance depends more on the deployment scenario than on model choice, with limited target-region fine-tuning improving cross-region transfer. | 7 | 6 |
+| 2026-10-11 | [GraphAHA: Graph-Based Adaptive Search with Heterogeneous Actions for Test-Time Code Generation](https://arxiv.org/abs/2609.12757) | Adaptation and Memory: Test-Time Learning | GraphAHA improves test-time code generation by combining graph-based state sharing with adaptive selection of heterogeneous generation actions. | 8 | 8 |
 | 2026-10-10 | [Correlation-Guided Fast Machine Unlearning via Hessian Analysis](https://arxiv.org/abs/2609.12620) | Adaptation and Memory: Test-Time Learning | A Hessian-based, correlation-guided unlearning method accelerates removal of related training points while maintaining model utility and forgetting effectiveness. | 6 | 7 |
 | 2026-10-09 | [JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts](https://arxiv.org/abs/2610.00722) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | JEPA-TTT persistently adapts a pretrained latent world model during deployment, improving prediction and planning under changed environment dynamics. | 9 | 8 |
 | 2026-10-09 | [RecastVLA: From Past Interaction to Future Control with Adaptive Policy States](https://arxiv.org/abs/2609.32155) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | RecastVLA turns a vision-language-action policy’s past action generation into a persistent adaptive state that improves sequential robot manipulation without expert labels at deployment. | 9 | 8 |
