@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**467 papers total**
+**468 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Low-Bit Recurrent States in Hybrid Language Models](https://arxiv.org/abs/2609.30950) | Efficient AI: KV Cache and Memory Efficiency | A calibration-free mixed-precision quantizer enables accurate low-bit recurrent states in hybrid language models, with four-bit states substantially reducing quantization error and six-bit states nearly matching FP32 performance. | 8 | 8 |
 | 2026-10-11 | [ReplaySSM: Cache SSM Inputs, Not State](https://arxiv.org/abs/2610.13778) | Efficient AI: KV Cache and Memory Efficiency | ReplaySSM accelerates hybrid SSM decoding by caching recent inputs instead of updating recurrent state every step, while enabling cheap speculative rollback and safer state quantization. | 8 | 8 |
 | 2026-10-11 | [Adaptive DHiSparse: Speculative Decoding over a Load-Adaptive KV Hierarchy](https://arxiv.org/abs/2610.13708) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Adaptive DHiSparse combines load-adaptive hierarchical sparse KV caching with speculative decoding to improve long-context serving throughput while preserving latency bounds. | 8 | 8 |
 | 2026-10-11 | [O\\'ido: Open-Vocabulary Speech Recognition on a $5 Microcontroller without a Neural Accelerator](https://arxiv.org/abs/2610.13447) | Efficient AI: KV Cache and Memory Efficiency | O’ido brings open-vocabulary English speech recognition to a $5 ESP32-S3 microcontroller without a neural accelerator, achieving strong accuracy but not yet real-time performance. | 6 | 7 |

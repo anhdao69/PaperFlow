@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**451 papers total**
+**452 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [DynEoMT: Learning Object Dynamicity from Online Segmentation Queries](https://arxiv.org/abs/2609.14466) | Video Generation and Understanding: Video Understanding | DynEoMT augments online video segmentation with per-region dynamic/static predictions using only current-frame inputs and propagated queries. | 6 | 7 |
 | 2026-10-11 | [Mind the Temporal Gap: Evaluating Video Models for Temporal Understanding in Driving](https://arxiv.org/abs/2610.12575) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Current video-language models often fail to reliably understand temporal dynamics in driving videos, despite containing motion-relevant information that lightweight adaptation can unlock. | 7 | 6 |
 | 2026-10-11 | [Transformer-Based Masked Diffusion Models Provably Learn Distributions with Latent Structure](https://arxiv.org/abs/2610.12544) | World Models: Video World Models; Video Generation and Understanding: Video Understanding | Transformer-based masked diffusion models can learn discrete distributions with latent structure using sample complexity that depends on the structure rather than the full sequence space. | 8 | 9 |
 | 2026-10-09 | [Mid-Training Language Models on Raw Video](https://arxiv.org/abs/2610.11019) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | Mid-training a language model on raw video by predicting visual tokens improves downstream video and image understanding while preserving text performance, without captions or text supervision. | 9 | 8 |

@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**1666 papers total**
+**1670 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript](https://arxiv.org/abs/2610.02638) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI | DuplexJev enables a frozen LLM to answer many speech-based decisions in parallel from ASR hidden states without autoregressive decoding. | 7 | 8 |
+| 2026-10-12 | [AF-Muon: An AdamW-Free Muon Optimizer for Tied-Embedding Models](https://arxiv.org/abs/2610.01395) | Efficient AI | AF-Muon extends Muon to tied-embedding models without AdamW, reducing optimizer-state memory while improving validation performance across diverse modalities and architectures. | 6 | 7 |
+| 2026-10-12 | [Low-Bit Recurrent States in Hybrid Language Models](https://arxiv.org/abs/2609.30950) | Efficient AI: KV Cache and Memory Efficiency | A calibration-free mixed-precision quantizer enables accurate low-bit recurrent states in hybrid language models, with four-bit states substantially reducing quantization error and six-bit states nearly matching FP32 performance. | 8 | 8 |
+| 2026-10-12 | [Linearized PINN with pretrained nonlinear layers](https://arxiv.org/abs/2609.14926) | Efficient AI; Adaptation and Memory: Test-Time Learning | lPINN pretrains physics-compatible neural basis functions offline, then solves new forward or inverse differential-equation problems online using only a linear output layer and physics constraints. | 5 | 7 |
 | 2026-10-11 | [ReplaySSM: Cache SSM Inputs, Not State](https://arxiv.org/abs/2610.13778) | Efficient AI: KV Cache and Memory Efficiency | ReplaySSM accelerates hybrid SSM decoding by caching recent inputs instead of updating recurrent state every step, while enabling cheap speculative rollback and safer state quantization. | 8 | 8 |
 | 2026-10-11 | [DualQuant: Dual-scale Calibration-free Weight-and-Activation Quantization for LLMs](https://arxiv.org/abs/2610.13767) | Efficient AI | DUALQUANT enables calibration-free 4-bit weight-and-activation quantization for LLMs using dual-scale rescaling, achieving competitive accuracy and practical memory and throughput gains. | 7 | 7 |
 | 2026-10-11 | [SmolWAM: A Latent World-Action Model for Robotic Manipulation on Edge Devices](https://arxiv.org/abs/2610.13740) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Efficient AI | SmolWAM compresses a large world-action model into an edge-friendly latent model that rapidly predicts robot actions and future scene observations. | 9 | 7 |

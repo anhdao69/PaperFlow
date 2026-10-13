@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**625 papers total**
+**629 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [RoboQuest: Generalist Physical Agents that Search, Inspect and Test](https://arxiv.org/abs/2610.10388) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | RoboQuest benchmarks whether embodied agents can actively search, inspect, and test in unfamiliar environments, revealing major gaps in information-seeking and adaptive exploration. | 9 | 8 |
+| 2026-10-12 | [ViDAL: A Visual Dynamics-Grounded Action Latent Space for Vision-Language-Action Models](https://arxiv.org/abs/2610.08150) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | ViDAL learns action latents grounded in predicted future visual dynamics, improving vision-language-action robot policies across simulated and real-world tasks. | 9 | 8 |
+| 2026-10-12 | [Is Success All You Need? Investigating the Impact of Input Perturbations on VLA Behaviour in Tabletop Manipulation Tasks](https://arxiv.org/abs/2610.01351) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | VLA robustness evaluation should measure how robots complete successful tasks under perturbations, not just whether they succeed. | 8 | 7 |
+| 2026-10-12 | [MotorMind: Scaffolding General Vision Language Models for Zero-Shot Robot Manipulation](https://arxiv.org/abs/2609.38078) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | MotorMind enables a general-purpose VLM to perform zero-shot robot manipulation by converting mid-level action reasoning into controlled execution with feedback and memory. | 9 | 8 |
 | 2026-10-11 | [Splat2Act: From Captured Scenes to Personalized VLA Manipulation](https://arxiv.org/abs/2610.13945) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Splat2Act personalizes a pretrained VLA manipulation policy to a user’s indoor scene and objects using only a phone scan and object images, achieving roughly 64% real-world pickup success without real demonstrations. | 9 | 8 |
 | 2026-10-11 | [Noise Space Learning for VLA Adaptation](https://arxiv.org/abs/2610.13943) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Noise Space Learning adapts pretrained vision-language-action models efficiently and safely by learning task-conditioned noise while leaving the original model unchanged. | 9 | 8 |
 | 2026-10-11 | [SmolWAM: A Latent World-Action Model for Robotic Manipulation on Edge Devices](https://arxiv.org/abs/2610.13740) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Efficient AI | SmolWAM compresses a large world-action model into an edge-friendly latent model that rapidly predicts robot actions and future scene observations. | 9 | 7 |

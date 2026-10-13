@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**1607 papers total**
+**1611 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Specialists Learn Faster: Knowledge Organization in Pre-training Shapes Knowledge Update Efficiency](https://arxiv.org/abs/2610.13835) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Large Language Models | Organizing pre-training knowledge chronologically creates specialists that update substantially more efficiently than generalists while preserving historical knowledge. | 7 | 8 |
+| 2026-10-12 | [On the Design Space of Continuous Diffusion Language Models](https://arxiv.org/abs/2610.13834) | Language Foundation Models: Large Language Models | This work analyzes key design choices in continuous diffusion language models and introduces cheaper interpolants that improve token identifiability and achieve competitive performance with discrete diffusion. | 7 | 8 |
+| 2026-10-12 | [Agentic Large Language Models](https://arxiv.org/abs/2610.13455) | Language Foundation Models: Large Language Models | Agentic LLMs extend language models from generating responses to acting in and interacting with the real world. | 5 | 4 |
+| 2026-10-12 | [Masked Diffusion Language Agents for Tool-Integrated Chemical Reasoning](https://arxiv.org/abs/2610.13330) | Language Foundation Models: Large Language Models | ChemDiffAgent uses masked diffusion to jointly plan reasoning and tool use with full-trajectory context, improving chemical agent performance over autoregressive approaches. | 6 | 7 |
 | 2026-10-11 | [Matched-Context Group Policy Optimization for LLM Agent Training](https://arxiv.org/abs/2610.13755) | Language Foundation Models: Large Language Models | MCGPO improves long-horizon LLM agent training by learning context-matched action preferences from existing rollouts and sparse terminal feedback. | 6 | 7 |
 | 2026-10-11 | [A Privileged Teacher That Only Scores Cannot Search: Critique-Conditioned On-Policy Self-Distillation for Reasoning](https://arxiv.org/abs/2610.13744) | Language Foundation Models: Large Language Models | Scoring-only privileged teachers fail to find and correct reasoning errors, while generating a critique first enables effective error localization and corrective self-distillation. | 7 | 8 |
 | 2026-10-11 | [Inject a Turn, Not a Token: Learning Where to Redirect LLM Reasoning for Self-Correction](https://arxiv.org/abs/2610.13672) | Language Foundation Models: Large Language Models | UPTURN learns where to interrupt failed LLM reasoning and redirects it with a new user turn, improving self-correction without fine-tuning the LLM. | 6 | 7 |

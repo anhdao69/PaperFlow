@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**443 papers total**
+**446 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Specialists Learn Faster: Knowledge Organization in Pre-training Shapes Knowledge Update Efficiency](https://arxiv.org/abs/2610.13835) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Large Language Models | Organizing pre-training knowledge chronologically creates specialists that update substantially more efficiently than generalists while preserving historical knowledge. | 7 | 8 |
+| 2026-10-12 | [EASE: Behavior-Adaptive Skill Curation for Self-Evolving Agents](https://arxiv.org/abs/2609.36746) | Adaptation and Memory: Continual and Online Learning | EASE enables one skill curator to adapt to different agent executors, improving skill quality and efficiency without per-executor fine-tuning. | 7 | 7 |
+| 2026-10-12 | [REVOLVE: An Automated Closed-Loop Framework for Evolving Robot Manipulation with Minimal Human Intervention](https://arxiv.org/abs/2609.14633) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | REVOLVE creates a closed-loop robot manipulation system that learns from failures and corrections while sharply reducing human involvement. | 8 | 7 |
 | 2026-10-11 | [RSI-Anything: Unlocking Recursive Self-Improvement with World Models](https://arxiv.org/abs/2610.13912) | World Models; Adaptation and Memory: Continual and Online Learning | RSI-Anything uses predictive world models and validated policy updates to enable recursive self-improvement across diverse tasks with limited external feedback. | 7 | 7 |
 | 2026-10-11 | [Dream to Remember: Continual Steering of Generalist Robot Policies with World Models](https://arxiv.org/abs/2610.13816) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | D2R continually improves a frozen generalist robot policy on new tasks while preserving earlier skills through world-model rehearsal. | 9 | 8 |
 | 2026-10-11 | [Does Financial Speech Need Continual Learning Regularization? A Study of EWC and mini-KFAC on Earnings Call ASR](https://arxiv.org/abs/2610.13432) | Adaptation and Memory: Continual and Online Learning | Financial ASR adaptation on Earnings22 improves prior financial-speech performance rather than causing forgetting, making continual-learning regularization unnecessary in this setting. | 8 | 7 |

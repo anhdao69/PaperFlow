@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**188 papers total**
+**189 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [GLAM: Training a latent world model over global spatiotemporal memory for active exploration and navigation](https://arxiv.org/abs/2609.14561) | Embodied AI: Robot Navigation; World Models: Latent Action Models; Adaptation and Memory: Embodied Memory | GLAM learns a goal-conditioned latent world model that predicts future spatial memory and navigation waypoints for active exploration and semantic navigation. | 8 | 8 |
 | 2026-10-11 | [MC-EvoBench: Auditing Experience-Driven Self-Improvement in Minecraft Agents](https://arxiv.org/abs/2610.13829) | Embodied AI; Adaptation and Memory: Embodied Memory | MC-EvoBench is a controlled Minecraft benchmark showing that agents’ prior experience does not yet reliably produce durable, transferable capabilities. | 7 | 7 |
 | 2026-10-11 | [Dual-Stream Memory for Vision-Language-Action Policies](https://arxiv.org/abs/2610.13262) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | Dual-stream memory improves vision-language-action manipulation by combining compressed execution history with selective retrieval of relevant past frames. | 9 | 8 |
 | 2026-10-11 | [Gamma: Grounded Multi-Agent Memory with Mechanical Audit for Memory-Intensive Manipulation](https://arxiv.org/abs/2610.12793) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | GAMMA combines grounded visual detection, structured text memory, multi-agent reasoning, and mechanical verification to help fixed VLA policies solve long-horizon memory-based manipulation tasks. | 8 | 8 |

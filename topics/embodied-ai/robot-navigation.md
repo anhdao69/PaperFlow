@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**612 papers total**
+**615 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation](https://arxiv.org/abs/2609.32837) | Embodied AI: Robot Navigation; World Models: Interactive World Models | SonoGraph-WM enables anticipatory robotic ultrasound navigation by predicting future anatomical scene graphs and probe poses, then planning through imagined trajectories. | 9 | 9 |
+| 2026-10-12 | [GLAM: Training a latent world model over global spatiotemporal memory for active exploration and navigation](https://arxiv.org/abs/2609.14561) | Embodied AI: Robot Navigation; World Models: Latent Action Models; Adaptation and Memory: Embodied Memory | GLAM learns a goal-conditioned latent world model that predicts future spatial memory and navigation waypoints for active exploration and semantic navigation. | 8 | 8 |
+| 2026-10-12 | [NavPatch: Evidence-Guided Object-Level Costmap Correction with Vision-Language Models](https://arxiv.org/abs/2609.14543) | Embodied AI: Robot Navigation | NavPatch uses vision-language scene understanding and 3D sensing to dynamically correct object-level navigation costmaps, improving robot navigation success and reducing erroneous map updates. | 7 | 7 |
 | 2026-10-11 | [HorizonNav: Geometry-Guided Video Diffusion for Anticipatory 3D Robot Navigation](https://arxiv.org/abs/2610.13849) | Embodied AI: Robot Navigation; World Models: Video World Models; Video Generation and Understanding: Video Diffusion | HorizonNav uses text-guided video diffusion and geometry-based depth alignment to imagine and reconstruct navigable 3D surroundings from a single RGB image. | 8 | 8 |
 | 2026-10-11 | [When LiDAR Fades, Radar Takes Over: LiDAR Reliability-Aware Adaptive Localization Under Airborne Obscurants](https://arxiv.org/abs/2610.13788) | Embodied AI: Robot Navigation | A one-class LSTM-based system detects LiDAR degradation and adaptively switches from LIO to radar-inertial odometry to maintain localization in smoke- and dust-obscured subterranean environments. | 6 | 6 |
 | 2026-10-11 | [SafeDiSTL: Decomposing Joint Constraints for Safe Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2610.13737) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | SafeDiSTL assigns multi-agent credit for shared safety violations using STL robustness and action sensitivities, improving safety and task performance across cooperative control tasks. | 7 | 7 |

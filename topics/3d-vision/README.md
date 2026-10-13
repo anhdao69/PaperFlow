@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**704 papers total**
+**705 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [GRC-Pose: Generation-Reconstruction Correspondence for Prior-Free 6D Object Pose Tracking](https://arxiv.org/abs/2609.39116) | 3D Vision | GRC-Pose tracks unseen objects in 6D from a single RGB video without object-specific pose priors by matching generated object geometry to reconstructed scene evidence. | 7 | 7 |
 | 2026-10-11 | [Designing Protein Structures from Natural Language](https://arxiv.org/abs/2610.13917) | Multimodal Foundation Models: Multimodal Large Language Models; 3D Vision: 3D Foundation Models | Prompteina enables natural-language-guided generation of protein structures and produces designs that better satisfy structural and functional goals, including experimentally validated binders. | 8 | 8 |
 | 2026-10-11 | [NovaSplat: Model-Free 6D Object Pose Estimation via 3D Gaussian Splatting Onboarding and Refinement](https://arxiv.org/abs/2610.13309) | 3D Vision | NovaSplat enables model-free 6D pose estimation of novel objects by building and refining a 3D Gaussian Splatting representation from a short smartphone video. | 6 | 7 |
 | 2026-10-11 | [VETR: Execution-Grounded Self-Improving Agent for Symbolic Graphics Reasoning](https://arxiv.org/abs/2610.13098) | Embodied AI; 3D Vision | VETR improves symbolic graphics agents by using execution traces to verify and repair programs for more reliable self-improvement. | 6 | 8 |

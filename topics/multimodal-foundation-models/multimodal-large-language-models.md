@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**992 papers total**
+**997 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Retrieval-Augmented Multimodal Language Model with Heterogeneous Evidence Integration for Clinical Prognosis](https://arxiv.org/abs/2610.13510) | Multimodal Foundation Models: Multimodal Large Language Models | PRISM integrates structured clinical data, waveforms, longitudinal history, and population retrieval to improve multimodal prognosis, with performance depending on input scope and supervised adaptation. | 7 | 8 |
+| 2026-10-12 | [Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript](https://arxiv.org/abs/2610.02638) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI | DuplexJev enables a frozen LLM to answer many speech-based decisions in parallel from ASR hidden states without autoregressive decoding. | 7 | 8 |
+| 2026-10-12 | [SignGPT: Toward LLM-Mediated Sign Language Interaction through Gloss-Free Translation and Generation](https://arxiv.org/abs/2609.21709) | Multimodal Foundation Models: Multimodal Large Language Models | SignGPT unifies gloss-free sign language translation and generation in one pose-based, LLM-mediated framework to support bidirectional sign-text and sign-to-sign interaction. | 6 | 8 |
+| 2026-10-12 | [Reducing the Output-Mode Gap in Speech Language Models via Joint-Output On-Policy Distillation](https://arxiv.org/abs/2609.15313) | Multimodal Foundation Models: Multimodal Large Language Models | JO-OPD narrows the accuracy gap between speech-to-text-and-speech and speech-to-text generation by distilling a stronger text-only policy into interleaved speech generation. | 7 | 7 |
+| 2026-10-12 | [Two-Stage Mixture-of-LoRA for Multi-Task Medical Vision-Language Learning](https://arxiv.org/abs/2609.14350) | Multimodal Foundation Models: Multimodal Large Language Models | Two-Stage Mixture-of-LoRA adapts MedGemma-1.5-4B to diverse medical vision-language tasks using shared and task-specific LoRA experts refined in two stages. | 6 | 5 |
 | 2026-10-11 | [Designing Protein Structures from Natural Language](https://arxiv.org/abs/2610.13917) | Multimodal Foundation Models: Multimodal Large Language Models; 3D Vision: 3D Foundation Models | Prompteina enables natural-language-guided generation of protein structures and produces designs that better satisfy structural and functional goals, including experimentally validated binders. | 8 | 8 |
 | 2026-10-11 | [Studying Comics at Scale with Artificial Intelligence: The PAGE Framework and Three Studies of American Comics and Japanese Manga](https://arxiv.org/abs/2610.13840) | Multimodal Foundation Models: Multimodal Large Language Models | PAGE uses AI to study comics at archival scale by parsing, annotating, validating, and interpreting their visual and textual content. | 4 | 5 |
 | 2026-10-11 | [OccludeBench: Can VLMs Find What's Missing?](https://arxiv.org/abs/2610.13790) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | OccludeBench shows that VLMs struggle to recover fully occluded objects from direct physical cues, and an inpaint-then-confront strategy can reduce this reasoning gap. | 7 | 7 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**117 papers total**
+**118 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Language-Grounded Semantic Target Navigation for Autonomous Surface Vehicles](https://arxiv.org/abs/2609.14558) | Embodied AI: Vision-Language Navigation | SGNav enables autonomous surface vehicles to navigate to maritime targets described in natural language by combining semantic perception, target verification, and closed-loop control. | 7 | 7 |
 | 2026-10-11 | [Assisted Spatial Cognition Through Vision-Language Models](https://arxiv.org/abs/2609.12747) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | A mobile-camera system combines VLMs, LLMs, SLAM, and digital twins to build 3D scene understanding for more autonomous navigation by visually impaired and neuro-divergent users. | 9 | 8 |
 | 2026-10-09 | [AnchorVLN: Geometry-Anchored Vision-Language Grounding Reasoning for Open-Vocabulary Navigation](https://arxiv.org/abs/2609.12285) | Embodied AI: Vision-Language Navigation | AnchorVLN improves open-vocabulary indoor navigation by letting a VLM identify semantic targets while geometry tools handle metric spatial reasoning. | 9 | 8 |
 | 2026-10-08 | [SuperNav: An Agentic Navigation System for Any Task in Any Scene](https://arxiv.org/abs/2610.12126) | Embodied AI: Vision-Language Navigation, Robot Navigation | SuperNav enables a pretrained multimodal language model to perform general-purpose navigation by delegating motion execution to specialized tools instead of fine-tuning the model for navigation. | 9 | 8 |

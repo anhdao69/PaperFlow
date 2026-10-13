@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**765 papers total**
+**766 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [DynEoMT: Learning Object Dynamicity from Online Segmentation Queries](https://arxiv.org/abs/2609.14466) | Video Generation and Understanding: Video Understanding | DynEoMT augments online video segmentation with per-region dynamic/static predictions using only current-frame inputs and propagated queries. | 6 | 7 |
 | 2026-10-11 | [HorizonNav: Geometry-Guided Video Diffusion for Anticipatory 3D Robot Navigation](https://arxiv.org/abs/2610.13849) | Embodied AI: Robot Navigation; World Models: Video World Models; Video Generation and Understanding: Video Diffusion | HorizonNav uses text-guided video diffusion and geometry-based depth alignment to imagine and reconstruct navigable 3D surroundings from a single RGB image. | 8 | 8 |
 | 2026-10-11 | [Opening the Black Box of Classifier-Free Guidance via Information Bottleneck](https://arxiv.org/abs/2610.13369) | Multimodal Foundation Models; Video Generation and Understanding | The paper explains when classifier-free guidance is most informative and uses this insight to adaptively activate guidance during diffusion sampling. | 8 | 8 |
 | 2026-10-11 | [Golden Anchor for Video Generation](https://arxiv.org/abs/2610.13217) | Video Generation and Understanding | Golden Anchor Learning improves text-to-image anchor generation for image-to-video systems by optimizing anchors using downstream video feedback. | 8 | 8 |

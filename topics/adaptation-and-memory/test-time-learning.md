@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**481 papers total**
+**482 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Linearized PINN with pretrained nonlinear layers](https://arxiv.org/abs/2609.14926) | Efficient AI; Adaptation and Memory: Test-Time Learning | lPINN pretrains physics-compatible neural basis functions offline, then solves new forward or inverse differential-equation problems online using only a linear output layer and physics constraints. | 5 | 7 |
 | 2026-10-11 | [Pretraining and Test-Time Training Budgets Matter for ARC: A Controlled Study of VARC and TRM](https://arxiv.org/abs/2610.13660) | Adaptation and Memory: Test-Time Learning | A controlled ARC-AGI-1 study shows that pretraining and test-time training budgets substantially influence VARC and TRM performance, complicating architecture comparisons. | 7 | 7 |
 | 2026-10-11 | [Test-Time Memory Construction](https://arxiv.org/abs/2610.13348) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | T²Mem builds query-specific memory at inference time, helping LLMs answer questions over long, scattered interaction histories with lower construction overhead. | 8 | 8 |
 | 2026-10-11 | [Evo$^2$: Evolving the Evolver through Weight-Harness Co-Evolution](https://arxiv.org/abs/2610.13025) | Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Evo² jointly evolves language-model weights and agent harnesses, substantially improving self-evolving coding agents and enabling transfer across models and tasks. | 8 | 8 |

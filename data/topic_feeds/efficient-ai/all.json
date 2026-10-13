@@ -1,6 +1,1223 @@
 {
   "days": [
     {
+      "date": "2026-10-12",
+      "paper_count": 4,
+      "papers": [
+        {
+          "abstract": "Full-duplex voice agents make many small, closed decisions, which current systems answer by slow autoregressive decoding. We propose DuplexJev, which feeds ASR-encoder hidden states through a small connector into a frozen LLM and reads each question as a single-token distribution over its options. Nothing is decoded, and an 8-GPU node answers 80 decisions about eight utterances in about 0.1 s. With a last-layer connector, spoken QA stays close to reading the transcript (90% vs. 91%). DuplexJev also hears the speaker: gender and emotion accuracy both reach 90% (from 55% and 28%) with a cross-attention connector, whose spoken QA drops by only 1 point (83% to 82%). We train decisions with cross-entropy on the read-out answer token, instead of the usual transcript distillation, whose teacher never hears the voice, and keep distillation for content. Encoders and LLMs are interchangeable; we release weights, training recipe, a batched-inference pipeline for full-duplex serving and a bilingual spoken-QA set.",
+          "arxiv_id": "2610.02638",
+          "arxiv_url": "https://arxiv.org/abs/2610.02638",
+          "authors": [
+            "Jie Jin",
+            "Ziyin Ma",
+            "Min Yin",
+            "Jinyu Chen",
+            "Haigang Song",
+            "Zhikun Pang",
+            "Xiaowen Zhang"
+          ],
+          "bullets": [
+            "Maps ASR-encoder representations into a frozen LLM and reads each question as a single-token option distribution.",
+            "Uses answer-token cross-entropy for decision supervision while retaining distillation for speech content.",
+            "Handles spoken QA, speaker gender, and emotion, with cross-attention improving paralinguistic recognition while slightly reducing QA accuracy.",
+            "Batches 80 decisions over eight utterances in about 0.1 seconds on an 8-GPU node.",
+            "Provides interchangeable encoder/LLM components, released weights and recipe, a full-duplex inference pipeline, and a bilingual spoken-QA set."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. R3 from the R2 connector, same data and schedule. Left: gender on 800 real utterances under distillation (flat) and answertoken supervision, for A and B. Right: emotion under answer-token supervision, with ZJU-ML (dashed).",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 205,
+              "image_path": "figures/2610.02638/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 498
+            },
+            {
+              "caption": "Fig. 1. DuplexJev. Only the connector (fusion block and projector, orange) is trained. Variant A fuses three encoder layers by crossattention; variant B projects the final layer only. Every question is read as a closed-set next-token distribution. Content is aligned by transcript distillation; decisions are trained with answer-token crossentropy (Sec. 2.1).",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 220,
+              "image_path": "figures/2610.02638/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 427
+            },
+            {
+              "caption": "Table 3. Paralinguistic accuracy (%) and change in content understanding. Gender: our 800 real utterances / ZJU native / ZJU lettered. Emotion: 4-way, 800 utterances. ∆: change vs. the R2 start of the same connector. Probes: logistic regression on pooled features.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 329,
+              "image_path": "figures/2610.02638/table-003.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "Table 2. Content-understanding accuracy (%). qa100: released spoken QA (/100, zh/en /50 each). ZJU-ML: spoken questions from [23], half real, half TTS. Easy-Turn: zero-shot 4-way turn state. Our connectors are shown after R2 (two 1% packs).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 168,
+              "image_path": "figures/2610.02638/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "Table 1. Ten decisions per event, one H200, Qwen3-32B on vLLM, 30 real utterances. JSON: one JSON answer generated from the ASR transcript (ASR, 411 ms, not included). Readout: one single-token prompt per question on the transcript (approximates DuplexJev). Capacity: events/s whose batch finishes within the budget.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 165,
+              "image_path": "figures/2610.02638/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 396
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2610.02638/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.02638",
+          "relevance": 7,
+          "selection_reason": "Extends a frozen LLM with speech encoder features for batched single-token decisions; fits multimodal LLMs and efficient inference.",
+          "summary_status": "generated",
+          "title": "Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript",
+          "tldr": "DuplexJev enables a frozen LLM to answer many speech-based decisions in parallel from ASR hidden states without autoregressive decoding.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Muon improves large-scale training by applying a spectral-norm steepest-descent update to matrix parameters, but practical models also contain parameter blocks that do not fit dense-matrix geometry. One important case is the tied vocabulary table, which appears in language models and other token generators and can receive multiple structurally different gradient sources, from sparse input lookups to dense output-classifier updates. In the reference recipe these blocks are handed to an auxiliary AdamW optimizer, which restores second-moment state and updates the aliased table as a generic tensor. We propose AF-Muon, an AdamW-free extension of Muon that keeps the Muon matrix update for hidden weight matrices while using a support-aware finite-cap linear minimization oracle for tied vocabulary tables and an RMS-normalized update for one-dimensional auxiliary parameters. AF-Muon therefore trains every parameter class with a single first-moment buffer and no second-moment state, saving around 20% optimizer-state memory relative to Hybrid Muon in our benchmark. Across nine tied-token settings - decoder-only language models from 124M to 1B parameters, a fully shared T5-style encoder-decoder, and ImageGPT-style image-token, protein, and sparse-MoE variants, spanning text, image, and protein-sequence data - AF-Muon improves mean validation loss and perplexity over both Hybrid Muon and a SCION-style Sign endpoint. Long-horizon runs and hyperparameter sensitivity studies confirm the gain is robust, and identical-momentum diagnostics attribute it to the finite cap, which preserves more within-row magnitude than Sign while bounding the coordinate concentration of row-RMS. These results identify tied vocabulary tables as a distinct optimizer geometry and yield a robust AdamW-free Muon variant across models, modalities, and architectures, with about 1% step-time overhead in matched training.",
+          "arxiv_id": "2610.01395",
+          "arxiv_url": "https://arxiv.org/abs/2610.01395",
+          "authors": [
+            "Arash Lagzian",
+            "Paniz Halvachi",
+            "Junming Zhang",
+            "Zhouhan Lin",
+            "Dianbo Liu"
+          ],
+          "bullets": [
+            "Addresses tied vocabulary tables that receive both sparse input-lookup and dense output-classifier gradients.",
+            "Keeps Muon updates for matrix weights, uses a support-aware finite-cap oracle for tied tables, and RMS-normalized updates for 1D parameters.",
+            "Uses only first-moment state, saving around 20% optimizer-state memory versus Hybrid Muon.",
+            "Improves mean validation loss and perplexity across nine tied-token settings, including language, image, protein, encoder-decoder, and sparse-MoE models.",
+            "Reported overhead is about 1% of matched training step time; diagnostics attribute gains to the finite cap preserving within-row magnitude while limiting coordinate concentration."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Decoder-only tied-vocabulary training dynamics on FineWeb for SmolLM2-135M (top) and Llama-3.2-1B (bottom). Each row reports metrics under the matched protocol in Section 3.1. Curves show the mean over three paired seeds. Llama model long horizon curves reported in Appendix J.4.1",
+              "figure_id": "figure-2-18",
+              "figure_number": "2",
+              "height": 533,
+              "image_path": "figures/2610.01395/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 827
+            },
+            {
+              "caption": "Figure 1: AF-Muon tied-table geometry. Top: a hard-tied vocabulary table serves both sparse input lookup and dense output-softmax roles, so their gradients merge on one tensor. AF-Muon assigns one first-moment LMO per parameter class: Muon for hidden matrices, a finite-cap clipped-row LMO for the tied table, and RMS normalization for 1-D vectors. Bottom: the tied-table feasible set is the intersection of a fixed row-ℓ2 ball and a coordinate cap box. Varying c interpolates between the Sign endpoint (c = 1), the finite-cap AF-Muon update (1 < c < √ d), and row-RMS (c ≥ √ d).",
+              "figure_id": "figure-1-17",
+              "figure_number": "1",
+              "height": 418,
+              "image_path": "figures/2610.01395/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 827
+            },
+            {
+              "caption": "Figure 5: NanoGPT batch-size sensitivity at a matched 458.8M-token comparison. The x-axis varies the number of tokens per optimizer update. AF-Muon leads across all tested batch sizes.",
+              "figure_id": "figure-5-52",
+              "figure_number": "5",
+              "height": 271,
+              "image_path": "figures/2610.01395/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 809
+            },
+            {
+              "caption": "Figure 12: Tied-embedding NanoGPT-MoE training dynamics on FineWeb. Curves show the mean over three paired seeds, and shaded regions denote ±1 standard error of the mean. All methods use four top-1 routed experts per layer and the same router auxiliary load-balancing coefficient.",
+              "figure_id": "figure-12-31",
+              "figure_number": "12",
+              "height": 340,
+              "image_path": "figures/2610.01395/figure-004.webp",
+              "kind": "figure",
+              "page": 45,
+              "width": 827
+            },
+            {
+              "caption": "Figure 7: Qwen2.5-0.5B training dynamics on FineWeb. Curves show the mean over three paired seeds, and shaded regions denote ±1 standard error of the mean. The plot shows the short-horizon region used for the main three-seed comparison, omitting the earliest training region for readability. All methods use tied input/output embeddings, FP32 trainable parameters and optimizer state with BF16 autocast, matrix weight decay 0.1, and the same matched large-batch constant-learning-rate protocol.",
+              "figure_id": "figure-7-55",
+              "figure_number": "7",
+              "height": 313,
+              "image_path": "figures/2610.01395/figure-005.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 814
+            },
+            {
+              "caption": "Figure 17: NanoGPT tied-scale sweep training dynamics. Top: training loss, validation loss, and validation perplexity for SCION-style Sign and AF-Muon with different tied scales s. Bottom: token-wise AF-Muon minus SCION-style Sign gaps for the same metrics. All runs use the same fixed 50k vocabulary, d = 768 model width, 500M training-token budget, FP32 trainable parameters and optimizer state with BF16 autocast, matrix weight decay 0.1, and zero auxiliary/tied weight decay.",
+              "figure_id": "figure-17-24",
+              "figure_number": "17",
+              "height": 568,
+              "image_path": "figures/2610.01395/figure-006.webp",
+              "kind": "figure",
+              "page": 54,
+              "width": 811
+            },
+            {
+              "caption": "Figure 15: Protein language-modeling training dynamics on UniRef50 / ProtGPT2-BPE with a 363M-parameter tied-vocabulary RoPE decoder. Curves show the mean over three paired seeds under the matched large-batch protocol, after omitting the first 100M training tokens to focus on the stable training regime. AF-Muon maintains the lowest training loss, validation loss, and validation perplexity among the tested optimizers.",
+              "figure_id": "figure-15-37",
+              "figure_number": "15",
+              "height": 334,
+              "image_path": "figures/2610.01395/figure-007.webp",
+              "kind": "figure",
+              "page": 50,
+              "width": 806
+            },
+            {
+              "caption": "Figure 3: Validation-loss curves beyond decoder-only language modeling. Each panel shows one tied-token setting with its own training-token scale. AF-Muon reaches the lowest final validation loss in all four settings; full training-loss and perplexity curves are in the related appendix.",
+              "figure_id": "figure-3-40",
+              "figure_number": "3",
+              "height": 223,
+              "image_path": "figures/2610.01395/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 827
+            },
+            {
+              "caption": "Figure 18: Real-width NanoGPT training dynamics at fixed 50k vocabulary and 500M training tokens. Each row compares AF-Muon and the SCION-style Sign endpoint for one hidden width d ∈ {768, 1024, 1536}. Curves show the mean over three paired seeds, with shaded regions denoting ±1 standard error.",
+              "figure_id": "figure-18-50",
+              "figure_number": "18",
+              "height": 524,
+              "image_path": "figures/2610.01395/figure-009.webp",
+              "kind": "figure",
+              "page": 56,
+              "width": 810
+            },
+            {
+              "caption": "Figure 11: T5Gemma2-style shared-vocabulary encoder–decoder training dynamics after 100M target tokens. Curves show the mean over three paired seeds for Hybrid Muon, SCION-style Sign, and AF-Muon.",
+              "figure_id": "figure-11-47",
+              "figure_number": "11",
+              "height": 340,
+              "image_path": "figures/2610.01395/figure-010.webp",
+              "kind": "figure",
+              "page": 44,
+              "width": 827
+            },
+            {
+              "caption": "Figure 19: Training dynamics for the NanoGPT tied-table gradient-source ablation. Curves show seed-43 runs after the first 100M training tokens. All variants use the same AF-Muon optimizer for non-tied parameters; only the gradient supplied to the tied input/output vocabulary table is changed. The dense output-only variant learns much faster than the sparse input-only variant, but the full sparse-input plus dense-output tied gradient remains best.",
+              "figure_id": "figure-19-34",
+              "figure_number": "19",
+              "height": 313,
+              "image_path": "figures/2610.01395/figure-011.webp",
+              "kind": "figure",
+              "page": 60,
+              "width": 806
+            },
+            {
+              "caption": "Figure 6: NanoGPT-style decoder-only training dynamics on FineWeb. Curves show the mean over three paired seeds, and shaded regions denote ±1 standard error of the mean.",
+              "figure_id": "figure-6-28",
+              "figure_number": "6",
+              "height": 283,
+              "image_path": "figures/2610.01395/figure-012.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 827
+            },
+            {
+              "caption": "Figure 10: Small T5-style training dynamics under shared-vocabulary and untied-vocabulary topologies. Curves show the mean over three seeds. The untied Hybrid Muon control has nearly twice as many parameters, because the encoder embedding, decoder embedding, and output head are separate.",
+              "figure_id": "figure-10-26",
+              "figure_number": "10",
+              "height": 269,
+              "image_path": "figures/2610.01395/figure-013.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 827
+            },
+            {
+              "caption": "Figure 13: Tied ImageGPT-style ImageNet-32 training dynamics with a deterministic RGB554 16k color vocabulary. Curves show the mean over three paired seeds, and shaded regions denote ±1 standard error of the mean. To focus on the stable late-training regime, the plot starts at step 1000; training loss is shown every 250 steps, and validation metrics are shown every 500 steps. AF-Muon achieves the best final validation loss and validation bits/dim, while SCION-style Sign remains worse throughout this late window.",
+              "figure_id": "figure-13-13",
+              "figure_number": "13",
+              "height": 270,
+              "image_path": "figures/2610.01395/figure-014.webp",
+              "kind": "figure",
+              "page": 47,
+              "width": 814
+            },
+            {
+              "caption": "Figure 4: NanoGPT 2× 2 factorial abl tion over training tokens (billions) for three paired seeds.",
+              "figure_id": "figure-4-51",
+              "figure_number": "4",
+              "height": 233,
+              "image_path": "figures/2610.01395/figure-015.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 827
+            },
+            {
+              "caption": "Figure 14: Qualitative top-half completions from the tied ImageGPT-style ImageNet-32 seed-43 checkpoints. Each panel uses the same fixed validation images and the same sampling seed. Within each panel, columns show the top-half prime, the ground-truth full image, and the sampled bottomhalf completion. The samples are illustrative only; quantitative completion likelihoods are reported in Table 23.",
+              "figure_id": "figure-14-45",
+              "figure_number": "14",
+              "height": 1220,
+              "image_path": "figures/2610.01395/figure-016.webp",
+              "kind": "figure",
+              "page": 49,
+              "width": 827
+            },
+            {
+              "caption": "Figure 9: Llama-3.2-1B long-horizon seed-43 continuation. The curves omit the earliest training region and begin after 1B tokens to focus on long-horizon behavior. This is a single-seed stability check, not a replacement for the three-seed short-horizon comparison. AF-Muon preserves the best endpoint validation loss at 9.98B tokens, while both AdamW-free tied-table arms remain ahead of Hybrid Muon.",
+              "figure_id": "figure-9-48",
+              "figure_number": "9",
+              "height": 793,
+              "image_path": "figures/2610.01395/figure-017.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 752
+            },
+            {
+              "caption": "Figure 8: Qwen2.5-0.5B long-horizon seed-43 continuation. The three optimizer arms are trained under the same matched large-batch protocol as the short-horizon runs. The plotted curves omit the earliest training region and begin after 1B tokens to focus on the long-horizon behavior. This figure is a single-seed stability check, not a replacement for the three-seed short-horizon comparison. AF-Muon preserves the best validation loss at the last scheduled evaluation point, 6.29B tokens.",
+              "figure_id": "figure-8-20",
+              "figure_number": "8",
+              "height": 728,
+              "image_path": "figures/2610.01395/figure-018.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 692
+            },
+            {
+              "caption": "Figure 16: Real-vocabulary re-tokenization ablation on NanoGPT. Each row uses a separately trained ByteLevel BPE tokenizer with vocabulary size 50k, 100k, or 150k and compares AF-Muon with the SCION-style Sign endpoint for 500M training tokens. Curves show the mean over three paired seeds, with shaded regions denoting ±1 standard error. Since tokenizers differ across rows, absolute validation losses and perplexities should not be compared across vocabulary sizes; the relevant comparison is the within-vocabulary AF-Muon versus Sign gap.",
+              "figure_id": "figure-16-8",
+              "figure_number": "16",
+              "height": 226,
+              "image_path": "figures/2610.01395/figure-019.webp",
+              "kind": "figure",
+              "page": 53,
+              "width": 693
+            },
+            {
+              "caption": "Table 1: Main optimizer comparison across tied-token models and domains. Results are mean ± SD over three paired seeds. All rows compare matched tied-table optimizer arms under the same model, data, token budget, precision, batching, and matrix-update protocol; detailed settings and per-seed results are reported in Appendix J. NanoGPT, SmolLM2, Qwen2.5, Llama, T5, MoE, and protein rows report validation perplexity; ImageGPT reports validation bits/dim.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 552,
+              "image_path": "figures/2610.01395/table-020.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 772
+            },
+            {
+              "caption": "Table 26: Per-seed protein language-modeling results on UniRef50 / ProtGPT2-BPE. All runs use the matched large-batch protocol and are compared at 458.8M training tokens. The final row reports a paired two-sided t-test over eval loss between AF-Muon and the strongest non-AF baseline by mean eval loss; the gain is baseline minus AF-Muon, so positive values indicate that AF-Muon is better.",
+              "figure_id": "table-26-38",
+              "figure_number": "26",
+              "height": 313,
+              "image_path": "figures/2610.01395/table-021.webp",
+              "kind": "table",
+              "page": 50,
+              "width": 830
+            },
+            {
+              "caption": "Table 27: Training-overhead benchmark under the matched large-batch protocol. Optimizer state memory is computed analytically from the parameter partition and FP32 optimizer states. “Saved” reports the optimizer-state reduction relative to Hybrid Muon within the same model. Peak allocated memory is measured exactly with torch.cuda.max memory allocated() after resetting CUDA peak statistics before the training loop. Step time is the median over 30 training steps after discarding the first five steps as warmup. The short-run training loss is included as a sanity check; long-horizon performance is reported in the main experiment tables.",
+              "figure_id": "table-27-46",
+              "figure_number": "27",
+              "height": 290,
+              "image_path": "figures/2610.01395/table-022.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 830
+            },
+            {
+              "caption": "Table 24: Per-seed top-half completion results for tied ImageGPT-style ImageNet-32. The same fixed validation images and completion protocol are used for all methods.",
+              "figure_id": "table-24-58",
+              "figure_number": "24",
+              "height": 254,
+              "image_path": "figures/2610.01395/table-023.webp",
+              "kind": "table",
+              "page": 48,
+              "width": 736
+            },
+            {
+              "caption": "Table 33: Paired AF-Muon minus SCION-style Sign gaps for the real-width NanoGPT ablation. Negative values indicate that AF-Muon is better.",
+              "figure_id": "table-33-49",
+              "figure_number": "33",
+              "height": 540,
+              "image_path": "figures/2610.01395/table-024.webp",
+              "kind": "table",
+              "page": 56,
+              "width": 810
+            },
+            {
+              "caption": "Table 32: Per-seed real-width NanoGPT results for the width ablation in Table 31.",
+              "figure_id": "table-32-35",
+              "figure_number": "32",
+              "height": 481,
+              "image_path": "figures/2610.01395/table-025.webp",
+              "kind": "table",
+              "page": 55,
+              "width": 690
+            },
+            {
+              "caption": "Table 15: Per-seed small T5-style shared-vocabulary encoder–decoder results for the selected sharedvocabulary setting. All runs use 275M target tokens. Hybrid Muon uses auxiliary AdamW weight decay 0.01; SCION-style Sign and AF-Muon use zero auxiliary/tied weight decay. The table reports paired two-sided t-tests over validation loss comparing AF-Muon with Hybrid Muon and with the strongest non-AF baseline – in the fully shared setting – by mean validation loss.",
+              "figure_id": "table-15-4",
+              "figure_number": "15",
+              "height": 388,
+              "image_path": "figures/2610.01395/table-026.webp",
+              "kind": "table",
+              "page": 43,
+              "width": 810
+            },
+            {
+              "caption": "Table 36: AF-Muon cap and scale sensitivity on the NanoGPT tied-vocabulary task at the 393.2Mtoken intermediate comparison point. Results are mean ± SD over three paired seeds. The default setting used in the main experiments is c = 3, s = 0.5.",
+              "figure_id": "table-36-14",
+              "figure_number": "36",
+              "height": 327,
+              "image_path": "figures/2610.01395/table-027.webp",
+              "kind": "table",
+              "page": 58,
+              "width": 830
+            },
+            {
+              "caption": "Table 16: T5Gemma2-style shared-vocabulary encoder–decoder results at 750M target tokens. Runs use the random-init google/t5gemma-2-270m-270m configuration with a shared 262k-row vocabulary table. Per-seed rows report validation metrics; summary rows report mean ± SD over paired seeds. Paired tests compare validation loss against AF-Muon; positive gain means AF-Muon is better.",
+              "figure_id": "table-16-3",
+              "figure_number": "16",
+              "height": 370,
+              "image_path": "figures/2610.01395/table-028.webp",
+              "kind": "table",
+              "page": 43,
+              "width": 722
+            },
+            {
+              "caption": "Table 21: Per-seed tied ImageGPT-style ImageNet-32 results. All runs use 1.31B image tokens and the same deterministic RGB554 16k tokenizer. The final row reports a paired two-sided t-test over validation loss between AF-Muon and the strongest non-AF baseline by mean validation loss; the gain is baseline minus AF-Muon, so positive values indicate that AF-Muon is better.",
+              "figure_id": "table-21-10",
+              "figure_number": "21",
+              "height": 288,
+              "image_path": "figures/2610.01395/table-029.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 875
+            },
+            {
+              "caption": "Table 2: Per-seed NanoGPT-style decoder-only results. All runs use tied input/output embeddings and 2.67B training tokens. The final row reports a paired two-sided t-test over validation loss between AF-Muon and the strongest non-AF baseline by mean validation loss. The validation-loss entry is the mean paired gain, computed as baseline minus AF-Muon, so positive values indicate that AF-Muon is better.",
+              "figure_id": "table-2-22",
+              "figure_number": "2",
+              "height": 287,
+              "image_path": "figures/2610.01395/table-030.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 830
+            },
+            {
+              "caption": "Table 10: Per-seed Llama-3.2-1B short-horizon results. Values are reported at the final available evaluation near the 2B-token budget. Seed 43 is read from the long-horizon continuation at the last pre-2B evaluation point, 1.966B tokens; seeds 44 and 45 are read from the 2B short-horizon runs. The final row reports a paired two-sided t-test over validation loss between AF-Muon and the strongest non-AF baseline by mean validation loss; the gain is baseline minus AF-Muon, so positive values indicate that AF-Muon is better.",
+              "figure_id": "table-10-7",
+              "figure_number": "10",
+              "height": 288,
+              "image_path": "figures/2610.01395/table-031.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 826
+            },
+            {
+              "caption": "Table 4: Per-seed SmolLM2-135M decoder-only results. All runs use tied input/output embeddings and 2.49B training tokens. The final row reports a paired two-sided t-test over validation loss between AF-Muon and the strongest non-AF baseline by mean validation loss; the gain is baseline minus AF-Muon, so positive values indicate that AF-Muon is better.",
+              "figure_id": "table-4-27",
+              "figure_number": "4",
+              "height": 287,
+              "image_path": "figures/2610.01395/table-032.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 826
+            },
+            {
+              "caption": "Table 6: Per-seed Qwen2.5-0.5B short-horizon results. Values are reported at the last evaluation before the 1B-token budget, corresponding to 0.918B training tokens. The final row reports a paired two-sided t-test over validation loss between AF-Muon and the strongest non-AF baseline by mean validation loss; the gain is baseline minus AF-Muon, so positive values indicate that AF-Muon is better.",
+              "figure_id": "table-6-44",
+              "figure_number": "6",
+              "height": 287,
+              "image_path": "figures/2610.01395/table-033.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 826
+            },
+            {
+              "caption": "Table 37: Tied-table diagnostics for the NanoGPT cap and scale sweep at 393.2M training tokens. Results are mean ± SD over three matched seeds. Coordinate and row fractions describe cap activity; tail energy is computed from the row-RMS endpoint before applying the finite-cap oracle. Cosine similarity and linear-objective ratio compare the normalized AF-Muon direction with Sign evaluated on the same oracle input within each run.",
+              "figure_id": "table-37-53",
+              "figure_number": "37",
+              "height": 284,
+              "image_path": "figures/2610.01395/table-034.webp",
+              "kind": "table",
+              "page": 59,
+              "width": 830
+            },
+            {
+              "caption": "Table 18: Per-seed tied-embedding NanoGPT-MoE results. All runs use 2.62B training tokens, four top-1 routed experts per layer, and the same router auxiliary loss. The final row reports a paired two-sided t-test over validation loss between AF-Muon and the strongest non-AF baseline by mean validation loss; the gain is baseline minus AF-Muon, so positive values indicate that AF-Muon is better.",
+              "figure_id": "table-18-29",
+              "figure_number": "18",
+              "height": 286,
+              "image_path": "figures/2610.01395/table-035.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 756
+            },
+            {
+              "caption": "Table 23: Top-half image-completion metrics for the tied ImageGPT-style ImageNet-32 experiment. Metrics are computed by conditioning on the first 512 tokens of fixed validation images and evaluating the likelihood of the held-out bottom half. Results are mean ± SD over three trained seeds; all methods use the same validation images.",
+              "figure_id": "table-23-57",
+              "figure_number": "23",
+              "height": 117,
+              "image_path": "figures/2610.01395/table-036.webp",
+              "kind": "table",
+              "page": 48,
+              "width": 810
+            },
+            {
+              "caption": "Table 20: Tied ImageGPT-style ImageNet-32 results with a deterministic RGB554 16k color vocabulary. Results are mean ± SD over three paired seeds. All methods use the same tied input/output color-token table, FP32 trainable parameters and optimizer state with BF16 autocast, batch size 512, and 1.31B image tokens.",
+              "figure_id": "table-20-11",
+              "figure_number": "20",
+              "height": 116,
+              "image_path": "figures/2610.01395/table-037.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 810
+            },
+            {
+              "caption": "Table 5: Final SmolLM2-135M tied-vocabulary diagnostics. Hybrid Muon uses auxiliary/tied AdamW weight decay 0.01; SCION-style Sign and AF-Muon use zero auxiliary/tied weight decay.",
+              "figure_id": "table-5-43",
+              "figure_number": "5",
+              "height": 255,
+              "image_path": "figures/2610.01395/table-038.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 690
+            },
+            {
+              "caption": "Table 3: Final NanoGPT tied-vocabulary diagnostics. Hybrid Muon uses auxiliary AdamW weight decay 0.01; SCION-style Sign and AF-Muon use zero auxiliary/tied weight decay.",
+              "figure_id": "table-3-21",
+              "figure_number": "3",
+              "height": 254,
+              "image_path": "figures/2610.01395/table-039.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 690
+            },
+            {
+              "caption": "Table 30: NanoGPT AF-Muon tied-scale sweep at fixed model width and vocabulary size. All runs use a 12-layer NanoGPT model with hidden size d = 768, a 50k vocabulary, 500M training tokens, FP32 trainable parameters and optimizer state with BF16 autocast, matrix weight decay 0.1, and zero auxiliary/tied weight decay. AF-Muon uses c = 3 and varies the tied scale s. The SCION-style Sign endpoint uses c = 1, s = 1 under the same training protocol.",
+              "figure_id": "table-30-23",
+              "figure_number": "30",
+              "height": 208,
+              "image_path": "figures/2610.01395/table-040.webp",
+              "kind": "table",
+              "page": 54,
+              "width": 790
+            },
+            {
+              "caption": "Table 9: Final Qwen2.5-0.5B long-horizon seed-43 checkpoint diagnostics. The tied-table and matrix norms are measured from the final model-only checkpoint at 6.40B training tokens. Hybrid Muon uses auxiliary/tied AdamW weight decay 0.01; SCION-style Sign and AF-Muon use zero auxiliary/tied weight decay. All runs use FP32 trainable parameters and optimizer state with BF16 autocast.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 105,
+              "image_path": "figures/2610.01395/table-041.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 830
+            },
+            {
+              "caption": "Table 38: NanoGPT tied-table gradient-source ablation at a matched 458.8M-token comparison point. Only the gradient used for the tied input/output vocabulary table is changed; all other model parameters use the same AF-Muon update.",
+              "figure_id": "table-38-33",
+              "figure_number": "38",
+              "height": 100,
+              "image_path": "figures/2610.01395/table-042.webp",
+              "kind": "table",
+              "page": 60,
+              "width": 830
+            },
+            {
+              "caption": "Table 17: Tied-embedding NanoGPT-MoE results on FineWeb for 2.62B tokens across three paired seeds. We report mean ± SD over seeds. The model uses four top-1 routed experts per layer and a router auxiliary load-balancing coefficient of 0.01.",
+              "figure_id": "table-17-32",
+              "figure_number": "17",
+              "height": 116,
+              "image_path": "figures/2610.01395/table-043.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 677
+            },
+            {
+              "caption": "Table 35: NanoGPT auxiliary/fallback learning-rate sensitivity at a matched 458.8M-token comparison point. All runs use seed 43. The hidden-matrix Muon learning rate is fixed at 0.02; the auxiliary/fallback learning-rate scale is varied. For Hybrid Muon this branch includes the tied vocabulary table, while the AdamW-free arms use their tied-table LMO and vary the remaining auxiliary/vector scale.",
+              "figure_id": "table-35-15",
+              "figure_number": "35",
+              "height": 209,
+              "image_path": "figures/2610.01395/table-044.webp",
+              "kind": "table",
+              "page": 58,
+              "width": 829
+            },
+            {
+              "caption": "Table 31: Real-width NanoGPT ablation at fixed 50k vocabulary and 500M training tokens. We report mean ± sample standard deviation over three paired seeds. Rows clipped denotes the fraction of tied-table rows for which the finite-cap constraint is active in the final tied-momentum diagnostic.",
+              "figure_id": "table-31-36",
+              "figure_number": "31",
+              "height": 206,
+              "image_path": "figures/2610.01395/table-045.webp",
+              "kind": "table",
+              "page": 55,
+              "width": 826
+            },
+            {
+              "caption": "Table 29: NanoGPT real-vocabulary re-tokenization ablation. We train matched ByteLevel BPE tokenizers with fix d=768, and 50k, 100k, and 150k vocabulary sizes on the same FineWeb shard, then train each optimizer for 500M tokens. All runs use FP32 trainable parameters and optimizer state with BF16 autocast, matrix weight decay 0.1, zero auxiliary/tied weight decay, and effective batch size 512. The 50k runs use microbatch 16; 100k and 150k use microbatch 8 for memory. We report mean ± sample standard deviation over three paired seeds. related figure 16",
+              "figure_id": "table-29-9",
+              "figure_number": "29",
+              "height": 206,
+              "image_path": "figures/2610.01395/table-046.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 814
+            },
+            {
+              "caption": "Table 34: NanoGPT batch-size sensitivity at a matched 458.8M-token comparison point. All runs use seed 43. Tokens/update is the number of training tokens per optimizer step.",
+              "figure_id": "table-34-2",
+              "figure_number": "34",
+              "height": 181,
+              "image_path": "figures/2610.01395/table-047.webp",
+              "kind": "table",
+              "page": 57,
+              "width": 830
+            },
+            {
+              "caption": "Table 7: Final Qwen2.5-0.5B tied-table diagnostics for the 1B short-horizon seed-44 and seed-45 runs. Hybrid Muon uses auxiliary AdamW weight decay 0.01; SCION-style Sign and AF-Muon use zero auxiliary/tied weight decay. Seed-43 checkpoint diagnostics are reported separately for the long-horizon continuation in Table 9.",
+              "figure_id": "table-7-54",
+              "figure_number": "7",
+              "height": 186,
+              "image_path": "figures/2610.01395/table-048.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 690
+            },
+            {
+              "caption": "Table 11: Final Llama-3.2-1B tied-table diagnostics for the 2B short-horizon seed-44 and seed-45 runs. Hybrid Muon uses auxiliary/tied AdamW weight decay 0.01; SCION-style Sign and AF-Muon use zero auxiliary/tied weight decay. Seed-43 checkpoint diagnostics are reported separately for the long-horizon continuation in Table 13.",
+              "figure_id": "table-11-19",
+              "figure_number": "11",
+              "height": 186,
+              "image_path": "figures/2610.01395/table-049.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 690
+            },
+            {
+              "caption": "Table 14: Single-seed ρ sweep for AF-Muon on small T5-style shared-vocabulary encoder–decoder with a fully shared vocabulary table. All runs use 110M target tokens, matrix weight decay 0.1, and zero auxiliary/tied weight decay. We select ρout/ρhid = 1 for the main three-seed experiment.",
+              "figure_id": "table-14-25",
+              "figure_number": "14",
+              "height": 154,
+              "image_path": "figures/2610.01395/table-050.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 744
+            },
+            {
+              "caption": "Table 22: Final tied-table diagnostics for the tied ImageGPT-style ImageNet-32 ablation. Values are mean ± SD over three paired seeds. The cosine and objective-ratio columns compare the AF-Muon tied-table update geometry to the Sign endpoint.",
+              "figure_id": "table-22-12",
+              "figure_number": "22",
+              "height": 133,
+              "image_path": "figures/2610.01395/table-051.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 830
+            },
+            {
+              "caption": "Table 13: Final Llama-3.2-1B long-horizon seed-43 diagnostics. All runs use FP32 trainable parameters and optimizer state with BF16 autocast.",
+              "figure_id": "table-13-41",
+              "figure_number": "13",
+              "height": 100,
+              "image_path": "figures/2610.01395/table-052.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 830
+            },
+            {
+              "caption": "Table 12: Llama-3.2-1B long-horizon seed-43 endpoint results.",
+              "figure_id": "table-12-42",
+              "figure_number": "12",
+              "height": 119,
+              "image_path": "figures/2610.01395/table-053.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 632
+            },
+            {
+              "caption": "Table 28: NanoGPT 2 × 2 factorial ablation separating the tied vocabulary-table update from the remaining one-dimensional auxiliary update. All runs use 1.05B training tokens and three paired seeds.",
+              "figure_id": "table-28-56",
+              "figure_number": "28",
+              "height": 139,
+              "image_path": "figures/2610.01395/table-054.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 536
+            },
+            {
+              "caption": "Table 8: Qwen2.5-0.5B long-horizon seed-43 endpoint results. The run continues the same seed used in the paired short-horizon comparison to 6.40B training tokens; the validation endpoint below is the last scheduled evaluation, at 6.29B tokens. This single-seed continuation is used as a stability check, not as a three-seed estimate.",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 117,
+              "image_path": "figures/2610.01395/table-055.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 632
+            },
+            {
+              "caption": "Table 19: Final tied-table and router diagnostics for the tied-embedding NanoGPT-MoE ablation. Values are mean ± SD over three paired seeds.",
+              "figure_id": "table-19-30",
+              "figure_number": "19",
+              "height": 84,
+              "image_path": "figures/2610.01395/table-056.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 830
+            },
+            {
+              "caption": "Table 39: Homogeneous dense-sharing diagnostic. One up-projection and one down-projection are reused at four depths. Statistics are measured at the final audit after 5.0M predicted tokens. Objective retention compares the equal-spectral-radius sum of per-depth Muon directions with Muon applied once to the accumulated gradient. The experiment uses one seed and is intended as a boundary diagnostic rather than a performance comparison.",
+              "figure_id": "table-39-16",
+              "figure_number": "39",
+              "height": 63,
+              "image_path": "figures/2610.01395/table-057.webp",
+              "kind": "table",
+              "page": 62,
+              "width": 827
+            },
+            {
+              "caption": "Table 25: Seed-43 AdamW LR pilot. All runs use the same 363M RoPE decoder and 500 steps / 32.77M tokens. We use η = 6 × 10−4 for the longer AdamW comparison in table",
+              "figure_id": "table-25-39",
+              "figure_number": "25",
+              "height": 114,
+              "image_path": "figures/2610.01395/table-058.webp",
+              "kind": "table",
+              "page": 50,
+              "width": 244
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2610.01395/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.01395",
+          "relevance": 6,
+          "selection_reason": "Presents an optimizer that reduces memory and compute overhead for tied-embedding models; fits efficient AI via reduced training memory and step-time cost.",
+          "summary_status": "generated",
+          "title": "AF-Muon: An AdamW-Free Muon Optimizer for Tied-Embedding Models",
+          "tldr": "AF-Muon extends Muon to tied-embedding models without AdamW, reducing optimizer-state memory while improving validation performance across diverse modalities and architectures.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Hybrid language models maintain fixed-size recurrent states, but existing quantizers typically use eight bits or more. Quantization errors persist according to channel decay rates. We derive distortion weights from the observability Gramian and combine them with normalized state ranges for mixed-precision bit allocation, without calibration data, rotation, or training. We also quantize decay rates logarithmically. With per-token state quantization, a four-bit mean payload reduces excess negative log-likelihood by factors of 3.3--27.9 relative to the best of seven baselines across three hybrid models; metadata costs vary. At six bits, negative log-likelihood differs from the FP32-state baseline by less than 0.005 nats. Ablations separate gains from variable bit widths, decay weighting, and range normalization. With less frequent write-backs, gains diminish and depend on the model and budget.",
+          "arxiv_id": "2609.30950",
+          "arxiv_url": "https://arxiv.org/abs/2609.30950",
+          "authors": [
+            "Hongren Chen",
+            "Jiayang He"
+          ],
+          "bullets": [
+            "Existing recurrent-state quantizers generally use at least eight bits, while persistent errors depend on channel decay rates.",
+            "The method allocates bits using observability-Gramian distortion weights and normalized state ranges, and logarithmically quantizes decay rates.",
+            "It requires no calibration data, rotations, or retraining, and supports per-token state quantization.",
+            "Across three hybrid models, four-bit mean payloads reduce excess negative log-likelihood by 3.3–27.9× versus seven baselines; metadata costs vary.",
+            "At six bits, negative log-likelihood is within 0.005 nats of the FP32-state baseline; benefits diminish with less frequent write-backs and depend on model and budget."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Chunked state quantization (WikiText, C = 64). Excess NLL is relative to FP32 on a symmetric logarithmic scale. Stars and triangles identify configurations in the legends below each panel (nominal payloads).",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 300,
+              "image_path": "figures/2609.30950/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 965
+            },
+            {
+              "caption": "Figure 1. Error propagation and bit allocation. (a) Squared decay of an injected state error in two Kimi-Linear rows; gray steps sample it at write-backs. Paired sums refer to the decay curve and steps. (b) Centered contributions to the bit-allocation target. (c) Allocated bit widths in one layer. (d) Relative readout MSE in a synthetic recurrence with natural or equal row ranges. Settings: C = 64, two-bit mean payload.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 284,
+              "image_path": "figures/2609.30950/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 970
+            },
+            {
+              "caption": "Table 2. Per-token state quantization (C = 1; excess NLL, nats). Ours outperforms all seven baselines in every window at four bits (unadjusted sign test p = 0.004 per comparison). Settings: 8 WikiText windows of 2K tokens, bmax = 16. INT uses fitted scales; range-only uses the same units as ours. Total bits: Kimi (†4.5 on Qwen). Bold: minimum and statistical ties.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 500,
+              "image_path": "figures/2609.30950/table-003.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 714
+            },
+            {
+              "caption": "Table 3. Chunked state quantization (C = 64; excess NLL, nats). Total bits are shown at b̄ = 2 (†Qwen3.6: DASC 2.234, ours 2.5). Bold: minimum and statistical ties. INT scales are fitted; Quamba2 uses static scales. Requirements: calibration (C), FP16 values (F), rotation (R). The zero-state baseline resets the state every 64 tokens.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 496,
+              "image_path": "figures/2609.30950/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 710
+            },
+            {
+              "caption": "Table 1. Held-out bit-allocation ablations on Kimi (excess NLL, nats). Only ci varies. Payload: 4 bits at C = 1, 2 bits otherwise. Settings: 2K-token windows (8 at C = 1, else 32). Bold: minimum and entries whose paired 95% interval against it includes zero; –: not evaluated.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 317,
+              "image_path": "figures/2609.30950/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 527
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2609.30950/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.30950",
+          "relevance": 8,
+          "selection_reason": "Low-bit quantization of recurrent states in hybrid language models reduces memory footprint; directly relevant to memory-efficient inference.",
+          "summary_status": "generated",
+          "title": "Low-Bit Recurrent States in Hybrid Language Models",
+          "tldr": "A calibration-free mixed-precision quantizer enables accurate low-bit recurrent states in hybrid language models, with four-bit states substantially reducing quantization error and six-bit states nearly matching FP32 performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We propose a linearized Physics-Informed Neural Network (lPINN), a reduced-order neural basis method for forward and inverse differential equations. In an offline stage, lPINN learns operator-compatible continuous neural basis functions from an ensemble of numerical solutions. The basis functions are differentiable through automatic differentiation and are pretrained using solution data together with either derivative information or physics residuals. For each new problem instance, the basis functions are frozen and the solution is obtained by minimizing the governing-equation residual together with applicable initial, boundary, regularization, and observational terms. Unlike surrogate and operator-learning methods, the training data define the trial space offline, while the instance-specific solution is computed online by enforcing the governing physics. Relative to vanilla PINNs, lPINN pretrains the nonlinear hidden-layer representation offline and performs online inference only in the final linear layer. We evaluate lPINN on forward and inverse problems for the advection-diffusion equation, Burgers' equation, and the nonlinear pendulum equation. Compared with vanilla PINNs, lPINN achieves lower solution and parameter errors while reducing online inference times by approximately one to more than three orders of magnitude, with the largest gains generally observed for limited residual or measurement data. Cross-resolution experiments show that the learned continuous representation can be evaluated on finer meshes without retraining and with nearly unchanged accuracy.",
+          "arxiv_id": "2609.14926",
+          "arxiv_url": "https://arxiv.org/abs/2609.14926",
+          "authors": [
+            "Wenhao Chen",
+            "Alexandre M. Tartakovsky"
+          ],
+          "bullets": [
+            "Targets faster and more data-efficient solution of forward and inverse differential equations than vanilla PINNs.",
+            "Learns differentiable, operator-compatible basis functions from ensembles of numerical solutions, derivative data, or physics residuals.",
+            "Freezes the nonlinear representation for each new instance; online optimization enforces governing equations and relevant initial, boundary, observational, and regularization terms.",
+            "Evaluated on advection-diffusion, Burgers’, and nonlinear pendulum equations.",
+            "Compared with vanilla PINNs, reports lower solution and parameter errors and online speedups of roughly one to over three orders of magnitude, especially with limited residual or measurement data; supports finer meshes without retraining."
+          ],
+          "categories": [
+            "math.AP",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The schematic representation of the lPINN method. All parameters in the mean DNN and the parameters associated with the fluctuation DNN layers are estimated offline using the training dataset. The remaining fluctuationDNN parameters in the last layer are determined for the specified parameters using the physics-informed loss.",
+              "figure_id": "figure-1-23",
+              "figure_number": "1",
+              "height": 525,
+              "image_path": "figures/2609.14926/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 932
+            },
+            {
+              "caption": "Figure 3: ADE forward problem: (a) Comparison of the PINN and lPINN predictions with the reference solution at t = 20.7 s, and 200.0 s. (b) Pointwise standard deviation at the Nx = 30 grid points on the same mesh at t = 20.7 s, and 200.0 s. Nres = 500, Nη = 50, Ntrain = 500.",
+              "figure_id": "figure-3-28",
+              "figure_number": "3",
+              "height": 415,
+              "image_path": "figures/2609.14926/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 979
+            },
+            {
+              "caption": "Figure 4: ADE forward problem: (a) rRMSE(u) as a function of the number of residual points Nres, where u is the mean of 10 PINN or lPINN solutions. (b) Relative root-mean-square error (rRMSE) of residual, initial condition, and boundary condition error as a function of the number of residual points Nres. Nη = 50, Ntrain = 500.",
+              "figure_id": "figure-4-27",
+              "figure_number": "4",
+              "height": 362,
+              "image_path": "figures/2609.14926/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 976
+            },
+            {
+              "caption": "Figure 5: ADE inverse problem: Comparison of the PINN and lPINN estimations of u(x, t) with the reference solution at t = 20.7 s, and 200.0 s. Nres = 500, Nm = 40, Nη = 50, Ntrain = 500.",
+              "figure_id": "figure-5-21",
+              "figure_number": "5",
+              "height": 415,
+              "image_path": "figures/2609.14926/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 979
+            },
+            {
+              "caption": "Figure 6: ADE inverse problem: Relative root-mean-square error (rRMSE) of the inferred velocity V , dispersion coefficient D, and predicted solution u as functions of the number of measurement points Nm. Nres = 500, Nη = 50, Ntrain = 500.",
+              "figure_id": "figure-6-22",
+              "figure_number": "6",
+              "height": 424,
+              "image_path": "figures/2609.14926/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 736
+            },
+            {
+              "caption": "Figure 7: ADE forward problem: Comparison of the lPINN and dPICKLE predictions with the reference solution at t = 20.7 s and 200.0 s. Here, Nres = 784, Nη = 50, and Ntrain = 500.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 417,
+              "image_path": "figures/2609.14926/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 490
+            },
+            {
+              "caption": "Figure 9: Burgers’ forward problem: Comparison of the PINN and lPINN predictions with the reference solution at t = 0.0 s and 1.0 s. Here, Nres = 100, Nη = 20, Ntrain = 500",
+              "figure_id": "figure-9-36",
+              "figure_number": "9",
+              "height": 412,
+              "image_path": "figures/2609.14926/figure-007.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 979
+            },
+            {
+              "caption": "Figure 11: Burgers’ inverse problem: Comparison of the PINN and lPINN predictions with the reference solution at t = 0.0 and 1.0 s. Nres = 100, Nm = 5, Nη = 50, Ntrain = 500",
+              "figure_id": "figure-11-25",
+              "figure_number": "11",
+              "height": 414,
+              "image_path": "figures/2609.14926/figure-008.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 979
+            },
+            {
+              "caption": "Figure 10: Burgers’ forward problem: (a) Relative root-mean-square error (rRMSE) of the predicted solution for PINN and lPINN as a function of the number of residual points Nres. (b) Relative root-mean-square error (rRMSE) of the residual, initial condition, and boundary condition errors as functions of the number of residual points Nres. Nη = 20, Ntrain = 500.",
+              "figure_id": "figure-10-26",
+              "figure_number": "10",
+              "height": 360,
+              "image_path": "figures/2609.14926/figure-009.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 976
+            },
+            {
+              "caption": "Figure 12: Burgers’ inverse problem: Relative root-mean-square error (rRMSE) of the inferred kinematic viscosity ν and predicted solution u as functions of the number of measurement points Nm. Nres = 100, Nη = 50, Ntrain = 500",
+              "figure_id": "figure-12-15",
+              "figure_number": "12",
+              "height": 435,
+              "image_path": "figures/2609.14926/figure-010.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 736
+            },
+            {
+              "caption": "Figure 2: ADE problem: Left: Approximation error of the pretrained fluctuation network and the corresponding residual error. Middle: Relative error of the lPINN forward prediction. Right: Relative errors of the lPINN inverse prediction for the solution u and the inferred parameters V and D. Ntrain = 500. The lPINN error for Nη = 50, Nres = 500 in this test is not directly comparable with the lPINN error for Nη = 50, Nres = 500 in the following forward problem as in that problem we use a shared λ = 10−4 across Nres.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 271,
+              "image_path": "figures/2609.14926/figure-011.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 979
+            },
+            {
+              "caption": "Figure 14: Nonlinear pendulum equation forward problem: Comparison of the PINN and lPINN predictions with the reference solution. Nres = 1000, Nη = 200, Ntrain = 500.",
+              "figure_id": "figure-14-34",
+              "figure_number": "14",
+              "height": 415,
+              "image_path": "figures/2609.14926/figure-012.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 979
+            },
+            {
+              "caption": "Figure 15: Nonlinear pendulum forward problem: (a) rRMSE of the predicted solution for PINN and lPINN as a function of the number of residual points Nres. (b) rRMSE of residual and initial condition errors as a function of the number of residual points Nres. Nη = 200, Ntrain = 500.",
+              "figure_id": "figure-15-33",
+              "figure_number": "15",
+              "height": 360,
+              "image_path": "figures/2609.14926/figure-013.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 976
+            },
+            {
+              "caption": "Figure 16: Nonlinear pendulum equation inverse problem: Comparison of the PINN and lPINN predictions with the reference solution. Nres = 500, Nm = 10, Nη = 200, Ntrain = 500.",
+              "figure_id": "figure-16-9",
+              "figure_number": "16",
+              "height": 415,
+              "image_path": "figures/2609.14926/figure-014.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 979
+            },
+            {
+              "caption": "Figure 17: Nonlinear pendulum equation inverse problem: Relative root-mean-square error (rRMSE) of the inferred damping coefficient γ, pendulum length ℓ, and predicted solution θ as functions of the number of measurement points Nm. Nres = 500, Nη = 200, Ntrain = 500.",
+              "figure_id": "figure-17-10",
+              "figure_number": "17",
+              "height": 425,
+              "image_path": "figures/2609.14926/figure-015.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 736
+            },
+            {
+              "caption": "Figure 18: lPINN prediction error vs. mesh spacing ∆x for ADE equation. For each mesh, the lPINN is pretrained using the numerical-solution dataset generated on that mesh and is then evaluated on the same mesh. Smaller ∆x corresponds to a finer mesh. Nres = 500, Nη = 50, Ntrain = 500.",
+              "figure_id": "figure-18-13",
+              "figure_number": "18",
+              "height": 481,
+              "image_path": "figures/2609.14926/figure-016.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 736
+            },
+            {
+              "caption": "Figure 19: lPINN prediction error versus mesh spacing ∆x for Burgers’ equation. For each mesh, the lPINN is pretrained using the numerical-solution dataset generated on that mesh and is then evaluated on the same mesh. Smaller ∆x corresponds to a finer mesh. Nres = 100, Nη = 20, Ntrain = 500.",
+              "figure_id": "figure-19-16",
+              "figure_number": "19",
+              "height": 484,
+              "image_path": "figures/2609.14926/figure-017.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 736
+            },
+            {
+              "caption": "Figure 8: Burgers’ equation: Left: Approximation error of the pretrained fluctuation network and the corresponding residual error. Middle: Relative error of the lPINN forward prediction. Right: Relative errors of the lPINN inverse prediction for the solution u and the inferred parameter ν. Here, Ntrain = 500.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 270,
+              "image_path": "figures/2609.14926/figure-018.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 979
+            },
+            {
+              "caption": "Figure 20: lPINN prediction error elPINN versus time-step size ∆t for the nonlinear pendulum equation. For each temporal mesh, the lPINN is pretrained using the numerical-solution dataset generated on that mesh and is then evaluated on the same mesh. Smaller ∆t corresponds to a finer temporal mesh. Nres = 1000.",
+              "figure_id": "figure-20-32",
+              "figure_number": "20",
+              "height": 484,
+              "image_path": "figures/2609.14926/figure-019.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 736
+            },
+            {
+              "caption": "Figure 13: Nonlinear pendulum equation. Left: Approximation error of the pretrained fluctuation network and the corresponding residual error. Middle: Relative error of the lPINN forward prediction. Right: Relative errors of the lPINN inverse prediction for the solution θ and the inferred parameter γ and ℓ. Here, Ntrain = 500, Nres = 10Nη , and Nm = 50 for the inverse problem.",
+              "figure_id": "figure-13-24",
+              "figure_number": "13",
+              "height": 271,
+              "image_path": "figures/2609.14926/figure-020.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 976
+            },
+            {
+              "caption": "Table 8: Forward Problem: PINN and lPINN Error vs. Nres. Ntrain = 500 for lPINN. For ADE equation, NIC = Nres and NBC = 2Nres. For Burgers’ equation, NIC = NBC = Nres.",
+              "figure_id": "table-8-29",
+              "figure_number": "8",
+              "height": 537,
+              "image_path": "figures/2609.14926/table-021.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 964
+            },
+            {
+              "caption": "Table 2: Comparison of residual-based and derivative-matching pretraining for Burgers’ equation. As we use Nm = 5 in this test and we use Nm = 50 for solving the inverse problem in the following part of the section, the result is not directly comparable.",
+              "figure_id": "table-2-35",
+              "figure_number": "2",
+              "height": 195,
+              "image_path": "figures/2609.14926/table-022.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 622
+            },
+            {
+              "caption": "Table 3: Forward Problem in Basis Size Studies for lPINN. Ntrain = 500. For ADE equation, NIC = Nres and NBC = 2Nres. For Burgers’ equation, NIC = NBC = Nres.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 406,
+              "image_path": "figures/2609.14926/table-023.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 964
+            },
+            {
+              "caption": "Table 9: Nonlinear Pendulum Forward Problem: PINN and lPINN Error vs. Nres. Ntrain = 500 for lPINN.",
+              "figure_id": "table-9-30",
+              "figure_number": "9",
+              "height": 329,
+              "image_path": "figures/2609.14926/table-024.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 964
+            },
+            {
+              "caption": "Table 1: ADE comparison between residual-based pretraining and derivative-matching pretraining. The smaller value in each row is shown in bold.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 171,
+              "image_path": "figures/2609.14926/table-025.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 622
+            },
+            {
+              "caption": "Table 15: Nonlinear Pendulum Superresolution Study. Nres = 1000 for lPINN. rRMSEnum is the error of the numerical solution.",
+              "figure_id": "table-15-12",
+              "figure_number": "15",
+              "height": 231,
+              "image_path": "figures/2609.14926/table-026.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 964
+            },
+            {
+              "caption": "Table 5: ADE Inverse Problem in the Basis Size Study for lPINN. Ntrain = 500, Nm = 40, NIC = NBC = Nres, λdata = 1, Fig. 2.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 225,
+              "image_path": "figures/2609.14926/table-027.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 968
+            },
+            {
+              "caption": "Table 11: Burgers Equation Inverse Problem: PINN and lPINN Error vs. Nm. Ntrain = 500, Nη = 50, Nres = 100, NIC = 100, NBC = 100.",
+              "figure_id": "table-11-17",
+              "figure_number": "11",
+              "height": 238,
+              "image_path": "figures/2609.14926/table-028.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 914
+            },
+            {
+              "caption": "Table 12: Nonlinear Pendulum Inverse Problem: PINN and lPINN Error vs.Nm. Ntrain = 500,Nη = 200,Nres = 500.",
+              "figure_id": "table-12-20",
+              "figure_number": "12",
+              "height": 209,
+              "image_path": "figures/2609.14926/table-029.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 968
+            },
+            {
+              "caption": "Table 16: Offline pretraining. For ADE and Burgers’ equation, λf = λIC,0 = λBC = 1 in 15, and for nonlinear pendulum equation, λ1 = λ4 = 1 in ?? and ??.",
+              "figure_id": "table-16-11",
+              "figure_number": "16",
+              "height": 164,
+              "image_path": "figures/2609.14926/table-030.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 390
+            },
+            {
+              "caption": "Table 14: Superresolution studies. For the ADE equation, NIC = Nres and NBC = 2Nres. For Burgers’ equation, NIC = NBC = Nres. Ntrain = 500 for lPINN, rRMSEnum is the error of the numerical solution.",
+              "figure_id": "table-14-19",
+              "figure_number": "14",
+              "height": 199,
+              "image_path": "figures/2609.14926/table-031.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 968
+            },
+            {
+              "caption": "Table 10: ADE Inverse Problem: PINN and lPINN Error vs. Nm. Ntrain = 500, Nη = 50, Nres = 500, NIC = 500, NBC = 500, λdata = 1.",
+              "figure_id": "table-10-31",
+              "figure_number": "10",
+              "height": 198,
+              "image_path": "figures/2609.14926/table-032.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 968
+            },
+            {
+              "caption": "Table 7: Nonlinear Pendulum Inverse Problem in the Basis Size Study for lPINN. Ntrain = 500, Nm = 50, λdata = 1, Fig. 13.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 143,
+              "image_path": "figures/2609.14926/table-033.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 966
+            },
+            {
+              "caption": "Table 6: Burgers Equation Inverse Problem in the Basis Size Study for lPINN. Ntrain = 500, Nm = 50, NIC = NBC = Nres, λdata = 1, Fig. 8.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 144,
+              "image_path": "figures/2609.14926/table-034.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 606
+            },
+            {
+              "caption": "Table 4: Nonlinear Pendulum Forward Problem in the Basis Size Study for lPINN. Ntrain = 500.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 119,
+              "image_path": "figures/2609.14926/table-035.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 622
+            },
+            {
+              "caption": "Table 13: ADE lPINN and dPICKLE Comparison. Ntrain = 500, Nη = 50, Nres = 784, NIC = 30, and NBC = 59.",
+              "figure_id": "table-13-18",
+              "figure_number": "13",
+              "height": 97,
+              "image_path": "figures/2609.14926/table-036.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 410
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2609.14926/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.14926",
+          "relevance": 5,
+          "selection_reason": "Instance-specific online residual minimization over frozen pretrained layers is a test-time optimization method with substantial inference-speed gains.",
+          "summary_status": "generated",
+          "title": "Linearized PINN with pretrained nonlinear layers",
+          "tldr": "lPINN pretrains physics-compatible neural basis functions offline, then solves new forward or inverse differential-equation problems online using only a linear output layer and physics constraints.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "test-time-learning"
+              ],
+              "topic_id": "adaptation-and-memory"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-11",
       "paper_count": 50,
       "papers": [
@@ -309471,5 +310688,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "efficient-ai",
-  "total_paper_count": 1666
+  "total_paper_count": 1670
 }

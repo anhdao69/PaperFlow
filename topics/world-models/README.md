@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**822 papers total**
+**825 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [JANUS: Enhancing Long-Horizon Autonomous Research with Co-Evolving World Models](https://arxiv.org/abs/2610.13194) | World Models: Interactive World Models | JANUS accelerates long-horizon autonomous research by using a co-evolving world model to predict, filter, and improve research candidates before costly execution. | 7 | 8 |
+| 2026-10-12 | [Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation](https://arxiv.org/abs/2609.32837) | Embodied AI: Robot Navigation; World Models: Interactive World Models | SonoGraph-WM enables anticipatory robotic ultrasound navigation by predicting future anatomical scene graphs and probe poses, then planning through imagined trajectories. | 9 | 9 |
+| 2026-10-12 | [GLAM: Training a latent world model over global spatiotemporal memory for active exploration and navigation](https://arxiv.org/abs/2609.14561) | Embodied AI: Robot Navigation; World Models: Latent Action Models; Adaptation and Memory: Embodied Memory | GLAM learns a goal-conditioned latent world model that predicts future spatial memory and navigation waypoints for active exploration and semantic navigation. | 8 | 8 |
 | 2026-10-11 | [RSI-Anything: Unlocking Recursive Self-Improvement with World Models](https://arxiv.org/abs/2610.13912) | World Models; Adaptation and Memory: Continual and Online Learning | RSI-Anything uses predictive world models and validated policy updates to enable recursive self-improvement across diverse tasks with limited external feedback. | 7 | 7 |
 | 2026-10-11 | [HorizonNav: Geometry-Guided Video Diffusion for Anticipatory 3D Robot Navigation](https://arxiv.org/abs/2610.13849) | Embodied AI: Robot Navigation; World Models: Video World Models; Video Generation and Understanding: Video Diffusion | HorizonNav uses text-guided video diffusion and geometry-based depth alignment to imagine and reconstruct navigable 3D surroundings from a single RGB image. | 8 | 8 |
 | 2026-10-11 | [SmolWAM: A Latent World-Action Model for Robotic Manipulation on Edge Devices](https://arxiv.org/abs/2610.13740) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Efficient AI | SmolWAM compresses a large world-action model into an edge-friendly latent model that rapidly predicts robot actions and future scene observations. | 9 | 7 |

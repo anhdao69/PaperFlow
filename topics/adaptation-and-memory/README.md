@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1044 papers total**
+**1049 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Specialists Learn Faster: Knowledge Organization in Pre-training Shapes Knowledge Update Efficiency](https://arxiv.org/abs/2610.13835) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Large Language Models | Organizing pre-training knowledge chronologically creates specialists that update substantially more efficiently than generalists while preserving historical knowledge. | 7 | 8 |
+| 2026-10-12 | [EASE: Behavior-Adaptive Skill Curation for Self-Evolving Agents](https://arxiv.org/abs/2609.36746) | Adaptation and Memory: Continual and Online Learning | EASE enables one skill curator to adapt to different agent executors, improving skill quality and efficiency without per-executor fine-tuning. | 7 | 7 |
+| 2026-10-12 | [Linearized PINN with pretrained nonlinear layers](https://arxiv.org/abs/2609.14926) | Efficient AI; Adaptation and Memory: Test-Time Learning | lPINN pretrains physics-compatible neural basis functions offline, then solves new forward or inverse differential-equation problems online using only a linear output layer and physics constraints. | 5 | 7 |
+| 2026-10-12 | [REVOLVE: An Automated Closed-Loop Framework for Evolving Robot Manipulation with Minimal Human Intervention](https://arxiv.org/abs/2609.14633) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | REVOLVE creates a closed-loop robot manipulation system that learns from failures and corrections while sharply reducing human involvement. | 8 | 7 |
+| 2026-10-12 | [GLAM: Training a latent world model over global spatiotemporal memory for active exploration and navigation](https://arxiv.org/abs/2609.14561) | Embodied AI: Robot Navigation; World Models: Latent Action Models; Adaptation and Memory: Embodied Memory | GLAM learns a goal-conditioned latent world model that predicts future spatial memory and navigation waypoints for active exploration and semantic navigation. | 8 | 8 |
 | 2026-10-11 | [RSI-Anything: Unlocking Recursive Self-Improvement with World Models](https://arxiv.org/abs/2610.13912) | World Models; Adaptation and Memory: Continual and Online Learning | RSI-Anything uses predictive world models and validated policy updates to enable recursive self-improvement across diverse tasks with limited external feedback. | 7 | 7 |
 | 2026-10-11 | [MC-EvoBench: Auditing Experience-Driven Self-Improvement in Minecraft Agents](https://arxiv.org/abs/2610.13829) | Embodied AI; Adaptation and Memory: Embodied Memory | MC-EvoBench is a controlled Minecraft benchmark showing that agents’ prior experience does not yet reliably produce durable, transferable capabilities. | 7 | 7 |
 | 2026-10-11 | [Dream to Remember: Continual Steering of Generalist Robot Policies with World Models](https://arxiv.org/abs/2610.13816) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | D2R continually improves a frozen generalist robot policy on new tasks while preserving earlier skills through world-model rehearsal. | 9 | 8 |

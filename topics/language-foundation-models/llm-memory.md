@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**541 papers total**
+**543 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [Forgetting is Not Always Bad: A Neuro-Inspired Memory Repair Mechanism for Poisoned LLM Agents](https://arxiv.org/abs/2610.13267) | Language Foundation Models: LLM Memory | DREAM repairs poisoned LLM-agent memories by selectively forgetting harmful memories while preserving benign ones, reducing attack success and overhead. | 7 | 8 |
+| 2026-10-12 | [Empirical Evaluation of Open-Source Large Language Models for Retrieval-Augmented Generation in ESG Domain](https://arxiv.org/abs/2609.15242) | Language Foundation Models: LLM Memory | A systematic evaluation of seven open-source LLMs finds that RAG retrieves ESG information reliably, but generation quality—especially factual correctness—remains limited and model-dependent. | 4 | 3 |
 | 2026-10-11 | [Test-Time Memory Construction](https://arxiv.org/abs/2610.13348) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | T²Mem builds query-specific memory at inference time, helping LLMs answer questions over long, scattered interaction histories with lower construction overhead. | 8 | 8 |
 | 2026-10-11 | [Beyond the Final Embedding: Retrieving Memories from Token-Level Evidence](https://arxiv.org/abs/2610.13277) | Language Foundation Models: LLM Memory | Token-level sparse matching complements whole-memory embeddings to retrieve locally relevant evidence more effectively, improving retrieval and long-term-memory QA. | 7 | 7 |
 | 2026-10-11 | [DP-MIND: Differentially private memory-guided Long context Inference](https://arxiv.org/abs/2610.13132) | Language Foundation Models: LLM Memory, Long-Context Models | DP-MIND enables differentially private inference over million-token contexts by combining input perturbation, chunk-wise memory, reinforcement-learned memory construction, and local answer denoising. | 7 | 7 |

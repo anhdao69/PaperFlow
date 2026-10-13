@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**411 papers total**
+**413 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-12 | [JANUS: Enhancing Long-Horizon Autonomous Research with Co-Evolving World Models](https://arxiv.org/abs/2610.13194) | World Models: Interactive World Models | JANUS accelerates long-horizon autonomous research by using a co-evolving world model to predict, filter, and improve research candidates before costly execution. | 7 | 8 |
+| 2026-10-12 | [Scanning While Imagining: A Scene-Graph World Model for Robotic Ultrasound Navigation](https://arxiv.org/abs/2609.32837) | Embodied AI: Robot Navigation; World Models: Interactive World Models | SonoGraph-WM enables anticipatory robotic ultrasound navigation by predicting future anatomical scene graphs and probe poses, then planning through imagined trajectories. | 9 | 9 |
 | 2026-10-11 | [SmolWAM: A Latent World-Action Model for Robotic Manipulation on Edge Devices](https://arxiv.org/abs/2610.13740) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Efficient AI | SmolWAM compresses a large world-action model into an edge-friendly latent model that rapidly predicts robot actions and future scene observations. | 9 | 7 |
 | 2026-10-11 | [Beyond Successful Robot Demonstrations: Learning from Human Interactions and Modeling Failure Dynamics](https://arxiv.org/abs/2610.13522) | Embodied AI: Learning from Human Videos; World Models: Interactive World Models | HF-WM improves robotic world modeling by learning from human interactions and synthesizing failure dynamics from perturbed successful demonstrations. | 9 | 9 |
 | 2026-10-11 | [What Visual Representations Do World Action Models Need?](https://arxiv.org/abs/2610.13024) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | A controlled study finds that strong general-purpose visual representations, especially with channel-wise joint prediction, substantially improve World Action Models for manipulation. | 8 | 7 |

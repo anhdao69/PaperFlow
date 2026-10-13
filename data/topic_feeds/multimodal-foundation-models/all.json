@@ -1,6 +1,948 @@
 {
   "days": [
     {
+      "date": "2026-10-12",
+      "paper_count": 5,
+      "papers": [
+        {
+          "abstract": "Clinical prognosis requires integrating structured measurements, physiological waveforms, longitudinal history, and population context. We introduce PRISM (Population-Retrieved Inference for Structured Multimodal Prognosis), a multimodal language model that combines per-feature numerical tokenization, recency-weighted aggregation of longitudinal ECGs, and a dual-modality population memory bank. Retrieval operates in representation space: the model receives mean-pooled embeddings of similar training-cohort encounters, while no individual retrieved record enters the prompt. On the 1,443-task MDS-ED benchmark, PRISM achieves AUROCs of 86.2% for diagnosis, 93.1% for deterioration, 91.8% for ICU admission, and 92.8% for mortality. These results use a 96-hour pre-arrival window unavailable to reported baselines. With benchmark-window inputs only, PRISM reaches 0.8895 AUROC, compared with 0.8937 for UniPACT and 0.8889 for MDS-ED. A matched-input compact fusion model using the same five evidence streams and frozen encoders reaches 0.7652 AUROC, versus 0.9092 for PRISM. Replacing numerical EHR encoding with text serialization reduces AUROC by 3.66 points; removing pre-arrival history reduces it by 1.97 points; and zeroing retrieval reduces it by 0.99 points. Genuine retrieval outperforms random-neighbor retrieval by 0.97 macro-average points, although a paired task-level sign test does not establish a uniform advantage (p=0.067). On the external MC-MED cohort, supervised fine-tuning reaches 0.8611 AUROC, compared with 0.8227 for locally trained gradient boosting and 0.7841 for source-only PRISM. These results support structure-aware multimodal integration and supervised external adaptation.",
+          "arxiv_id": "2610.13510",
+          "arxiv_url": "https://arxiv.org/abs/2610.13510",
+          "authors": [
+            "Hamza Shafiq",
+            "Jialu Tang",
+            "Ting Dang",
+            "Jun Hu",
+            "Aaqib Saeed"
+          ],
+          "bullets": [
+            "Addresses clinical prognosis across diagnosis, deterioration, ICU admission, and mortality using heterogeneous evidence.",
+            "Uses per-feature numerical tokenization, recency-weighted ECG history, and representation-space retrieval from a population memory bank without prompting individual records.",
+            "On MDS-ED, reports AUROCs of 86.2%–93.1% using a 96-hour pre-arrival window; with benchmark-window inputs, performance is comparable to reported baselines.",
+            "Ablations show declines from text-based numerical encoding, removing pre-arrival history, and removing retrieval; genuine retrieval improves average performance, though uniform superiority is not statistically established.",
+            "On external MC-MED data, supervised fine-tuning outperforms locally trained gradient boosting and source-only PRISM."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the PRISM architecture. Five modality streams (structured EHR, current ECG, longitudinal ECG history, retrieved EHR context, and retrieved ECG context) are independently encoded and projected as soft tokens into a shared sequence consumed by a LoRA-adapted MedGemma-4B decoder. The population memory bank (center) retrieves the k=3 nearest training-fold encounters from dual EHR and ECG indices constructed after Stage 1 and passes their mean-pooled embeddings, not their outcome labels, to the decoder. The temporal history aggregator (right) pools prior ECG embeddings under exponential recency weighting. Each task question is answered in one forward pass, via either the generative or the classification pathway, with no task-specific heads.",
+              "figure_id": "figure-1-18",
+              "figure_number": "1",
+              "height": 404,
+              "image_path": "figures/2610.13510/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 974
+            },
+            {
+              "caption": "Figure 3: Qualitative analysis of the population memory bank. A test encounter with ICD-10 label Z79 (long-term drug therapy, positive outcome) and three training-fold encounters selected from the dual-modality memory bank for illustration. The EHR and ECG indices are queried independently; the displayed encounters are returned by both indices. The model itself receives the two meanpooled retrieval vectors defined in Equation 5, rather than the individual encounters shown here. All displayed encounters share the same discharge label and outcome. Similarity values are reported within the index from which they are obtained and are not directly comparable across modalities. Shared abnormalities, including elevated glucose and heart rate, illustrate local clinical coherence in the learned embedding space.",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 474,
+              "image_path": "figures/2610.13510/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 976
+            },
+            {
+              "caption": "Figure 2: PRISM performance vs. MDS-ED baseline across clinical prediction categories. Comparison of AUROC for (a) mortality at multiple horizons, (b) clinical deterioration endpoints, (c) ICU admission, and (d) ICD-chapter-level diagnosis groups. Red and blue markers denote PRISM and MDS-ED, respectively. Green annotations indicate relative AUROC improvement. Gains are largest on laboratory-dependent outcomes (e.g., blood and immune disorders, musculoskeletal conditions) and on deterioration endpoints where metabolic measurements are clinically relevant.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 515,
+              "image_path": "figures/2610.13510/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 954
+            },
+            {
+              "caption": "Figure 4: Population memory bank retrieval across four clinical phenotypes (Cases A–D). For each test encounter, the 50 nearest neighbors of the EHR index are used, so every percentage below is computed against a denominator of 50; clinical status (PRESENT/ABSENT) reflects the ground-truth outcome label of the index patient, and percentages report outcome prevalence among the 50 retrieved neighbors.",
+              "figure_id": "figure-4-19",
+              "figure_number": "4",
+              "height": 1078,
+              "image_path": "figures/2610.13510/figure-004.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 686
+            },
+            {
+              "caption": "Table 4: Architectures with and without a language model. The fusion+retrieval control is matched to PRISM on all five input streams; the remaining compact controls use the subsets indicated in their row labels. Frozen upstream encoders are shared where applicable, and all models use the same test fold and evaluation protocol. AUROC is reported as mean ± standard deviation over five seeds for the compact models and over three seeds for PRISM. Expected calibration error uses ten equal-count bins weighted by bin size. Average precision is reported at true cohort prevalence. Parameter counts are totals including frozen components.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 235,
+              "image_path": "figures/2610.13510/table-005.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 882
+            },
+            {
+              "caption": "Table 1: Benchmark results across all 1,443 MDS-ED tasks. AUROC (%) is macro-averaged within each task group: Diagnosis (1,428 ICD-10 discharge tasks), Deterioration (6 tasks), ICU admission (2 tasks), and Mortality (7 tasks). PRISM has the highest reported values among the listed methods in each task group. Its full-input configuration additionally uses 96-hour pre-arrival history; the matched-window comparison is reported in the text. Bold with underline: best. †Zero-shot, text-only input.",
+              "figure_id": "table-1-26",
+              "figure_number": "1",
+              "height": 777,
+              "image_path": "figures/2610.13510/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 1006
+            },
+            {
+              "caption": "Table 5: Contribution of each evidence stream. One evidence stream is removed or replaced per row, with the remaining model components held fixed. ∆ is the change in AUROC relative to full PRISM, in points. Random-neighbor and zeroed-token controls retain the retrieval architecture while varying the content supplied through it.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 266,
+              "image_path": "figures/2610.13510/table-007.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 686
+            },
+            {
+              "caption": "Table 2: External evaluation on MC-MED. All entries are AUROC; PRISM uses the generative pathway. Overall AUROC is the unweighted mean of the four task-group means. Brackets show reported 95% patient-bootstrap confidence intervals. The first two rows use no target-site parameter training. The final two rows perturb retrieval at inference using the fine-tuned checkpoint and identical evaluation records. Bold identifies the highest point estimate among the supervised rows, not statistical significance.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 490,
+              "image_path": "figures/2610.13510/table-008.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 980
+            },
+            {
+              "caption": "Table 3: Architectural and training ablations. AUROC is reported as macro-of-macro over the four task groups under the generative pathway. Rows marked † use the three-seed full-model reference (0.9092±0.0032); unmarked rows use the single-run reference (0.9094). Individual ablations are single training runs unless stated otherwise. ∆ is calculated against the corresponding full-model reference.",
+              "figure_id": "table-3-17",
+              "figure_number": "3",
+              "height": 666,
+              "image_path": "figures/2610.13510/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 540
+            },
+            {
+              "caption": "Table 7: Per-group discrimination, average precision and calibration. AP@eval is measured at the retained evaluation prevalence after ECG exclusions; its chance reference is the retained positive fraction for each task. AP@true rescales to the cohort prevalence of each endpoint. ECE uses ten equal-count bins weighted by bin size.",
+              "figure_id": "table-7-27",
+              "figure_number": "7",
+              "height": 407,
+              "image_path": "figures/2610.13510/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 844
+            },
+            {
+              "caption": "Table 11: Per-task AUROC for all Deterioration, ICU, and Mortality tasks on the held-out test set, with 95% bootstrap confidence intervals (1,000 resamples). The stronger pathway per task is bolded. Point estimates are computed on the retained sampled evaluation records; the bootstrap estimates uncertainty. The macroaverages in the final three rows are the exact means of the per-task values above them and reconcile with the corresponding entries of Table 1.",
+              "figure_id": "table-11-14",
+              "figure_number": "11",
+              "height": 599,
+              "image_path": "figures/2610.13510/table-011.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 852
+            },
+            {
+              "caption": "Table 8: Training hyperparameters for PRISM Stage 1 and Stage 2.",
+              "figure_id": "table-8-7",
+              "figure_number": "8",
+              "height": 627,
+              "image_path": "figures/2610.13510/table-012.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 736
+            },
+            {
+              "caption": "Table 19: PRISM performance stratified by sex, age band and self-reported ethnicity. Confidence intervals are bootstrap estimates over patients. Of the twenty-one pairwise contrasts within attributes, twenty have overlapping intervals; the exception is the 40–54 band against the 85+ band.",
+              "figure_id": "table-19-22",
+              "figure_number": "19",
+              "height": 418,
+              "image_path": "figures/2610.13510/table-013.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 914
+            },
+            {
+              "caption": "Table 12: Diagnosis AUROC by ICD-10 chapter (PRISMgen), sorted by mean AUROC. N : number of ICD10 codes per chapter.",
+              "figure_id": "table-12-25",
+              "figure_number": "12",
+              "height": 749,
+              "image_path": "figures/2610.13510/table-014.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 672
+            },
+            {
+              "caption": "Table 20: Clinical reference intervals used for EHR abnormality flagging. Open bounds are indicated by a dash. Applied in conjunction with a population z-score threshold of |z| > 2.0 (Section K.2).",
+              "figure_id": "table-20-6",
+              "figure_number": "20",
+              "height": 745,
+              "image_path": "figures/2610.13510/table-015.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 826
+            },
+            {
+              "caption": "Table 9: Soft-token projector specifications. All projectors have a hidden dimension of 1,024 and produce an output shape of 8 × 2,560 (MedGemma-4B embedding size).",
+              "figure_id": "table-9-8",
+              "figure_number": "9",
+              "height": 198,
+              "image_path": "figures/2610.13510/table-016.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 444
+            },
+            {
+              "caption": "Table 6: ECG encoder backbone ablation. All other architectural components and hyperparameters are held fixed; only the waveform encoder varies. Best AUROC (%) across both inference pathways is reported per task group. Values are per-task-group percentages from the original single-run evaluation, on the same scale as Table 1 and not on the macro-of-macro scale used in Tables 4, 5 and 3. ∆ denotes the gap between D-BETA and the next-best encoder. Bold: best per column.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 207,
+              "image_path": "figures/2610.13510/table-017.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 842
+            },
+            {
+              "caption": "Table 10: Population memory bank configuration for PRISM.",
+              "figure_id": "table-10-15",
+              "figure_number": "10",
+              "height": 225,
+              "image_path": "figures/2610.13510/table-018.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 582
+            },
+            {
+              "caption": "Table 13: Distribution of per-task AUROC across all 1,428 diagnosis tasks (PRISMdisc). Cumulative percentage is computed from the highest bin downward.",
+              "figure_id": "table-13-24",
+              "figure_number": "13",
+              "height": 236,
+              "image_path": "figures/2610.13510/table-019.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 522
+            },
+            {
+              "caption": "Table 14: Prior ECG acquisitions per test encounter within the 96-hour window.",
+              "figure_id": "table-14-3",
+              "figure_number": "14",
+              "height": 321,
+              "image_path": "figures/2610.13510/table-020.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 518
+            },
+            {
+              "caption": "Table 15: Converged temporal decay parameter and derived quantities.",
+              "figure_id": "table-15-2",
+              "figure_number": "15",
+              "height": 255,
+              "image_path": "figures/2610.13510/table-021.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 440
+            },
+            {
+              "caption": "Table 23: Temporal generalization to later encounters. All entries are AUROC; PRISM uses the generative pathway. Brackets show reported 95% patient-bootstrap confidence intervals. The later-era records are retained without rebalancing after the original test-set ECG exclusions. Zeroed and random retrieval are inference-time controls. Bold indicates the highest point estimate in each column, not statistical significance.",
+              "figure_id": "table-23-9",
+              "figure_number": "23",
+              "height": 227,
+              "image_path": "figures/2610.13510/table-022.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 978
+            },
+            {
+              "caption": "Table 21: Cohort sizes for external and temporal evaluation. Counts describe the underlying visit/encounter tables, rather than the sampled encounter–task records. Banks comprise training and validation rows.",
+              "figure_id": "table-21-13",
+              "figure_number": "21",
+              "height": 321,
+              "image_path": "figures/2610.13510/table-023.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 577
+            },
+            {
+              "caption": "Table 16: Alternative rules for pooling prior ECG embeddings.",
+              "figure_id": "table-16-4",
+              "figure_number": "16",
+              "height": 225,
+              "image_path": "figures/2610.13510/table-024.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 632
+            },
+            {
+              "caption": "Table 22: MC-MED retrieval controls. AUROC and 95% patient-level percentile-bootstrap confidence intervals for inference-time perturbations of fine-tuned PRISM. Overall is the unweighted mean of the four task-group AUROCs.",
+              "figure_id": "table-22-10",
+              "figure_number": "22",
+              "height": 207,
+              "image_path": "figures/2610.13510/table-025.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 506
+            },
+            {
+              "caption": "Table 17: MDS-ED cohort and partition statistics.",
+              "figure_id": "table-17-23",
+              "figure_number": "17",
+              "height": 236,
+              "image_path": "figures/2610.13510/table-026.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 432
+            },
+            {
+              "caption": "Table 18: Summary of the 1,443 binary clinical tasks predicted by PRISM.",
+              "figure_id": "table-18-21",
+              "figure_number": "18",
+              "height": 169,
+              "image_path": "figures/2610.13510/table-027.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 748
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2610.13510/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.13510",
+          "relevance": 7,
+          "selection_reason": "The paper introduces PRISM, a multimodal language model for clinical prognosis that integrates heterogeneous evidence (waveforms, structured measurements) via a population memory bank and retrieval-augmented generation. This aligns with the 'Multimodal Foundation Models' topic, specifically the 'Multimodal Large Language Models' subtopic, as it extends LLMs to handle non-text modalities and retrieval-based context.",
+          "summary_status": "generated",
+          "title": "Retrieval-Augmented Multimodal Language Model with Heterogeneous Evidence Integration for Clinical Prognosis",
+          "tldr": "PRISM integrates structured clinical data, waveforms, longitudinal history, and population retrieval to improve multimodal prognosis, with performance depending on input scope and supervised adaptation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Full-duplex voice agents make many small, closed decisions, which current systems answer by slow autoregressive decoding. We propose DuplexJev, which feeds ASR-encoder hidden states through a small connector into a frozen LLM and reads each question as a single-token distribution over its options. Nothing is decoded, and an 8-GPU node answers 80 decisions about eight utterances in about 0.1 s. With a last-layer connector, spoken QA stays close to reading the transcript (90% vs. 91%). DuplexJev also hears the speaker: gender and emotion accuracy both reach 90% (from 55% and 28%) with a cross-attention connector, whose spoken QA drops by only 1 point (83% to 82%). We train decisions with cross-entropy on the read-out answer token, instead of the usual transcript distillation, whose teacher never hears the voice, and keep distillation for content. Encoders and LLMs are interchangeable; we release weights, training recipe, a batched-inference pipeline for full-duplex serving and a bilingual spoken-QA set.",
+          "arxiv_id": "2610.02638",
+          "arxiv_url": "https://arxiv.org/abs/2610.02638",
+          "authors": [
+            "Jie Jin",
+            "Ziyin Ma",
+            "Min Yin",
+            "Jinyu Chen",
+            "Haigang Song",
+            "Zhikun Pang",
+            "Xiaowen Zhang"
+          ],
+          "bullets": [
+            "Maps ASR-encoder representations into a frozen LLM and reads each question as a single-token option distribution.",
+            "Uses answer-token cross-entropy for decision supervision while retaining distillation for speech content.",
+            "Handles spoken QA, speaker gender, and emotion, with cross-attention improving paralinguistic recognition while slightly reducing QA accuracy.",
+            "Batches 80 decisions over eight utterances in about 0.1 seconds on an 8-GPU node.",
+            "Provides interchangeable encoder/LLM components, released weights and recipe, a full-duplex inference pipeline, and a bilingual spoken-QA set."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. R3 from the R2 connector, same data and schedule. Left: gender on 800 real utterances under distillation (flat) and answertoken supervision, for A and B. Right: emotion under answer-token supervision, with ZJU-ML (dashed).",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 205,
+              "image_path": "figures/2610.02638/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 498
+            },
+            {
+              "caption": "Fig. 1. DuplexJev. Only the connector (fusion block and projector, orange) is trained. Variant A fuses three encoder layers by crossattention; variant B projects the final layer only. Every question is read as a closed-set next-token distribution. Content is aligned by transcript distillation; decisions are trained with answer-token crossentropy (Sec. 2.1).",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 220,
+              "image_path": "figures/2610.02638/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 427
+            },
+            {
+              "caption": "Table 3. Paralinguistic accuracy (%) and change in content understanding. Gender: our 800 real utterances / ZJU native / ZJU lettered. Emotion: 4-way, 800 utterances. ∆: change vs. the R2 start of the same connector. Probes: logistic regression on pooled features.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 329,
+              "image_path": "figures/2610.02638/table-003.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "Table 2. Content-understanding accuracy (%). qa100: released spoken QA (/100, zh/en /50 each). ZJU-ML: spoken questions from [23], half real, half TTS. Easy-Turn: zero-shot 4-way turn state. Our connectors are shown after R2 (two 1% packs).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 168,
+              "image_path": "figures/2610.02638/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "Table 1. Ten decisions per event, one H200, Qwen3-32B on vLLM, 30 real utterances. JSON: one JSON answer generated from the ASR transcript (ASR, 411 ms, not included). Readout: one single-token prompt per question on the transcript (approximates DuplexJev). Capacity: events/s whose batch finishes within the budget.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 165,
+              "image_path": "figures/2610.02638/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 396
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2610.02638/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.02638",
+          "relevance": 7,
+          "selection_reason": "Extends a frozen LLM with speech encoder features for batched single-token decisions; fits multimodal LLMs and efficient inference.",
+          "summary_status": "generated",
+          "title": "Batched Speech Decisions Without Decoding: Single-Token Supervision Lets a Frozen LLM Hear Beyond the Transcript",
+          "tldr": "DuplexJev enables a frozen LLM to answer many speech-based decisions in parallel from ASR hidden states without autoregressive decoding.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models (LLMs) provide limited support for sign language interaction. Unifying sign language translation (SLT) and generation (SLG) to enable sign language as both input and output can reduce switching between separate models during sign-text interaction. We present SignGPT, a unified, pose-based framework for gloss-free SLT and SLG. SignGPT integrates part-aware hierarchical representations of body, hand, and facial motion into a shared language model and employs asymmetric multi-token prediction and progressive training for bidirectional modeling. We evaluate SignGPT on How2Sign (ASL) and Phoenix-2014T (DGS) through benchmark comparisons, qualitative analyses, and component ablations. An exploratory study with 12 Deaf ASL signers assesses an LLM-mediated sign-to-sign response pipeline, highlighting the potential of unified modeling to support sign language conversation (SLC).",
+          "arxiv_id": "2609.21709",
+          "arxiv_url": "https://arxiv.org/abs/2609.21709",
+          "authors": [
+            "Ronghui Li",
+            "Jun Dong",
+            "Zhongyuan Hu",
+            "Zunnan Xu",
+            "Jun Zhou",
+            "Liyuan Chen",
+            "Shuoling Liu",
+            "Jiangpeng Yan",
+            "Jie Guo",
+            "Xiu Li",
+            "Linchao Bao"
+          ],
+          "bullets": [
+            "Targets limited LLM support for sign language and the need to combine translation and generation.",
+            "Uses part-aware hierarchical representations of body, hand, and facial motion within a shared language model.",
+            "Applies asymmetric multi-token prediction and progressive training for bidirectional modeling.",
+            "Evaluated on How2Sign (ASL) and Phoenix-2014T (DGS) with benchmark comparisons, qualitative analysis, and ablations.",
+            "A 12-person Deaf ASL signer study explores its potential for sign-to-sign conversational interaction."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3. Overview of the Part-aware Hierarchical VQ-VAE (PHVQ) tokenizer. PHVQ combines bidirectional multi-scale temporal modeling with body-to-hand hierarchical quantization and encodes a full-body sign language motion sequence into three discrete streams: a body–face codebook 𝐵𝐵𝑜𝑑𝑦 , a left-hand codebook 𝐵𝐿𝐻 , and a right-hand codebook 𝐵𝑅𝐻 . Facial-expression features are encoded jointly with the body stream.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 446,
+              "image_path": "figures/2609.21709/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 895
+            },
+            {
+              "caption": "Fig. 2. Overview of SignGPT’s three training stages: (1) PHVQ discretizes continuous body and hand motion, with an optional text-alignment objective; (2) GHMLM is jointly trained on SLG and SLT and uses AMTP to decode text or part-aware motion tokens; and (3) instruction fine-tuning supports prompted translation and generation.",
+              "figure_id": "figure-2-19",
+              "figure_number": "2",
+              "height": 511,
+              "image_path": "figures/2609.21709/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 895
+            },
+            {
+              "caption": "Fig. 5. Qualitative examples from the LLM-mediated, one-turn ASL response pipeline. GTQ-Text is the reference question; Q-Motion is the input query; Q-Text is the SLT output; A-Text is the response-model output; A-Motion is the SLG output; and BTA-Text is the frozen evaluator’s back-translation. The examples show one semantically related response and one case exhibiting a discrepancy.",
+              "figure_id": "figure-5-20",
+              "figure_number": "5",
+              "height": 813,
+              "image_path": "figures/2609.21709/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 895
+            },
+            {
+              "caption": "Fig. 4. Qualitative comparison between SignGPT and MotionGPT on SLT and SLG. The upper half shows reference, MotionGPT, and SignGPT avatar frames for text-to-sign generation on How2Sign and Phoenix-2014T; red circles mark visibly incorrect hand or arm configurations. The lower half shows input signing frames followed by reference text and the translations from both models. SignGPT outputs remain closer to the reference motion and text than MotionGPT outputs.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 686,
+              "image_path": "figures/2609.21709/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 895
+            },
+            {
+              "caption": "Fig. 7. Qualitative comparison between SignGPT and MotionGPT for sign language generation on the test sets of Phoenix-2014T (left) and How2Sign (right).",
+              "figure_id": "figure-7-16",
+              "figure_number": "7",
+              "height": 771,
+              "image_path": "figures/2609.21709/figure-005.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 895
+            },
+            {
+              "caption": "Fig. 6. Statistics of discrete tokens in the sign language motion vocabularies (codebooks) for different body parts after quantizing the training samples. For the Phoenix-2014T and How2Sign datasets, from left to right the represented body parts are body–face (𝑁𝐵𝐹 = 128), left hand (𝑁𝐿𝐻 = 256), and right hand (𝑁𝑅𝐻 = 256).",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 533,
+              "image_path": "figures/2609.21709/figure-006.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 895
+            },
+            {
+              "caption": "Fig. 8. Qualitative comparison between SignGPT and MotionGPT for sign-to-text translation on the test sets of Phoenix-2014T (left) and How2Sign (right).",
+              "figure_id": "figure-8-11",
+              "figure_number": "8",
+              "height": 450,
+              "image_path": "figures/2609.21709/figure-007.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 895
+            },
+            {
+              "caption": "Table 4. End-to-end response relevance and exploratory subjective ratings for the single-turn ASL response pipeline. For each system, LLM-AR is the percentage of its 1,000 outputs judged relevant by GPT-4o after the shared frozen SLT back-translation, with one binary judgment per output (𝑛 = 1,000 per system). The subjective results are descriptive means from 12 Deaf participants. Every sample was rated by three different participants; each system–item mean therefore summarizes 1,000 three-rater sample averages (3,000 raw ratings). Response appropriateness examines whether the signed reply plausibly answers the signed question; motion smoothness examines whether the rendered motion is free of frame-to-frame jitter.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 141,
+              "image_path": "figures/2609.21709/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 895
+            },
+            {
+              "caption": "Table 3. Stage-wise automatic proxy metrics for the LLM-mediated single-turn ASL response pipeline on How2Sign. M2T compares the translated question against the reference question; T2T scores the (translated question, English reply) pair; T2M compares the English reply against the text back-translated by a frozen evaluator from its generated pose sequence; M2M scores the (reference question, back-translated reply) pair. B4 denotes BLEU-4 and DR denotes DialogRPT-updown. Both systems use the same frozen mediator, response prompt, sampling configuration, and frozen SLT evaluator.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 124,
+              "image_path": "figures/2609.21709/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 895
+            },
+            {
+              "caption": "Table 1. Sign language generation (SLG) on Phoenix-2014T and How2Sign. DTW-JPE is reported for the body, hands, and the aggregate labeled “Avg” in each implementation. Bi-T indicates support for both sign-to-text and text-to-sign directions within one dataset-specific model. SignGPT+TSA uses the optional text-embedding alignment objective with paired sentence-level translations during PHVQ training. MotionGPT results are reproduced using our matched sign-language adaptation; all other baseline values are transcribed from the source studies cited for the corresponding results. Bold and underline mark the best and second-best values.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 275,
+              "image_path": "figures/2609.21709/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 887
+            },
+            {
+              "caption": "Table 2. Sign language translation (SLT) on Phoenix-2014T and How2Sign.We report BLEU-4 (B4) and ROUGE-L (R). Bi-T indicates support for both sign-to-text translation and text-to-sign generation within one dataset-specific model. MotionGPT results are reproduced using our matched sign-language adaptation; all other baseline values are transcribed from the source studies cited for the corresponding results.",
+              "figure_id": "table-2-15",
+              "figure_number": "2",
+              "height": 307,
+              "image_path": "figures/2609.21709/table-011.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 887
+            },
+            {
+              "caption": "Table 5. Ablation study on constructing PHVQ across two datasets. The blank row denotes the vanilla VQ-VAE baseline without any of the following components. Part-Aware: modeling different body parts using independent codebooks (body and face, left hand, right hand); TCN: temporal convolutional network for enhanced temporal modeling; Hand-E: incorporating LPos and LAngle to strengthen fine-grained quantization and reconstruction quality of fingers. (Text-Space Alignment) TSA: adding the optional cosine loss between pooled motion projections and the frozen LLaMA input-embedding target during PHVQ training.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 269,
+              "image_path": "figures/2609.21709/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 887
+            },
+            {
+              "caption": "Table 6. Cumulative SignGPT ablations on the Phoenix-2014T test set. The first row is the adapted MotionGPT baseline. PHVQ+TSA uses paired sentence-level translations for text-space alignment during tokenizer training. GHMLM denotes joint LoRAbased SLT–SLG model adaptation, IFT denotes instruction fine-tuning, and Avg is the reported aggregate DTW-JPE.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 207,
+              "image_path": "figures/2609.21709/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 895
+            },
+            {
+              "caption": "Table 11. Ablation study of SignGPT using different motion embedding fusion weights 𝛽 on two sign language datasets.",
+              "figure_id": "table-11-17",
+              "figure_number": "11",
+              "height": 225,
+              "image_path": "figures/2609.21709/table-014.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 895
+            },
+            {
+              "caption": "Table 7. Ablation study on the impact of different motion representations on PHVQ reconstruction quality across two sign language datasets.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 195,
+              "image_path": "figures/2609.21709/table-015.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 881
+            },
+            {
+              "caption": "Table 8. PHVQ reconstruction results for different body–face and hand codebook sizes. We use 𝑁𝐵𝐹 = 128 and 𝑁𝐿𝐻 = 𝑁𝑅𝐻 = 256 in the remaining experiments.",
+              "figure_id": "table-8-6",
+              "figure_number": "8",
+              "height": 192,
+              "image_path": "figures/2609.21709/table-016.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 895
+            },
+            {
+              "caption": "Table 9. Ablation study on different encoder designs in PHVQ.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 154,
+              "image_path": "figures/2609.21709/table-017.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 877
+            },
+            {
+              "caption": "Table 10. Ablation study on the conditioning direction of the hierarchical quantization in PHVQ.",
+              "figure_id": "table-10-18",
+              "figure_number": "10",
+              "height": 146,
+              "image_path": "figures/2609.21709/table-018.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 879
+            },
+            {
+              "caption": "Table 13. Comparison between parallel multi-head decoding (AMTP) and serial single-head autoregressive decoding of body-part motion tokens.",
+              "figure_id": "table-13-2",
+              "figure_number": "13",
+              "height": 180,
+              "image_path": "figures/2609.21709/table-019.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 895
+            },
+            {
+              "caption": "Table 12. Ablation study on the motion embedding initialization scheme of SignGPT. “Random Init” adds new motion tokens with randomly initialized embeddings; “Codebook Reuse” reuses frozen PHVQ codebook features projected by 𝑃↑ 𝑝 .",
+              "figure_id": "table-12-3",
+              "figure_number": "12",
+              "height": 179,
+              "image_path": "figures/2609.21709/table-020.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 895
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2609.21709/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.21709",
+          "relevance": 6,
+          "selection_reason": "Unifies sign language translation and generation through an LLM with multimodal pose understanding; fits multimodal large language models.",
+          "summary_status": "generated",
+          "title": "SignGPT: Toward LLM-Mediated Sign Language Interaction through Gloss-Free Translation and Generation",
+          "tldr": "SignGPT unifies gloss-free sign language translation and generation in one pose-based, LLM-mediated framework to support bidirectional sign-text and sign-to-sign interaction.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Autoregressive generation of interleaved text and acoustic tokens is a common approach to spoken-response generation in speech large language models. Although this design enables streaming generation with explicit textual guidance, generated acoustic tokens become part of the context for subsequent text predictions. Given identical speech inputs, we observe markedly lower answer accuracy for the internal text generated in speech-to-text-and-speech (S2TS) mode than for speech-to-text (S2T) responses. We term this discrepancy the \\emph{output-mode gap} (OMG). To reduce OMG, we propose \\emph{Joint-Output On-Policy Distillation} (JO-OPD), which distills the model's stronger S2T policy into joint generation using student-generated S2TS trajectories. At each text position, the S2T teacher provides soft targets from a text-only projection of the student's preceding outputs, while the student predicts from the corresponding full interleaved history. A preservation objective further regularizes native non-text predictions. Experiments on Step-Audio-2-mini and Baichuan-Audio-Instruct reveal OMG across two interleaved generation architectures. On Step-Audio-2-mini, JO-OPD reduces OMG from 42.87 to 16.26 percentage points on Spoken-MQA and from 29.72 to 13.04 points on speech-rendered GSM8K, with little change in S2T accuracy and substantially larger reductions than matched SFT baselines. ASR-based evaluation further shows a 7.49-point improvement in spoken-answer accuracy on Spoken-MQA.",
+          "arxiv_id": "2609.15313",
+          "arxiv_url": "https://arxiv.org/abs/2609.15313",
+          "authors": [
+            "Daxin Tan",
+            "Dehua Tao",
+            "Chengxi Deng",
+            "Hanlin Zhang",
+            "Xiao Chen"
+          ],
+          "bullets": [
+            "The output-mode gap arises because generated acoustic tokens remain in the context and degrade later text predictions.",
+            "JO-OPD uses student-generated S2TS trajectories and soft targets from an S2T teacher based on text-only histories.",
+            "A preservation objective regularizes the model’s native non-text predictions during distillation.",
+            "On Step-Audio-2-mini, the gap fell from 42.87 to 16.26 points on Spoken-MQA and from 29.72 to 13.04 points on speech-rendered GSM8K.",
+            "S2T accuracy changed little, while ASR evaluation showed a 7.49-point Spoken-MQA improvement; results cover two interleaved-generation architectures."
+          ],
+          "categories": [
+            "eess.AS",
+            "cs.CL",
+            "cs.SD"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Overview of JO-OPD. Teacher and reference share a frozen base model, using S2T on projected text histories and S2TS on joint histories, respectively.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 463,
+              "image_path": "figures/2609.15313/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 498
+            },
+            {
+              "caption": "Table 4. Internal-text and ASR-based spoken-answer accuracy (%) in S2TS mode.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 254,
+              "image_path": "figures/2609.15313/table-002.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "Table 2. Baichuan-Audio text answer accuracy (%) and OMG (pp).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 206,
+              "image_path": "figures/2609.15313/table-003.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 510
+            },
+            {
+              "caption": "Table 3. Step-Audio 2 answer accuracy (%) and OMG (pp) under Short and CoT conditions on the same 1,000 human-recorded VoiceBench-BBH inputs.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 200,
+              "image_path": "figures/2609.15313/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 512
+            },
+            {
+              "caption": "Table 1. Step-Audio 2 text answer accuracy (%) and OMG (pp).",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 200,
+              "image_path": "figures/2609.15313/table-005.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 510
+            },
+            {
+              "caption": "Table 5. Ablations of text-vocabulary restriction and non-text preservation on Step-Audio 2. We report internal-text and ASR-based spoken-answer accuracy (%).",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 160,
+              "image_path": "figures/2609.15313/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 510
+            },
+            {
+              "caption": "Table 6. Step-Audio 2 text answer accuracy (%) on Spoken-MQA with different JO-OPD-Soft training set sizes.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 148,
+              "image_path": "figures/2609.15313/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 510
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2609.15313/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.15313",
+          "relevance": 7,
+          "selection_reason": "Speech language models with interleaved text and audio generation are multimodal LLMs, and the distillation method targets a core multimodal generation challenge.",
+          "summary_status": "generated",
+          "title": "Reducing the Output-Mode Gap in Speech Language Models via Joint-Output On-Policy Distillation",
+          "tldr": "JO-OPD narrows the accuracy gap between speech-to-text-and-speech and speech-to-text generation by distilling a stronger text-only policy into interleaved speech generation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Medical vision-language models (VLMs) allow a single model to perform clinical image analysis tasks ranging from diagnosis classification to report generation. However, joint adaptation is challenged by heterogeneous output formats, conflicting task gradients, and imbalanced training data. Hence, we present \\textbf{Two-Stage Mixture-of-LoRA}, a framework built on MedGemma-1.5-4B. The framework uses a shared-specific Mixture-of-LoRA architecture comprising one shared LoRA and six task-specific expert LoRAs, together with a two-stage training procedure. In Stage 1, we jointly train the shared LoRA and all task-specific expert LoRAs on all tasks. In Stage 2, we first freeze the backbone, the shared LoRA, and all non-target experts, and refine one task expert at a time. Classification and regression then receive an additional modality-balanced continuation, in which smaller modality groups are repeated to match the largest group. In the FLARE 2026 Task 3 test sets, the proposed method achieves 0.85 balanced accuracy for classification, 0.48 micro-F1 for multi-label classification, 0.79 detection F1, and 17.39 regression MAE. Code is available at https://github.com/YuanYL03/MICCAI-FLARE-2026-Challenge-Task3-2D.",
+          "arxiv_id": "2609.14350",
+          "arxiv_url": "https://arxiv.org/abs/2609.14350",
+          "authors": [
+            "Zhanghao Chen",
+            "Yuanyuan Li",
+            "Zhenyu Lu",
+            "Shuo Gao",
+            "Guangquan Zhou",
+            "Yikun Zhang"
+          ],
+          "bullets": [
+            "Addresses heterogeneous outputs, conflicting task gradients, and imbalanced data in joint medical VLM adaptation.",
+            "Uses one shared LoRA plus six task-specific expert LoRAs.",
+            "Jointly trains all adapters, then separately refines each task expert while freezing the others.",
+            "Adds modality-balanced continuation training for classification and regression.",
+            "On FLARE 2026 Task 3 test sets, reports 0.85 balanced accuracy, 0.48 micro-F1, 0.79 detection F1, and 17.39 regression MAE across task types."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Overview of the proposed Two-Stage Mixture-of-LoRA framework for medical vision-language tasks. The frozen MedGemma-1.5-4B backbone is augmented with one shared LoRA module and six task-specific LoRA experts. For each task, the shared module is jointly activated with its corresponding expert, enabling knowledge sharing across tasks while preserving task-specific adaptation.",
+              "figure_id": "figure-1-12",
+              "figure_number": "1",
+              "height": 347,
+              "image_path": "figures/2609.14350/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 714
+            },
+            {
+              "caption": "Fig. 2. Two-stage optimization strategy. In Stage 1, the shared LoRA and all taskspecific LoRAs are jointly trained on the six tasks while the MedGemma-1.5 backbone remains frozen. In Stage 2, all six experts are independently refined while the backbone, shared LoRA, and non-target experts remain frozen. Classification and regression then receive an additional continuation using modality-balanced resampling.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 354,
+              "image_path": "figures/2609.14350/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 4. Task-wise modality distribution across the training, public-validation, and hidden-validation splits. The three panels use split-specific vertical scales.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 298,
+              "image_path": "figures/2609.14350/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 725
+            },
+            {
+              "caption": "Fig. 3. Distribution of imaging modalities across the training, public-validation, and hidden-validation splits. Each bar is stacked by modality and labeled with its total number of questions.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 404,
+              "image_path": "figures/2609.14350/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 523
+            },
+            {
+              "caption": "Fig. 5. Changes in validation performance from Mixture-of-LoRA to expert-wise refinement and modality-balanced resampling. Expert-wise refinement improves detection, counting, report generation, hidden multi-label classification, and regression, while public multi-label performance decreases slightly. Modality-balanced resampling provides additional gains for classification and regression (Table 4).",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 444,
+              "image_path": "figures/2609.14350/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 716
+            },
+            {
+              "caption": "Fig. 6. Qualitative comparison on the public-validation split. From left to right, examples cover classification, multi-label classification, detection, and report generation. Each example shows the input, task instruction, ground-truth, and our prediction.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 539,
+              "image_path": "figures/2609.14350/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 716
+            },
+            {
+              "caption": "Table 3. Comparison with medical VLM baselines on FLARE-MLLM-2D. Values are public validation | hidden validation. ↑ indicates higher is better, while ↓ indicates lower is better.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 517,
+              "image_path": "figures/2609.14350/table-007.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 718
+            },
+            {
+              "caption": "Table 4. Ablation of the proposed two-stage adaptation strategy. Values are public validation | hidden validation. ↑ indicates higher is better, while ↓ indicates lower is better.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 321,
+              "image_path": "figures/2609.14350/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 718
+            },
+            {
+              "caption": "Table 6. Checklist Table. Please fill out this checklist table in the answer column.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 381,
+              "image_path": "figures/2609.14350/table-009.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 579
+            },
+            {
+              "caption": "Table 2. Core training and inference settings.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 240,
+              "image_path": "figures/2609.14350/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 448
+            },
+            {
+              "caption": "Table 5. Performance of the proposed method on the official final testing set. ↑ indicates higher is better, while ↓ indicates lower is better.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 75,
+              "image_path": "figures/2609.14350/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 612
+            },
+            {
+              "caption": "Table 1. Development environments and requirements.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 171,
+              "image_path": "figures/2609.14350/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 685
+            }
+          ],
+          "first_seen_at": "2026-10-12T21:00:00-04:00",
+          "hero_figure": "figures/2609.14350/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2609.14350",
+          "relevance": 6,
+          "selection_reason": "Multi-task medical vision-language model adaptation via Mixture-of-LoRA; fits multimodal LLM adaptation.",
+          "summary_status": "generated",
+          "title": "Two-Stage Mixture-of-LoRA for Multi-Task Medical Vision-Language Learning",
+          "tldr": "Two-Stage Mixture-of-LoRA adapts MedGemma-1.5-4B to diverse medical vision-language tasks using shared and task-specific LoRA experts refined in two stages.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-11",
       "paper_count": 35,
       "papers": [
@@ -317240,5 +318182,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "multimodal-foundation-models",
-  "total_paper_count": 1623
+  "total_paper_count": 1628
 }
