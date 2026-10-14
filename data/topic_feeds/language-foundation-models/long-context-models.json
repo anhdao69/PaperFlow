@@ -1,6 +1,2830 @@
 {
   "days": [
     {
+      "date": "2026-10-13",
+      "paper_count": 10,
+      "papers": [
+        {
+          "abstract": "Long-context inference makes the key-value (KV) cache a major memory bottleneck for large language models. We propose BELT, a low-rank KV cache compression framework. Its key-side objective targets attention distributions rather than raw keys or pre-softmax logits, yielding a quadratic surrogate with a closed-form low-rank solution. A learned global rank allocator uses differentiable soft selection during training and hard selection at deployment to meet a user-specified component budget. Experiments demonstrate improved model quality under aggressive compression and increased decoding throughput at comparable accuracy. Evaluated across three LLMs and multiple benchmarks, BELT achieves up to 70% low-rank KV cache compression while outperforming the strongest baseline by up to 23.3 points on LongBench, and up to 17.8x overall KV cache reduction when combined with quantization. With Triton-based GPU kernels and a quantized cache, BELT delivers up to 2.7x speedup for the attention module and 3.3x end-to-end decoding throughput.",
+          "arxiv_id": "2610.17966",
+          "arxiv_url": "https://arxiv.org/abs/2610.17966",
+          "authors": [
+            "Yaoyang Liu, Shuwei Shen, Jincheng Tang, Jinguang Liu, Jinbao Xue, Hailong Yang, Ke Zhang, Yinjun Wu"
+          ],
+          "bullets": [
+            "Targets attention distributions rather than raw keys or logits, producing a quadratic objective with a closed-form low-rank solution.",
+            "Learns global top-k rank allocation using differentiable soft selection during training and hard selection at deployment.",
+            "Across three LLMs and multiple benchmarks, achieves up to 70% low-rank KV-cache compression and up to 17.8× reduction with quantization.",
+            "Reports up to 23.3-point LongBench gains over the strongest baseline and up to 3.3× end-to-end decoding throughput.",
+            "Uses Triton GPU kernels and quantized caches to reach up to 2.7× attention-module speedup."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Main results at 50% (dark) and 70% (light) KV cache compression. Each row connects one method’s two rates; the dashed line marks the uncompressed model. All axes point right toward better results; perplexity is reversed and logarithmic, with out-of-range values printed at the left end. Numbers beside BELT denote 50%/70% results. RULER uses 16K tokens, exceeding LLaMA-2-7B’s 4K context. A3 is not applicable to Qwen3-32B, whose query/key normalization lies between the projections and RoPE. Per-task results are in Appendix H.4.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 729,
+              "image_path": "figures/2610.17966/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 947
+            },
+            {
+              "caption": "Figure 1: Left: Full attention, where each query attends to all context tokens. Middle: State-of-the-art low-rank compression (e.g., vanilla SVD) retains only the dominant KV eigenvector µ, reducing the query–key product from q⊤k to (q⊤µ)(µ⊤k). Since µ is derived solely from the input-context tokens and ignores subsequent queries, this distorts the attention distribution and can yield an incorrect answer. Right: The dominant eigen-vector derived by ours aligns the query and key decompositions, preserving the downstream attention output and yielding the correct answer.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 551,
+              "image_path": "figures/2610.17966/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 976
+            },
+            {
+              "caption": "Figure 3: Speedup of the attention module over PyTorch SDPA for one decoding step of LLaMA-2-7B at batch size 16, measured over all 32 layers; layers left uncompressed run SDPA. Baselines use 50% compression and Ours uses 70%; the dashed line adds STAR-Q.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 279,
+              "image_path": "figures/2610.17966/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 449
+            },
+            {
+              "caption": "Figure 4: Latency breakdown of the attention module in Figure 3, averaged over all 32 layers. Arrows give the speedup over SDPA; the ERC-SVD bars at 16K and 32K are truncated.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 546,
+              "image_path": "figures/2610.17966/figure-004.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 951
+            },
+            {
+              "caption": "Table 6: Rank allocation on LLaMA-3.1-8B-Instruct with the key and value bases of BELT fixed. All methods share the same KV cache budget; STAR-KV stops once its budgets are met and uses 1.5% and 0.3% fewer ranks at 50% and 70% compression. Bold marks the best result at each compression rate.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 316,
+              "image_path": "figures/2610.17966/table-005.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 968
+            },
+            {
+              "caption": "Table 2: Quantization results on Qwen3-32B: average KV bit-width, KV cache compression ratio, and average zero-shot accuracy over the six commonsense tasks.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 277,
+              "image_path": "figures/2610.17966/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 394
+            },
+            {
+              "caption": "Table 11: RULER evaluation at a context length of 16K under different KV cache compression rates. LLaMA-2-7B, whose context window is 4K tokens, is not evaluated, and A3 does not apply to Qwen3-32B. MK1/MK2: NIAH multi-key 1/2; MQ: NIAH multi-query; MV: NIAH multi-value; S1–S3: NIAH single 1–3; FWE: frequent words extraction; SQ: SQuAD QA. Bold marks the best result at each compression rate.",
+              "figure_id": "table-11-14",
+              "figure_number": "11",
+              "height": 831,
+              "image_path": "figures/2610.17966/table-007.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 968
+            },
+            {
+              "caption": "Table 3: End-to-end generation throughput (tokens/s). The gray text in brackets denotes batch size. Baselines use 50% KV cache compression and BELT uses 70% with STAR-KV.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 150,
+              "image_path": "figures/2610.17966/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 790
+            },
+            {
+              "caption": "Table 9: Zero-shot evaluation on commonsense reasoning benchmarks using LM-Eval-Harness. We report accuracy (%) under different KV cache compression rates, together with perplexity on WikiText-2 and C4. A3 does not apply to Qwen3-32B. Bold marks the best result at each compression rate.",
+              "figure_id": "table-9-3",
+              "figure_number": "9",
+              "height": 1376,
+              "image_path": "figures/2610.17966/table-009.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 968
+            },
+            {
+              "caption": "Table 10: LongBench evaluation under different KV cache compression rates. A3 does not apply to Qwen3-32B. Bold marks the best result at each compression rate.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 1309,
+              "image_path": "figures/2610.17966/table-010.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 968
+            },
+            {
+              "caption": "Table 5: Compressing only the keys or only the values on LLaMA-3.1-8B-Instruct. Each variant takes the BELT checkpoint at 50% or 70% compression, keeps its low-rank projections for the compressed cache and the original projections for the other cache, and is not retrained. Comp is the resulting KV cache compression.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 213,
+              "image_path": "figures/2610.17966/table-011.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 968
+            },
+            {
+              "caption": "Table 8: Evaluation of the bounds used in Theorem 2 at ŴK ∗",
+              "figure_id": "table-8-13",
+              "figure_number": "8",
+              "height": 120,
+              "image_path": "figures/2610.17966/table-012.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 371
+            },
+            {
+              "caption": "Table 7: Sensitivity of BELT to the calibration corpus on Qwen3-32B at 50% KV cache compression. Each corpus supplies both the calibration set of the key and value bases and the rank-allocation training data. WikiText-2 is the corpus of the main experiments (Table 9).",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 183,
+              "image_path": "figures/2610.17966/table-013.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 968
+            },
+            {
+              "caption": "Table 4: BELT on MPT-7B, which encodes position with ALiBi instead of RoPE. Perplexity is measured on 2048-token windows.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 173,
+              "image_path": "figures/2610.17966/table-014.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 968
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17966/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17966",
+          "relevance": 9,
+          "selection_reason": "Low-rank KV cache compression with learned rank allocation for long-context LLM inference, directly targeting KV-cache memory efficiency.",
+          "summary_status": "generated",
+          "title": "BELT : BEhavior-Aligned Low-Rank KV Cache Compression with Learned Top-k Rank Allocation",
+          "tldr": "BELT compresses long-context KV caches with behavior-aligned low-rank representations and learned rank allocation, improving memory efficiency and decoding speed while preserving quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The design of attention mechanisms in long-context large language models faces an ``impossible triangle'' among KV cache size, training and prefill FLOPs, and model quality. GQA achieves strong quality but incurs high KV cache overhead; alternative approaches such as MLA and MFA can compress the cache, but MLA suffers from quality loss while MFA substantially increases training and prefill compute. We propose Virtual Head Attention (VHA), which simultaneously improves all three vertices through two lightweight linear operations: Q Premix applies a near-identity transformation to queries within each KV group to recover virtual head diversity from halved physical query heads, and Linear Postmix fuses inter-head features via a low-rank $I + AB^\\top$ residual structure. Since VHA introduces no nonlinear operations, Premix can be folded into the query projection and Postmix into the output projection at inference time, reducing the model to a standard GQA-2 architecture that directly reuses all existing GQA inference optimizations. With only two KV heads, the group size in large models readily reaches 64, fully exploiting Tensor Core parallelism during decoding. Across four scales with 4K-context 50B-token pretraining, VHA consistently surpasses the standard GQA baseline at every scale ($+$0.05\\% to $+$0.81\\%), while reducing KV cache by $4\\times$ vs.\\ GQA-8 at dense scales and $2\\times$ vs.\\ GQA-4 at the MoE scale, and lowering training and prefill FLOPs by 7.9\\% (1.7B, $S{=}4096$). On an industrial 30B-A3B MoE model trained on 500B tokens at 8K context, VHA outperforms both MLA and GQA-4 by $+$0.70\\,/\\,$+$2.60\\,\\% on a 12-benchmark base-model evaluation suite; in a separate matched 10B-A1B MoE comparison after long-context mid-training, VHA attains an average RULER score of 84.4 over 8K--128K versus 73.0 for GQA, while using two rather than four KV heads in the full-attention layers.",
+          "arxiv_id": "2610.17959",
+          "arxiv_url": "https://arxiv.org/abs/2610.17959",
+          "authors": [
+            "Xibo Ding, Guoxia Wang, Jinle Zeng, Jiabin Yang, Sirui Tao, Chao Yang, Dianhai Yu"
+          ],
+          "bullets": [
+            "Targets the trade-off among KV-cache size, training/prefill compute, and model quality in long-context LLMs.",
+            "Uses two lightweight linear operations: Q Premix restores virtual query-head diversity, while Linear Postmix fuses inter-head features with a low-rank residual structure.",
+            "The operations can be folded into existing projections at inference, yielding a standard GQA-2 model compatible with GQA optimizations and Tensor Core decoding.",
+            "Across four model scales, VHA improves over GQA while reducing KV cache by 2–4× and training/prefill FLOPs by 7.9% in one reported setting.",
+            "On industrial MoE evaluations, VHA outperforms MLA and GQA and achieves higher long-context RULER scores than GQA while using fewer KV heads."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of Virtual Head Attention. (a) VHA improves the trade-off among KV cache size, training/prefill FLOPs, and model quality by combining Q Premix and Linear Postmix during training, while absorbing both linear modules into standard GQA projections at inference. (b) Schematic of the KV cache–FLOPs–quality impossible triangle faced by existing attention designs. (c) Method comparison at 1.7B and 4B scales, plotting KV cache size against training FLOPs, with bubble area proportional to 8-task average accuracy.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 366,
+              "image_path": "figures/2610.17959/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Training loss curves across four model scales. Each panel compares MHA, GQA, MLA, MFA, and VHA on FineWeb-Edu (50B tokens, 4K context). All curves are plotted from step 4K onward after the learning-rate warm-up; smoothing is applied with an exponential moving average (α=0.93). VHA (blue, solid) achieves the lowest loss at convergence at the 4B scale.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 534,
+              "image_path": "figures/2610.17959/figure-002.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 810
+            },
+            {
+              "caption": "Figure 2: Q Premix weight analysis on a trained Qwen-1.7B VHA model. (a) Per-layer Frobenius deviation ∥W premix",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 182,
+              "image_path": "figures/2610.17959/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 814
+            },
+            {
+              "caption": "Table 1: Pretraining accuracy across four model scales. We report zero-shot accuracy (%) on eight standard multiple-choice benchmarks. CACHE is KV cache per layer per token in BF16 (KB). Bold marks the best per scale per column; ties are bolded jointly. VHA achieves the highest average accuracy at every scale while using the smallest KV cache. Per-method full configurations and benchmark citations are in Appendix D; per-method training-FLOPs comparison is in Table 5.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 538,
+              "image_path": "figures/2610.17959/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 830
+            },
+            {
+              "caption": "Table 12: Model architecture and training hyperparameters across all five scales. “–” denotes not applicable.",
+              "figure_id": "table-12-6",
+              "figure_number": "12",
+              "height": 824,
+              "image_path": "figures/2610.17959/table-005.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 686
+            },
+            {
+              "caption": "Table 5: Computational efficiency across four model scales (S=4096). For each scale we list per-method query/key/value head counts, KV cache per layer per token (BF16, KB), training FLOPs per token aggregated over all transformer layers (G), and the relative change vs. the per-scale GQA baseline (GQA-8 dense, GQA-4 MoE). Bold highlights VHA, the method that achieves the best joint KV cache+FLOPs Pareto optimum at every scale. MHA’s lower FLOPs at three scales reflect its smaller query head count under our parameter-matched configurations (Hq=12 at 0.6B/1.7B, Hq=20 at 4B/8B-A1B versus GQA’s Hq=16 or Hq=32), at the cost of a 6–10× larger KV cache.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 154,
+              "image_path": "figures/2610.17959/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 6: Long-context results on RULER and HELMET (%). RULER Overall averages all 13 tasks. Bold marks the better result within each matched checkpoint and evaluation length; exact ties are unbolded.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 449,
+              "image_path": "figures/2610.17959/table-007.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 829
+            },
+            {
+              "caption": "Table 8: Repeated-run results at 0.6B (%). Every run is reported. Bold in the summary rows marks the higher across-run mean.",
+              "figure_id": "table-8-13",
+              "figure_number": "8",
+              "height": 285,
+              "image_path": "figures/2610.17959/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 827
+            },
+            {
+              "caption": "Table 3: Pretraining accuracy at the 30B-A3B MoE scale. We report accuracy (%) averaged within four task categories (General, Math & STEM, Coding, Multilingual) over 12 base-model benchmarks; AVG is the macro-average over the four task categories. CACHE is KV cache per layer per token in BF16 (KB). Bold marks the best per column. Per-benchmark scores and benchmark citations are in Appendix C.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 109,
+              "image_path": "figures/2610.17959/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 614
+            },
+            {
+              "caption": "Table 9: Early training trajectory under different Premix initializations. Each entry is loss / preclipping gradient norm.",
+              "figure_id": "table-9-14",
+              "figure_number": "9",
+              "height": 198,
+              "image_path": "figures/2610.17959/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 390
+            },
+            {
+              "caption": "Table 11: Per-benchmark scores on the 30B-A3B MoE evaluation suite (accuracy %).",
+              "figure_id": "table-11-10",
+              "figure_number": "11",
+              "height": 336,
+              "image_path": "figures/2610.17959/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 527
+            },
+            {
+              "caption": "Table 10: Downstream accuracy under different Premix initializations (%). Bold marks the best result per row.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 209,
+              "image_path": "figures/2610.17959/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 344
+            },
+            {
+              "caption": "Table 2: Recovering from a doubly-compressed shape (1.7B). GQA 16-8-8 is the standard GQA-8 baseline; GQA 16-2-2 reduces only Hkv to obtain a 1 KB KV cache; GQA 8-2-2 additionally halves the physical query heads to match VHA’s shape but lacks Premix and Postmix. ∆ is the gap to the GQA 16-8-8 baseline.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 147,
+              "image_path": "figures/2610.17959/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Table 7: Complementary evaluation results. LB-v2, InfBench, and BABI denote LongBench-v2, InfiniteBench, and BABILong; Short is the short-context eight-task average. The remaining columns report bits per byte (BPB) on ProLong domains. Bold marks the better matched result.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2610.17959/table-014.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17959/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17959",
+          "relevance": 9,
+          "selection_reason": "Introduces a linear attention variant that reduces KV cache size and training/prefill FLOPs for long-context LLMs, directly advancing efficient attention and KV-cache efficiency.",
+          "summary_status": "generated",
+          "title": "Virtual Head Attention",
+          "tldr": "Virtual Head Attention (VHA) reduces KV-cache and compute costs while maintaining or improving long-context language-model quality over standard attention alternatives.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context training of large language and multimodal models couples structured attention masks (document, prefix-LM, share-question, sliding-window, block-sparse) with multi-node context parallelism, making the mask a dominant bottleneck. FlashMask's column-wise sparse mask compresses them from $O(n^2)$ to $O(n)$ via four query-axis boundary vectors, covering broad structured patterns. Implemented for Ampere GPUs, it neither exploits FlashAttention-3's TMA/WGMMA warp-specialized pipeline on Hopper nor supports distribution. The column-wise sparse mask is indexed by key positions but stores query-axis interval boundaries. Under any multi-chunk context-parallel assignment, it reduces per-rank mask localization to a provably zero-communication \\emph{clip--shift--max} on the boundary vectors, compatible with the single-GPU kernel. FlashMask-3 introduces a mask-aware Hopper kernel with three-role warp specialization atop FlashAttention-3's TMA/WGMMA pipeline, plus a mask-aware distributed extension: zero-communication mask localization, a sparsity-aware load balancer (HCC-IPO), and a mask-aware compute-communication overlap with mask-driven communication pruning, whose forward all-gather uses topology-aware hierarchical routing. On a single H100 across 12 masks at 4K--128K context, it improves achieved TFLOPs over FlashMask, FlexAttention, and MagiAttention by 45--141%, 34--71%, and 2--44%. At context-parallel degrees 4--32 with 8K sequence per device, it attains 31--75% compute-communication overlap efficiency and improves throughput over Megatron-Core CP ring, Megatron-Core CP all-gather, and MagiAttention by $1.80\\times$--$3.71\\times$, $1.71\\times$--$2.92\\times$, and $1.09\\times$--$1.46\\times$. In end-to-end training of a 118B-A14B MoE at 128K on 128 H100 GPUs, it raises throughput by 7.3--11.0% over a Dual Chunk all-gather baseline, with attention forward+backward 24.5--44.9% faster.",
+          "arxiv_id": "2610.17901",
+          "arxiv_url": "https://arxiv.org/abs/2610.17901",
+          "authors": [
+            "Guoxia Wang, Qianyue He, Siming Wu, Haoyang Xie, Qiwen Bao, Jinle Zeng, Jiabin Yang, Tian Wu, Dianhai Yu"
+          ],
+          "bullets": [
+            "Targets the bottleneck of structured attention masks in long-context, multi-node training.",
+            "Uses a Hopper-optimized FlashAttention-3 kernel with TMA/WGMMA and three-role warp specialization.",
+            "Provides zero-communication mask localization via a clip–shift–max operation, plus load balancing and mask-aware communication overlap with pruning.",
+            "On a single H100, improves achieved TFLOPs by 2–141% over prior mask-aware attention systems across 12 masks and 4K–128K contexts.",
+            "Across 4–32 context-parallel degrees, improves throughput by up to 3.71×; in 128K end-to-end MoE training, raises throughput by 7.3–11.0%."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of FlashMask-3 across four layers of the execution stack.",
+              "figure_id": "figure-1-13",
+              "figure_number": "1",
+              "height": 426,
+              "image_path": "figures/2610.17901/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Mask-aware hierarchical compute-communication overlap. (a) AG skips fully-masked chunks; compute polls a write_ptr updated by the comm kernel. (b) Hierarchical AG (N=2, G=2): inter-node congruence-group fetch (Phase 1), then intra-node NVLink fetch (Phase 2). (c) Multi-stage backward overlap (N=2, G=8): RS of segment t overlaps AG and grad compute of segment t+1; the tail RS runs non-overlapped.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 331,
+              "image_path": "figures/2610.17901/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 816
+            },
+            {
+              "caption": "Figure 3: Zero-communication mapping of global mask boundaries (LTS, UTE) to rank-local coordinates using the clip–shift–max transform (Eq. 1).",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 280,
+              "image_path": "figures/2610.17901/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Kernel FWD & BWD throughput (TFLOPs/s) on a single H100 GPU. Error bars are omitted for legibility; the underlying per-mask measurements with standard deviations are reported in Figure 9 (Appendix D.1.3).",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 278,
+              "image_path": "figures/2610.17901/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Figure 2: Three-role warp specialization in the FlashMask-3 Hopper kernel: KV Index Generator (mask scan), KV Loader (TMA load), and MMA Consumer (WGMMA score), connected by three asynchronous pipelines.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 216,
+              "image_path": "figures/2610.17901/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 822
+            },
+            {
+              "caption": "Figure 10: Q Head = 64, KV Head = 1. CP-scale throughput comparison (TFLOPs/s) across mask types and CP degrees. Columns: forward, backward, and total (forward+backward). Rows: mask types.",
+              "figure_id": "figure-10-10",
+              "figure_number": "10",
+              "height": 615,
+              "image_path": "figures/2610.17901/figure-006.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 818
+            },
+            {
+              "caption": "Figure 9: Single-device throughput across mask types and sequence lengths. FlashMask-3 consistently outperforms all baselines across all 12 mask patterns.",
+              "figure_id": "figure-9-5",
+              "figure_number": "9",
+              "height": 342,
+              "image_path": "figures/2610.17901/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 818
+            },
+            {
+              "caption": "Figure 11: Comparison of compute load distributions under different scheduling strategies. Dark regions indicate work blocks assigned to each rank. The inset (upper-right of each subplot) shows per-rank compute load, with the dashed line denoting the average. The “peak/avg” in each title reports the peak-to-average load ratio across all 8 ranks; lower values indicate more balanced distributions.",
+              "figure_id": "figure-11-18",
+              "figure_number": "11",
+              "height": 269,
+              "image_path": "figures/2610.17901/figure-008.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 818
+            },
+            {
+              "caption": "Figure 12: Convergence under context parallelism. (a) Training loss of the two runs; faint lines are per-step values and bold lines an exponential moving average (α=0.1), and the inset magnifies the raw curves over the last 60 steps. (b) Per-step loss difference between the two runs and its moving average, on the same step axis.",
+              "figure_id": "figure-12-1",
+              "figure_number": "12",
+              "height": 323,
+              "image_path": "figures/2610.17901/figure-009.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 805
+            },
+            {
+              "caption": "Figure 6: Distributed scaling. Per-GPU TFLOPs/s versus CP degree P for FlashMask-3, Megatron all-gather, Megatron Ring Attention, and Magi-Attention on three practically relevant mask patterns.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 205,
+              "image_path": "figures/2610.17901/figure-010.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Figure 7: (a) Speedup of the Preemptive Persistent Tile (PPT) scheduler over the static scheduler across different mask patterns and sequence lengths on a single H100 GPU. (b) Peak-to-average ratio of per-device computation time under different workload partitioning strategies with Context Parallelism.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 200,
+              "image_path": "figures/2610.17901/figure-011.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 753
+            },
+            {
+              "caption": "Figure 8: Computation-communication overlap efficiency for various mask patterns and CP degrees.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 140,
+              "image_path": "figures/2610.17901/figure-012.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 817
+            },
+            {
+              "caption": "Table 1: End-to-end training throughput of a 118B-A14B MoE model (128K context, CP degree 16, Slocal=8K tokens per device, Hq=64, Hkv=8, document mask) on 128 H100 GPUs, for three datasets of differing average mask sparsity. Each run covers 70 steps; we discard the 10 highest and 10 lowest throughput steps and report the mean ± one standard deviation over the remaining 50. ∆attn is the corresponding attention forward+backward speedup over the baseline.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 64,
+              "image_path": "figures/2610.17901/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 830
+            },
+            {
+              "caption": "Table 7: Isolating the warp specialization from the Hopper port (forward TFLOPs/s, mean ± std). Parentheses give the ratio to FlashMask-3.",
+              "figure_id": "table-7-3",
+              "figure_number": "7",
+              "height": 380,
+              "image_path": "figures/2610.17901/table-014.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 706
+            },
+            {
+              "caption": "Table 4: FlashMask-3 throughput improvement over baselines (forward+backward TFLOPs/s). Reported as (Tours/Tbaseline − 1)× 100%.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2610.17901/table-015.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 452
+            },
+            {
+              "caption": "Table 5: FlashMask-3 speedup over distributed baselines (aggregated over all masks × CP sizes).",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 256,
+              "image_path": "figures/2610.17901/table-016.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 518
+            },
+            {
+              "caption": "Table 2: Resource profile of the FlashMask-3 distributed mask preprocessing on rank r owning nr chunks. NK denotes the global key length. All operations are elementwise and parallelized over the key dimension.",
+              "figure_id": "table-2-21",
+              "figure_number": "2",
+              "height": 128,
+              "image_path": "figures/2610.17901/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: IPO phase ablation across representative CP configurations. Subopt: fraction of random instances not matching the optimum. Max gap: worst-case relative excess over optimal makespan. P3 wins: cases where Phase 3 improves upon Phase 2. All configurations use 200 random instances (100 for N=128).",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 167,
+              "image_path": "figures/2610.17901/table-018.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 740
+            },
+            {
+              "caption": "Table 9: Balance preprocessing inside the 128- GPU run of §4.3.",
+              "figure_id": "table-9-16",
+              "figure_number": "9",
+              "height": 98,
+              "image_path": "figures/2610.17901/table-019.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 417
+            },
+            {
+              "caption": "Table 6: Single-GPU throughput on five masks supported by FA3 (total forward+backward TFLOPs/s, mean ± std over 50 iterations). Parentheses give the ratio to FA3.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 36,
+              "image_path": "figures/2610.17901/table-020.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 830
+            },
+            {
+              "caption": "Table 8: Standalone scheduling latency against attention time (P=32, chunk 2048).",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 35,
+              "image_path": "figures/2610.17901/table-021.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 392
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17901/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.17901",
+          "relevance": 9,
+          "selection_reason": "Mask-aware distributed attention for long-context LLM training; directly improves attention efficiency and long-context capability.",
+          "summary_status": "generated",
+          "title": "FlashMask-3: Efficient and Expressive Mask-Aware Distributed Attention",
+          "tldr": "FlashMask-3 makes structured, mask-aware attention efficient on Hopper GPUs and across distributed context parallelism, delivering substantial kernel and end-to-end training speedups.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion language models apply bidirectional attention over the whole context at every denoising step, so a longer context makes each step substantially more expensive. Sparsifying only at inference leaves the pretrained weights unchanged, so the model is never trained under the sparse pattern it runs with. We propose Prefilling-dLLM v2, which continues training a diffusion language model so that it routes with its native mask token. One mask is appended at the end of each chunk, and a learned role offset marks it as a routing slot. On every fourth layer, a query keeps a bidirectional local window and the top-K chunks scored from that mask; the other layers use a bidirectional sliding window. Starting from Dream-v0-Base-7B extended to 16K with YaRN, we compare Prefilling-dLLM v2 with bidirectional NSA, DSA, and SWA under the same layout, key budget, and dense initialization, using the same Fast-dLLM decoder. With the YaRN factor scaled to the evaluation length, Prefilling-dLLM v2 leads the other sparse methods on all three RULER tasks from 16K to 128K. Its mean accuracy at 128K is 7.4 points above NSA, the next sparse model, while DSA and SWA remain near zero. At the same length, decoding is 172x faster than with full dense attention.",
+          "arxiv_id": "2610.17868",
+          "arxiv_url": "https://arxiv.org/abs/2610.17868",
+          "authors": [
+            "Qi Han, Jing Xiong, Ziyuan Zhang, Ngai Wong"
+          ],
+          "bullets": [
+            "Addresses the high per-step cost of bidirectional full-context attention in diffusion language models.",
+            "Adds one learned routing mask per chunk; every fourth layer selects the top-K chunks while other layers use local sliding-window attention.",
+            "Continued training aligns the model with the sparse attention pattern used at inference.",
+            "Outperforms bidirectional NSA, DSA, and SWA across three RULER tasks from 16K to 128K; at 128K, it is 7.4 accuracy points above NSA.",
+            "Achieves 172× faster decoding than dense attention at 128K, within the evaluated setup and context range."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Mean accuracy of the four sparse methods on the three RULER tasks. The YaRN factor scales with the evaluation length.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 207,
+              "image_path": "figures/2610.17868/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 281
+            },
+            {
+              "caption": "Figure 2: What query q can see. Each chunk is three cells, and q sits in the middle so the local window extends both ways. Teal cells are the local window and orange cells are selected. The bar above each NSA chunk is its summary. DSA reads scattered tokens, and Prefilling-dLLM v2 marks the last cell of every chunk as a mask.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 389,
+              "image_path": "figures/2610.17868/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 827
+            },
+            {
+              "caption": "Figure 3: Computation on a route layer. A chunk is S − 1 content tokens followed by one routing mask. The role offset r is added to that mask at the input. Its query pools the content keys with an intra-chunk softmax, and the weighted sum is the summary key sc. A content query adds a lowrank residual and scores these summaries. Inside a GQA group (Ainslie et al., 2023) the scores are reduced by a maximum, and the top K chunks are shared by every head in the group. Attention mass puts the selected chunk scores and the local-window log-sum-exp in one partition, then a second softmax distributes each chunk’s mass over its content tokens.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 268,
+              "image_path": "figures/2610.17868/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 810
+            },
+            {
+              "caption": "Figure 7: Training loss of the continued-training runs. Each line averages the previous 25 steps. The dashed vertical line marks the end of the DSA indexer warmup.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 315,
+              "image_path": "figures/2610.17868/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 800
+            },
+            {
+              "caption": "Figure 4: Cosine between the mean content key of each chunk and the summary key of each routing slot on the 16K single-needle probe, averaged over route layers and 100 examples. Each panel is binned to 32×32. On the clean probe the diagonal pairs a slot with its own chunk. Shuffle summaries permutes the summaries across chunks.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 272,
+              "image_path": "figures/2610.17868/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 481
+            },
+            {
+              "caption": "Figure 6: Prefill time and decode time per generated token under the same Fast-dLLM decoder. Both vertical axes are logarithmic. The number above each full-dense and hybrid-dense bar is the ratio of that latency to the latency of Prefilling-dLLM v2. The YaRN factor is the evaluation length divided by 2048.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 230,
+              "image_path": "figures/2610.17868/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 481
+            },
+            {
+              "caption": "Figure 5: 16K single-needle accuracy for the routing mask, a new learned token, and EOS. Shuffle summaries permutes the summaries across chunks and leaves the text in place. Move needle places the intact needle in another chunk. Each bar is 100 examples.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 188,
+              "image_path": "figures/2610.17868/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 484
+            },
+            {
+              "caption": "Table 2: LongBench-v1 at the 16K training length. The upper block is dense attention. Full dense keeps dense attention in every layer through the same number of continued-training steps as the other variants. Hybrid dense uses three sliding-window layers and one dense layer. The lower block is sparse attention. In the dense block, ∗ marks the best score in each column. In the sparse block, the best score is bold and the second best is underlined.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 321,
+              "image_path": "figures/2610.17868/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 836
+            },
+            {
+              "caption": "Table 3: Layer configurations. Each variant occupies two rows. The first row is every fourth layer, and the second row is the other 21 layers. Local window is a bidirectional radius. Remote budget is the set of keys gathered beyond that window. Total budget is the number of key positions on that row. The sparse rows share a budget of about 2560. A dense layer reads every key.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 346,
+              "image_path": "figures/2610.17868/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 752
+            },
+            {
+              "caption": "Table 5: Continued training. Each variant is initialized from the dense step-500 checkpoint and trains for 1000 steps with a cosine schedule on four GPUs, at learning rate 10−4 with 50 warmup steps. The base weights stay frozen. Low-rank adapters of rank 16, scale 32, and dropout 0.05 train the query, key, value, and output projections. The rows below are the parameters that differ across variants.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 661,
+              "image_path": "figures/2610.17868/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 640
+            },
+            {
+              "caption": "Table 1: Three RULER tasks at 16K, 32K, 64K, and 128K. The upper block is dense attention. Full dense keeps dense attention in every layer through the same number of continued-training steps as the other variants. Hybrid dense uses three sliding-window layers and one dense layer. The lower block is sparse attention. Fixed uses YaRN factor 8. Scaled sets the factor to the evaluation length divided by 2048. MK is multi-key multi-query. Avg. is the mean of S-N, MK, and VT. In the dense block, ∗ marks the best score in each column. In the sparse block, the best score is bold and the second best is underlined.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 129,
+              "image_path": "figures/2610.17868/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Dense context extension. The run continues Dream-v0-Base-7B under dense attention. The base weights stay frozen, and the listed low-rank adapters are the trainable parameters.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 442,
+              "image_path": "figures/2610.17868/table-012.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 398
+            },
+            {
+              "caption": "Table 7: Routing-token ablations on the three RULER tasks. The YaRN factor is held at 8 at every length. MK is multi-key multi-query. Avg. is the mean of S-N, MK, and VT. Mask is the native mask used by Prefilling-dLLM v2, copied from its Fixed row in Table 1. EOS and New token replace the mask in the routing slot, both in training and at evaluation.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2610.17868/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 844
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17868/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17868",
+          "relevance": 8,
+          "selection_reason": "Learned chunk routing and sparse attention for long-context diffusion language models directly address efficient attention and long-context processing.",
+          "summary_status": "generated",
+          "title": "Prefilling-dLLM v2: Learned Chunk Routing for Long-Context Diffusion Language Models",
+          "tldr": "Prefilling-dLLM v2 trains a diffusion language model to route attention through learned chunk-level mask tokens, enabling efficient long-context decoding while preserving strong retrieval performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear-time sequence models typically store long-context information in a recurrent state. A fixed-size state limits how much information can be stored, while hybrid architectures that add full attention for better recall incur quadratic sequence cost. Alternatively, sparse attention with continued pretraining (CPT) can extend the effective context length. Generalization beyond the trained length remains challenging, however, and CPT can be costly. We introduce FreeSolo, a native sparse attention mechanism with a short-range sliding window branch and a long-range branch that selects keypoint cells for direct token attention. Its linear-time variant, FS-L, learns to prune the prefix before query-dependent selection through short CPT. FS-B searches balanced trees with $O(N\\log^2 N)$ algorithmic cost including radix-sort construction. FreeSolo demonstrates better zero-shot length extrapolation than the baselines without long-context fine-tuning.",
+          "arxiv_id": "2610.17191",
+          "arxiv_url": "https://arxiv.org/abs/2610.17191",
+          "authors": [
+            "Zekun Shi, Alastair James Arthur Price"
+          ],
+          "bullets": [
+            "Addresses the limited memory of fixed-size recurrent states and the quadratic cost of full attention.",
+            "Combines a short-range sliding-window branch with a long-range branch that selects keypoint cells for direct token attention.",
+            "FS-L prunes the prefix before query-dependent selection, while FS-B searches balanced trees with O(N log² N) cost.",
+            "The method shows better zero-shot length extrapolation than baselines without long-context fine-tuning."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Zero-shot RULER extrapolation at 800M. Models train at 4k (dotted line); shading marks extrapolation. 100 examples per task and length.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 663,
+              "image_path": "figures/2610.17191/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1038
+            },
+            {
+              "caption": "Figure 2: FreeSolo attention. FS scores the full prefix; FS-L prunes per head, independently of the query. Both select K = 4 cells per query and head. We use P = 64 high-norm cells, W = 8 recent cells, cell size s = 32, query blocks of B = 128 tokens, and SR radius w = 512.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 676,
+              "image_path": "figures/2610.17191/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 966
+            },
+            {
+              "caption": "Figure 3: FS-B long-range selection, per head. The query searches two causal forests over the prefix: one over every cell and one over cells with ac ≥ τℓh. Each beam keeps 16 nodes per level down to the leaves, ⌈log2M⌉ levels for M admitted cells (6 and 5 in this 64-cell example). The union of both beams is reranked with token keys; the top K = 4 cells form Si, which is read as in FS.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 577,
+              "image_path": "figures/2610.17191/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 8: Accuracy versus attention storage at 340M. The P = 64 points show the mean and range of two seed-42 continuations.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 338,
+              "image_path": "figures/2610.17191/figure-004.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 952
+            },
+            {
+              "caption": "Figure 9: Streaming construction of one FS-B forest, per head. Solid edges form balanced trees within power-of-two chunks; dashed edges join their roots, smallest first. Leaf numbers denote arrival order, while their arrangement follows mean-key splits. The 13 = 8 + 4 + 1 example has height ⌈log2 13⌉ = 4. Right: the two construction steps; node summaries are defined in Eqs. (20)–(21).",
+              "figure_id": "figure-9-25",
+              "figure_number": "9",
+              "height": 283,
+              "image_path": "figures/2610.17191/figure-005.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 968
+            },
+            {
+              "caption": "Figure 6: Retrieving a number at 64k (800M). Selected cells, routing scores, prompt text, and attention to the S-NIAH-2 value. Both answers are correct.",
+              "figure_id": "figure-6-19",
+              "figure_number": "6",
+              "height": 1060,
+              "image_path": "figures/2610.17191/figure-006.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 905
+            },
+            {
+              "caption": "Figure 7: Retrieving a UUID at 32k (800M). Selected cells, routing scores, prompt text, and attention to the S-NIAH-3 value. Both answers are correct.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 1060,
+              "image_path": "figures/2610.17191/figure-007.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 905
+            },
+            {
+              "caption": "Figure 4: Retrieving a number at 256k (340M). Selected cells, routing scores, prompt text, and attention during generation. Both answers are correct.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 1073,
+              "image_path": "figures/2610.17191/figure-008.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 822
+            },
+            {
+              "caption": "Figure 5: Long-range read distance at 800M on one 256k S-NIAH-1 prompt. Orange guides mark the needle position and its distance from each query.",
+              "figure_id": "figure-5-24",
+              "figure_number": "5",
+              "height": 832,
+              "image_path": "figures/2610.17191/figure-009.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 938
+            },
+            {
+              "caption": "Table 2: Zero-shot downstream accuracy (0–100). Rows are ordered by average within each scale; bold and underline mark the best and second-best scores.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 600,
+              "image_path": "figures/2610.17191/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 810
+            },
+            {
+              "caption": "Table 12: Only FS-B’s weighted CPT improves the RULER mean at all four lengths. Suite-mean changes at 800M scale (+CPT minus base, points, on the same prompts and protocols as Table 1; the base means are the Table 1 rows). Each “+CPT” arm continues the Table 1 checkpoint of the same architecture with plain next-token loss at the FS-L budget (1.57B tokens). The FS-L arm instead keeps the pruning loop in training at the same budget. The single-forest ablation uses FS-B’s recall-weighted CPT, spending 0.42B tokens (27%; Appendix E.4), and compares the full-prefix width-32 read before and after CPT (base means 40.9/36.0/30.4/28.2). FS-B itself denotes the two-forest design of Table 1.",
+              "figure_id": "table-12-23",
+              "figure_number": "12",
+              "height": 225,
+              "image_path": "figures/2610.17191/table-011.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 572
+            },
+            {
+              "caption": "Table 3: Evaluated pretraining checkpoints. Steps and training tokens at 524,288 tokens per step. MoBA is trained only at the smaller scale. FS-L and FS-B continue from the FS checkpoints: FS-L adds 0.73B (340M) and 1.57B (800M) CPT tokens; FS-B uses the FS-L weights at 340M and 0.42B retrieval-weighted CPT tokens at 800M (Appendix E.4).",
+              "figure_id": "table-3-16",
+              "figure_number": "3",
+              "height": 314,
+              "image_path": "figures/2610.17191/table-012.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 432
+            },
+            {
+              "caption": "Table 14: Adapted retention budgets at 340M. Each model trains and evaluates with its stated P .",
+              "figure_id": "table-14-11",
+              "figure_number": "14",
+              "height": 177,
+              "image_path": "figures/2610.17191/table-013.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 564
+            },
+            {
+              "caption": "Table 6: Prefill and eager decode throughput at 340M scale on one A100-40GB (bf16, batch 1). OOM denotes the 40GB memory limit.",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 314,
+              "image_path": "figures/2610.17191/table-014.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 614
+            },
+            {
+              "caption": "Table 5: Training throughput and peak memory at 340M scale on eight A100-40GB GPUs. Raven and NAtS-L use the fla/flame FSDP harness; see the text.",
+              "figure_id": "table-5-26",
+              "figure_number": "5",
+              "height": 279,
+              "image_path": "figures/2610.17191/table-015.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 490
+            },
+            {
+              "caption": "Table 7: Bounded FS-L inference. Throughput uses CUDA-graph decode; peak memory is the maximum across three trials.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 264,
+              "image_path": "figures/2610.17191/table-016.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 702
+            },
+            {
+              "caption": "Table 16: Multiple-question retrieval. Accuracy (%) on shared prefixes: an answer is correct if the target value appears in 16 greedy tokens; 50 prefixes per condition. Bold and underline mark the best and secondbest score within each scale, including ties. FS-B prefills each question afresh; at 340M this raises FS and FS-L by about 2 points relative to the shared-prefix rows.",
+              "figure_id": "table-16-15",
+              "figure_number": "16",
+              "height": 364,
+              "image_path": "figures/2610.17191/table-017.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 548
+            },
+            {
+              "caption": "Table 10: Source-cell availability and selection at 16k. The source is the cell containing the answer value. Rates average over all heads and the final 16 prompt positions within each prompt, then over prompts; FS (offline) applies the FS-L retention rule to FS keys.",
+              "figure_id": "table-10-6",
+              "figure_number": "10",
+              "height": 302,
+              "image_path": "figures/2610.17191/table-018.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 640
+            },
+            {
+              "caption": "Table 11: Pruning recovery and seed variation at 340M. Accuracy (%) on 50 shared prompts per task at 4k, the training context. FS-L is the 1400-step checkpoint of Table 1; seeded rows use 1500 CPT steps without (FS) or with (FS-L) pruning.",
+              "figure_id": "table-11-22",
+              "figure_number": "11",
+              "height": 302,
+              "image_path": "figures/2610.17191/table-019.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 518
+            },
+            {
+              "caption": "Table 4: RULER results by task (0–100) at 340M and 800M. Bold and underline mark the best and second-best scores within each group (super-linear or linear cost) and scale. Dashes denote unavailable results.",
+              "figure_id": "table-4-21",
+              "figure_number": "4",
+              "height": 83,
+              "image_path": "figures/2610.17191/table-020.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 977
+            },
+            {
+              "caption": "Table 1: RULER accuracy (0–100). All models train at 4k; results at 8k and above test zero-shot extrapolation. Means cover available tasks; cost is defined in Section 4.1. FS-B’s algorithmic cost includes radix-sort construction (Appendix E.2). Bold/underline mark the best/second-best scores within each block (super-linear or linear cost); dashes denote unavailable results.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 35,
+              "image_path": "figures/2610.17191/table-021.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 977
+            },
+            {
+              "caption": "Table 8: RULER ablations at 340M (0–100). Bold and underline mark the best and second-best scores, including ties.",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 165,
+              "image_path": "figures/2610.17191/table-022.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 802
+            },
+            {
+              "caption": "Table 9: Downstream accuracy of the ablations at 340M (0–100), using the metrics in Table 2.",
+              "figure_id": "table-9-18",
+              "figure_number": "9",
+              "height": 129,
+              "image_path": "figures/2610.17191/table-023.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 818
+            },
+            {
+              "caption": "Table 13: FS-L training recipes at 340M (0–100). Both use pruning during evaluation, with 100 examples per RULER task and length. Bold marks the better recipe.",
+              "figure_id": "table-13-14",
+              "figure_number": "13",
+              "height": 158,
+              "image_path": "figures/2610.17191/table-024.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 980
+            },
+            {
+              "caption": "Table 18: Recall-weighted CPT under single-forest ablations (0–100; RULER available-task means over 12 tasks at 2k/4k and 13 at 8k/16k, protocol of Table 1). All rows start from the base 743M FS checkpoint; CPT rows are the Table 1 FS-B checkpoint evaluated with a single-forest ablation. FS-B denotes the two-forest design, whose results appear in Table 1.",
+              "figure_id": "table-18-20",
+              "figure_number": "18",
+              "height": 142,
+              "image_path": "figures/2610.17191/table-025.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 610
+            },
+            {
+              "caption": "Table 17: Forest ablation of FS-B (0–100, RULER protocol of Table 1). All arms run on the same checkpoints with the same four-cell token read; only the inference-time candidate generator differs: FS-B’s two forests as rendered in Table 1, the full-prefix forest alone with a width-32 or width-16 beam, or the norm-filtered forest alone with a width-16 beam. Bold marks the best of the four arms per column.",
+              "figure_id": "table-17-8",
+              "figure_number": "17",
+              "height": 79,
+              "image_path": "figures/2610.17191/table-026.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 980
+            },
+            {
+              "caption": "Table 15: Retention budget and bounded inference at 340M, 256k.",
+              "figure_id": "table-15-9",
+              "figure_number": "15",
+              "height": 127,
+              "image_path": "figures/2610.17191/table-027.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 602
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17191/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17191",
+          "relevance": 7,
+          "selection_reason": "Linear-time sparse attention with zero-shot length extrapolation, relevant to efficient attention and long-context processing.",
+          "summary_status": "generated",
+          "title": "FreeSolo: Linear-time Sparse Attention with Zero-Shot Length Extrapolation",
+          "tldr": "FreeSolo is a sparse-attention mechanism that enables linear-time long-context modeling and stronger zero-shot length extrapolation without long-context fine-tuning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "State space models provide efficient linear-complexity processing for long sequences, but their performance frequently degrades as context length grows. We propose SuPER-Mamba, a training-free framework that uses Surprisal as a model-intrinsic signal for long-range state routing in pretrained Mamba models. SuPER-Mamba computes position-wise Surprisal from next-token predictions, aggregates neighboring responses through Local Pooling, and uses the resulting scores to prioritize Global-Channel updates without query-dependent scoring or additional training. We evaluate SuPER-Mamba on three state-space models across the LongBench-E benchmark. The results show that SuPER-Mamba improves the average score from 8.06 to 15.69, corresponding to a 94.7% relative gain over the Base Models and a 13.1% improvement over the state-of-the-art prior baseline. Ablation and length-wise analyses further support the effectiveness of the proposed routing framework.",
+          "arxiv_id": "2610.16636",
+          "arxiv_url": "https://arxiv.org/abs/2610.16636",
+          "authors": [
+            "Zhetong Zhang, Gayan K Kulatilleke"
+          ],
+          "bullets": [
+            "Addresses performance degradation in state space models as context length increases.",
+            "Computes position-wise surprisal from next-token predictions and smooths it with Local Pooling.",
+            "Uses surprisal scores to prioritize Global-Channel state updates without query-dependent scoring or additional training.",
+            "Evaluated across three state-space models on LongBench-E, improving the average score from 8.06 to 15.69.",
+            "Ablation and length-wise analyses support the effectiveness of the routing framework."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the SuPER-Mamba framework. Phase 1 performs offline Context Scoring. (a) Surprisal Calculation computes position-wise Raw Surprisal Scores from the next-token prediction probabilities of the pretrained Mamba. (b) Local Pooling aggregates neighboring predictive responses using category-specific Mean or Max Pooling to obtain Pooled Surprisal Scores. Phase 2 uses these scores for long-range state routing. The historical Top-K Content positions selected by the Pooled Surprisal Scores are combined with the most recent R = 32 Content positions to form the final routing set. For long-range state updates, Instruction and Query positions do not participate in Content Selection and retain their original state updates, while among Content positions, only the selected positions update the predefined Global Channels. All Content positions continue to participate in the original recurrent computation, so the complete input is neither removed nor truncated.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 364,
+              "image_path": "figures/2610.16636/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 921
+            },
+            {
+              "caption": "Figure 3: Hyperparameter sensitivity analysis on a LongBench-E subset using Mamba2-1.3B. The horizontal axis represents the six task categories, and the vertical axis reports the corresponding category-level LongBench-E score obtained by equally averaging the results of the datasets within each category. Each configuration is evaluated on 50 samples from each of the 13 datasets. (a) analyzes the routing budget K with k = 18 and Mean Pooling fixed, testing K ∈ {256, 512, 768, 1024, 1536, 2048, 3072}. (b) analyzes the Local Pooling kernel k with K = 1024 and Mean Pooling fixed, testing k ∈ {3, 5, 7, 9, 12, 15, 18, 21}. Boxes summarize the result distributions across all tested settings for each category, gray diamonds indicate the common reference configuration with K = 1024, k = 18, and Mean Pooling, and red circles indicate the best observed setting for each category in the corresponding parameter analysis.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 357,
+              "image_path": "figures/2610.16636/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 920
+            },
+            {
+              "caption": "Figure 1: Motivation of SuPER-Mamba. A pretrained Mamba produces position-wise Surprisal from nexttoken prediction probabilities while processing the input context. Relatively predictable local content typically produces lower and more stable Surprisal responses, whereas less predictable local changes may produce larger responses. SuPER-Mamba treats these responses as model-intrinsic predictive feedback and further investigates the relationship between such local predictive feedback and signals for long-range state allocation.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 228,
+              "image_path": "figures/2610.16636/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 453
+            },
+            {
+              "caption": "Table 1: Main LongBench-E results on Mamba2-1.3B. Results are grouped by task category. Different datasets are evaluated using their official LongBench-E task-specific metrics, including QA F1 for Qasper, MultiFieldQA-en, HotpotQA, 2WikiMQA, and TriviaQA, ROUGE-L F1 for GovReport, MultiNews, and SAMSum, classification score for TREC, count score for Passage Count, retrieval score for Passage Retrieval-en, and code similarity for LCC and RepoBench-P. Each dataset score is the arithmetic mean over the 0–4k, 4–8k, and 8k+ context-length ranges. The Average row reports the arithmetic mean over all 13 dataset-level scores. Best results are shown in bold, and second-best results are underlined.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 377,
+              "image_path": "figures/2610.16636/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 841
+            },
+            {
+              "caption": "Table 8: Dataset-level component ablation results on LongBench-E using Mamba2-1.3B. Each dataset is evaluated using its official LongBench-E task-specific metric. Samples are divided into the 0–4k, 4–8k, and 8k+ context-length ranges, and the three range-level scores are averaged arithmetically to obtain the dataset-level score. The Average row reports the arithmetic mean over all 13 dataset-level scores. Bold values indicate the best result among the four component settings.",
+              "figure_id": "table-8-7",
+              "figure_number": "8",
+              "height": 354,
+              "image_path": "figures/2610.16636/table-005.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 812
+            },
+            {
+              "caption": "Table 2: Category routing configurations used in the full LongBench-E evaluation. K denotes the number of historical Content positions selected based on the Pooled Surprisal Scores and allowed to update the Global Channels. Kernel denotes the Local Pooling window size k, and Pooling denotes Mean or Max aggregation. All task categories additionally retain the most recent R = 32 Content positions.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 150,
+              "image_path": "figures/2610.16636/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 369
+            },
+            {
+              "caption": "Table 3: Overall LongBench-E results of SuPERMamba on Mamba1-1.4B, Mamba2-1.3B, and Zamba21.2B. Each dataset is evaluated using its official LongBench-E task-specific metric, and the results are equally averaged across the three context-length ranges. The Average row reports the arithmetic mean of the overall scores of the three models.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 111,
+              "image_path": "figures/2610.16636/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 462
+            },
+            {
+              "caption": "Table 6: Complete mapping from LongBench-E datasets to task categories and their corresponding category routing configurations. Different categories use different routing parameter configurations while following the same routing mechanism during inference.",
+              "figure_id": "table-6-10",
+              "figure_number": "6",
+              "height": 340,
+              "image_path": "figures/2610.16636/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 571
+            },
+            {
+              "caption": "Table 7: Final category routing configurations used for the full LongBench-E evaluation. K denotes the selection budget for historical Content positions, Kernel k denotes the Local Pooling window size, and Pooling denotes Mean or Max aggregation. These configurations are determined from the parameter analysis on a LongBench-E subset and remain fixed throughout the subsequent full evaluation.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 169,
+              "image_path": "figures/2610.16636/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 361
+            },
+            {
+              "caption": "Table 9: Length-wise component ablation results on LongBench-E using Mamba2-1.3B. The 0–4k, 4–8k, and 8k+ columns correspond to the three context-length ranges. Each range uses the official LongBench-E taskspecific metric for each dataset and reports the equal average across all 13 datasets. Bold values indicate the best result in each column.",
+              "figure_id": "table-9-4",
+              "figure_number": "9",
+              "height": 121,
+              "image_path": "figures/2610.16636/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 451
+            },
+            {
+              "caption": "Table 4: SuPER-Mamba component ablation results on Mamba2-1.3B. All results are evaluated on the complete set of 13 LongBench-E datasets using their official task-specific metrics. Each dataset score is obtained by equally averaging the results over the three contextlength ranges.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 131,
+              "image_path": "figures/2610.16636/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 289
+            },
+            {
+              "caption": "Table 5: LongBench-E results of Mamba2-1.3B across different context-length ranges. The 0–4k, 4–8k, and 8k+ columns correspond to the three LongBench-E context-length ranges. Each column uses the official task-specific metric for each dataset and reports the equal average across all 13 datasets.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 88,
+              "image_path": "figures/2610.16636/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 342
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.16636/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.16636",
+          "relevance": 7,
+          "selection_reason": "Training-free surprisal-based routing improves long-context Mamba performance; fits long-context language model methods.",
+          "summary_status": "generated",
+          "title": "SuPER-Mamba: Surprisal Prioritization for Extended-Context Routing in Mamba",
+          "tldr": "SuPER-Mamba is a training-free surprisal-based routing method that substantially improves long-context performance in pretrained Mamba models.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Serving stacks for large language models manage context through four recurring mechanisms: incremental edits to a growing context, branching and snapshotting for tree search, identification of reusable prefixes for KV-cache reuse, and encoding of repeated segments. Each mechanism is served today by a different specialist structure. We show that all four reduce to a single persistent weight-balanced rope whose every node carries a polynomial hash of its subtree over a Mersenne prime, so that the structure supports logarithmic edits and logarithmic verified content-identity queries at the same time. We validate each mechanism with pre-registered, replicated experiments, then compare against a deployed specialist per mechanism: the Ropey editing library, a faithful PagedAttention copy-on-write block table, and the vendored SGLang radix matcher. On workloads that interleave edits with identity queries, Hashrope is net-superior to Ropey by a factor that grows without bound (369.7x at one million characters). Against the radix matcher on a live vLLM stack serving Qwen2.5-7B-Instruct-1M on four A100 GPUs, Hashrope identifies a one-million-token shared prefix exactly and 1.20x faster, at a context length the dense engine cannot even prefill.",
+          "arxiv_id": "2610.16144",
+          "arxiv_url": "https://arxiv.org/abs/2610.16144",
+          "authors": [
+            "Muntaser Syed (Florida Institute of Technology), Ameerah Alsulami (Florida Institute of Technology), Marius Silaghi (Florida Institute of Technology)"
+          ],
+          "bullets": [
+            "Targets incremental editing, branching/snapshotting, KV-cache prefix reuse, and repeated-segment encoding.",
+            "Stores a polynomial subtree hash over a Mersenne prime in every rope node to support content-identity checks.",
+            "Uses persistent structure sharing for logarithmic updates and queries across evolving contexts.",
+            "Validated through pre-registered, replicated experiments against Ropey, a PagedAttention copy-on-write table, and SGLang’s radix matcher.",
+            "Reported 369.7× advantage over Ropey at one million characters and 1.20× faster exact detection of a one-million-token shared prefix than the radix matcher in a live vLLM setup."
+          ],
+          "categories": [
+            "cs.DS",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 5. The engine prefix-cache effect on the live stack (top: GPU energy per generated token, cache off over cache on; bottom: time to first token), nine runs per point. The reduction, 69.6x to 277.6x across the sweep, is attributed to the vLLM cache, not to HASHROPE. The shaded region marks the denseattention serving wall, beyond which the engine cannot prefill; identification (Fig. 4) keeps working there.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 428,
+              "image_path": "figures/2610.16144/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 506
+            },
+            {
+              "caption": "Fig. 4. Identification latency on the live stack over shared-prefix length, loglog, nine runs per point. The live-stack crossover L∗′ is bracketed between 524,288 and 1,000,000 tokens; the dashed line is the crossover predicted in advance by the CPU-only study, which lands inside the bracket.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 347,
+              "image_path": "figures/2610.16144/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 507
+            },
+            {
+              "caption": "Fig. 2. Edit-plus-identity workload, HASHROPE (Rust) against Ropey 1.6.1 with the same polynomial hash: per-cycle latency over buffer size, nine runs per point. Ropey’s cycle is dominated by the O(N) fingerprint recompute (slope 1.013); HASHROPE reads the maintained fingerprint in O(1) (slope 0.150), so the gap widens without bound, 9/9 paired at every size.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 323,
+              "image_path": "figures/2610.16144/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 511
+            },
+            {
+              "caption": "Fig. 3. Branch memory against a faithful PagedAttention block-table copyon-write baseline, five branches per context. The paged table is Θ(N/B) per branch; HASHROPE adds an O(logw) shared spine per branch, so compression grows with context size.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 321,
+              "image_path": "figures/2610.16144/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 511
+            },
+            {
+              "caption": "Fig. 1. Prefix-identification latency over context size at half-way divergence, nine runs per point, log-log. The hash LCP is near flat (the O(log2 N) signature) while the byte scan is linear; the crossover falls near 1 MB, where long-context serving begins.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 311,
+              "image_path": "figures/2610.16144/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 500
+            },
+            {
+              "caption": "TABLE VI ECOLOGICAL REPLAY OF REAL 120B-MODEL TREE-OF-THOUGHT SEARCH: BRANCH-CREATION SPEEDUP (PAGED OVER HASHROPE) BY PREPENDED PREFIX LENGTH P , NINE RUNS PER POINT; SUB-CROSSOVER CELLS WHERE THE PAGED TABLE WINS ARE INCLUDED.",
+              "figure_id": "table-VI-11",
+              "figure_number": "VI",
+              "height": 140,
+              "image_path": "figures/2610.16144/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 488
+            },
+            {
+              "caption": "TABLE III VERIFICATION LEDGER ACROSS ALL STUDIES. EVERY ORACLE COMPARISON IN THE PAPER RETURNED ZERO MISMATCHES; NEGATIVE CONTROLS (INJECTED FAULTS) CONFIRM EACH GATE IS NON-VACUOUS.",
+              "figure_id": "table-III-8",
+              "figure_number": "III",
+              "height": 548,
+              "image_path": "figures/2610.16144/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 470
+            },
+            {
+              "caption": "TABLE VII SINGLE-QUERY PREFIX IDENTIFICATION AGAINST THE VENDORED SGLANG RADIX MATCHER OVER SHARED-PREFIX LENGTH L (TOKENS), MEAN OVER NINE RUNS; THE FLAT SCAN IS THE O(L) FLOOR. CROSSOVER NEAR 571 K.",
+              "figure_id": "table-VII-1",
+              "figure_number": "VII",
+              "height": 215,
+              "image_path": "figures/2610.16144/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 438
+            },
+            {
+              "caption": "TABLE II FLATTEN SWEEP, MEAN OVER NINE RUNS. THE GUARD COLUMN COUNTS LEAF RE-ALLOCATIONS / SPLITS / HASH RECOMPUTATIONS PER FLATTEN; THE IN-ORDER MATERIALIZER PERFORMS NONE AT ANY SIZE.",
+              "figure_id": "table-II-7",
+              "figure_number": "II",
+              "height": 158,
+              "image_path": "figures/2610.16144/table-009.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 484
+            },
+            {
+              "caption": "TABLE V BRANCH-CREATION LATENCY AGAINST THE PAGED COPY-ON-WRITE BASELINE OVER CONTEXT SIZE, REFERENCE BLOCK 16, NINE RUNS PER POINT; ALL SIZES 9/9 PAIRED AT 1 M FOR EVERY BLOCK SIZE.",
+              "figure_id": "table-V-12",
+              "figure_number": "V",
+              "height": 158,
+              "image_path": "figures/2610.16144/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 466
+            },
+            {
+              "caption": "TABLE VIII LIVE-STACK PREFIX-CACHE EFFECT, MEAN OVER NINE RUNS, ALL ROWS 9/9 PAIRED WITH P = 0.002. THE REDUCTION IS THE ENGINE’S; THE IDENTITY LAYER ADDS ZERO GPU WORK BY CONSTRUCTION.",
+              "figure_id": "table-VIII-5",
+              "figure_number": "VIII",
+              "height": 138,
+              "image_path": "figures/2610.16144/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 442
+            },
+            {
+              "caption": "TABLE I MECHANISM VALIDATION. GUARDS ARE DETERMINISTIC (STD = 0); TIMINGS ARE MEAN OVER 9 RUNS. SLOPES ARE LOG-LOG WALL-CLOCK EXPONENTS.",
+              "figure_id": "table-I-2",
+              "figure_number": "I",
+              "height": 141,
+              "image_path": "figures/2610.16144/table-012.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 516
+            },
+            {
+              "caption": "TABLE IV QUERY-TO-EDIT RATIO ABLATION AGAINST ROPEY: PER-CYCLE SPEEDUP (ROPEY OVER HASHROPE), NINE RUNS PER POINT, 9/9 PAIRED AT AND ABOVE EACH CROSSOVER N∗ . BELOW N∗ ROPEY WINS.",
+              "figure_id": "table-IV-9",
+              "figure_number": "IV",
+              "height": 101,
+              "image_path": "figures/2610.16144/table-013.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 396
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.16144/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.16144",
+          "relevance": 9,
+          "selection_reason": "Persistent data structure for LLM context and KV-cache management; directly relevant to efficient serving and long-context handling.",
+          "summary_status": "generated",
+          "title": "Hashrope: A Persistent Data Structure for Mechanisms of LLM Context Management",
+          "tldr": "Hashrope unifies four LLM context-management mechanisms in one persistent, hash-augmented weight-balanced rope with logarithmic edits and verified identity queries.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear attention promises the efficiency needed for long-context language modelling, yet its fixed-size recurrent state must simultaneously support ongoing computation and preserve information from an ever-growing history. This coupling has reinforced a prevailing view that the state's memory capacity defines the model's long-context capability. We challenge this presumed ceiling: \\emph{recurrent computation need not bear the full burden of long-term storage}. We introduce NoteBank, a sparse episodic memory that archives selected text before future queries are known, uses the backbone's native features for writing and addressing, and reads retrieved evidence through its native forward computation via replay. This \\emph{training-free, plug-and-play} interface requires no external embedding model, separately trained retriever, or separate neural reader. At one million tokens, it raises Gated DeltaNet's mean accuracy across six RULER retrieval tasks from 1.7% to 70.3%, with no observed significant retrieval degradation from 4K to 1M tokens. This recovery adds $\\leqslant$0.025% to analytical FLOPs, with persistent context storage approximately 1/2,600 that of a Transformer's full MHA KV cache at matched width, depth, and precision. Experiments extend from three 1.3B recurrent backbones to Mamba-2-8B and post-trained Qwen3.5-9B, demonstrating gains on LongBench v1/v2 and MemoryAgentBench. Together, these results show that sparse evidence storage and native replay can substantially expand the long-context capability of pretrained linear attention models while retaining the efficiency of recurrent computation.",
+          "arxiv_id": "2610.15715",
+          "arxiv_url": "https://arxiv.org/abs/2610.15715",
+          "authors": [
+            "Li Nanbo, Firas Laakom, Yilan Zhang, Piotr Pi\\k{e}kos, Yimeng Chen, Liangyu Wang, Yifan Xu, Mateusz Ostaszewski, Dandan Guo, Wenyi Wang, Yanning Dai, Yuhui Wang, J\\\"{u}rgen Schmidhuber"
+          ],
+          "bullets": [
+            "Linear attention’s fixed recurrent state must handle both computation and long-term storage, limiting context retention.",
+            "NoteBank archives selected text before queries are known, addresses it using native backbone features, and replays retrieved evidence through the model’s forward computation.",
+            "The training-free, plug-and-play method requires no external embedder, separately trained retriever, or separate neural reader.",
+            "On one-million-token RULER retrieval tasks, Gated DeltaNet’s mean accuracy improves from 1.7% to 70.3%, with no significant retrieval degradation from 4K to 1M tokens.",
+            "The approach adds at most 0.025% analytical FLOPs and uses far less persistent storage than a Transformer KV cache; evaluations cover multiple recurrent backbones and long-context benchmarks."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of NoteBank. During context encoding, native features “keys” and “queries” (i.e., k and q) guide span selection and indexing; each span zi is stored with addressesAi. Taking the retained context state ST , the backbone encodes the question to obtain queries for retrieving relevant spans. The native forward pass starts from the same ST and processes the retrieved evidence and then the question, and generates the answer. Backbone parameters remain frozen throughout. We refer to Algorithm 1 for more details.",
+              "figure_id": "figure-2-17",
+              "figure_number": "2",
+              "height": 304,
+              "image_path": "figures/2610.15715/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 829
+            },
+            {
+              "caption": "Figure 1: NoteBank (NB) recovers million-token retrieval with negligible compute overhead. a, Mean accuracy over six RULER-NIAH retrieval tasks for three pretrained 1.3B recurrent models, without NoteBank (dashed) and with training-free top-2 note replay (solid). b, At 1M tokens, NoteBank adds ⩽0.025% layer-level analytical FLOPs across the three backbones (GDN shown). GDN + NoteBank requires 74.5 MiB of persistent context storage, including its recurrent state— approximately 1/2,600 of the 192 GiB MHA KV cache at matched width, depth, and BF16 precision. Square areas represent storage, with a magnified inset for NoteBank. FLOPs include all evaluated stages at the full-model level and matched output length; they do not measure runtime. Storage excludes model weights and transient workspace.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 257,
+              "image_path": "figures/2610.15715/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 808
+            },
+            {
+              "caption": "Figure 6: Training-free long-range retrieval across architectures and context lengths: full results on RULER 6 NIAH tasks.",
+              "figure_id": "figure-6-19",
+              "figure_number": "6",
+              "height": 991,
+              "image_path": "figures/2610.15715/figure-003.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 827
+            },
+            {
+              "caption": "Figure 5: Evidence preservation, access, and utilisation in NoteBank. a, Gold-value coverage in the archive (Archived) and top-4 retrieved notes (Retrieved@4); shading marks stored but unretrieved values. b, Native vs. oracle routing on RULER, with archive, reader, and replay budget fixed. c, The same intervention on four LongBench QA tasks (top-1; frozen/LoRA readers). Oracle notes contain reference answers, a proxy for relevance rather than guaranteed supporting evidence.",
+              "figure_id": "figure-5-20",
+              "figure_number": "5",
+              "height": 490,
+              "image_path": "figures/2610.15715/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 806
+            },
+            {
+              "caption": "Figure 12: Replay–span interaction with read adaptation. LongBench macro-average scores over twelve evaluated tasks for NB-LoRA on GDN (top) and Mamba-2 (bottom). Left: varying replay budget R, with averages over span budgets. Middle: varying span budget B, with averages over replay budgets. Right: scores for each (B,R) configuration. The best replay and span budgets depend on the backbone.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 461,
+              "image_path": "figures/2610.15715/figure-005.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 824
+            },
+            {
+              "caption": "Figure 8: Effect of the per-chunk write budget. Six-task mean RULER accuracy versus analytical added FLOPs for NB-TF with W ∈ {1, 2} on GDN and Mamba-2, averaged over replay budgets R ∈ {1, 2, 4}. Labels indicate context lengths. Writing two notes consistently improves accuracy with little additional arithmetic cost.",
+              "figure_id": "figure-8-14",
+              "figure_number": "8",
+              "height": 302,
+              "image_path": "figures/2610.15715/figure-006.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 800
+            },
+            {
+              "caption": "Figure 10: Effect of chunk size on retrieval and computation. Six-task mean RULER accuracy versus analytical added FLOPs for NB-TF with different chunk sizes C, averaged over replay budgets R ∈ {1, 2, 4}. Labels indicate context lengths. Smaller chunks particularly benefit Mamba-2 at long contexts, while very large chunks degrade retrieval for both backbones.",
+              "figure_id": "figure-10-11",
+              "figure_number": "10",
+              "height": 302,
+              "image_path": "figures/2610.15715/figure-007.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 798
+            },
+            {
+              "caption": "Figure 11: Joint effects of span and replay budgets. Six-task mean RULER accuracy (%) for NBTF on GDN (top) and Mamba-2 (bottom), at context lengths from 4K to 1M. Each heatmap varies the span budget B ∈ {64, 128, 256} across columns and replay budget R ∈ {1, 2, 4} across rows. Longer spans do not consistently improve accuracy; their benefit depends on the replay budget and backbone.",
+              "figure_id": "figure-11-10",
+              "figure_number": "11",
+              "height": 294,
+              "image_path": "figures/2610.15715/figure-008.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 794
+            },
+            {
+              "caption": "Figure 7: Breakdown of NoteBank’s computation overhead. Added analytical FLOPs for NBTF with top-2 replay relative to Plain on RULER, using matched output lengths. Stacked bars separate writing/indexing, question encoding, routing, and replay for GDN, GDN-2, and Mamba-2. Annotations report routing costs at 1M tokens in GFLOPs.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 288,
+              "image_path": "figures/2610.15715/figure-009.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 800
+            },
+            {
+              "caption": "Figure 9: Effect of the replay budget on retrieval and computation. Six-task mean RULER accuracy versus analytical added FLOPs for NB-TF with R ∈ {1, 2, 4} on GDN and Mamba-2. Labels indicate context lengths; connected markers compare replay budgets at the same length. Additional replay generally improves accuracy, with gains depending on the backbone and context length.",
+              "figure_id": "figure-9-15",
+              "figure_number": "9",
+              "height": 251,
+              "image_path": "figures/2610.15715/figure-010.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 800
+            },
+            {
+              "caption": "Figure 4: Efficiency of training-free NoteBank. (a) Relative analytical FLOPs overhead, decreasing with context length as fixed costs are amortised. (b) Incremental persistent GPU storage grows linearly with context. (c) Measured inference latency on an H100, with batch size 1 and 32 generated tokens. NB uses top-2 replay; InfLLM uses the official default top-96.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 227,
+              "image_path": "figures/2610.15715/figure-011.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 806
+            },
+            {
+              "caption": "Figure 3: Recovering long-range retrieval without training. NoteBank (NB-TF top-2) substantially improves retrieval over plain forward pass and full-prompt repetition (JRT), using the same frozen backbone. Scores are averaged over six RULER retrieval tasks, including single- and multipassage retrieval. See App. D.1 for per-task results.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 223,
+              "image_path": "figures/2610.15715/figure-012.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 801
+            },
+            {
+              "caption": "Table 1: From retrieval to real-world long-context tasks. All backbones have 1.3B parameters. Scores are macro-averaged over evaluated LongBench-v1 tasks, within each category and overall. NB-TF requires no additional training; NB-LoRA adapts the read stage. †Reference results aggregated from Behrouz et al. (2026), whose LongBench models were trained with 16K contexts. Bold marks the best score within each recurrent backbone.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 256,
+              "image_path": "figures/2610.15715/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 814
+            },
+            {
+              "caption": "Table 2: Plug-and-play gains on larger models without training. We report task-macro-averaged scores on the 2,100-question QA subset of MemoryAgentBench and accuracy on the 375-question QA/dialogue subset of LongBench-v2. NB-TF uses top-4 and top-8 retrieval, respectively. All Qwen evaluations use YaRN (official long-context setup). ∆ denotes the gain (%).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 120,
+              "image_path": "figures/2610.15715/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 710
+            },
+            {
+              "caption": "Table 5: From retrieval to real-world long-context tasks. Scores are macro-averaged over evaluated LongBench-v1 tasks, within each category and overall. NB-TF requires no additional training; NB-LoRA adapts the read stage. †Reference results aggregated from Behrouz et al. (2026); ‡Reference results aggregated from Zhang et al. (2026). Both † and ‡ require pretraining on 16Kcontext length data; out GDN and Mamba-2 were pretrained on 2K and 4K-length sequences, respectively. Bold marks the best score within each recurrent backbone.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 311,
+              "image_path": "figures/2610.15715/table-015.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 772
+            },
+            {
+              "caption": "Table 3: Effect of routing strategy. Scores average 6 RULER tasks at 1M tokens and 12 evaluated LongBench tasks, with LoRA readers fixed across routers for each backbone and benchmark. Native (NB) uses feature matching and voting; input embeddings are mean-pooled. Auxiliary retrievers add a lexical index or encoder; None does not imply zero routing cost.",
+              "figure_id": "table-3-13",
+              "figure_number": "3",
+              "height": 192,
+              "image_path": "figures/2610.15715/table-016.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 818
+            },
+            {
+              "caption": "Table 4: Separating memory access from read adaptation. GDN scores with and without NoteBank, using frozen or LoRA-adapted readers. Scores average six RULER retrieval tasks at 1M tokens and twelve LongBench tasks. NoteBank uses top-1 replay; adapters are trained independently with and without replay using matched data and training budgets.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 119,
+              "image_path": "figures/2610.15715/table-017.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 618
+            },
+            {
+              "caption": "Table 7: Retrieval quality vs. measured storage at 1M tokens. RULER averages six NIAH tasks. GPU peak includes model weights. CPU archive reports compact payload accounting for NB’s token IDs and span-location records for NoteBank, and counted host KV for InfLLM.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 139,
+              "image_path": "figures/2610.15715/table-018.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 806
+            },
+            {
+              "caption": "Table 6: MemoryAgentBench results by task family and replay budget. Accuracy (%) for Mamba-2-8B and Qwen3.5-9B, using matched examples within each backbone. RULER QA differs from the RULER-NIAH tasks reported in this paper. Overall reports the macro-average over evaluated tasks. For Mamba-2, Clean start resets the inference state without replay, while NB-TF additionally replays retrieved evidence. Bold marks the best score within each backbone, including ties.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 221,
+              "image_path": "figures/2610.15715/table-019.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 798
+            },
+            {
+              "caption": "Table 8: Routing quality and computational cost. Scores average six RULER tasks at 1M tokens and 12 LongBench tasks, with LoRA readers fixed across routers within each backbone and benchmark. Bold marks the best score within each auxiliary-retriever group. Native routing matches backbone features and aggregates channel votes; input embeddings are mean-pooled. Reported times use a 4092-note bank at 1M: Native includes question probing and voting, BM25 runs on CPU, and BGE reports full-bank encoding. Timing scopes differ and do not constitute a matched query-latency comparison; no Random timing is available. None indicates no auxiliary retriever, not zero computational cost.",
+              "figure_id": "table-8-18",
+              "figure_number": "8",
+              "height": 139,
+              "image_path": "figures/2610.15715/table-020.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 826
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.15715/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.15715",
+          "relevance": 9,
+          "selection_reason": "Sparse episodic memory and native replay expand long-context capability of linear attention, directly relevant to memory efficiency and LLM memory.",
+          "summary_status": "generated",
+          "title": "History Replays Itself: Unleashing Long-Context Capability in Linear Attention",
+          "tldr": "NoteBank substantially extends linear-attention models’ long-context memory by sparsely storing and natively replaying past evidence without retraining or external retrieval components.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Language models are becoming infrastructure, and infrastructure built in the open, by public institutions, on documented data, is the alternative to dependence on a few providers; Apertus shows this is viable at scale. Apertus 1.5 extends the fully open Apertus family from text to multimodal reasoning. Continued pretraining of the Apertus 1.0 models, on 4T additional tokens for the 8B and 2T for the 70B, adds image and audio understanding and extends the context window fourfold to 262,144 tokens; multimodality enters through the tokenizer, the language-model head remains restricted to text, and the architecture is unchanged. Supervised finetuning, long-context finetuning, reinforcement learning with verifiable rewards, and preference alignment complete the released models. Thinking is a flag of the chat template rather than a separate model, and lifts mathematical reasoning by up to 20 points on the 8B model. The released models improve over their predecessors on nearly every benchmark; among fully open models of its class, the 8B leads on knowledge, instruction following, and cultural benchmarks, and its instruction following surpasses all compared models, including open-weight ones. On image and audio understanding, a first for the family, the models are competitive with fully open multimodal models, strongest on document understanding and long-form and lower-resource speech recognition, while specialized vision and audio models remain ahead on perception and transcription of English and other high-resource languages. As in Apertus 1.0, we train only on openly available data, respect crawler opt-outs retroactively, and exclude restrictively licensed material. We release the model weights, data preparation and training recipes, and evaluation suites under permissive licenses; openness extends to values, with the Apertus charter guiding alignment stages published alongside the models.",
+          "arxiv_id": "2610.15542",
+          "arxiv_url": "https://arxiv.org/abs/2610.15542",
+          "authors": [
+            "Project Apertus (ETH Zurich), : (ETH Zurich), Yixuan Xu (ETH Zurich), Yassine Turki (EPFL), Vinko Sabol\\v{c}ec (EPFL), Valentina Pyatkin (ETH Zurich), Tommy Chu (EPFL), Sven Najem-Meyer (EPFL), Sean F. Carroll (EPFL), Robert Smith (ETH Zurich), Raphael Kreft (ETH Zurich), Oscar Alessandro Tazza (ETH Zurich), Oleg Lavrovsky (EPFL), Nicola Irmiger (ETH Zurich), Matteo Santelmo (EPFL), Marian Schneider (ETH Zurich), Juan Garc\\'ia Giraldo (EPFL), Hanna Yukhymenko (ETH Zurich), Eduard \\v{D}urech (ETH Zurich), Davit Melikidze (ETH Zurich), Dani Tamayo (EPFL), Bettina Messmer (EPFL), Aryan Ahadinia (EPFL), Anunay Yadav (EPFL), Allen Huang (EPFL), Ahmad Fraij (ETH Zurich), Alessandro Bombarda (EPFL), Alex Padula (ETH Zurich), Alexander H\\\"agele (EPFL), Alexander Sternfeld (HES-SO Valais-Wallis), Anna Hedstr\\\"om (ETH Zurich), Anna Kosovskaia (ETH Zurich), Arthur Wuhrmann (EPFL), Arundhati Balasubramaniam (ETH Zurich), Badr Al Mahouri (EPFL), Barna Pasztor (ETH Zurich), Bartosz Szostakiewicz (ETH Zurich), Bich Ngoc Doan (EPFL), Bryan Schmid (FHNW), Burak Sezen (ETH Zurich), Camille Challier (EPFL), Cl\\'ement Charmillot (EPFL), Dana Shayakhmetova (EPFL), Daniel Perruchoud (FHNW), David Br\\\"uggemann (SDSC), David Isztl (CSCS), Elia Palme (CSCS), Emma Anastassova (EPFL), Fabian B\\\"osch (CSCS), Faruk Zahiragi\\'c (EPFL), Fawzi Roberto Mohamed (CSCS), Fiona Panicali (FHNW), Florian Kolly (EPFL), Flynn Guerra (FHNW), Francesco Monti (EPFL), Frederike L\\\"ubeck (ETH Zurich), Gennaro Oliva (CSCS), Haofeng Yang (ETH Zurich), Haoliang Shang (ETH Zurich), Helen El Khoury (EPFL), Henrique Mendon\\c{c}a (CSCS), Jannis Vamvas (University of Zurich), J\\'erome Landolt (FHNW), Jessica Lam (ETH Zurich), Jingchun Xiao (ETH Zurich), Jonathan Coles (CSCS), Joshua Oyebanji (EPFL), Khanh Nguyen (EPFL), Konstantinos Pitas (ETH Zurich), Lasse B. Strand (ETH Zurich), Li Mi (ETH Zurich), Lo\\\"ic Deslarzes (EPFL), Lorenzo Baggi (ETH Zurich), Lorenzo Noci (ETH Zurich), Luca Baumann (ETH Zurich), Luca Sartori (ETH Zurich), Lukas Drescher (CSCS), Marco De Negri (ETH Zurich), Marco Passerini (CSCS), Mark Klein (CSCS), Marko Stojanovic (EPFL), Martin Majsec (EPFL), Matin Ansaripour (EPFL), Mattea Busato (EPFL), Mauro Pellonara (EPFL), Max Neuwinger (ETH Zurich), Michael Graber (FHNW), Michal Te\\v{s}nar (ETH Zurich), Michelle Wastl (University of Zurich), Miguel Gila (CSCS), Mikolaj Boronski (EPFL), Morgane Magnin (EPFL), Moritz Reihs (ETH Zurich), Mukhammadali Sayfiddinov (ETH Zurich), Nathan Ranchin (ETH Zurich, EPFL), Nicolas Cuveillier (EPFL), Oscar Wohlfahrt (EPFL), Qianqian Zou (SDSC), Rada Kamysheva (ETH Zurich), Rita Sevastjanova (ETH Zurich), Roman Machacek (University of Bern), Sebastian Keller (CSCS), Simon Matrenok (EPFL), Simon Pierre (EPFL), Stefano Schuppli (CSCS), Suei-Wen Chen (ETH Zurich), Szabina Horv\\'ath-Mikulas (EPFL), Taliesin Perez (EPFL), Thilo Spinner (ETH Zurich), Thomas Kleine Buening (ETH Zurich), Tim Robinson (CSCS), Tymoteusz Kwiecinski (ETH Zurich), Vil\\'em Zouhar (ETH Zurich), Vinzenz Thoma (ETH Zurich), Xiaozhe Yao (ETH Zurich), Yannick Metz (ETH Zurich), Yuhei Fukuhara (EPFL), Yusif Askari (EPFL), Zixuan Chen (ETH Zurich), Alexander Ilic (ETH Zurich), Ana Klimovic (ETH Zurich), Andreas Krause (ETH Zurich), Andrei Kucharavy (HES-SO Valais-Wallis), Elliott Ash (ETH Zurich), Joost VandeVondele (CSCS), Martin Rajman (EPFL), Mennatallah El-Assady (ETH Zurich), Thomas Schulthess (CSCS), Timo Kehrer (University of Bern), Torsten Hoefler (ETH Zurich), Antoine Bosselut (EPFL), Martin Jaggi (EPFL), Imanol Schlag (ETH Zurich)"
+          ],
+          "bullets": [
+            "Continued pretraining adds multimodality and expands context to 262,144 tokens without changing the architecture; multimodality is introduced through the tokenizer.",
+            "Training combines supervised and long-context finetuning, verifiable-reward reinforcement learning, and preference alignment; “thinking” is controlled by the chat template.",
+            "The models improve over Apertus 1.0 across nearly every benchmark; the 8B model leads comparable fully open models in knowledge, instruction following, and cultural benchmarks.",
+            "Image and audio capabilities are competitive among fully open multimodal models, especially for document understanding, long-form speech, and lower-resource speech recognition.",
+            "The project uses openly available data with crawler opt-outs and restrictive licenses excluded, and releases weights, recipes, evaluation suites, and alignment guidance permissively."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The Apertus 1.5 training pipeline. Solid blue stages train on multimodal data (T · I ·A, or T · I for RLVR), light-blue stages on text only (T); red outlines mark the released models, which the 70B reaches without SDPO. DPO uses online pairs for the 8B model and offline and online pairs for the 70B model.",
+              "figure_id": "figure-1-20",
+              "figure_number": "1",
+              "height": 417,
+              "image_path": "figures/2610.15542/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Figure 2: The Apertus 1.5 architecture.",
+              "figure_id": "figure-2-31",
+              "figure_number": "2",
+              "height": 750,
+              "image_path": "figures/2610.15542/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 738
+            },
+            {
+              "caption": "Figure 4: Vision data composition by stage, with pool sizes in input tokens on the right.",
+              "figure_id": "figure-4-49",
+              "figure_number": "4",
+              "height": 437,
+              "image_path": "figures/2610.15542/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 810
+            },
+            {
+              "caption": "Figure D.8: Image samples from several prominent fine-grained classes. We observe that our embedding and classifier pipeline correctly captures the diverse classes in our taxonomy.",
+              "figure_id": "figure-D.8-2",
+              "figure_number": "D.8",
+              "height": 1031,
+              "image_path": "figures/2610.15542/figure-004.webp",
+              "kind": "figure",
+              "page": 102,
+              "width": 826
+            },
+            {
+              "caption": "Figure 5: Audio data composition by stage, with pool sizes in input tokens on the right.",
+              "figure_id": "figure-5-36",
+              "figure_number": "5",
+              "height": 259,
+              "image_path": "figures/2610.15542/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 785
+            },
+            {
+              "caption": "Figure 6: Per-category reconstruction quality of the Emu3 and Emu3.5 tokenizers on the same 350 Stage 1 training images as Table 1. Each marker is a category mean. Higher is better for PSNR and SSIM; lower is better for LPIPS. Table E.1 lists the values.",
+              "figure_id": "figure-6-43",
+              "figure_number": "6",
+              "height": 355,
+              "image_path": "figures/2610.15542/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 817
+            },
+            {
+              "caption": "Figure 8: A conversation rendered by the inference chat template, with thinking enabled and one tool declared: the model reasons and calls the tool inside the thinking span, and answers after the tool output returns. The released models do not yet produce this combination (Section 7.2). Line breaks are added for display.",
+              "figure_id": "figure-8-48",
+              "figure_number": "8",
+              "height": 346,
+              "image_path": "figures/2610.15542/figure-007.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 829
+            },
+            {
+              "caption": "Figure 9: Capability filtering. We train an auxiliary nonthinking Apertus 1.5 8B checkpoint to evaluate verifiable text prompts. Prompts solved at least once in eight attempts enter the production text mixture without reasoning traces; those that fail all eight receive verified traces. Both production models use the resulting mixture.",
+              "figure_id": "figure-9-23",
+              "figure_number": "9",
+              "height": 296,
+              "image_path": "figures/2610.15542/figure-008.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 827
+            },
+            {
+              "caption": "Figure 7: Per-stage loss against consumed tokens. Top (a, b): text loss, computed over text tokens only in every stage and therefore comparable across stage boundaries. The text loss creeps upward through Stage 1 and then drops sharply over the Stage 3 cooldown. Bottom (c, d): combined loss over all of each stage’s prediction targets (Table 2): image, audio, and text tokens in Stage 1, text only from Stage 2 onward. In Stage 1 the combined loss stays stable, so the text-loss creep visible in the top row is masked when text and multimodal targets are averaged together; the drop at the Stage 1→2 boundary reflects the change of targets, not a change in quality. Averages are computed within each stage.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 638,
+              "image_path": "figures/2610.15542/figure-009.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 829
+            },
+            {
+              "caption": "Figure 3: Composition of the 8B vision samples. The inner segments show the relative dataset sizes (largest first). A dataset can span multiple categories.",
+              "figure_id": "figure-3-50",
+              "figure_number": "3",
+              "height": 289,
+              "image_path": "figures/2610.15542/figure-010.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 410
+            },
+            {
+              "caption": "Figure 13: Held-out benchmarks during RL from three SFT checkpoints. Each group of panels comes from the runs on one prompt set, evaluated in the thinking mode used for training (Table 12). Each curve is a single RL run; step 0 is the SFT checkpoint, and we evaluate every 50 steps. We report accuracy on MATH-500, mean@32 on AIME, zero-shot exact match on BBH, and prompt-level strict accuracy on IFEval, Multi-IF, and IFBench. A response without a final answer counts as wrong. AIME 2026 excludes problem 1, which appears in DAPO-Math-17k.",
+              "figure_id": "figure-13-4",
+              "figure_number": "13",
+              "height": 565,
+              "image_path": "figures/2610.15542/figure-011.webp",
+              "kind": "figure",
+              "page": 43,
+              "width": 826
+            },
+            {
+              "caption": "Figure 14: Training dynamics of the runs in Figure 13. The top row shows the mean reward of each step, and the bottom row the tokens per rollout, counting the reasoning trace when thinking is on and the whole response when it is off. Curves are 10-step trailing means from step 3, because the first two steps of asynchronous rollout collect the fastest and then the slowest rollouts, producing unrepresentative reward and length statistics.",
+              "figure_id": "figure-14-3",
+              "figure_number": "14",
+              "height": 359,
+              "image_path": "figures/2610.15542/figure-012.webp",
+              "kind": "figure",
+              "page": 43,
+              "width": 772
+            },
+            {
+              "caption": "Figure 12: SFT ablations of multimodal supervision and reasoning, one panel per question. Q1 compares text benchmark scores for MM No-CoT versus Text No-CoT and MM CoT versus Text CoT, evaluated under matched response modes. Q2 compares MM CoT with thinking on against MM No-CoT with thinking off. Q3 compares MM CoT against MM No-CoT, both with thinking off. Bars report mean score differences in percentage points; dots denote the three multimodal seeds. Comparisons use a single text-only reference seed in Q1 and paired seeds in Q2 and Q3. Scores are unweighted means over 16 text benchmarks, excluding MGSM (Table H.1 gives the reason), and 14 vision benchmarks. Without thinking, decoding is greedy with a 16,384-token budget; thinking is sampled at temperature 0.6 and top-p 0.95 with a 32,768-token budget.",
+              "figure_id": "figure-12-64",
+              "figure_number": "12",
+              "height": 305,
+              "image_path": "figures/2610.15542/figure-013.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 806
+            },
+            {
+              "caption": "Figure D.2: Photograph axis of the taxonomy, subdivided into seven coarse groups and then into 35 fine-grained groups.",
+              "figure_id": "figure-D.2-30",
+              "figure_number": "D.2",
+              "height": 1040,
+              "image_path": "figures/2610.15542/figure-014.webp",
+              "kind": "figure",
+              "page": 98,
+              "width": 826
+            },
+            {
+              "caption": "Figure D.1: Graphic axis of the taxonomy, subdivided into five coarse groups and then into 26 fine-grained groups.",
+              "figure_id": "figure-D.1-34",
+              "figure_number": "D.1",
+              "height": 929,
+              "image_path": "figures/2610.15542/figure-015.webp",
+              "kind": "figure",
+              "page": 97,
+              "width": 826
+            },
+            {
+              "caption": "Figure D.6: Breakdown of the main image datasets by fine graphic type. We observe that the Brand Logo, Book or Magazine Cover, Scientific Plot, Scientific / Technical Imagery, and Quote or Text Overlay Composite types are overrepresented in the image distribution. By contrast, the Data Table, Geographic or Spatial Map, and Flowchart or Process Diagram classes are relatively underrepresented.",
+              "figure_id": "figure-D.6-62",
+              "figure_number": "D.6",
+              "height": 1197,
+              "image_path": "figures/2610.15542/figure-016.webp",
+              "kind": "figure",
+              "page": 100,
+              "width": 503
+            },
+            {
+              "caption": "Figure D.7: Breakdown of the main image datasets by fine photograph type.",
+              "figure_id": "figure-D.7-73",
+              "figure_number": "D.7",
+              "height": 1279,
+              "image_path": "figures/2610.15542/figure-017.webp",
+              "kind": "figure",
+              "page": 101,
+              "width": 405
+            },
+            {
+              "caption": "Figure 10: Representative categorical answer distributions in image SFT sources with deterministic extraction. Left: RSRCC strongly favors the first two answer options among questions with four options, whereas BigEarthNet is nearly uniform. Right: RSRCC also strongly favors affirmative binary answers, unlike BigEarthNet, SpatialSense, and PathVQA. These source distributions can create answer priors but do not by themselves establish a causal effect on evaluation accuracy.",
+              "figure_id": "figure-10-38",
+              "figure_number": "10",
+              "height": 240,
+              "image_path": "figures/2610.15542/figure-018.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 810
+            },
+            {
+              "caption": "Figure D.3: Breakdown of the main image datasets into Graphic and Photograph categories. We observe that most datasets are roughly evenly split between graphics and photographs. The main outlier is the MINT-1T (arXiv) dataset, which consists overwhelmingly of graphics.",
+              "figure_id": "figure-D.3-54",
+              "figure_number": "D.3",
+              "height": 269,
+              "image_path": "figures/2610.15542/figure-019.webp",
+              "kind": "figure",
+              "page": 99,
+              "width": 563
+            },
+            {
+              "caption": "Figure D.4: Breakdown of the main image datasets by coarse graphic type. The datasets are relatively evenly distributed across the different image types. Composite graphics seem to be overrepresented in the datasets. Furthermore, MINT-1T-ArXiv is an outlier, as most images belong to the Diagram/Chart class. This is consistent with the dataset’s sourcing, as it consists of scientific papers.",
+              "figure_id": "figure-D.4-55",
+              "figure_number": "D.4",
+              "height": 286,
+              "image_path": "figures/2610.15542/figure-020.webp",
+              "kind": "figure",
+              "page": 99,
+              "width": 388
+            },
+            {
+              "caption": "Figure D.9: Prevalence of broad overlapping task signals.",
+              "figure_id": "figure-D.9-22",
+              "figure_number": "D.9",
+              "height": 205,
+              "image_path": "figures/2610.15542/figure-021.webp",
+              "kind": "figure",
+              "page": 103,
+              "width": 780
+            },
+            {
+              "caption": "Figure D.5: Breakdown of the main image datasets by coarse photograph type. We observe that all datasets are significantly unbalanced. The Artifacts/Objects class is significantly overrepresented in all datasets. The second most represented class is People. The remaining classes are roughly equally represented, with 5–10% of the total images.",
+              "figure_id": "figure-D.5-53",
+              "figure_number": "D.5",
+              "height": 378,
+              "image_path": "figures/2610.15542/figure-022.webp",
+              "kind": "figure",
+              "page": 99,
+              "width": 386
+            },
+            {
+              "caption": "Table 24: Release evaluation of the 70B-class post-trained models, thinking disabled for all models including thinking-capable peers. All values in percent, higher is better, best per group in bold. Instruction following is scored by prompt-level strict accuracy and code by pass@1.",
+              "figure_id": "table-24-52",
+              "figure_number": "24",
+              "height": 710,
+              "image_path": "figures/2610.15542/table-023.webp",
+              "kind": "table",
+              "page": 50,
+              "width": 818
+            },
+            {
+              "caption": "Table 23: Release evaluation of the 8B-class post-trained models, thinking disabled for all models including thinking-capable peers. All values in percent, higher is better, best per group in bold. Instruction following is scored by prompt-level strict accuracy and code by pass@1.",
+              "figure_id": "table-23-57",
+              "figure_number": "23",
+              "height": 670,
+              "image_path": "figures/2610.15542/table-024.webp",
+              "kind": "table",
+              "page": 49,
+              "width": 810
+            },
+            {
+              "caption": "Table 35: Audio evaluation of the released Apertus 8B and 70B checkpoints against open audio models. Word error rates (WER) are in percent, lower is better; accuracies are in percent and BLEU on a 0 to 100 scale, both higher is better. Best per row in bold. All models decode greedily, Qwen2-Audio with the repetition penalty (Keskar et al., 2019) of 1.1 from its generation configuration, which its authors’ evaluation code (QwenLM/Qwen2-Audio) also applies, and use each task’s output cap; where a task sets none, all models share a cap of 4,096 tokens, which TED-LIUM long form also receives because its own cap of 256 tokens would cut off transcripts of up to 4,164 words; on that task, Qwen2.5-Omni uses PyTorch SDPA attention, whose fused kernels do not store the full attention matrix (Dao et al., 2022; Rabe & Staats, 2021), because with the default eager attention its longest talks exceed GPU memory.",
+              "figure_id": "table-35-17",
+              "figure_number": "35",
+              "height": 556,
+              "image_path": "figures/2610.15542/table-025.webp",
+              "kind": "table",
+              "page": 58,
+              "width": 740
+            },
+            {
+              "caption": "Table 30: Multilingual and cultural evaluation of the 70B-class post-trained models, thinking disabled. All values in percent, higher is better, best per group in bold. Multiple-choice benchmarks report accuracy, length-normalized for multilingual ARC.",
+              "figure_id": "table-30-8",
+              "figure_number": "30",
+              "height": 419,
+              "image_path": "figures/2610.15542/table-026.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 822
+            },
+            {
+              "caption": "Table 29: Multilingual and cultural evaluation of the 8B-class post-trained models, thinking disabled. All values in percent, higher is better, best per group in bold. GlobalMMLU, Multi-IF, and SwitzerlandQA repeat from Table 23 for completeness. Multiplechoice benchmarks report accuracy, length-normalized for multilingual ARC.",
+              "figure_id": "table-29-7",
+              "figure_number": "29",
+              "height": 398,
+              "image_path": "figures/2610.15542/table-027.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 822
+            },
+            {
+              "caption": "Table 18: Pretraining Evaluation (70B-class models). Performance (%) on reasoning, mathematics, and code tasks, higher is better. GSM8K-P = GSM8K Platinum; Minerva = Minerva MATH; MGSM-En = MGSM English. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-18-40",
+              "figure_number": "18",
+              "height": 398,
+              "image_path": "figures/2610.15542/table-028.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 760
+            },
+            {
+              "caption": "Table 25: Thinking-mode comparison on reasoning-heavy benchmarks: the Apertus 1.5 models with thinking off and on, and thinking-native peers in their thinking mode. All values in percent, best per row in bold. We report mean@8 for AIME, and mean@4 for other math and coding benchmarks.",
+              "figure_id": "table-25-51",
+              "figure_number": "25",
+              "height": 346,
+              "image_path": "figures/2610.15542/table-029.webp",
+              "kind": "table",
+              "page": 50,
+              "width": 782
+            },
+            {
+              "caption": "Table 17: Pretraining Evaluation (8B-class models). Performance (%) on reasoning, mathematics, and code tasks, higher is better. GSM8K-P = GSM8K Platinum; Minerva = Minerva MATH; MGSM-En = MGSM English. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-17-41",
+              "figure_number": "17",
+              "height": 377,
+              "image_path": "figures/2610.15542/table-030.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 677
+            },
+            {
+              "caption": "Table 14: Pretraining Evaluation (70B-class models). Performance (%) on general language understanding tasks, higher is better. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-14-46",
+              "figure_number": "14",
+              "height": 275,
+              "image_path": "figures/2610.15542/table-031.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 814
+            },
+            {
+              "caption": "Table 39: HalluLens hallucination suite of the released checkpoints. All values in percent. The PreciseWiki rates partition all questions, so hallucination, correct, and refusal sum to roughly 100; the abstention rows reward declining to answer questions about nonexistent entities. The best value per row and model size is in bold on rows with a direction. The judge is a served Qwen3.5-27B, whereas the original benchmark uses a Llama-3.1-405B judge, so scores are not comparable with the official leaderboard.",
+              "figure_id": "table-39-19",
+              "figure_number": "39",
+              "height": 346,
+              "image_path": "figures/2610.15542/table-032.webp",
+              "kind": "table",
+              "page": 62,
+              "width": 640
+            },
+            {
+              "caption": "Table 20: Pretraining Evaluation (70B-class models). Performance (%) on multilingual tasks (“-ml” = multilingual variant), higher is better. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-20-11",
+              "figure_number": "20",
+              "height": 274,
+              "image_path": "figures/2610.15542/table-033.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 790
+            },
+            {
+              "caption": "Table 16: Pretraining Evaluation (70B-class models). Performance (%) on factual knowledge tasks, higher is better. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-16-39",
+              "figure_number": "16",
+              "height": 274,
+              "image_path": "figures/2610.15542/table-034.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 786
+            },
+            {
+              "caption": "Table 27: Held-out benchmarks, excluded from development, for both models, thinking disabled. All six held-out benchmarks are shown. Best value per row in bold, taken separately within each model.",
+              "figure_id": "table-27-58",
+              "figure_number": "27",
+              "height": 317,
+              "image_path": "figures/2610.15542/table-035.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 640
+            },
+            {
+              "caption": "Table 34: Image understanding of the released checkpoints against open vision-language models, on the 33 image benchmarks of the released model card plus MM-Safety. 8Bth is the 8B model with thinking enabled. All values in percent, higher is better, best per group in bold. Dashes mark cells with no valid run. *For MM-Safety we report the safety rate instead of the attack rate. †EuroVLM answers AI2D in prose rather than the requested option letter in 74.6% of responses, whereas every other model complies in essentially all of them; the harness credits only bare-letter replies, so this cell largely measures instruction following. A prose-tolerant extractor scores the same generations at 64.3.",
+              "figure_id": "table-34-65",
+              "figure_number": "34",
+              "height": 1092,
+              "image_path": "figures/2610.15542/table-036.webp",
+              "kind": "table",
+              "page": 56,
+              "width": 818
+            },
+            {
+              "caption": "Table 8: Long-context SFT data mixture. The mix each model’s run trains on, with tokens and samples per source; the runs draw subsets of the pools, so the totals stay below the pool sizes. Length range is the observed range from minimum to maximum sequence length within the class. The short-context text and audio rows are length-filtered slices of the production pools of Section 4.2; all three vision rows (short- and long-context) are length buckets of the same pool in Table B.6. Those tables give the per-dataset composition.",
+              "figure_id": "table-8-27",
+              "figure_number": "8",
+              "height": 897,
+              "image_path": "figures/2610.15542/table-037.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 822
+            },
+            {
+              "caption": "Table 36: Long-context evaluation on RULER and HELMET, in percent, higher is better. RULER cells average 13 subtasks; HELMET cells average seven task-group scores, HELMET’s own aggregation. Three HELMET settings use ROUGE in place of the reference LLM judge. Base and post-trained models are shown separately, fully open models above open-weight ones; bold marks the best value per column within a panel. “–” marks a length beyond the model’s position ceiling.",
+              "figure_id": "table-36-67",
+              "figure_number": "36",
+              "height": 780,
+              "image_path": "figures/2610.15542/table-038.webp",
+              "kind": "table",
+              "page": 59,
+              "width": 760
+            },
+            {
+              "caption": "Table 4: Text data mixture per training stage, as a percentage of each stage’s sampled textonly token budget.",
+              "figure_id": "table-4-24",
+              "figure_number": "4",
+              "height": 379,
+              "image_path": "figures/2610.15542/table-039.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 698
+            },
+            {
+              "caption": "Table 5: Token budget per class across the four long-context extension phases. Percentages are the within-phase share of tokens beyond the Cooldown subsample of Table 3.",
+              "figure_id": "table-5-66",
+              "figure_number": "5",
+              "height": 265,
+              "image_path": "figures/2610.15542/table-040.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 798
+            },
+            {
+              "caption": "Table 26: Post-training lineage of the Apertus 1.5 models on the development benchmark suite, thinking disabled. Each column adds one stage to the one before it. A representative subset of each skill area is shown; Table L.3 gives all 37 benchmarks, and the overall average is taken over all of them. Best value per row in bold, taken separately within each model.",
+              "figure_id": "table-26-59",
+              "figure_number": "26",
+              "height": 771,
+              "image_path": "figures/2610.15542/table-041.webp",
+              "kind": "table",
+              "page": 51,
+              "width": 648
+            },
+            {
+              "caption": "Table 28: Post-training lineage with thinking enabled, on all 19 benchmarks evaluated in thinking mode. Benchmarks marked † are held out from development. The two averages cover the development and held-out benchmarks respectively, and neither is comparable with Table 26, which spans a wider suite. Best value per row in bold, taken separately within each model.",
+              "figure_id": "table-28-69",
+              "figure_number": "28",
+              "height": 650,
+              "image_path": "figures/2610.15542/table-042.webp",
+              "kind": "table",
+              "page": 52,
+              "width": 690
+            },
+            {
+              "caption": "Table B.2: Vision pool of Stage 2.",
+              "figure_id": "table-B.2-29",
+              "figure_number": "B.2",
+              "height": 519,
+              "image_path": "figures/2610.15542/table-043.webp",
+              "kind": "table",
+              "page": 93,
+              "width": 828
+            },
+            {
+              "caption": "Table C.2: Audio pool of Stage 2 and the cooldown.",
+              "figure_id": "table-C.2-72",
+              "figure_number": "C.2",
+              "height": 420,
+              "image_path": "figures/2610.15542/table-044.webp",
+              "kind": "table",
+              "page": 95,
+              "width": 827
+            },
+            {
+              "caption": "Table 37: BFCL v3 function calling by call type, over the single-turn categories alone. All values in percent, higher is better, best per group in bold. The irrelevance categories reward declining to call a tool when none applies.",
+              "figure_id": "table-37-47",
+              "figure_number": "37",
+              "height": 429,
+              "image_path": "figures/2610.15542/table-045.webp",
+              "kind": "table",
+              "page": 60,
+              "width": 806
+            },
+            {
+              "caption": "Table 40: Measured performance of the production training phases, aggregated from the logged wandb run segments. Tokens are per phase, from the differences of the cumulative counter; throughput and TFLOPs per GPU are means over the longest segment of each phase; wall time sums the process time of all segments of the phase.",
+              "figure_id": "table-40-42",
+              "figure_number": "40",
+              "height": 368,
+              "image_path": "figures/2610.15542/table-046.webp",
+              "kind": "table",
+              "page": 65,
+              "width": 790
+            },
+            {
+              "caption": "Table B.6: Vision pool of long-context SFT; Table 8 gives the mix each run trains on.",
+              "figure_id": "table-B.6-16",
+              "figure_number": "B.6",
+              "height": 321,
+              "image_path": "figures/2610.15542/table-047.webp",
+              "kind": "table",
+              "page": 94,
+              "width": 828
+            },
+            {
+              "caption": "Table 38: Safety evaluation of the released checkpoints against their predecessors and openweight anchors. All values in percent; WMDP reports accuracy on hazardous-knowledge questions without a preferred direction, and is excluded from bolding.",
+              "figure_id": "table-38-21",
+              "figure_number": "38",
+              "height": 305,
+              "image_path": "figures/2610.15542/table-048.webp",
+              "kind": "table",
+              "page": 61,
+              "width": 832
+            },
+            {
+              "caption": "Table B.5: Vision pool of SFT, after splitting and packing for the Apertus 1.5 8B production run.",
+              "figure_id": "table-B.5-14",
+              "figure_number": "B.5",
+              "height": 302,
+              "image_path": "figures/2610.15542/table-049.webp",
+              "kind": "table",
+              "page": 94,
+              "width": 828
+            },
+            {
+              "caption": "Table B.1: Vision pool of Stage 1.",
+              "figure_id": "table-B.1-28",
+              "figure_number": "B.1",
+              "height": 300,
+              "image_path": "figures/2610.15542/table-050.webp",
+              "kind": "table",
+              "page": 93,
+              "width": 828
+            },
+            {
+              "caption": "Table 13: Pretraining Evaluation (8B-class models). Performance (%) on general language understanding tasks, higher is better. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-13-44",
+              "figure_number": "13",
+              "height": 254,
+              "image_path": "figures/2610.15542/table-051.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 727
+            },
+            {
+              "caption": "Table 15: Pretraining Evaluation (8B-class models). Performance (%) on factual knowledge tasks, higher is better. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-15-45",
+              "figure_number": "15",
+              "height": 255,
+              "image_path": "figures/2610.15542/table-052.webp",
+              "kind": "table",
+              "page": 45,
+              "width": 722
+            },
+            {
+              "caption": "Table 22: Pretraining Evaluation (70B-class models). Performance (%) on bias, safety, and cultural knowledge tasks, higher is better (higher ToxiGen/BBQ = less toxic/biased). Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-22-12",
+              "figure_number": "22",
+              "height": 233,
+              "image_path": "figures/2610.15542/table-053.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 782
+            },
+            {
+              "caption": "Table 19: Pretraining Evaluation (8B-class models). Performance (%) on multilingual tasks (“-ml” = multilingual variant), higher is better. Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-19-10",
+              "figure_number": "19",
+              "height": 255,
+              "image_path": "figures/2610.15542/table-054.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 702
+            },
+            {
+              "caption": "Table 21: Pretraining Evaluation (8B-class models). Performance (%) on bias, safety, and cultural knowledge tasks, higher is better (higher ToxiGen/BBQ = less toxic/biased). Bold = best overall; italic = best among fully open models.",
+              "figure_id": "table-21-9",
+              "figure_number": "21",
+              "height": 213,
+              "image_path": "figures/2610.15542/table-055.webp",
+              "kind": "table",
+              "page": 47,
+              "width": 694
+            },
+            {
+              "caption": "Table 32: Automatic evaluation on the news domain of the WMT24, WMT24++, and WMT25 translation tasks with the ChrF metric.",
+              "figure_id": "table-32-32",
+              "figure_number": "32",
+              "height": 1035,
+              "image_path": "figures/2610.15542/table-056.webp",
+              "kind": "table",
+              "page": 54,
+              "width": 826
+            },
+            {
+              "caption": "Table 7: Image pool used to train the auxiliary checkpoint for capability filtering of text data: 20 datasets, 17.5M sequences, 58.1B tokens. The production SFT pool appears in Table B.5.",
+              "figure_id": "table-7-61",
+              "figure_number": "7",
+              "height": 908,
+              "image_path": "figures/2610.15542/table-057.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 828
+            },
+            {
+              "caption": "Table 6: Text component of the final production SFT mixture by source and category. All datasets are decontaminated against evaluation benchmarks. Numbers indicate example count after filtering. Data Ratio is each category’s share of the text SFT pool by example count.",
+              "figure_id": "table-6-18",
+              "figure_number": "6",
+              "height": 918,
+              "image_path": "figures/2610.15542/table-058.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 814
+            },
+            {
+              "caption": "Table 3: Token budget per modality across the three curriculum stages of Apertus 1.5 8B and Apertus 1.5 70B, that is, the mix each run trains on. Percentages are the within-stage share of tokens. For Stages 2 and 3, the Vision and Audio counts include their paired text (image captions and audio transcripts); the Text column is the separate text-only data.",
+              "figure_id": "table-3-25",
+              "figure_number": "3",
+              "height": 224,
+              "image_path": "figures/2610.15542/table-059.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 532
+            },
+            {
+              "caption": "Table 1: Reconstruction quality and token cost of the Emu3 and Emu3.5 tokenizers, averaged over 350 Stage 1 training images from six representative categories of Section 2.2.3 and preprocessed as in training. Tokens are the mean per image, arrows give the better direction, and bold marks the better tokenizer; Table E.1 in Appendix E lists the values per category.",
+              "figure_id": "table-1-60",
+              "figure_number": "1",
+              "height": 87,
+              "image_path": "figures/2610.15542/table-060.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 502
+            },
+            {
+              "caption": "Table 10: Prompt composition of the Apertus 1.5 reinforcement-learning mixture. Counts refer to samples used in the production mixture.",
+              "figure_id": "table-10-68",
+              "figure_number": "10",
+              "height": 348,
+              "image_path": "figures/2610.15542/table-061.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 532
+            },
+            {
+              "caption": "Table 31: Automatic evaluation of the SwissGov translation tasks with COMETKiwi22.",
+              "figure_id": "table-31-6",
+              "figure_number": "31",
+              "height": 264,
+              "image_path": "figures/2610.15542/table-062.webp",
+              "kind": "table",
+              "page": 53,
+              "width": 664
+            },
+            {
+              "caption": "Table D.1: Standard deviation (percentage points) of renormalized category shares across categories, per dataset, for each grouping. We observe significant variation across the different domain and type classes.",
+              "figure_id": "table-D.1-35",
+              "figure_number": "D.1",
+              "height": 223,
+              "image_path": "figures/2610.15542/table-063.webp",
+              "kind": "table",
+              "page": 97,
+              "width": 632
+            },
+            {
+              "caption": "Table 33: Human evaluation results for the translation tasks on a 0% to 100% cESA scale.",
+              "figure_id": "table-33-33",
+              "figure_number": "33",
+              "height": 216,
+              "image_path": "figures/2610.15542/table-064.webp",
+              "kind": "table",
+              "page": 54,
+              "width": 622
+            },
+            {
+              "caption": "Table 41: Serving performance of Apertus 1.5 70B on a simulated workload, by anonymized inference provider. Latency in seconds and TTFT (time to first token) in milliseconds, lower is better; throughput in tokens per second, higher is better.",
+              "figure_id": "table-41-1",
+              "figure_number": "41",
+              "height": 200,
+              "image_path": "figures/2610.15542/table-065.webp",
+              "kind": "table",
+              "page": 70,
+              "width": 540
+            },
+            {
+              "caption": "Table 2: Stages 1 and 2 fall in the warmup and stable phases of the LR schedule, while Stage 3 is the decay phase. Stage 1 is trained to predict tokens of all modalities. Stages 2 and 3 are trained to predict only text tokens.",
+              "figure_id": "table-2-26",
+              "figure_number": "2",
+              "height": 108,
+              "image_path": "figures/2610.15542/table-066.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 827
+            },
+            {
+              "caption": "Table B.3: Vision pool of the cooldown.",
+              "figure_id": "table-B.3-13",
+              "figure_number": "B.3",
+              "height": 223,
+              "image_path": "figures/2610.15542/table-067.webp",
+              "kind": "table",
+              "page": 94,
+              "width": 828
+            },
+            {
+              "caption": "Table 11: Configuration of the SFT ablation. Conversations are reported per epoch and tokens over the full two-epoch run. CoT and No-CoT arms use the same conversations and differ only in whether reasoning traces are retained.",
+              "figure_id": "table-11-63",
+              "figure_number": "11",
+              "height": 208,
+              "image_path": "figures/2610.15542/table-068.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 759
+            },
+            {
+              "caption": "Table B.4: Vision pool of the long-context extension; Appendix F gives the mix each run trains on.",
+              "figure_id": "table-B.4-15",
+              "figure_number": "B.4",
+              "height": 183,
+              "image_path": "figures/2610.15542/table-069.webp",
+              "kind": "table",
+              "page": 94,
+              "width": 827
+            },
+            {
+              "caption": "Table C.3: Audio pool of the long-context extension.",
+              "figure_id": "table-C.3-71",
+              "figure_number": "C.3",
+              "height": 164,
+              "image_path": "figures/2610.15542/table-070.webp",
+              "kind": "table",
+              "page": 95,
+              "width": 828
+            },
+            {
+              "caption": "Table C.1: Audio pool of Stage 1.",
+              "figure_id": "table-C.1-70",
+              "figure_number": "C.1",
+              "height": 125,
+              "image_path": "figures/2610.15542/table-071.webp",
+              "kind": "table",
+              "page": 95,
+              "width": 828
+            },
+            {
+              "caption": "Table 12: Training configuration of the RL ablation, with one row per prompt set. The sets are drawn from DAPO-Math-17k (Yu et al., 2025), Reasoning Gym (Stojanovski et al., 2025), and nvidia/Nemotron-RL-instruction_following. Each run lasts 200 steps of GRPO (Shao et al., 2024), with 64 prompts and eight rollouts per step. We use binary rewards, a leave-one-out baseline, DAPO asymmetric clipping, no KL penalty, and a constant learning rate of 2× 10−6. Rollouts are asynchronous, at most two policy versions stale, and capped at 14,336 new tokens with thinking on and 3,840 with thinking off. Mathematics is scored with Math-Verify (Kydlíček, 2025); for reasoning tasks, Qwen3.6-35B-A3B is used as a fallback judge only when the task verifier rejects an answer.",
+              "figure_id": "table-12-37",
+              "figure_number": "12",
+              "height": 110,
+              "image_path": "figures/2610.15542/table-072.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 756
+            },
+            {
+              "caption": "Table 9: Instruction following of Apertus 1.5 8B under different post-training paths from the same SFT checkpoint, thinking disabled. The SFT column is the shared starting point, the next two apply a single alignment stage to it, and the last two are the checkpoints of the release lineage (Table 26). Best value per row in bold.",
+              "figure_id": "table-9-56",
+              "figure_number": "9",
+              "height": 87,
+              "image_path": "figures/2610.15542/table-073.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 694
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.15542/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.15542",
+          "relevance": 8,
+          "selection_reason": "Open multimodal LLM with image/audio understanding, long context, and RL-trained reasoning; fits multimodal and language foundation model interests.",
+          "summary_status": "generated",
+          "title": "Apertus 1.5: From Open Text Models to Open Multimodal Reasoners",
+          "tldr": "Apertus 1.5 extends a fully open text-model family into multimodal reasoning with image/audio understanding, much longer context, and publicly released models, data practices, recipes, and evaluations.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Chinese historical documents are invaluable cultural treasures, but their complexity poses significant comprehension challenges for non-specialists. Despite the success of Large Language Models (LLMs) and Large Vision-Language Models (LVLMs) in modern document tasks, their capabilities in Long (full-book) Historical Document understanding remain largely unexplored. To bridge this gap, we introduce LongHisDoc, the first benchmark tailored for long historical document understanding. LongHisDoc comprises 1,012 expert-annotated QA pairs derived from 101 PDF documents, with an average of 85.1 pages and 42,776.4 tokens per document. It spans 10 categories and features four QA types: single-page, cross-page, multi-hop, and unanswerable. Answering these questions requires integrating multimodal evidence from text, layout, and visual elements. Our evaluation reveals that the top-performing LVLM and LLM achieve only 62.9% and 69.9% accuracy, respectively, highlighting a substantial performance gap. Furthermore, we assess various modal retrievers and the end-to-end RAG performance to provide references for Retrieval-Augmented Generation (RAG) systems. We believe that LongHisDoc serves as a comprehensive benchmark to catalyze future research in full-book historical document understanding. The benchmark and evaluation code are available at https://huggingface.co/datasets/qweq12433454/LongHisDoc and https://github.com/SCUT-DLVCLab/LongHisDoc.",
+          "arxiv_id": "2610.14531",
+          "arxiv_url": "https://arxiv.org/abs/2610.14531",
+          "authors": [
+            "Zeyu Shan, Yongxin Shi, Shihang Wu, Peirong Zhang, Yuanyuan Fang, Zhaopeng Wang, Lianwen Jin"
+          ],
+          "bullets": [
+            "Contains 1,012 expert-annotated QA pairs from 101 PDF documents averaging 85.1 pages and 42,776.4 tokens.",
+            "Covers 10 categories and four question types: single-page, cross-page, multi-hop, and unanswerable.",
+            "Questions require combining textual, layout, and visual evidence across long documents.",
+            "Top reported accuracies are 69.9% for LLMs and 62.9% for LVLMs, indicating substantial challenges.",
+            "Also evaluates modal retrievers and end-to-end RAG performance to support future system development."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: The data construction pipeline of LongHisDoc consists of four stages: (1) Documents Collection; (2) Q&A Annotation; (3) Quality Control; (4) Data Standardization.",
+              "figure_id": "figure-2-22",
+              "figure_number": "2",
+              "height": 352,
+              "image_path": "figures/2610.14531/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 972
+            },
+            {
+              "caption": "Figure 5: Visualization of test results. Left: Incorrect response attributed to OCR parsing failure; Right: Complex layouts of historical documents with interlinear annotations pose challenges to model understanding. Zoom in for better view.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 485,
+              "image_path": "figures/2610.14531/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 975
+            },
+            {
+              "caption": "Figure 6: Visualization comparison between Text-Input and Image-Input . Left: Text-input models fail due to the loss of visual elements in OCR outputs. Right: Image-input models fail due to image-quality degradation.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 435,
+              "image_path": "figures/2610.14531/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 998
+            },
+            {
+              "caption": "Figure 4: Multi-faceted analysis on various document types, evidence pages and evidence sources. Zoom in for better view.",
+              "figure_id": "figure-4-29",
+              "figure_number": "4",
+              "height": 447,
+              "image_path": "figures/2610.14531/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1106
+            },
+            {
+              "caption": "Figure 1: LongHisDoc assesses the capabilities of LLMs and LVLMs in understanding long-context historical documents. The experiments (bottom-right) reveal that most LVLMs face difficulties, showing significantly lower performance compared to LLMs fed with Optical Character Recognition (OCR)-parsed historical documents. Zoom in for better view.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 501,
+              "image_path": "figures/2610.14531/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 956
+            },
+            {
+              "caption": "Figure 7: Comparison among different input lengths on LongHisDoc benchmark.",
+              "figure_id": "figure-7-26",
+              "figure_number": "7",
+              "height": 335,
+              "image_path": "figures/2610.14531/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 664
+            },
+            {
+              "caption": "Figure 11: Prompt for answer extraction (Format: Option and Bool). Zoom in for better view.",
+              "figure_id": "figure-11-30",
+              "figure_number": "11",
+              "height": 841,
+              "image_path": "figures/2610.14531/figure-007.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 1010
+            },
+            {
+              "caption": "Figure 12: Prompt for answer extraction (Format: Integer and None). Zoom in for better view.",
+              "figure_id": "figure-12-3",
+              "figure_number": "12",
+              "height": 839,
+              "image_path": "figures/2610.14531/figure-008.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 1010
+            },
+            {
+              "caption": "Figure 10: Prompt for answer extraction (Format: String and List). Zoom in for better view.",
+              "figure_id": "figure-10-23",
+              "figure_number": "10",
+              "height": 795,
+              "image_path": "figures/2610.14531/figure-009.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 998
+            },
+            {
+              "caption": "Figure 13: Selection rules of images input.",
+              "figure_id": "figure-13-8",
+              "figure_number": "13",
+              "height": 669,
+              "image_path": "figures/2610.14531/figure-010.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 1016
+            },
+            {
+              "caption": "Figure 20: Top 2~50 recall rate of retrievers on LongHisDoc.",
+              "figure_id": "figure-20-17",
+              "figure_number": "20",
+              "height": 613,
+              "image_path": "figures/2610.14531/figure-011.webp",
+              "kind": "figure",
+              "page": 46,
+              "width": 1022
+            },
+            {
+              "caption": "Figure 8: More distribution characteristics of LongHisDoc. Top Left: Absolute position of answer evidences (the page index). Top Right: Relative position (the page index / document page number). Bottom Left: Evidence page number of each question. Bottom Right: Document textual token number.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 367,
+              "image_path": "figures/2610.14531/figure-012.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 808
+            },
+            {
+              "caption": "Figure 19: Image-input case 3. Evidence source: \"Layout\". Answer format: \"List\". Key information in the images is highlighted with green boxes, while incorrect information is marked in red. Zoom in for better view.",
+              "figure_id": "figure-19-18",
+              "figure_number": "19",
+              "height": 1354,
+              "image_path": "figures/2610.14531/figure-013.webp",
+              "kind": "figure",
+              "page": 45,
+              "width": 1010
+            },
+            {
+              "caption": "Figure 17: Image-input case 1. Evidence source: \"Text\". Answer format: \"List\". Key information in the images is highlighted with green boxes, while incorrect information is marked in red. Zoom in for better view.",
+              "figure_id": "figure-17-2",
+              "figure_number": "17",
+              "height": 1177,
+              "image_path": "figures/2610.14531/figure-014.webp",
+              "kind": "figure",
+              "page": 43,
+              "width": 1016
+            },
+            {
+              "caption": "Figure 9: Prompt for response generation.",
+              "figure_id": "figure-9-31",
+              "figure_number": "9",
+              "height": 1223,
+              "image_path": "figures/2610.14531/figure-015.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 888
+            },
+            {
+              "caption": "Figure 16: Text-input case 3. Evidence source: \"Visual\". Answer format: \"List\". Key information in the image is highlighted with green boxes, while incorrect information is marked in red. Zoom in for better view.",
+              "figure_id": "figure-16-13",
+              "figure_number": "16",
+              "height": 1006,
+              "image_path": "figures/2610.14531/figure-016.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 1008
+            },
+            {
+              "caption": "Figure 14: Text-input case 1. Evidence source: \"Layout\". Answer format: \"List\". Key information in the image is highlighted with green boxes, while incorrect information is marked in red. Zoom in for better view.",
+              "figure_id": "figure-14-21",
+              "figure_number": "14",
+              "height": 981,
+              "image_path": "figures/2610.14531/figure-017.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1022
+            },
+            {
+              "caption": "Figure 15: Text-input case 2. Evidence source: \"Visual\". Answer format: \"String\". Key information in the image is highlighted with green boxes, while incorrect information is marked in red. Zoom in for better view.",
+              "figure_id": "figure-15-28",
+              "figure_number": "15",
+              "height": 960,
+              "image_path": "figures/2610.14531/figure-018.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 985
+            },
+            {
+              "caption": "Figure 18: Image-input case 2. Evidence source: \"Layout\". Answer format: \"String\". Key information in the images is highlighted with green boxes, while incorrect information is marked in red. Zoom in for better view.",
+              "figure_id": "figure-18-27",
+              "figure_number": "18",
+              "height": 900,
+              "image_path": "figures/2610.14531/figure-019.webp",
+              "kind": "figure",
+              "page": 44,
+              "width": 997
+            },
+            {
+              "caption": "Table 9: End-to-end RAG evaluation on LongHisDoc using Top-5 retrieved results from different text-based and visual-based retrievers with state-of-the-art generation models. Zoom in for better view.",
+              "figure_id": "table-9-5",
+              "figure_number": "9",
+              "height": 662,
+              "image_path": "figures/2610.14531/table-020.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 1020
+            },
+            {
+              "caption": "Table 4: Performance of generation models on LongHisDoc using outputs from different OCR models.",
+              "figure_id": "table-4-25",
+              "figure_number": "4",
+              "height": 394,
+              "image_path": "figures/2610.14531/table-021.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 1014
+            },
+            {
+              "caption": "Table 3: Generalized accuracy scores (%) on LongHisDoc. There are four types of evidence pages: single-page (SIN), cross-page (CRO), multi-hop (MUL), and unanswerable (UNA). There are six types of answer formats: String (STR), Integer (INT), Option (OPT), List (LIST), Boolean (BOOL), and None (NONE). There are three types of evidence sources: text (TXT), layout (LAY), and visual (VIS). (Think) refers to using the model’s thinking mode. The highest scores among",
+              "figure_id": "table-3-20",
+              "figure_number": "3",
+              "height": 1069,
+              "image_path": "figures/2610.14531/table-022.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 1018
+            },
+            {
+              "caption": "Table 8: Retriever performance on LongHisDoc using top-k Recall metrics.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 728,
+              "image_path": "figures/2610.14531/table-023.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1016
+            },
+            {
+              "caption": "Table 14: Subgroup uncertainty estimates (95% bootstrap CI, N = 1, 000) across evaluated frontier models on LongHisDoc.",
+              "figure_id": "table-14-16",
+              "figure_number": "14",
+              "height": 646,
+              "image_path": "figures/2610.14531/table-024.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 1018
+            },
+            {
+              "caption": "Table 15: More model evaluation results.",
+              "figure_id": "table-15-15",
+              "figure_number": "15",
+              "height": 304,
+              "image_path": "figures/2610.14531/table-025.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 1014
+            },
+            {
+              "caption": "Table 1: Comparison between LongHisDoc and previous document understanding datasets. T/L/V:text/layout/visual. HisDoc Rel.: historical document relevance.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 229,
+              "image_path": "figures/2610.14531/table-026.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 1014
+            },
+            {
+              "caption": "Table 11: Details of all evaluated LLMs and LVLMs. Zoom in for better view.",
+              "figure_id": "table-11-24",
+              "figure_number": "11",
+              "height": 504,
+              "image_path": "figures/2610.14531/table-027.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 1014
+            },
+            {
+              "caption": "Table 6: Performance with human-verified ground truth (Human-GT).",
+              "figure_id": "table-6-12",
+              "figure_number": "6",
+              "height": 199,
+              "image_path": "figures/2610.14531/table-028.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 513
+            },
+            {
+              "caption": "Table 7: Performance using texts matched from external text corpora (External-TC).",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 199,
+              "image_path": "figures/2610.14531/table-029.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 513
+            },
+            {
+              "caption": "Table 5: Quality evaluation of automated OCR annotations against human-verified ground truth.",
+              "figure_id": "table-5-19",
+              "figure_number": "5",
+              "height": 58,
+              "image_path": "figures/2610.14531/table-030.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 1024
+            },
+            {
+              "caption": "Table 10: Details of Historical Documents in LongHisDoc. Zoom in for better view.",
+              "figure_id": "table-10-4",
+              "figure_number": "10",
+              "height": 79,
+              "image_path": "figures/2610.14531/table-031.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 1097
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.14531/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.14531",
+          "relevance": 8,
+          "selection_reason": "Introduces LongHisDoc, a benchmark for long historical document understanding, challenging long-context capabilities.",
+          "summary_status": "generated",
+          "title": "LongHisDoc: A Comprehensive Benchmark for Chinese Long Historical Document Understanding",
+          "tldr": "LongHisDoc is a benchmark for evaluating LLMs and LVLMs on multimodal, full-book understanding of long Chinese historical documents.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-11",
       "paper_count": 6,
       "papers": [
@@ -26197,5 +29021,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 123
+  "total_paper_count": 133
 }

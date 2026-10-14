@@ -1,6 +1,2677 @@
 {
   "days": [
     {
+      "date": "2026-10-13",
+      "paper_count": 13,
+      "papers": [
+        {
+          "abstract": "The design of attention mechanisms in long-context large language models faces an ``impossible triangle'' among KV cache size, training and prefill FLOPs, and model quality. GQA achieves strong quality but incurs high KV cache overhead; alternative approaches such as MLA and MFA can compress the cache, but MLA suffers from quality loss while MFA substantially increases training and prefill compute. We propose Virtual Head Attention (VHA), which simultaneously improves all three vertices through two lightweight linear operations: Q Premix applies a near-identity transformation to queries within each KV group to recover virtual head diversity from halved physical query heads, and Linear Postmix fuses inter-head features via a low-rank $I + AB^\\top$ residual structure. Since VHA introduces no nonlinear operations, Premix can be folded into the query projection and Postmix into the output projection at inference time, reducing the model to a standard GQA-2 architecture that directly reuses all existing GQA inference optimizations. With only two KV heads, the group size in large models readily reaches 64, fully exploiting Tensor Core parallelism during decoding. Across four scales with 4K-context 50B-token pretraining, VHA consistently surpasses the standard GQA baseline at every scale ($+$0.05\\% to $+$0.81\\%), while reducing KV cache by $4\\times$ vs.\\ GQA-8 at dense scales and $2\\times$ vs.\\ GQA-4 at the MoE scale, and lowering training and prefill FLOPs by 7.9\\% (1.7B, $S{=}4096$). On an industrial 30B-A3B MoE model trained on 500B tokens at 8K context, VHA outperforms both MLA and GQA-4 by $+$0.70\\,/\\,$+$2.60\\,\\% on a 12-benchmark base-model evaluation suite; in a separate matched 10B-A1B MoE comparison after long-context mid-training, VHA attains an average RULER score of 84.4 over 8K--128K versus 73.0 for GQA, while using two rather than four KV heads in the full-attention layers.",
+          "arxiv_id": "2610.17959",
+          "arxiv_url": "https://arxiv.org/abs/2610.17959",
+          "authors": [
+            "Xibo Ding, Guoxia Wang, Jinle Zeng, Jiabin Yang, Sirui Tao, Chao Yang, Dianhai Yu"
+          ],
+          "bullets": [
+            "Targets the trade-off among KV-cache size, training/prefill compute, and model quality in long-context LLMs.",
+            "Uses two lightweight linear operations: Q Premix restores virtual query-head diversity, while Linear Postmix fuses inter-head features with a low-rank residual structure.",
+            "The operations can be folded into existing projections at inference, yielding a standard GQA-2 model compatible with GQA optimizations and Tensor Core decoding.",
+            "Across four model scales, VHA improves over GQA while reducing KV cache by 2–4× and training/prefill FLOPs by 7.9% in one reported setting.",
+            "On industrial MoE evaluations, VHA outperforms MLA and GQA and achieves higher long-context RULER scores than GQA while using fewer KV heads."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of Virtual Head Attention. (a) VHA improves the trade-off among KV cache size, training/prefill FLOPs, and model quality by combining Q Premix and Linear Postmix during training, while absorbing both linear modules into standard GQA projections at inference. (b) Schematic of the KV cache–FLOPs–quality impossible triangle faced by existing attention designs. (c) Method comparison at 1.7B and 4B scales, plotting KV cache size against training FLOPs, with bubble area proportional to 8-task average accuracy.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 366,
+              "image_path": "figures/2610.17959/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Training loss curves across four model scales. Each panel compares MHA, GQA, MLA, MFA, and VHA on FineWeb-Edu (50B tokens, 4K context). All curves are plotted from step 4K onward after the learning-rate warm-up; smoothing is applied with an exponential moving average (α=0.93). VHA (blue, solid) achieves the lowest loss at convergence at the 4B scale.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 534,
+              "image_path": "figures/2610.17959/figure-002.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 810
+            },
+            {
+              "caption": "Figure 2: Q Premix weight analysis on a trained Qwen-1.7B VHA model. (a) Per-layer Frobenius deviation ∥W premix",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 182,
+              "image_path": "figures/2610.17959/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 814
+            },
+            {
+              "caption": "Table 1: Pretraining accuracy across four model scales. We report zero-shot accuracy (%) on eight standard multiple-choice benchmarks. CACHE is KV cache per layer per token in BF16 (KB). Bold marks the best per scale per column; ties are bolded jointly. VHA achieves the highest average accuracy at every scale while using the smallest KV cache. Per-method full configurations and benchmark citations are in Appendix D; per-method training-FLOPs comparison is in Table 5.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 538,
+              "image_path": "figures/2610.17959/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 830
+            },
+            {
+              "caption": "Table 12: Model architecture and training hyperparameters across all five scales. “–” denotes not applicable.",
+              "figure_id": "table-12-6",
+              "figure_number": "12",
+              "height": 824,
+              "image_path": "figures/2610.17959/table-005.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 686
+            },
+            {
+              "caption": "Table 5: Computational efficiency across four model scales (S=4096). For each scale we list per-method query/key/value head counts, KV cache per layer per token (BF16, KB), training FLOPs per token aggregated over all transformer layers (G), and the relative change vs. the per-scale GQA baseline (GQA-8 dense, GQA-4 MoE). Bold highlights VHA, the method that achieves the best joint KV cache+FLOPs Pareto optimum at every scale. MHA’s lower FLOPs at three scales reflect its smaller query head count under our parameter-matched configurations (Hq=12 at 0.6B/1.7B, Hq=20 at 4B/8B-A1B versus GQA’s Hq=16 or Hq=32), at the cost of a 6–10× larger KV cache.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 154,
+              "image_path": "figures/2610.17959/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 6: Long-context results on RULER and HELMET (%). RULER Overall averages all 13 tasks. Bold marks the better result within each matched checkpoint and evaluation length; exact ties are unbolded.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 449,
+              "image_path": "figures/2610.17959/table-007.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 829
+            },
+            {
+              "caption": "Table 8: Repeated-run results at 0.6B (%). Every run is reported. Bold in the summary rows marks the higher across-run mean.",
+              "figure_id": "table-8-13",
+              "figure_number": "8",
+              "height": 285,
+              "image_path": "figures/2610.17959/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 827
+            },
+            {
+              "caption": "Table 3: Pretraining accuracy at the 30B-A3B MoE scale. We report accuracy (%) averaged within four task categories (General, Math & STEM, Coding, Multilingual) over 12 base-model benchmarks; AVG is the macro-average over the four task categories. CACHE is KV cache per layer per token in BF16 (KB). Bold marks the best per column. Per-benchmark scores and benchmark citations are in Appendix C.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 109,
+              "image_path": "figures/2610.17959/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 614
+            },
+            {
+              "caption": "Table 9: Early training trajectory under different Premix initializations. Each entry is loss / preclipping gradient norm.",
+              "figure_id": "table-9-14",
+              "figure_number": "9",
+              "height": 198,
+              "image_path": "figures/2610.17959/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 390
+            },
+            {
+              "caption": "Table 11: Per-benchmark scores on the 30B-A3B MoE evaluation suite (accuracy %).",
+              "figure_id": "table-11-10",
+              "figure_number": "11",
+              "height": 336,
+              "image_path": "figures/2610.17959/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 527
+            },
+            {
+              "caption": "Table 10: Downstream accuracy under different Premix initializations (%). Bold marks the best result per row.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 209,
+              "image_path": "figures/2610.17959/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 344
+            },
+            {
+              "caption": "Table 2: Recovering from a doubly-compressed shape (1.7B). GQA 16-8-8 is the standard GQA-8 baseline; GQA 16-2-2 reduces only Hkv to obtain a 1 KB KV cache; GQA 8-2-2 additionally halves the physical query heads to match VHA’s shape but lacks Premix and Postmix. ∆ is the gap to the GQA 16-8-8 baseline.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 147,
+              "image_path": "figures/2610.17959/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Table 7: Complementary evaluation results. LB-v2, InfBench, and BABI denote LongBench-v2, InfiniteBench, and BABILong; Short is the short-context eight-task average. The remaining columns report bits per byte (BPB) on ProLong domains. Bold marks the better matched result.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2610.17959/table-014.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17959/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17959",
+          "relevance": 9,
+          "selection_reason": "Introduces a linear attention variant that reduces KV cache size and training/prefill FLOPs for long-context LLMs, directly advancing efficient attention and KV-cache efficiency.",
+          "summary_status": "generated",
+          "title": "Virtual Head Attention",
+          "tldr": "Virtual Head Attention (VHA) reduces KV-cache and compute costs while maintaining or improving long-context language-model quality over standard attention alternatives.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Post-hoc linearization is an attractive way to accelerate pretrained Video Diffusion Transformers (Video DiTs), yet existing methods largely treat the quality loss induced by attention replacement as a recovery problem. We show that a more fundamental bottleneck lies upstream: \\emph{initialization}. Random initialization discards pretrained knowledge, whereas manual weight reuse transfers it through rigid and incomplete source--target correspondences. We introduce \\textbf{LinMorph}, which recasts Video DiT linearization as a learnable softmax-to-linear weight transformation problem. Instead of copying predefined counterparts, LinMorph learns a cross-parameter morphism that lets each target Gated DeltaNet (GDN) parameter draw jointly from pretrained query, key, value, and output projections, including for parameters with no direct softmax counterpart. A single morphism is shared across layers and learned through local teacher alignment, while producing layer-specific initializations from their respective pretrained weights. The resulting weights are then materialized as independent GDN modules for progressive distillation and joint recovery.Since the morphism operates in weight space rather than token space, it can be learned on short, low-resolution clips and directly reused at larger video scales. Across pretrained Video DiTs, LinMorph enables markedly faster recovery and better final generation quality than random initialization and heuristic weight reuse. Results show that efficient linearization depends not only on how a converted model is recovered, but critically on how pretrained knowledge is transferred before recovery. Project page: https://lonelyling.github.io/LinMorph.",
+          "arxiv_id": "2610.17914",
+          "arxiv_url": "https://arxiv.org/abs/2610.17914",
+          "authors": [
+            "Lingyi Long, Congyue Zhao, Xiaoou Li, Yanmin Qian, Tao Huang"
+          ],
+          "bullets": [
+            "Identifies initialization—not only post-conversion recovery—as a key bottleneck in Video DiT linearization.",
+            "Learns a shared cross-parameter softmax-to-linear morphism instead of relying on random initialization or rigid weight copying.",
+            "Allows each GDN parameter to combine information from pretrained query, key, value, and output projections, including unmatched parameters.",
+            "Uses local teacher alignment on short, low-resolution clips, then applies layer-specific transformed weights for progressive distillation and recovery.",
+            "Reports faster recovery and better final generation quality across pretrained Video DiTs than random or heuristic initialization."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Overview of LinMorph. A shared weight morphism is first learned from the frozen softmax teacher and used to generate GDN initialization weights. After materialization, the mapper is discarded and the GDN modules are progressively introduced and recovered by prediction distillation. The resulting hybrid Video DiT is finally fine-tuned end-to-end without the teacher.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 273,
+              "image_path": "figures/2610.17914/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 902
+            },
+            {
+              "caption": "Figure 1. Comparisons of different weight initialization methods. (a) Random initialization discards pretrained knowledge, while (b) manual copying relies on partial one-to-one correspondences. (c) Our LinMorph learns a cross-parameter transformation that initializes both matched and target-specific linearattention parameters. (d) The resulting initialization yields substantially faster recovery and lower KD loss.",
+              "figure_id": "figure-1-11",
+              "figure_number": "1",
+              "height": 292,
+              "image_path": "figures/2610.17914/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 928
+            },
+            {
+              "caption": "Figure 6. Wan2.2 recovery with six GDN blocks. Total training recovery loss with EMA-100 smoothing. All methods use the same backbone-specific recovery objective.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 421,
+              "image_path": "figures/2610.17914/figure-003.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 582
+            },
+            {
+              "caption": "Figure 4. Learned cross-parameter structure. Left: source-mixing coefficients. Right: block-NMSE degradation after restricting or permuting the learned source assignments.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 270,
+              "image_path": "figures/2610.17914/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 443
+            },
+            {
+              "caption": "Figure 5. 21-GDN inference speedup. Attention/backbone: median and IQR over three paired rounds; end-to-end: one pair. Protocol: Appendix C.7.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 333,
+              "image_path": "figures/2610.17914/figure-005.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 390
+            },
+            {
+              "caption": "Figure 7. Layerwise local alignment across video sizes. The same low-resolution-trained base and residual-refined mappers are evaluated at two video sizes. Block indices are zero-based; all 30 source layers participated in mapper fitting. Lines connect measured layers and are not uncertainty estimates.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 306,
+              "image_path": "figures/2610.17914/figure-006.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 893
+            },
+            {
+              "caption": "Figure 3. Shared weight mapper. Shown for a target parameter j. Alignment and construction are targetdependent; residual correction applies only to q, k, v, o, g, β.",
+              "figure_id": "figure-3-23",
+              "figure_number": "3",
+              "height": 438,
+              "image_path": "figures/2610.17914/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 333
+            },
+            {
+              "caption": "Figure 8. Qualitative comparison on four selected prompts. Rows within each group showWan2.1-1.3B, LinMorph-14, and LinMorph-21 using identical enhanced prompts, seeds, and sampling settings. Columns show matched timestamps; 8k and 40k denote fine-tuning microsteps.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 1198,
+              "image_path": "figures/2610.17914/figure-008.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 946
+            },
+            {
+              "caption": "Table 2. Controlled initialization ablation on two Video DiT backbones. Within each backbone, all methods use the same target architecture, recovery recipe, and evaluation protocol.",
+              "figure_id": "table-2-21",
+              "figure_number": "2",
+              "height": 217,
+              "image_path": "figures/2610.17914/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 914
+            },
+            {
+              "caption": "Table 9. Parameter-count comparison for the specified architecture. Mapping rows count the parameters trainable in each separate fitting step. Progressive recovery trains all selected GDN modules and their bridges. Full-DiT fine-tuning additionally updates the remaining model components. Counts are not measurements of wall-clock time.",
+              "figure_id": "table-9-22",
+              "figure_number": "9",
+              "height": 208,
+              "image_path": "figures/2610.17914/table-010.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 568
+            },
+            {
+              "caption": "Table 4. Dimension-wise VBench comparison with LinVideo. All eight dimensions in the Wan2.1-1.3B panel of Huang et al. [10] are included. Scores are multiplied by 100; higher is better. Bold marks the higher score in each row. LinVideo converts 16/30 blocks; LinMorph converts 21/30.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 319,
+              "image_path": "figures/2610.17914/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 930
+            },
+            {
+              "caption": "Table 3. Overall generation quality on VBench and VBench-2.0. Scores are on a 0–100 scale; higher is better. LinMorph uses 50-step sampling. † denotes an approximate score read from the 480 × 832 panel of Figure 5 in Ghafoorian et al. [9]. Reference provenance and evaluation details are provided in Appendix C.6.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 361,
+              "image_path": "figures/2610.17914/table-012.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 798
+            },
+            {
+              "caption": "Table 7. Notation used throughout the manuscript.",
+              "figure_id": "table-7-17",
+              "figure_number": "7",
+              "height": 613,
+              "image_path": "figures/2610.17914/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 772
+            },
+            {
+              "caption": "Table 1. Pre-recovery initialization fidelity. Evaluated on 64 HQ videos, 30 blocks, and five diffusion timesteps.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 153,
+              "image_path": "figures/2610.17914/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 373
+            },
+            {
+              "caption": "Table 5. Block alignment after 21-GDN distillation. Both schedules use the same mapped initialization bank and 4,500 total optimizer updates. Metrics use student depth rollout, before final teacher-free full-model fine-tuning. Complete prediction diagnostics appear in Appendix C.3.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 121,
+              "image_path": "figures/2610.17914/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 648
+            },
+            {
+              "caption": "Table 10. Recovery settings for the initialization ablations. These are not the mapper-fitting or final teacher-free fine-tuning settings.",
+              "figure_id": "table-10-8",
+              "figure_number": "10",
+              "height": 351,
+              "image_path": "figures/2610.17914/table-016.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 652
+            },
+            {
+              "caption": "Table 12. Teacher-forced attention diagnostics for initialization. Rows shared with Table 2 use the same checkpoints. An additional 1,500-update LinMorph checkpoint is included for Wan2.2. A norm ratio close to zero indicates an attenuated student attention output; low NMSE alone need not imply good directional agreement.",
+              "figure_id": "table-12-20",
+              "figure_number": "12",
+              "height": 302,
+              "image_path": "figures/2610.17914/table-017.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 718
+            },
+            {
+              "caption": "Table 6. Comparison of weight-transformation designs. Entries report results without / with residual refinement. Block metrics use teacher-forced inputs; output metrics evaluate the cascade of all 30 mapped modules. Evaluation uses 64 videos and five diffusion timesteps. Bold marks the best result in each metric.",
+              "figure_id": "table-6-18",
+              "figure_number": "6",
+              "height": 188,
+              "image_path": "figures/2610.17914/table-018.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 748
+            },
+            {
+              "caption": "Table 11. Complete diagnostics before final joint fine-tuning. Both 21-GDN models use 4,500 distillation updates. Block metrics measure depth-rollout outputs at replaced layers; output metrics measure the final DiT velocity prediction on the same fixed evaluation inputs.",
+              "figure_id": "table-11-19",
+              "figure_number": "11",
+              "height": 124,
+              "image_path": "figures/2610.17914/table-019.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 490
+            },
+            {
+              "caption": "Table 8. Auxiliary mappings in FullMix. Shapes use stored-weight conventions. The convolution channel count Cj is Ck for q, k and Cv for v; K is the short-convolution kernel length.",
+              "figure_id": "table-8-16",
+              "figure_number": "8",
+              "height": 156,
+              "image_path": "figures/2610.17914/table-020.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 727
+            },
+            {
+              "caption": "Table 13. Reuse across video shapes without mapper refitting. Both variants are fitted at 17×256×448; each is then evaluated at both sizes. Each row averages 9,600 teacher-forced local comparisons (64 videos, five timesteps, 30 blocks). Residual denotes the separately fitted native-shape correction, not post-transfer optimization.",
+              "figure_id": "table-13-3",
+              "figure_number": "13",
+              "height": 172,
+              "image_path": "figures/2610.17914/table-021.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 710
+            },
+            {
+              "caption": "Table 15. Full-generation latency and peak allocated memory. All runs use 480× 832, batch one, BF16, 50 denoising steps, and CFG six. Each latency is one timed generation after one excluded first generation. Memory is PyTorch peak allocated memory in GiB, not total board memory.",
+              "figure_id": "table-15-13",
+              "figure_number": "15",
+              "height": 128,
+              "image_path": "figures/2610.17914/table-022.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 656
+            },
+            {
+              "caption": "Table 14. Cross-layer sharing and generalization. Block NMSE and cosine are averaged over five evenly spaced evaluation blocks (0, 6, 12, 18, and 24). For the one-layer setting, five separate mappers are each trained on one corresponding block; for the six-layer setting, five separate mappers are trained on consecutive groups [0, 5], [6, 11], [12, 17], [18, 23], and [24, 29]. Each mapper is evaluated at all five evaluation blocks. The table then reports the equal-weight mean across the five mappers. The 30-layer setting trains one mapper on all layers and evaluates it at the same five blocks.",
+              "figure_id": "table-14-4",
+              "figure_number": "14",
+              "height": 127,
+              "image_path": "figures/2610.17914/table-023.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 614
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17914/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.17914",
+          "relevance": 8,
+          "selection_reason": "Presents a weight-morphing method to linearize Video Diffusion Transformers, improving efficiency of video DiT inference.",
+          "summary_status": "generated",
+          "title": "LinMorph: Learning to Morph Weights for Efficient Video DiT Linearization",
+          "tldr": "LinMorph learns how to transfer pretrained attention weights into linear Gated DeltaNet modules, enabling faster Video DiT linearization with better recovered quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context training of large language and multimodal models couples structured attention masks (document, prefix-LM, share-question, sliding-window, block-sparse) with multi-node context parallelism, making the mask a dominant bottleneck. FlashMask's column-wise sparse mask compresses them from $O(n^2)$ to $O(n)$ via four query-axis boundary vectors, covering broad structured patterns. Implemented for Ampere GPUs, it neither exploits FlashAttention-3's TMA/WGMMA warp-specialized pipeline on Hopper nor supports distribution. The column-wise sparse mask is indexed by key positions but stores query-axis interval boundaries. Under any multi-chunk context-parallel assignment, it reduces per-rank mask localization to a provably zero-communication \\emph{clip--shift--max} on the boundary vectors, compatible with the single-GPU kernel. FlashMask-3 introduces a mask-aware Hopper kernel with three-role warp specialization atop FlashAttention-3's TMA/WGMMA pipeline, plus a mask-aware distributed extension: zero-communication mask localization, a sparsity-aware load balancer (HCC-IPO), and a mask-aware compute-communication overlap with mask-driven communication pruning, whose forward all-gather uses topology-aware hierarchical routing. On a single H100 across 12 masks at 4K--128K context, it improves achieved TFLOPs over FlashMask, FlexAttention, and MagiAttention by 45--141%, 34--71%, and 2--44%. At context-parallel degrees 4--32 with 8K sequence per device, it attains 31--75% compute-communication overlap efficiency and improves throughput over Megatron-Core CP ring, Megatron-Core CP all-gather, and MagiAttention by $1.80\\times$--$3.71\\times$, $1.71\\times$--$2.92\\times$, and $1.09\\times$--$1.46\\times$. In end-to-end training of a 118B-A14B MoE at 128K on 128 H100 GPUs, it raises throughput by 7.3--11.0% over a Dual Chunk all-gather baseline, with attention forward+backward 24.5--44.9% faster.",
+          "arxiv_id": "2610.17901",
+          "arxiv_url": "https://arxiv.org/abs/2610.17901",
+          "authors": [
+            "Guoxia Wang, Qianyue He, Siming Wu, Haoyang Xie, Qiwen Bao, Jinle Zeng, Jiabin Yang, Tian Wu, Dianhai Yu"
+          ],
+          "bullets": [
+            "Targets the bottleneck of structured attention masks in long-context, multi-node training.",
+            "Uses a Hopper-optimized FlashAttention-3 kernel with TMA/WGMMA and three-role warp specialization.",
+            "Provides zero-communication mask localization via a clip–shift–max operation, plus load balancing and mask-aware communication overlap with pruning.",
+            "On a single H100, improves achieved TFLOPs by 2–141% over prior mask-aware attention systems across 12 masks and 4K–128K contexts.",
+            "Across 4–32 context-parallel degrees, improves throughput by up to 3.71×; in 128K end-to-end MoE training, raises throughput by 7.3–11.0%."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of FlashMask-3 across four layers of the execution stack.",
+              "figure_id": "figure-1-13",
+              "figure_number": "1",
+              "height": 426,
+              "image_path": "figures/2610.17901/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Mask-aware hierarchical compute-communication overlap. (a) AG skips fully-masked chunks; compute polls a write_ptr updated by the comm kernel. (b) Hierarchical AG (N=2, G=2): inter-node congruence-group fetch (Phase 1), then intra-node NVLink fetch (Phase 2). (c) Multi-stage backward overlap (N=2, G=8): RS of segment t overlaps AG and grad compute of segment t+1; the tail RS runs non-overlapped.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 331,
+              "image_path": "figures/2610.17901/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 816
+            },
+            {
+              "caption": "Figure 3: Zero-communication mapping of global mask boundaries (LTS, UTE) to rank-local coordinates using the clip–shift–max transform (Eq. 1).",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 280,
+              "image_path": "figures/2610.17901/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Kernel FWD & BWD throughput (TFLOPs/s) on a single H100 GPU. Error bars are omitted for legibility; the underlying per-mask measurements with standard deviations are reported in Figure 9 (Appendix D.1.3).",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 278,
+              "image_path": "figures/2610.17901/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Figure 2: Three-role warp specialization in the FlashMask-3 Hopper kernel: KV Index Generator (mask scan), KV Loader (TMA load), and MMA Consumer (WGMMA score), connected by three asynchronous pipelines.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 216,
+              "image_path": "figures/2610.17901/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 822
+            },
+            {
+              "caption": "Figure 10: Q Head = 64, KV Head = 1. CP-scale throughput comparison (TFLOPs/s) across mask types and CP degrees. Columns: forward, backward, and total (forward+backward). Rows: mask types.",
+              "figure_id": "figure-10-10",
+              "figure_number": "10",
+              "height": 615,
+              "image_path": "figures/2610.17901/figure-006.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 818
+            },
+            {
+              "caption": "Figure 9: Single-device throughput across mask types and sequence lengths. FlashMask-3 consistently outperforms all baselines across all 12 mask patterns.",
+              "figure_id": "figure-9-5",
+              "figure_number": "9",
+              "height": 342,
+              "image_path": "figures/2610.17901/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 818
+            },
+            {
+              "caption": "Figure 11: Comparison of compute load distributions under different scheduling strategies. Dark regions indicate work blocks assigned to each rank. The inset (upper-right of each subplot) shows per-rank compute load, with the dashed line denoting the average. The “peak/avg” in each title reports the peak-to-average load ratio across all 8 ranks; lower values indicate more balanced distributions.",
+              "figure_id": "figure-11-18",
+              "figure_number": "11",
+              "height": 269,
+              "image_path": "figures/2610.17901/figure-008.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 818
+            },
+            {
+              "caption": "Figure 12: Convergence under context parallelism. (a) Training loss of the two runs; faint lines are per-step values and bold lines an exponential moving average (α=0.1), and the inset magnifies the raw curves over the last 60 steps. (b) Per-step loss difference between the two runs and its moving average, on the same step axis.",
+              "figure_id": "figure-12-1",
+              "figure_number": "12",
+              "height": 323,
+              "image_path": "figures/2610.17901/figure-009.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 805
+            },
+            {
+              "caption": "Figure 6: Distributed scaling. Per-GPU TFLOPs/s versus CP degree P for FlashMask-3, Megatron all-gather, Megatron Ring Attention, and Magi-Attention on three practically relevant mask patterns.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 205,
+              "image_path": "figures/2610.17901/figure-010.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Figure 7: (a) Speedup of the Preemptive Persistent Tile (PPT) scheduler over the static scheduler across different mask patterns and sequence lengths on a single H100 GPU. (b) Peak-to-average ratio of per-device computation time under different workload partitioning strategies with Context Parallelism.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 200,
+              "image_path": "figures/2610.17901/figure-011.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 753
+            },
+            {
+              "caption": "Figure 8: Computation-communication overlap efficiency for various mask patterns and CP degrees.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 140,
+              "image_path": "figures/2610.17901/figure-012.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 817
+            },
+            {
+              "caption": "Table 1: End-to-end training throughput of a 118B-A14B MoE model (128K context, CP degree 16, Slocal=8K tokens per device, Hq=64, Hkv=8, document mask) on 128 H100 GPUs, for three datasets of differing average mask sparsity. Each run covers 70 steps; we discard the 10 highest and 10 lowest throughput steps and report the mean ± one standard deviation over the remaining 50. ∆attn is the corresponding attention forward+backward speedup over the baseline.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 64,
+              "image_path": "figures/2610.17901/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 830
+            },
+            {
+              "caption": "Table 7: Isolating the warp specialization from the Hopper port (forward TFLOPs/s, mean ± std). Parentheses give the ratio to FlashMask-3.",
+              "figure_id": "table-7-3",
+              "figure_number": "7",
+              "height": 380,
+              "image_path": "figures/2610.17901/table-014.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 706
+            },
+            {
+              "caption": "Table 4: FlashMask-3 throughput improvement over baselines (forward+backward TFLOPs/s). Reported as (Tours/Tbaseline − 1)× 100%.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2610.17901/table-015.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 452
+            },
+            {
+              "caption": "Table 5: FlashMask-3 speedup over distributed baselines (aggregated over all masks × CP sizes).",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 256,
+              "image_path": "figures/2610.17901/table-016.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 518
+            },
+            {
+              "caption": "Table 2: Resource profile of the FlashMask-3 distributed mask preprocessing on rank r owning nr chunks. NK denotes the global key length. All operations are elementwise and parallelized over the key dimension.",
+              "figure_id": "table-2-21",
+              "figure_number": "2",
+              "height": 128,
+              "image_path": "figures/2610.17901/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: IPO phase ablation across representative CP configurations. Subopt: fraction of random instances not matching the optimum. Max gap: worst-case relative excess over optimal makespan. P3 wins: cases where Phase 3 improves upon Phase 2. All configurations use 200 random instances (100 for N=128).",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 167,
+              "image_path": "figures/2610.17901/table-018.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 740
+            },
+            {
+              "caption": "Table 9: Balance preprocessing inside the 128- GPU run of §4.3.",
+              "figure_id": "table-9-16",
+              "figure_number": "9",
+              "height": 98,
+              "image_path": "figures/2610.17901/table-019.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 417
+            },
+            {
+              "caption": "Table 6: Single-GPU throughput on five masks supported by FA3 (total forward+backward TFLOPs/s, mean ± std over 50 iterations). Parentheses give the ratio to FA3.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 36,
+              "image_path": "figures/2610.17901/table-020.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 830
+            },
+            {
+              "caption": "Table 8: Standalone scheduling latency against attention time (P=32, chunk 2048).",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 35,
+              "image_path": "figures/2610.17901/table-021.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 392
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17901/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.17901",
+          "relevance": 9,
+          "selection_reason": "Mask-aware distributed attention for long-context LLM training; directly improves attention efficiency and long-context capability.",
+          "summary_status": "generated",
+          "title": "FlashMask-3: Efficient and Expressive Mask-Aware Distributed Attention",
+          "tldr": "FlashMask-3 makes structured, mask-aware attention efficient on Hopper GPUs and across distributed context parallelism, delivering substantial kernel and end-to-end training speedups.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion language models apply bidirectional attention over the whole context at every denoising step, so a longer context makes each step substantially more expensive. Sparsifying only at inference leaves the pretrained weights unchanged, so the model is never trained under the sparse pattern it runs with. We propose Prefilling-dLLM v2, which continues training a diffusion language model so that it routes with its native mask token. One mask is appended at the end of each chunk, and a learned role offset marks it as a routing slot. On every fourth layer, a query keeps a bidirectional local window and the top-K chunks scored from that mask; the other layers use a bidirectional sliding window. Starting from Dream-v0-Base-7B extended to 16K with YaRN, we compare Prefilling-dLLM v2 with bidirectional NSA, DSA, and SWA under the same layout, key budget, and dense initialization, using the same Fast-dLLM decoder. With the YaRN factor scaled to the evaluation length, Prefilling-dLLM v2 leads the other sparse methods on all three RULER tasks from 16K to 128K. Its mean accuracy at 128K is 7.4 points above NSA, the next sparse model, while DSA and SWA remain near zero. At the same length, decoding is 172x faster than with full dense attention.",
+          "arxiv_id": "2610.17868",
+          "arxiv_url": "https://arxiv.org/abs/2610.17868",
+          "authors": [
+            "Qi Han, Jing Xiong, Ziyuan Zhang, Ngai Wong"
+          ],
+          "bullets": [
+            "Addresses the high per-step cost of bidirectional full-context attention in diffusion language models.",
+            "Adds one learned routing mask per chunk; every fourth layer selects the top-K chunks while other layers use local sliding-window attention.",
+            "Continued training aligns the model with the sparse attention pattern used at inference.",
+            "Outperforms bidirectional NSA, DSA, and SWA across three RULER tasks from 16K to 128K; at 128K, it is 7.4 accuracy points above NSA.",
+            "Achieves 172× faster decoding than dense attention at 128K, within the evaluated setup and context range."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Mean accuracy of the four sparse methods on the three RULER tasks. The YaRN factor scales with the evaluation length.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 207,
+              "image_path": "figures/2610.17868/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 281
+            },
+            {
+              "caption": "Figure 2: What query q can see. Each chunk is three cells, and q sits in the middle so the local window extends both ways. Teal cells are the local window and orange cells are selected. The bar above each NSA chunk is its summary. DSA reads scattered tokens, and Prefilling-dLLM v2 marks the last cell of every chunk as a mask.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 389,
+              "image_path": "figures/2610.17868/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 827
+            },
+            {
+              "caption": "Figure 3: Computation on a route layer. A chunk is S − 1 content tokens followed by one routing mask. The role offset r is added to that mask at the input. Its query pools the content keys with an intra-chunk softmax, and the weighted sum is the summary key sc. A content query adds a lowrank residual and scores these summaries. Inside a GQA group (Ainslie et al., 2023) the scores are reduced by a maximum, and the top K chunks are shared by every head in the group. Attention mass puts the selected chunk scores and the local-window log-sum-exp in one partition, then a second softmax distributes each chunk’s mass over its content tokens.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 268,
+              "image_path": "figures/2610.17868/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 810
+            },
+            {
+              "caption": "Figure 7: Training loss of the continued-training runs. Each line averages the previous 25 steps. The dashed vertical line marks the end of the DSA indexer warmup.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 315,
+              "image_path": "figures/2610.17868/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 800
+            },
+            {
+              "caption": "Figure 4: Cosine between the mean content key of each chunk and the summary key of each routing slot on the 16K single-needle probe, averaged over route layers and 100 examples. Each panel is binned to 32×32. On the clean probe the diagonal pairs a slot with its own chunk. Shuffle summaries permutes the summaries across chunks.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 272,
+              "image_path": "figures/2610.17868/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 481
+            },
+            {
+              "caption": "Figure 6: Prefill time and decode time per generated token under the same Fast-dLLM decoder. Both vertical axes are logarithmic. The number above each full-dense and hybrid-dense bar is the ratio of that latency to the latency of Prefilling-dLLM v2. The YaRN factor is the evaluation length divided by 2048.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 230,
+              "image_path": "figures/2610.17868/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 481
+            },
+            {
+              "caption": "Figure 5: 16K single-needle accuracy for the routing mask, a new learned token, and EOS. Shuffle summaries permutes the summaries across chunks and leaves the text in place. Move needle places the intact needle in another chunk. Each bar is 100 examples.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 188,
+              "image_path": "figures/2610.17868/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 484
+            },
+            {
+              "caption": "Table 2: LongBench-v1 at the 16K training length. The upper block is dense attention. Full dense keeps dense attention in every layer through the same number of continued-training steps as the other variants. Hybrid dense uses three sliding-window layers and one dense layer. The lower block is sparse attention. In the dense block, ∗ marks the best score in each column. In the sparse block, the best score is bold and the second best is underlined.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 321,
+              "image_path": "figures/2610.17868/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 836
+            },
+            {
+              "caption": "Table 3: Layer configurations. Each variant occupies two rows. The first row is every fourth layer, and the second row is the other 21 layers. Local window is a bidirectional radius. Remote budget is the set of keys gathered beyond that window. Total budget is the number of key positions on that row. The sparse rows share a budget of about 2560. A dense layer reads every key.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 346,
+              "image_path": "figures/2610.17868/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 752
+            },
+            {
+              "caption": "Table 5: Continued training. Each variant is initialized from the dense step-500 checkpoint and trains for 1000 steps with a cosine schedule on four GPUs, at learning rate 10−4 with 50 warmup steps. The base weights stay frozen. Low-rank adapters of rank 16, scale 32, and dropout 0.05 train the query, key, value, and output projections. The rows below are the parameters that differ across variants.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 661,
+              "image_path": "figures/2610.17868/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 640
+            },
+            {
+              "caption": "Table 1: Three RULER tasks at 16K, 32K, 64K, and 128K. The upper block is dense attention. Full dense keeps dense attention in every layer through the same number of continued-training steps as the other variants. Hybrid dense uses three sliding-window layers and one dense layer. The lower block is sparse attention. Fixed uses YaRN factor 8. Scaled sets the factor to the evaluation length divided by 2048. MK is multi-key multi-query. Avg. is the mean of S-N, MK, and VT. In the dense block, ∗ marks the best score in each column. In the sparse block, the best score is bold and the second best is underlined.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 129,
+              "image_path": "figures/2610.17868/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Dense context extension. The run continues Dream-v0-Base-7B under dense attention. The base weights stay frozen, and the listed low-rank adapters are the trainable parameters.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 442,
+              "image_path": "figures/2610.17868/table-012.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 398
+            },
+            {
+              "caption": "Table 7: Routing-token ablations on the three RULER tasks. The YaRN factor is held at 8 at every length. MK is multi-key multi-query. Avg. is the mean of S-N, MK, and VT. Mask is the native mask used by Prefilling-dLLM v2, copied from its Fixed row in Table 1. EOS and New token replace the mask in the routing slot, both in training and at evaluation.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 152,
+              "image_path": "figures/2610.17868/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 844
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17868/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17868",
+          "relevance": 8,
+          "selection_reason": "Learned chunk routing and sparse attention for long-context diffusion language models directly address efficient attention and long-context processing.",
+          "summary_status": "generated",
+          "title": "Prefilling-dLLM v2: Learned Chunk Routing for Long-Context Diffusion Language Models",
+          "tldr": "Prefilling-dLLM v2 trains a diffusion language model to route attention through learned chunk-level mask tokens, enabling efficient long-context decoding while preserving strong retrieval performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent video super-resolution (VSR) models achieve efficient one-step generation through diffusion distillation. However, high-resolution inference remains costly, and distilled models are difficult to align with human preferences. These challenges call for improvements in both model architecture and training strategy. We present \\textbf{FlashVSR+} to address both limitations. On the architecture side, we introduce hybrid attention based on the strong locality observed in pretrained VSR models, while retaining sparse global interaction for long-range consistency. It achieves up to $2\\times$ DiT speedup and 45\\% lower peak memory, enabling spatially untiled 4K VSR on a single 24GB RTX 4090. On the training side, we propose Reward-Yield Distribution Matching Distillation (Ry-DMD) for preference-aligned one-step generation. Ry-DMD uses reward-weighted teacher rollouts to incorporate black-box rewards into distribution matching, without backpropagating through the reward model. We further show that Ry-DMD generalizes beyond VSR to T2I generation. Together, FlashVSR+ delivers stronger restoration quality and substantially improves high-resolution efficiency, with consistent gains in user preference. We release our code, models, and training data at \\href{https://www.flashvsr.tech}{\\textcolor{FlashBlue}{\\textbf{www.flashvsr.tech}}}.",
+          "arxiv_id": "2610.17552",
+          "arxiv_url": "https://arxiv.org/abs/2610.17552",
+          "authors": [
+            "Ruchang Yao, Shi Guo, Junhao Zhuang, Mingde Yao, Xin Cai, Jiahao Zhan, Bin Fu, Xinyuan Chen, Yu Qiao, Tianfan Xue"
+          ],
+          "bullets": [
+            "Targets the high inference cost of high-resolution VSR and the difficulty of aligning distilled models with human preferences.",
+            "Uses hybrid attention that emphasizes local interactions while preserving sparse global context for long-range consistency.",
+            "Introduces Reward-Yield Distribution Matching Distillation (Ry-DMD), which uses reward-weighted teacher rollouts without backpropagating through the reward model.",
+            "Reports up to 2× DiT speedup and 45% lower peak memory, enabling untiled 4K VSR on a single 24GB RTX 4090.",
+            "Achieves stronger restoration quality and consistent user-preference gains; Ry-DMD also generalizes to text-to-image generation."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Overview of the FlashVSR+ training pipeline. Stage 1 trains a 14B full-attention multi-step teacher on image and video data. Stage 2 trains the hybrid-attention student to obtain a strong initialization. Stage 3 distills the student into a one-step generator using Ry-DMD, where reward feedback modifies the teacher term estimation without requiring reward gradients.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 406,
+              "image_path": "figures/2610.17552/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 934
+            },
+            {
+              "caption": "Figure 5. Qualitative comparison with representative VSR methods. Zoomed regions highlight the reconstruction of text, fine textures, and facial details.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 837,
+              "image_path": "figures/2610.17552/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 892
+            },
+            {
+              "caption": "Figure 1. FlashVSR+ achieves high-quality and efficient video restoration. Left: We recover fine visual details while maintaining natural textures. Right: At 4K resolution, we suppress visible artifacts and enable substantially faster inference on both H200 equivalent GPU and a RTX 4090.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 845,
+              "image_path": "figures/2610.17552/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 9. Qualitative comparison of Ry-DMD on 4-step SD3.5-M. Ry-DMD substantially improves text correctness and legibility while preserving the intended scene content. Beyond text rendering, the resulting images often exhibit cleaner structures, more coherent materials and lighting, and improved overall visual quality.",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 538,
+              "image_path": "figures/2610.17552/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 742
+            },
+            {
+              "caption": "Figure 6. Efficiency comparison on 89-frame videos. (a) GPU time and peak memory on NVIDIA H200 equivalent GPU. (b) End-to-end wall-clock inference time on NVIDIA RTX 4090, including CPU KV-cache offloading and asynchronous prefetching overhead.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 305,
+              "image_path": "figures/2610.17552/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 940
+            },
+            {
+              "caption": "Figure 8. Qualitative comparison of OCR-guided VSR posttraining. Ry-DMD restores more recognizable text, while DMDR often introduces artifacts.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 287,
+              "image_path": "figures/2610.17552/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 567
+            },
+            {
+              "caption": "Figure 3. Attention locality and adaptation in causal VSR. (a) Attention concentrates in compact spatiotemporal neighborhoods. (b) Local attention mass varies across DiT blocks, and hybrid training reduces the locality of retained global-attention blocks.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 266,
+              "image_path": "figures/2610.17552/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 543
+            },
+            {
+              "caption": "Figure 7. Quality and efficiency of trained hybrid attention. The (3, 1, 25) configuration achieves the best balance between DiT cost and restoration quality.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 284,
+              "image_path": "figures/2610.17552/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 391
+            },
+            {
+              "caption": "Figure 10. Ablation on DMD steps.",
+              "figure_id": "figure-10-8",
+              "figure_number": "10",
+              "height": 218,
+              "image_path": "figures/2610.17552/figure-009.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 381
+            },
+            {
+              "caption": "Figure 4. Conceptual illustration of Ry-DMD.",
+              "figure_id": "figure-4-15",
+              "figure_number": "4",
+              "height": 299,
+              "image_path": "figures/2610.17552/figure-010.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 331
+            },
+            {
+              "caption": "Table 1. Human preference study. Preference margins relative to Ours-Base.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 273,
+              "image_path": "figures/2610.17552/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 408
+            },
+            {
+              "caption": "Table 3. Quantitative results of OCR-guided post-training.",
+              "figure_id": "table-3-14",
+              "figure_number": "3",
+              "height": 132,
+              "image_path": "figures/2610.17552/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 408
+            },
+            {
+              "caption": "Table 6. Hyperparameter analysis of Ry-DMD on SDXL. We vary one hyperparameter at a time from the default configuration (β, λRY, J, K) = (0.1, 0.2, 4, 3).",
+              "figure_id": "table-6-16",
+              "figure_number": "6",
+              "height": 367,
+              "image_path": "figures/2610.17552/table-013.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 510
+            },
+            {
+              "caption": "Table 4. Reward-guided text-to-image generation on SDXL.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 150,
+              "image_path": "figures/2610.17552/table-014.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 694
+            },
+            {
+              "caption": "Table 7. Ry-DMD on 4-step SD3.5-M. Ry-DMD substantially improves OCR accuracy while preserving the original 4-step sampling budget and improving general image-quality and preference metrics.",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 99,
+              "image_path": "figures/2610.17552/table-015.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 752
+            },
+            {
+              "caption": "Table 5. Ablation on student initialization and teacher capacity.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 131,
+              "image_path": "figures/2610.17552/table-016.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 304
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17552/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17552",
+          "relevance": 7,
+          "selection_reason": "Efficient video super-resolution via diffusion distillation and hybrid attention, relevant to video diffusion and efficient attention.",
+          "summary_status": "generated",
+          "title": "FlashVSR+: Efficient Video Super-Resolution via Hybrid Attention and Reward-Yield Distribution Matching",
+          "tldr": "FlashVSR+ makes one-step video super-resolution faster and more preference-aligned through hybrid attention and reward-weighted distillation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Generating images beyond the training resolution of Diffusion Transformers (DiTs) remains challenging, as the number of tokens grows rapidly with resolution, full attention becomes expensive, and outputs often suffer from structural distortions and degraded detail. We identify uniform full attention as the common source of both problems. Attending to all tokens at every step causes quadratic cost and exposes the model to more tokens and relative distances beyond the training range, pushing the model out of distribution. We observe that attention's effective receptive field narrows during denoising, from global in early steps that form structure to local in later steps that refine details. We propose AReA, a training-free attention mechanism whose receptive field evolves from coarse to fine, following the denoising progression. In early steps, AReA applies cross-scale coarse attention over downsampled keys and values, capturing global context, while in later steps it applies local attention within progressively shrinking windows. Without additional parameters or training, experiments show that AReA consistently outperforms state-of-the-art training-free baselines across target resolutions and different models, while also being faster and more efficient.",
+          "arxiv_id": "2610.17227",
+          "arxiv_url": "https://arxiv.org/abs/2610.17227",
+          "authors": [
+            "Javad Rajabi, Koorosh Roohi, David B. Lindell, Babak Taati"
+          ],
+          "bullets": [
+            "Addresses quadratic full-attention costs and structural/detail degradation when DiTs generate beyond training resolution.",
+            "Uses coarse cross-scale attention in early denoising steps to capture global structure.",
+            "Progressively switches to shrinking-window local attention in later steps for detail refinement.",
+            "Training-free and adds no parameters, while reported experiments show consistent gains over training-free baselines with improved speed and efficiency."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Qualitative comparisons across resolutions. AReA eliminates structural distortions and subject duplication seen in baseline methods, achieving superior fidelity and prompt alignment.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 636,
+              "image_path": "figures/2610.17227/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 812
+            },
+            {
+              "caption": "Figure 4: Pipeline of AReA. AReA follows the coarse-to-fine progression of denoising, switching from Phase I to Phase II at noise level σ⋆. In Phase I, full-resolution queries attend to keys and values pooled to one token per f × f block, with f ramped over steps, and positioned on a grid matching the training resolution. In Phase II, attention is restricted to progressively shrinking local windows, and those over smooth regions of the DWT map are further split to reduce cost.",
+              "figure_id": "figure-4-18",
+              "figure_number": "4",
+              "height": 373,
+              "image_path": "figures/2610.17227/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 820
+            },
+            {
+              "caption": "Figure 16: Out-of-Distribution Exposure and Its Consequence on FLUX.1. Left: distance and token-count exposure at 40962, averaged over denoising and scaled so that 0 is the model at its native 10242 and 1 is the vanilla model at 40962. RoPE-modifying methods (like SEGA) remove only the distance cause, while AReA reduces both. Right: FID of each method’s outputs to the model’s own native-resolution outputs; lower is closer to the model’s intended and trained distribution. AReA stays lowest and flat as resolution grows.",
+              "figure_id": "figure-16-3",
+              "figure_number": "16",
+              "height": 264,
+              "image_path": "figures/2610.17227/figure-003.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 788
+            },
+            {
+              "caption": "Figure 2: Failure Modes at High Resolution. FLUX.1 at 4096 × 4096. Full attention keeps the model’s intended subject but collapses the layout, while RoPE-based methods keep a layout but fragment, lose, or distort the subject. AReA preserves both and renders fine details.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 196,
+              "image_path": "figures/2610.17227/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 822
+            },
+            {
+              "caption": "Figure 15: Comparison with Multi-Stage Methods on FLUX.1 at 4096× 4096. Multi-stage methods and AReA-Bootstrap inherit the composition of the same base-resolution image and differ mainly in local detail. AReA with Phase I (default) sets its own layout at the target resolution and renders finer detail (green insets). ScaleDiff introduces repetitive content in low-detail regions (red insets).",
+              "figure_id": "figure-15-1",
+              "figure_number": "15",
+              "height": 528,
+              "image_path": "figures/2610.17227/figure-005.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 826
+            },
+            {
+              "caption": "Figure 9: Effect of the Phase I pooling strategy on FLUX.1 at 4096 × 4096. Mean pooling averages away the components that distinguish keys within a block, blurring fine detail such as armor ornamentation and facial features. Medoid selection keeps a real token but favors the most typical one in each block, partially inheriting this loss. Random selection preserves more detail but depends on the seed. Center pooling (default) uses a fixed, content-free token per block and gives the sharpest and most coherent results.",
+              "figure_id": "figure-9-5",
+              "figure_number": "9",
+              "height": 455,
+              "image_path": "figures/2610.17227/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 829
+            },
+            {
+              "caption": "Figure 8: Effect of the Phase I pooling schedule on FLUX.1 at 4096 × 4096. A fixed f = 4 forms the layout on a 64× 64 pooled grid, which matches the training resolution but is too coarse to separate objects, so the sheep merge into a single blurred mass. A fixed f = 2 forms the layout on a 128× 128 grid, twice the training resolution, producing scattered and repeated subjects. Decreasing f from 4 to 2 first sets the layout at the training resolution and then refines it on the finer grid, giving separated subjects and a coherent scene.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 303,
+              "image_path": "figures/2610.17227/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 829
+            },
+            {
+              "caption": "Figure 18: Additional Comparison on FLUX.1 at 4096× 4096 on HRGen-1K. Existing methods warp scenes into symmetric, fisheye-like layouts, reduce object-centric prompts to zoomed-in texture, miscount objects, and garble rendered text. AReA preserves scene composition, object counts (highlighted in red), and legible text.",
+              "figure_id": "figure-18-23",
+              "figure_number": "18",
+              "height": 1154,
+              "image_path": "figures/2610.17227/figure-008.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 742
+            },
+            {
+              "caption": "Figure 3: Attention Locality as Denoising Progresses. Vanilla FLUX.1 (1024 × 1024), averaged across heads, blocks, and 24 prompts. Left: attention-weighted query–key distance. Over all keys it shrinks only 1.4×, but over dominant keys (≥ 1/4 max attention) it shrinks 5.5×: late in denoising, the most important keys lie close to the query. Right: attention maps of a center query at early, middle, and late steps (top 60% of mass).",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 232,
+              "image_path": "figures/2610.17227/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 791
+            },
+            {
+              "caption": "Figure 6: Generation latency vs. resolution. AReA is significantly faster than full-attention baselines across all resolutions, reaching 3.2× and 2.9× acceleration at 61442 on FLUX.1 and Qwen-Image, respectively.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 176,
+              "image_path": "figures/2610.17227/figure-010.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 413
+            },
+            {
+              "caption": "Figure 11: Window size follows the locality of the model’s attention. AReA’s window size at 40962 and the model’s attention range at its native resolution of 10242, computed over keys receiving at least a quarter of the maximum attention (blue) and over all keys (orange). All curves are shown relative to their values at the start of Phase II. In Phase I, every query attends to pooled keys from the whole image, so no window is shown. In Phase II, the window size follows a similar trend to the strongest attention, while attention over all keys remains broad.",
+              "figure_id": "figure-11-19",
+              "figure_number": "11",
+              "height": 243,
+              "image_path": "figures/2610.17227/figure-011.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 351
+            },
+            {
+              "caption": "Figure 14: Key budget per denoising step. Number of image keys each query attends to on FLUX.1 at 4096 × 4096, averaged over 20 prompts (shading shows the range). Top: In Phase I, the pooled keys match the token count of the native 10242 resolution for f = 4 and four times that for f = 2. In Phase II, the windows shrink from about 32K keys to the native 4K, and full AReA stays within about 30% of plain windowing. No query attends to more than about 40K of the 64K image keys at any step. Bottom: Change in keys per query relative to plain windows. The global-KV bridge adds a roughly constant share of about 25%, the halo takes a growing share as windows shrink, and DWT splits remove up to 35% late in Phase II.",
+              "figure_id": "figure-14-20",
+              "figure_number": "14",
+              "height": 424,
+              "image_path": "figures/2610.17227/figure-012.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 788
+            },
+            {
+              "caption": "Figure 12: AReA Across Denoising on FLUX.1 at 4096 × 4096. Top row: Phase I steps with pooled keys and values (insets show the pixelation effect). Other rows: Phase II steps, each showing the current image (upper half) and its DWT detail map (lower half), with base windows in red, overlap regions hatched, and DWT splits in orange.",
+              "figure_id": "figure-12-6",
+              "figure_number": "12",
+              "height": 1202,
+              "image_path": "figures/2610.17227/figure-013.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 736
+            },
+            {
+              "caption": "Figure 20: Comparison on Qwen-Image at 5120× 5120. Full attention blurs the scene and repeats subjects. SEGA keeps the layout but corrupts the details with high-frequency artifacts. AReA produces clean faces and the prompted number of subjects.",
+              "figure_id": "figure-20-12",
+              "figure_number": "20",
+              "height": 582,
+              "image_path": "figures/2610.17227/figure-014.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 829
+            },
+            {
+              "caption": "Figure 21: Comparison on Ideogram 4 at 6144× 6144. Full attention completely collapses, while SEGA fails to keep the layout and add fine detail. AReA excels in both structure and fine detail, showing that it transfers to a different backbone without modification.",
+              "figure_id": "figure-21-13",
+              "figure_number": "21",
+              "height": 582,
+              "image_path": "figures/2610.17227/figure-015.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 829
+            },
+            {
+              "caption": "Figure 17: Statistics of HRGen-1K. left: Distribution of prompt lengths, grouped into short (≤ 15 words), medium (16-40 words), and long (> 40 words) prompts. Right: Share of prompts containing common attributes, estimated via keyword matching. Attributes are not mutually exclusive.",
+              "figure_id": "figure-17-14",
+              "figure_number": "17",
+              "height": 282,
+              "image_path": "figures/2610.17227/figure-016.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 822
+            },
+            {
+              "caption": "Figure 7: Qualitative ablation on FLUX.1 at 4096× 4096. Without Phase I, windows diverge and disrupt global layout. Without Phase II, the image lacks fine texture and remains blurry. Mean pooling degrades overall image quality (compared in Table 4), while fixed windows without shrinking cause seams and content fragmentation compared to default AReA.",
+              "figure_id": "figure-7-16",
+              "figure_number": "7",
+              "height": 184,
+              "image_path": "figures/2610.17227/figure-017.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Figure 10: Effect of switching phases too early or too late. An early switch starts Phase II before the structure has settled, degrading the final result. A late switch leaves too few Phase II steps to add fine details, so the final image lacks detail.",
+              "figure_id": "figure-10-25",
+              "figure_number": "10",
+              "height": 195,
+              "image_path": "figures/2610.17227/figure-018.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 829
+            },
+            {
+              "caption": "Figure 13: Effect of the Global-KV Bridge and Halo. Left: without the global-KV bridge, each window is blind to content elsewhere on the canvas and paints extra copies of the subject. With the bridge, windows see distinctive tokens from the rest of the grid and the duplicates disappear. Right: without the Halo, tokens at window edges lack context from across the boundary, leaving seams in smooth regions such as the sky.",
+              "figure_id": "figure-13-10",
+              "figure_number": "13",
+              "height": 226,
+              "image_path": "figures/2610.17227/figure-019.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 826
+            },
+            {
+              "caption": "Table 1: Comparison of AReA against state-of-the-art baselines on FLUX.1 and Qwen-Image across different resolutions and aspect ratios on Aesthetic-4K. Bold: best; underline: second-best.",
+              "figure_id": "table-1-15",
+              "figure_number": "1",
+              "height": 400,
+              "image_path": "figures/2610.17227/table-020.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: Ablation study on FLUX.1 at 4096 × 4096 on Aesthetic-4K. Within each phase, the first row replaces the whole phase with full attention; the rows below change one component.",
+              "figure_id": "table-3-22",
+              "figure_number": "3",
+              "height": 247,
+              "image_path": "figures/2610.17227/table-021.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 844
+            },
+            {
+              "caption": "Table 2: Comparison on FLUX.1 at 4096 × 4096 on HRGen-1K. Bold: best; underline: second-best.",
+              "figure_id": "table-2-17",
+              "figure_number": "2",
+              "height": 148,
+              "image_path": "figures/2610.17227/table-022.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 365
+            },
+            {
+              "caption": "Table 4: Phase I pooling strategy on FLUX.1 (4096× 4096, Aesthetic-4K). †Default.",
+              "figure_id": "table-4-21",
+              "figure_number": "4",
+              "height": 115,
+              "image_path": "figures/2610.17227/table-023.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 385
+            },
+            {
+              "caption": "Table 6: Comparison with multi-stage methods on FLUX.1 at 4096×4096 on Aesthetic-4K. Bold: best; underline: second-best.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 149,
+              "image_path": "figures/2610.17227/table-024.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 830
+            },
+            {
+              "caption": "Table 5: Ablation of the phase switch step s (Phase I → Phase II) on FLUX.1 at 4096×4096 resolution on 20 prompts from Aesthetic-4K. The noise level σ at the switch is given in parentheses.",
+              "figure_id": "table-5-24",
+              "figure_number": "5",
+              "height": 207,
+              "image_path": "figures/2610.17227/table-025.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 825
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17227/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.17227",
+          "relevance": 9,
+          "selection_reason": "Introduces AReA, a training-free attention mechanism that adapts receptive fields from coarse to fine, directly improving efficiency in high-resolution Diffusion Transformers.",
+          "summary_status": "generated",
+          "title": "AReA: Adaptive Receptive-Field Attention for Efficient High-Resolution Diffusion Transformers",
+          "tldr": "AReA enables more efficient high-resolution Diffusion Transformers by adapting attention from global to local as denoising progresses.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear-time sequence models typically store long-context information in a recurrent state. A fixed-size state limits how much information can be stored, while hybrid architectures that add full attention for better recall incur quadratic sequence cost. Alternatively, sparse attention with continued pretraining (CPT) can extend the effective context length. Generalization beyond the trained length remains challenging, however, and CPT can be costly. We introduce FreeSolo, a native sparse attention mechanism with a short-range sliding window branch and a long-range branch that selects keypoint cells for direct token attention. Its linear-time variant, FS-L, learns to prune the prefix before query-dependent selection through short CPT. FS-B searches balanced trees with $O(N\\log^2 N)$ algorithmic cost including radix-sort construction. FreeSolo demonstrates better zero-shot length extrapolation than the baselines without long-context fine-tuning.",
+          "arxiv_id": "2610.17191",
+          "arxiv_url": "https://arxiv.org/abs/2610.17191",
+          "authors": [
+            "Zekun Shi, Alastair James Arthur Price"
+          ],
+          "bullets": [
+            "Addresses the limited memory of fixed-size recurrent states and the quadratic cost of full attention.",
+            "Combines a short-range sliding-window branch with a long-range branch that selects keypoint cells for direct token attention.",
+            "FS-L prunes the prefix before query-dependent selection, while FS-B searches balanced trees with O(N log² N) cost.",
+            "The method shows better zero-shot length extrapolation than baselines without long-context fine-tuning."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Zero-shot RULER extrapolation at 800M. Models train at 4k (dotted line); shading marks extrapolation. 100 examples per task and length.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 663,
+              "image_path": "figures/2610.17191/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1038
+            },
+            {
+              "caption": "Figure 2: FreeSolo attention. FS scores the full prefix; FS-L prunes per head, independently of the query. Both select K = 4 cells per query and head. We use P = 64 high-norm cells, W = 8 recent cells, cell size s = 32, query blocks of B = 128 tokens, and SR radius w = 512.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 676,
+              "image_path": "figures/2610.17191/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 966
+            },
+            {
+              "caption": "Figure 3: FS-B long-range selection, per head. The query searches two causal forests over the prefix: one over every cell and one over cells with ac ≥ τℓh. Each beam keeps 16 nodes per level down to the leaves, ⌈log2M⌉ levels for M admitted cells (6 and 5 in this 64-cell example). The union of both beams is reranked with token keys; the top K = 4 cells form Si, which is read as in FS.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 577,
+              "image_path": "figures/2610.17191/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 8: Accuracy versus attention storage at 340M. The P = 64 points show the mean and range of two seed-42 continuations.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 338,
+              "image_path": "figures/2610.17191/figure-004.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 952
+            },
+            {
+              "caption": "Figure 9: Streaming construction of one FS-B forest, per head. Solid edges form balanced trees within power-of-two chunks; dashed edges join their roots, smallest first. Leaf numbers denote arrival order, while their arrangement follows mean-key splits. The 13 = 8 + 4 + 1 example has height ⌈log2 13⌉ = 4. Right: the two construction steps; node summaries are defined in Eqs. (20)–(21).",
+              "figure_id": "figure-9-25",
+              "figure_number": "9",
+              "height": 283,
+              "image_path": "figures/2610.17191/figure-005.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 968
+            },
+            {
+              "caption": "Figure 6: Retrieving a number at 64k (800M). Selected cells, routing scores, prompt text, and attention to the S-NIAH-2 value. Both answers are correct.",
+              "figure_id": "figure-6-19",
+              "figure_number": "6",
+              "height": 1060,
+              "image_path": "figures/2610.17191/figure-006.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 905
+            },
+            {
+              "caption": "Figure 7: Retrieving a UUID at 32k (800M). Selected cells, routing scores, prompt text, and attention to the S-NIAH-3 value. Both answers are correct.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 1060,
+              "image_path": "figures/2610.17191/figure-007.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 905
+            },
+            {
+              "caption": "Figure 4: Retrieving a number at 256k (340M). Selected cells, routing scores, prompt text, and attention during generation. Both answers are correct.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 1073,
+              "image_path": "figures/2610.17191/figure-008.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 822
+            },
+            {
+              "caption": "Figure 5: Long-range read distance at 800M on one 256k S-NIAH-1 prompt. Orange guides mark the needle position and its distance from each query.",
+              "figure_id": "figure-5-24",
+              "figure_number": "5",
+              "height": 832,
+              "image_path": "figures/2610.17191/figure-009.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 938
+            },
+            {
+              "caption": "Table 2: Zero-shot downstream accuracy (0–100). Rows are ordered by average within each scale; bold and underline mark the best and second-best scores.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 600,
+              "image_path": "figures/2610.17191/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 810
+            },
+            {
+              "caption": "Table 12: Only FS-B’s weighted CPT improves the RULER mean at all four lengths. Suite-mean changes at 800M scale (+CPT minus base, points, on the same prompts and protocols as Table 1; the base means are the Table 1 rows). Each “+CPT” arm continues the Table 1 checkpoint of the same architecture with plain next-token loss at the FS-L budget (1.57B tokens). The FS-L arm instead keeps the pruning loop in training at the same budget. The single-forest ablation uses FS-B’s recall-weighted CPT, spending 0.42B tokens (27%; Appendix E.4), and compares the full-prefix width-32 read before and after CPT (base means 40.9/36.0/30.4/28.2). FS-B itself denotes the two-forest design of Table 1.",
+              "figure_id": "table-12-23",
+              "figure_number": "12",
+              "height": 225,
+              "image_path": "figures/2610.17191/table-011.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 572
+            },
+            {
+              "caption": "Table 3: Evaluated pretraining checkpoints. Steps and training tokens at 524,288 tokens per step. MoBA is trained only at the smaller scale. FS-L and FS-B continue from the FS checkpoints: FS-L adds 0.73B (340M) and 1.57B (800M) CPT tokens; FS-B uses the FS-L weights at 340M and 0.42B retrieval-weighted CPT tokens at 800M (Appendix E.4).",
+              "figure_id": "table-3-16",
+              "figure_number": "3",
+              "height": 314,
+              "image_path": "figures/2610.17191/table-012.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 432
+            },
+            {
+              "caption": "Table 14: Adapted retention budgets at 340M. Each model trains and evaluates with its stated P .",
+              "figure_id": "table-14-11",
+              "figure_number": "14",
+              "height": 177,
+              "image_path": "figures/2610.17191/table-013.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 564
+            },
+            {
+              "caption": "Table 6: Prefill and eager decode throughput at 340M scale on one A100-40GB (bf16, batch 1). OOM denotes the 40GB memory limit.",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 314,
+              "image_path": "figures/2610.17191/table-014.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 614
+            },
+            {
+              "caption": "Table 5: Training throughput and peak memory at 340M scale on eight A100-40GB GPUs. Raven and NAtS-L use the fla/flame FSDP harness; see the text.",
+              "figure_id": "table-5-26",
+              "figure_number": "5",
+              "height": 279,
+              "image_path": "figures/2610.17191/table-015.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 490
+            },
+            {
+              "caption": "Table 7: Bounded FS-L inference. Throughput uses CUDA-graph decode; peak memory is the maximum across three trials.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 264,
+              "image_path": "figures/2610.17191/table-016.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 702
+            },
+            {
+              "caption": "Table 16: Multiple-question retrieval. Accuracy (%) on shared prefixes: an answer is correct if the target value appears in 16 greedy tokens; 50 prefixes per condition. Bold and underline mark the best and secondbest score within each scale, including ties. FS-B prefills each question afresh; at 340M this raises FS and FS-L by about 2 points relative to the shared-prefix rows.",
+              "figure_id": "table-16-15",
+              "figure_number": "16",
+              "height": 364,
+              "image_path": "figures/2610.17191/table-017.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 548
+            },
+            {
+              "caption": "Table 10: Source-cell availability and selection at 16k. The source is the cell containing the answer value. Rates average over all heads and the final 16 prompt positions within each prompt, then over prompts; FS (offline) applies the FS-L retention rule to FS keys.",
+              "figure_id": "table-10-6",
+              "figure_number": "10",
+              "height": 302,
+              "image_path": "figures/2610.17191/table-018.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 640
+            },
+            {
+              "caption": "Table 11: Pruning recovery and seed variation at 340M. Accuracy (%) on 50 shared prompts per task at 4k, the training context. FS-L is the 1400-step checkpoint of Table 1; seeded rows use 1500 CPT steps without (FS) or with (FS-L) pruning.",
+              "figure_id": "table-11-22",
+              "figure_number": "11",
+              "height": 302,
+              "image_path": "figures/2610.17191/table-019.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 518
+            },
+            {
+              "caption": "Table 4: RULER results by task (0–100) at 340M and 800M. Bold and underline mark the best and second-best scores within each group (super-linear or linear cost) and scale. Dashes denote unavailable results.",
+              "figure_id": "table-4-21",
+              "figure_number": "4",
+              "height": 83,
+              "image_path": "figures/2610.17191/table-020.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 977
+            },
+            {
+              "caption": "Table 1: RULER accuracy (0–100). All models train at 4k; results at 8k and above test zero-shot extrapolation. Means cover available tasks; cost is defined in Section 4.1. FS-B’s algorithmic cost includes radix-sort construction (Appendix E.2). Bold/underline mark the best/second-best scores within each block (super-linear or linear cost); dashes denote unavailable results.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 35,
+              "image_path": "figures/2610.17191/table-021.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 977
+            },
+            {
+              "caption": "Table 8: RULER ablations at 340M (0–100). Bold and underline mark the best and second-best scores, including ties.",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 165,
+              "image_path": "figures/2610.17191/table-022.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 802
+            },
+            {
+              "caption": "Table 9: Downstream accuracy of the ablations at 340M (0–100), using the metrics in Table 2.",
+              "figure_id": "table-9-18",
+              "figure_number": "9",
+              "height": 129,
+              "image_path": "figures/2610.17191/table-023.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 818
+            },
+            {
+              "caption": "Table 13: FS-L training recipes at 340M (0–100). Both use pruning during evaluation, with 100 examples per RULER task and length. Bold marks the better recipe.",
+              "figure_id": "table-13-14",
+              "figure_number": "13",
+              "height": 158,
+              "image_path": "figures/2610.17191/table-024.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 980
+            },
+            {
+              "caption": "Table 18: Recall-weighted CPT under single-forest ablations (0–100; RULER available-task means over 12 tasks at 2k/4k and 13 at 8k/16k, protocol of Table 1). All rows start from the base 743M FS checkpoint; CPT rows are the Table 1 FS-B checkpoint evaluated with a single-forest ablation. FS-B denotes the two-forest design, whose results appear in Table 1.",
+              "figure_id": "table-18-20",
+              "figure_number": "18",
+              "height": 142,
+              "image_path": "figures/2610.17191/table-025.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 610
+            },
+            {
+              "caption": "Table 17: Forest ablation of FS-B (0–100, RULER protocol of Table 1). All arms run on the same checkpoints with the same four-cell token read; only the inference-time candidate generator differs: FS-B’s two forests as rendered in Table 1, the full-prefix forest alone with a width-32 or width-16 beam, or the norm-filtered forest alone with a width-16 beam. Bold marks the best of the four arms per column.",
+              "figure_id": "table-17-8",
+              "figure_number": "17",
+              "height": 79,
+              "image_path": "figures/2610.17191/table-026.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 980
+            },
+            {
+              "caption": "Table 15: Retention budget and bounded inference at 340M, 256k.",
+              "figure_id": "table-15-9",
+              "figure_number": "15",
+              "height": 127,
+              "image_path": "figures/2610.17191/table-027.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 602
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.17191/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.17191",
+          "relevance": 7,
+          "selection_reason": "Linear-time sparse attention with zero-shot length extrapolation, relevant to efficient attention and long-context processing.",
+          "summary_status": "generated",
+          "title": "FreeSolo: Linear-time Sparse Attention with Zero-Shot Length Extrapolation",
+          "tldr": "FreeSolo is a sparse-attention mechanism that enables linear-time long-context modeling and stronger zero-shot length extrapolation without long-context fine-tuning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Spatial transcriptomics jointly captures molecular state, tissue morphology, and spatial organization, yet spatial-domain methods are typically compared only at late training checkpoints, obscuring differences in convergence efficiency. We introduce MP-MNCA, a morphology-prior masked neighbor cross-attention framework that preserves the full 3,000 dimensional highly-variable-gene representation while selectively routing molecular information across spatial neighbors, with histological similarity incorporated as a continuous attention prior under a self-supervised masked neighbor-contrastive objective. Across 12 heterogeneous human dorsolateral prefrontal cortex (DLPFC) sections, MP-MNCA is evaluated against established spatial-domain baselines using both convergence trajectories and epoch-wise spatial-domain visualizations. Our results show that MP-MNCA (i) reaches coherent spatial-domain structure in substantially fewer training epochs, as reflected quantitatively by convergence curves and qualitatively by progressive spatial grids, and (ii) maintains strong clustering quality, achieving a mean peak refined ARI of 0.546 versus 0.549 for the strongest baseline (STAIG), while attaining the highest mean refined NMI of 0.657 versus 0.640. Moreover, MP-MNCA outperforms STAIG on 7 of 12 sections in ARI and 11 of 12 in NMI, demonstrating faster convergence without sacrificing spatial-domain quality.",
+          "arxiv_id": "2610.16212",
+          "arxiv_url": "https://arxiv.org/abs/2610.16212",
+          "authors": [
+            "Sidharthan Sivacoumar Chitra, Sanjeev Manivannan"
+          ],
+          "bullets": [
+            "Addresses the limited comparison of spatial-domain methods during training by evaluating convergence trajectories and epoch-wise spatial visualizations.",
+            "Preserves the full 3,000-dimensional highly variable gene representation and selectively routes molecular information across spatial neighbors.",
+            "Uses histological similarity as a continuous attention prior within a self-supervised masked neighbor-contrastive objective.",
+            "Across 12 human DLPFC sections, it reaches coherent spatial structure in fewer epochs than established baselines.",
+            "Its mean peak refined ARI is 0.546 versus 0.549 for STAIG, while mean refined NMI is higher at 0.657 versus 0.640; it outperforms STAIG on 7/12 sections in ARI and 11/12 in NMI."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI",
+            "cs.LG",
+            "q-bio.TO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. MP-MNCA architecture: (A) Multi-view BYOL learns frozen morphology embeddings used to construct a continuous imagesimilarity prior. (B) MP-MNCA performs full-dimensional center-to-neighbor molecular cross-attention over six spatial neighbors, combining gene compatibility, morphology prior, and relative-position bias before residual contextualization. (C) Two independently masked molecular views are optimized with a self-supervised neighbor-contrastive loss without pseudo-labels or layer supervision. (D) Inference uses unmasked expression followed by PCA-assisted tied-GMM clustering and spatial refinement.",
+              "figure_id": "figure-1-17",
+              "figure_number": "1",
+              "height": 692,
+              "image_path": "figures/2610.16212/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 7. Refined ARI against Phase-1 epochs for each section, with Phase 2 fixed at 20 epochs. Blue is the full two-phase pipeline; orange and green are Phase 1 alone under two cluster-input choices. The dotted line marks each section’s best epoch. All checkpoints come from a single 200-epoch run per section, so the curves are trajectories rather than independent runs.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 602,
+              "image_path": "figures/2610.16212/figure-002.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 952
+            },
+            {
+              "caption": "Figure 10. Section-wise convergence of refined ARI on the 12 DLPFC sections. Each panel reports refined ARI over the common 200-epoch optimization budget for MP-MNCA, STAIG, GraphST, and MuCoST. MP-MNCA typically reaches a competitive regime early in training, whereas the competing methods exhibit more section-dependent convergence behavior.",
+              "figure_id": "figure-10-19",
+              "figure_number": "10",
+              "height": 650,
+              "image_path": "figures/2610.16212/figure-003.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 3. Qualitative convergence on DLPFC section 151507. Spatial-domain predictions at epochs 10, 20, 50, 100, and 200 for STAIG, GraphST, MuCoST, and MP-MNCA. MP-MNCA recovers coherent laminar structure earlier, while competing methods show slower organization or greater domain mixing. Ground truth is shown for reference; evaluation uses permutation-invariant ARI and NMI.",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 952,
+              "image_path": "figures/2610.16212/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 952
+            },
+            {
+              "caption": "Figure 12. Epoch-wise spatial-domain evolution on DLPFC section 151507. Predictions are shown at epochs 10, 20, 50, 100, and 200 for STAIG, GraphST, MuCoST, and MP-MNCA, together with the ground-truth cortical layers. The sequence highlights how the spatial organization and cortical boundaries produced by each method evolve throughout optimization.",
+              "figure_id": "figure-12-18",
+              "figure_number": "12",
+              "height": 1031,
+              "image_path": "figures/2610.16212/figure-005.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 4. Effect of spatial smoothing across the twelve DLPFC sections. Left: refined ARI per section for no smoothing, smoothing applied before alignment, and smoothing applied to the latents after alignment. Right: per-section change from smoothing before alignment. The gain is concentrated in sections whose sparse codes were least stable (151671, +0.207; 151673, +0.132), and four sections regress.",
+              "figure_id": "figure-4-20",
+              "figure_number": "4",
+              "height": 348,
+              "image_path": "figures/2610.16212/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 14. Epoch-wise spatial-domain evolution on DLPFC section 151509. This comparatively challenging section illustrates that convergence behavior is not uniform across tissue sections. The maps show the evolution of layer continuity, boundary placement, and local fragmentation for each method over the common 200-epoch budget.",
+              "figure_id": "figure-14-6",
+              "figure_number": "14",
+              "height": 1031,
+              "image_path": "figures/2610.16212/figure-007.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 11. Mean convergence of refined ARI across the 12 DLPFC sections. Curves denote the mean refined ARI at each epoch and shaded regions denote ± one standard deviation across sections. MP-MNCA reaches a competitive high-ARI regime early in optimization, while STAIG improves more gradually and becomes comparable later in training.",
+              "figure_id": "figure-11-13",
+              "figure_number": "11",
+              "height": 643,
+              "image_path": "figures/2610.16212/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 5. Predicted spatial domains on DLPFC section 151507 at 10, 20, 50, 100 and 200 Phase-1 epochs, without smoothing (top) and with smoothing before alignment (bottom); ground truth at left. Smoothing converts spatially incoherent predictions into laminar bands, but Layer 4 remains too thick and white matter stays entangled with Layer 6 at every budget.",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 410,
+              "image_path": "figures/2610.16212/figure-009.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 16. Epoch-wise spatial-domain evolution on DLPFC section 151669. The checkpoint sequence compares the formation and stabilization of spatial domains across competing methods, with the ground-truth laminar organization shown for reference.",
+              "figure_id": "figure-16-14",
+              "figure_number": "16",
+              "height": 1008,
+              "image_path": "figures/2610.16212/figure-010.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 9. Batch-size sweep at a fixed epoch budget. Left: per section. Right: mean with interquartile band. The spread over a sixteen-fold range is 0.040 ARI and the nominal optimum is not significant.",
+              "figure_id": "figure-9-25",
+              "figure_number": "9",
+              "height": 408,
+              "image_path": "figures/2610.16212/figure-011.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 8. Mean refined ARI (left) and NMI (right) across the twelve sections against Phase-1 epochs, with an interquartile band. The mean changes by 0.031 ARI over a twenty-fold range of training.",
+              "figure_id": "figure-8-24",
+              "figure_number": "8",
+              "height": 344,
+              "image_path": "figures/2610.16212/figure-012.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 21. Epoch-wise spatial-domain evolution on DLPFC section 151674. The progression across checkpoints provides a qualitative comparison of optimization dynamics and the emergence of cortical-layer structure for the four evaluated methods.",
+              "figure_id": "figure-21-15",
+              "figure_number": "21",
+              "height": 1050,
+              "image_path": "figures/2610.16212/figure-013.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 20. Epoch-wise spatial-domain evolution on DLPFC section 151673. The five checkpoints show how spatial-domain assignments evolve from early training through epoch 200, exposing differences in boundary consistency and regional fragmentation across methods.",
+              "figure_id": "figure-20-21",
+              "figure_number": "20",
+              "height": 1042,
+              "image_path": "figures/2610.16212/figure-014.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 19. Epoch-wise spatial-domain evolution on DLPFC section 151672. Predictions from successive checkpoints illustrate differences between methods in the development of coherent laminar structure and the stabilization of spatial-domain boundaries.",
+              "figure_id": "figure-19-3",
+              "figure_number": "19",
+              "height": 1018,
+              "image_path": "figures/2610.16212/figure-015.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 2. Convergence of refined ARI across the 12 DLPFC sections. Mean refined ARI over 200 epochs with ± one standard deviation across sections. MP-MNCA reaches a competitive regime substantially earlier than the baselines.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 308,
+              "image_path": "figures/2610.16212/figure-016.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 496
+            },
+            {
+              "caption": "Figure 6. Predicted spatial domains on section 151507 under the partitioned dictionary, at 10, 20, 50, 100 and 200 Phase-1 epochs, with ground truth at left. Laminar organization is established by the earliest checkpoint and remains stable thereafter.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 204,
+              "image_path": "figures/2610.16212/figure-017.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 13. Epoch-wise spatial-domain evolution on DLPFC section 151508. Spatial-domain predictions at epochs 10, 20, 50, 100, and 200 illustrate the progression from early optimization to the later training regime for STAIG, GraphST, MuCoST, and MP-MNCA.",
+              "figure_id": "figure-13-23",
+              "figure_number": "13",
+              "height": 1033,
+              "image_path": "figures/2610.16212/figure-018.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 15. Epoch-wise spatial-domain evolution on DLPFC section 151510. Predictions across the five training checkpoints provide a qualitative view of how cortical-layer organization develops and stabilizes under STAIG, GraphST, MuCoST, and MP-MNCA.",
+              "figure_id": "figure-15-10",
+              "figure_number": "15",
+              "height": 1029,
+              "image_path": "figures/2610.16212/figure-019.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 17. Epoch-wise spatial-domain evolution on DLPFC section 151670. Spatial-domain maps at epochs 10–200 reveal the temporal evolution of cortical boundaries and within-layer consistency for STAIG, GraphST, MuCoST, and MP-MNCA.",
+              "figure_id": "figure-17-22",
+              "figure_number": "17",
+              "height": 996,
+              "image_path": "figures/2610.16212/figure-020.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 18. Epoch-wise spatial-domain evolution on DLPFC section 151671. The visualization tracks changes in predicted cortical organization throughout the shared training budget and complements the corresponding quantitative convergence measurements.",
+              "figure_id": "figure-18-2",
+              "figure_number": "18",
+              "height": 1029,
+              "image_path": "figures/2610.16212/figure-021.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 22. Epoch-wise spatial-domain evolution on DLPFC section 151675. This challenging section provides an important counterexample to uniform improvement across sections. The checkpoint maps reveal differences in layer fragmentation, boundary placement, and optimization behavior over the complete 200-epoch training budget.",
+              "figure_id": "figure-22-9",
+              "figure_number": "22",
+              "height": 1043,
+              "image_path": "figures/2610.16212/figure-022.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 23. Epoch-wise spatial-domain evolution on DLPFC section 151676. Predictions at epochs 10, 20, 50, 100, and 200 complete the qualitative comparison across all 12 DLPFC sections and illustrate the evolution of cortical-domain structure under each optimization procedure.",
+              "figure_id": "figure-23-7",
+              "figure_number": "23",
+              "height": 1035,
+              "image_path": "figures/2610.16212/figure-023.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 1036
+            },
+            {
+              "caption": "Table 2. SPARC-align with spatial smoothing on the twelve DLPFC sections, under a shared concept support (Sec. 8) and under the partitioned dictionary (Sec. 8.4). Standard deviation uses ddof = 1, treating sections as the biological replicates. Bold marks the larger of the two where the difference exceeds 0.05.",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 434,
+              "image_path": "figures/2610.16212/table-024.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 514
+            },
+            {
+              "caption": "Table 1. Peak-checkpoint spatial-domain identification on the 12 DLPFC sections. We report the maximum refined ARI observed within the same 200-epoch optimization budget and the corresponding refined NMI at that checkpoint, with the selected epoch shown in parentheses. This complementary analysis assesses whether MP-MNCA’s faster convergence is achieved without sacrificing peak clustering quality. Higher is better, and the best result for each section and metric is shown in bold.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 290,
+              "image_path": "figures/2610.16212/table-025.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1036
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.16212/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.16212",
+          "relevance": 7,
+          "selection_reason": "Introduces a novel attention mechanism (Masked Neighbor Cross-Attention) designed for efficiency in spatial domain identification. The technical contribution of an efficient attention mechanism is transferable to the Efficient AI topic.",
+          "summary_status": "generated",
+          "title": "MP-MNCA: Morphology-Prior Masked Neighbor Cross-Attention for Efficient Spatial Domain Identification",
+          "tldr": "MP-MNCA accelerates spatial-domain identification in spatial transcriptomics by combining morphology-guided neighbor attention with masked contrastive learning, while preserving competitive clustering quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Spiking Transformers achieve energy efficiency by discarding softmax normalization in favor of thresholded, binary attention. However, this removal breaks the thermodynamic framework used to analyze attention networks, as the normalized measure and partition function cease to exist. We restore this theoretical foundation by proving that softmax-free spiking attention operates exactly as the zero-temperature limit of a product of independent two-level systems. This correspondence places spiking attention strictly in the frozen ordered phase of the thermodynamic phase diagram for all inputs. Consequently, the entropic cost of organizing attention collapses, replaced by a Landauer-type physical floor governed by action-potential generation. Furthermore, this ordered-phase pinning mathematically explains the optimization difficulty caused by vanishing surrogate gradients. We validate this theory with forward-relaxation experiments, placing both standard and neuromorphic attention mechanisms on a unified thermodynamic axis.",
+          "arxiv_id": "2610.15968",
+          "arxiv_url": "https://arxiv.org/abs/2610.15968",
+          "authors": [
+            "Roberto C. Sotero, Pouya Taghipour, Jose M. Sanchez-Bornot"
+          ],
+          "bullets": [
+            "Reintroduces a thermodynamic framework for binary, thresholded attention without softmax normalization.",
+            "Proves that spiking attention remains in the frozen ordered phase for every input.",
+            "Shows that attention’s entropic organization cost collapses, leaving a Landauer-type floor tied to action-potential generation.",
+            "Connects ordered-phase pinning to vanishing surrogate gradients and difficult optimization.",
+            "Forward-relaxation experiments place standard and neuromorphic attention mechanisms on a unified thermodynamic axis."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Forward relaxation of the matched models on CIFAR-10. The trained spiking operator (red) is shown against",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 395,
+              "image_path": "figures/2610.15968/figure-001.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 974
+            },
+            {
+              "caption": "Figure 4: Entropy dynamics of the spiking model during training on CIFAR-10, shown as the mean over 𝐾 seeds with error bars. A: the per-input two-level entropy ?̄? (2) (blue), evaluated at the backward temperature 𝛽𝑠 = 𝛼, and the across-ensemble spike-pattern entropy 𝑆𝑠𝑝𝑘 of Equation (12) (red), against training epoch; the dotted line is the maximum binary entropy ln 2. The per-input entropy stays near zero for the whole run, so the attention pattern is frozen in the ordered phase at every epoch and the pinning of Equation (10) holds along the trajectory, whereas the across-ensemble entropy starts",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 375,
+              "image_path": "figures/2610.15968/figure-002.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 973
+            },
+            {
+              "caption": "Figure 1: The spiking-Boltzmann correspondence. Each column is read from top to bottom as a derivation, from the",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 480,
+              "image_path": "figures/2610.15968/figure-003.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 837
+            },
+            {
+              "caption": "Figure 3: Surrogate slope as the backward temperature on CIFAR-10. A: test accuracy against 𝛼 = 1∕𝑇eff, with error bars over seeds. Accuracy peaks across a broad intermediate plateau and collapses as 𝛼 grows: large 𝛼 is the cold backward",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 396,
+              "image_path": "figures/2610.15968/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 973
+            },
+            {
+              "caption": "Table 1",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 633,
+              "image_path": "figures/2610.15968/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 974
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.15968/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.15968",
+          "relevance": 7,
+          "selection_reason": "Provides theoretical grounding for softmax-free spiking attention, an efficient attention mechanism.",
+          "summary_status": "generated",
+          "title": "Softmax-Free Attention in Spiking Transformers as the Zero-Temperature Limit of Two-Level Systems",
+          "tldr": "Softmax-free spiking attention is shown to be the zero-temperature, fully ordered limit of independent two-level systems, explaining both its energy efficiency and optimization challenges.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear attention promises the efficiency needed for long-context language modelling, yet its fixed-size recurrent state must simultaneously support ongoing computation and preserve information from an ever-growing history. This coupling has reinforced a prevailing view that the state's memory capacity defines the model's long-context capability. We challenge this presumed ceiling: \\emph{recurrent computation need not bear the full burden of long-term storage}. We introduce NoteBank, a sparse episodic memory that archives selected text before future queries are known, uses the backbone's native features for writing and addressing, and reads retrieved evidence through its native forward computation via replay. This \\emph{training-free, plug-and-play} interface requires no external embedding model, separately trained retriever, or separate neural reader. At one million tokens, it raises Gated DeltaNet's mean accuracy across six RULER retrieval tasks from 1.7% to 70.3%, with no observed significant retrieval degradation from 4K to 1M tokens. This recovery adds $\\leqslant$0.025% to analytical FLOPs, with persistent context storage approximately 1/2,600 that of a Transformer's full MHA KV cache at matched width, depth, and precision. Experiments extend from three 1.3B recurrent backbones to Mamba-2-8B and post-trained Qwen3.5-9B, demonstrating gains on LongBench v1/v2 and MemoryAgentBench. Together, these results show that sparse evidence storage and native replay can substantially expand the long-context capability of pretrained linear attention models while retaining the efficiency of recurrent computation.",
+          "arxiv_id": "2610.15715",
+          "arxiv_url": "https://arxiv.org/abs/2610.15715",
+          "authors": [
+            "Li Nanbo, Firas Laakom, Yilan Zhang, Piotr Pi\\k{e}kos, Yimeng Chen, Liangyu Wang, Yifan Xu, Mateusz Ostaszewski, Dandan Guo, Wenyi Wang, Yanning Dai, Yuhui Wang, J\\\"{u}rgen Schmidhuber"
+          ],
+          "bullets": [
+            "Linear attention’s fixed recurrent state must handle both computation and long-term storage, limiting context retention.",
+            "NoteBank archives selected text before queries are known, addresses it using native backbone features, and replays retrieved evidence through the model’s forward computation.",
+            "The training-free, plug-and-play method requires no external embedder, separately trained retriever, or separate neural reader.",
+            "On one-million-token RULER retrieval tasks, Gated DeltaNet’s mean accuracy improves from 1.7% to 70.3%, with no significant retrieval degradation from 4K to 1M tokens.",
+            "The approach adds at most 0.025% analytical FLOPs and uses far less persistent storage than a Transformer KV cache; evaluations cover multiple recurrent backbones and long-context benchmarks."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of NoteBank. During context encoding, native features “keys” and “queries” (i.e., k and q) guide span selection and indexing; each span zi is stored with addressesAi. Taking the retained context state ST , the backbone encodes the question to obtain queries for retrieving relevant spans. The native forward pass starts from the same ST and processes the retrieved evidence and then the question, and generates the answer. Backbone parameters remain frozen throughout. We refer to Algorithm 1 for more details.",
+              "figure_id": "figure-2-17",
+              "figure_number": "2",
+              "height": 304,
+              "image_path": "figures/2610.15715/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 829
+            },
+            {
+              "caption": "Figure 1: NoteBank (NB) recovers million-token retrieval with negligible compute overhead. a, Mean accuracy over six RULER-NIAH retrieval tasks for three pretrained 1.3B recurrent models, without NoteBank (dashed) and with training-free top-2 note replay (solid). b, At 1M tokens, NoteBank adds ⩽0.025% layer-level analytical FLOPs across the three backbones (GDN shown). GDN + NoteBank requires 74.5 MiB of persistent context storage, including its recurrent state— approximately 1/2,600 of the 192 GiB MHA KV cache at matched width, depth, and BF16 precision. Square areas represent storage, with a magnified inset for NoteBank. FLOPs include all evaluated stages at the full-model level and matched output length; they do not measure runtime. Storage excludes model weights and transient workspace.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 257,
+              "image_path": "figures/2610.15715/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 808
+            },
+            {
+              "caption": "Figure 6: Training-free long-range retrieval across architectures and context lengths: full results on RULER 6 NIAH tasks.",
+              "figure_id": "figure-6-19",
+              "figure_number": "6",
+              "height": 991,
+              "image_path": "figures/2610.15715/figure-003.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 827
+            },
+            {
+              "caption": "Figure 5: Evidence preservation, access, and utilisation in NoteBank. a, Gold-value coverage in the archive (Archived) and top-4 retrieved notes (Retrieved@4); shading marks stored but unretrieved values. b, Native vs. oracle routing on RULER, with archive, reader, and replay budget fixed. c, The same intervention on four LongBench QA tasks (top-1; frozen/LoRA readers). Oracle notes contain reference answers, a proxy for relevance rather than guaranteed supporting evidence.",
+              "figure_id": "figure-5-20",
+              "figure_number": "5",
+              "height": 490,
+              "image_path": "figures/2610.15715/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 806
+            },
+            {
+              "caption": "Figure 12: Replay–span interaction with read adaptation. LongBench macro-average scores over twelve evaluated tasks for NB-LoRA on GDN (top) and Mamba-2 (bottom). Left: varying replay budget R, with averages over span budgets. Middle: varying span budget B, with averages over replay budgets. Right: scores for each (B,R) configuration. The best replay and span budgets depend on the backbone.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 461,
+              "image_path": "figures/2610.15715/figure-005.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 824
+            },
+            {
+              "caption": "Figure 8: Effect of the per-chunk write budget. Six-task mean RULER accuracy versus analytical added FLOPs for NB-TF with W ∈ {1, 2} on GDN and Mamba-2, averaged over replay budgets R ∈ {1, 2, 4}. Labels indicate context lengths. Writing two notes consistently improves accuracy with little additional arithmetic cost.",
+              "figure_id": "figure-8-14",
+              "figure_number": "8",
+              "height": 302,
+              "image_path": "figures/2610.15715/figure-006.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 800
+            },
+            {
+              "caption": "Figure 10: Effect of chunk size on retrieval and computation. Six-task mean RULER accuracy versus analytical added FLOPs for NB-TF with different chunk sizes C, averaged over replay budgets R ∈ {1, 2, 4}. Labels indicate context lengths. Smaller chunks particularly benefit Mamba-2 at long contexts, while very large chunks degrade retrieval for both backbones.",
+              "figure_id": "figure-10-11",
+              "figure_number": "10",
+              "height": 302,
+              "image_path": "figures/2610.15715/figure-007.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 798
+            },
+            {
+              "caption": "Figure 11: Joint effects of span and replay budgets. Six-task mean RULER accuracy (%) for NBTF on GDN (top) and Mamba-2 (bottom), at context lengths from 4K to 1M. Each heatmap varies the span budget B ∈ {64, 128, 256} across columns and replay budget R ∈ {1, 2, 4} across rows. Longer spans do not consistently improve accuracy; their benefit depends on the replay budget and backbone.",
+              "figure_id": "figure-11-10",
+              "figure_number": "11",
+              "height": 294,
+              "image_path": "figures/2610.15715/figure-008.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 794
+            },
+            {
+              "caption": "Figure 7: Breakdown of NoteBank’s computation overhead. Added analytical FLOPs for NBTF with top-2 replay relative to Plain on RULER, using matched output lengths. Stacked bars separate writing/indexing, question encoding, routing, and replay for GDN, GDN-2, and Mamba-2. Annotations report routing costs at 1M tokens in GFLOPs.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 288,
+              "image_path": "figures/2610.15715/figure-009.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 800
+            },
+            {
+              "caption": "Figure 9: Effect of the replay budget on retrieval and computation. Six-task mean RULER accuracy versus analytical added FLOPs for NB-TF with R ∈ {1, 2, 4} on GDN and Mamba-2. Labels indicate context lengths; connected markers compare replay budgets at the same length. Additional replay generally improves accuracy, with gains depending on the backbone and context length.",
+              "figure_id": "figure-9-15",
+              "figure_number": "9",
+              "height": 251,
+              "image_path": "figures/2610.15715/figure-010.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 800
+            },
+            {
+              "caption": "Figure 4: Efficiency of training-free NoteBank. (a) Relative analytical FLOPs overhead, decreasing with context length as fixed costs are amortised. (b) Incremental persistent GPU storage grows linearly with context. (c) Measured inference latency on an H100, with batch size 1 and 32 generated tokens. NB uses top-2 replay; InfLLM uses the official default top-96.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 227,
+              "image_path": "figures/2610.15715/figure-011.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 806
+            },
+            {
+              "caption": "Figure 3: Recovering long-range retrieval without training. NoteBank (NB-TF top-2) substantially improves retrieval over plain forward pass and full-prompt repetition (JRT), using the same frozen backbone. Scores are averaged over six RULER retrieval tasks, including single- and multipassage retrieval. See App. D.1 for per-task results.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 223,
+              "image_path": "figures/2610.15715/figure-012.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 801
+            },
+            {
+              "caption": "Table 1: From retrieval to real-world long-context tasks. All backbones have 1.3B parameters. Scores are macro-averaged over evaluated LongBench-v1 tasks, within each category and overall. NB-TF requires no additional training; NB-LoRA adapts the read stage. †Reference results aggregated from Behrouz et al. (2026), whose LongBench models were trained with 16K contexts. Bold marks the best score within each recurrent backbone.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 256,
+              "image_path": "figures/2610.15715/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 814
+            },
+            {
+              "caption": "Table 2: Plug-and-play gains on larger models without training. We report task-macro-averaged scores on the 2,100-question QA subset of MemoryAgentBench and accuracy on the 375-question QA/dialogue subset of LongBench-v2. NB-TF uses top-4 and top-8 retrieval, respectively. All Qwen evaluations use YaRN (official long-context setup). ∆ denotes the gain (%).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 120,
+              "image_path": "figures/2610.15715/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 710
+            },
+            {
+              "caption": "Table 5: From retrieval to real-world long-context tasks. Scores are macro-averaged over evaluated LongBench-v1 tasks, within each category and overall. NB-TF requires no additional training; NB-LoRA adapts the read stage. †Reference results aggregated from Behrouz et al. (2026); ‡Reference results aggregated from Zhang et al. (2026). Both † and ‡ require pretraining on 16Kcontext length data; out GDN and Mamba-2 were pretrained on 2K and 4K-length sequences, respectively. Bold marks the best score within each recurrent backbone.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 311,
+              "image_path": "figures/2610.15715/table-015.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 772
+            },
+            {
+              "caption": "Table 3: Effect of routing strategy. Scores average 6 RULER tasks at 1M tokens and 12 evaluated LongBench tasks, with LoRA readers fixed across routers for each backbone and benchmark. Native (NB) uses feature matching and voting; input embeddings are mean-pooled. Auxiliary retrievers add a lexical index or encoder; None does not imply zero routing cost.",
+              "figure_id": "table-3-13",
+              "figure_number": "3",
+              "height": 192,
+              "image_path": "figures/2610.15715/table-016.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 818
+            },
+            {
+              "caption": "Table 4: Separating memory access from read adaptation. GDN scores with and without NoteBank, using frozen or LoRA-adapted readers. Scores average six RULER retrieval tasks at 1M tokens and twelve LongBench tasks. NoteBank uses top-1 replay; adapters are trained independently with and without replay using matched data and training budgets.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 119,
+              "image_path": "figures/2610.15715/table-017.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 618
+            },
+            {
+              "caption": "Table 7: Retrieval quality vs. measured storage at 1M tokens. RULER averages six NIAH tasks. GPU peak includes model weights. CPU archive reports compact payload accounting for NB’s token IDs and span-location records for NoteBank, and counted host KV for InfLLM.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 139,
+              "image_path": "figures/2610.15715/table-018.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 806
+            },
+            {
+              "caption": "Table 6: MemoryAgentBench results by task family and replay budget. Accuracy (%) for Mamba-2-8B and Qwen3.5-9B, using matched examples within each backbone. RULER QA differs from the RULER-NIAH tasks reported in this paper. Overall reports the macro-average over evaluated tasks. For Mamba-2, Clean start resets the inference state without replay, while NB-TF additionally replays retrieved evidence. Bold marks the best score within each backbone, including ties.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 221,
+              "image_path": "figures/2610.15715/table-019.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 798
+            },
+            {
+              "caption": "Table 8: Routing quality and computational cost. Scores average six RULER tasks at 1M tokens and 12 LongBench tasks, with LoRA readers fixed across routers within each backbone and benchmark. Bold marks the best score within each auxiliary-retriever group. Native routing matches backbone features and aggregates channel votes; input embeddings are mean-pooled. Reported times use a 4092-note bank at 1M: Native includes question probing and voting, BM25 runs on CPU, and BGE reports full-bank encoding. Timing scopes differ and do not constitute a matched query-latency comparison; no Random timing is available. None indicates no auxiliary retriever, not zero computational cost.",
+              "figure_id": "table-8-18",
+              "figure_number": "8",
+              "height": 139,
+              "image_path": "figures/2610.15715/table-020.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 826
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.15715/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.15715",
+          "relevance": 9,
+          "selection_reason": "Sparse episodic memory and native replay expand long-context capability of linear attention, directly relevant to memory efficiency and LLM memory.",
+          "summary_status": "generated",
+          "title": "History Replays Itself: Unleashing Long-Context Capability in Linear Attention",
+          "tldr": "NoteBank substantially extends linear-attention models’ long-context memory by sparsely storing and natively replaying past evidence without retraining or external retrieval components.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory",
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Training-free sparse attention is a practical route to efficient video diffusion transformer inference, yet existing methods typically fix the competition domain at each query row for every attention head. Prior work primarily addresses how to estimate token-level importance within this fixed domain; whether the domain itself should adapt to head heterogeneity remains under-specified. We introduce EG-Sparse, a training-free framework that routes low-entropy heads to a grouped cross-head pool while retaining per-row local selection for high-entropy heads, using only scores already materialized by the sparse pipeline. A controlled diagnostic fixes the ranking score and varies only the competition rule: grouped cross-head selection reduces low-entropy-head reconstruction error by 9.8%, whereas forcing high-entropy heads into an all-head global pool increases it by 7.9%. Across four configurations, EG-Sparse achieves higher video quality while reducing attention density and GPU denoising latency compared with strong training-free sparse-attention baselines. Mechanism ablations further show that selective domain adaptation outperforms uniform, random, and fixed domain-assignment policies. These results support competition-domain adaptation as a distinct design axis within centroid-guided training-free sparse attention.",
+          "arxiv_id": "2610.14672",
+          "arxiv_url": "https://arxiv.org/abs/2610.14672",
+          "authors": [
+            "Tiantian Liu, Meng Wan, Zhiqiang Liang, Jue Wang, Ningming Nie, Yangang Wang"
+          ],
+          "bullets": [
+            "Existing methods use a fixed competition domain for every attention head, despite head heterogeneity.",
+            "EG-Sparse routes low-entropy heads to grouped cross-head selection while keeping high-entropy heads on per-row local selection.",
+            "A controlled diagnostic found grouped selection reduced low-entropy-head reconstruction error by 9.8%, while global pooling increased high-entropy-head error by 7.9%.",
+            "Across four configurations, the method improved video quality while lowering attention density and GPU denoising latency versus strong training-free baselines.",
+            "Ablations favored selective domain adaptation over uniform, random, and fixed assignment policies."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of EG-Sparse. A fixed row-wise domain constrains low-entropy heads because the budget cannot flow across rows to where it is most needed, whereas indiscriminate all-head global competition penalizes high-entropy heads. EG-Sparse resolves both: entropy routes low-entropy heads to a grouped cross-head pool, retains per-row local selection for the remaining heads, and merges both masks for execution by the sparse attention kernel.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 246,
+              "image_path": "figures/2610.14672/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1031
+            },
+            {
+              "caption": "Figure 1: Attention heads exhibit substantial structural heterogeneity. (a) Normalized attention entropy H̃h = Hh/ logCk varies across layers and heads. (b–c) Two representative heads from the same layer show distinct dense centroid-attention patterns: a low-entropy head concentrates its mass on a small set of query–key cluster pairs, whereas a high-entropy head distributes attention broadly across keys. This heterogeneity motivates head-adaptive competition domains.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 438,
+              "image_path": "figures/2610.14672/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 498
+            },
+            {
+              "caption": "Figure 3: Competition-Domain Mismatch under a Fixed Ranking Score. Bars report the relative reconstructionerror change from the per-row local baseline for low- and high-entropy heads; error bars show mean ± 95% CI over 200 HunyuanVideo-T2V-13B prompts at 480P. The overlaid curves report the retained-budget ratio relative to the perrow local baseline. Low-entropy heads benefit increasingly from domain expansion, whereas high-entropy heads incur a +7.9% error increase under all-head global selection, where low-entropy heads capture a disproportionate share of the pooled budget.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 327,
+              "image_path": "figures/2610.14672/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 502
+            },
+            {
+              "caption": "Table 1: Main results in the evaluated model configurations. All sparse methods use no dense warmup. Density is the fraction of retained centroid pairs; lower is better. GPU denoising latency is the total GPU time for the 50-step DiT denoising process, and speedup is relative to Dense. †: p < 0.05 vs. SVG2 (Wilcoxon).",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 542,
+              "image_path": "figures/2610.14672/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1006
+            },
+            {
+              "caption": "Table 2: Selective-globalization ablation on Wan2.1-T2V1.3B at 480P. All variants share the same upstream candidate representation and use p=0.9. †: p < 0.05 vs. SVG2 (Wilcoxon).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 175,
+              "image_path": "figures/2610.14672/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 458
+            },
+            {
+              "caption": "Table 4: Per-attention-block latency breakdown on HunyuanVideo-T2V-13B at 480P (GH200, ms). Computing the entropy signal costs only 0.13ms; the complete selective domain routing and sparse execution costs are reported separately.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 182,
+              "image_path": "figures/2610.14672/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 440
+            },
+            {
+              "caption": "Table 3: Sensitivity to the fraction of low-entropy heads routed to grouped cross-head selection on HunyuanVideoT2V13B at 480P with p=0.9. Heads are added in ascending entropy order. Fidelity improves as heads predicted to benefit from grouped cross-head selection enter the pool, peaks at the median split, and declines as the pool expands into the higher-entropy regime where inter-group budget interference outweighs the gain.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 151,
+              "image_path": "figures/2610.14672/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 490
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.14672/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.14672",
+          "relevance": 8,
+          "selection_reason": "Training-free sparse attention for video diffusion transformers; fits efficient attention and video diffusion.",
+          "summary_status": "generated",
+          "title": "Competition Domains Matter: Selective Head Globalization for Training-Free Sparse Attention in Video Diffusion Transformers",
+          "tldr": "EG-Sparse improves training-free sparse attention for video diffusion by adapting the token-selection competition domain to each head’s entropy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Softmax attention in Transformers suffers from quadratic complexity in sequence length, making it impractical for long-context applications. Linear attention alleviates this issue by replacing the exponential kernel with alternative functions that enable linear-time computation. Among existing linear attention approaches, recent studies have shown that polynomial kernels are particularly effective, as they exhibit sparse and spiky behavior similar to softmax attention, which emphasizes large dot products while suppressing irrelevant interactions. However, the exact computation of high-degree polynomial kernels is infeasible for high-dimensional representations. As a result, prior work relies on approximate polynomial kernels. This introduces a non-negligible approximation error. In this paper, we show that, from the perspective of polynomial kernel approximation, existing linear attention methods are still suboptimal. We propose \\textbf{L}earnable \\textbf{Lo}w-Rank \\textbf{P}olynomial \\textbf{S}ketch (LLoPS), a principled and flexible framework for approximating polynomial kernels with linear attention. Our method learns a low-rank polynomial sketch that provably achieves a strictly smaller approximation error than existing approaches. Experiment results show that LLoPS achieves the highest performance across extensive benchmarks, comparing with various linear attention baselines.",
+          "arxiv_id": "2610.14219",
+          "arxiv_url": "https://arxiv.org/abs/2610.14219",
+          "authors": [
+            "Zongyue Qin, Haoran Deng, Jason Cong, Yizhou Sun"
+          ],
+          "bullets": [
+            "Softmax attention has quadratic sequence-length complexity, limiting long-context use.",
+            "Polynomial kernels can mimic softmax’s sparse, spiky attention patterns but are costly to compute exactly in high dimensions.",
+            "LLoPS learns a low-rank polynomial sketch to reduce approximation error in linear attention.",
+            "The framework is theoretically shown to outperform existing polynomial-kernel approximation methods in error.",
+            "Across extensive benchmarks, LLoPS achieves the best performance among the compared linear-attention baselines."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Results of how accuracy and forward time changes with sketch dimension m ∈ {64, 128, 192, 256} and d = 128, p = 4.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 286,
+              "image_path": "figures/2610.14219/figure-001.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 829
+            },
+            {
+              "caption": "Figure 1: Illustration of LLoPS with an example where p = 2, d = 2,m = 3. (a) Given the optimal linear projection matrix W , each column of W can be written as a 2 by 2 matrix, and be approximated by its rank-1 CP decomposition; (b) The rank-1 CP decomposition can be stacked into two weight matrices Θ1,Θ2; (c) In this way, the linear projection W⊤vec(xx⊤) can be approximated as (Θ⊤ 1 x) ∗ (Θ⊤ 2 x) where ∗ is an element-wise product.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 494,
+              "image_path": "figures/2610.14219/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 386
+            },
+            {
+              "caption": "Table 1: Zero-shot accuracy (%) across diverse NLP benchmarks for pretrained models at two scales. Bold numbers indicate the best performance among linear-complexity methods within each model size. BASED+CT is BASED under the same continual training setting as LLoPS.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 330,
+              "image_path": "figures/2610.14219/table-003.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 752
+            },
+            {
+              "caption": "Table 4: Comparion of Based and LLoPS on synthetic associative recall task. For LLoPS, m = 256, p = 4. For both methods d = 128.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 95,
+              "image_path": "figures/2610.14219/table-004.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 218
+            },
+            {
+              "caption": "Table 5: Accuracy of synthetic association recall task under different polynomial degree p with d = 128.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 73,
+              "image_path": "figures/2610.14219/table-005.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 248
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.14219/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.14219",
+          "relevance": 8,
+          "selection_reason": "Learnable low-rank polynomial sketch for linear attention, directly targets efficient attention.",
+          "summary_status": "generated",
+          "title": "Learnable Low-Rank Polynomial Sketch for Effective Linear Attention",
+          "tldr": "LLoPS improves linear attention by learning a low-rank sketch that more accurately approximates high-degree polynomial kernels while retaining linear-time computation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Sparse attention visits few keys, yet finding them can still require scoring every key with every indexer head. We introduce DoSA (Dots Sparse Attention), a lossless method for making this computation conditional while preserving exact token selection. Its central observation is that Top-K selection requires sufficient evidence to reject a candidate, not necessarily its full score. A seed set supplies a lower bound on the winning threshold. Nonnegative head projections and joint residual bounds upper-bound positive contributions, while activation-informed aggregation bounds the magnitude subtracted by negative heads. The certificate directs full scoring toward candidates that remain eligible; exact-score filtering further reduces writeback and selection work. We establish the certificate and its exact-selection conditions, and analyze how geometry and selection margins govern its effectiveness. Our GPU implementation accelerates the complete Indexer by up to 2.74 times over SGLang and 1.69 times over LiteTopK across English, Chinese, and code workloads. End-to-end evaluation on GLM-5.2 and DeepSeek-V3.2 achieves up to 1.94 times and 1.50 times time-to-first-token speedups over the two baselines, respectively.",
+          "arxiv_id": "2610.13990",
+          "arxiv_url": "https://arxiv.org/abs/2610.13990",
+          "authors": [
+            "Fanxu Meng, Taosong Fang"
+          ],
+          "bullets": [
+            "Sparse attention can remain expensive because every candidate may still be scored by each indexer head.",
+            "A seed set establishes a lower bound on the Top-K threshold, while bounds identify candidates that cannot be eliminated without full scoring.",
+            "The method uses nonnegative projections, residual bounds, and activation-informed bounds for negative contributions, followed by exact-score filtering.",
+            "GPU experiments report up to 2.74× faster indexing than SGLang and 1.69× faster than LiteTopK across English, Chinese, and code workloads.",
+            "End-to-end time-to-first-token improves by up to 1.94× on GLM-5.2 and 1.50× on DeepSeek-V3.2 versus the baselines."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: DOSA execution overview, read in order ❶–❹: ❶ screening dot products; ❷ bound evaluation, pruning, and candidate compaction; ❸ full-head dot products for survivors; ❹ originalscore reduction and sparse writeback. Tensor Cores execute stages ❶ and ❸; SIMT threads execute stages ❷ and ❹ using accumulators from Tensor Memory (TMEM), with gray and purple data tiles indicating avoided computation and writeback, respectively. The center sketches GPU resources; seed initialization and final Top-K selection are omitted.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 373,
+              "image_path": "figures/2610.13990/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 742
+            },
+            {
+              "caption": "Figure 4: Complete-Indexer speedup over SGLang across context lengths, input domains, and prefill chunk sizes.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 566,
+              "image_path": "figures/2610.13990/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 806
+            },
+            {
+              "caption": "Figure 3: Data flow through screening, refinement, and sparse writeback. Blue and orange illustrate successive tiles within each stage, where key loading overlaps computation. SIMT threads evaluate bounds U from TMEM accumulators; gray full-head MMA blocks indicate work avoided through certified pruning. Compacted candidate IDs feed refinement, whose outputs are filtered before writeback. G2S and T2R denote global-to-shared and TMEM-to-register transfers.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 309,
+              "image_path": "figures/2610.13990/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 824
+            },
+            {
+              "caption": "Figure 1: The indexer becomes a dominant cost of long-context prefill. Left: its fraction of prefill GPU time, including query/key preparation, scoring, and Top-K. Right: its fraction of theoretical matrix FLOPs. Each point averages two requests under SGLang; profiling and FLOP conventions are given in Appendix D.1.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 241,
+              "image_path": "figures/2610.13990/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 818
+            },
+            {
+              "caption": "Figure 9: Effects of certificate components on screening and Indexer latency. Bars show the mean candidate survival rate and geometric mean latency relative to DOSA. Breaks mark bars beyond the displayed range; annotations give their measured values.",
+              "figure_id": "figure-9-8",
+              "figure_number": "9",
+              "height": 316,
+              "image_path": "figures/2610.13990/figure-005.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 776
+            },
+            {
+              "caption": "Figure 10: Layer-wise effects of certificate components on candidate survival and Indexer latency. Each layer aggregates the same sample sets. Both vertical axes use logarithmic scales.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 384,
+              "image_path": "figures/2610.13990/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 781
+            },
+            {
+              "caption": "Figure 12: Per-layer retrieval speedup over LiteTopK. Input and layer ordering, timing scope, remeasured cells, and color scale match Figure 11; crosses retain the two comparisons slower than the baseline.",
+              "figure_id": "figure-12-2",
+              "figure_number": "12",
+              "height": 476,
+              "image_path": "figures/2610.13990/figure-007.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 777
+            },
+            {
+              "caption": "Figure 11: Per-layer retrieval speedup over SGLang for the final 32K queries. Columns identify inputs and context lengths; rows identify indexer layers. Crosses mark cells slower than the baseline. The logarithmic color scale is centered at 1×. Five cells use the capacity-repair remeasurements specified in Appendix D.4.",
+              "figure_id": "figure-11-3",
+              "figure_number": "11",
+              "height": 475,
+              "image_path": "figures/2610.13990/figure-008.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 769
+            },
+            {
+              "caption": "Figure 8: Time to first token across input lengths on (a) GLM-5.2 and (b) DeepSeek-V3.2.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 210,
+              "image_path": "figures/2610.13990/figure-009.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 821
+            },
+            {
+              "caption": "Figure 7: Screening and sparse writeback ablation.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 342,
+              "image_path": "figures/2610.13990/figure-010.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 211
+            }
+          ],
+          "first_seen_at": "2026-10-13T21:00:00-04:00",
+          "hero_figure": "figures/2610.13990/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.13990",
+          "relevance": 8,
+          "selection_reason": "Lossless conditional sparse attention with exact Top-K key selection; directly targets efficient attention and token selection for LLM inference.",
+          "summary_status": "generated",
+          "title": "DoSA: Dots Sparse Attention",
+          "tldr": "DoSA accelerates sparse-attention index selection by conditionally avoiding unnecessary key scoring while preserving exact Top-K results.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-11",
       "paper_count": 7,
       "papers": [
@@ -43804,5 +46475,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 231
+  "total_paper_count": 244
 }
