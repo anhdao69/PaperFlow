@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gzip
 import json
 import shutil
 from pathlib import Path
@@ -7,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from paperflow.generated_files import GENERATED_FILE_MARKER
-from paperflow.paper_store import load_selected_store
+from paperflow.paper_store import load_selected_store, selected_store_path
 from paperflow.render.validation import validate_repository
 from paperflow.taxonomy import load_taxonomy
 
@@ -70,11 +71,15 @@ def test_stale_marked_site_file_is_rejected(tmp_path: Path) -> None:
 def test_ready_figure_asset_must_exist(tmp_path: Path) -> None:
     project = copy_project(tmp_path)
     papers_path = project / "data/papers.json"
-    content = json.loads(papers_path.read_text())
+    papers_path = selected_store_path(papers_path)
+    raw = papers_path.read_bytes()
+    compressed = papers_path.suffix == ".gz"
+    content = json.loads(gzip.decompress(raw) if compressed else raw)
     paper = next(iter(content["papers"].values()))
     paper["figure_status"] = "ready"
     paper["hero_figure"] = "figures/does-not-exist/hero.webp"
-    papers_path.write_text(json.dumps(content, indent=2, sort_keys=True) + "\n")
+    raw = (json.dumps(content, indent=2, sort_keys=True) + "\n").encode()
+    papers_path.write_bytes(gzip.compress(raw, mtime=0) if compressed else raw)
 
     with pytest.raises(ValueError, match="ready figure asset is missing"):
         validate_repository(project)

@@ -389,9 +389,13 @@ def test_delayed_trigger_publishes_the_missed_date_not_delivery_date(
     assert (project / "data/run_stats/2026-08-26.json").exists()
 
 
+@pytest.mark.parametrize("compressed", [False, True])
 def test_dated_snapshot_replay_uses_archived_entries_and_advances_once(
-    tmp_path: Path,
+    tmp_path: Path, monkeypatch, compressed: bool,
 ) -> None:
+    from paperflow.paper_store import selected_store_path
+    if compressed:
+        monkeypatch.setattr("paperflow.paper_store.COMPRESS_THRESHOLD_BYTES", 1)
     project = project_copy(tmp_path)
     entries, fixture = raw_fixture()
     snapshot = tmp_path / "snapshot.json"
@@ -427,10 +431,12 @@ def test_dated_snapshot_replay_uses_archived_entries_and_advances_once(
     assert load_run_state(
         project / "data/state.json"
     ).last_successful_local_date == date(2026, 10, 6)
-    before = (project / "data/papers.json").read_bytes()
+    store_path = selected_store_path(project / "data/papers.json")
+    assert (store_path.suffix == ".gz") == compressed
+    before = store_path.read_bytes()
     again = run_pipeline(project, dependencies, manual=False, source_snapshot=snapshot)
     assert not again.ran
-    assert (project / "data/papers.json").read_bytes() == before
+    assert store_path.read_bytes() == before
 
 
 def test_wrong_snapshot_date_fails_before_publication_changes(tmp_path: Path) -> None:

@@ -144,3 +144,58 @@ def test_pending_and_failed_summary_fallback_states_are_valid() -> None:
             summary_model=None,
         )
         assert paper.abstract
+
+
+def test_large_store_compresses_losslessly_and_stays_compressed(tmp_path, monkeypatch):
+    import gzip
+
+    import paperflow.paper_store as store
+    path = tmp_path / "papers.json"
+    taxonomy = load_taxonomy(ROOT / "configs/topics.yaml")
+    paper = _paper(title="Bộ nhớ — navigation")
+    original = save_selected_store(path, {paper.arxiv_id: paper}, taxonomy)
+    plain = path.read_bytes()
+    monkeypatch.setattr(store, "COMPRESS_THRESHOLD_BYTES", 1)
+    save_selected_store(path, original.papers, taxonomy)
+    compressed = path.with_suffix(".json.gz")
+    assert not path.exists()
+    assert gzip.decompress(compressed.read_bytes()) == plain
+    assert load_selected_store(path, taxonomy) == original
+    assert store.load_selected_store_unvalidated(path) == original
+    first = compressed.read_bytes()
+    monkeypatch.setattr(store, "COMPRESS_THRESHOLD_BYTES", 10**9)
+    save_selected_store(path, original.papers, taxonomy)
+    assert compressed.read_bytes() == first
+    assert not path.exists()
+
+
+def test_compressed_store_is_authoritative_and_corruption_fails_closed(tmp_path):
+    import gzip
+    path = tmp_path / "papers.json"
+    taxonomy = load_taxonomy(ROOT / "configs/topics.yaml")
+    paper = _paper()
+    original = save_selected_store(path, {paper.arxiv_id: paper}, taxonomy)
+    compressed = path.with_suffix(".json.gz")
+    compressed.write_bytes(gzip.compress(path.read_bytes(), mtime=0))
+    path.write_text("stale legacy file")
+    assert load_selected_store(path, taxonomy) == original
+    compressed.write_bytes(b"broken gzip")
+    with pytest.raises(gzip.BadGzipFile):
+        load_selected_store(path, taxonomy)
+
+
+def test_compression_install_failure_preserves_legacy_store(tmp_path, monkeypatch):
+    import paperflow.paper_store as store
+    path = tmp_path / "papers.json"
+    taxonomy = load_taxonomy(ROOT / "configs/topics.yaml")
+    paper = _paper()
+    save_selected_store(path, {paper.arxiv_id: paper}, taxonomy)
+    before = path.read_bytes()
+    monkeypatch.setattr(store, "COMPRESS_THRESHOLD_BYTES", 1)
+    def fail(*args, **kwargs):
+        raise OSError("disk failure")
+    monkeypatch.setattr(store, "atomic_write_bytes", fail)
+    with pytest.raises(OSError):
+        save_selected_store(path, {paper.arxiv_id: paper}, taxonomy)
+    assert path.read_bytes() == before
+    assert not path.with_suffix(".json.gz").exists()
