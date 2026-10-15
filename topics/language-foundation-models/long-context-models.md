@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**133 papers total**
+**137 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-14 | [Latent Compaction with Test-Time Training](https://arxiv.org/abs/2610.20582) | Efficient AI: KV Cache and Memory Efficiency; Adaptation and Memory: Test-Time Learning; Language Foundation Models: Long-Context Models | Latent Compaction uses document-specific test-time training to compress KV caches while preserving long-context retrieval accuracy. | 9 | 8 |
+| 2026-10-14 | [FOLD: Position-Free Far Memory with Local Order for Long-Context Speculative Decoding](https://arxiv.org/abs/2610.20392) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory, Long-Context Models | FOLD is a training-free long-context speculative-decoding method that improves drafting by combining exact local positions with sharpened, weight-controlled far-memory attention. | 8 | 8 |
+| 2026-10-14 | [MemDuet: Learning Dual-Process Memory for Long-Context Reasoning](https://arxiv.org/abs/2610.19928) | Language Foundation Models: LLM Memory, Long-Context Models | MemDuet coordinates fast evidence selection with slower memory verification to improve long-context reasoning efficiency while preserving accuracy as contexts grow. | 8 | 7 |
+| 2026-10-14 | [Kwai Summary Attention V2 Technical Report](https://arxiv.org/abs/2610.18654) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | KSA V2 makes hybrid summary-token attention more flexible and efficient by separating summary tokens’ KV-memory and sparse-indexing roles. | 8 | 6 |
 | 2026-10-13 | [BELT : BEhavior-Aligned Low-Rank KV Cache Compression with Learned Top-k Rank Allocation](https://arxiv.org/abs/2610.17966) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | BELT compresses long-context KV caches with behavior-aligned low-rank representations and learned rank allocation, improving memory efficiency and decoding speed while preserving quality. | 9 | 7 |
 | 2026-10-13 | [Virtual Head Attention](https://arxiv.org/abs/2610.17959) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models, Long-Context Models | Virtual Head Attention (VHA) reduces KV-cache and compute costs while maintaining or improving long-context language-model quality over standard attention alternatives. | 9 | 7 |
 | 2026-10-13 | [FlashMask-3: Efficient and Expressive Mask-Aware Distributed Attention](https://arxiv.org/abs/2610.17901) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | FlashMask-3 makes structured, mask-aware attention efficient on Hopper GPUs and across distributed context parallelism, delivering substantial kernel and end-to-end training speedups. | 9 | 8 |

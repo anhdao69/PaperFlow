@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**49 papers total**
+**52 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-14 | [Glance Forcing: Making Bidirectional Diffusion Autoregressive at a Glance](https://arxiv.org/abs/2610.20220) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Glance Forcing efficiently distills bidirectional diffusion into autoregressive video generation using just one PF-ODE trajectory while improving quality over a fully trained baseline. | 8 | 9 |
+| 2026-10-14 | [StreamErase: Towards Ultra-Fast Streaming Video Erasing](https://arxiv.org/abs/2610.20137) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | StreamErase enables real-time, arbitrarily long video object removal by distilling bidirectional erasing quality into a causal streaming model. | 8 | 8 |
+| 2026-10-14 | [RepForcing: Representation-Space Initialization for Autoregressive Video Distillation](https://arxiv.org/abs/2610.20111) | Video Generation and Understanding: Autoregressive Video Models | RepForcing improves few-step autoregressive video diffusion distillation by learning causal initialization in a pretrained representation space instead of regressing intermediate teacher trajectories. | 7 | 7 |
 | 2026-10-13 | [LongForcing: Scaling Temporal Manifold Matching for Long-Horizon World Rollout](https://arxiv.org/abs/2610.18289) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | LongForcing reduces long-horizon video and world-model drift by training on extended student self-rollouts with a bidirectional teacher. | 9 | 8 |
 | 2026-10-13 | [CineMem: Attention-Aligned Fine-grained Memory Retrieval for Multi-Shot Long Video Generation](https://arxiv.org/abs/2610.17926) | Video Generation and Understanding: Autoregressive Video Models | CineMem enables efficient long-video generation by retrieving semantically relevant historical information separately for each query token, preserving consistency across multi-shot transitions. | 8 | 7 |
 | 2026-10-13 | [Frequency-Step Cache: Separating Synchronization and Repair for Efficient Autoregressive Video Diffusion](https://arxiv.org/abs/2610.15922) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI | Frequency-Step Cache accelerates autoregressive video diffusion by independently scheduling exact cache synchronization and adaptive latent-space repair, improving speed–quality trade-offs across multiple backbones. | 8 | 7 |

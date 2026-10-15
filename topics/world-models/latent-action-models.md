@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**98 papers total**
+**101 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-14 | [VITAL: From Visual Motion to Precise Action](https://arxiv.org/abs/2610.20604) | Embodied AI: Robot Navigation, Vision-Language-Action; World Models: Latent Action Models, Interactive World Models | VITAL derives action representations from visual motion and adds normalized residual corrections, enabling fast, precise driving decisions without predicting future images. | 9 | 9 |
+| 2026-10-14 | [OneLA: Learning Many Worlds from Latent Actions](https://arxiv.org/abs/2610.20160) | World Models: Latent Action Models, Interactive World Models | OneLA learns a shared latent action space from videos, enabling controllable world models across domains with varied control interfaces. | 9 | 8 |
+| 2026-10-14 | [SonoWorld: Towards Interactive Pose-Controllable Ultrasound World Models](https://arxiv.org/abs/2610.19327) | World Models: Latent Action Models, Video World Models, Interactive World Models; Efficient AI: Token Pruning and Eviction | SonoWorld is a causal ultrasound world model that generates pose-controllable video for interactive robotic ultrasound simulation and policy evaluation. | 9 | 9 |
 | 2026-10-13 | [GreenWAM: A World Foundation Model for Robotics](https://arxiv.org/abs/2610.18774) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | GreenWAM is a cross-robot world foundation model that supports both scene prediction and action selection through shared actions, joint training, and adaptable policies. | 9 | 9 |
 | 2026-10-13 | [ForkCast: Predictive Recovery for Vision-Language-Action Policies via Counterfactual Futures](https://arxiv.org/abs/2610.18650) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | ForkCast enables a frozen vision-language-action policy to recover from slip and occlusion by comparing predicted outcomes of continuing, reobserving, or replanning. | 8 | 8 |
 | 2026-10-13 | [Two Routes to Interoceptive Prioritisation: Dissociating Likelihood Precision and Preference Reweighting in Active Inference](https://arxiv.org/abs/2610.18617) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models; Adaptation and Memory: Embodied Memory | Precision and preference reweighting are distinct routes to prioritising bodily needs, producing different effects on survival, perception, and learned body models. | 7 | 8 |
