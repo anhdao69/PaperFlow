@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**316 papers total**
+**321 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-15 | [Motion- and Gravity-Aware Feedforward 3D Reconstruction](https://arxiv.org/abs/2610.22177) | 3D Vision: 3D Foundation Models | A LUPI-based feed-forward 3D reconstruction framework uses training-only motion and gravity cues to improve accuracy and robustness without adding inference-time inputs or complexity. | 8 | 8 |
+| 2026-10-15 | [BridgeAfford: Bridging Query-Target Gap for Generalizable 3D Affordance Grounding](https://arxiv.org/abs/2610.21918) | 3D Vision: 3D Foundation Models | BridgeAfford improves language-guided 3D affordance grounding on unseen objects by narrowing the semantic gap between interaction queries and target regions. | 8 | 8 |
+| 2026-10-15 | [Seeing Both the Forest and the Trees: Reusing Holistic 3D Priors for Part-Decomposed Generation](https://arxiv.org/abs/2610.21850) | 3D Vision: 3D Foundation Models | STRUCTPARTS reuses holistic 3D generation priors to produce detailed, structurally coherent, part-decomposed 3D assets with lightweight finetuning. | 7 | 7 |
+| 2026-10-15 | [ResStreamGS: Residual-Sensitive Dual-Stream Gaussian Splatting for Mobile Volumetric Video Streaming](https://arxiv.org/abs/2610.21121) | 3D Vision: 3D Foundation Models; Video Generation and Understanding: Video Diffusion | ResStreamGS improves mobile volumetric video streaming by separating temporally stable Gaussians from residual-sensitive ones, reducing payload while enhancing reconstructed quality and maintaining real-time performance. | 9 | 8 |
+| 2026-10-15 | [SIEVE: Overcoming Topological Obstruction in Equivariant Self-Supervised Learning](https://arxiv.org/abs/2610.21087) | 3D Vision: 3D Foundation Models | SIEVE avoids a topological collapse in equivariant point-cloud masked autoencoding by using pose-preserving spherical projection masks and invariant scalar embeddings. | 7 | 8 |
 | 2026-10-14 | [Can Learning to Answer Spatial Questions Improve Novel-View Generation?](https://arxiv.org/abs/2610.20610) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Ask4NV uses 3D language understanding and camera-aware multimodal modeling to improve the visual quality and geometric consistency of novel-view generation. | 8 | 8 |
 | 2026-10-14 | [Where Should the Gaussians Go? Reusable Label-Aware Allocation for Budget-Constrained Gaussian Splatting of Cinematic CT](https://arxiv.org/abs/2610.20397) | 3D Vision: 3D Foundation Models | A reusable label-aware Gaussian allocation strategy places a fixed rendering budget where CT vessels matter, improving vessel quality and speeding position optimisation without per-patient allocation search. | 8 | 7 |
 | 2026-10-14 | [InfiniSplat v2: Analyzing and Improving Feed-Forward 3DGS from Any Views](https://arxiv.org/abs/2610.20341) | 3D Vision: 3D Foundation Models | InfiniSplat v2 improves feed-forward 3D Gaussian Splatting for large viewpoint changes by separating geometry and attribute learning and using stronger view-aware supervision. | 9 | 8 |

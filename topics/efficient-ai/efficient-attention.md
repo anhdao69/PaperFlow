@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**251 papers total**
+**256 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-15 | [FlashAttention with Statistics: Low-Overhead Attention Features for Compact Hallucination Detectors](https://arxiv.org/abs/2610.21483) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | FlashAttention-based computation makes attention features practical for compact, frozen-model hallucination detectors without storing the full attention matrix. | 8 | 7 |
+| 2026-10-15 | [Sparse Attention for Video Generation Acceleration via Growing Sparsity and Reduced Search](https://arxiv.org/abs/2610.21129) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | GSRS accelerates video diffusion Transformers by progressively increasing attention sparsity and reusing early search results, achieving 1.55×–2.21× speedups with comparable quality to full attention. | 8 | 7 |
+| 2026-10-15 | [Verdict: Encode Once, Decide Many](https://arxiv.org/abs/2610.20778) | Efficient AI: Efficient Attention | Verdict-MQ encodes each case once to answer many typed questions, improving typed-decision calibration and accuracy while trading some performance for lower repeated-processing cost on standard QA tasks. | 6 | 7 |
+| 2026-10-15 | [Expanding Attention: A Taylor-Series Route to Linear-Time Transformers with a Fixed Number of Recurrent States](https://arxiv.org/abs/2610.20637) | Efficient AI: Efficient Attention | A truncated Taylor expansion replaces softmax attention with a fixed number of recurrent states, enabling linear-time sequence processing while exposing a cost–accuracy trade-off. | 8 | 9 |
+| 2026-10-15 | [MOIRA: Mass-Oriented Indexing with Ragged Attention for Long-Context Decoding](https://arxiv.org/abs/2610.04313) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | MOIRA enables fast, training-free long-context decoding by adaptively reading only the KV-cache pages needed by each layer and KV head while preserving dense-model accuracy. | 9 | 8 |
 | 2026-10-14 | [ReaDy: Recurrent States as Dynamic Context for Speculative Drafting in Hybrid Linear Attention Large Language Models](https://arxiv.org/abs/2610.20503) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | ReaDy accelerates speculative decoding in hybrid linear-attention LLMs by retrieving position-specific context from the target model’s recurrent states. | 8 | 8 |
 | 2026-10-14 | [Copy-Paste Language Models](https://arxiv.org/abs/2610.19247) | Efficient AI: Efficient Attention; Language Foundation Models: Large Language Models | Copy-Paste Language Models add a lightweight copy mechanism that improves in-context copying, efficiency, and downstream performance with negligible overhead. | 8 | 7 |
 | 2026-10-14 | [Online Tokenization with Optimal Delay in Linear Time](https://arxiv.org/abs/2610.19139) | Efficient AI: Efficient Attention | The paper formalizes online tokenization and presents a near-linear-time algorithm with provably optimal output delay and strong practical latency and throughput gains. | 7 | 8 |

@@ -1,6 +1,2820 @@
 {
   "days": [
     {
+      "date": "2026-10-15",
+      "paper_count": 13,
+      "papers": [
+        {
+          "abstract": "Key-value (KV) cache management has become a critical bottleneck for scaling Large Language Models (LLMs) to long-context scenarios due to linear memory growth. While recent eviction methods have moved beyond simple attention-score heuristics to incorporate value representations, they typically face a fundamental trade-off: the underlying optimization for minimizing output perturbation is an NP-hard combinatorial problem, leading to mathematically suboptimal heuristics or implementations that are difficult to kernelize. In this work, we propose DropKV, a simple principled eviction framework based on Decoupled Residual-Output Perturbation. By decoupling the joint eviction decision into independent per-token scoring, DropKV circumvents combinatorial intractability and admits a provable constant-factor approximation guarantee under a cone condition that we empirically verify on three long-context LLMs. To ensure practical viability, we provide a high-performance implementation using fused Triton kernels that avoid materializing the full attention matrix, delivering a 19.8x scoring-kernel speedup that translates to up to a 9.9% matched-batch end-to-end prefill speedup. Extensive evaluations on the RULER and LongBench benchmarks demonstrate that DropKV consistently outperforms state-of-the-art baselines at equivalent cache budgets, achieving the lowest inference latency among eviction methods while also remaining faster than the dynamic cache baseline.",
+          "arxiv_id": "2610.22130",
+          "arxiv_url": "https://arxiv.org/abs/2610.22130",
+          "authors": [
+            "Aozhong Zhang, Selcuk Gurses, Yanxia Deng, Naigang Wang, Chi-Chun Liu, Davis Wertheimer, Derrick Liu, Xin Li, Zi Yang, Felix X. -F. Ye, Penghang Yin"
+          ],
+          "bullets": [
+            "Targets the linear KV-cache memory growth that limits long-context LLM scaling.",
+            "Decouples residual-output perturbation into per-token scores, avoiding the underlying NP-hard combinatorial optimization.",
+            "Provides a provable constant-factor approximation under a cone condition empirically verified on three long-context LLMs.",
+            "Uses fused Triton kernels without materializing the full attention matrix, yielding a reported 19.8× scoring-kernel speedup and up to 9.9% end-to-end prefill speedup.",
+            "On RULER and LongBench, outperforms evaluated baselines at equal cache budgets and achieves the lowest reported inference latency among eviction methods."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Average accuracy on RULER. Top: 5% budget at varying sequence lengths. Bottom: varying cache budgets at 128K sequence length. Our method consistently outperforms baselines and shows more graceful degradation at longer contexts.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 289,
+              "image_path": "figures/2610.22130/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 672
+            },
+            {
+              "caption": "Figure 3: DropKV scoring at B=1, w=8, and 5% budget. Left: Triton vs. PyTorch on scoring latency and peak scratch memory. At n=128K Triton is ∼20× faster with scratch flat at ∼17MB vs. ∼9GB. Right: Matched-batch prefill relative speedup percentage is positive in 8 of 9 cells; Qwen at n=32K is essentially neutral (−0.1%).",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 163,
+              "image_path": "figures/2610.22130/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 807
+            },
+            {
+              "caption": "Figure 4: Left: Strict Cone Condition (Assumption 2). Right: Approximate Cone Condition (Assumption 3): Lu,c = {1, 2, 3, 5} and p4∥r4∥2 ≤ µ.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 204,
+              "image_path": "figures/2610.22130/figure-003.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 693
+            },
+            {
+              "caption": "Table 1: RULER results at 128K sequence length and 5% KV-cache budget. On the Avg. column, the best result is bolded and the second-best is underlined; the DropKV row is shaded gray for emphasis.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 534,
+              "image_path": "figures/2610.22130/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 822
+            },
+            {
+              "caption": "Table 2: LongBench results at 5% KV-cache budget.",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 431,
+              "image_path": "figures/2610.22130/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            },
+            {
+              "caption": "Table 13: Serving throughput at each method’s maximum batch at 5% budget on A100-80GB GPU. B is the largest batch that fits for the given (n,method); aggregate decode throughput is in tokens/s. ×dyn is Triton’s decode throughput divided by dynamic’s.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 310,
+              "image_path": "figures/2610.22130/table-006.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 744
+            },
+            {
+              "caption": "Table 3: Average scores on RULER (64K sequence length) and LongBench across different KV-cache budgets (5%, 10%, and 30%). The best result is highlighted in bold.",
+              "figure_id": "table-3-19",
+              "figure_number": "3",
+              "height": 356,
+              "image_path": "figures/2610.22130/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 568
+            },
+            {
+              "caption": "Table 14: Per-token scoring expressions of the baselines in Table 1. “Type” classifies the surrogate strategy: H: heuristic retention (no value-space modelling), B: explicit upper bound on ∥∆(J )∥1, R: convex (LASSO-style [44]) relaxation of the combinatorial perturbation objective, E: exact singleton perturbation followed by per-token decoupling. “Direction” indicates whether the score is read as “keep large” (retention score) or “evict small” (eviction cost). Notation: p̄j = 1 |Q| ∑ t∈Q p (t) j ; µ(K) = 1 n ∑ i ki; s, w are the StreamingLLM sink and recent-window sizes; κ is the SnapKV pooling kernel size; γ is CAKE’s variance weight; and kl is PyramidKV’s per-layer budget.",
+              "figure_id": "table-14-9",
+              "figure_number": "14",
+              "height": 251,
+              "image_path": "figures/2610.22130/table-008.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: End-to-End and Time to First Token latencies (in seconds) across batch sizes B ∈ {1, 2, 4, 8, 12}. All evaluations were conducted using the Mistral-7B-512K model with 32K sequence length. ↓ indicates lower values are better. “OOM” denotes Out-of-Memory.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 175,
+              "image_path": "figures/2610.22130/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 818
+            },
+            {
+              "caption": "Table 5: RULER results at 128K sequence length, 10% and 30% KV-cache budgets. The best result is highlighted in gray, and the second-best is underlined.",
+              "figure_id": "table-5-24",
+              "figure_number": "5",
+              "height": 987,
+              "image_path": "figures/2610.22130/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 822
+            },
+            {
+              "caption": "Table 10: Additional LongBench results at 30% budget. The best average result is highlighted in gray, and the second-best is underlined.",
+              "figure_id": "table-10-23",
+              "figure_number": "10",
+              "height": 468,
+              "image_path": "figures/2610.22130/table-011.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 822
+            },
+            {
+              "caption": "Table 9: LongBench results at 10% cache budget.",
+              "figure_id": "table-9-22",
+              "figure_number": "9",
+              "height": 466,
+              "image_path": "figures/2610.22130/table-012.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 822
+            },
+            {
+              "caption": "Table 6: RULER results at 64K sequence length and 5%, 10% and 30% KV-cache budget. The best result is highlighted in gray, and the second-best is underlined.",
+              "figure_id": "table-6-15",
+              "figure_number": "6",
+              "height": 1213,
+              "image_path": "figures/2610.22130/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 822
+            },
+            {
+              "caption": "Table 7: RULER results at 32K sequence length and 5%, 10% and 30% KV-cache budget. The best result is highlighted in gray, and the second-best is underlined.",
+              "figure_id": "table-7-8",
+              "figure_number": "7",
+              "height": 1238,
+              "image_path": "figures/2610.22130/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 822
+            },
+            {
+              "caption": "Table 12: LongBench results at 5%, 10% and 30% cache budget. The best result is highlighted in gray, and the second-best is underlined.",
+              "figure_id": "table-12-5",
+              "figure_number": "12",
+              "height": 568,
+              "image_path": "figures/2610.22130/table-015.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 822
+            },
+            {
+              "caption": "Table 8: RULER results at 16K sequence length and 5%, 10% and 30% KV-cache budget. The best result is highlighted in gray, and the second-best is underlined.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 1238,
+              "image_path": "figures/2610.22130/table-016.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 822
+            },
+            {
+              "caption": "Table 11: RULER results at 128K and 64K sequence length (S. L.) and 5%, 10% and 30% KV-cache budget. The best result is highlighted in gray, and the second-best is underlined.",
+              "figure_id": "table-11-2",
+              "figure_number": "11",
+              "height": 958,
+              "image_path": "figures/2610.22130/table-017.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 822
+            },
+            {
+              "caption": "Table 19: Empirical approximation gap: DropKV proxy ratio F (Ĵ )/F (J ∗) at nsmall=20, broken down by stratification and k. Median (p50) and 95th percentile (p95) computed over 150 triples per (model, stratification, k) cell. Compare against the worst-case bound (median 10–12) in Table 18.",
+              "figure_id": "table-19-11",
+              "figure_number": "19",
+              "height": 256,
+              "image_path": "figures/2610.22130/table-018.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 614
+            },
+            {
+              "caption": "Table 21: Per-kernel ncu measurements for the Triton scoring pipeline at n=16K. SM% and Mem% are fractions of peak sustained SM issue and peak HBM bandwidth. Active warps is measured achieved occupancy; Ceiling is the resource-limited occupancy ceiling.",
+              "figure_id": "table-21-20",
+              "figure_number": "21",
+              "height": 110,
+              "image_path": "figures/2610.22130/table-019.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 823
+            },
+            {
+              "caption": "Table 20: Nsight Compute full-call profiling at n=16K. Both columns aggregate all launches inside the scoring call: time/bytes/ instructions are summed, percentage metrics are time-weighted, and register or shared-memory footprints are maxima over launches.",
+              "figure_id": "table-20-21",
+              "figure_number": "20",
+              "height": 349,
+              "image_path": "figures/2610.22130/table-020.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 472
+            },
+            {
+              "caption": "Table 15: Verification of Assumption 1 at n = 128K: distribution of ε = maxj∈L pj across sampled triples.",
+              "figure_id": "table-15-1",
+              "figure_number": "15",
+              "height": 94,
+              "image_path": "figures/2610.22130/table-021.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 710
+            },
+            {
+              "caption": "Table 16: Cone constant c⋆ distribution across sampled triples at n = 128K.",
+              "figure_id": "table-16-16",
+              "figure_number": "16",
+              "height": 88,
+              "image_path": "figures/2610.22130/table-022.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 756
+            },
+            {
+              "caption": "Table 17: Fraction of sampled triples satisfying c⋆ > τ .",
+              "figure_id": "table-17-18",
+              "figure_number": "17",
+              "height": 87,
+              "image_path": "figures/2610.22130/table-023.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 760
+            },
+            {
+              "caption": "Table 18: Empirical distribution of the conservative multiplicative factor in Theorem 1, computed as 1/[c⋆(1− ε)(1− kε)] from the measured assumption constants. “finite” is the fraction of sampled triples with c⋆ > 0 and 1− kε > 0; p50/p95/max are computed over this finite subset.",
+              "figure_id": "table-18-17",
+              "figure_number": "18",
+              "height": 96,
+              "image_path": "figures/2610.22130/table-024.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 548
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.22130/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.22130",
+          "relevance": 9,
+          "selection_reason": "Presents a principled KV-cache eviction method with approximation guarantees and efficient kernels.",
+          "summary_status": "generated",
+          "title": "DropKV: Decoupling Residual-Output Perturbation for Near-Optimal KV-Cache Eviction",
+          "tldr": "DropKV enables fast, near-optimal KV-cache eviction for long-context LLMs by replacing an intractable joint optimization with independently scored token decisions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent work shows that depth recurrence can be retrofitted into pretrained language models. In this work, we adapt this paradigm for visual understanding, using depth recurrence to reduce the parameter footprint of a pretrained vision-language model (VLM). To this end, we prune layers from the language backbone of the VLM and loop over a subset of the remaining layers. At each step of the loop, a linear adapter merges the block's output with the token representations from the preceding layers and projects the fused representation back into the block. As the pruning impacts the original model performance, we propose a three-stage recovery training: first, we leverage a language-only pretraining to recover the performance of the language backbone, followed by an alignment of the vision-language projector, and a full fine-tuning of the model via visual instruction tuning. In the first and the last stage, we distill the outputs of the pretrained non-recurrent model into the recurrent model, which further improves the recovery. We evaluate the proposed approach on the TinyLLaVA-1.4B backbone without introducing any new vision-language data during retrofitting. Our experiments demonstrate that the retrofitted recurrent model outperforms the unpruned baseline trained with the same recovery data while storing 23.3% fewer language parameters. We further show that the proposed retrofitting recurrence outperforms the setup of converting a recurrent LM into a VLM on the same data. Additionally, our ablations show how design choices, such as the adapter between recurrences and a larger recurrent block, lead to the improved performance of our approach. Finally, we find that our proposed model gains on reasoning-oriented benchmarks, whereas its performance on basic visual understanding benchmarks remains on par with the baseline.",
+          "arxiv_id": "2610.22075",
+          "arxiv_url": "https://arxiv.org/abs/2610.22075",
+          "authors": [
+            "Madhav Iyengar, Andreas Geiger, Hilde K\\\"uhne"
+          ],
+          "bullets": [
+            "Prunes the language backbone and repeatedly applies a subset of its layers, using linear adapters to merge representations across recurrences.",
+            "Uses three-stage recovery: language-backbone training, vision-language projector alignment, and visual instruction tuning.",
+            "Distills outputs from the original non-recurrent model during the first and final recovery stages.",
+            "On TinyLLaVA-1.4B, the retrofitted model outperforms an equally recovered unpruned baseline without adding vision-language data.",
+            "Improvements are strongest on reasoning benchmarks; basic visual understanding remains comparable to the baseline."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Qualitative examples (AI2D, CV-Bench-2D). Two items per benchmark with the answer of every model in Table 1. A check mark denotes the correct option.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 462,
+              "image_path": "figures/2610.22075/figure-001.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 732
+            },
+            {
+              "caption": "Figure 3: Qualitative examples (RealWorldQA, SEED-Bench). Two items per benchmark with the answer of every model in Table 1. A check mark denotes the correct option.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 461,
+              "image_path": "figures/2610.22075/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 732
+            },
+            {
+              "caption": "Figure 1: Prune-then-loop retrofit. Left: a pretrained VLM embeds the image as vision tokens, the prompt as text tokens and passes them through its language backbone. The layers marked in grey are pruned. Right: Our retrofitting mechanism reuses the remaining layers. The prelude is executed once, and an adapter merges the prelude’s output with the hidden state of the recurrent block initialized with noise. The adapter and recurrent block are applied repeatedly, with the coda used to decode to logits.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 323,
+              "image_path": "figures/2610.22075/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Table 1: Comparison to baselines. The retrofit outperforms the baselines on average over nine benchmarks with 23.3% fewer stored language-model parameters. Sec. 5.1 defines the models. RR-VLM denotes our retrofitted recurrent VLM F 6 4/8/4 of Sec. 3 and F 1 the pruned single-pass model.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 294,
+              "image_path": "figures/2610.22075/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 836
+            },
+            {
+              "caption": "Table 10: Early exit (Eq. 5) on GQA. The retrofits use the 7.5B-token S0 and are trained at a fixed depth of 6 or with depth sampled at mean 6 or 16. The converted model at mean depth 32 is built like the converted recurrent VLM of Table 1 from the McLeish et al. (2025) checkpoint pretrained at that depth. Pass read is the mean pass a generated token is read from. Passes run is the mean number of block passes computed per generated token, with the first token counted at the cap (†: tokens after the first only). Settled@6 is the share of generated tokens whose successive readouts have a KL divergence below 5·10−3 at pass 6. Rows without exit have no ϵ and no ∆. The readouts of the fixed-depth model do not settle, so the rule almost never fires on it (pass read 6.00 and 5.92). The values without exit differ from Tables 1 and 5 because this evaluation ran without image padding.",
+              "figure_id": "table-10-3",
+              "figure_number": "10",
+              "height": 499,
+              "image_path": "figures/2610.22075/table-005.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 828
+            },
+            {
+              "caption": "Table 3: Ablations. Each table changes one setting of the model named in its header and the best value is in bold. All tables (a), (b) and (c) use the 7.5B S0 budget without text distillation.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 129,
+              "image_path": "figures/2610.22075/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 827
+            },
+            {
+              "caption": "Table 4: Knowledge distillation. We evaluate the impact of the knowledge distillation in S2. Each row states on which batches the distillation term is applied and with which weight λ and temperature τ . All rows use the 60B S0 budget and the 4/8/4 layer allocation and share the same S0, which applies the distillation term with λ=0.5 at τ=2. The first two rows give the unpruned baseline of Table 1 with and without the S2 distillation.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 182,
+              "image_path": "figures/2610.22075/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 498
+            },
+            {
+              "caption": "Table 6: KV-cache sharing across passes at inference. The table analyses the KV cache per token as a multiple of the base model’s cache. The model keeps only n copies of the cache instead of one per pass. The six passes use these copies in turn, so with n=1 every pass shares one cache, and n=6 is our model without sharing.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 109,
+              "image_path": "figures/2610.22075/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 828
+            },
+            {
+              "caption": "Table 5: Fixed against sampled training depth. Both models use the 4/8/4 layer allocation and the 7.5B S0 budget and differ only in the number of recurrences during training, fixed at r=6 or sampled with mean 6. The columns give GQA accuracy when the model is evaluated with r passes. Values marked † come from runs that were stopped early because the output had degenerated.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 123,
+              "image_path": "figures/2610.22075/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 644
+            },
+            {
+              "caption": "Table 8: KV-cache sharing across passes during training. The model is trained with the sharing active, at the 7.5B S0 budget and the 4/8/4 layer allocation of our ablations. The Cache column gives the KV cache per token as a multiple of the base model’s cache. K-sharing shares the keys across passes, KV-sharing the keys and the values. Seed 42.",
+              "figure_id": "table-8-8",
+              "figure_number": "8",
+              "height": 92,
+              "image_path": "figures/2610.22075/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 828
+            },
+            {
+              "caption": "Table 2: Training stages. We remove single stages of the training strategy of Sec. 3.2 from our best performing setting (4/8/4, r=6, 60B S0 budget), each stage with its distillation term. The first row repeats the unpruned baseline of Table 1, which is trained with the full strategy. Avg is the mean of the nine columns to its left.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 119,
+              "image_path": "figures/2610.22075/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 836
+            },
+            {
+              "caption": "Table 7: Placement of the distillation term at the 7.5B S0 budget. Each row shows in which training stages we apply the distillation term and with which weight λ, on the 4/6/4 layer allocation with r=6. Seed 42. These are separate runs from the 4/6/4 row of Table 3(b).",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 129,
+              "image_path": "figures/2610.22075/table-012.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 498
+            },
+            {
+              "caption": "Table 9: Text interleaving in S2. Number of multimodal batches K per text batch during S2, on the 60B S0 budget and the 4/8/4 layer allocation without text distillation. The best value is in bold. Seed 42.",
+              "figure_id": "table-9-2",
+              "figure_number": "9",
+              "height": 130,
+              "image_path": "figures/2610.22075/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 498
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.22075/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.22075",
+          "relevance": 7,
+          "selection_reason": "Reduces VLM parameters via recurrence, fitting both multimodal foundation models and efficiency.",
+          "summary_status": "generated",
+          "title": "Retrofitting Recurrent Vision-Language Models from Pretrained Backbones",
+          "tldr": "A pretrained vision-language model can be made recurrent and 23.3% smaller in language parameters while matching or improving performance through structured recovery training and distillation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Context: Organizations increasingly delegate code review to multi-agent large language model (LLM) pipelines billed per token. Low code quality raises human maintenance effort, but its effect on agent review cost has not been measured. Objective: We test whether baseline CodeHealth predicts the token cost of agentic review and fix beyond pull request (PR) footprint. Method: In a pre-registered observational study, we sampled 465 agent-authored PRs from 246 repositories in AIDev, jointly stratified by CodeHealth and footprint under repository caps. A frozen five-agent review-and-fix pipeline processed every PR with three different LLMs. Per LLM, we fitted a mixed model of log tokens on CodeHealth and log PR footprint, with a repository random intercept. Results: For all three LLMs the CodeHealth coefficient was negative, with 95% CI excluding zero; each CodeHealth point was associated with 3.5% to 6.1% lower token cost. CodeHealth was unrelated to PR footprint, so PR size does not explain the association. Two of three registered smells predicted fix cost; batch fixing left median CodeHealth unchanged. Exploratory analyses located the association in the review stage, where agents iterated more on unhealthy code without writing more comments. Adjusting for the size of the scored files absorbed the association, which we interpret as mediation by file size. Conclusions: A quality metric calibrated against human maintainability also predicts the inference cost of multi-agent review and fix. The effect is modest per point and not carried by PR size, so the refactoring case extends to agent-reviewed code when it changes structure and file size, not only the score. Data Availability: https://doi.org/10.5281/zenodo.22127920",
+          "arxiv_id": "2610.21914",
+          "arxiv_url": "https://arxiv.org/abs/2610.21914",
+          "authors": [
+            "Lo Gullstrand Heander, Markus Borg, Emma S\\\"oderberg, Christofer Rydenf\\\"alt"
+          ],
+          "bullets": [
+            "CodeHealth negatively predicted agentic review-and-fix token cost across all three tested LLMs, independent of PR footprint.",
+            "Each additional CodeHealth point corresponded to 3.5%–6.1% lower token cost.",
+            "The association appeared during review, where agents iterated more on unhealthy code without producing more comments.",
+            "Adjusting for scored-file size removed the association, suggesting file size mediates the relationship.",
+            "Two registered code smells predicted fix cost, while batch fixing did not change median CodeHealth."
+          ],
+          "categories": [
+            "cs.SE",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the study procedure in four phases, with its milestones on a timeline. Takeaway: Hypotheses and sampling were locked after pilot 3, and the pre-registration was finalized after the review agents had started but before the fix agent ran, so no complete row existed at filing (Section 3.12).",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 404,
+              "image_path": "figures/2610.21914/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 784
+            },
+            {
+              "caption": "Figure 3: Associational path diagram of the registered model, log(tokens total) ∼ health + log(footprint) + language + (1|repo). Takeaway: Change footprint is treated as a mediator candidate sitting on the path from CodeHealth to cost, not as a nuisance covariate to be removed, so RQ1 concerns the direct path c′ that survives conditioning on footprint and RQ2 concerns the decomposition of a, b, and c′; the arrows denote regression paths in an observational design and do not imply causality.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 392,
+              "image_path": "figures/2610.21914/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 765
+            },
+            {
+              "caption": "Figure 4: One PR from each CodeHealth tier traced through the measurement instrument, all three from the medium footprint tercile and all three measured with sonnet-5. A pass is one invocation of an agent over its whole input; the iteration counts in each cell are the agent turns taken inside that single pass, so a batch fix pass with no retry can still run many iterations. Each is the PR whose total token cost lies closest to its own tier’s median among PRs with 95 to 125 changed lines, so none is an extreme case. Takeaway: At a nearly identical PR footprint, total cost rises as baseline CH falls, and the rise is not explained by the number of review comments, which are unrelated to CH across the whole sample (ρ = −.03, p = .56). Agent iterations, in contrast, are correlated with CH (ρ = −.16, p < .001). Three PRs illustrate the measurement path and are not evidence for it; the estimates are in Section 4.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 586,
+              "image_path": "figures/2610.21914/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 968
+            },
+            {
+              "caption": "Figure 1: The registered answers to RQ1 and RQ2, fitted separately per LLM. Takeaway: Token cost falls with CH for all three LLMs, and CH does not predict footprint, so larger PR footprints do not account for the extra cost of unhealthy code.",
+              "figure_id": "figure-1-10",
+              "figure_number": "1",
+              "height": 485,
+              "image_path": "figures/2610.21914/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 977
+            },
+            {
+              "caption": "Table 12: The registered model form refitted on each pipeline stage separately, one fit per LLM per outcome, on the same PRs as Table 8. Fix-stage fits drop the PRs with zero review comments: n reports the rows that remain. Takeaway: The CodeHealth effect survives removing the fix stage from the outcome entirely, and in fact strengthens for every LLM, so the association lies with the review stage and not with the fix stage that follows it.",
+              "figure_id": "table-12-18",
+              "figure_number": "12",
+              "height": 352,
+              "image_path": "figures/2610.21914/table-005.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 977
+            },
+            {
+              "caption": "Table 13: Decomposition of the review-stage effect, same model form and same rows as Table 12. Because log(review tokens) = log(iterations) + log(tokens per iteration), the first two coefficients in each block sum to that LLM’s review-token coefficient by construction. Comment counts, and the per-comment ratio, are modeled on the PRs with at least one comment. The last row of each block corresponds to the review-token row of Table 12 minus the sixth row of this block, but it is fitted independently on the ratio, on the smaller sample that having at least one comment requires. Takeaway: Lower CodeHealth is associated with more agent turns and more tokens within each turn, and it shows most consistently on the input side, yet it does not correlate with additional review comments, so the additional spend buys no additional output and the cost per review finding rises accordingly.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 562,
+              "image_path": "figures/2610.21914/table-006.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 977
+            },
+            {
+              "caption": "Table 9: RQ2 three-path decomposition, every path estimated in the registered mixed-model family with a repository random intercept, fitted separately per LLM. Path (a) is log(footprint) ∼ health + language + (1|repo); paths (b) and (c) are the log(footprint) and health coefficients of the primary fit in Table 8. Takeaway: CodeHealth is not associated with PR footprint for any LLM, footprint is the strongest driver of cost for every LLM, and the CH effect on cost persists with footprint held constant, so the effect is direct with respect to PR footprint; Section 4.6.4 examines file size.",
+              "figure_id": "table-9-15",
+              "figure_number": "9",
+              "height": 274,
+              "image_path": "figures/2610.21914/table-007.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 864
+            },
+            {
+              "caption": "Table 1: The three pilot exercises and the main collection. Takeaway: Pilots 1 and 2 failed for sampling reasons rather than pipeline reasons, and each failure influenced the final design; pilot 3 is the main collection at one tenth of the scale, run with the same three LLMs, prompts, and workflow, with small harness updates in between.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 108,
+              "image_path": "figures/2610.21914/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 977
+            },
+            {
+              "caption": "Table 10: RQ3 confirmatory test on the main collection: partial Spearman correlation with log1p fix-agent tokens, controlling for log changed lines, Holm-corrected within each LLM’s three-hypothesis family. Takeaway: Complex Method and Complex Conditional are confirmed for all three LLMs; Code Duplication is confirmed for none of them, and its sign even reverses for sonnet-5, so only two of the three pre-registered smell hypotheses are supported.",
+              "figure_id": "table-10-16",
+              "figure_number": "10",
+              "height": 273,
+              "image_path": "figures/2610.21914/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 702
+            },
+            {
+              "caption": "Table 14: Exploratory refit of the comment-count outcome with both the CodeHealth score and the smell count as predictors on the same rows, controlling for log changed lines, log scored-file lines, log changed files, language, and a repo random intercept. Comment counts are modeled on the PRs with at least one comment, as in Table 13. Takeaway: The number of findings the agents report tracks how many smells CodeScene counted, while remaining unrelated to the CH score those smells produce, so the null in Table 13 reflects the predictor and is not evidence that the agents attend to unrelated properties of the code.",
+              "figure_id": "table-14-7",
+              "figure_number": "14",
+              "height": 241,
+              "image_path": "figures/2610.21914/table-010.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 876
+            },
+            {
+              "caption": "Table 15: The registered model refitted with log total lines of the scored files added, one fit per LLM on the same rows as Table 8. The size coefficient is the change in log tokens per unit of log file lines; it is reported as an estimate and is not part of the corrected family. Takeaway: Adjusting for file size absorbs the CodeHealth association for all three LLMs, which in this sample cannot be separated from the size of the files it is computed over.",
+              "figure_id": "table-15-6",
+              "figure_number": "15",
+              "height": 225,
+              "image_path": "figures/2610.21914/table-011.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 914
+            },
+            {
+              "caption": "Table 2: Achieved cell fill on the 3× 3 CodeHealth by footprint grid, against a target of 56 PRs per cell. Takeaway: Seven of nine cells filled completely. The two short cells are in the unhealthy tier at medium and large footprint, reflecting a real scarcity of low-CH PRs in the AIDev pool.",
+              "figure_id": "table-2-17",
+              "figure_number": "2",
+              "height": 149,
+              "image_path": "figures/2610.21914/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 656
+            },
+            {
+              "caption": "Table 4: The three LLMs, their serving stacks, versions, and cached input shares. The cached input share is computed as the share of all input tokens served from the prefix cache across the 465-PR collection, pooled over review and fix agents. Takeaway: The three instruments differ simultaneously in provider, quantization, serving stack, and prefix-cache regime, which is why the analysis fits them separately and never compares them inferentially.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 139,
+              "image_path": "figures/2610.21914/table-013.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 782
+            },
+            {
+              "caption": "Table 3: The four review agents and their primary ISO/IEC 25010 quality characteristics (ISO/IEC 2023). Takeaway: The agent set partitions review concerns along an externally defined taxonomy, which makes the choice of roles auditable; the mapping is approximate only for DesignReviewer, which spans two characteristics.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 81,
+              "image_path": "figures/2610.21914/table-014.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 976
+            },
+            {
+              "caption": "Table 6: Agent-session termination categories and their treatment. Takeaway: A guard-stopped review session is kept because it is instrument behavior and part of the cost being measured; a guard-stopped fix session leaves no completed fix record or post-fix score, so that PR is excluded for that LLM. Infrastructure failures and unexpected errors are retried until success.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 185,
+              "image_path": "figures/2610.21914/table-015.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 977
+            },
+            {
+              "caption": "Table 5: The three code smells registered as confirmatory hypotheses for RQ3, selected from pilot data by the pre-specified rule. Takeaway: The rule retained the three smells present in enough pilot PRs, with a sign agreed by all three LLMs and the largest mean adjusted correlations; each was then registered with a mechanism of its own.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 117,
+              "image_path": "figures/2610.21914/table-016.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 572
+            },
+            {
+              "caption": "Table 7: Pilot 3 per-LLM CodeHealth-to-cost slope and the resulting power characteristics at the achieved main-collection design (n = 465, 246 repositories). Takeaway: All three pilot slopes are negative and similar in magnitude, but every LLM’s own required sample size exceeds the achieved 465, which is why no single LLM is designated primary and why the confirmatory claim is a direction-consistency criterion across all three.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 162,
+              "image_path": "figures/2610.21914/table-017.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 977
+            },
+            {
+              "caption": "Table 16: Run-to-run variance decomposition on the 27-PR replication subsample (three runs per PR per LLM). λ is the run-to-run variance divided by the between-PR variance; ICC(k = 1) is the implied reliability of a single run. Takeaway: qwen3-6’s run-to-run noise is about an order of magnitude larger, relative to its stable PR signal, than either of the other two LLMs, while deepseek-v4-flash and sonnet-5 are both highly reliable at a single run.",
+              "figure_id": "table-16-11",
+              "figure_number": "16",
+              "height": 115,
+              "image_path": "figures/2610.21914/table-018.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 806
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21914/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.21914",
+          "relevance": 7,
+          "selection_reason": "Studies the token cost of agentic code review, providing empirical insights into the efficiency of LLM inference pipelines.",
+          "summary_status": "generated",
+          "title": "CodeHealth Predicts the Token Cost of Agentic Code Review: A Pre-Registered Study of 465 Agent-Authored Pull Requests",
+          "tldr": "In a pre-registered study of 465 agent-authored PRs, healthier code consistently required modestly fewer tokens for multi-agent review and fixing, largely because it involved smaller scored files.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Conditional memory expands language-model capacity through selective lookup, but the full embedding table must remain available for every possible input. We introduce Conditional Program (CP), a compressed representation that reconstructs only the rows an input requests. CP represents each row by a short code and a local scale, with a reconstruction program shared across the table. We instantiate this representation with a Gaussian trellis, norm restoration and independently decodable row records. CP's two-bit code lowers output KL by 41--63\\% relative to 2-bit round-to-nearest. Analysis across three trained n-gram memory families shows that Gaussian-like coordinate statistics coexist with learned relationships among rows; at matched storage budgets, the shared trellis outperforms the fitted codebooks and low-rank residual variants we test. For DeepSeek, it reduces table storage from 203GB to 51GB, leaving room for larger workloads when the table is kept on GPU.",
+          "arxiv_id": "2610.21810",
+          "arxiv_url": "https://arxiv.org/abs/2610.21810",
+          "authors": [
+            "Donghoon Han, Minseop Jung, Dong Woo Kwak, SeungJae Lee, Junhoo Lee"
+          ],
+          "bullets": [
+            "Targets conditional memories whose full embedding table must remain available for lookup.",
+            "Encodes each row with a short code and local scale, using a shared Gaussian-trellis reconstruction program.",
+            "Adds norm restoration and independently decodable row records for practical access.",
+            "Reduces output KL by 41–63% versus 2-bit round-to-nearest quantization.",
+            "Cuts DeepSeek table storage from 203GB to 51GB, enabling larger GPU-resident workloads."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Conditional Program (CP). An input selects row addresses in the compressed memory. Each record contains a trellis code and a bf16 scale; a shared decoder reconstructs the vector, and the scale restores its norm before the existing readout. (a) Offline, the encoder selects a low-error trellis path and stores its code with the norm-restoring scale. (b) Online, only addressed records are fetched, decoded and scaled. Trellis states and paths are schematic.",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 387,
+              "image_path": "figures/2610.21810/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 912
+            },
+            {
+              "caption": "Figure 2: Table size versus six-domain geometric-mean output KL (log scale); lower and further left is better. CP labels include per-row scales. Dashed lines connect RTN settings. Purple markers: MXFP4 (left), NVFP4 (right), including block scales. Full values and paired comparisons are in Table 13.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 275,
+              "image_path": "figures/2610.21810/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 900
+            },
+            {
+              "caption": "Figure 3: LongCat damage model KL = c0 + k Sp + k∥ dN 2 with the measured small-perturbation offset c0 = .0021 and k = .198, p = .79, k∥ = 2.19 fitted once on 29 codec configurations (LM, VQ and TCQ at 0.5–4 bits with the MSE-optimal scale or with norm restoration, plus one global gain, not drawn). Pure direction edits that keep every row norm (triangles) are out of sample. S and dN summarize direction and norm error using the codec-level approximations defined in the text; the direction controls set S explicitly.",
+              "figure_id": "figure-3-22",
+              "figure_number": "3",
+              "height": 313,
+              "image_path": "figures/2610.21810/figure-003.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 423
+            },
+            {
+              "caption": "Figure 4: DeepSeek tables behind a static hot-row cache (rows ranked by read count, fineweb held-out reads). (a) Share of reads served by a cache of a given size holding FP8 or 2-bpp rows (CP, 2.06 bpp); circles mark the 12.9 GB/node cache of the end-to-end runs. (b) Simulated SSD reads per token (one 4 KB read per missed row, 48 rows per token) for the FP8 table (202.7 GB) and the CP table (2.06 bpp, 50.7 GB); colors as in (a).",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2610.21810/figure-004.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 432
+            },
+            {
+              "caption": "Table 10: Paired task-score differences for DeepSeek-V4.1-Flash in percentage points, with 95% intervals from 10,000 paired item-bootstrap replicates. Positive values favor the first method. Differences are computed before rounding, so they may differ from subtracting the displayed scores. Intervals are per comparison, without multiplicity adjustment; isolated differences across 40 tasks require caution.",
+              "figure_id": "table-10-11",
+              "figure_number": "10",
+              "height": 869,
+              "image_path": "figures/2610.21810/table-005.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 950
+            },
+            {
+              "caption": "Table 1: Lookup-table storage and downstream performance. Bits denotes code bits per value; table GB includes scales and offsets. Scores are on a 0–100 scale; Belebele averages eight languages. Overall equally weights the five task-group means. Evaluation details and all 40 tasks appear in Appendices A and B.",
+              "figure_id": "table-1-24",
+              "figure_number": "1",
+              "height": 683,
+              "image_path": "figures/2610.21810/table-006.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 958
+            },
+            {
+              "caption": "Table 11: Paired task-score differences for Qwen3.8-Flash-Next in percentage points, with 95% intervals from 10,000 paired item-bootstrap replicates. Positive values favor the first method. Differences are computed before rounding, so they may differ from subtracting the displayed scores. Intervals are per comparison, without multiplicity adjustment; isolated differences across 40 tasks require caution.",
+              "figure_id": "table-11-7",
+              "figure_number": "11",
+              "height": 869,
+              "image_path": "figures/2610.21810/table-007.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 950
+            },
+            {
+              "caption": "Table 12: Paired task-score differences for LongCat-Flash-Lite in percentage points, with 95% intervals from 10,000 paired item-bootstrap replicates. Positive values favor the first method. Differences are computed before rounding, so they may differ from subtracting the displayed scores. Intervals are per comparison, without multiplicity adjustment; isolated differences across 40 tasks require caution.",
+              "figure_id": "table-12-26",
+              "figure_number": "12",
+              "height": 869,
+              "image_path": "figures/2610.21810/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 950
+            },
+            {
+              "caption": "Table 5: Memory and workload capacity on DeepSeek. Backbone and lookup tables reside on H200 GPUs. Four-GPU timings report mean ± standard deviation over three runs.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 360,
+              "image_path": "figures/2610.21810/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 971
+            },
+            {
+              "caption": "Table 7: Evaluation suite. Counts and protocols are fixed across quantization settings. English Belebele and MKQA are separate tasks; the main table’s Belebele score averages the eight non-English languages. QA uses three-shot prompts, with chat formatting for DeepSeek and Qwen and base prompts for LongCat. SQuAD uses zero-shot passage prompting. MGSM and GSM8K use native/base few-shot reasoning prompts or zero-shot chat instructions. All generation is greedy. Output limits are 16 tokens for short-answer QA, 24 for MKQA and 32 for SQuAD; GSM8K/MGSM use 512 tokens with chat prompts and 320 with base prompts, while HumanEval uses 768 and 384, respectively.",
+              "figure_id": "table-7-20",
+              "figure_number": "7",
+              "height": 351,
+              "image_path": "figures/2610.21810/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 950
+            },
+            {
+              "caption": "Table 13: Full storage and output-fidelity results. KL is the geometric mean over six domains; KLmax is the worst domain; top-1 is next-token agreement with the original. GB counts lookup-table storage. Rates include row/group metadata. QTIP uses within-row rotation and a global scale; CP restores each row norm. RTN uses groups of 64 (80 for Qwen). NVFP4 and MXFP4 include block scales. Bottom: paired KL ratios and 95% chunk-bootstrap intervals; below 1 favors the first setting.",
+              "figure_id": "table-13-18",
+              "figure_number": "13",
+              "height": 310,
+              "image_path": "figures/2610.21810/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 950
+            },
+            {
+              "caption": "Table 3: Encoding at matched storage rates. Output KL on Qwen, evaluated on FineWeb-Edu. VQ labels denote codebook size × block dimension.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 204,
+              "image_path": "figures/2610.21810/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 473
+            },
+            {
+              "caption": "Table 4: Rotation and row scaling. Geometric-mean output KL over six domains with two-bit codes.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 191,
+              "image_path": "figures/2610.21810/table-013.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 466
+            },
+            {
+              "caption": "Table 2: Shared directions in frequently read rows. Energy captured by 16 fitted directions on the 4,096 most-read held-out rows. The Gaussian reference is 16/d.",
+              "figure_id": "table-2-25",
+              "figure_number": "2",
+              "height": 144,
+              "image_path": "figures/2610.21810/table-014.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 352
+            },
+            {
+              "caption": "Table 6: Lookup tables studied: the DeepSeek-V4.1Flash Engram tables and the Qwen3.8-Flash-Next and LongCat-Flash-Lite n-gram tables. Each token reads one row per hashed head. Original size 202.7, 102.4 and 62.8 GB. aTwo Engram layers, each 384.0M rows, 24 rows read per token. be4m3 with a UE8M0 scale per 32 values.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 137,
+              "image_path": "figures/2610.21810/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 461
+            },
+            {
+              "caption": "Table 19: Norm-restoration KL divided by LS KL in the gain test, with paired 95% bootstrap intervals. Values below 1 favor norm restoration. Stored codes and storage costs are fixed within each model. Web is the held-out FineWeb-Edu test split; code and Wikipedia reuse the benchmark texts described above.",
+              "figure_id": "table-19-23",
+              "figure_number": "19",
+              "height": 173,
+              "image_path": "figures/2610.21810/table-016.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 344
+            },
+            {
+              "caption": "Table 14: WikiText-2 perplexity in its original units (lower is better). Settings match Table 1; no normalization by the table-removal baseline is applied.",
+              "figure_id": "table-14-19",
+              "figure_number": "14",
+              "height": 194,
+              "image_path": "figures/2610.21810/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 383
+            },
+            {
+              "caption": "Table 15: Six statistics of the hashed tables. Ranges are over layers and n-gram orders (effective rank: over heads); d is the row dimension. Kurtosis and max/RMS (median over rows) are computed within each row (uniformly sampled rows; read-weighted: rows drawn in proportion to their read count). Effective rank is that of the row covariance of each head. The Gaussian column gives the value expected for i.i.d. Gaussian rows of the same dimension. KLT gain: coding gain of a covariance KLT at 2 bits, in the value-path readout metric. Cols.: columns with kurtosis above 5, out of 12,288, 2,560 and 3,072 columns. aUniformly sampled rows; with readweighted sampling, DeepSeek layer-14 order-2 heads have 2,048 such columns, an effect of mixing rows of different energy.",
+              "figure_id": "table-15-12",
+              "figure_number": "15",
+              "height": 196,
+              "image_path": "figures/2610.21810/table-018.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 461
+            },
+            {
+              "caption": "Table 26: Worst-domain KL of Gemma PLE tables at 2.0 bpp (six domains) when the BOS row, or the BOS row and the 100 most-read token rows (+top-100), are kept in bf16 in every layer (+0.006 bpp), without and with rotation. Models: Gemma-4 E2B, E4B and their instruction-tuned (-it) versions, gemma-3n-E4B. Bold: lowest of the first four columns.",
+              "figure_id": "table-26-21",
+              "figure_number": "26",
+              "height": 136,
+              "image_path": "figures/2610.21810/table-019.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 461
+            },
+            {
+              "caption": "Table 17: Codes considered for the Engram tables (Section 3) at about 2 bpp, on Qwen in the shared benchmark of Section 4 (six domains). KL is the geometric mean over domains of the per-token KL to the original model, KLmax the worst domain, top-1 the next-token agreement. aRotation and one scale per table. bAs in CP: no rotation, one bf16 norm-restoring scale per row. cOne scale per row (least squares for AQLM, RMS for HIGGS); HIGGS rotates, AQLM does not. dThe same codes with each row’s norm restored. Ratios are paired, with document-chunk bootstrap 95% CIs.",
+              "figure_id": "table-17-17",
+              "figure_number": "17",
+              "height": 404,
+              "image_path": "figures/2610.21810/table-020.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 458
+            },
+            {
+              "caption": "Table 16: Source-code comparisons on held-out Qwen text. Rates include per-row gains and structural coefficients. The final row interpolates the trellis curve in log KL; its uncertainty is not reported. The fitted codebooks and structural variants use the protocol in Appendix D.2.",
+              "figure_id": "table-16-16",
+              "figure_number": "16",
+              "height": 173,
+              "image_path": "figures/2610.21810/table-021.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 393
+            },
+            {
+              "caption": "Table 9: PopQA accuracy by entity popularity bin (1 = rarest). Settings match Table 8.",
+              "figure_id": "table-9-15",
+              "figure_number": "9",
+              "height": 152,
+              "image_path": "figures/2610.21810/table-022.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 950
+            },
+            {
+              "caption": "Table 20: Supplementary tool comparisons on hashed tables (frequency allocation lowers KL only on web, the distribution its read counts come from: .915 there, 1.044 over all domains). Entries: KL with / without the tool (S rows: geometric mean over domains, 95% CI). S: shared benchmark; E: separate evaluation with its own baseline; –: not tested; details in Table 21. A pure low-rank replacement was not evaluated end to end (covariance effective rank 239–254 of d = 256 and 152–158 of d = 160); a mean + 4 PCs + trellis residual was (Section 4.3). aKL without / with rotation, both with norm restoration, as in Section 3. bTrellis codes in three tiers by read count (top tier 35% of rows) vs the 2-bit code alone at the same mean rate; the 10% top tier and per-domain ratios are in Table 21.",
+              "figure_id": "table-20-8",
+              "figure_number": "20",
+              "height": 248,
+              "image_path": "figures/2610.21810/table-023.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 461
+            },
+            {
+              "caption": "Table 8: All task results on the 0–1 scale. Scores use the task-specific metrics in Appendix A, including token F1 for SQuAD. Orig.: original table; Rem.: table removed. RTN codes use 3 or 2 bits; QTIP uses 2 bits; CP uses 2 or 1.5 bits. Belebele-n, MKQA-n and MGSM-n average n non-English languages. Task differences and their intervals are reported in Table 10.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 69,
+              "image_path": "figures/2610.21810/table-024.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 950
+            },
+            {
+              "caption": "Table 22: Extended allocation checks. Entries are geometric-mean KL ratios to uniform CP with paired 95% chunk-bootstrap intervals over six domains. Frequency tiers keep the same mean rate; the top-tier fraction refers to rows. Qwen start-row protection restores 37,750 selected rows to bf16 and adds .0019 bpp; the random-row control uses the same count.",
+              "figure_id": "table-22-13",
+              "figure_number": "22",
+              "height": 229,
+              "image_path": "figures/2610.21810/table-025.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 461
+            },
+            {
+              "caption": "Table 24: DeepSeek lookup costs at two code bits (48 rows/token; one H200). HBM: GPU memory; DRAM: pinned host memory over PCIe. Decode: batch 64; prefill: 4,096 tokens. Top: separate gather/decode, singlesession medians; parentheses give factors over row records. Bottom: mean of five independent run medians (100 calls after 20 warm-ups each); row windows use random payloads, CP uses model codes. Blocks use different nodes and protocols and should be compared only within each block. KB/token is computed code traffic, not measured bandwidth; this test does not compare output KL.",
+              "figure_id": "table-24-5",
+              "figure_number": "24",
+              "height": 66,
+              "image_path": "figures/2610.21810/table-026.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 461
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21810/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.21810",
+          "relevance": 8,
+          "selection_reason": "Quantizes large LLM n-gram lookup tables with compressed reconstructable codes, drastically reducing model memory footprint while preserving output quality.",
+          "summary_status": "generated",
+          "title": "N-Gram Memories at Two Bits: Quantizing Lookup Tables in Large Language Models",
+          "tldr": "Conditional Program compresses language-model lookup tables to two bits per value while reconstructing requested rows on demand, substantially reducing storage and quantization error.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Weight quantization below four bits shrinks memory and bandwidth at a perplexity that looks acceptable, but often at the cost of factual knowledge and task accuracy. Ternary weights have mostly been obtained by training from scratch or long fine-tuning. We introduce RoleQ, a quantization framework that places scales by the functional roles of Transformer units rather than by the layout of the weight matrix, as conventional formats do. Vectors that read from the residual stream take one scale per output unit; those that write to it, one per input unit. The rule is structural, needs no search, calibration or stored state, and holds on integer and ternary grids. In a rotated basis it matches a per-layer axis search at half the solver work, and at ternary it cuts perplexity by up to half against layout-based placement in two families at every size from 0.6B to 14B, where per-row scales leave MMLU at chance. Our lightweight post-training pipeline converts an existing checkpoint to 1.59 bits per weight in a few GPU-hours, a fraction of the cost of learned ternarization, and leads every post-training ternary method at matched or lower memory-resident bits on perplexity, zero-shot accuracy and MMLU, most widely on knowledge. A sparse second ternary plane placed by a per-unit Fisher saliency keeps the matmul multiplication-free and recovers what ternary loses first: at 8B, a fraction of a bit returns about half the MMLU that conversion costs, well ahead of random or Hessian-based placement at equal bits.",
+          "arxiv_id": "2610.21808",
+          "arxiv_url": "https://arxiv.org/abs/2610.21808",
+          "authors": [
+            "Johannes Knittel, Alec Helbling, Hanspeter Pfister"
+          ],
+          "bullets": [
+            "Targets sub-four-bit quantization, where memory savings often degrade factual knowledge and task accuracy.",
+            "Assigns scales by Transformer unit function: residual-stream readers use per-output-unit scales, while writers use per-input-unit scales.",
+            "Requires no search, calibration, or stored state, and converts existing checkpoints to 1.59 bits per weight in a few GPU-hours.",
+            "In two model families from 0.6B to 14B parameters, ternary RoleQ reduces perplexity by up to half versus layout-based scaling; per-row scaling leaves MMLU near chance.",
+            "A sparse second ternary plane selected by Fisher saliency recovers about half of the lost 8B MMLU performance with a fraction of a bit."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: RoleQ aligns scales with the roles. (A) Readers read from the residual stream through rows, writers write to it through columns. (B) RoleQ places the scales on the unit axis, per row for readers and per column for writers, never on the stream axis. (C) Qwen3-14B, ternary at equal bits: the placement alone lifts MMLU from 25.4 (chance) with per-output-channel scales to 38.5.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 342,
+              "image_path": "figures/2610.21808/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: The RoleQ-T pipeline. A data-free learned rotation precedes ternary GPTQ with an exact per-vector step, giving codes in {−1, 0,+1} (grey) and one scale per functional unit (blue). The dashed stages are optional: scale distillation refits scales with frozen codes, and Fisher planes add a sparse second plane to salient units (+0.57 bits here). Values below each stage are memory-resident bits per weight for Qwen3-8B-Base.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 162,
+              "image_path": "figures/2610.21808/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 760
+            },
+            {
+              "caption": "Figure 3: The plane budget sweep. Qwen3-1.7B (post-trained), PTQ stage, WikiText2 perplexity, two calibration seeds at every budget; bands are the seed range. (a) Perplexity against the total rate as the second plane is extended to more units (upper axis), for three placements: the per-unit Fisher saliency, Hessian×weight saliency, and random units; the planes-off run at 1.594 bits is the common origin. Random was run at three budgets. (b) The same cells as a ratio to the Fisher placement: its advantage over random decays from 1.96× at +0.15 bits to 1.12× at +0.90, and Hessian × weight overtakes it at +1.20 bits (0.94×). The decay is measured at 1.7B and is not claimed at 8B.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 306,
+              "image_path": "figures/2610.21808/figure-003.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 808
+            },
+            {
+              "caption": "Table 4: Compared methods. Each method’s claimed and memory-resident rate (derivations in Table 5), whether it trains codes or weights, whether it calibrates on data, where its scales sit, and how it enters our tables (rerun: its own code on our checkpoint; ckpt: its released checkpoint decoded and scored on our harness; paper: cited as reported). PTQTP has no public code or checkpoints; its rate and scale axis follow from its own decomposition and storage formula (Xiao et al., 2025b). QTIP, alone and under GuidedQuant’s loss-guided Hessian, is the trellis-coded 2-bit class we do not claim to match; those checkpoints are Llama-3.1-8B-Instruct and CAT-Q’s are post-trained Qwen3-1.7B / 8B; CAT-Q brackets its cost at 1–8 h on eight A100-80GB GPUs from 1.7B to 14B. TWLA releases no checkpoint: its row is the model its released code builds that matches its reported numbers, and its rotation objective is fitted to the weights (its text mentions the calibration set, its code does not use it).",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 650,
+              "image_path": "figures/2610.21808/table-004.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 798
+            },
+            {
+              "caption": "Table 1: RoleQ-T leads the tested post-training ternary baselines below 2.3 bpw. WikiText2 perplexity, seven-task zero-shot average and five-shot MMLU; baselines at their best available stage, ours at PTQ and after scale distillation (+SD), mean of two seeds ± half-range. TWLA (higher rate) and CAT-Q (learned) are references. Planes use the text Fisher on Base models and the knowledge Fisher on the post-trained model.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 599,
+              "image_path": "figures/2610.21808/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 818
+            },
+            {
+              "caption": "Table 6: Models, corpora, seeds and evaluation. Full-precision references are measured on our harness.",
+              "figure_id": "table-6-17",
+              "figure_number": "6",
+              "height": 630,
+              "image_path": "figures/2610.21808/table-006.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 798
+            },
+            {
+              "caption": "Table 5: Bit-accounting derivations. Information bits per weight, counting every term a decoder needs to produce the weight (Qwen3-8B: d = 4096, dff = 12288); folded or seed-regenerable rotations cost nothing, and packing is not charged (5 trits per byte would read 1.605). QTEA’s terms use its own bit width function. PT2-LLM’s α and µ are counted as fp16 per (row, 128), the layout of its released quantizer; it publishes no per-weight accounting. TWLA’s terms are measured on the model its released code builds, the code that reproduces its reported Qwen3-8B perplexity (TWLA releases no checkpoint; its paper describes one (α, µ) pair per row and a single plane, while the code, of ARB-LLM lineage, adds per-block magnitude masks with separate pairs and a second plane on the salient partition) over all 10 368 blocks: 26.21% of the weights carry a second plane (26.48% on the post-trained model), and the absence of a single exact zero among 1.31 M sampled weights shows that the mask membership is consumed at inference, since µ is added to every element inside a mask regardless of its code. Even without the membership bit, TWLA sits at 3.15–3.65.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 725,
+              "image_path": "figures/2610.21808/table-007.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 810
+            },
+            {
+              "caption": "Table 10: Llama-3.1-8B-Instruct at 2 bpw against the trellis-coded class. Scores and, in parentheses, the share of the above-chance headroom retained (fp16: 7.23 ppl, 71.50 zero-shot, 68.30 MMLU; chance 35.7 and 25.0). QTIP (whose stage includes its QuIP#-style fine-tune) and GuidedQuant are their released checkpoints re-scored on our harness (QTIP’s WikiText2 reproduces its published value to 0.001, in its own convention on the materialised model). Our plane budget is set so that the rate matches QTIP-2bit to three decimals (1.590 + 0.4165). Calibration on the standard draw 128 × 2048. The recipe rows are two-seed on every instrument; the r1 rows (seed 45) are the same method in the ablation basis. This is a negative result: at matched bits the trellis-coded methods lead on every instrument (−4.3 zero-shot and −8.9 MMLU against QTIP after distillation, −2.5 and −6.6 against GuidedQuant), and the change of basis narrows the gap (from −5.0 / −11.9 in r1) without closing it.",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 171,
+              "image_path": "figures/2610.21808/table-008.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 786
+            },
+            {
+              "caption": "Table 7: The placement rule: the cells behind Table 2. (a) Ternary, calibrated, r1, PTQ-only: two-seed means with half-ranges (four seeds for RoleQ and per-IC at Qwen-8B), the writer half (per-OC over RoleQ), the reader half (per-IC over RoleQ), the best uniform placement, and RoleQ’s lead over it with the gap as a multiple of the largest seed range. Llama-8B is the one cell in which both halves separate at once, between runs at 9× and 18× full precision. (b) Two grids omitted from the main table: the per-vector four-level grid (2.01 bpw), whose lead closes and reverses by 8B as it does at the integer widths, and INT8sym, where the axis makes no measurable difference (seed 45). (c) Zero-shot and MMLU scores of the integer grids where they were run and of the 14B ternary triplet (two seeds; lead: RoleQ compared to best uniform placement, ∗marks notable difference; the 14B per-OC and per-IC MMLU are at chance, ◦).",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 494,
+              "image_path": "figures/2610.21808/table-009.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 830
+            },
+            {
+              "caption": "Table 9: The 8B recipe ladder in both bases. Every run of ours behind Table 1: Qwen3-8B-Base, C4 512 × 512, two seeds, half-range as subscript. The r1 rows are the ablation that measures what the recipe’s rotation is worth; the recipe rows are the numbers presented in the main text.",
+              "figure_id": "table-9-5",
+              "figure_number": "9",
+              "height": 358,
+              "image_path": "figures/2610.21808/table-010.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 690
+            },
+            {
+              "caption": "Table 8: AdaDim’s per-layer search against the placement rule. Left: at the GPTQ stage on Qwen3-1.7B, in 16 sampled layers, how many matrices of each kind AdaDim’s reconstruction-error argmin sends to the input axis, rotated (r1) and unrotated; RoleQ fixes readers to the output axis and writers to the input axis without a search. Right: the cost and the return of the search; AdaDim’s own search quantizes each matrix twice with RTN before one GPTQ pass, and the “half the solver work” of Section 4.2 is against a two-way GPTQ search. We did not run AdaDim end to end: it would differ from RoleQ in 4 of 112 cells at 1.7B and 6 of 112 at 8B, worth 0.003% and 0.023% of H-metric error, three orders of magnitude below the seed noise.",
+              "figure_id": "table-8-4",
+              "figure_number": "8",
+              "height": 394,
+              "image_path": "figures/2610.21808/table-011.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 586
+            },
+            {
+              "caption": "Table 11: Matched bits in the recipe basis. Ternary + text-Fisher planes (2.157 bpw at Qwen-8B, 2.158 at Llama-8B) against the four-level INT2-g128 grid (2.156) with scales per output channel (the standard) and on the role axis (the best four-level control); all three are ours, with the same solver, kernel and calibration; two seeds, half-range as subscript. The lead is the better control’s perplexity over ours (or the point gap against the better control), with the gap as a multiple of the largest seed range among the runs compared; ∗ marks ≥ 3×. On Llama the role-axis grid ties per-OC, with the sign against it. The r1-basis perplexities at 0.6B and 1.7B are in Table 2.",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 400,
+              "image_path": "figures/2610.21808/table-012.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 714
+            },
+            {
+              "caption": "Table 3: Our Fisher selector outperforms random and Hessian-based selection at matched bit rates. Results on post-trained Qwen3-8B after scale distillation (two seeds, ± half-range).",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 171,
+              "image_path": "figures/2610.21808/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 827
+            },
+            {
+              "caption": "Table 2: Role-aligned scale placement achieves the lowest perplexity over fixed per-channel placement. WikiText2 perplexity at four Qwen3-Base sizes and Llama-3.1-8B-Base, under matched PTQ settings (random Hadamard r1). Mean of two (4 four) seeds ± half-range; lower is better.",
+              "figure_id": "table-2-16",
+              "figure_number": "2",
+              "height": 97,
+              "image_path": "figures/2610.21808/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 826
+            },
+            {
+              "caption": "Table 13: Rotation bake-off and solver controls. (a) Qwen3-1.7B-Base, RoleQ format, C4 512× 512 seed 45, WikiText2 perplexity at PTQ and after SD; the weight-space column is the ternary reconstruction error relative to the random Hadamard. The objective with the lowest weight-space error has the highest perplexity, and the learned rotation paired with per-OC scales collapses. (b) The s2 and r4 slots isolated, s1 = l4 throughout. (c) Solver controls on the writer step: Qwen3-1.7B, minipile 256 × 512, r1, PTQ seed 42 and 100-step SD on two seeds. (d) The r4 intervention: the writer-half margin at 1.7B ternary with and without r4, two seeds; r4 is the one slot that mixes a unit axis, and it compresses the half that lives on the writers by two thirds in log terms.",
+              "figure_id": "table-13-1",
+              "figure_number": "13",
+              "height": 816,
+              "image_path": "figures/2610.21808/table-015.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 844
+            },
+            {
+              "caption": "Table 14: Calibration draw-shape sensitivity. PTQ WikiText2 perplexity of the same configuration calibrated on the standard draw (128 × 2048 tokens) and on the paper draw (512 × 512), seed 45, multiple of fp16 in parentheses. The draw shape moves every method, including PT2-LLM on its own corpus, by more than most format effects, and it favours the baselines as much as it favours us. The ternary rows are the RoleQ-T body under r1.",
+              "figure_id": "table-14-12",
+              "figure_number": "14",
+              "height": 154,
+              "image_path": "figures/2610.21808/table-016.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 772
+            },
+            {
+              "caption": "Table 12: Every selector at 1.7B, grouped by the family of the score. Qwen3-1.7B post-trained, +0.47 bits of planes (2.066 bpw), PTQ WikiText2 perplexity and the same runs after scale distillation (fp 5.64); two seeds with the half-range as subscript, a cell without a subscript is one seed; ρ as in Table 3. The loss-sensitivity scores lie at 9.7–10.3 and the error-magnitude scores at 13.7–17.9, with random placement among the latter; three of the four error-magnitude scores, including the solver’s own measured error, fail to beat random, so a better estimate of the error would not help. The 3.3× spread across selectors at PTQ narrows to 1.22× after scale distillation.",
+              "figure_id": "table-12-14",
+              "figure_number": "12",
+              "height": 296,
+              "image_path": "figures/2610.21808/table-017.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 518
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21808/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.21808",
+          "relevance": 8,
+          "selection_reason": "Ternary quantization of LLMs reduces model memory, fitting efficient AI memory-efficiency.",
+          "summary_status": "generated",
+          "title": "RoleQ: Role-Aligned Scales for Converting Language Models to Ternary",
+          "tldr": "RoleQ converts pretrained language models to ternary weights using role-aligned scaling, preserving knowledge and accuracy better than layout-based quantization at low memory cost.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Reusing the attention KV cache across requests is a standard way to cut prefill cost in long-context LLM serving, and production systems increasingly back the per-engine cache with a remote tier shared by every engine. We study such a tier in a disaggregated deployment of GLM-5.3, an FP8 mixture-of-experts model with multi-head latent attention (MLA), on 8xB300 nodes running prefill context parallelism (PCP8). Enabling the remote tier (LMCache with a Valkey store) left median time-to-first-token unchanged but raised the 16k-token p99 from 3.96 s to 17.3 s. Replaying a production request stream on an isolated engine, we find that a remote hit took 0.88 s against 0.31 s to recompute the prompt, and that synchronous loading turned a hit-heavy stream into an unstable queue: p99 83.32 s with the GPUs 7% busy. A two-term cost model explains both: a hit pays off only if the tier delivers more than B* = sR (2.53 GB/s for this model and GPU), and a fixed per-hit engine cost (T0 ~ 0.33 s) means that hits on prompts shorter than about 17k tokens cannot beat recompute at any bandwidth. Guided by the model, we (i) shard the MLA KV store across PCP ranks, with a proof that the existing minimum-over-ranks lookup returns the longest cached prefix and a load protocol that can never desynchronize collectives; (ii) partition the remote tier by rank, one server instance per rank with no coordination, which raises GET bandwidth 6.3x to 10.76 GB/s; (iii) add asynchronous loading to the sharded store; and (iv) fix three client bugs that caused unbounded stalls. On the hit-heavy stream, with 98.5% of prompt tokens served from the remote tier, p99 falls from 83.32 s to 0.67 s. The sharded store raises prefill throughput by 14%, and by 34% together with an upstream kernel fix. All changes are submitted upstream to LMCache.",
+          "arxiv_id": "2610.21500",
+          "arxiv_url": "https://arxiv.org/abs/2610.21500",
+          "authors": [
+            "Muhammad Ibrahim"
+          ],
+          "bullets": [
+            "A remote LMCache/Valkey tier increased 16k-token p99 latency from 3.96 s to 17.3 s, despite unchanged median time-to-first-token.",
+            "Remote hits initially took 0.88 s versus 0.31 s for prompt recomputation; synchronous loading caused severe queueing and 83.32 s p99 latency.",
+            "A cost model shows caching helps only above 2.53 GB/s and for prompts longer than roughly 17k tokens.",
+            "The proposed design shards MLA KV state and the remote tier across PCP ranks, adds asynchronous loading, and fixes three stalling client bugs.",
+            "The optimized system reduced hit-heavy p99 latency to 0.67 s, increased prefill throughput by 14%, and by 34% with an upstream kernel fix."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: System overview, final design. The original design stored every chunk from rank 0 into a single Valkey instance.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 231,
+              "image_path": "figures/2610.21500/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 929
+            },
+            {
+              "caption": "Figure 2: Model (Eq. (1)) against measurement for a 16k-token hit. 𝑇0 is fitted on the H5b median only; the single-instance runs were not used to fit. The dashed line is the measured recompute median.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 420,
+              "image_path": "figures/2610.21500/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 491
+            },
+            {
+              "caption": "Figure 4: Per-request prefill latency over the hit-heavy replay (log scale). With one instance and synchronous loading (H1b) the engine never catches up; with one instance per rank (H3, H5b) latency is flat from the first request to the last.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 403,
+              "image_path": "figures/2610.21500/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 491
+            },
+            {
+              "caption": "Figure 6: Requests running or waiting in the engine (5 s samples).",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 313,
+              "image_path": "figures/2610.21500/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 497
+            },
+            {
+              "caption": "Figure 7: Prefill throughput on one 8×B300 node, 8 concurrent ∼200k-token prompts. “Kernel fix” is FlashInfer PR #3969 [3].",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 250,
+              "image_path": "figures/2610.21500/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 499
+            },
+            {
+              "caption": "Figure 3: Aggregate GET bandwidth, LMCache native RESP client, 12.4 MB chunks.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 246,
+              "image_path": "figures/2610.21500/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 498
+            },
+            {
+              "caption": "Figure 8: Tokens per minute per B300 node on the SLA benchmark.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 230,
+              "image_path": "figures/2610.21500/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 499
+            },
+            {
+              "caption": "Figure 5: Latency CDFs on the hit-heavy subset (log scale), with the recompute baseline and the production engine on the same requests.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 84,
+              "image_path": "figures/2610.21500/figure-008.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 487
+            },
+            {
+              "caption": "Table 3: 200k-token SLA benchmark. TPM: input plus output tokens per minute.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 209,
+              "image_path": "figures/2610.21500/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 420
+            },
+            {
+              "caption": "Table 1: Prefill latency of the 683-request 16k-token stream by cache state. “Hits” are requests with ≥12k cached tokens. Single L2 instance, synchronous loading unless noted.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 186,
+              "image_path": "figures/2610.21500/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 438
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21500/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.21500",
+          "relevance": 8,
+          "selection_reason": "Scales remote KV cache tiers for context-parallel prefill; directly relevant to KV cache and memory efficiency.",
+          "summary_status": "generated",
+          "title": "When the KV Cache Is Slower Than the GPU: Scaling Remote KV Tiers for Context-Parallel Prefill",
+          "tldr": "Remote KV caching can be slower than recomputing prompts, but sharding, bandwidth scaling, asynchronous loading, and client fixes make it effective for long-context PCP serving.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models can produce fluent answers that the supplied context does not support. A compact frozen proxy model can detect such answers by reading the context and another model's response, even from a proprietary generator. Attention-based detectors use summary statistics of the proxy's attention weights, but standard pipelines materialize the attention matrix, whose memory grows quadratically with sequence length. We compute these statistics without materializing attention, by accumulation in the FlashAttention pass, sparse lookups after it, or a second tiled pass over the scores, and classify them by this path into nearly free and costlier ones. On an H100, the statistics of five published detectors add 16% to the latency of a Qwen3-8B forward at 2K tokens, falling to 1.4% at 35K, and store 22.5 KiB per response token. On three benchmarks, probes trained on frozen Qwen3 proxies of 0.6B to 8B parameters prove strong detectors: a 4B proxy outperforms the strongest of nine zero-shot 4-9B LLM judges in F1 on two of the three, the proxies match or outperform specialized grounding checkers of up to 7B parameters, probing each proxy beats prompting it as a judge, and adding attention features significantly improves F1 in half of the 12 benchmark-proxy pairs, never significantly lowering it.",
+          "arxiv_id": "2610.21483",
+          "arxiv_url": "https://arxiv.org/abs/2610.21483",
+          "authors": [
+            "Andrei Volodichev, Maksim Savichev, Nikita Sviridov, Artem Yuliy, Dmitry Simakov, Alexey Zaytsev"
+          ],
+          "bullets": [
+            "Targets unsupported but fluent LLM answers, including responses from proprietary generators.",
+            "Computes attention statistics during FlashAttention, via sparse lookups, or with a second tiled score pass, avoiding quadratic memory materialization.",
+            "On an H100, five detectors add 16% latency at 2K tokens and 1.4% at 35K, using 22.5 KiB per response token.",
+            "Across three benchmarks, frozen Qwen3 probes are strong detectors; a 4B proxy beats nine zero-shot LLM judges on two benchmarks and matches or exceeds specialized checkers.",
+            "Attention features significantly improve F1 in 6 of 12 benchmark–proxy pairs and never significantly reduce it."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: What each benchmark configuration adds to one attention layer (Q2). Configuration ≤Tk enables the paths up to Tk; ≤T3 reads the BOS column sum from the column sums instead of the lookup. (a) Overhead of each configuration over our statistics-off Base layer at L=32K (whiskers: 16K–32K), and of Base relative to SDPA on the whole sequence (diamonds). (b) Latency from 1K to 100K tokens at d = 128, r = 0.3. (c) Overhead relative to SDPA cuDNN on the whole sequence, at r = 0.3 (solid) and r = 0.1 (dashed).",
+              "figure_id": "figure-3-18",
+              "figure_number": "3",
+              "height": 591,
+              "image_path": "figures/2610.21483/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 935
+            },
+            {
+              "caption": "Figure 2: Attention with statistics. Blue: standard FlashAttention (Dao et al., 2022; Dao, 2024); green: our additions. (a) We compute statistics for response rows only; prompt rows can go through any production kernel (§2.1). sIJ : scores of query tile I against key tile J . (b) One tile of the pass: the exponentials that FlashAttention already computes also feed the T1 statistics, which are finalized after the last tile; the pass also stores the log-sum-exp (LSE) that T2 and T3 reuse (§2.2). (c) The four tiers, i.e. computation paths of a statistic, ordered by the extra work they need: none (T1, fused), a few positions per row (T2, lookup), a second pass over all scores (T3, rescore), or the whole stored map (T4, dense) (§3).",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 489,
+              "image_path": "figures/2610.21483/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 917
+            },
+            {
+              "caption": "Figure 5: Figure 1 at every length, for Qwen3-8B (left) and Qwen3-0.6B (right, all 16 heads of all 28 layers), with the overhead on a log scale. Dotted line: the 2K cut of Figure 1. Same inputs, backends, and binning; batch 1, H100 NVL, bf16.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 438,
+              "image_path": "figures/2610.21483/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 940
+            },
+            {
+              "caption": "Figure 1: Cost of extracting all implemented attention statistics for hallucination detection in every layer of Qwen3-8B and Qwen3-0.6B using our kernels. Top: model forward-pass latency. Bottom: relative overhead compared with the same forward using standard scaled dot-product attention (SDPA), without statistic extraction.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 399,
+              "image_path": "figures/2610.21483/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 450
+            },
+            {
+              "caption": "Figure 4: Added latency and peak memory over the forward without features, per sample, by prompt length (Q3). Lines: binned medians. The shortest prompts are RAGTruth QA, the others PHANTOM.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 363,
+              "image_path": "figures/2610.21483/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 423
+            },
+            {
+              "caption": "Figure 6: Figure 1 for peak memory: the peak of each forward above the memory allocated before it, so the model weights are excluded, with all features (solid, points) and without (dashed). Same runs, inputs of at least 2K tokens, and binning; batch 1, H100 NVL, bf16.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 381,
+              "image_path": "figures/2610.21483/figure-006.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 450
+            },
+            {
+              "caption": "Table 2: Test F1 by feature set and Qwen3 proxy size. A7: cheap attention features; A64: all-head sink values; H64: compact hidden states; L9: logit features; combinations concatenate blocks (Section 5.2). N : number of classifier inputs. Bold: best in column; underlined: second best. Bottom: the best of nine LLM judges of 4–9B parameters, Qwen3.5-9B on every dataset (Table 13).",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 319,
+              "image_path": "figures/2610.21483/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 725
+            },
+            {
+              "caption": "Table 14: Cross-domain transfer on HaluBench (Qwen3-8B reader): test AUROC of each method fit on the source of its row group and tested on each source. Shaded: same source. Other five: fit on the five sources other than the test domain (leave-one-source-out); All six: fit on all six sources (pooled). Mean: over the five other test domains for a single fitting source, over all six for the last two groups. RAUQ fits nothing and scores the same for every fitting source. Bold: best method of the group in each column (ties marked alike). Each test domain has 138–166 examples; the 95% bootstrap intervals span ±0.09 at the median (±0.03 to ±0.12).",
+              "figure_id": "table-14-3",
+              "figure_number": "14",
+              "height": 1027,
+              "image_path": "figures/2610.21483/table-008.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 904
+            },
+            {
+              "caption": "Table 10: Test AUROC of the detectors of Table 2. Bold: best in column; underlined: second best (ties marked alike). Bottom: the best of nine LLM judges of 4–9B parameters, Qwen3.5-9B on every dataset (Table 13).",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 318,
+              "image_path": "figures/2610.21483/table-009.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 725
+            },
+            {
+              "caption": "Table 11: Change in test F1 when A7 is added, with two-sided p-values from 100,000 paired bootstrap resamples of test groups (seed 42; models, regularization, and thresholds fixed), Holm-corrected over the 12 dataset–proxy pairs of an addition (Holm-12). A gain is significant if ∆ > 0 and the corrected p < 0.05; bold: significant gain. No addition gives a significant loss.",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 219,
+              "image_path": "figures/2610.21483/table-010.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 943
+            },
+            {
+              "caption": "Table 13: LLM judges on the test splits of Table 7 with F1 at the threshold selected on validation. Top: nine instruction-tuned LLMs prompted as judges. Middle: the four Qwen3 proxy backbones prompted as judges and two specialized grounding checkers. Bottom: our proxy detectors for reference.",
+              "figure_id": "table-13-15",
+              "figure_number": "13",
+              "height": 499,
+              "image_path": "figures/2610.21483/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 869
+            },
+            {
+              "caption": "Table 4: Mean absolute error on response rows against an fp64 reference for materialized attention (the dense bf16 path) and our bf16 kernels, and their ratio. Each entry averages the per-head error over heads and layers and reports the worst input type (random or PHANTOM) and length (2K, 8K, 32K). Our statistics are about three to four orders of magnitude closer to fp64; they have the lower error for every statistic, input, and length, in both mean and maximum error.",
+              "figure_id": "table-4-19",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2610.21483/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 427
+            },
+            {
+              "caption": "Table 6: Where the time of a short forward goes: Qwen38B on five TRIVIA+ inputs of 90–253 tokens, all 36 layers scored, FlashAttention-2, H100 NVL. GPU busy is the summed device time of all kernels (PyTorch profiler); syncs are counted with PyTorch’s synchronization debug mode.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 134,
+              "image_path": "figures/2610.21483/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 302
+            },
+            {
+              "caption": "Table 8: Text-only baselines on the test splits of Table 7: answer length in words or characters, and TF– IDF of the answer alone. The last column uses a split of HaluBench built the same way without the length filtering (2,231 test answers, 1,075 hallucinated). The 95% group-bootstrap intervals of AUROC are at most ±0.05.",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 258,
+              "image_path": "figures/2610.21483/table-014.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 436
+            },
+            {
+              "caption": "Table 7: Splits used in Section 5. Hal.: hallucinated test answers; Grp.: test groups for the bootstrap.",
+              "figure_id": "table-7-16",
+              "figure_number": "7",
+              "height": 113,
+              "image_path": "figures/2610.21483/table-015.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 377
+            },
+            {
+              "caption": "Table 9: Logit statistics computed per answer token from the proxy’s next-token distribution. Shape: output for one sequence with R answer tokens.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 239,
+              "image_path": "figures/2610.21483/table-016.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 887
+            },
+            {
+              "caption": "Table 5: The numbers behind Figure 3a (Q2): latency overhead (%) of one attention layer, as a range over L ∈ {16K, 32K}. Upper rows: each configuration of Section 4 over the statistics-off split Base, with the prompt stage on SDPA cuDNN. Lower rows: Base over SDPA on the whole sequence, with the prompt stage on the same backend, and the cost of all row statistics (≤T2) over full SDPA cuDNN, the fastest production kernel here. H100 NVL, bf16.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 209,
+              "image_path": "figures/2610.21483/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 946
+            },
+            {
+              "caption": "Table 15: Licences of the artifacts we use, as stated by their releases; Falcon LLM and GLM-4 are the custom licences of these models. Detection: Section 5; kernels: Section 4; judges and grounding checkers (checker): Appendix L.5, where the models are cited.",
+              "figure_id": "table-15-11",
+              "figure_number": "15",
+              "height": 394,
+              "image_path": "figures/2610.21483/table-018.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 452
+            },
+            {
+              "caption": "Table 12: Change in test F1 when A64 is added to H64 (Section 5.4), with two-sided p-values from 100,000 paired bootstrap resamples of test groups as in Table 11, Holm-corrected over the 12 dataset–proxy pairs (Holm-12). Bold: significant gain. No change is a significant loss.",
+              "figure_id": "table-12-10",
+              "figure_number": "12",
+              "height": 123,
+              "image_path": "figures/2610.21483/table-019.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 931
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21483/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.21483",
+          "relevance": 8,
+          "selection_reason": "Computes attention statistics without materializing the attention matrix, reducing memory and latency for attention-based detectors.",
+          "summary_status": "generated",
+          "title": "FlashAttention with Statistics: Low-Overhead Attention Features for Compact Hallucination Detectors",
+          "tldr": "FlashAttention-based computation makes attention features practical for compact, frozen-model hallucination detectors without storing the full attention matrix.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Multi-agent large language model (LLM) systems are increasingly deployed at the edge to support complex tasks that require collaboration and information exchange among multiple agents. However, when task contexts are passed across agents, shared context that has already been processed by upstream agents often needs to be prefilled again, resulting in substantial redundant computation. Reusing an already prefilled key--value (KV) cache can avoid this recomputation, but requires the reusable KV state to be transferred across the network before the receiving agent can begin generation. Under strict time-to-first-token (TTFT) deadlines and unreliable edge links, delivering the complete KV cache may be infeasible, making it necessary to prioritize and protect the most valuable KV information within a limited transmission budget. This paper proposes PriorityFEC, a utility-aware KV-cache handoff scheme that jointly exploits model-side KV importance and transport-side reliability. PriorityFEC first constructs a utility-aware source stream by placing high-utility KV blocks at earlier transmission positions. It then protects the ordered stream using a feedback-adaptive Streaming Forward Erasure Correction (FEC) mechanism, which schedules repair packets according to receiver feedback before the TTFT deadline. We implement PriorityFEC on a distributed edge LLM serving prototype and evaluate it with Qwen2.5-7B-Instruct and Llama-3.1-8B-Instruct across multiple datasets. Results show that PriorityFEC achieves superior task quality over the compared transport schemes, with its advantages becoming particularly pronounced under stringent deadline constraints. These results demonstrate the importance of jointly optimizing KV-cache utility and deadline-aware transport reliability when reusable LLM state must be handed off across unreliable edge networks.",
+          "arxiv_id": "2610.21390",
+          "arxiv_url": "https://arxiv.org/abs/2610.21390",
+          "authors": [
+            "Han Shen, Qifu Tyler Sun, Fanyang Meng, Ye Wang, Yongsheng Liang"
+          ],
+          "bullets": [
+            "Addresses redundant prefill computation when shared context moves between agents.",
+            "Orders KV blocks by model-side utility so the most valuable information is transmitted first.",
+            "Uses feedback-adaptive streaming FEC to schedule repairs before the receiver’s TTFT deadline.",
+            "Evaluations on Qwen2.5-7B-Instruct and Llama-3.1-8B-Instruct across multiple datasets show better task quality than compared transport schemes, especially under tight deadlines.",
+            "Scope: effectiveness depends on KV-utility estimation, link reliability, and available transmission time."
+          ],
+          "categories": [
+            "cs.NI",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 5. Normalized KV utility recovered before the decode-start deadline on the 100-Mbps burst-loss GE link. PriorityFEC consistently preserves the highestutility KV regions, with its advantage being most pronounced under the tight ρ = 0.8 deadline.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 565,
+              "image_path": "figures/2610.21390/figure-001.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1063
+            },
+            {
+              "caption": "Fig. 6. End-to-end token-level F1 under different decode-start deadlines on the 100-Mbps burst-loss GE link. PriorityFEC provides substantial gains under ρ = 0.8, where complete loss-free KV serialization is infeasible. As the deadline is relaxed to ρ = 1.0, the performance gap decreases because more KV state can be recovered regardless of source position.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 573,
+              "image_path": "figures/2610.21390/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1063
+            },
+            {
+              "caption": "Fig. 7. Ablation of utility-aware source ordering and adaptive Streaming FEC on Qwen2.5-7B-Instruct under the 100-Mbps heavy-GE channel. The first row reports downstream token-level F1, while the second row reports normalized KV utility recovered before the decode-start deadline. PriorityFEC consistently achieves the best performance by combining favorable source ordering with adaptive repair scheduling.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 569,
+              "image_path": "figures/2610.21390/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1063
+            },
+            {
+              "caption": "Fig. 8. Token-level F1 under measured 5G SA uplink loss replay. Bars average eight examples and two paired replay windows per example; the dashed line is the clean Full-KV reference.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 573,
+              "image_path": "figures/2610.21390/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1063
+            },
+            {
+              "caption": "Fig. 1. Motivation for deadline-constrained KV-cache handoff. (a) Reliable transport waits for loss recovery before the receiving agent can use the complete reusable KV state, delaying agent activation and TTFT. (b) PriorityFEC places high-utility KV blocks earlier in the source stream and uses FEC, allowing useful KV state to be reconstructed before the TTFT deadline.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 535,
+              "image_path": "figures/2610.21390/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 524
+            },
+            {
+              "caption": "TABLE I Positioning of PriorityFEC relative to representative related work.",
+              "figure_id": "table-I-6",
+              "figure_number": "I",
+              "height": 357,
+              "image_path": "figures/2610.21390/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 1076
+            },
+            {
+              "caption": "TABLE II Measured online computation overhead of PriorityFEC. Component-wise overhead is normalized by the number of transmitted packets. The control latency measures the online decision path from transport-state construction to scheduling output.",
+              "figure_id": "table-II-5",
+              "figure_number": "II",
+              "height": 133,
+              "image_path": "figures/2610.21390/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 598
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21390/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.21390",
+          "relevance": 6,
+          "selection_reason": "Focuses on deadline-aware KV-cache handoff and transport for edge multi-agent LLM systems, relevant to KV-cache efficiency.",
+          "summary_status": "generated",
+          "title": "PriorityFEC: Deadline-Aware Streaming FEC for KV-Cache Handoff in Edge Multi-Agent Systems",
+          "tldr": "PriorityFEC improves KV-cache handoff for edge multi-agent LLMs by prioritizing valuable cache blocks and adaptively protecting them under TTFT deadlines and unreliable links.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language-action (VLA) policies commonly place a multi-billion-parameter model inside the feedback loop, repeatedly recomputing task context whenever they predict a new action chunk. Yet task understanding changes far more slowly than the robot state. We introduce Fast-VLA, which invokes a frozen 4B VLM once per episode to contextualize the instruction and initial views as fixed, multi-layer key-value task memory. During execution, a lightweight online actor fuses learned time- and arm-indexed queries with current visual and proprioceptive feedback to form action queries. These queries retrieve task context from the fixed memory and predict action chunks without re-running the foundation model. Fast-VLA achieves 92.46% and 92.40% success on RoboTwin 2.0 Clean and Randomized, and 95.95% and 79.11% on LIBERO and LIBERO-Plus evaluation. Against three continually conditioned baselines on the same hardware, it reduces RoboTwin amortized policy inference time by 10.9-17.1x and requires 1.22 GiB of post-prefill online resident memory. Task-memory swaps further show that the actor relies on episode-matched task memory. These results show that task context can be established once while closed-loop control remains responsive throughout execution. Project page: https://garfield-kh.github.io/FastVLA",
+          "arxiv_id": "2610.21389",
+          "arxiv_url": "https://arxiv.org/abs/2610.21389",
+          "authors": [
+            "Kehong Gong, Guanli Hou, Xiaoxu Zheng, Qi Wang, Mingxi Xu, Anbang Zhai, Xiaoyu He, Mingyuan Zhang, Michael Bi Mi"
+          ],
+          "bullets": [
+            "Addresses the high inference cost of repeatedly recomputing task context in VLA policies.",
+            "Stores instruction and initial-view context as fixed, multi-layer key-value task memory.",
+            "A lightweight actor combines current visual/proprioceptive feedback with learned time- and arm-indexed queries to predict action chunks.",
+            "Reports strong success across RoboTwin 2.0, LIBERO, and LIBERO-Plus, with 10.9–17.1× lower amortized RoboTwin inference time than continually conditioned baselines.",
+            "Task-memory swaps indicate that performance depends on episode-matched task context."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Successful rollouts with fixed task memory. Each row shows five frames sampled at equal intervals from one episode; corner labels indicate frame indices. Wrist views are inset below the third-person view (two for RoboTwin and one for LIBERO). Task memory is constructed once at episode start and reused throughout each rollout. In the LIBERO-Plus row, sensor noise corrupts the third-person view while the wrist view remains unperturbed; memory is built from the perturbed initial observation.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 392,
+              "image_path": "figures/2610.21389/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: Memory-conditioned online control in Fast-VLA. A frozen VLM constructs layer-wise KV task memory from the instruction and initial views once per episode. In the online actor, query fusion combines learned queries with arm state and wrist-view CLS tokens to form action queries. The action decoder reads visual tokens from current and historical views and retrieves task context from the fixed memory. The action head predicts a 50-step bimanual action chunk.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 342,
+              "image_path": "figures/2610.21389/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Figure 5: Successful rollouts of Fast-VLA. Each row samples five frames at equal intervals from one episode; the corner label is the frame index. Each frame shows the third-person view at full size with the actor’s wrist views inset at the bottom, two for RoboTwin and one for LIBERO. All actions in a row are produced from a single task memory built before the first frame and never refreshed.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 592,
+              "image_path": "figures/2610.21389/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Attention follows the active sub-goal. A successful 300-step stack blocks two rollout, shown in successive 50-step action chunks. As control passes from the left arm to the right, headcamera attention shifts from the red block to the green block. Each wrist focuses on the block handled by its own arm, with the right wrist attending to the green block before the second sub-goal begins. Crosshairs mark attention peaks, and enrichment above 1 indicates preferential attention to the corresponding block; the final open-loop chunk has no new attention map.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 236,
+              "image_path": "figures/2610.21389/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 812
+            },
+            {
+              "caption": "Figure 6: Additional successful LIBERO-Plus rollouts for “put the black bowl in the bottom drawer of the cabinet and close it.” Rows show camera, background, lighting, object-layout, and initial-state perturbations, respectively. Each row contains five equally spaced frames, with frame indices in the corners and the wrist view inset. Task memory is built once from the perturbed initial observations and remains fixed for the episode. The sensor-noise variant appears in Figure 3.",
+              "figure_id": "figure-6-16",
+              "figure_number": "6",
+              "height": 999,
+              "image_path": "figures/2610.21389/figure-005.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 826
+            },
+            {
+              "caption": "Table 10: Architecture and training configuration. Each camera has a separate, trainable DINOv2 encoder. Batch sizes are effective global batch sizes.",
+              "figure_id": "table-10-7",
+              "figure_number": "10",
+              "height": 537,
+              "image_path": "figures/2610.21389/table-006.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 829
+            },
+            {
+              "caption": "Table 9: Task-memory encoders on LIBERO (%). The actor architecture is unchanged across rows; memory denotes the bf16 KV cache stored per episode in the LIBERO configuration.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 130,
+              "image_path": "figures/2610.21389/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 652
+            },
+            {
+              "caption": "Table 2: RoboTwin 2.0 success rates (%) and inference costs. Action PT denotes pretraining of actiongenerating weights on external large-scale action or latent-action data before benchmark adaptation; VLM or visual-backbone pretraining alone does not count.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 346,
+              "image_path": "figures/2610.21389/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 768
+            },
+            {
+              "caption": "Table 3: Standard LIBERO and LIBERO-Plus success rates (%) with inference cost.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 345,
+              "image_path": "figures/2610.21389/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 714
+            },
+            {
+              "caption": "Table 11: Inference latency and memory measurement protocol.",
+              "figure_id": "table-11-6",
+              "figure_number": "11",
+              "height": 323,
+              "image_path": "figures/2610.21389/table-010.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 814
+            },
+            {
+              "caption": "Table 7: RoboTwin 2.0 success (%) by step budget: short (S), 400–500; medium (M), 501–900; long (L), 901–1700.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 203,
+              "image_path": "figures/2610.21389/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 365
+            },
+            {
+              "caption": "Table 6: Online-input ablations on LIBERO (%). Each variant is retrained with the indicated combination of online inputs.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 182,
+              "image_path": "figures/2610.21389/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 369
+            },
+            {
+              "caption": "Table 5: Task-memory construction on LIBERO (%). The actor is retrained separately for each task-memory construction variant.",
+              "figure_id": "table-5-10",
+              "figure_number": "5",
+              "height": 168,
+              "image_path": "figures/2610.21389/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 347
+            },
+            {
+              "caption": "Table 4: RoboTwin 2.0 task-memory swaps (%). Test-time swaps keep the actor weights fixed, without any additional training.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 160,
+              "image_path": "figures/2610.21389/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 347
+            },
+            {
+              "caption": "Table 8: Task-memory refresh ablation on LIBERO using last-layer memory and matched training for each schedule. Amortized cost includes a 34.25-ms actor call per chunk and one VLM prefill per memory construction, using the episode-length distribution and accounting of Table 3. The once-per-episode cost is 3.975 ms/step, as in that table.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 140,
+              "image_path": "figures/2610.21389/table-015.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 652
+            },
+            {
+              "caption": "Table 1: Training settings. Batch size is the effective global batch size; training compute is reported in accelerator-hours.",
+              "figure_id": "table-1-15",
+              "figure_number": "1",
+              "height": 130,
+              "image_path": "figures/2610.21389/table-016.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 536
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21389/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.21389",
+          "relevance": 9,
+          "selection_reason": "Vision-language-action policy with fixed KV task memory for efficient closed-loop manipulation; strongly relevant to VLA and memory-efficient inference.",
+          "summary_status": "generated",
+          "title": "Fast-VLA: You Only Think Once for Robot Manipulation",
+          "tldr": "Fast-VLA runs a 4B vision-language model once per episode, then enables efficient closed-loop robot control with a lightweight actor.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action",
+                "robot-learning-and-manipulation"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Mixture-of-Experts (MoE) models reduce computation by routing each token to a small set of experts, but each selected expert is still used at a fixed precision. We present DPA-MoE, a runtime precision control framework that makes routed experts any-precision. DPA-MoE encodes expert feed-forward weights as prefix-decodable chunks using SharedScale AnyBCQ, profiles per-expert reconstruction residuals offline, and allocates chunks at inference time using live router gate scores. This post-routing allocation lets a single encoded MoE checkpoint operate at multiple effective weight budgets without retraining or re-encoding. Experiments on Qwen3-30B-A3B and DeepSeekMoE-16B show that DPA-MoE improves KL divergence and downstream accuracy over uniform chunk allocation at matched budgets, with modest steady-state throughput overhead in our prototype.",
+          "arxiv_id": "2610.21378",
+          "arxiv_url": "https://arxiv.org/abs/2610.21378",
+          "authors": [
+            "Jaeyun Kim, Hoonki Lee, Susie Shin, Hyunmin Kim, Dahyun Lee, Sangyeob Kim"
+          ],
+          "bullets": [
+            "Addresses the fixed-precision limitation of routed MoE experts.",
+            "Encodes expert FFN weights into prefix-decodable SharedScale AnyBCQ chunks and profiles reconstruction residuals offline.",
+            "Allocates precision at inference time using live router gate scores and per-expert residual profiles.",
+            "Outperforms uniform chunk allocation on KL divergence and downstream accuracy at matched weight budgets.",
+            "Evaluated on Qwen3-30B-A3B and DeepSeekMoE-16B, with modest steady-state throughput overhead in the prototype."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Mean KL divergence vs. effective model weight (GB) for DPA (ours), Uniform-k allocation, and static quantization baselines on Qwen3-30B-A3B (left) and DeepSeekMoE-16B-Chat (right).",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 317,
+              "image_path": "figures/2610.21378/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 950
+            },
+            {
+              "caption": "Figure 5: Macro-average benchmark accuracy (%) vs. effective model weight (GB) for DPA (ours), Uniform-k allocation, and static quantization baselines on Qwen3-30B-A3B (left) and DeepSeekMoE-16B-Chat (right).",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 315,
+              "image_path": "figures/2610.21378/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 950
+            },
+            {
+              "caption": "Figure 6: Per-task benchmark results for Qwen3-30B-A3B.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 652,
+              "image_path": "figures/2610.21378/figure-003.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 917
+            },
+            {
+              "caption": "Figure 7: Per-task benchmark results for DeepSeekMoE-16B-Chat.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 642,
+              "image_path": "figures/2610.21378/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 917
+            },
+            {
+              "caption": "Figure 3: Two-Stage Precision Allocation. Offline profiling builds a residual table R[L, e, k]. At inference time, DPA combines this table with live gate scores and allocates a fixed chunk budget across routed experts.",
+              "figure_id": "figure-3-21",
+              "figure_number": "3",
+              "height": 488,
+              "image_path": "figures/2610.21378/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 671
+            },
+            {
+              "caption": "Figure 2: SharedScale AnyBCQ encoding and dynamic precision inference. Left (Progressive Expert Encoding): chunks are added sequentially, with all active α planes jointly re-optimized at each step to produce a single shared scale table. Right (Dynamic Precision Inference): at inference time, selecting k chunks loads the first k bitplanes and scale columns from the shared table — no additional scale fetches are required when switching precision.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 246,
+              "image_path": "figures/2610.21378/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 950
+            },
+            {
+              "caption": "Figure 1: DPA-MoE adds post-routing precision allocation to MoE: routing chooses which experts run, while DPA-MoE chooses how much of each selected expert is used.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 331,
+              "image_path": "figures/2610.21378/figure-007.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 458
+            },
+            {
+              "caption": "Table 6: Mean KL divergence and macro-average benchmark accuracy versus effective weight-memory budget on the two additional MoE architectures.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 334,
+              "image_path": "figures/2610.21378/table-008.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 950
+            },
+            {
+              "caption": "Table 13: Model artifacts, versions, terms, and intended use.",
+              "figure_id": "table-13-10",
+              "figure_number": "13",
+              "height": 567,
+              "image_path": "figures/2610.21378/table-009.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 939
+            },
+            {
+              "caption": "Table 9: Models, source artifacts, and compute.",
+              "figure_id": "table-9-17",
+              "figure_number": "9",
+              "height": 498,
+              "image_path": "figures/2610.21378/table-010.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 910
+            },
+            {
+              "caption": "Table 11: Reconstruction-fidelity and downstream benchmark configuration.",
+              "figure_id": "table-11-16",
+              "figure_number": "11",
+              "height": 402,
+              "image_path": "figures/2610.21378/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 910
+            },
+            {
+              "caption": "Table 10: Encoding and residual-profiling configuration.",
+              "figure_id": "table-10-18",
+              "figure_number": "10",
+              "height": 361,
+              "image_path": "figures/2610.21378/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 910
+            },
+            {
+              "caption": "Table 14: Dataset and software artifacts, terms, and intended use.",
+              "figure_id": "table-14-11",
+              "figure_number": "14",
+              "height": 361,
+              "image_path": "figures/2610.21378/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 939
+            },
+            {
+              "caption": "Table 12: Inference-speed measurement configuration.",
+              "figure_id": "table-12-12",
+              "figure_number": "12",
+              "height": 281,
+              "image_path": "figures/2610.21378/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 910
+            },
+            {
+              "caption": "Table 2: Mean KL divergence on OLMoE-1B-7B-0125 with each allocation signal isolated. Lower is better.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 154,
+              "image_path": "figures/2610.21378/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 356
+            },
+            {
+              "caption": "Table 5: Comparison with existing dynamic and mixed expert-precision methods. △: HOBBIT switches precision only for cache-miss experts, so the decision is gated by cache state rather than by the gate score itself.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 178,
+              "image_path": "figures/2610.21378/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 950
+            },
+            {
+              "caption": "Table 4: Cross-term analysis per precision level k.",
+              "figure_id": "table-4-19",
+              "figure_number": "4",
+              "height": 254,
+              "image_path": "figures/2610.21378/table-017.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 458
+            },
+            {
+              "caption": "Table 8: Accuracy at matched memory read per token on OLMoE-1B-7B-0125-Instruct. The top-p rows activate on average 2.0, 4.0, and 6.0 experts respectively. Reducing the number of routed experts and reducing per-expert precision are two ways to spend the same byte budget.",
+              "figure_id": "table-8-4",
+              "figure_number": "8",
+              "height": 180,
+              "image_path": "figures/2610.21378/table-018.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 375
+            },
+            {
+              "caption": "Table 7: PIQA accuracy under dynamic top-p routing (p=0.25, average 4.0 active experts per token) on OLMoE-1B-7B-0125-Instruct, averaged over 5 runs.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 175,
+              "image_path": "figures/2610.21378/table-019.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 325
+            },
+            {
+              "caption": "Table 1: Macro-average benchmark accuracy, generation throughput (TPS), and time-to-first-token (TTFT) on Qwen3-30B-A3B and DeepSeekMoE-16B-Chat under the Full-Memory setting.",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 209,
+              "image_path": "figures/2610.21378/table-020.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 950
+            },
+            {
+              "caption": "Table 3: Per-expert storage breakdown in KB for full 2–8 bit support on Qwen3-30B-A3B.",
+              "figure_id": "table-3-20",
+              "figure_number": "3",
+              "height": 113,
+              "image_path": "figures/2610.21378/table-021.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 439
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21378/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.21378",
+          "relevance": 8,
+          "selection_reason": "Runtime precision allocation for MoE expert weights reduces inference memory; fits memory-efficient inference.",
+          "summary_status": "generated",
+          "title": "DPA-MoE: A Runtime Precision Control Framework for MoE Inference",
+          "tldr": "DPA-MoE enables runtime, token-aware precision allocation for MoE experts from a single encoded checkpoint without retraining or re-encoding.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Sparse KV compression reduces long-context inference costs by retaining selected historical states, yet these states typically keep their coordinates from the full history. Under Rotary Position Embedding (RoPE), gaps left by evicted tokens continue to affect query-key matching, potentially limiting the use of retained evidence. We study post-selection positional geometry on a fixed selector-produced cache, examining how positional organization affects the use of retained information and which coordinate and continuation rules improve answer quality. To reorganize this geometry, we propose RoPERelay, which assigns compact, order-preserving RoPE coordinates, relocates cached key phases through inverse rotation and re-rotation, and synchronizes the current query and subsequent generation. It reuses existing K/V without renewed selection, historical re-prefill, or additional cache budget. Across 36 comparisons spanning two models, six sparse selectors, and three long-term memory tasks, RoPERelay improves answer quality in 32 cases. For Llama-3.1-8B-Instruct with BM25 on LongMemEval-S, accuracy increases from 23.6% to 35.4%. Measured complete-request time overhead is approximately 1%-3% in the evaluated configurations. These findings establish positional organization as a distinct optimization dimension for sparse KV caches after content selection.",
+          "arxiv_id": "2610.21126",
+          "arxiv_url": "https://arxiv.org/abs/2610.21126",
+          "authors": [
+            "Wanyang Hong, Zhaoning Zhang"
+          ],
+          "bullets": [
+            "Sparse KV caches retain selected states, but gaps from evicted tokens can distort RoPE query–key matching.",
+            "The method assigns compact, order-preserving coordinates and relocates cached key phases while synchronizing queries and generation.",
+            "It operates on a fixed selector-produced cache without renewed selection or historical re-prefill.",
+            "Across 36 comparisons, answer quality improved in 32 cases; one reported result rose from 23.6% to 35.4%.",
+            "Measured complete-request overhead was approximately 1%–3% in the evaluated configurations."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Answer quality versus history retention on LongMemEval-S. Gray dashed lines: Original. Blue solid lines: RoPERelay. Accuracy uses blinded LLM judgments.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 406,
+              "image_path": "figures/2610.21126/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 923
+            },
+            {
+              "caption": "Figure 2: RoPERelay reorganizes the positional geometry of the sparse history supplied by a selector. Retained states are mapped to consecutive coordinates in source temporal order, and historical keys enter the compact space through RoPE phase transformation. The current question starts at the shared anchor M , and subsequent answer inputs proceed along consecutive coordinates.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 374,
+              "image_path": "figures/2610.21126/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 917
+            },
+            {
+              "caption": "Figure 4: Coordinate ablations over identical historical caches. Left: coordinate operations. Right: answer accuracy and paired differences in pp relative to Original.",
+              "figure_id": "figure-4-7",
+              "figure_number": "4",
+              "height": 337,
+              "image_path": "figures/2610.21126/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 923
+            },
+            {
+              "caption": "Figure 6: Evidence-reading changes relative to Original: mean phase-replayed evidence scores (left), total evidence attention in pp (middle), and changes in the L2 norm of the attention-weighted evidence value vector (right). Curves average over heads and questions at each layer. Partial Gap uses half-gap compaction with query synchronization. Shading shows record-level paired 95% bootstrap intervals.",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 314,
+              "image_path": "figures/2610.21126/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 932
+            },
+            {
+              "caption": "Figure 5: Answer accuracy under alternative compact position assignments. The dashed line is the Original baseline. RandomMean averages seeds 17, 29, and 43. Dots show individual-seed accuracy.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 254,
+              "image_path": "figures/2610.21126/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 441
+            },
+            {
+              "caption": "Figure 1: Fixed-content dose response on Qwen2-7BInstruct, LongMemEval-S (500 records), and BM25 with an 8,192-token history-cache budget. Compacting residual positional spans increases answer accuracy. Shading: 95% confidence intervals.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 387,
+              "image_path": "figures/2610.21126/figure-006.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 423
+            },
+            {
+              "caption": "Table 1: Answer quality (%). Sparse-condition cells report Original → RoPERelay, with the higher paired value in bold. FullKV is the full-history reference. Metrics and the paired protocol are described in Section 4.1.",
+              "figure_id": "table-1-17",
+              "figure_number": "1",
+              "height": 439,
+              "image_path": "figures/2610.21126/table-007.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 933
+            },
+            {
+              "caption": "Table 8: Paired score differences (RoPERelay minus Original), in percentage points, with 95% cluster-bootstrap confidence intervals in brackets.",
+              "figure_id": "table-8-9",
+              "figure_number": "8",
+              "height": 342,
+              "image_path": "figures/2610.21126/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 754
+            },
+            {
+              "caption": "Table 2: InfiniteBench results at 1% history KV retention. Dialogue QA: Exact Substring accuracy, book choice: multiple-choice accuracy (both %), book QA: Token QA-F1 (0–100).",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 141,
+              "image_path": "figures/2610.21126/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 406
+            },
+            {
+              "caption": "Table 5: Main selector parameters used in the experiments.",
+              "figure_id": "table-5-16",
+              "figure_number": "5",
+              "height": 277,
+              "image_path": "figures/2610.21126/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 447
+            },
+            {
+              "caption": "Table 7: Supplemental comparison with FINCH. Scores are percentages. Selector-based rows use the main-table positional condition.",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 165,
+              "image_path": "figures/2610.21126/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 425
+            },
+            {
+              "caption": "Table 6: Judged accuracy by question type (500 questions, history budget 2,048). O: Original, T: RoPERelay. Scores are percentages and ∆ is in pp. The first three rows are single-session types.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 174,
+              "image_path": "figures/2610.21126/table-012.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 381
+            },
+            {
+              "caption": "Table 9: Coordinate alignment on fixed caches: 200 questions per configuration at 10% history retention. O: Original, R: RankSync, T: RoPERelay. ∆ denotes T−R in percentage points, calculated before rounding. Bold marks improvements over R.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 325,
+              "image_path": "figures/2610.21126/table-013.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 377
+            },
+            {
+              "caption": "Table 12: Qwen2-7B-Instruct/LongMemEval-S, 10% history retention, 500 pairs per selector. Accuracy (%), ∆: RoPERelay−Original (pp). O: Original, T: RoPERelay.",
+              "figure_id": "table-12-6",
+              "figure_number": "12",
+              "height": 192,
+              "image_path": "figures/2610.21126/table-014.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 386
+            },
+            {
+              "caption": "Table 10: Quality and generation behavior on the same 24 summarization questions. Tokens is the mean actual output length. Rep4 is the fraction of repeated token 4-gram windows beyond their first occurrence, averaged over answers. EOS is the natural termination rate. The decoding limit is 8,192 tokens.",
+              "figure_id": "table-10-5",
+              "figure_number": "10",
+              "height": 196,
+              "image_path": "figures/2610.21126/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 343
+            },
+            {
+              "caption": "Table 11: Quality by source category for the same 24 questions. Differences use the 0–1 quality scale.",
+              "figure_id": "table-11-4",
+              "figure_number": "11",
+              "height": 152,
+              "image_path": "figures/2610.21126/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 420
+            },
+            {
+              "caption": "Table 15: Omitting an Earlier Personal Record.",
+              "figure_id": "table-15-19",
+              "figure_number": "15",
+              "height": 270,
+              "image_path": "figures/2610.21126/table-017.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 950
+            },
+            {
+              "caption": "Table 13: Reading an Already Retained Fact.",
+              "figure_id": "table-13-18",
+              "figure_number": "13",
+              "height": 238,
+              "image_path": "figures/2610.21126/table-018.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 950
+            },
+            {
+              "caption": "Table 3: Complete-request time overhead: (RoPERelay −Original)/Original.",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 114,
+              "image_path": "figures/2610.21126/table-019.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 429
+            },
+            {
+              "caption": "Table 14: Temporal Reasoning over Merged States.",
+              "figure_id": "table-14-20",
+              "figure_number": "14",
+              "height": 207,
+              "image_path": "figures/2610.21126/table-020.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 950
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21126/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.21126",
+          "relevance": 9,
+          "selection_reason": "Directly targets sparse KV cache compression and improves retained-state use through positional reorganization, fitting KV-cache and memory efficiency.",
+          "summary_status": "generated",
+          "title": "Compression Does Not End at Selection: Post-Selection Positional Geometry for Sparse KV Caches",
+          "tldr": "RoPERelay improves sparse KV-cache use by reorganizing RoPE positions after token selection, boosting answer quality without selecting more tokens or increasing cache size.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Multi-head latent attention (MLA) compresses the content of a key-value cache into a shared latent per token, making low-bit storage attractive for long-context inference. At two bits, errors in this representation perturb both attention matching and value readout, with effects that depend on error direction and reconstruction scale. We introduce RoLaQ (Rotation-calibrated Latent Quantization), an offline method for joint rotation and range calibration. RoLaQ refines a shared rotation within subspaces defined by the frozen key and value projections, and jointly learns quantization ranges whose thresholds and reconstruction gains are coupled to control the shared signal's response. Prediction matching and attention-output supervision guide calibration with model weights frozen. Across three MLA models and six benchmarks, RoLaQ achieves the highest average accuracy among the compared 2-bit methods both without and with token protection. On DeepSeek-V2-Lite, an SGLang implementation provides 3.96 times the BF16 KV capacity under the same memory budget and 2.51 times its decode throughput with 256K input tokens.",
+          "arxiv_id": "2610.20686",
+          "arxiv_url": "https://arxiv.org/abs/2610.20686",
+          "authors": [
+            "Shiyu Ji, Peng Ling, Chen Lin, Shupeng Li, Yixuan Wang, Qingfu Zhu, Wanxiang Che"
+          ],
+          "bullets": [
+            "Targets errors in 2-bit MLA KV caches that affect both attention matching and value reconstruction.",
+            "Uses offline calibration with a learned shared rotation and coupled quantization thresholds and reconstruction gains.",
+            "Supervises calibration through prediction matching and attention-output matching while keeping model weights frozen.",
+            "Achieves the highest average accuracy among compared 2-bit methods across three MLA models and six benchmarks.",
+            "On DeepSeek-V2-Lite, delivers 3.96× BF16 KV capacity and 2.51× decode throughput at 256K-token inputs in SGLang."
+          ],
+          "categories": [
+            "cs.LG",
+            "stat.ML"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of ROLAQ. (a) A shared 2-bit content cache supplies both K/V paths. The dashed box groups the read-side rotation with the projections that absorb it. (b) HK +HV defines two spectral subspaces for learning the shared rotation. (c) The learned threshold determines the four-level assignments and gain g(T ) = 1/C(T ). (d) A frozen BF16 teacher guides joint calibration through prediction KL and attention-output loss.",
+              "figure_id": "figure-3-17",
+              "figure_number": "3",
+              "height": 450,
+              "image_path": "figures/2610.20686/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 948
+            },
+            {
+              "caption": "Figure 6: Serving performance of DeepSeek-V2-Lite on an A100 80GB GPU. (a) KV token capacity. (b,c) Decode throughput for long inputs and successive output intervals, with four concurrent requests. (d) P99 time to first token (TTFT) under increasing concurrency. OSCAR and ROLAQ share the INT2 kernels, so their overlapping curves use timings measured with ROLAQ under the same workloads.",
+              "figure_id": "figure-6-16",
+              "figure_number": "6",
+              "height": 244,
+              "image_path": "figures/2610.20686/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 936
+            },
+            {
+              "caption": "Figure 4: Effect of quantizer response on DeepSeek-V2Lite. Prediction KL to BF16 is normalized by its value at κ = 1 for each context length. Using a checkpoint calibrated with full rotation and unit response, we vary the gain at inference while keeping the rotation and thresholds fixed.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 277,
+              "image_path": "figures/2610.20686/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 450
+            },
+            {
+              "caption": "Figure 5: Effect of token protection on six-task mean accuracy (%). The horizontal axis gives the number of sink + recent content tokens retained in BF16.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 240,
+              "image_path": "figures/2610.20686/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 451
+            },
+            {
+              "caption": "Figure 2: Two observations on shared-latent quantization. (a) K/V energy in the leading half of the joint spectrum (mean ± layer std.; dashed: 50%). (b) Prediction KL at 8K with OSCAR’s rotation and threshold fixed, normalized by its value at g0 = 1.16 (vertical dashed line). DS, ML, and CPM denote DeepSeek-V2Lite, Moonlight, and MiniCPM3.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 223,
+              "image_path": "figures/2610.20686/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 449
+            },
+            {
+              "caption": "Figure 7: Cumulative K/V projection energy in the common joint eigenbasis. Solid and dashed curves denote keys and values, respectively; shading shows one standard deviation across layers. The diagonal gives the isotropic reference. The vertical line marks the equal-dimensional split used in Figure 2a.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 262,
+              "image_path": "figures/2610.20686/figure-006.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 940
+            },
+            {
+              "caption": "Figure 8: Learned per-layer thresholds with κ = 1 for all rotations and seeds. The dashed line is the Lloyd–Max threshold used by OSCAR.",
+              "figure_id": "figure-8-22",
+              "figure_number": "8",
+              "height": 240,
+              "image_path": "figures/2610.20686/figure-007.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 944
+            },
+            {
+              "caption": "Table 13: GSM8K examples on DeepSeek-V2-Lite. (a) Both bags must be counted. (b) The available line must be subtracted. We show BF16 final answers and the quantized models’ solutions. All quantized methods retain 4 sink and 16 recent tokens in BF16; ROLAQ uses calibration seed 42.",
+              "figure_id": "table-13-18",
+              "figure_number": "13",
+              "height": 688,
+              "image_path": "figures/2610.20686/table-008.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 928
+            },
+            {
+              "caption": "Table 14: RULER examples from the 16K evaluation on DeepSeek-V2-Lite. (a) A single key is queried among multiple keys. (b) Four keys are queried together. We show the relevant context sentences and each model’s first answer line, with the same protection budget and calibration seed as Table 13.",
+              "figure_id": "table-14-19",
+              "figure_number": "14",
+              "height": 450,
+              "image_path": "figures/2610.20686/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 928
+            },
+            {
+              "caption": "Table 8: Accuracy (%) with 4 sink and 8 recent BF16 tokens.",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 540,
+              "image_path": "figures/2610.20686/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 704
+            },
+            {
+              "caption": "Table 10: Per-seed accuracy (%) with 4 sink and 8 recent BF16 tokens.",
+              "figure_id": "table-10-7",
+              "figure_number": "10",
+              "height": 321,
+              "image_path": "figures/2610.20686/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 950
+            },
+            {
+              "caption": "Table 9: Per-seed accuracy (%) without protection. Avg. averages six tasks; std denotes sample standard deviation.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 321,
+              "image_path": "figures/2610.20686/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 950
+            },
+            {
+              "caption": "Table 11: Per-seed accuracy (%) with 4 sink and 16 recent BF16 tokens.",
+              "figure_id": "table-11-21",
+              "figure_number": "11",
+              "height": 323,
+              "image_path": "figures/2610.20686/table-013.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 950
+            },
+            {
+              "caption": "Table 4: Rotation search spaces. Params. counts trainable rotation parameters per layer; S is validation KL relative to OSCAR. Avg. is six-task mean accuracy (%).",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 192,
+              "image_path": "figures/2610.20686/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 461
+            },
+            {
+              "caption": "Table 2: Retrieval accuracy (%) on the eight RULER retrieval tasks with 4 sink and 16 recent tokens retained in BF16. Avg. denotes the task mean; bold marks the best 2-bit scores at the displayed precision.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 184,
+              "image_path": "figures/2610.20686/table-015.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 458
+            },
+            {
+              "caption": "Table 6: Downstream evaluation settings.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 173,
+              "image_path": "figures/2610.20686/table-016.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 461
+            },
+            {
+              "caption": "Table 5: Model configurations; d and dr are the contentlatent and RoPE-key dimensions.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 113,
+              "image_path": "figures/2610.20686/table-017.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 461
+            },
+            {
+              "caption": "Table 7: Calibration hyperparameters.",
+              "figure_id": "table-7-20",
+              "figure_number": "7",
+              "height": 300,
+              "image_path": "figures/2610.20686/table-018.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 461
+            },
+            {
+              "caption": "Table 16: Decode throughput (tok/s) underlying Figure 6(b,c). Both workloads use four concurrent requests. Speedups relative to BF16 are computed from unrounded measurements.",
+              "figure_id": "table-16-12",
+              "figure_number": "16",
+              "height": 508,
+              "image_path": "figures/2610.20686/table-019.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 458
+            },
+            {
+              "caption": "Table 17: P99 TTFT (s) underlying Figure 6(d). Each request has 16K input and 1K output tokens.",
+              "figure_id": "table-17-14",
+              "figure_number": "17",
+              "height": 236,
+              "image_path": "figures/2610.20686/table-020.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 458
+            },
+            {
+              "caption": "Table 3: Ablations of calibration components and objectives. (a) MMLU and MBPP accuracy (%) for different component configurations. (b) Six-task average accuracy (%) for different calibration objectives.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 120,
+              "image_path": "figures/2610.20686/table-021.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 458
+            },
+            {
+              "caption": "Table 12: Range calibration with HK + HV on MiniCPM3. S is validation KL relative to OSCAR (lower is better); values are mean ± sample standard deviation over three seeds.",
+              "figure_id": "table-12-23",
+              "figure_number": "12",
+              "height": 90,
+              "image_path": "figures/2610.20686/table-022.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 458
+            },
+            {
+              "caption": "Table 15: Allocated KV capacity in Figure 6(a). GiB measures KV memory; ratios use BF16 as the reference.",
+              "figure_id": "table-15-13",
+              "figure_number": "15",
+              "height": 112,
+              "image_path": "figures/2610.20686/table-023.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 461
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.20686/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.20686",
+          "relevance": 9,
+          "selection_reason": "Introduces rotation and range calibration for 2-bit KV cache quantization in MLA, directly targeting memory-efficient long-context inference.",
+          "summary_status": "generated",
+          "title": "RoLaQ: Joint Rotation and Range Calibration for 2-Bit KV Caches in Multi-Head Latent Attention",
+          "tldr": "RoLaQ improves 2-bit KV-cache quantization for multi-head latent attention by jointly calibrating rotations and quantization ranges, enabling higher accuracy and greater long-context capacity.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context decoding is limited by memory bandwidth, because every output token reads the KV cache of every layer. Sparse decoding reduces this cost by reading only part of the KV cache. We observe that the number of pages a query needs varies widely across KV heads, layers and steps. Fixed budgets are simple, but they are sized for demanding cases and tuned per workload; adaptive budgets follow this variation more flexibly, but existing designs pay for it with extra selection cost or training. At the kernel level, FlashAttention-3 (FA3) and FlashInfer are designed for rows of similar length: with page lists whose length differs per KV head, they either pad the lists (forfeiting much of the sparse saving), leave thread blocks unbalanced, or rely on a host-side plan that runs outside the CUDA graph. We propose MOIRA, a training-free sparse decode path in vLLM whose budget adapts per KV head and per layer. For every request, layer, KV head and step, a coverage rule keeps the smallest set of pages whose estimated attention mass reaches a fraction $γ$. A new kernel, self-planning attention, lets each thread block derive its own share of the work from the list lengths, so the whole decode step stays inside the CUDA graph. On an H200, at RULER's 128k context, MOIRA with $γ=0.99$ matches dense accuracy while reading about 30% of the pages and reduces the time per output token (TPOT) by 2.2-2.5$\\times$ relative to dense FA3; with $γ=0.98$ it reduces TPOT by 2.7$\\times$ and stays within the noise of dense. Under high serving load it raises throughput by up to 51%. These results suggest that a budget adapted per head and layer, paired with a kernel that keeps such budgets inside the CUDA graph, makes sparse decoding both flexible and fast.",
+          "arxiv_id": "2610.04313",
+          "arxiv_url": "https://arxiv.org/abs/2610.04313",
+          "authors": [
+            "Dich Nhat Minh Nguyen",
+            "Tran Dang Duong Nguyen"
+          ],
+          "bullets": [
+            "Long-context decoding is memory-bandwidth-bound because each token accesses every layer’s KV cache.",
+            "MOIRA selects the smallest set of pages reaching a target attention-mass coverage per request, layer, KV head, and decoding step.",
+            "Its self-planning attention kernel handles variable page-list lengths without padding, imbalance, or host-side CUDA-graph breaks.",
+            "On an H200 with 128k-token contexts, it reads about 30% of pages at γ=0.99 and achieves 2.2–2.5× lower TPOT than dense FA3 while matching dense accuracy.",
+            "At γ=0.98, TPOT improves by 2.7× and serving throughput increases by up to 51%, according to the abstract."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 7. Sparse decode methods vs. dense FA3, attention only (Section 5.5.1). (a) One decode step (32 layers) of Llama-3.1-8B at 4×130k. Twilight: the authors’ selection chain and FlashInfer attention on its own token sets (GPU), plus host metadata and plan (hatched). (b) Speedup against the kept fraction at the same geometry (Moira: 64-token pages; FFD: 128/256-token blocks at a preset kept fraction; shaded band: FFD’s kept fraction on RULER). Moira uses page counts from a real decode step, scaled to the reads of γ=0.98 and 0.99 on RULER and, labelled “scaled”, to an intermediate fraction. (c) Across shapes: FFD at about 15% kept; Moira on real γ=0.98 steps (kept fraction in parentheses).",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 298,
+              "image_path": "figures/2610.04313/figure-001.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1004
+            },
+            {
+              "caption": "Figure 1. The budget a row needs varies, and fixed budgets or coarse lengths forfeit the savings. Oracle coverage sets C⋆(0.95) over 60 LongBench requests, 64-token pages. (a) Mean size of the set, as a fraction of the context, for each (layer, KV head) of Llama-3.1-8B: the first layer needs most of its context, while most layers need only a tenth. (b) Tokens read by budget policies relative to the coverage set, when each policy must give 90% of the rows, over all layers and steps, at least 0.95 of the mass: every fixed or profiled budget reads 1.7–2.4× as many tokens as the coverage set (dashed line). (c) Fraction of the dense KV cache read by batches of 32 requests (total over decode steps 16–256) when the per-(layer, KV head) lengths are coarsened: padding to the longest head doubles the reads.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 371,
+              "image_path": "figures/2610.04313/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1008
+            },
+            {
+              "caption": "Figure 4. Attention time per layer as per-head lengths spread (Llama-3.1-8B geometry, 22% of the pages kept on average; the x axis is the coefficient of variation (CV) of the per-(request, KV head) lengths). “real”: per-(request, layer, KV head) page counts from decode steps of Moira on LongBench prompts of about 8k tokens, applied as fractions of each context (0.33–0.41 of the pages; short contexts need a larger fraction than RULER at 128k). FlashInfer additionally needs the host plan given in each panel, per layer and step. The 64k panel has no FlashInfer arm.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 344,
+              "image_path": "figures/2610.04313/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1007
+            },
+            {
+              "caption": "Figure 5. Online serving with vllm bench serve (closed loop, prefix caching off, 1,024 output tokens, one run per point). Set A: LongBench prompts of 4k–64k tokens; set B: 64k–126k tokens.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 378,
+              "image_path": "figures/2610.04313/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1003
+            },
+            {
+              "caption": "Figure 3. One decode layer of Moira, for one (request, KV head) row. Step 1 approximates the attention mass of each page; Step 2 keeps the fewest pages whose total mass reaches γ; Step 3 reads those pages, with each thread block taking one chunk of the row by itself; Step 4 combines the chunks. Values are illustrative; Step 3 uses the row lengths of Figure 2.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 261,
+              "image_path": "figures/2610.04313/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1010
+            },
+            {
+              "caption": "Figure 6. TPOT in vLLM (Moira at γ=0.98 vs. dense FA3; data of Table 3). Median of 5 repetitions, two interleaved pairs per shape; the error bars span the two pairs.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 391,
+              "image_path": "figures/2610.04313/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 594
+            },
+            {
+              "caption": "Figure 2. Existing decode kernels on per-head lists of different lengths. Each bar is one (request, KV head) row with its selected pages; each segment is the work of one thread block; red is padding. Times: attention of one layer of Llama-3.1-8B on lists from real decode steps, scaled to 32k context× 16 requests (H200). Only self-planning attention reads exactly the selected pages, gives every thread block a bounded, nearly equal amount of work, and runs inside a CUDA graph.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 154,
+              "image_path": "figures/2610.04313/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 975
+            },
+            {
+              "caption": "Table 6. Attention time per layer (µs) on the same page lists (Llama-3.1-8B geometry; data of Figure 4). CV 0: all rows of equal length; CV 1: nominal spread (measured 0.84–0.88); real: page counts from decode steps of Moira at about 8k tokens, applied as fractions of each context. FlashInfer needs its host plan at every step (plan: page counts copied to the host, index arrays built and plan() called, per layer); “–”: not measured. Bold: fastest method per row, FlashInfer counted with its plan.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 346,
+              "image_path": "figures/2610.04313/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 667
+            },
+            {
+              "caption": "Table 1. Accuracy and latency at 128k. RULER-13 (13 tasks × 20 documents); †: significantly below dense (paired bootstrap by document, 95%). KL: mean token KL to dense on 65 teacherforced RULER answers (0.0003 with every page kept). Attn: selection + attention of one decode step at 4×130k on the GPU; Host: FlashInfer’s plan() call per step, with its index arrays already built. TPOT: measured end to end in vLLM with CUDA graphs on RULER prompts (batch 4); –: the method does not run in vLLM; dense FlashInfer: 18.8 / 20.0 ms. ×: dense FA3 TPOT / TPOT. Page reads of Moira (and of the c rows, same lists) at γ=0.98 / 0.99: 19.6 / 27.4% on Llama-3.1-8B, 24.2 / 32.5% on Qwen3-4B. Bold: best sparse value.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 467,
+              "image_path": "figures/2610.04313/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 460
+            },
+            {
+              "caption": "Table 4. One decode step of Llama-3.1-8B by kernel (ms, Nsight Systems median of 128 steps). att, est, sel, mrg: Attend, Estimate, Select, Merge; GEMM: matrix multiplications. Tracing at CUDAgraph node level lengthens the step by up to 1 ms relative to Table 3. Bold: shorter step.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 161,
+              "image_path": "figures/2610.04313/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 470
+            },
+            {
+              "caption": "Table 7. TPOT (ms) with γ=0.99 and dense FA3, same shapes and protocol as Table 3 (mean of two interleaved pairs), and page reads of Moira. Bold: lower TPOT.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 444,
+              "image_path": "figures/2610.04313/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 991
+            },
+            {
+              "caption": "Table 2. Adaptive vs. fixed budgets on AIME (Qwen3-4BThinking, 480 solutions). All sparse arms use the same estimator and kernels and differ only in the rule that sets the page count. Truncated: solutions that hit the 32,768-token limit. Closed acc.: accuracy on the solutions that finish before the limit. Accuracy also counts the 0–2 truncated solutions per arm whose answer, extracted from the truncated text, is correct. †: significantly below Moira γ=0.98 (paired bootstrap by problem, 95%).",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 292,
+              "image_path": "figures/2610.04313/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 504
+            },
+            {
+              "caption": "Table 5. Online serving (vllm bench serve, closed loop, 1,024 output tokens). Set A: 256 LongBench prompts of 4k–64k tokens; set B: 64 prompts of 64k–126k tokens. c: concurrency. FI: dense FlashInfer. Bold: best per row.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 252,
+              "image_path": "figures/2610.04313/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 481
+            },
+            {
+              "caption": "Table 3. TPOT (ms) of Moira (γ=0.98) and dense FA3 on prompts cut from LongBench documents (batch× context as listed), mean of two interleaved pairs (whose speedups differ by at most 0.13), and page reads of Moira. Bold: lower TPOT.",
+              "figure_id": "table-3-12",
+              "figure_number": "3",
+              "height": 182,
+              "image_path": "figures/2610.04313/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 473
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.04313/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.04313",
+          "relevance": 9,
+          "selection_reason": "Sparse adaptive-budget KV-cache decoding for long-context LLMs; strong efficiency contribution.",
+          "summary_status": "generated",
+          "title": "MOIRA: Mass-Oriented Indexing with Ragged Attention for Long-Context Decoding",
+          "tldr": "MOIRA enables fast, training-free long-context decoding by adaptively reading only the KV-cache pages needed by each layer and KV head while preserving dense-model accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-14",
       "paper_count": 18,
       "papers": [
@@ -104011,5 +106825,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 536
+  "total_paper_count": 549
 }

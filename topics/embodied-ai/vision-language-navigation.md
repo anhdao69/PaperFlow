@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**137 papers total**
+**141 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-15 | [Learning to Think and Explore in 3D World](https://arxiv.org/abs/2610.21783) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | ACT3D trains a vision-language model to actively navigate 3D environments and gather only the visual evidence needed to answer questions. | 9 | 8 |
+| 2026-10-15 | [X-Fly: Learning to Reach and Stop in Full-Chunk Aerial Vision-Language Navigation](https://arxiv.org/abs/2610.21450) | Embodied AI: Vision-Language Navigation | X-Fly trains aerial VLN agents to recover from off-demonstration states and stop correctly while executing full action chunks, substantially improving navigation success over prior methods. | 9 | 8 |
+| 2026-10-15 | [RECAST: Recasting Vision-Language Semantics into an Actionable Cost Map for Robot Navigation](https://arxiv.org/abs/2609.32595) | Embodied AI: Vision-Language Navigation | RECAST combines VLM reasoning with spatial grounding to convert scene understanding and user instructions into an actionable cost map for safer robot navigation. | 8 | 7 |
+| 2026-10-15 | [SatNav: A Scalable Benchmark for Long-Horizon UAV Vision-Language Navigation from Satellite Imagery](https://arxiv.org/abs/2609.31507) | Embodied AI: Vision-Language Navigation | SatNav is a large-scale benchmark for testing long-horizon UAV vision-language navigation using satellite imagery as a scalable alternative to 3D environments. | 8 | 7 |
 | 2026-10-14 | [HM3D-M3: A Benchmark for Multi-Agent, Multi-Modal, Multi-Object Goal Navigation](https://arxiv.org/abs/2610.20121) | Embodied AI: Vision-Language Navigation, Robot Navigation | HM3D-M3 introduces a benchmark for teams of robots jointly navigating to multiple objects specified through mixed language, image, and category goals. | 8 | 7 |
 | 2026-10-14 | [$S^3$-Nav: Structured Spatial-Semantic Decision Making for Language-Guided Robot Navigation](https://arxiv.org/abs/2610.19431) | Embodied AI: Vision-Language Navigation | S³-Nav improves language-guided robot navigation under partial observability by separating persistent spatial-semantic memory from capacity-controlled policy inputs and validating actions before execution. | 8 | 7 |
 | 2026-10-14 | [From Failures to Learnable Worlds: Policy-Conditioned Environment Generation for Navigation Agents](https://arxiv.org/abs/2610.19420) | Embodied AI: Vision-Language Navigation, Robot Navigation | WEDGE uses a policy’s observed failures to generate targeted training environments that address its current navigation weaknesses. | 8 | 8 |

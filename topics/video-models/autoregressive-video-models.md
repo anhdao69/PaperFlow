@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**52 papers total**
+**53 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-15 | [Speculative Forcing for Efficient Autoregressive Video Generation](https://arxiv.org/abs/2610.22347) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI | Speculative Forcing accelerates autoregressive video generation by safely freezing tokens once their intermediate predictions are sufficiently accurate. | 8 | 8 |
 | 2026-10-14 | [Glance Forcing: Making Bidirectional Diffusion Autoregressive at a Glance](https://arxiv.org/abs/2610.20220) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Glance Forcing efficiently distills bidirectional diffusion into autoregressive video generation using just one PF-ODE trajectory while improving quality over a fully trained baseline. | 8 | 9 |
 | 2026-10-14 | [StreamErase: Towards Ultra-Fast Streaming Video Erasing](https://arxiv.org/abs/2610.20137) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | StreamErase enables real-time, arbitrarily long video object removal by distilling bidirectional erasing quality into a causal streaming model. | 8 | 8 |
 | 2026-10-14 | [RepForcing: Representation-Space Initialization for Autoregressive Video Distillation](https://arxiv.org/abs/2610.20111) | Video Generation and Understanding: Autoregressive Video Models | RepForcing improves few-step autoregressive video diffusion distillation by learning causal initialization in a pretrained representation space instead of regressing intermediate teacher trajectories. | 7 | 7 |

@@ -1,6 +1,1089 @@
 {
   "days": [
     {
+      "date": "2026-10-15",
+      "paper_count": 5,
+      "papers": [
+        {
+          "abstract": "Large language models can produce fluent answers that the supplied context does not support. A compact frozen proxy model can detect such answers by reading the context and another model's response, even from a proprietary generator. Attention-based detectors use summary statistics of the proxy's attention weights, but standard pipelines materialize the attention matrix, whose memory grows quadratically with sequence length. We compute these statistics without materializing attention, by accumulation in the FlashAttention pass, sparse lookups after it, or a second tiled pass over the scores, and classify them by this path into nearly free and costlier ones. On an H100, the statistics of five published detectors add 16% to the latency of a Qwen3-8B forward at 2K tokens, falling to 1.4% at 35K, and store 22.5 KiB per response token. On three benchmarks, probes trained on frozen Qwen3 proxies of 0.6B to 8B parameters prove strong detectors: a 4B proxy outperforms the strongest of nine zero-shot 4-9B LLM judges in F1 on two of the three, the proxies match or outperform specialized grounding checkers of up to 7B parameters, probing each proxy beats prompting it as a judge, and adding attention features significantly improves F1 in half of the 12 benchmark-proxy pairs, never significantly lowering it.",
+          "arxiv_id": "2610.21483",
+          "arxiv_url": "https://arxiv.org/abs/2610.21483",
+          "authors": [
+            "Andrei Volodichev, Maksim Savichev, Nikita Sviridov, Artem Yuliy, Dmitry Simakov, Alexey Zaytsev"
+          ],
+          "bullets": [
+            "Targets unsupported but fluent LLM answers, including responses from proprietary generators.",
+            "Computes attention statistics during FlashAttention, via sparse lookups, or with a second tiled score pass, avoiding quadratic memory materialization.",
+            "On an H100, five detectors add 16% latency at 2K tokens and 1.4% at 35K, using 22.5 KiB per response token.",
+            "Across three benchmarks, frozen Qwen3 probes are strong detectors; a 4B proxy beats nine zero-shot LLM judges on two benchmarks and matches or exceeds specialized checkers.",
+            "Attention features significantly improve F1 in 6 of 12 benchmark–proxy pairs and never significantly reduce it."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: What each benchmark configuration adds to one attention layer (Q2). Configuration ≤Tk enables the paths up to Tk; ≤T3 reads the BOS column sum from the column sums instead of the lookup. (a) Overhead of each configuration over our statistics-off Base layer at L=32K (whiskers: 16K–32K), and of Base relative to SDPA on the whole sequence (diamonds). (b) Latency from 1K to 100K tokens at d = 128, r = 0.3. (c) Overhead relative to SDPA cuDNN on the whole sequence, at r = 0.3 (solid) and r = 0.1 (dashed).",
+              "figure_id": "figure-3-18",
+              "figure_number": "3",
+              "height": 591,
+              "image_path": "figures/2610.21483/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 935
+            },
+            {
+              "caption": "Figure 2: Attention with statistics. Blue: standard FlashAttention (Dao et al., 2022; Dao, 2024); green: our additions. (a) We compute statistics for response rows only; prompt rows can go through any production kernel (§2.1). sIJ : scores of query tile I against key tile J . (b) One tile of the pass: the exponentials that FlashAttention already computes also feed the T1 statistics, which are finalized after the last tile; the pass also stores the log-sum-exp (LSE) that T2 and T3 reuse (§2.2). (c) The four tiers, i.e. computation paths of a statistic, ordered by the extra work they need: none (T1, fused), a few positions per row (T2, lookup), a second pass over all scores (T3, rescore), or the whole stored map (T4, dense) (§3).",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 489,
+              "image_path": "figures/2610.21483/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 917
+            },
+            {
+              "caption": "Figure 5: Figure 1 at every length, for Qwen3-8B (left) and Qwen3-0.6B (right, all 16 heads of all 28 layers), with the overhead on a log scale. Dotted line: the 2K cut of Figure 1. Same inputs, backends, and binning; batch 1, H100 NVL, bf16.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 438,
+              "image_path": "figures/2610.21483/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 940
+            },
+            {
+              "caption": "Figure 1: Cost of extracting all implemented attention statistics for hallucination detection in every layer of Qwen3-8B and Qwen3-0.6B using our kernels. Top: model forward-pass latency. Bottom: relative overhead compared with the same forward using standard scaled dot-product attention (SDPA), without statistic extraction.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 399,
+              "image_path": "figures/2610.21483/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 450
+            },
+            {
+              "caption": "Figure 4: Added latency and peak memory over the forward without features, per sample, by prompt length (Q3). Lines: binned medians. The shortest prompts are RAGTruth QA, the others PHANTOM.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 363,
+              "image_path": "figures/2610.21483/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 423
+            },
+            {
+              "caption": "Figure 6: Figure 1 for peak memory: the peak of each forward above the memory allocated before it, so the model weights are excluded, with all features (solid, points) and without (dashed). Same runs, inputs of at least 2K tokens, and binning; batch 1, H100 NVL, bf16.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 381,
+              "image_path": "figures/2610.21483/figure-006.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 450
+            },
+            {
+              "caption": "Table 2: Test F1 by feature set and Qwen3 proxy size. A7: cheap attention features; A64: all-head sink values; H64: compact hidden states; L9: logit features; combinations concatenate blocks (Section 5.2). N : number of classifier inputs. Bold: best in column; underlined: second best. Bottom: the best of nine LLM judges of 4–9B parameters, Qwen3.5-9B on every dataset (Table 13).",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 319,
+              "image_path": "figures/2610.21483/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 725
+            },
+            {
+              "caption": "Table 14: Cross-domain transfer on HaluBench (Qwen3-8B reader): test AUROC of each method fit on the source of its row group and tested on each source. Shaded: same source. Other five: fit on the five sources other than the test domain (leave-one-source-out); All six: fit on all six sources (pooled). Mean: over the five other test domains for a single fitting source, over all six for the last two groups. RAUQ fits nothing and scores the same for every fitting source. Bold: best method of the group in each column (ties marked alike). Each test domain has 138–166 examples; the 95% bootstrap intervals span ±0.09 at the median (±0.03 to ±0.12).",
+              "figure_id": "table-14-3",
+              "figure_number": "14",
+              "height": 1027,
+              "image_path": "figures/2610.21483/table-008.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 904
+            },
+            {
+              "caption": "Table 10: Test AUROC of the detectors of Table 2. Bold: best in column; underlined: second best (ties marked alike). Bottom: the best of nine LLM judges of 4–9B parameters, Qwen3.5-9B on every dataset (Table 13).",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 318,
+              "image_path": "figures/2610.21483/table-009.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 725
+            },
+            {
+              "caption": "Table 11: Change in test F1 when A7 is added, with two-sided p-values from 100,000 paired bootstrap resamples of test groups (seed 42; models, regularization, and thresholds fixed), Holm-corrected over the 12 dataset–proxy pairs of an addition (Holm-12). A gain is significant if ∆ > 0 and the corrected p < 0.05; bold: significant gain. No addition gives a significant loss.",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 219,
+              "image_path": "figures/2610.21483/table-010.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 943
+            },
+            {
+              "caption": "Table 13: LLM judges on the test splits of Table 7 with F1 at the threshold selected on validation. Top: nine instruction-tuned LLMs prompted as judges. Middle: the four Qwen3 proxy backbones prompted as judges and two specialized grounding checkers. Bottom: our proxy detectors for reference.",
+              "figure_id": "table-13-15",
+              "figure_number": "13",
+              "height": 499,
+              "image_path": "figures/2610.21483/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 869
+            },
+            {
+              "caption": "Table 4: Mean absolute error on response rows against an fp64 reference for materialized attention (the dense bf16 path) and our bf16 kernels, and their ratio. Each entry averages the per-head error over heads and layers and reports the worst input type (random or PHANTOM) and length (2K, 8K, 32K). Our statistics are about three to four orders of magnitude closer to fp64; they have the lower error for every statistic, input, and length, in both mean and maximum error.",
+              "figure_id": "table-4-19",
+              "figure_number": "4",
+              "height": 256,
+              "image_path": "figures/2610.21483/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 427
+            },
+            {
+              "caption": "Table 6: Where the time of a short forward goes: Qwen38B on five TRIVIA+ inputs of 90–253 tokens, all 36 layers scored, FlashAttention-2, H100 NVL. GPU busy is the summed device time of all kernels (PyTorch profiler); syncs are counted with PyTorch’s synchronization debug mode.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 134,
+              "image_path": "figures/2610.21483/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 302
+            },
+            {
+              "caption": "Table 8: Text-only baselines on the test splits of Table 7: answer length in words or characters, and TF– IDF of the answer alone. The last column uses a split of HaluBench built the same way without the length filtering (2,231 test answers, 1,075 hallucinated). The 95% group-bootstrap intervals of AUROC are at most ±0.05.",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 258,
+              "image_path": "figures/2610.21483/table-014.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 436
+            },
+            {
+              "caption": "Table 7: Splits used in Section 5. Hal.: hallucinated test answers; Grp.: test groups for the bootstrap.",
+              "figure_id": "table-7-16",
+              "figure_number": "7",
+              "height": 113,
+              "image_path": "figures/2610.21483/table-015.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 377
+            },
+            {
+              "caption": "Table 9: Logit statistics computed per answer token from the proxy’s next-token distribution. Shape: output for one sequence with R answer tokens.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 239,
+              "image_path": "figures/2610.21483/table-016.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 887
+            },
+            {
+              "caption": "Table 5: The numbers behind Figure 3a (Q2): latency overhead (%) of one attention layer, as a range over L ∈ {16K, 32K}. Upper rows: each configuration of Section 4 over the statistics-off split Base, with the prompt stage on SDPA cuDNN. Lower rows: Base over SDPA on the whole sequence, with the prompt stage on the same backend, and the cost of all row statistics (≤T2) over full SDPA cuDNN, the fastest production kernel here. H100 NVL, bf16.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 209,
+              "image_path": "figures/2610.21483/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 946
+            },
+            {
+              "caption": "Table 15: Licences of the artifacts we use, as stated by their releases; Falcon LLM and GLM-4 are the custom licences of these models. Detection: Section 5; kernels: Section 4; judges and grounding checkers (checker): Appendix L.5, where the models are cited.",
+              "figure_id": "table-15-11",
+              "figure_number": "15",
+              "height": 394,
+              "image_path": "figures/2610.21483/table-018.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 452
+            },
+            {
+              "caption": "Table 12: Change in test F1 when A64 is added to H64 (Section 5.4), with two-sided p-values from 100,000 paired bootstrap resamples of test groups as in Table 11, Holm-corrected over the 12 dataset–proxy pairs (Holm-12). Bold: significant gain. No change is a significant loss.",
+              "figure_id": "table-12-10",
+              "figure_number": "12",
+              "height": 123,
+              "image_path": "figures/2610.21483/table-019.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 931
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21483/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.21483",
+          "relevance": 8,
+          "selection_reason": "Computes attention statistics without materializing the attention matrix, reducing memory and latency for attention-based detectors.",
+          "summary_status": "generated",
+          "title": "FlashAttention with Statistics: Low-Overhead Attention Features for Compact Hallucination Detectors",
+          "tldr": "FlashAttention-based computation makes attention features practical for compact, frozen-model hallucination detectors without storing the full attention matrix.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion Transformers (DiTs) dominate video generation but suffer from high inference cost due to the quadratic complexity of self-attention. Sparse attention mitigates this by skipping unnecessary computation in the attention matrix, but existing methods apply a fixed sparsity ratio throughout denoising and struggle to accurately determine which computations to skip. To address these limitations, we analyze attention dynamics through attention entropy and mean attention distance, and find that attention becomes increasingly concentrated across denoising steps. We further observe that blocks selected early continue to capture a large fraction of the total attention weight at later steps. These findings suggest two acceleration opportunities: the sparsity ratio should grow as denoising progresses, and earlier search results can be reused to reduce the search space. Based on these findings, we propose Growing Sparsity and Reduced Search (GSRS), a training-free framework that retains more computation early and progressively reduces it later, while restricting subsequent searches to an early candidate set to reduce search overhead. GSRS adopts Top-p selection for adaptive sparsity control, supported by a precise evaluation scheme that computes exact attention weights within the FlashAttention computation at negligible overhead. Experiments on HunyuanVideo and Wan 2.1 validate that GSRS achieves 1.55$\\times$--2.21$\\times$ speedup while maintaining generation quality comparable to full attention.",
+          "arxiv_id": "2610.21129",
+          "arxiv_url": "https://arxiv.org/abs/2610.21129",
+          "authors": [
+            "Yun Dai, Yuyun Chen, Jiarui Wen, Huiping Zhuang, Cen Chen, Ziqian Zeng"
+          ],
+          "bullets": [
+            "Video DiTs are slowed by quadratic self-attention, while fixed-sparsity methods poorly reflect changing attention patterns during denoising.",
+            "Attention becomes increasingly concentrated over denoising steps, and early-selected blocks retain much of the later attention weight.",
+            "GSRS is training-free: it keeps more computation early, reduces it progressively, and restricts later searches to an early candidate set.",
+            "Top-p selection provides adaptive sparsity, with exact attention-weight evaluation integrated into FlashAttention at negligible overhead.",
+            "Validated on HunyuanVideo and Wan 2.1, GSRS delivers 1.55×–2.21× speedup while maintaining quality comparable to full attention."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4. Overview of GSRS. The top row illustrates growing sparsity. As denoising progresses, progressively tighter Top-p thresholds retain fewer blocks, yielding increasingly sparse masks. The bottom row illustrates reduced search. The first search step evaluates all blocks to establish a baseline sparse mask. Subsequent search steps only evaluate blocks within this baseline mask, while non-search steps directly reuse the most recent mask without re-evaluation.",
+              "figure_id": "figure-4-26",
+              "figure_number": "4",
+              "height": 519,
+              "image_path": "figures/2610.21129/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 3. Block-level attention patterns across denoising steps. Each cell represents the attention weight between a query block and a key block. Two representative heads at steps 5, 17, 29, 37, and 49 on HunyuanVideo. Tokens are reordered via Hilbert curves [3] to preserve spatial-temporal adjacency. As attention becomes more concentrated, blocks with high attention weights early in denoising continue to capture substantial attention weight, while those with low weights tend to retain low weights at later steps.",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 408,
+              "image_path": "figures/2610.21129/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 7. Runtime breakdown on HunyuanVideo. Removing reduced search introduces substantial extra attention and search overhead. GSRS with reduced search achieves 13.75× lower overhead compared to the variant without it.",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 358,
+              "image_path": "figures/2610.21129/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 913
+            },
+            {
+              "caption": "Figure 2. Attention recall under a fixed sparse mask. A sparse mask is constructed at an early denoising step and held fixed at subsequent steps. The mask maintains high attention recall throughout subsequent steps on both HunyuanVideo and Wan2.1.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 265,
+              "image_path": "figures/2610.21129/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 486
+            },
+            {
+              "caption": "Figure 9. Attention entropy and MAD profiles across diverse prompts for HunyuanVideo and Wan2.1. Each line represents a different test prompt. Both metrics exhibit a consistent monotonic decrease across all prompts, confirming that the attention concentration trend is an intrinsic model property independent of input content.",
+              "figure_id": "figure-9-22",
+              "figure_number": "9",
+              "height": 1191,
+              "image_path": "figures/2610.21129/figure-005.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 817
+            },
+            {
+              "caption": "Figure 5. Per-step attention kernel latency at varying density levels (L = 115200, H = 24, d = 128).",
+              "figure_id": "figure-5-27",
+              "figure_number": "5",
+              "height": 231,
+              "image_path": "figures/2610.21129/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1015
+            },
+            {
+              "caption": "Figure 6. Token distribution within a single block under different ordering strategies. (a) Standard row-major ordering groups tokens from a flat spatial-temporal slab. (b) Gilbert curve ordering groups tokens from a compact spatial-temporal region, better preserving spatial-temporal adjacency.",
+              "figure_id": "figure-6-20",
+              "figure_number": "6",
+              "height": 302,
+              "image_path": "figures/2610.21129/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 618
+            },
+            {
+              "caption": "Figure 8. PSNR distribution across VBench prompts. GSRS achieves the highest median PSNR on both Wan2.1 and HunyuanVideo.",
+              "figure_id": "figure-8-19",
+              "figure_number": "8",
+              "height": 262,
+              "image_path": "figures/2610.21129/figure-008.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 970
+            },
+            {
+              "caption": "Figure 10. Layer-wise attention entropy and MAD across denoising steps. Both metrics decrease monotonically within each layer. Meanwhile, substantial variation exists across layers, confirming distinct attention concentration patterns at different depths.",
+              "figure_id": "figure-10-1",
+              "figure_number": "10",
+              "height": 819,
+              "image_path": "figures/2610.21129/figure-009.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 716
+            },
+            {
+              "caption": "Figure 14. Comparion of Full Attention and GSRS on Wan 2.1 Text-to-Video generation.",
+              "figure_id": "figure-14-6",
+              "figure_number": "14",
+              "height": 1135,
+              "image_path": "figures/2610.21129/figure-010.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 930
+            },
+            {
+              "caption": "Figure 15. Comparion of Full Attention and GSRS on HunyuanVideo Text-to-Video generation.",
+              "figure_id": "figure-15-4",
+              "figure_number": "15",
+              "height": 1135,
+              "image_path": "figures/2610.21129/figure-011.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 930
+            },
+            {
+              "caption": "Figure 12. Head-level attention entropy and MAD in Wan2.1 (conditional branch). Significant variation exists across heads within each layer, while the overall monotonic decrease over denoising is preserved.",
+              "figure_id": "figure-12-21",
+              "figure_number": "12",
+              "height": 691,
+              "image_path": "figures/2610.21129/figure-012.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 720
+            },
+            {
+              "caption": "Figure 13. Head-level attention entropy and MAD in Wan2.1 (unconditional branch). The patterns are highly consistent with the conditional branch, suggesting that head-wise variation is largely independent of conditioning.",
+              "figure_id": "figure-13-11",
+              "figure_number": "13",
+              "height": 691,
+              "image_path": "figures/2610.21129/figure-013.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 720
+            },
+            {
+              "caption": "Figure 11. Head-level attention entropy and MAD in HunyuanVideo. Each row corresponds to one layer, showing entropy (left) and MAD (right) for all heads. While different heads exhibit diverse behaviors, all follow a consistent decreasing trend across denoising steps.",
+              "figure_id": "figure-11-2",
+              "figure_number": "11",
+              "height": 689,
+              "image_path": "figures/2610.21129/figure-014.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 720
+            },
+            {
+              "caption": "Table 1. Quantitative evaluation of quality and efficiency. We evaluate on Wan 2.1 and HunyuanVideo. Bold and underline denote the best and second best results.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 431,
+              "image_path": "figures/2610.21129/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1026
+            },
+            {
+              "caption": "Table 7. Detailed VBench Quality dimensions. Full breakdown of VBench Quality Score across all 7 dimensions for Wan 2.1 and HunyuanVideo. Bold and underline denote the best and second best results.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 388,
+              "image_path": "figures/2610.21129/table-016.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 1026
+            },
+            {
+              "caption": "Table 13. Comparison with related sparse attention methods on HunyuanVideo. GSRS (AdaSpa aligned) and AdaSpa (w/o Head Adaptive) both use a uniform 20% keep ratio.",
+              "figure_id": "table-13-7",
+              "figure_number": "13",
+              "height": 200,
+              "image_path": "figures/2610.21129/table-017.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 552
+            },
+            {
+              "caption": "Table 3. Ablation on search strategies and block importance evaluation on HunyuanVideo. Den. represents Density.",
+              "figure_id": "table-3-14",
+              "figure_number": "3",
+              "height": 125,
+              "image_path": "figures/2610.21129/table-018.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 437
+            },
+            {
+              "caption": "Table 2. Effect of Top-p schedule configurations on HunyuanVideo.",
+              "figure_id": "table-2-15",
+              "figure_number": "2",
+              "height": 125,
+              "image_path": "figures/2610.21129/table-019.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 373
+            },
+            {
+              "caption": "Table 4. Ablation on search steps T on HunyuanVideo.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 144,
+              "image_path": "figures/2610.21129/table-020.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 323
+            },
+            {
+              "caption": "Table 11. GSRS performance under different Top-p configurations on HunyuanVideo.",
+              "figure_id": "table-11-23",
+              "figure_number": "11",
+              "height": 310,
+              "image_path": "figures/2610.21129/table-021.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 818
+            },
+            {
+              "caption": "Table 9. Detailed VBench Quality dimensions under different warmup steps. Full breakdown of VBench Quality Score across all 7 dimensions on HunyuanVideo.",
+              "figure_id": "table-9-18",
+              "figure_number": "9",
+              "height": 264,
+              "image_path": "figures/2610.21129/table-022.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 1026
+            },
+            {
+              "caption": "Table 8. Ablation on the number of warmup steps Nw on HunyuanVideo.",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 186,
+              "image_path": "figures/2610.21129/table-023.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 414
+            },
+            {
+              "caption": "Table 12. Inference latency and speedup on a single NVIDIA H800 GPU.",
+              "figure_id": "table-12-25",
+              "figure_number": "12",
+              "height": 234,
+              "image_path": "figures/2610.21129/table-024.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 572
+            },
+            {
+              "caption": "Table 10. GSRS performance across five random seeds on HunyuanVideo. Values are reported as mean ± standard deviation.",
+              "figure_id": "table-10-24",
+              "figure_number": "10",
+              "height": 75,
+              "image_path": "figures/2610.21129/table-025.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 736
+            },
+            {
+              "caption": "Table 5. Comparison of Top-p and Top-k selection strategies on HunyuanVideo.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 104,
+              "image_path": "figures/2610.21129/table-026.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 297
+            },
+            {
+              "caption": "Table 6. Peak GPU memory usage during inference on HunyuanVideo (single A800, 125 frames, 720p).",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 99,
+              "image_path": "figures/2610.21129/table-027.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 352
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.21129/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.21129",
+          "relevance": 8,
+          "selection_reason": "Training-free sparse attention acceleration for video diffusion with growing sparsity and reduced search; relevant to efficient video generation.",
+          "summary_status": "generated",
+          "title": "Sparse Attention for Video Generation Acceleration via Growing Sparsity and Reduced Search",
+          "tldr": "GSRS accelerates video diffusion Transformers by progressively increasing attention sparsity and reusing early search results, achieving 1.55×–2.21× speedups with comparable quality to full attention.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Automating organizational work means answering many small typed questions about one piece of state (does this email need a reply, how urgent is it, who owns it) with probabilities good enough to act on without a human. The open typed-decision model we compare against, like a standard cross-encoder, answers each question with a separate pass over the input. We present Verdict-MQ, an open encoder that reads a case once and answers all of its questions: given identical retained state tokens after truncation (verified on every reported case), a structured attention mask makes the state encoding independent of the questions, keeps questions from influencing each other, and makes option order irrelevant by construction. On the typed-decisions benchmark, a 395M Verdict-MQ matches the soft gold labels significantly better than the released 421M Laya specialist on all five fresh seeds (KL 0.080 vs 0.117, Brier 0.045 vs 0.061), an advantage that survives per-system temperature scaling; its higher accuracy (0.801 vs 0.767) lies past the benchmark's own saturation point, so we read that margin as closer agreement with the benchmark's labelling teacher. On RACE, BoolQ and MultiRC, against a matched fine-tuned baseline it wins on MultiRC and loses on RACE and on BoolQ, where its training is unstable; we measure zero-shot references ourselves, including a closed general system (Jev) that beats every fine-tuned encoder. A controlled comparison measures what the shared state costs: giving each question its own question-aware copy of the state gains 0.9-3.5 points on RACE and MultiRC at 1.4-2.5x the per-case latency, and nothing measurable on typed decisions, with the invariance guarantees unchanged.",
+          "arxiv_id": "2610.20778",
+          "arxiv_url": "https://arxiv.org/abs/2610.20778",
+          "authors": [
+            "Avdhesh Singh Chouhan, Jack Perry"
+          ],
+          "bullets": [
+            "Structured attention makes state encoding independent of questions, prevents question interaction, and makes option order irrelevant.",
+            "On the typed-decisions benchmark, the 395M model beats the released 421M specialist on soft-label agreement and accuracy across five seeds.",
+            "Against a matched fine-tuned baseline, it wins on MultiRC but loses on RACE and BoolQ, where training is unstable.",
+            "Question-specific state copies improve RACE and MultiRC by 0.9–3.5 points at 1.4–2.5× latency, but show no measurable benefit on typed decisions.",
+            "The study also reports zero-shot references, including a closed general system that outperforms all fine-tuned encoders."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Accuracy-coverage curves on the typeddecisions test decisions (decisions ranked by confidence; seeds pooled: three for the base model, the five fixedmarker seeds 40–44 for the large model; Laya is the released checkpoint). Higher is better at every coverage. Table 3 gives the held-out operating points.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 307,
+              "image_path": "figures/2610.20778/figure-001.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 429
+            },
+            {
+              "caption": "Figure 1: Attention mask for a state s and two questions with two options each (shaded: the row token attends to the column token), with each group’s position ids; it implements rules 1–4. Every block starts at position a and a block’s options share one start position bk, so neither question grouping nor option order is visible.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 248,
+              "image_path": "figures/2610.20778/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 319
+            },
+            {
+              "caption": "Table 6: Matched initialization: both architectures start from Laya’s own general-purpose encoder and are trained on the same 6,000 decisions. Our re-fine-tuning of Laya uses hard labels and no temperature, so its distribution metrics are not a fair calibration comparison; the released checkpoint is.",
+              "figure_id": "table-6-15",
+              "figure_number": "6",
+              "height": 177,
+              "image_path": "figures/2610.20778/table-003.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 458
+            },
+            {
+              "caption": "Table 9: Full paired-comparison search history (Table 2 in the main text shows only the 5 headline seeds): every seed of every configuration tried against the released Laya typed-decisions checkpoint on the identical 2,000 test decisions (400 cases × 5 questions each). Item-level exact McNemar treats every decision as independent and is anti-conservative here, since the 5 questions of one case are correlated; the case-cluster bootstrap (10,000 resamples of whole cases) is the primary test. Includes the two large-model seeds that stalled early in training.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 573,
+              "image_path": "figures/2610.20778/table-004.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 950
+            },
+            {
+              "caption": "Table 3: Held-out autonomy dial on typed-decisions test decisions. The confidence threshold for each target accuracy is chosen on one half of the test cases (split by a fixed hash shared by all systems, so one case’s 5 decisions never straddle the split) and applied to the other half; each cell gives coverage (share auto-handled) / realized accuracy on that half. AURC = area under the risk-coverage curve (lower is better).",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 236,
+              "image_path": "figures/2610.20778/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 750
+            },
+            {
+              "caption": "Table 12: Marker (mask/cls, Section 3) × split-depth (k = top layers where the state attends to each question; k=22 is full ModernBERT-base depth) grid, seed 0. dev is the selection split, test the reporting split; ms = latency per passage (all its questions), batch 1, bf16, RTX 4090 Laptop. RACE’s k=4 runs never completed for either marker (Appendix C). Baselines: pair classifier (BoolQ, MultiRC; learning rate tuned on dev) and multiple-choice head (RACE). (mask, k=4) comes within about a point of the chosen (cls, k=22) on BoolQ dev but was not stable across seeds (Section 7); this table reports architecture and cost, not stability.",
+              "figure_id": "table-12-8",
+              "figure_number": "12",
+              "height": 227,
+              "image_path": "figures/2610.20778/table-006.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 677
+            },
+            {
+              "caption": "Table 2: The five fresh headline seeds (395M, fixed marker) against the released Laya typed-decisions checkpoint on the identical 2,000 test decisions, all paired by case: case-cluster bootstrap over the 400 cases (10,000 resamples). ∆ = Verdict-MQ − Laya, so negative KL and Brier (against the soft gold) favour Verdict-MQ. Temp.-matched: one temperature per system, fitted to the soft gold on half of the cases, scored on the other half. Every KL and Brier difference here, raw or temperature-matched, has p ≤ 0.0002. The full search history, with item-level McNemar and ∆ECE, is Table 9.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 128,
+              "image_path": "figures/2610.20778/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 950
+            },
+            {
+              "caption": "Table 8: Full typed-decisions history including intermediate marker and split-depth variants; Table 1 in the main text gives the headline rows only. Columns as in Table 1.",
+              "figure_id": "table-8-16",
+              "figure_number": "8",
+              "height": 306,
+              "image_path": "figures/2610.20778/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 950
+            },
+            {
+              "caption": "Table 1: Typed-decisions test split (2,000 decisions, 400 cases), specialist mode unless marked. Acc = accuracy; Soft = soft accuracy; F1 = macro-F1; KL, TV, Brier against the benchmark’s soft gold (lower is better); ECE 10-bin; MAE = score-question MAE of the expected level; W1 = score predictions within one level; ± = seed standard deviation. Card rows are taken from the benchmark card (its Jev row is the card maintainer’s own measurement); we additionally measure Jev ourselves (387/400 cases; 13 excluded for transient errors), closely matching it. Jev, Simple Jev and Decider are general (zero-shot), not directly comparable with specialists; Simple Jev and Decider are card-only (the card gives only Acc, KL and Brier for Simple Jev). The card calls accuracy of about 0.75 saturation. Intermediate training-recipe variants (marker and split-depth ablations) are Table 8 in the appendix.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 263,
+              "image_path": "figures/2610.20778/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 950
+            },
+            {
+              "caption": "Table 4: Latency in ms per case: all five questions in one packed pass vs one pass per question (typeddecisions test cases; bf16; RTX 4090 Laptop GPU; same weights in both modes; measured on checkpoints with the original marker token, whose compute is identical to the headline models’).",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 117,
+              "image_path": "figures/2610.20778/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 461
+            },
+            {
+              "caption": "Table 7: Component ablations of Verdict-MQ on typeddecisions (test split, ModernBERT-base initialization, one seed per variant; the full recipe’s seed s.d. is 0.013). Only the learning-rate schedule moves accuracy beyond seed noise, and that effect does not carry over to the NLI initializations (Appendix A).",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 150,
+              "image_path": "figures/2610.20778/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 461
+            },
+            {
+              "caption": "Table 11: Large-model recipe selection on the development split (15% of the benchmark’s training cases, held out by case). The recipe with the highest mean development accuracy is used for the final test runs.",
+              "figure_id": "table-11-12",
+              "figure_number": "11",
+              "height": 106,
+              "image_path": "figures/2610.20778/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 458
+            },
+            {
+              "caption": "Table 14: Negative result: generalists trained on public data or on our synthetic multi-workflow corpus, scored zero-shot on typed-decisions (training split used as the development split, since a generalist never trains on it). All fall below the input-ignoring prior, although the teacher that labelled the corpus agrees 0.699 with the benchmark’s gold.",
+              "figure_id": "table-14-7",
+              "figure_number": "14",
+              "height": 195,
+              "image_path": "figures/2610.20778/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 452
+            },
+            {
+              "caption": "Table 5: Standard benchmarks. Verdict-MQ and the baseline (same initialization and epoch budget) are fine-tuned on each benchmark’s training split; Laya’s general checkpoint and Jev are zero-shot references (not fine-tuned on these tasks; their own training data is undisclosed), run on the identical test items and case grouping. All numbers are measured by us, not taken from vendor cards (Appendix C). p: case-cluster bootstrap, min–max across seeds (3 for RACE/MultiRC, 5 for BoolQ). †BoolQ training is unstable (§7): the 5 seeds range 72.3–79.4%. ‡MultiRC official metrics: Verdict-MQ F1a/EM 77.5/38.8 vs baseline 67.8/20.7; the baseline varies widely across seeds (66.4, 75.9, 72.6%; Appendix C).",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 111,
+              "image_path": "figures/2610.20778/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 758
+            },
+            {
+              "caption": "Table 10: Verdict-MQ training settings.",
+              "figure_id": "table-10-14",
+              "figure_number": "10",
+              "height": 424,
+              "image_path": "figures/2610.20778/table-015.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 450
+            },
+            {
+              "caption": "Table 13: Organizational email decisions (Enron): accuracy on the consensus validation items where the two strong LLM teachers agree (323, 228 and 347 items). †Escalate is uninformative: only 3 of 347 consensus items are escalations, so the majority class scores 99.1%.",
+              "figure_id": "table-13-6",
+              "figure_number": "13",
+              "height": 129,
+              "image_path": "figures/2610.20778/table-016.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 461
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.20778/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.20778",
+          "relevance": 6,
+          "selection_reason": "Structured attention mask enables shared state encoding across many questions, reducing per-case latency.",
+          "summary_status": "generated",
+          "title": "Verdict: Encode Once, Decide Many",
+          "tldr": "Verdict-MQ encodes each case once to answer many typed questions, improving typed-decision calibration and accuracy while trading some performance for lower repeated-processing cost on standard QA tasks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We expand the exponential kernel of attention into a truncated Taylor series of $n$ terms and factorize each term into a tensor-power inner product, which collapses the causal history into exactly $n$ recurrent states, each updated by one rank-one outer product per token and independent of context length $N$. The recursion is lossless with respect to the truncated kernel ($2.2 \\times 10^{-16}$ in float64), and the states are additive across chunks ($5.7 \\times 10^{-14}$), so prefill admits a parallel scan. Measured exponents are $t \\propto N^{2.28}$ for softmax against $N^{0.91}$ for states, with a crossover at $N \\approx 728$ and $20.8\\times$ at $N = 8192$; per-token decoding latency is constant at $7.3\\,\\mu$s against $N^{1.04}$ for softmax, giving $76.0\\times$ at $N = 65536$. Accuracy improves exponentially in $n$ while cost grows combinatorially, since the $m$-th state is $\\binom{d+m-1}{m}$ wide---a bound confirmed by SVD---so the optimum is second order, $n = 3$, at $6.5 \\times 10^{-4}$ error and $9{,}945$ elements per head. Query and key normalization is a prerequisite: without it the argument exceeds the convergence radius and adding terms stops helping.",
+          "arxiv_id": "2610.20637",
+          "arxiv_url": "https://arxiv.org/abs/2610.20637",
+          "authors": [
+            "Zicong Huang"
+          ],
+          "bullets": [
+            "Approximates the exponential attention kernel with n Taylor terms and tensor-power factorization.",
+            "Maintains exactly n recurrent states using one rank-one outer-product update per token, independent of context length.",
+            "States combine additively across chunks, enabling parallel-scan prefill and constant per-token decoding latency.",
+            "The method scales more favorably than softmax attention for long contexts, with reported speedups up to 20.8× in prefill and 76.0× in decoding.",
+            "State width grows combinatorially with order; second order (n = 3) is identified as optimal, while query/key normalization is required for convergence."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Table 7: Single-token decoding latency against context length, with d = 16, dv = 64, n = 3. Fitted exponents are α = 1.04 for softmax and α = 0.00 for the state model.",
+              "figure_id": "table-7-3",
+              "figure_number": "7",
+              "height": 169,
+              "image_path": "figures/2610.20637/table-001.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 572
+            },
+            {
+              "caption": "Table 9: State size in MB at bf16 with dv = 64.",
+              "figure_id": "table-9-6",
+              "figure_number": "9",
+              "height": 198,
+              "image_path": "figures/2610.20637/table-002.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 590
+            },
+            {
+              "caption": "Table 2: Time as N doubles: recurrence against rescanning the history from the start at every step. Settings: d = 6, dv = 4, n = 4.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2610.20637/table-003.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 427
+            },
+            {
+              "caption": "Table 6: Extrapolated prefill time from the fitted exponents. Not measured.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 198,
+              "image_path": "figures/2610.20637/table-004.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 498
+            },
+            {
+              "caption": "Table 1: Recurrent states against the explicitly materialized truncated kernel, maximum absolute output difference in float64. The compression loses nothing. State elements are counted in the uncompressed basis for this table.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 225,
+              "image_path": "figures/2610.20637/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 422
+            },
+            {
+              "caption": "Table 4: Forcing low rank on the order-2 state. Rank 21 = ( 7 2 ) is exactly lossless; one dimension fewer is not.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 254,
+              "image_path": "figures/2610.20637/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 340
+            },
+            {
+              "caption": "Table 5: Prefill time and speedup. Settings: d = 16, dv = 64, n = 3, c = 256.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 196,
+              "image_path": "figures/2610.20637/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 440
+            },
+            {
+              "caption": "Table 11: Truncated polynomial ∑ m<n x m/m! against exp(x).",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 197,
+              "image_path": "figures/2610.20637/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 427
+            },
+            {
+              "caption": "Table 3: Rank of span{k⊗m} over 2,000 random keys with d = 6. The state saturates at the symmetric-tensor dimension, far below dm.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 198,
+              "image_path": "figures/2610.20637/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 398
+            },
+            {
+              "caption": "Table 8: Truncation order sweep at fixed N = 2048. Softmax baseline is 32.7ms.",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 198,
+              "image_path": "figures/2610.20637/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 744
+            },
+            {
+              "caption": "Table 10: Accuracy depends entirely on keeping |q⊤k/a| small.",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 142,
+              "image_path": "figures/2610.20637/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 906
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.20637/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.20637",
+          "relevance": 8,
+          "selection_reason": "Linear-time attention via Taylor expansion with fixed recurrent states.",
+          "summary_status": "generated",
+          "title": "Expanding Attention: A Taylor-Series Route to Linear-Time Transformers with a Fixed Number of Recurrent States",
+          "tldr": "A truncated Taylor expansion replaces softmax attention with a fixed number of recurrent states, enabling linear-time sequence processing while exposing a cost–accuracy trade-off.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context decoding is limited by memory bandwidth, because every output token reads the KV cache of every layer. Sparse decoding reduces this cost by reading only part of the KV cache. We observe that the number of pages a query needs varies widely across KV heads, layers and steps. Fixed budgets are simple, but they are sized for demanding cases and tuned per workload; adaptive budgets follow this variation more flexibly, but existing designs pay for it with extra selection cost or training. At the kernel level, FlashAttention-3 (FA3) and FlashInfer are designed for rows of similar length: with page lists whose length differs per KV head, they either pad the lists (forfeiting much of the sparse saving), leave thread blocks unbalanced, or rely on a host-side plan that runs outside the CUDA graph. We propose MOIRA, a training-free sparse decode path in vLLM whose budget adapts per KV head and per layer. For every request, layer, KV head and step, a coverage rule keeps the smallest set of pages whose estimated attention mass reaches a fraction $γ$. A new kernel, self-planning attention, lets each thread block derive its own share of the work from the list lengths, so the whole decode step stays inside the CUDA graph. On an H200, at RULER's 128k context, MOIRA with $γ=0.99$ matches dense accuracy while reading about 30% of the pages and reduces the time per output token (TPOT) by 2.2-2.5$\\times$ relative to dense FA3; with $γ=0.98$ it reduces TPOT by 2.7$\\times$ and stays within the noise of dense. Under high serving load it raises throughput by up to 51%. These results suggest that a budget adapted per head and layer, paired with a kernel that keeps such budgets inside the CUDA graph, makes sparse decoding both flexible and fast.",
+          "arxiv_id": "2610.04313",
+          "arxiv_url": "https://arxiv.org/abs/2610.04313",
+          "authors": [
+            "Dich Nhat Minh Nguyen",
+            "Tran Dang Duong Nguyen"
+          ],
+          "bullets": [
+            "Long-context decoding is memory-bandwidth-bound because each token accesses every layer’s KV cache.",
+            "MOIRA selects the smallest set of pages reaching a target attention-mass coverage per request, layer, KV head, and decoding step.",
+            "Its self-planning attention kernel handles variable page-list lengths without padding, imbalance, or host-side CUDA-graph breaks.",
+            "On an H200 with 128k-token contexts, it reads about 30% of pages at γ=0.99 and achieves 2.2–2.5× lower TPOT than dense FA3 while matching dense accuracy.",
+            "At γ=0.98, TPOT improves by 2.7× and serving throughput increases by up to 51%, according to the abstract."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 7. Sparse decode methods vs. dense FA3, attention only (Section 5.5.1). (a) One decode step (32 layers) of Llama-3.1-8B at 4×130k. Twilight: the authors’ selection chain and FlashInfer attention on its own token sets (GPU), plus host metadata and plan (hatched). (b) Speedup against the kept fraction at the same geometry (Moira: 64-token pages; FFD: 128/256-token blocks at a preset kept fraction; shaded band: FFD’s kept fraction on RULER). Moira uses page counts from a real decode step, scaled to the reads of γ=0.98 and 0.99 on RULER and, labelled “scaled”, to an intermediate fraction. (c) Across shapes: FFD at about 15% kept; Moira on real γ=0.98 steps (kept fraction in parentheses).",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 298,
+              "image_path": "figures/2610.04313/figure-001.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1004
+            },
+            {
+              "caption": "Figure 1. The budget a row needs varies, and fixed budgets or coarse lengths forfeit the savings. Oracle coverage sets C⋆(0.95) over 60 LongBench requests, 64-token pages. (a) Mean size of the set, as a fraction of the context, for each (layer, KV head) of Llama-3.1-8B: the first layer needs most of its context, while most layers need only a tenth. (b) Tokens read by budget policies relative to the coverage set, when each policy must give 90% of the rows, over all layers and steps, at least 0.95 of the mass: every fixed or profiled budget reads 1.7–2.4× as many tokens as the coverage set (dashed line). (c) Fraction of the dense KV cache read by batches of 32 requests (total over decode steps 16–256) when the per-(layer, KV head) lengths are coarsened: padding to the longest head doubles the reads.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 371,
+              "image_path": "figures/2610.04313/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1008
+            },
+            {
+              "caption": "Figure 4. Attention time per layer as per-head lengths spread (Llama-3.1-8B geometry, 22% of the pages kept on average; the x axis is the coefficient of variation (CV) of the per-(request, KV head) lengths). “real”: per-(request, layer, KV head) page counts from decode steps of Moira on LongBench prompts of about 8k tokens, applied as fractions of each context (0.33–0.41 of the pages; short contexts need a larger fraction than RULER at 128k). FlashInfer additionally needs the host plan given in each panel, per layer and step. The 64k panel has no FlashInfer arm.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 344,
+              "image_path": "figures/2610.04313/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1007
+            },
+            {
+              "caption": "Figure 5. Online serving with vllm bench serve (closed loop, prefix caching off, 1,024 output tokens, one run per point). Set A: LongBench prompts of 4k–64k tokens; set B: 64k–126k tokens.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 378,
+              "image_path": "figures/2610.04313/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1003
+            },
+            {
+              "caption": "Figure 3. One decode layer of Moira, for one (request, KV head) row. Step 1 approximates the attention mass of each page; Step 2 keeps the fewest pages whose total mass reaches γ; Step 3 reads those pages, with each thread block taking one chunk of the row by itself; Step 4 combines the chunks. Values are illustrative; Step 3 uses the row lengths of Figure 2.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 261,
+              "image_path": "figures/2610.04313/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1010
+            },
+            {
+              "caption": "Figure 6. TPOT in vLLM (Moira at γ=0.98 vs. dense FA3; data of Table 3). Median of 5 repetitions, two interleaved pairs per shape; the error bars span the two pairs.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 391,
+              "image_path": "figures/2610.04313/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 594
+            },
+            {
+              "caption": "Figure 2. Existing decode kernels on per-head lists of different lengths. Each bar is one (request, KV head) row with its selected pages; each segment is the work of one thread block; red is padding. Times: attention of one layer of Llama-3.1-8B on lists from real decode steps, scaled to 32k context× 16 requests (H200). Only self-planning attention reads exactly the selected pages, gives every thread block a bounded, nearly equal amount of work, and runs inside a CUDA graph.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 154,
+              "image_path": "figures/2610.04313/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 975
+            },
+            {
+              "caption": "Table 6. Attention time per layer (µs) on the same page lists (Llama-3.1-8B geometry; data of Figure 4). CV 0: all rows of equal length; CV 1: nominal spread (measured 0.84–0.88); real: page counts from decode steps of Moira at about 8k tokens, applied as fractions of each context. FlashInfer needs its host plan at every step (plan: page counts copied to the host, index arrays built and plan() called, per layer); “–”: not measured. Bold: fastest method per row, FlashInfer counted with its plan.",
+              "figure_id": "table-6-14",
+              "figure_number": "6",
+              "height": 346,
+              "image_path": "figures/2610.04313/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 667
+            },
+            {
+              "caption": "Table 1. Accuracy and latency at 128k. RULER-13 (13 tasks × 20 documents); †: significantly below dense (paired bootstrap by document, 95%). KL: mean token KL to dense on 65 teacherforced RULER answers (0.0003 with every page kept). Attn: selection + attention of one decode step at 4×130k on the GPU; Host: FlashInfer’s plan() call per step, with its index arrays already built. TPOT: measured end to end in vLLM with CUDA graphs on RULER prompts (batch 4); –: the method does not run in vLLM; dense FlashInfer: 18.8 / 20.0 ms. ×: dense FA3 TPOT / TPOT. Page reads of Moira (and of the c rows, same lists) at γ=0.98 / 0.99: 19.6 / 27.4% on Llama-3.1-8B, 24.2 / 32.5% on Qwen3-4B. Bold: best sparse value.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 467,
+              "image_path": "figures/2610.04313/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 460
+            },
+            {
+              "caption": "Table 4. One decode step of Llama-3.1-8B by kernel (ms, Nsight Systems median of 128 steps). att, est, sel, mrg: Attend, Estimate, Select, Merge; GEMM: matrix multiplications. Tracing at CUDAgraph node level lengthens the step by up to 1 ms relative to Table 3. Bold: shorter step.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 161,
+              "image_path": "figures/2610.04313/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 470
+            },
+            {
+              "caption": "Table 7. TPOT (ms) with γ=0.99 and dense FA3, same shapes and protocol as Table 3 (mean of two interleaved pairs), and page reads of Moira. Bold: lower TPOT.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 444,
+              "image_path": "figures/2610.04313/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 991
+            },
+            {
+              "caption": "Table 2. Adaptive vs. fixed budgets on AIME (Qwen3-4BThinking, 480 solutions). All sparse arms use the same estimator and kernels and differ only in the rule that sets the page count. Truncated: solutions that hit the 32,768-token limit. Closed acc.: accuracy on the solutions that finish before the limit. Accuracy also counts the 0–2 truncated solutions per arm whose answer, extracted from the truncated text, is correct. †: significantly below Moira γ=0.98 (paired bootstrap by problem, 95%).",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 292,
+              "image_path": "figures/2610.04313/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 504
+            },
+            {
+              "caption": "Table 5. Online serving (vllm bench serve, closed loop, 1,024 output tokens). Set A: 256 LongBench prompts of 4k–64k tokens; set B: 64 prompts of 64k–126k tokens. c: concurrency. FI: dense FlashInfer. Bold: best per row.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 252,
+              "image_path": "figures/2610.04313/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 481
+            },
+            {
+              "caption": "Table 3. TPOT (ms) of Moira (γ=0.98) and dense FA3 on prompts cut from LongBench documents (batch× context as listed), mean of two interleaved pairs (whose speedups differ by at most 0.13), and page reads of Moira. Bold: lower TPOT.",
+              "figure_id": "table-3-12",
+              "figure_number": "3",
+              "height": 182,
+              "image_path": "figures/2610.04313/table-014.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 473
+            }
+          ],
+          "first_seen_at": "2026-10-15T21:00:00-04:00",
+          "hero_figure": "figures/2610.04313/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.04313",
+          "relevance": 9,
+          "selection_reason": "Sparse adaptive-budget KV-cache decoding for long-context LLMs; strong efficiency contribution.",
+          "summary_status": "generated",
+          "title": "MOIRA: Mass-Oriented Indexing with Ragged Attention for Long-Context Decoding",
+          "tldr": "MOIRA enables fast, training-free long-context decoding by adaptively reading only the KV-cache pages needed by each layer and KV head while preserving dense-model accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-14",
       "paper_count": 7,
       "papers": [
@@ -48566,5 +49649,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 251
+  "total_paper_count": 256
 }
