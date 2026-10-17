@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**515 papers total**
+**517 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-16 | [Octree-based Video Representation](https://arxiv.org/abs/2609.33100) | Video Generation and Understanding: Video Understanding | OctVideo represents videos with an adaptive octree that allocates computation to detailed regions, enabling efficient reconstruction and competitive understanding. | 8 | 8 |
+| 2026-10-16 | [dKFD: Phase-Structured Evidence Allocation for Fixed-Budget Localized Event Understanding](https://arxiv.org/abs/2609.33083) | Video Generation and Understanding: Video Understanding | dKFD improves fixed-budget evidence selection for localized events by allocating frames across pre-event, event, and post-event phases. | 8 | 8 |
 | 2026-10-15 | [Gen4P: Video Generators are 4D Perceivers](https://arxiv.org/abs/2610.22371) | 3D Vision; Video Generation and Understanding: Video Understanding | Gen4P repurposes a pretrained video generator as a fast, unified feed-forward model for recovering 4D geometry and motion from monocular video. | 8 | 8 |
 | 2026-10-15 | [Grounded Human-Attributed Description and Activity Recognition in Videos](https://arxiv.org/abs/2610.22295) | Video Generation and Understanding: Video Understanding | GHADAR enables video models to describe every person’s characteristics and activities using their locations, supported by a new dataset, grounding-aware training, and video-based evaluation. | 6 | 6 |
 | 2026-10-15 | [EVA-Cap: Optimizing Audiovisual Video Captioning via Event-Centric Alignment](https://arxiv.org/abs/2610.22186) | Video Generation and Understanding: Video Understanding | EVA-Cap improves audiovisual video captioning by decomposing captions into atomic events and optimizing their audiovisual alignment. | 7 | 7 |

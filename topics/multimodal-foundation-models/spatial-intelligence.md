@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**613 papers total**
+**614 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-16 | [QSCP: Beyond Class-Name Prompts for Query-Guided Semantic Change Parsing](https://arxiv.org/abs/2609.33088) | Multimodal Foundation Models: Spatial Intelligence | QSCP advances query-guided change detection by interpreting category, synonym, and sentence queries to identify specific transitions and produce paired semantic maps over time. | 7 | 7 |
 | 2026-10-15 | [DK-VLM: Geometry as Position for Spatial Reasoning in Vision-Language Models](https://arxiv.org/abs/2610.22356) | Multimodal Foundation Models: Spatial Intelligence | DK-VLM improves multi-view 3D spatial reasoning by injecting scene geometry into attention as positional information and training explicit reference-frame updates. | 9 | 9 |
 | 2026-10-15 | [Grid-Bench: Can LLMs Predict How Discrete Worlds Change?](https://arxiv.org/abs/2610.22312) | Multimodal Foundation Models: Spatial Intelligence | Grid-Bench evaluates how accurately LLMs execute sequences of spatial transformations and reconstruct final states in discrete grids. | 7 | 7 |
 | 2026-10-15 | [MJev-Spatial: System One Spatial Intelligence via Native Attention Matching](https://arxiv.org/abs/2610.22276) | Multimodal Foundation Models: Spatial Intelligence | MJev-Spatial converts spatial reasoning into fast, unified classification, achieving strong benchmark performance while avoiding autoregressive answer generation. | 8 | 7 |

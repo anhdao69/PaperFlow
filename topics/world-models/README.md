@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**973 papers total**
+**974 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-16 | [TriDrive: Joint Driver, Vehicle, and Road Modeling for Forecasting and Driver Monitoring](https://arxiv.org/abs/2609.33000) | World Models | TriDrive jointly models driver behavior, vehicle dynamics, and road context to forecast driving states and deliver real-time driver-monitoring warnings. | 6 | 7 |
 | 2026-10-15 | [T2-z: Test-Time Optimization of Environment Latents for Robotic World Models](https://arxiv.org/abs/2610.22364) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | T2-Z adapts robotic world models to unseen environments by optimizing a compact environment latent from test-time interactions. | 9 | 9 |
 | 2026-10-15 | [Perceive, Predict, and Plan: a Unified World Action Model for Egocentric Dexterous Manipulation](https://arxiv.org/abs/2610.22363) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | P³-WAM unifies 3D perception, action-conditioned video prediction, and goal-directed planning for egocentric dexterous manipulation. | 9 | 9 |
 | 2026-10-15 | [GeoState: Learning View-Decoupled Geometry States for 3D World Modeling](https://arxiv.org/abs/2610.22343) | World Models | GeoState learns view-independent geometric scene states so 3D world models can predict scene evolution separately from camera motion. | 8 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**743 papers total**
+**745 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-16 | [CAR-VLA: Complexity-Aware and Risk-Adaptive Reasoning for Autonomous Driving](https://arxiv.org/abs/2609.34387) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | CAR-VLA adapts autonomous-driving VLA reasoning to both scene complexity and dynamic risk, selecting fast, deliberate, or hazard-focused reasoning modes. | 8 | 7 |
+| 2026-10-16 | [Train Together or Merge Later? Unifying VLA Experts via a Shared Action Interface](https://arxiv.org/abs/2609.33125) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | PolicyWeave improves multi-task VLA policies by preserving a shared action interface and selectively merging task-specific expert updates based on deployment context. | 9 | 9 |
 | 2026-10-15 | [LIBERO-PeRM: Benchmarking Personalized Robotic Manipulation](https://arxiv.org/abs/2610.22372) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | LIBERO-PeRM introduces a controlled benchmark for evaluating whether robotic manipulation policies can learn, generalize, and compose user preferences without changing task goals. | 8 | 7 |
 | 2026-10-15 | [Perceive, Predict, and Plan: a Unified World Action Model for Egocentric Dexterous Manipulation](https://arxiv.org/abs/2610.22363) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models | P³-WAM unifies 3D perception, action-conditioned video prediction, and goal-directed planning for egocentric dexterous manipulation. | 9 | 9 |
 | 2026-10-15 | [CoDA: Co-Evolution of Data Engines and Action Policies](https://arxiv.org/abs/2610.22362) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | CoDA co-evolves simulation data generation and robot policies to target failures, yielding substantially better out-of-distribution manipulation performance. | 9 | 8 |

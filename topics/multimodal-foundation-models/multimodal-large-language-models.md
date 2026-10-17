@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1140 papers total**
+**1142 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-16 | [Evidence-Aligned Multimodal On-Policy Self-Distillation for Fine-Grained Visual Understanding](https://arxiv.org/abs/2609.34672) | Multimodal Foundation Models: Multimodal Large Language Models | EAD improves fine-grained visual understanding by filtering multimodal self-distillation signals according to whether they align with task-relevant visual evidence. | 6 | 7 |
+| 2026-10-16 | [Certified Interface Aliases: Exact Collisions in Vision-Language Preprocessing, and When They Exist](https://arxiv.org/abs/2609.33003) | Multimodal Foundation Models: Multimodal Large Language Models | AliasForge proves that vision-language preprocessing can create exact, certified image collisions that make some visual facts unrecoverable by any language-side reasoning or routing. | 7 | 8 |
 | 2026-10-15 | [Twice Upon a Time: Complementary Representations for Time-Series Reasoning](https://arxiv.org/abs/2610.22327) | Multimodal Foundation Models: Multimodal Large Language Models | A dual-view time-series representation combining line plots with normalized delay embeddings substantially improves language-model-based temporal reasoning. | 6 | 7 |
 | 2026-10-15 | [OS-Helix: Unifying GUI Interaction and Code Execution in Native Computer-Using Agents](https://arxiv.org/abs/2610.22234) | Multimodal Foundation Models: Multimodal Large Language Models | OS-Helix trains a multimodal agent to coordinate GUI actions and code execution natively, achieving substantial gains on desktop automation benchmarks. | 6 | 8 |
 | 2026-10-15 | [Skill-Decoupled On-Policy Expert Distillation for Unified Vision-Language Models](https://arxiv.org/abs/2610.22217) | Multimodal Foundation Models: Multimodal Large Language Models | SCOPED unifies specialized visual capabilities by distilling independently trained experts into one VLM while keeping their explicit skills hidden at inference. | 7 | 7 |

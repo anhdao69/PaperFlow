@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**802 papers total**
+**805 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-16 | [ReVision3D: Attribution-Guided Recursive Self-Improvement for 3D Medical Perception](https://arxiv.org/abs/2609.32984) | 3D Vision | ReVision3D uses attribution-guided recursive self-improvement and spatially grounded 3D feedback to identify and fix the main bottleneck in medical image perception. | 6 | 8 |
+| 2026-10-16 | [SV2V-RSim: A Comprehensive Benchmark for Self-Selective V2V Cooperative Perception with Near-Realistic Data](https://arxiv.org/abs/2609.32863) | 3D Vision | SV2V-RSim is a near-realistic, large-scale V2V cooperative perception benchmark with adaptive collaborator selection to improve perception under communication constraints. | 5 | 6 |
+| 2026-10-16 | [Unlocking Geodesic Gromov-Wasserstein Distances for 3D Modeling](https://arxiv.org/abs/2609.32824) | 3D Vision | EGGroW makes geodesic Gromov-Wasserstein distances practical at scale for 3D modeling tasks such as pose estimation and template detection. | 6 | 7 |
 | 2026-10-15 | [Gen4P: Video Generators are 4D Perceivers](https://arxiv.org/abs/2610.22371) | 3D Vision; Video Generation and Understanding: Video Understanding | Gen4P repurposes a pretrained video generator as a fast, unified feed-forward model for recovering 4D geometry and motion from monocular video. | 8 | 8 |
 | 2026-10-15 | [Grounding Generative Verification in 3D Content](https://arxiv.org/abs/2610.22360) | 3D Vision | The paper introduces benchmarks, data, and workflows for verifying whether generated 3D content satisfies factual requirements using multi-view evidence and explanatory feedback. | 6 | 7 |
 | 2026-10-15 | [SUPRA-TEX: 3D Generation with Super-Aligned Texture](https://arxiv.org/abs/2610.22352) | 3D Vision | SUPRA-Tex generates relightable 3D materials that closely preserve visible reference-image details while coherently completing unseen surfaces. | 7 | 7 |
