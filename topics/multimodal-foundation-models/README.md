@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**1863 papers total**
+**1864 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [TimeCap: A Scalable Open-Source Pipeline for Captioning Wearable Health Time-Series Data](https://arxiv.org/abs/2610.21274) | Multimodal Foundation Models: Multimodal Large Language Models | TimeCap is a deterministic, open-source pipeline that generates reproducible captions for multimodal wearable health time series, enabling large-scale training of time-series language models. | 7 | 7 |
 | 2026-10-16 | [Evidence-Aligned Multimodal On-Policy Self-Distillation for Fine-Grained Visual Understanding](https://arxiv.org/abs/2609.34672) | Multimodal Foundation Models: Multimodal Large Language Models | EAD improves fine-grained visual understanding by filtering multimodal self-distillation signals according to whether they align with task-relevant visual evidence. | 6 | 7 |
 | 2026-10-16 | [QSCP: Beyond Class-Name Prompts for Query-Guided Semantic Change Parsing](https://arxiv.org/abs/2609.33088) | Multimodal Foundation Models: Spatial Intelligence | QSCP advances query-guided change detection by interpreting category, synonym, and sentence queries to identify specific transitions and produce paired semantic maps over time. | 7 | 7 |
 | 2026-10-16 | [Certified Interface Aliases: Exact Collisions in Vision-Language Preprocessing, and When They Exist](https://arxiv.org/abs/2609.33003) | Multimodal Foundation Models: Multimodal Large Language Models | AliasForge proves that vision-language preprocessing can create exact, certified image collisions that make some visual facts unrecoverable by any language-side reasoning or routing. | 7 | 8 |

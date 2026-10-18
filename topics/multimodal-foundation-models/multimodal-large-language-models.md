@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1142 papers total**
+**1143 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [TimeCap: A Scalable Open-Source Pipeline for Captioning Wearable Health Time-Series Data](https://arxiv.org/abs/2610.21274) | Multimodal Foundation Models: Multimodal Large Language Models | TimeCap is a deterministic, open-source pipeline that generates reproducible captions for multimodal wearable health time series, enabling large-scale training of time-series language models. | 7 | 7 |
 | 2026-10-16 | [Evidence-Aligned Multimodal On-Policy Self-Distillation for Fine-Grained Visual Understanding](https://arxiv.org/abs/2609.34672) | Multimodal Foundation Models: Multimodal Large Language Models | EAD improves fine-grained visual understanding by filtering multimodal self-distillation signals according to whether they align with task-relevant visual evidence. | 6 | 7 |
 | 2026-10-16 | [Certified Interface Aliases: Exact Collisions in Vision-Language Preprocessing, and When They Exist](https://arxiv.org/abs/2609.33003) | Multimodal Foundation Models: Multimodal Large Language Models | AliasForge proves that vision-language preprocessing can create exact, certified image collisions that make some visual facts unrecoverable by any language-side reasoning or routing. | 7 | 8 |
 | 2026-10-15 | [Twice Upon a Time: Complementary Representations for Time-Series Reasoning](https://arxiv.org/abs/2610.22327) | Multimodal Foundation Models: Multimodal Large Language Models | A dual-view time-series representation combining line plots with normalized delay embeddings substantially improves language-model-based temporal reasoning. | 6 | 7 |

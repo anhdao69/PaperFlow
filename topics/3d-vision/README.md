@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**805 papers total**
+**806 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [MAETrack: Unleashing the Potential of Pretrained Geometric Priors for 3D Single Object Tracking](https://arxiv.org/abs/2609.16695) | 3D Vision | MAETrack improves 3D single-object tracking transfer from masked-autoencoder pretraining by preserving shallow geometric features and adapting deeper layers for tracking. | 6 | 6 |
 | 2026-10-16 | [ReVision3D: Attribution-Guided Recursive Self-Improvement for 3D Medical Perception](https://arxiv.org/abs/2609.32984) | 3D Vision | ReVision3D uses attribution-guided recursive self-improvement and spatially grounded 3D feedback to identify and fix the main bottleneck in medical image perception. | 6 | 8 |
 | 2026-10-16 | [SV2V-RSim: A Comprehensive Benchmark for Self-Selective V2V Cooperative Perception with Near-Realistic Data](https://arxiv.org/abs/2609.32863) | 3D Vision | SV2V-RSim is a near-realistic, large-scale V2V cooperative perception benchmark with adaptive collaborator selection to improve perception under communication constraints. | 5 | 6 |
 | 2026-10-16 | [Unlocking Geodesic Gromov-Wasserstein Distances for 3D Modeling](https://arxiv.org/abs/2609.32824) | 3D Vision | EGGroW makes geodesic Gromov-Wasserstein distances practical at scale for 3D modeling tasks such as pose estimation and template detection. | 6 | 7 |

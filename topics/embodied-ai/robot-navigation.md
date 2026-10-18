@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**703 papers total**
+**704 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [Continual Learning for Traversability Prediction with Uncertainty-Aware Adaptation](https://arxiv.org/abs/2609.17141) | Embodied AI: Robot Navigation; Adaptation and Memory: Continual and Online Learning | A continual-learning framework adapts traversability prediction to new terrains while preserving prior knowledge through uncertainty-aware generative experience recall. | 8 | 7 |
 | 2026-10-15 | [Safe and Fuel-Efficient Motion Planning for Lunar Propulsive Drones](https://arxiv.org/abs/2610.22225) | Embodied AI: Robot Navigation | An autonomous vision-guided framework plans and robustly controls safe, fuel-efficient lunar drone hops between waypoints. | 7 | 6 |
 | 2026-10-15 | [Onboard Lightweight LLM Reasoning for Human-Aware Safe UAV Navigation](https://arxiv.org/abs/2610.22092) | Embodied AI: Robot Navigation | A fully onboard UAV system uses lightweight vision and LLM-based object reasoning to impose category-specific safety constraints, reducing collisions and improving semantic landing success in simulation. | 8 | 7 |
 | 2026-10-15 | [Plans Are Not Executions: Adapting Frozen World-Model Planners to Controller-Induced Execution Shift](https://arxiv.org/abs/2610.22041) | Embodied AI: Robot Navigation; World Models | ExecutionBridge adapts frozen world-model planners to controller-specific motion without replacing the original plan, improving decisions under unseen execution behaviors. | 8 | 7 |

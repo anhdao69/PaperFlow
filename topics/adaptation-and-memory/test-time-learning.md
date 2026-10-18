@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**546 papers total**
+**548 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [FGSS-BO: Feedback-Guided Hypothesis Management for LLM-Based Bayesian Optimization](https://arxiv.org/abs/2610.21246) | Adaptation and Memory: Test-Time Learning | FGSS-BO makes LLM-guided Bayesian optimization more explicit and inspectable by managing hypotheses, evidence, interventions, and revisions throughout the search. | 7 | 7 |
+| 2026-10-17 | [Few-Shot Adaptation for Anomalous Sound Detection at Low False-Positive Rate](https://arxiv.org/abs/2610.19893) | Adaptation and Memory: Test-Time Learning | A two-stage approach uses unsupervised learning followed by few-shot adaptation from the first fault’s audio to improve anomalous sound detection at low false-positive rates. | 7 | 7 |
 | 2026-10-15 | [T2-z: Test-Time Optimization of Environment Latents for Robotic World Models](https://arxiv.org/abs/2610.22364) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | T2-Z adapts robotic world models to unseen environments by optimizing a compact environment latent from test-time interactions. | 9 | 9 |
 | 2026-10-15 | [LAMP: Layerwise Adaptive Mixing of Predictors for Training-Free Few-Shot Vision-Language Adaptation](https://arxiv.org/abs/2610.22182) | Adaptation and Memory: Test-Time Learning | LAMP improves training-free few-shot vision-language adaptation by adaptively mixing predictions from multiple encoder layers and global/regional features. | 7 | 7 |
 | 2026-10-15 | [EMO: A Closed-Loop Test-Time Computation Framework via Alternating Context Optimization and Logits Steering](https://arxiv.org/abs/2610.22160) | Adaptation and Memory: Test-Time Learning | EMO improves test-time adaptation by alternating textual context updates with confidence-constrained logit steering, yielding broad zero-shot gains without training. | 9 | 9 |

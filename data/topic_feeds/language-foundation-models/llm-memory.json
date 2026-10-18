@@ -1,6 +1,392 @@
 {
   "days": [
     {
+      "date": "2026-10-17",
+      "paper_count": 2,
+      "papers": [
+        {
+          "abstract": "Multi-hop retrieval-augmented generation (RAG) requires an agent to retrieve evidence for a sequence of dependent sub-questions. When a wrong answer lacks a required passage, the passage may be inaccessible to the retriever, or the agent may have failed to issue a query that would retrieve it. Standard retrieval evaluations conflate these two causes. We study how much apparent retrieval failure is instead caused by search drift: the search no longer tracks an unanswered sub-question. Holding the retriever, corpus, and generation model fixed, we introduce ExecutionRAG, a training-free requirement register that records open sub-questions and their supporting evidence. The register changes search guidance but not evidence access, so each gold passage it recovers certifies that the passage was reachable by the original retriever. On 1,000 MuSiQue questions, the number of wrong answers with unretrieved required evidence falls from 382 to 234 with all-MiniLM-L6-v2 and from 383 to 274 with Qwen3-Embedding-0.6B. These counts correspond to 69% to 44% and 66% to 48% of each system's wrong answers, respectively. Crucially, evidence recovery does not produce a proportional reduction in total error: premature resolutions and abstentions increase as missing-evidence failures decrease. The central finding is therefore a shift in the remaining bottleneck, from guiding search toward required evidence to verifying that the retrieved evidence is sufficient.",
+          "arxiv_id": "2610.21184",
+          "arxiv_url": "https://arxiv.org/abs/2610.21184",
+          "authors": [
+            "Jiaqi Wei",
+            "Wenxuan Huang",
+            "Chengdong Xu",
+            "Xiang Zhang",
+            "Wanli Ouyang"
+          ],
+          "bullets": [
+            "Standard retrieval evaluations conflate inaccessible evidence with failures to query for evidence required by an unanswered sub-question.",
+            "ExecutionRAG is a training-free requirement register that tracks open sub-questions and supporting evidence while keeping the retriever, corpus, and generator fixed.",
+            "On 1,000 MuSiQue questions, missing-evidence wrong answers decrease substantially for both tested retrievers when search is guided by the register.",
+            "This recovery does not proportionally reduce total errors because premature resolutions and abstentions increase.",
+            "The remaining challenge is verifying evidence sufficiency after improving search guidance."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of ExecutionRAG. The agent keeps a requirement register of the question’s open sub-questions and works through it in three stages: (1) build the register from the question and an initial (seed) retrieval, so its items are grounded in evidence the corpus can actually return; (2) at each step, select an open item, retrieve evidence, and update the register. The agent marks an item answered when a passage supports it and records that passage, or drops the item if later evidence contradicts it; and (3) answer only once no item is still open, or return a bounded partial answer when the search budget runs out.",
+              "figure_id": "figure-1-11",
+              "figure_number": "1",
+              "height": 486,
+              "image_path": "figures/2610.21184/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1056
+            },
+            {
+              "caption": "Figure 4: Accuracy–efficiency trade-off. Pareto frontiers of LLM-Evaluation Accuracy vs. retrieved tokens per question for ExecutionRAG and A-RAG under two embedding backbones. Bottom row: ablation variants; bars show LLM-Acc and the line shows average retrieved tokens per question.",
+              "figure_id": "figure-4-15",
+              "figure_number": "4",
+              "height": 415,
+              "image_path": "figures/2610.21184/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1005
+            },
+            {
+              "caption": "Figure 2: Failure distribution on MuSiQue, by failure type and hop count. The share of failures that never retrieve a required passage decreases after adding the register, while reasoning errors after retrieval and abstentions increase. For ExecutionRAG, failures caused by missing evidence remain most common at four hops.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 337,
+              "image_path": "figures/2610.21184/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 934
+            },
+            {
+              "caption": "Figure 3: Performance under Qwen3-Embedding-0.6B. Left: per-benchmark Contain-Match and LLM-Evaluation Accuracy. Right: average accuracy across benchmarks.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 329,
+              "image_path": "figures/2610.21184/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 946
+            },
+            {
+              "caption": "Figure 5: Per-category performance of ExecutionRAG under both embedding backbones. We report Contain-Match Accuracy and LLM-Evaluation Accuracy on MuSiQue (by hop count), HotpotQA (by question type), and 2WikiMultiHopQA (by question type).",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 317,
+              "image_path": "figures/2610.21184/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 939
+            },
+            {
+              "caption": "Figure 6: Accuracy–efficiency trade-off across ablation variants on MuSiQue, the same variants as Table 2. Removing a register component lowers retrieved tokens and accuracy together.",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 267,
+              "image_path": "figures/2610.21184/figure-006.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 337
+            },
+            {
+              "caption": "Table 1: Main results on three multi-hop QA benchmarks. Bold marks the best Contain-Match result per benchmark; the grey columns report LLM-Evaluation Accuracy for comparability with prior work. These answer-level metrics complement the primary failure analysis by showing whether recovered evidence improves the final prediction. The lower block is the matched comparison our attribution rests on: A-RAG shares ExecutionRAG’s generator, tools, and corpora, so it is ExecutionRAG without the register. Gains concentrate where sub-questions must be combined across documents; HotpotQA is a tie.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 633,
+              "image_path": "figures/2610.21184/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 782
+            },
+            {
+              "caption": "Table 12: Failure case analysis on MuSiQue (𝑛=1,000, GPT-4omini + all-MiniLM-L6-v2). Percentages are relative to total failures for each method.",
+              "figure_id": "table-12-10",
+              "figure_number": "12",
+              "height": 211,
+              "image_path": "figures/2610.21184/table-008.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 382
+            },
+            {
+              "caption": "Table 14: Failure case analysis on MuSiQue (𝑛=1,000, GPT-4omini + Qwen3-Embedding-0.6B). Percentages are relative to total failures for each method.",
+              "figure_id": "table-14-9",
+              "figure_number": "14",
+              "height": 209,
+              "image_path": "figures/2610.21184/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 382
+            },
+            {
+              "caption": "Table 18: Case 3: ExecutionRAG uses the retired transition to explicitly discard an invalid requirement when later evidence contradicts its premise. A-RAG reads overlapping evidence but lacks an explicit mechanism for requirement revision, and therefore closes on a plausible but incorrect year.",
+              "figure_id": "table-18-24",
+              "figure_number": "18",
+              "height": 536,
+              "image_path": "figures/2610.21184/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 1026
+            },
+            {
+              "caption": "Table 11: Efficiency comparison across embedding models (𝑛=1,000, GPT-4o-mini). ExecutionRAG maintains its accuracy advantage with both embedding backbones, with comparable or fewer retrieved tokens on 2WikiMultiHopQA.",
+              "figure_id": "table-11-13",
+              "figure_number": "11",
+              "height": 242,
+              "image_path": "figures/2610.21184/table-011.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 472
+            },
+            {
+              "caption": "Table 16: Case 1: ExecutionRAG’s seed-grounded register anchors the correct entity, Frederick Douglass, before iterative retrieval begins. A-RAG instead latches onto William Cooper Nell, a contributor rather than the publisher, and continues retrieval along the wrong branch.",
+              "figure_id": "table-16-3",
+              "figure_number": "16",
+              "height": 407,
+              "image_path": "figures/2610.21184/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 1026
+            },
+            {
+              "caption": "Table 9: Retrieval efficiency comparison on three benchmarks (𝑛=1,000, GPT-4o-mini + all-MiniLM-L6-v2). Tokens: average retrieved tokens per question; Cost: average API cost per question (USD).",
+              "figure_id": "table-9-20",
+              "figure_number": "9",
+              "height": 210,
+              "image_path": "figures/2610.21184/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 476
+            },
+            {
+              "caption": "Table 8: Per-category accuracy on 2WikiMultiHopQA by question type (GPT-4o-mini + Qwen3-Embedding-0.6B, 𝑛=1,000).",
+              "figure_id": "table-8-19",
+              "figure_number": "8",
+              "height": 149,
+              "image_path": "figures/2610.21184/table-014.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 464
+            },
+            {
+              "caption": "Table 5: Per-category accuracy on 2WikiMultiHopQA by question type (GPT-4o-mini + all-MiniLM-L6-v2, 𝑛=1,000).",
+              "figure_id": "table-5-18",
+              "figure_number": "5",
+              "height": 148,
+              "image_path": "figures/2610.21184/table-015.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 464
+            },
+            {
+              "caption": "Table 3: Per-category accuracy on MuSiQue by hop count (GPT-4o-mini + all-MiniLM-L6-v2, 𝑛=1,000).",
+              "figure_id": "table-3-23",
+              "figure_number": "3",
+              "height": 129,
+              "image_path": "figures/2610.21184/table-016.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 398
+            },
+            {
+              "caption": "Table 6: Per-category accuracy on MuSiQue by hop count (GPT-4o-mini + Qwen3-Embedding-0.6B, 𝑛=1,000).",
+              "figure_id": "table-6-22",
+              "figure_number": "6",
+              "height": 127,
+              "image_path": "figures/2610.21184/table-017.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 398
+            },
+            {
+              "caption": "Table 15: Failure distribution by hop count (%, Qwen). ExecutionRAG reduces Missing Evidence at every hop level (−18.5pp overall).",
+              "figure_id": "table-15-8",
+              "figure_number": "15",
+              "height": 211,
+              "image_path": "figures/2610.21184/table-018.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 472
+            },
+            {
+              "caption": "Table 13: Failure distribution by hop count (%, MiniLM). ExecutionRAG reduces Missing Evidence at every hop level (−25.4pp overall).",
+              "figure_id": "table-13-7",
+              "figure_number": "13",
+              "height": 210,
+              "image_path": "figures/2610.21184/table-019.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 472
+            },
+            {
+              "caption": "Table 17: Case 2: ExecutionRAG resolves a long dependency chain by turning register updates into targeted follow-up retrieval. Once the register records “Universal Music Group” and “Santa Monica,” the next search becomes sharply focused. A-RAG lacks an explicit record of this intermediate progress and keeps issuing weakly constrained searches.",
+              "figure_id": "table-17-4",
+              "figure_number": "17",
+              "height": 265,
+              "image_path": "figures/2610.21184/table-020.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 1026
+            },
+            {
+              "caption": "Table 10: Retrieval efficiency under ablation on MuSiQue (𝑛=1,000, GPT-4o-mini + all-MiniLM-L6-v2). We report token consumption and cost alongside the accuracy numbers from Table 2.",
+              "figure_id": "table-10-21",
+              "figure_number": "10",
+              "height": 119,
+              "image_path": "figures/2610.21184/table-021.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 479
+            },
+            {
+              "caption": "Table 7: Per-category accuracy onHotpotQA by question type (GPT-4o-mini + Qwen3-Embedding-0.6B, 𝑛=1,000).",
+              "figure_id": "table-7-17",
+              "figure_number": "7",
+              "height": 108,
+              "image_path": "figures/2610.21184/table-022.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 414
+            },
+            {
+              "caption": "Table 4: Per-category accuracy onHotpotQA by question type (GPT-4o-mini + all-MiniLM-L6-v2, 𝑛=1,000).",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 106,
+              "image_path": "figures/2610.21184/table-023.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 414
+            },
+            {
+              "caption": "Table 2: Ablation study on MuSiQue. LLM-Evaluation and Contain-Match Accuracy, under the default setup.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 107,
+              "image_path": "figures/2610.21184/table-024.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 372
+            }
+          ],
+          "first_seen_at": "2026-10-17T21:00:00-04:00",
+          "hero_figure": "figures/2610.21184/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.21184",
+          "relevance": 7,
+          "selection_reason": "Introduces ExecutionRAG, a training-free method to address retrieval failure in multi-hop RAG by tracking open sub-questions. This addresses retrieval mechanisms and evidence access, fitting 'LLM Memory'.",
+          "summary_status": "generated",
+          "title": "Beyond Retrieval Failure: Understanding Why LLMs Miss Evidence in Multi-Hop RAG",
+          "tldr": "Many multi-hop RAG failures blamed on retrieval are actually search drift, but recovering missing evidence shifts the main bottleneck to verifying whether the evidence is sufficient.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context capability has become essential for large language models (LLMs) to handle complex tasks, yet continuously expanding the context window does not remove the computational, storage, and information-selection pressures incurred at inference time. Existing work on prompt compression, KV-cache management, efficient serving, retrieval augmentation, and agent memory is usually discussed in isolation, leaving the flow of information between storage and computation insufficiently understood. This survey reframes long-context compression as a memory-management problem for allocating inference-time resources. We distinguish compute-active memory, which directly participates in model computation, from compute-inactive memory, which lies outside the computation path but can be stored, retrieved, updated, or forgotten, and we characterize offloaded KV caches, persistent prefix caches, and precomputed KV states as intermediate states on the activation path. On this basis, we formulate writing, offloading, recall, retrieval-and-injection, materialization, eviction, consolidation, and forgetting as state transitions within an information lifecycle, and introduce a budgeted cost model that places these operations in a single cost account. The resulting framework unifies short-term context compression, long-term memory management, and the transitions between them, and shows that the central challenge is not merely reducing information volume but deciding which information should participate in costly inference, when, and in what form. We further summarize evaluation dimensions, benchmark gaps, and open challenges, and argue that future research should move from static, pointwise compression toward dynamic, governable, lifecycle-aware memory management.",
+          "arxiv_id": "2610.21165",
+          "arxiv_url": "https://arxiv.org/abs/2610.21165",
+          "authors": [
+            "Chaogui Gou"
+          ],
+          "bullets": [
+            "Long-context scaling still faces inference-time compute, storage, and information-selection pressures.",
+            "It distinguishes compute-active memory from compute-inactive memory, including offloaded, persistent, and precomputed KV states.",
+            "It models writing, offloading, retrieval, injection, materialization, eviction, consolidation, and forgetting as information-lifecycle transitions.",
+            "A budgeted cost model brings prompt compression, KV-cache management, retrieval augmentation, and agent memory into one framework.",
+            "It identifies benchmark gaps and argues for dynamic, governable memory management rather than static, pointwise compression."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Taxonomy of representative methods organized by memory state and state transition. Citations for all methods are given in the corresponding sections.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 706,
+              "image_path": "figures/2610.21165/figure-001.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 944
+            },
+            {
+              "caption": "Figure 1: Memory-centric lifecycle view of long-context compression. Information flows between compute-active and compute-inactive memory: writing externalizes information from the inference path, while retrieval, compression, and injection reactivate external memory. Offloaded KV caches, persistent prefix caches, and materialized KV states are intermediate states on the activation path that can be recalled directly. In-place operations compress, reorganize, or discard content within a state; per-unit holding cost increases from bottom to top.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 475,
+              "image_path": "figures/2610.21165/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 794
+            },
+            {
+              "caption": "Table 3: Representative methods coded along the analytical dimensions of Section 3. Operators follow Table 2 (A: compute-active; S: intermediate; I: compute-inactive). Access: black-box methods work with closed-model APIs; white-box methods require model weights or internal states; system methods operate in the serving runtime. Reuse: whether the compressed or stored state is reused across requests or sessions.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 755,
+              "image_path": "figures/2610.21165/table-003.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 977
+            },
+            {
+              "caption": "Table 4: Coverage of representative benchmarks across lifecycle capabilities. : primary focus; G#: partially covered; #: not covered. No benchmark jointly covers KV-level compression, memory updating, and systematic cost reporting.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 694,
+              "image_path": "figures/2610.21165/table-004.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 977
+            },
+            {
+              "caption": "Table 1: Comparison with representative related surveys. : systematically discussed; G#: partially discussed; #: largely not discussed. Ratings reflect the authors’ reading of each survey’s structure and coverage.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 98,
+              "image_path": "figures/2610.21165/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 977
+            },
+            {
+              "caption": "Table 2: State-transition operators. A: compute-active; S: intermediate state on the activation path; I: compute-inactive.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 59,
+              "image_path": "figures/2610.21165/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 977
+            }
+          ],
+          "first_seen_at": "2026-10-17T21:00:00-04:00",
+          "hero_figure": "figures/2610.21165/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.21165",
+          "relevance": 7,
+          "selection_reason": "A survey reframing long-context compression as memory management for LLMs, introducing a budgeted cost model and state transitions for memory lifecycle management. This is highly relevant to 'LLM Memory' and 'Long-Context Models'.",
+          "summary_status": "generated",
+          "title": "From Long Context to Selective Memory:A Survey of Memory-Centric Compression for Large Language Models",
+          "tldr": "This survey unifies long-context compression and LLM memory management as lifecycle-aware decisions about what information should enter costly inference, when, and in what form.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-15",
       "paper_count": 20,
       "papers": [
@@ -121654,5 +122040,5 @@
   "schema_version": 1,
   "subtopic_id": "llm-memory",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 614
+  "total_paper_count": 616
 }

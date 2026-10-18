@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**512 papers total**
+**513 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [Continual Learning for Traversability Prediction with Uncertainty-Aware Adaptation](https://arxiv.org/abs/2609.17141) | Embodied AI: Robot Navigation; Adaptation and Memory: Continual and Online Learning | A continual-learning framework adapts traversability prediction to new terrains while preserving prior knowledge through uncertainty-aware generative experience recall. | 8 | 7 |
 | 2026-10-15 | [Value as Memory: Online Value-Guided Post-training for General Robot Policies](https://arxiv.org/abs/2610.22368) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | VaM improves general robot policies by using cached value predictions as memory and online RL to adapt efficiently from real-world experience. | 8 | 8 |
 | 2026-10-15 | [Towards Continual Learning: Mitigating Forgetting With Subspace Tuning](https://arxiv.org/abs/2610.22293) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Large Language Models | Subspace Tuning reduces catastrophic forgetting by confining fine-tuning updates to the bottom singular subspace while retaining strong performance on new tasks. | 9 | 8 |
 | 2026-10-15 | [CART: Compatible Routing for Multimodal Continual Instruction Tuning](https://arxiv.org/abs/2610.22137) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | CART reduces catastrophic forgetting in multimodal continual instruction tuning by coordinating projector and language-model adaptation through compatible expert routing. | 8 | 7 |

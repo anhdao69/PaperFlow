@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1208 papers total**
+**1211 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [FGSS-BO: Feedback-Guided Hypothesis Management for LLM-Based Bayesian Optimization](https://arxiv.org/abs/2610.21246) | Adaptation and Memory: Test-Time Learning | FGSS-BO makes LLM-guided Bayesian optimization more explicit and inspectable by managing hypotheses, evidence, interventions, and revisions throughout the search. | 7 | 7 |
+| 2026-10-17 | [Few-Shot Adaptation for Anomalous Sound Detection at Low False-Positive Rate](https://arxiv.org/abs/2610.19893) | Adaptation and Memory: Test-Time Learning | A two-stage approach uses unsupervised learning followed by few-shot adaptation from the first fault’s audio to improve anomalous sound detection at low false-positive rates. | 7 | 7 |
+| 2026-10-17 | [Continual Learning for Traversability Prediction with Uncertainty-Aware Adaptation](https://arxiv.org/abs/2609.17141) | Embodied AI: Robot Navigation; Adaptation and Memory: Continual and Online Learning | A continual-learning framework adapts traversability prediction to new terrains while preserving prior knowledge through uncertainty-aware generative experience recall. | 8 | 7 |
 | 2026-10-15 | [Value as Memory: Online Value-Guided Post-training for General Robot Policies](https://arxiv.org/abs/2610.22368) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | VaM improves general robot policies by using cached value predictions as memory and online RL to adapt efficiently from real-world experience. | 8 | 8 |
 | 2026-10-15 | [T2-z: Test-Time Optimization of Environment Latents for Robotic World Models](https://arxiv.org/abs/2610.22364) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | T2-Z adapts robotic world models to unseen environments by optimizing a compact environment latent from test-time interactions. | 9 | 9 |
 | 2026-10-15 | [Mem4Act: Learning Effective Latent Memory for Long-Horizon Robotic Manipulation](https://arxiv.org/abs/2610.22323) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Mem4Act learns a fixed-size latent memory that preserves task-relevant temporal, semantic, and perceptual information for long-horizon robotic manipulation. | 9 | 8 |

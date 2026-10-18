@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**2003 papers total**
+**2006 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [AtomSearch: Evidence-Grounded Tree Search for Agent Skill Optimization](https://arxiv.org/abs/2610.19951) | Embodied AI: Robot Learning and Manipulation | AtomSearch improves agent skills by combining evidence-grounded local rule edits with tree search over promising intermediate skill states. | 8 | 8 |
+| 2026-10-17 | [Intrinsic Robot Rewarding: Reusing VLA Representations for Autonomous Evaluation and Policy Improvement](https://arxiv.org/abs/2609.17115) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Intrinsic Robot Rewarding reuses a VLA robot’s visual features and successful demonstrations to evaluate outcomes and provide rewards for policy improvement without a separate evaluator. | 8 | 6 |
+| 2026-10-17 | [The Latent That Never Was: A Forensic Re-run of the CVAE Ablation in Action Chunking Transformers](https://arxiv.org/abs/2609.16745) | Embodied AI: Robot Learning and Manipulation | A forensic re-run does not reproduce ACT’s reported performance collapse without its CVAE encoder, suggesting the encoder’s benefit is implementation- or evaluation-dependent and limited on the tested benchmark. | 8 | 5 |
 | 2026-10-16 | [Sufficiency of Zeroth-Order Reward Shaping for Policy Gradient in Stabilization Control](https://arxiv.org/abs/2609.34695) | Embodied AI: Robot Learning and Manipulation | For stabilization control, policy gradients need reward terms covering goal-relevant configurations, but not velocity terms, which can make training highly scale-sensitive. | 7 | 6 |
 | 2026-10-16 | [CAR-VLA: Complexity-Aware and Risk-Adaptive Reasoning for Autonomous Driving](https://arxiv.org/abs/2609.34387) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | CAR-VLA adapts autonomous-driving VLA reasoning to both scene complexity and dynamic risk, selecting fast, deliberate, or hazard-focused reasoning modes. | 8 | 7 |
 | 2026-10-16 | [Train Together or Merge Later? Unifying VLA Experts via a Shared Action Interface](https://arxiv.org/abs/2609.33125) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | PolicyWeave improves multi-task VLA policies by preserving a shared action interface and selectively merging task-specific expert updates based on deployment context. | 9 | 9 |

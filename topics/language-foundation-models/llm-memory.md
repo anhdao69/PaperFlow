@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**614 papers total**
+**616 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-17 | [Beyond Retrieval Failure: Understanding Why LLMs Miss Evidence in Multi-Hop RAG](https://arxiv.org/abs/2610.21184) | Language Foundation Models: LLM Memory | Many multi-hop RAG failures blamed on retrieval are actually search drift, but recovering missing evidence shifts the main bottleneck to verifying whether the evidence is sufficient. | 7 | 7 |
+| 2026-10-17 | [From Long Context to Selective Memory:A Survey of Memory-Centric Compression for Large Language Models](https://arxiv.org/abs/2610.21165) | Language Foundation Models: LLM Memory | This survey unifies long-context compression and LLM memory management as lifecycle-aware decisions about what information should enter costly inference, when, and in what form. | 7 | 7 |
 | 2026-10-15 | [Librarian Agents: Training LLMs to Curate Long-Context Workspaces that Anticipate Future Queries](https://arxiv.org/abs/2610.22273) | Language Foundation Models: LLM Memory | Librarian Agents uses reinforcement learning to proactively organize documents into reusable, query-oriented workspaces that improve long-context question answering. | 8 | 8 |
 | 2026-10-15 | [Beyond Downstream QA: Rethinking How We Evaluate Agent Memory](https://arxiv.org/abs/2610.22209) | Language Foundation Models: LLM Memory | FEB-30 shows that downstream QA alone cannot reliably evaluate agent memory, because it mixes memory correctness with retrieval and generation errors. | 7 | 8 |
 | 2026-10-15 | [Hy-Memory-30B-A3B: Attributed Reinforcement Learning for Long-Term Memory Writing](https://arxiv.org/abs/2610.22196) | Language Foundation Models: LLM Memory | Hy-Memory-30B-A3B is a compact, unified memory-writing model trained with distillation and attributed reinforcement learning to improve long-term memory across multiple frameworks. | 8 | 8 |
