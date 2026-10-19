@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**141 papers total**
+**143 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-18 | [SimpleVLN: Towards Simple and Frontier Vision-Language Navigation](https://arxiv.org/abs/2610.23203) | Embodied AI: Vision-Language Navigation | SimpleVLN unlocks native MLLMs for vision-language navigation through improved formulation, data, and training—without task-specific architectural changes. | 9 | 7 |
+| 2026-10-18 | [PASS-VLN: Passability-Aware Local-Command Vision-and-Language Navigation](https://arxiv.org/abs/2610.22812) | Embodied AI: Vision-Language Navigation | PASS-VLN benchmarks and enables vision-language navigation that adapts local motion to robot body width, choosing to pass through feasible gaps or stop safely before blockages. | 9 | 7 |
 | 2026-10-15 | [Learning to Think and Explore in 3D World](https://arxiv.org/abs/2610.21783) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | ACT3D trains a vision-language model to actively navigate 3D environments and gather only the visual evidence needed to answer questions. | 9 | 8 |
 | 2026-10-15 | [X-Fly: Learning to Reach and Stop in Full-Chunk Aerial Vision-Language Navigation](https://arxiv.org/abs/2610.21450) | Embodied AI: Vision-Language Navigation | X-Fly trains aerial VLN agents to recover from off-demonstration states and stop correctly while executing full action chunks, substantially improving navigation success over prior methods. | 9 | 8 |
 | 2026-10-15 | [RECAST: Recasting Vision-Language Semantics into an Actionable Cost Map for Robot Navigation](https://arxiv.org/abs/2609.32595) | Embodied AI: Vision-Language Navigation | RECAST combines VLM reasoning with spatial grounding to convert scene understanding and user instructions into an actionable cost map for safer robot navigation. | 8 | 7 |

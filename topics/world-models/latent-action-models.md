@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**107 papers total**
+**108 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-18 | [Beyond Action Prediction: Learning Search-Free Planning in Latent Space](https://arxiv.org/abs/2610.23615) | World Models: Latent Action Models, Interactive World Models | HIJP enables search-free visual planning by learning goal-conditioned actions that remain consistent with a latent world model, achieving strong control performance with substantially faster planning. | 8 | 7 |
 | 2026-10-15 | [TS-WAM: Temporal Latent Actions and World-Action Coupling for Vision-Language Robot Control](https://arxiv.org/abs/2610.21922) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | TS-WAM is a lightweight vision-language-action policy that learns from both robot demonstrations and action-free videos by predicting latent actions and future visual states for more robust control. | 9 | 8 |
 | 2026-10-15 | [What Should Robot Policies Learn to Predict? Rethinking Supervision Targets in Vision-Language-Action Learning](https://arxiv.org/abs/2610.21915) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | Under a fixed training budget, explicitly allocating samples to auxiliary latent-action or future-vision prediction can improve vision-language-action robot policies over action-only supervision. | 9 | 8 |
 | 2026-10-15 | [Learning Rewards in Strategic Games](https://arxiv.org/abs/2610.21912) | World Models: Latent Action Models | Active inverse reinforcement learning can recover strategically useful rewards in two-player Stackelberg games by adaptively probing an opponent’s responses. | 7 | 8 |

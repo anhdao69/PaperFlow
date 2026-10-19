@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**306 papers total**
+**310 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-18 | [Persistent Planar Memory for Video World Models](https://arxiv.org/abs/2610.23795) | World Models: Video World Models | PPMem gives video world models a compact, persistent plane-based 3D memory to maintain coherent, geometrically grounded generation over long sequences and changing viewpoints. | 9 | 9 |
+| 2026-10-18 | [Execution Before Memory: Diagnosing Memory Failures in Video World Models](https://arxiv.org/abs/2610.23542) | World Models: Video World Models, Interactive World Models | MIST separates execution from memory in video world models, revealing that failures often stem from not carrying out the instructed change; M3-Agent addresses this by revising instructions and substantially improves reveal performance. | 8 | 7 |
+| 2026-10-18 | [Momentum: Persistent Dynamics for Video World Models](https://arxiv.org/abs/2610.23423) | World Models: Video World Models, Interactive World Models | Momentum builds a persistent, graph-connected video memory that keeps dynamic scene elements consistent as they move outside and re-enter the camera view. | 8 | 8 |
+| 2026-10-18 | [DriveWorld3D Evidence Constrained 3D World Modeling and Generative Simulation for Real-World Autonomous Driving](https://arxiv.org/abs/2610.22450) | World Models: Video World Models, Interactive World Models | DriveWorld3D proposes an evidence-constrained 3D world model that combines multisensor temporal learning with cautious generative simulation to improve autonomous-driving safety under limited compute. | 8 | 7 |
 | 2026-10-15 | [Velox: Spatial Memory Makes World Models Efficient](https://arxiv.org/abs/2610.22311) | World Models: Video World Models | Velox uses streaming camera geometry to route attention to relevant spatial memory, making long-horizon video world-model rollouts faster while preserving navigation quality. | 8 | 8 |
 | 2026-10-15 | [What Should Robot Policies Learn to Predict? Rethinking Supervision Targets in Vision-Language-Action Learning](https://arxiv.org/abs/2610.21915) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models, Video World Models | Under a fixed training budget, explicitly allocating samples to auxiliary latent-action or future-vision prediction can improve vision-language-action robot policies over action-only supervision. | 9 | 8 |
 | 2026-10-15 | [CoWorld Reasoner: Agentic Multimodal Reasoning with the Evolving Video World Model-Driven Harness](https://arxiv.org/abs/2610.21910) | World Models: Video World Models; Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | CoWorld Reasoner equips a VLM with an evolving, tool-based video world-model harness for flexible visual imagination and stronger spatiotemporal reasoning. | 9 | 8 |

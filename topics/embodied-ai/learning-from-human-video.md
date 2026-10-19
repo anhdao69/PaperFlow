@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**201 papers total**
+**205 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-18 | [Ego2Contact: Predicting Touch from Egocentric Human Video for Contact-Rich Robot Manipulation](https://arxiv.org/abs/2610.22932) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | Ego2Contact transfers tactile knowledge learned from human egocentric video to robot hands, enabling touch-aware manipulation without requiring extensive robot tactile data. | 8 | 8 |
+| 2026-10-18 | [HAPACT: A Benchmark For Human-Centric Physical Impact Localization in Movies](https://arxiv.org/abs/2610.22895) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | HAPACT introduces a benchmark for locating physical impacts in movies both in time and on the human body, revealing that current methods still struggle with this task. | 7 | 7 |
+| 2026-10-18 | [VISTA: A Multimodal Egocentric Benchmark for Goal-Oriented Perception and Assistance to Blind and Low-Vision Users](https://arxiv.org/abs/2610.22822) | Embodied AI: Learning from Human Videos; Multimodal Foundation Models | VISTA is a multimodal egocentric benchmark for evaluating AI-generated, goal-directed assistance to blind and low-vision users in everyday tasks. | 8 | 7 |
+| 2026-10-18 | [EgoProbe: Benchmarking Long-Range and Exact Memory in Streaming Egocentric Videos](https://arxiv.org/abs/2610.17128) | Embodied AI: Learning from Human Videos; Adaptation and Memory: Embodied Memory | EgoProbe benchmarks whether streaming video models can both remember distant egocentric events and retrieve the exact details tied to the correct event. | 8 | 7 |
 | 2026-10-15 | [Spark-0: Scaling Spatially Aligned Tactile Pretraining for Robot Dexterous Manipulation](https://arxiv.org/abs/2610.22342) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | Spark-0 uses large-scale tactile supervision to improve both vision-only and tactile-conditioned robot dexterous manipulation. | 9 | 9 |
 | 2026-10-15 | [TS-WAM: Temporal Latent Actions and World-Action Coupling for Vision-Language Robot Control](https://arxiv.org/abs/2610.21922) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | TS-WAM is a lightweight vision-language-action policy that learns from both robot demonstrations and action-free videos by predicting latent actions and future visual states for more robust control. | 9 | 8 |
 | 2026-10-15 | [Cross-Embodiment Causal Transfer from Human Videos to Robot Manipulation](https://arxiv.org/abs/2610.21798) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | CBST transfers causally relevant task context from human videos to robot manipulation without requiring human–robot motion correspondence, improving benchmark task success over baseline world-action models. | 10 | 9 |

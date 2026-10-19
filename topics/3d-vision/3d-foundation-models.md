@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**321 papers total**
+**326 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-18 | [Foundation-Model-Driven 3D Scene Graphs for Mobile Manipulation](https://arxiv.org/abs/2610.23622) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; 3D Vision: 3D Foundation Models; Adaptation and Memory: Embodied Memory | The paper integrates a monocular, foundation-model-driven 3D scene graph system into a mobile manipulator and evaluates its usefulness for end-to-end spatially informed tasks. | 9 | 7 |
+| 2026-10-18 | [Structural Affinity: An Algorithm for Coherent Cage-Based Shape Design](https://arxiv.org/abs/2610.23173) | 3D Vision: 3D Foundation Models | Structural Affinity improves cage-based 3D deformation by coupling a fine inner cage to a coarser outer cage, producing smoother, more coherent shapes with less distortion. | 8 | 8 |
+| 2026-10-18 | [TriFold: Folding irregular 3D Gaussians into structured latents for 3D Scene Generation](https://arxiv.org/abs/2610.23050) | 3D Vision: 3D Foundation Models | TriFold converts irregular 3D Gaussian scenes into structured triplane latents for high-fidelity reconstruction and conditional scene generation. | 7 | 8 |
+| 2026-10-18 | [Direct Conditional Parameterization for N-Dimensional Splatting](https://arxiv.org/abs/2610.22778) | 3D Vision: 3D Foundation Models | Direct conditional parameterization makes N-dimensional Gaussian and Beta splatting substantially faster while matching or improving rendering quality. | 8 | 8 |
+| 2026-10-18 | [Towards Reconstructing Geographically Diverse Architecture with 3D Foundation Models](https://arxiv.org/abs/2610.22514) | 3D Vision: 3D Foundation Models | ArchWorld benchmarks geographically diverse architectural landmarks, diagnoses regional disparities in 3D foundation models, and presents an intervention that improves performance while reducing those disparities. | 8 | 7 |
 | 2026-10-15 | [Motion- and Gravity-Aware Feedforward 3D Reconstruction](https://arxiv.org/abs/2610.22177) | 3D Vision: 3D Foundation Models | A LUPI-based feed-forward 3D reconstruction framework uses training-only motion and gravity cues to improve accuracy and robustness without adding inference-time inputs or complexity. | 8 | 8 |
 | 2026-10-15 | [BridgeAfford: Bridging Query-Target Gap for Generalizable 3D Affordance Grounding](https://arxiv.org/abs/2610.21918) | 3D Vision: 3D Foundation Models | BridgeAfford improves language-guided 3D affordance grounding on unseen objects by narrowing the semantic gap between interaction queries and target regions. | 8 | 8 |
 | 2026-10-15 | [Seeing Both the Forest and the Trees: Reusing Holistic 3D Priors for Part-Decomposed Generation](https://arxiv.org/abs/2610.21850) | 3D Vision: 3D Foundation Models | STRUCTPARTS reuses holistic 3D generation priors to produce detailed, structurally coherent, part-decomposed 3D assets with lightweight finetuning. | 7 | 7 |

@@ -1,6 +1,1348 @@
 {
   "days": [
     {
+      "date": "2026-10-18",
+      "paper_count": 5,
+      "papers": [
+        {
+          "abstract": "On AWS Trainium2, every component of a diffusion model runs as a program compiled ahead of time for fixed shapes, while pipelines differ across models, prompt lengths across requests, and caching decisions across denoising steps. We present Difflet, a serving engine in which five model pipelines share one compilation backend, joint attention is split across cores by attention head, and a host controller decides at each denoising step whether to run the denoiser or reuse its earlier output. A small probe program computes the caching signal on the device and returns one number per step, and a resident model process keeps every program loaded across requests. Across five image and video model families, fused attention accelerates denoiser steps by 1.2-4.3x over the same framework using PyTorch/XLA attention, and at 32.8k visual tokens it is the only attention that compiles. On four of the five models, resident serving is 1.5-3.4x faster than standalone runs that reload weights from a warm file cache for each generation.",
+          "arxiv_id": "2610.23047",
+          "arxiv_url": "https://arxiv.org/abs/2610.23047",
+          "authors": [
+            "Bin Ma, Min Yu, Vijay Kodamalla, Jialin Liu, Dong Li"
+          ],
+          "bullets": [
+            "Addresses fixed-shape compilation constraints across varying pipelines, prompt lengths, and denoising-time caching decisions.",
+            "Uses one compilation backend for five pipelines, splits joint attention across cores by head, and fuses attention computation.",
+            "A host controller selectively reuses denoiser outputs, guided by a device-side probe that produces one caching signal per step.",
+            "Fused attention is 1.2–4.3× faster than PyTorch/XLA attention and is the only attention variant compiling at 32.8k visual tokens.",
+            "Resident serving is 1.5–3.4× faster than reloading weights for each generation on four of five models."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. Model abstraction and Trainium adaptation in Difflet. (a) Pipelines specify component dataflow and configurations. (b) Component, operator, and parallelism interfaces connect models to (c) Trainium compilation and execution. Solid arrows denote dataflow; dashed arrows denote configuration and adaptation. NeuronCore icons are schematic.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 290,
+              "image_path": "figures/2610.23047/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 479
+            },
+            {
+              "caption": "Figure 4. Serving in Difflet. (a) Startup selects artifacts for the serving profile, loads components, and checks readiness. Dashed arrows connect loading to the model process and Trainium. (b) The API process validates and queues requests. One resident model process orchestrates encoding, denoising, and decoding and controls the device cores; component placement depends on the model configuration. (c) After a timeout or failure, dispatch waits for prior execution to stop and the model process to become ready, with a restart when needed.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 299,
+              "image_path": "figures/2610.23047/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 988
+            },
+            {
+              "caption": "Figure 5. Where the request-latency speedup comes from, adding Difflet’s mechanisms one at a time to a standalone PyTorch/XLA run. Each bar is a model’s starting latency; colored segments are the time each mechanism removes, labeled with that step’s speedup where it fits, and gray is the final latency. ×: Wan’s PyTorch/XLA program does not compile, so its bar starts from NKI attention. Caching is fixed cadence 2; for FLUX, Wan, and LTX-2 it is the resident caching-off request minus the denoising time cadence 2 saves. LTX-2’s first two stages are medians of two alternated runs (106–113 s).",
+              "figure_id": "figure-5-14",
+              "figure_number": "5",
+              "height": 249,
+              "image_path": "figures/2610.23047/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 471
+            },
+            {
+              "caption": "Figure 6. Step speedup of NKI attention over PyTorch/XLA’s SDPA, each model at its evaluated shape, ordered by visual tokens per step. ×: Wan 2.1’s SDPA program does not compile at 81 frames.",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 211,
+              "image_path": "figures/2610.23047/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 477
+            },
+            {
+              "caption": "Figure 8. Step caching at official step counts. Left: denoising-time speedup over caching off (caching-off time under each model); dotted: the ceiling set by cadence 2’s 20 of 50 skipped calls (15 of 40 on LTX-2); fewer steps runs cadence 2’s 30 calls (25 on LTX-2) without caching. Right: PSNR against the model’s caching-off output, mean over 16 prompts (five on Wan), whisker to the worst prompt. Online-delta’s speedup is for the timing prompt. Calibrated adaptive runs standalone, against the standalone caching-off time, and its Wan and LTX-2 points come from an earlier denoiser program, as does LTX-2’s quality; LTX-2’s online-delta mean omits one prompt that skipped no step. Wan’s device throttles during its 12-minute caching-off loop, which lifts its speedups past the ceiling; its quality is scored without calibrated adaptive.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 277,
+              "image_path": "figures/2610.23047/figure-005.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 479
+            },
+            {
+              "caption": "Figure 7. Parallel configurations for FLUX.1-dev (4.1k tokens) relative to TP4: resident request latency and throughput. DP2×TP2 serves two concurrent requests; its latency is the wall time for both and its throughput counts both.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 373,
+              "image_path": "figures/2610.23047/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 476
+            },
+            {
+              "caption": "Figure 3. Calibrated adaptive caching with a device probe in Difflet. The probe retains features on Trainium and returns a scalar score to the host CPU. Teal denotes full denoiser execution; gold denotes cached prediction. Solid arrows show data flow; dashed arrows show execution choices.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 359,
+              "image_path": "figures/2610.23047/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 480
+            },
+            {
+              "caption": "Figure 2. Joint attention with visual tokens partitioned and text replicated across two ranks. (a) Ulysses gives each head group the full joint Q/K sequence with equal lengths; bounds [0, 6) exclude text padding. (b) Ring uses the same local queries in separate text and visual calls with unequal Q/K lengths, then merges unnormalized outputs and softmax statistics. Starred: the text bounds [0, 2) that Ring needs for padded prompts. Both paths restore visual sequence shards and replicated text.",
+              "figure_id": "figure-2-16",
+              "figure_number": "2",
+              "height": 302,
+              "image_path": "figures/2610.23047/figure-008.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 479
+            },
+            {
+              "caption": "Table 3. End-to-end latency at TP=4. Cold and warm are standalone runs; resident is the request latency of the model process; step is the step latency with NKI and with SDPA attention.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 248,
+              "image_path": "figures/2610.23047/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 492
+            },
+            {
+              "caption": "Table 4. Parallel modes each model runs. Y: supported; †: constrained; ×: unsupported; –: not applicable.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 185,
+              "image_path": "figures/2610.23047/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 423
+            },
+            {
+              "caption": "Table 1. Evaluated models. Tokens are the visual tokens the denoiser attends over per step; guidance is distilled (dist.), classifierfree (CFG), or embedded (emb.).",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 154,
+              "image_path": "figures/2610.23047/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 492
+            },
+            {
+              "caption": "Table 7. Startup of one resident model at TP=4, until the server reports ready. Recompiles counts the programs rebuilt when switching from caching off to calibrated adaptive.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 182,
+              "image_path": "figures/2610.23047/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 425
+            },
+            {
+              "caption": "Table 2. Systems compared and the mechanisms each provides: ahead-of-time compilation, NKI attention, presharded weights, resident serving, step caching, and parallelism. NxDI covers FLUX.1dev only. Y: yes; ×: no.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 119,
+              "image_path": "figures/2610.23047/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 492
+            },
+            {
+              "caption": "Table 5. Request latency and step latency across parallel configurations. FLUX is resident; Wan is standalone. DP rows serve two concurrent requests, so their latency is the wall time for both. FLUX TP4 is a separate run from Table 3 (14.2 s, 270 ms).",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 293,
+              "image_path": "figures/2610.23047/table-014.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 492
+            },
+            {
+              "caption": "Table 8. Request latency under open-loop Poisson load through difflet serve over HTTP: for FLUX, one TP4 server against two TP2 servers on separate core pairs, each request sent to the server with fewer requests in flight; for HunyuanVideo, one TP4 server (its TP2 denoiser does not fit in HBM). Both configurations receive the same arrival sequence; 20 requests per load level. Load ρ is the realized arrival rate times the isolated TP4 request latency (FLUX 14.2 s; HunyuanVideo 58.5 s in this run, 59.9 s in Table 3). SLO: completion within 2.1× that latency (30 s and 123 s).",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 243,
+              "image_path": "figures/2610.23047/table-015.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 425
+            },
+            {
+              "caption": "Table 6. Signal of calibrated adaptive caching: the probe’s cost per scheduler step and how well the fitted curve predicts the output change (R2 over 8 recording prompts).",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 149,
+              "image_path": "figures/2610.23047/table-016.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 420
+            }
+          ],
+          "first_seen_at": "2026-10-18T21:00:00-04:00",
+          "hero_figure": "figures/2610.23047/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.23047",
+          "relevance": 8,
+          "selection_reason": "Presents Difflet, a fast inference engine for diffusion transformer models on AWS Trainium, optimizing attention computation and caching to improve serving efficiency.",
+          "summary_status": "generated",
+          "title": "DIFFLET: A Fast Inference Engine for Diffusion Transformer Models on AWS Trainium",
+          "tldr": "Difflet speeds diffusion-transformer inference on AWS Trainium2 through shared compilation, fused attention, adaptive caching, and resident model serving.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context decoding in large language models (LLMs) is increasingly bottlenecked by the memory and computation required to attend over an ever-growing Key-Value (KV) cache at each autoregressive step. Although token-level sparse attention reduces this burden by restricting computation to a small subset of relevant past tokens, its practical gains are often offset by repeatedly recomputing layer-wise sparse indices as the context grows. A common remedy is to share sparse indices across layers by computing them only at designated anchor layers, but such static reuse ignores the layer-wise evolution of attention patterns, causing the reused indices to progressively deviate from the layer-specific optima and incur substantial attention loss. By revisiting cross-layer sparsity from the perspective of attention dynamics, we find that inter-layer salient token shift is highly localized: although the exact top-$\\kappa$ indices differ across layers, the core high-attention tokens remain stable, with changes concentrated near the expanded boundary of previously selected regions. Motivated by this, we propose Prism Attention, a proposal-refined sparse attention framework. It replaces rigid cross-layer index reuse with a coarse-to-fine strategy, preserving layer-wise adaptability while retaining the efficiency benefits of cross-layer sharing. Extensive experiments show that Prism Attention achieves state-of-the-art performance among mainstream sparse attention methods on both reasoning and long-context benchmarks, while attaining a $3.4\\times$ end-to-end decoding speedup over FlashAttention at 128K context length.",
+          "arxiv_id": "2610.22985",
+          "arxiv_url": "https://arxiv.org/abs/2610.22985",
+          "authors": [
+            "Zhenxu Tian, Kebin Liu, Zhengwu Yang, Yi Su, Qingqing Dang, Yanlin Sha, Kaipeng Deng, Dianhai Yu, Yanjun Ma, Juntao Li, Min Zhang"
+          ],
+          "bullets": [
+            "Long-context decoding is bottlenecked by repeated attention over the growing KV cache.",
+            "Static cross-layer index sharing is efficient but can lose accuracy as attention patterns evolve across layers.",
+            "The method observes that salient-token changes are localized near the boundaries of previously selected regions.",
+            "Its coarse-to-fine proposal-refinement strategy preserves layer adaptability while reducing index recomputation.",
+            "It reports state-of-the-art performance among mainstream sparse-attention methods and a 3.4× decoding speedup over FlashAttention at 128K context."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: An overview of Prism Attention. Algorithm 1 presents the per-step decoding procedure.",
+              "figure_id": "figure-4-21",
+              "figure_number": "4",
+              "height": 438,
+              "image_path": "figures/2610.22985/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 806
+            },
+            {
+              "caption": "Figure 3: Effect of expanded proposal regions on cross-layer sparse-index coverage. We conduct the analysis on Qwen3-4B using decoding traces collected from AIME24, and report the average cross-layer coverage of refined-layer top-128 sparse indices by the reference-layer proposal set. Left: the reference proposal is restricted to its top-128 indices, corresponding to rigid top-κ index reuse by the refined layer. Right: the reference proposal is expanded from top-128 to top-256 (ρ = 2), doubling the candidate pool used for refinement while keeping the refined-layer sparse support fixed at top-128. Compared with rigid top-128 reuse, the expanded proposal region preserves substantially higher coverage across layers, showing that many refined-layer salient tokens missed by rigid reuse are still captured within a moderately enlarged candidate window.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 320,
+              "image_path": "figures/2610.22985/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 777
+            },
+            {
+              "caption": "Figure 2: Localized evolution of sparse indices across layers within proposal regions. For each target (refined) layer, we categorize its own top-128 sparse indices according to their ranks in the corresponding reference (proposal) layer: “Prop. Top-128”, “Prop. Top-128∼512”, and “Outside Prop. Top-512” denote the ratios of target-layer top-128 indices falling in the reference-layer top128 set, ranks 128∼511, and outside the top-512 set, respectively. The above two panels share the same legend. (a) tracks this distribution from proposal layers L0, L9, L18, and L27 to their subsequent refined layers, showing that a slightly expanded proposal pool (ρ = 4, i.e., 4× the base size) consistently captures a significant majority of layer-wise sparse-index variations. (b) measures, for each adjacent pair Lℓ→Lℓ+1, how the top-128 indices of Lℓ+1 fall into the proposal regions of Lℓ. This demonstrates that adjacent-layer shifts are heavily concentrated within the expanded proposal window, significantly reducing the risk of missing salient tokens while avoiding the prohibitive cost of full-context search. A more comprehensive analysis is provided in Appendix B.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 295,
+              "image_path": "figures/2610.22985/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 818
+            },
+            {
+              "caption": "Figure 6: (a) Kernel latency breakdown at BSZ=4 across different context lengths. (b) The speedup of the average per-layer kernel latency over FlashAttention across context lengths and batch sizes.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 283,
+              "image_path": "figures/2610.22985/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 819
+            },
+            {
+              "caption": "Figure 12: Effect of expanded proposal regions on cross-layer sparse-index coverage, with the refined-layer sparse support fixed at top-128 (Qwen3-4B; GPQA [23] and MATH500 [13] traces).",
+              "figure_id": "figure-12-3",
+              "figure_number": "12",
+              "height": 396,
+              "image_path": "figures/2610.22985/figure-005.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 809
+            },
+            {
+              "caption": "Figure 11: Cross-layer index/attention-mass distribution (Left) and attention score recovered by proposal expansion (Right) across task types. Both follow the conventions of Figure 9. Note: for conciseness, we abbreviate Mathematical Reasoning, Summarization, Few-shot Learning, and MultiDocument QA as Math, Summ, FS, and MDQA, respectively, in both figures above.",
+              "figure_id": "figure-11-2",
+              "figure_number": "11",
+              "height": 333,
+              "image_path": "figures/2610.22985/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 809
+            },
+            {
+              "caption": "Figure 13: Sensitivity of proposal layer assignment to calibration sample selection on Qwen3-4B.",
+              "figure_id": "figure-13-23",
+              "figure_number": "13",
+              "height": 277,
+              "image_path": "figures/2610.22985/figure-007.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 820
+            },
+            {
+              "caption": "Figure 14: Component-wise latency breakdown of Prism Attention compared to the FlashAttention baseline across different sequence lengths at (a) BSZ=1 and (b) BSZ=16.",
+              "figure_id": "figure-14-10",
+              "figure_number": "14",
+              "height": 280,
+              "image_path": "figures/2610.22985/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 813
+            },
+            {
+              "caption": "Figure 5: Accuracy-Efficiency Pareto Comparison.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 275,
+              "image_path": "figures/2610.22985/figure-009.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 417
+            },
+            {
+              "caption": "Figure 7: End-to-end latency comparison across different context lengths on Qwen3-4B at BSZ=16.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 262,
+              "image_path": "figures/2610.22985/figure-010.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 413
+            },
+            {
+              "caption": "Figure 8: Sensitivity to proposal expansion factor ρ and sparse budget κ on AIME25.",
+              "figure_id": "figure-8-19",
+              "figure_number": "8",
+              "height": 261,
+              "image_path": "figures/2610.22985/figure-011.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 396
+            },
+            {
+              "caption": "Figure 1: Cross-layer overlap ratio across varying distances of different layer offset.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 66,
+              "image_path": "figures/2610.22985/figure-012.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 332
+            },
+            {
+              "caption": "Table 7: Attention-path kernel latency breakdown under a 2K sparse budget, measured with our Triton kernels integrated into the SGLang serving framework. Gate and Refine denote the full layer chain of an index-construction layer (Prism: proposal, IndexCache: anchor) and an index-reuse layer (Prism: refined, IndexCache: shared), respectively. Eff. is the effective cost at the 1:3 construction-to-reuse ratio used throughout our experiments, i.e., T = (Tconstruct + 3Treuse)/4; parenthesized values are speedups over FlashAttention (FA). All latencies in ms.",
+              "figure_id": "table-7-8",
+              "figure_number": "7",
+              "height": 427,
+              "image_path": "figures/2610.22985/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 640
+            },
+            {
+              "caption": "Table 8: End-to-end per-step decoding latency on Qwen3-4B with the SGLang serving framework under a 2K sparse budget. Each cell reports the absolute latency (ms) and, in parentheses, the speedup over FlashAttention (FA).",
+              "figure_id": "table-8-9",
+              "figure_number": "8",
+              "height": 250,
+              "image_path": "figures/2610.22985/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 830
+            },
+            {
+              "caption": "Table 2: Performance comparison of different methods across various LLMs on LongBench.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 237,
+              "image_path": "figures/2610.22985/table-015.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 827
+            },
+            {
+              "caption": "Table 3: Ablation study of index construction and proposal-refined sharing on Qwen3-4B. Group x denotes that one in every x layers acts as a proposal layer (i.e., a proposal-to-refined ratio of 1:(x− 1)). All configurations use a sparse budget of κ = 1024; in proposal-refined configurations, each refined layer selects its final κ tokens from a candidate pool of n = ρκ with ρ = 4.",
+              "figure_id": "table-3-20",
+              "figure_number": "3",
+              "height": 296,
+              "image_path": "figures/2610.22985/table-016.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 788
+            },
+            {
+              "caption": "Table 1: Accuracy comparison on reasoning benchmarks using Qwen3-4B and Qwen3-8B.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 306,
+              "image_path": "figures/2610.22985/table-017.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 672
+            },
+            {
+              "caption": "Table 11: Per-subtask accuracy (%) on RULER (64K and 128K) with GLM-5.2 under the SGLang framework and a unified sparse budget κ = 2048.",
+              "figure_id": "table-11-14",
+              "figure_number": "11",
+              "height": 152,
+              "image_path": "figures/2610.22985/table-018.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 832
+            },
+            {
+              "caption": "Table 10: Accuracy on GLM-5.2 with the SGLang framework under a unified sparse budget κ = 2048. Each cell reports accuracy and, to the right of the slash, the average output length. The _L suffix in each dataset name denotes the maximum input length.",
+              "figure_id": "table-10-16",
+              "figure_number": "10",
+              "height": 137,
+              "image_path": "figures/2610.22985/table-019.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 590
+            },
+            {
+              "caption": "Table 6: Detailed latency breakdown (ms) of Prism Attention kernels compared with FlashAttention across various batch sizes and sequence lengths.",
+              "figure_id": "table-6-18",
+              "figure_number": "6",
+              "height": 410,
+              "image_path": "figures/2610.22985/table-020.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 686
+            },
+            {
+              "caption": "Table 9: Layer-assignment patterns evaluated on GLM-5.2 under a unified sparse budget κ = 2048 and proposal expansion factor ρ = 4. Note: the meanings of F, S, and R here differ from those in Table 4, and throughout this table follow the definitions given below. F (Full) layers construct sparse indices from the full context, S (Shared) layers directly reuse the indices of their nearest preceding index-producing layer, and R (Refined) layers refine an inherited candidate pool. 21F57S is the default pattern of GLM-5.2 itself, i.e., its native trained IndexCache configuration, where each F layer builds its own κ indices and each S layer reuses these κ indices from the nearest preceding F layer. 10F68S is an IndexCache variant calibrated to fewer F layers. 10F11R57S incorporates Prism as a hybrid of F, R, and S layers: each F layer builds an expanded pool of ρκ candidate indices, each R layer selects its own top-κ from the ρκ pool of the nearest preceding F layer, and each S layer reuses the κ indices of its nearest preceding F or R layer.",
+              "figure_id": "table-9-15",
+              "figure_number": "9",
+              "height": 271,
+              "image_path": "figures/2610.22985/table-021.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 828
+            },
+            {
+              "caption": "Table 4: Searched Proposal/Refined layer assignment patterns (F: Proposal layer, S: Refined layer).",
+              "figure_id": "table-4-22",
+              "figure_number": "4",
+              "height": 185,
+              "image_path": "figures/2610.22985/table-022.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 768
+            },
+            {
+              "caption": "Table 5: Performance across layer assignment patterns from random calibration seeds.",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 71,
+              "image_path": "figures/2610.22985/table-023.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 506
+            }
+          ],
+          "first_seen_at": "2026-10-18T21:00:00-04:00",
+          "hero_figure": "figures/2610.22985/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.22985",
+          "relevance": 9,
+          "selection_reason": "Sparse attention with cross-layer index sharing reduces KV-cache memory and decoding compute.",
+          "summary_status": "generated",
+          "title": "Prism Attention: Proposal-Refined Index Sharing Mechanism for Efficient LLMs Inference",
+          "tldr": "Prism Attention accelerates long-context LLM decoding by refining shared sparse-attention indices across layers instead of rigidly reusing them.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion Transformers (DiTs) have become a common backbone for high-quality text-to-image and text-to-video generation, but repeated dense self-attention remains a major inference bottleneck as token sequences grow and the same operator is invoked across many denoising steps. Our study suggests that dense attention in pretrained DiTs contains reusable layer/head-specific high-mass structure that can be identified from a small offline calibration set and reused across future generations. This leads to Sink-Sparse Hybrid Attention, a train-free attention replacement that reuses static sink masks and supplements them with a lightweight pooled-KV branch, while leaving model weights and sampling schedules unchanged. On Wan2.1-T2V-1.3B, the method attains 1.54$\\times$ end-to-end speedup while maintaining generation quality. On Z-Image-Turbo, it attains 1.57$\\times$ end-to-end speedup with competitive GenEval2 performance. These results indicate that reusable importance-aware sparse support can provide an effective train-free acceleration path for both T2V and T2I DiTs.",
+          "arxiv_id": "2610.22975",
+          "arxiv_url": "https://arxiv.org/abs/2610.22975",
+          "authors": [
+            "Bingxin Xing, Yu Zhang, Jiatong Ding, Lei Lu, Ping Wang"
+          ],
+          "bullets": [
+            "Targets the inference cost of repeated dense self-attention in DiTs with long token sequences and many denoising steps.",
+            "Uses small offline calibration to identify reusable, layer/head-specific high-mass attention structure.",
+            "Combines static sink masks with a lightweight pooled-KV branch as a train-free attention replacement.",
+            "Achieves 1.54× end-to-end speedup on Wan2.1-T2V-1.3B while maintaining generation quality.",
+            "Achieves 1.57× end-to-end speedup on Z-Image-Turbo with competitive GenEval2 performance; scope covers T2V and T2I DiTs."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Representative qualitative comparison on Wan2.1-T2V-1.3B and Z-Image-Turbo. For Wan2.1T2V-1.3B, we show three synchronized frames (frames 16, 40, and 64 out of 81) for the prompt “Campfire at night in a snowy forest with starry sky in the background.” using the same noise seed across methods. For Z-Image-Turbo, we show image results for the prompt “Winter station at golden hour.” in the order Dense, Ours-Hybrid (𝜏 = 0.85), and SpargeAttn.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 300,
+              "image_path": "figures/2610.22975/figure-001.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 460
+            },
+            {
+              "caption": "Figure 4: Workflow of Sink-Sparse Hybrid Attention. Offline calibration collects dense self-attention observations from a small calibration set, converts token-level attention into exact block-mass scores, averages them across observations, and applies a row-wise coverage threshold 𝜏 to obtain one static sink mask for each layer and head. Online inference reuses these masks at every denoising step: a static sparse sink branch preserves recurrently important interactions, a pooled-KV compensation branch supplies coarse omitted context using full-resolution queries and pooled keys/values, and the two branches are fused into the final attention output.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 295,
+              "image_path": "figures/2610.22975/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 960
+            },
+            {
+              "caption": "Figure 6: Efficiency profile and quality–efficiency frontier in the T2V setting. Left: End-to-end runtime versus main-branch effective sparsity for Ours-Sink and Ours-Hybrid, with Dense, SVG1, and SpargeAttn shown as reference points. Right: Quality–efficiency frontier measured by VBench Avg (8 dims) versus end-to-end runtime. Lower coverage thresholds yield stronger acceleration, while higher thresholds improve quality; 𝜏 = 0.70 and 𝜏 = 0.85 are highlighted as representative speed-oriented and quality-oriented operating points, respectively.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 297,
+              "image_path": "figures/2610.22975/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 855
+            },
+            {
+              "caption": "Figure 1: Profiling sampling latency in the evaluated T2V setting.We decompose the sampling time 𝑇sample (excluding model initialization and video writing) into self-attention time 𝑇attn and the remaining components 𝑇other across different denoising schedules. Self-attention consistently occupies a large fraction of the total runtime.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 256,
+              "image_path": "figures/2610.22975/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 431
+            },
+            {
+              "caption": "Figure 2: Attention pattern similarity across different prompts. We visualize representative dense self-attention maps fromWan2.1-T2V-1.3B and ZImage-Turbo, each under three different prompts. Despite changes in prompt content, the dominant stripe-like structures remain visually similar.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 348,
+              "image_path": "figures/2610.22975/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 444
+            },
+            {
+              "caption": "Figure 3: Coverage of dense attention mass captured by the static sink mask across denoising steps. We evaluate a representative shared-step static sink mask with mean retained block density 38.8% (i.e., 61.2% sparsity). For each denoising step, the sink-mask curve shows the mean coverage across layer–head pairs on held-out cases, and the shaded band shows the 25th–75th percentile range. A budget-matched random mask is shown as a reference.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 251,
+              "image_path": "figures/2610.22975/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 429
+            },
+            {
+              "caption": "Table 4: Effect of the pooled-KV compensation branch across coverage thresholds on Wan2.1-T2V1.3B. Ours-Sink uses only the static sink mask, whileOurs-Hybrid additionally enables the pooledKV compensation branch with adaptive fusion. ΔAvg denotes the gain of Ours-Hybrid over OursSink.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 173,
+              "image_path": "figures/2610.22975/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 464
+            },
+            {
+              "caption": "Table 1: Main T2V comparison on Wan2.1-T2V-1.3B under a unified evaluation setup. Dense is the end-toend reference under the same operator stack. Speedup is reported relative to this dense reference (164.80s). We report two representative operating points of Ours-Hybrid: a speed-oriented setting at 𝜏 = 0.70 and a quality-oriented setting at 𝜏 = 0.85. VBench Avg (8 dims) is computed from the underlying full-precision per-dimension scores before rounding, so it may not exactly equal the mean of the displayed three-decimal values.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 133,
+              "image_path": "figures/2610.22975/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 980
+            },
+            {
+              "caption": "Table 3: Effect of calibration set size for OursHybrid at 𝜏 = 0.70 onWan2.1-T2V-1.3B. Calibration budget is specified by the number of prompts and seeds used for offlinemask acquisition,where each prompt–seed pair contributes one full denoising trajectory. Offline calibration cost is a rough onetime estimate computed from the shared-stack dense latency (164.80s per trajectory), reported in minutes. Larger calibration budgets improve quality modestly, and the gains largely saturate by 4×4.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 106,
+              "image_path": "figures/2610.22975/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 466
+            },
+            {
+              "caption": "Table 2: Main T2I comparison on Z-Image-Turbo. Evaluated at 2048×2048 resolution with 8 denoising steps. We report Soft-TIFA AM, Soft-TIFA GM, endto-end Time(s), and Speedup relative to the dense baseline.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 81,
+              "image_path": "figures/2610.22975/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 466
+            }
+          ],
+          "first_seen_at": "2026-10-18T21:00:00-04:00",
+          "hero_figure": "figures/2610.22975/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.22975",
+          "relevance": 8,
+          "selection_reason": "Train-free sparse attention replacement for efficient T2I/T2V diffusion transformers.",
+          "summary_status": "generated",
+          "title": "Sink-Sparse Hybrid Attention for Efficient Inference in T2I/T2V Diffusion Transformers",
+          "tldr": "Sink-Sparse Hybrid Attention accelerates pretrained text-to-image and text-to-video diffusion Transformers by reusing calibrated sparse attention structure without retraining or changing sampling schedules.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Federated Learning (FL) is a powerful machine learning framework that allows building a global model from the contributions of multiple, distributed clients, while ensuring the privacy of their local data. However, its heavy computational and communication overheads challenge its use for contemporary AI workloads such as natural language processing (NLP) and multimodal analysis. For this reason, this paper presents a novel small language model that leverages byte-level text and multimodal data processing, enhanced by a linear attention mechanism, to enable manageable Federated Learning of NLP and multimodal analysis tasks. The proposed model, nicknamed FederatedBytes, manages to process text and any other data types, including images, by treating its input as a mere sequence of bytes, while its lean linear attention mechanism allows abating the overall memory and computational footprint. To prove the effectiveness of the proposed model we have carried out an extensive performance evaluation on sentiment analysis tasks in multilingual and multimodal settings over the Multilingual Amazon Reviews and ScienceQA datasets. The experimental results show that FederatedBytes has been able to outperform comparable models such as ByT5 and LSTM, achieving higher accuracy while significantly reducing memory and communication overheads.",
+          "arxiv_id": "2610.22906",
+          "arxiv_url": "https://arxiv.org/abs/2610.22906",
+          "authors": [
+            "Ali Sarabadani, Massimo Piccardi, Mehran Abolhasan, Farzad Tofigh, Ian Zhou, Justin Lipman"
+          ],
+          "bullets": [
+            "Targets the computational and communication costs that hinder federated NLP and multimodal learning.",
+            "Processes text, images, and other modalities uniformly as byte sequences, without tokenization.",
+            "Uses lean linear attention to reduce memory and computational requirements.",
+            "Evaluated on multilingual and multimodal sentiment analysis using Multilingual Amazon Reviews and ScienceQA.",
+            "The abstract reports higher accuracy than ByT5 and LSTM, alongside substantially lower memory and communication overheads."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: The FederatedBytes Inference Pipeline. An illustrative walkthrough of the running example (“This product is amazing...”) as it passes through the three stages of the model architecture. Stage 1: Input text is patched and processed by the Hierarchical Encoder (Conv1d) to reduce sequence length. Stage 2: Patches are contextualized via Performer linear attention. Stage 3: Features are pooled for final classification.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 583,
+              "image_path": "figures/2610.22906/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1087
+            },
+            {
+              "caption": "Figure 1: End-to-end FederatedBytes Architecture. The pipeline operates in three sequential stages tailored for efficient federated learning: Stage 1 (Input Processing): Raw multilingual text is encoded into UTF-8 bytes. These bytes are compressed into patch embeddings using a Hierarchical Patch Encoder (1D Convolution→ ReLU→Adaptive Pooling) to reduce sequence length. Stage 2 (Memory-Efficient Processing): The patch sequence is processed by a Transformer Encoder utilizing the Performer mechanism. This approximates the full attention matrix using Orthogonal Random Features (ORFs) Yu et al. (2016), achieving linear O(L) time and space complexity. Stage 3 (Prediction & Classification): The encoded representations are aggregated via global mean pooling, normalized via BatchNorm, and passed through a linear classification head to generate final class logits.",
+              "figure_id": "figure-1-15",
+              "figure_number": "1",
+              "height": 575,
+              "image_path": "figures/2610.22906/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1087
+            },
+            {
+              "caption": "Figure 3: FederatedBytes Scalability and Efficiency Analysis. Top: FederatedBytes maintains high AUC scores while ByT5 collapses as client counts increase. Bottom: FederatedBytes demonstrates significantly lower computational overhead, network traffic, and memory footprint compared to ByT5. FederatedBytesPerformer-30M demonstrates superior efficiency, maintaining competitive AUC scores with significantly lower training time, CPU memory, and network consumption compared to the larger ByT5 model, especially as the number of clients increases. Data points represent averages across Amazon (en), (zh), and (de) datasets.",
+              "figure_id": "figure-3-17",
+              "figure_number": "3",
+              "height": 485,
+              "image_path": "figures/2610.22906/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 1087
+            },
+            {
+              "caption": "Table 2: Detailed comparison of specific models and methods. This table analyzes the key innovations and suitability for federated learning of the models discussed. While powerful, centralized models such as ByT5 and BLT are not inherently designed for the communication and resource constraints of FL.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 542,
+              "image_path": "figures/2610.22906/table-004.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 1008
+            },
+            {
+              "caption": "Table 14: Centralized performance of single models on the Amazon and ScienceQA datasets. Note: The top AUC scores within the Byte-Level model category are highlighted in bold. Text-Level baselines updated with GPT-2 Medium results.",
+              "figure_id": "table-14-16",
+              "figure_number": "14",
+              "height": 531,
+              "image_path": "figures/2610.22906/table-005.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 1087
+            },
+            {
+              "caption": "Table 13: Model Size (Number of Trainable Parameters).",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 176,
+              "image_path": "figures/2610.22906/table-006.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 518
+            },
+            {
+              "caption": "Table 7: Tensor transformation for one sample during the forward pass.",
+              "figure_id": "table-7-11",
+              "figure_number": "7",
+              "height": 224,
+              "image_path": "figures/2610.22906/table-007.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 917
+            },
+            {
+              "caption": "Table 1: High-level comparison of key token- and byte-level models.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 152,
+              "image_path": "figures/2610.22906/table-008.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 1087
+            },
+            {
+              "caption": "Table 12: Amazon Reviews Dataset (3 Languages).",
+              "figure_id": "table-12-7",
+              "figure_number": "12",
+              "height": 269,
+              "image_path": "figures/2610.22906/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 520
+            },
+            {
+              "caption": "Table 4: Example embeddings (first 4 dimensions) for the first 8 bytes of Patch 1.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 269,
+              "image_path": "figures/2610.22906/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 416
+            },
+            {
+              "caption": "Table 5: Hypothetical attention distribution across the first 3 patches.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 123,
+              "image_path": "figures/2610.22906/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 339
+            },
+            {
+              "caption": "Table A.16: Key hyperparameters and configuration settings used in the experiments.",
+              "figure_id": "table-A.16-5",
+              "figure_number": "A.16",
+              "height": 681,
+              "image_path": "figures/2610.22906/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 413
+            },
+            {
+              "caption": "Table 9: Prediction generation for our review sample during evaluation.",
+              "figure_id": "table-9-13",
+              "figure_number": "9",
+              "height": 115,
+              "image_path": "figures/2610.22906/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 518
+            },
+            {
+              "caption": "Table 10: Appending our example’s results to the aggregated evaluation lists.",
+              "figure_id": "table-10-14",
+              "figure_number": "10",
+              "height": 106,
+              "image_path": "figures/2610.22906/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 516
+            },
+            {
+              "caption": "Table 8: Sample input data for our example review within an evaluation batch.",
+              "figure_id": "table-8-12",
+              "figure_number": "8",
+              "height": 81,
+              "image_path": "figures/2610.22906/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 516
+            },
+            {
+              "caption": "Table 3: Byte content of the first 32 positions in Patch 1.",
+              "figure_id": "table-3-18",
+              "figure_number": "3",
+              "height": 79,
+              "image_path": "figures/2610.22906/table-016.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 519
+            },
+            {
+              "caption": "Table 15: Federated learning results comparing FederatedBytes-Performer-30M, FederatedBytes-Performer-100M, and ByT5. The highest AUC for each comparison is bolded. CPU memory reflects the active process usage (total) rather than differential deltas.",
+              "figure_id": "table-15-10",
+              "figure_number": "15",
+              "height": 178,
+              "image_path": "figures/2610.22906/table-017.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 1087
+            },
+            {
+              "caption": "Table 6: Sample input data for our example review within a training microbatch.",
+              "figure_id": "table-6-6",
+              "figure_number": "6",
+              "height": 54,
+              "image_path": "figures/2610.22906/table-018.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 521
+            }
+          ],
+          "first_seen_at": "2026-10-18T21:00:00-04:00",
+          "hero_figure": "figures/2610.22906/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.22906",
+          "relevance": 8,
+          "selection_reason": "Presents a tokenizer-free, byte-level small language model for efficient federated learning, utilizing linear attention to reduce memory and computational footprint.",
+          "summary_status": "generated",
+          "title": "FederatedBytes: Tokenizer-Free, Byte-Level Small Language Models for Efficient Multimodal Federated Learning",
+          "tldr": "FederatedBytes is a tokenizer-free, byte-level small language model using linear attention to make multimodal federated learning more efficient while maintaining strong sentiment-analysis performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Augmenting softmax attention with forget gates typically relies on summing decay contributions along the key--query path. Because such accumulation is monotonic, these mechanisms cannot selectively erase intermediate context while preserving older, structurally relevant tokens. We propose First Passage Attention (FPA), which shifts from path summation to path extrema by lowering a key's logit proportionally to the deepest dip of a learned scalar field below that key's level over the intervening span. FPA encompasses the Forgetting Transformer (FoX) as a special case, and when the field and levels follow a shared learned walk, the alive keys with unpenalised logits naturally form a stack. We show that a constant-dimension FPA head realises any subset of keys left alive by subsequent dips, whereas softmax heads with positional biases or token-level forget gates require a head dimension linear in the number of keys. In synthetic experiments, one-layer FPA heads converge to these target sets while comparable softmax and FoX baselines fail on every seed. Scaling to a 110M-parameter language model, FPA matches FoX in perplexity and uniquely achieves perfect passkey retrieval at $8\\times$ the training length, even with its key--value cache compressed to about $25\\%$.",
+          "arxiv_id": "2610.22714",
+          "arxiv_url": "https://arxiv.org/abs/2610.22714",
+          "authors": [
+            "Yuxuan Liu"
+          ],
+          "bullets": [
+            "Addresses the limitation of monotonic decay mechanisms that cannot erase intermediate tokens selectively.",
+            "Uses path extrema: logits are penalized according to the deepest dip of a learned scalar field across the key–query span.",
+            "Includes the Forgetting Transformer as a special case; under a shared learned walk, unpenalized keys form a stack.",
+            "A constant-dimensional FPA head can realize arbitrary subsets of surviving keys, unlike comparable softmax-based mechanisms requiring dimension linear in key count.",
+            "In experiments, FPA converges to target key sets, matches FoX perplexity, and achieves perfect passkey retrieval at 8× training length with a cache compressed to about 25%."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 22: Architecture of the FPA language model. (a) Pre-norm decoder with L = 12 blocks of width 768. (b) Multi-head attention with H = 12 heads of dimension d = 64, in which a fourth linear map gives every head its increments δ and offsets g and h. (c) One head, in which the bias B with the entries bts joins the scaled scores before the causal mask. RangeMin returns ϕ̄ts = mins<u≤t ϕu for every query t and key s, and Sub returns ϕ̄ts − ψs. The parts of FPA are orange, and the one-layer probes use the attention of panel (b) alone on token embeddings. FPA, First Passage Attention. RMSNorm, root mean square normalisation. SwiGLU, gated linear unit with the Swish activation.",
+              "figure_id": "figure-22-42",
+              "figure_number": "22",
+              "height": 568,
+              "image_path": "figures/2610.22714/figure-001.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 988
+            },
+            {
+              "caption": "Figure 1: Three heads read the same typed word. A user types c, a and t, deletes t with the backspace key (←) and types r, so the query ? should attend to c, a and r. Every character has the content score q⊤t ks = 2 and every other token −2. (a) Softmax attention has no term that a later token can change. (b) The Forgetting Transformer (FoX) can remove t only through a small forget gate fu at←, and that gate lowers c and a as well. (c) First Passage Attention (FPA) in its stack form uses the walk W as the field ϕ and as the level ψ, with strength β = 4. Only t has a level above the lowest later value of W , so only t loses its weight.",
+              "figure_id": "figure-1-14",
+              "figure_number": "1",
+              "height": 348,
+              "image_path": "figures/2610.22714/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 998
+            },
+            {
+              "caption": "Figure 2: Loss far beyond the training length. Mean loss of the four language models on 94 PG-19 test books read in windows of 16,384 tokens, in bins of 256 positions. The models were trained with context 2048 (vertical line). The vertical axis is logarithmic in the loss minus 3.1 nats, which spreads out the lowest losses. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "figure-2-16",
+              "figure_number": "2",
+              "height": 278,
+              "image_path": "figures/2610.22714/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 454
+            },
+            {
+              "caption": "Figure 18: Retention by token class in the final FPA model. Share of the keys of each class that are still alive 256 positions later, for pairs of key and query in one document, and in the last column for pairs across a document boundary. Content heads lie above the line and the document heads of step 3250 below it, with layers and heads counted from 1. By the final step layer 9, head 5 kept only 76% of the keys within a document and no longer counted as a document head. FPA, First Passage Attention.",
+              "figure_id": "figure-18-26",
+              "figure_number": "18",
+              "height": 591,
+              "image_path": "figures/2610.22714/figure-004.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 907
+            },
+            {
+              "caption": "Figure 5: Training of the four language models. (a) Training loss, averaged over 50 steps of 524,288 tokens, on a vertical axis that is logarithmic in the loss minus 2.75 nats. (b) Validation loss of each baseline minus that of FPA, on 1024 validation windows every 250 steps, so that positive values favour FPA. The triangles mark values beyond the axis, which were −0.16 for FoX at step 250 and +0.46 and +0.25 for softmax attention at steps 250 and 500. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "figure-5-40",
+              "figure_number": "5",
+              "height": 375,
+              "image_path": "figures/2610.22714/figure-005.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 856
+            },
+            {
+              "caption": "Figure 6: Loss by position on the PG-19 test books. Mean loss per bin of 64 positions in windows of 2048 and of 4096 tokens, up to four windows per book from 100 and 99 books. The top panels use Unix newlines, as the amended extrapolation test does, and the bottom panels keep the carriage returns of the books. The extrapolation test compared the positions 2048 to 4095 of panel (b). The vertical axes are logarithmic in the loss minus 3.1 nats in the top panels and 4.4 nats in the bottom panels, which spreads out the lowest losses. The models were trained with context 2048. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 545,
+              "image_path": "figures/2610.22714/figure-006.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 850
+            },
+            {
+              "caption": "Figure 4: Steps of the walk at brackets in the FPA language model. (a) Increments δt of layer 1, head 5 at positions 447 to 846 of one test window, with the bracket depth shaded and the mean increments where the depth rises and falls in the whole window. A fixed seed chose the window before the analysis, and the head contrasts the two kinds of bracket most in it. (b) Mean increments at opening and at closing brackets of all 144 heads over 256 test windows. Filled markers show the 56 heads with increments of opposite signs and a familywise significant correlation with the bracket depth. FPA, First Passage Attention.",
+              "figure_id": "figure-4-29",
+              "figure_number": "4",
+              "height": 410,
+              "image_path": "figures/2610.22714/figure-007.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 440
+            },
+            {
+              "caption": "Figure 3: Passkey accuracy by length of the prompt. Each point averages 50 items, ten passkeys at each of five depths. Lengths up to 4096 come from the preregistered evaluation and the two longer ones from the descriptive one. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "figure-3-30",
+              "figure_number": "3",
+              "height": 268,
+              "image_path": "figures/2610.22714/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 448
+            },
+            {
+              "caption": "Figure 20: The bias of layer 1, head 10 on a news report in the final FPA model. Weight factor ebts at positions 1100 to 1163 of validation window 680, with factors below 0.02 left white. Articles, prepositions, punctuation and newlines stop being alive at the next token, while content words such as said and page stay alive to the end of the stretch. FPA, First Passage Attention.",
+              "figure_id": "figure-20-27",
+              "figure_number": "20",
+              "height": 852,
+              "image_path": "figures/2610.22714/figure-009.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 948
+            },
+            {
+              "caption": "Figure 19: The bias of layer 1, head 1 on C++ code in the final FPA model. Weight factor ebts of every key s for every query t at positions 1100 to 1163 of validation window 0, with factors below 0.02 left white. A key is alive while its factor is at least e−1. Groups of keys stop being alive at once, nine at the end of a statement and three to six at newlines, dots and underscores. FPA, First Passage Attention.",
+              "figure_id": "figure-19-23",
+              "figure_number": "19",
+              "height": 825,
+              "image_path": "figures/2610.22714/figure-010.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 920
+            },
+            {
+              "caption": "Figure 21: The bias of layer 4, head 9 at a document boundary in the final FPA model. Weight factor ebts at positions 233 to 296 of validation window 680, with factors below 0.02 left white. At the end-of-document token 36 of the 39 earlier keys of the stretch stop being alive, and at the start-of-document token the others do. No key of the stretch before the boundary stays alive in the next document. FPA, First Passage Attention.",
+              "figure_id": "figure-21-33",
+              "figure_number": "21",
+              "height": 812,
+              "image_path": "figures/2610.22714/figure-011.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 906
+            },
+            {
+              "caption": "Figure 8: The three preregistered windows of the observational analysis. Each column shows one window with the head that the preregistered rule chose for it, with layers and heads counted from 1. The top panels show the walk W of that head, with the bracket depth shaded. The middle and bottom panels show the bias and the attention weight of every key at the last query of the window, with the alive keys marked, among them the query itself. Attention weights below 10−7 are drawn at that value. The walks of all three heads fall almost linearly, so their biases resemble that of FoX. FoX, Forgetting Transformer.",
+              "figure_id": "figure-8-39",
+              "figure_number": "8",
+              "height": 614,
+              "image_path": "figures/2610.22714/figure-012.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 874
+            },
+            {
+              "caption": "Figure 7: Copying during training. Greedy accuracy on the second copy of a span of text at gaps of 0, 128 and 320 tokens between the two copies, every 1000 steps and at the last step. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 338,
+              "image_path": "figures/2610.22714/figure-013.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 843
+            },
+            {
+              "caption": "Figure 15: Median alive span of every head in the final FPA model. Spans over the queries 1024 to 2047 of the 12 validation windows, with layers and heads counted from 1. Triangles mark the 21 heads whose span grew or shrank by a factor of two or more since step 1500. FPA, First Passage Attention.",
+              "figure_id": "figure-15-43",
+              "figure_number": "15",
+              "height": 592,
+              "image_path": "figures/2610.22714/figure-014.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 675
+            },
+            {
+              "caption": "Figure 10: Alive keys of every head in the final FPA model. Each cell gives the percentage of keys with a bias of at least −1 over the queries from position 1024 on in 256 test windows, with layers and heads counted from 1. Dots mark the 19 heads whose alive sets are not suffixes at more than 10% of the queries. FPA, First Passage Attention.",
+              "figure_id": "figure-10-18",
+              "figure_number": "10",
+              "height": 593,
+              "image_path": "figures/2610.22714/figure-015.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 670
+            },
+            {
+              "caption": "Figure 9: Steps of the walk at brackets in the two other preregistered windows. Increments δt of layer 1, head 6, the head that the rule chose for both windows, along the whole window, with the bracket depth shaded and darker where brackets nest. The steps are about ten times smaller than in Figure 4 but keep their signs, with means of +0.41 and +0.38 where the depth rises and −0.50 and −0.51 where it falls.",
+              "figure_id": "figure-9-28",
+              "figure_number": "9",
+              "height": 427,
+              "image_path": "figures/2610.22714/figure-016.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 868
+            },
+            {
+              "caption": "Figure 13: Loss by position at three checkpoints. (a) Loss per bin of 64 positions over the 12 validation windows, with the bias and with the bias of every layer removed. (b) Loss increase when the alive sets of every head are forced into suffixes, the sets that a forget gate can express.",
+              "figure_id": "figure-13-13",
+              "figure_number": "13",
+              "height": 373,
+              "image_path": "figures/2610.22714/figure-017.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 842
+            },
+            {
+              "caption": "Figure 12: The bias removed at three checkpoints of the FPA model. Loss increase on the first four validation windows when the bias of all layers or of one layer is set to zero, at steps 1500, 3250 and 5150, the last step of training, on a logarithmic axis. FPA, First Passage Attention.",
+              "figure_id": "figure-12-12",
+              "figure_number": "12",
+              "height": 312,
+              "image_path": "figures/2610.22714/figure-018.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 610
+            },
+            {
+              "caption": "Figure 11: Where keys die in the final FPA model. Keys killed per occurrence of a token, averaged over the 95 local heads, for the 15 tokens with the highest rate among those occurring at least 30 times in 256 test windows. A visible space marks a token that starts with a space, and the dashed line is the mean over all tokens. FPA, First Passage Attention.",
+              "figure_id": "figure-11-17",
+              "figure_number": "11",
+              "height": 434,
+              "image_path": "figures/2610.22714/figure-019.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 450
+            },
+            {
+              "caption": "Figure 17: Attention on earlier documents at three checkpoints. Attention that queries pay to the keys of earlier documents, averaged over the heads of each layer, with the bias and with the bias of every layer removed. The dotted line is the share that weights spread evenly over the visible keys would give.",
+              "figure_id": "figure-17-36",
+              "figure_number": "17",
+              "height": 294,
+              "image_path": "figures/2610.22714/figure-020.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 663
+            },
+            {
+              "caption": "Figure 14: Alive sets forced into suffixes, per validation window. Loss increase on each of the 12 windows at steps 1500, 3250 and 5150, with the means of 0.032, 0.031 and 0.032 nats as dashed lines.",
+              "figure_id": "figure-14-44",
+              "figure_number": "14",
+              "height": 306,
+              "image_path": "figures/2610.22714/figure-021.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 608
+            },
+            {
+              "caption": "Figure 16: Where keys die at three checkpoints. Keys killed per occurrence of a token, averaged over the 90 local heads of each step, those with a median alive span below 64 tokens. The bars give the final step for its 15 tokens with the highest rate among those occurring at least 30 times in the 12 validation windows. Markers give steps 1500 and 3250 where the token was among the 15 highest at that step. A visible space marks a token that starts with a space, \\n is the newline, and the dashed line is the mean over all tokens at the final step.",
+              "figure_id": "figure-16-35",
+              "figure_number": "16",
+              "height": 433,
+              "image_path": "figures/2610.22714/figure-022.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 447
+            },
+            {
+              "caption": "Table 3: Cost on one 12 GB partition of a Turing GPU in half precision. One attention layer has 12 heads of dimension 64 at batch 4 and length 2048 (medians of 20 rounds). Model throughput is in training tokens per second of the 110M models in the benchmark. Decoding uses batch size 1 at length 8192, and bytes per position count the keys, values and per-key state of 12 layers in single precision. The lower rows switch off parts of the FPA kernel. SDPA, the scaled dot-product attention of PyTorch, with its memory-efficient kernel on this GPU. FPA, First Passage Attention. FoX, Forgetting Transformer.",
+              "figure_id": "table-3-41",
+              "figure_number": "3",
+              "height": 275,
+              "image_path": "figures/2610.22714/table-023.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 584
+            },
+            {
+              "caption": "Table 2: Language models with 110M parameters, one seed each. Losses are in nats per token on the SlimPajama test set, on WikiText-103 (Merity et al., 2017) and on PG-19 positions 2048 to 4095 in windows of 4096 tokens. Passkey accuracy averages 50 items at each of two lengths, and RULER averages 13 tasks at length 8192. The models were trained with context 2048. Bold marks the best value in each column. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "table-2-15",
+              "figure_number": "2",
+              "height": 196,
+              "image_path": "figures/2610.22714/table-024.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 598
+            },
+            {
+              "caption": "Table 16: Training of the language models, the same for all four. FPA, First Passage Attention. Sel. Att., Selective Attention. FoX, Forgetting Transformer. ReLU, rectified linear unit.",
+              "figure_id": "table-16-4",
+              "figure_number": "16",
+              "height": 415,
+              "image_path": "figures/2610.22714/table-025.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 988
+            },
+            {
+              "caption": "Table 21: Learning rates of the reported runs, with the second setting in brackets, namely the initial gate bias of FoX, the selection scale of Selective Attention and the initial bias of the interaction scores of DCP. The alive sets used one configuration for every r and, for the competitors, for their positive controls. Selective Attention with the scale 1 of its paper used 10−3 on the alive sets, and with one mask per head the scale 3 and 3× 10−2 on the two walks. The two- and four-layer models of FoX and of softmax attention used 3× 10−3 and 10−2. FPA used 3× 10−3 with the field only and 10−2 with the level of the query on the alive sets. On retrieval it used 3× 10−3 without the level of the key, 3× 10−2 with the level of the query and 10−3 without content, and on MQAR 10−3 without a bias in its first layer. FPA, First Passage Attention. FoX, Forgetting Transformer. Sel. Att., Selective Attention. DCP, Dynamic Context Pruning. RoPE, rotary position embedding. NoPE, no positional encoding. ALiBi, attention with linear biases. MQRAR, multi-query repeated associative recall. MQAR, multi-query associative recall. LSTM, long short-term memory network.",
+              "figure_id": "table-21-37",
+              "figure_number": "21",
+              "height": 436,
+              "image_path": "figures/2610.22714/table-026.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 806
+            },
+            {
+              "caption": "Table 15: The four language models. Parameters count the tied embeddings once. Throughput and time cover the whole run of 5150 steps with its validations and checkpoints on the GPU of Appendix C. For FPA, throughput, time and memory come from an exploratory run of the same configuration with seed 2202 and the kernel of Section 4.3, outside the preregistration. Table 3 instead gives the throughput that we measured in the benchmark over 12 training steps after 8 steps of warm-up. FPA, First Passage Attention. FoX, Forgetting Transformer. Sel. Att., Selective Attention. MLP, multilayer perceptron. SwiGLU, gated linear unit with the Swish activation. RMSNorm, root mean square normalisation. RoPE, rotary position embedding. SDPA, the scaled dot-product attention of PyTorch. GPU, graphics processing unit. GiB, gibibyte.",
+              "figure_id": "table-15-5",
+              "figure_number": "15",
+              "height": 366,
+              "image_path": "figures/2610.22714/table-027.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 792
+            },
+            {
+              "caption": "Table 12: Control items of the zero-shot demonstration, as accuracy over 200 items without inserted filler sentences. The recent items ask for the most recent mention and the older items for an older mention that its content identifies. Chance is 0.5, and bold marks an exact lower 95% bound above chance. A world needed two models with both kinds in bold. FPA, First Passage Attention. FoX, Forgetting Transformer. Sel. Att., Selective Attention.",
+              "figure_id": "table-12-38",
+              "figure_number": "12",
+              "height": 366,
+              "image_path": "figures/2610.22714/table-028.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 690
+            },
+            {
+              "caption": "Table 1: Seeds out of 15 that succeeded in the one-layer probes. The alive-set columns use the ladder family with head dimension d = 4, where positional heads realise all alive sets only for r ≤ 6. The varied durations hold the deepest step of each dip for one or two steps in training, the two walks are the complementary part of the two-walk family (r = 14, d = 2 per head), and the stack column uses push and pop sequences. A dash marks a pair that we did not run. With d = r + 2 every positional head and FoX succeeded on all seeds. Selective Attention∗ lies outside the class of Theorem 3.1. FPA, First Passage Attention. RoPE, rotary position embedding. NoPE, no positional encoding. ALiBi, attention with linear biases. FoX, Forgetting Transformer. DCP, Dynamic Context Pruning.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 265,
+              "image_path": "figures/2610.22714/table-029.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 552
+            },
+            {
+              "caption": "Table 14: Bias that each method adds to the logit q⊤t ks/ √ d of key s at query t, with the parameters that it adds to a layer of width D = 768 with H = 12 heads and its positional encoding in the language models. FoX has one gate fu per head with a weight vector w, a bias c and the logistic function σ. Selective Attention takes q(1) and k(1) from its first head, shares the bias among all heads and never masks the start token. FPA, First Passage Attention. FoX, Forgetting Transformer. Sel. Att., Selective Attention. RoPE, rotary position embedding.",
+              "figure_id": "table-14-6",
+              "figure_number": "14",
+              "height": 144,
+              "image_path": "figures/2610.22714/table-030.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 890
+            },
+            {
+              "caption": "Table 10: FPA minus each baseline on the descriptive evaluations, with 95% bootstrap intervals in brackets. PG-19 losses come from windows of 16,384 tokens, passkey and NIAH (needle in a haystack) are accuracies on 50 items, and the downstream rows are zero-shot accuracies or log-likelihoods from the evaluation harness of Gao et al. (2024). Negative losses and positive accuracies favour FPA. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "table-10-8",
+              "figure_number": "10",
+              "height": 438,
+              "image_path": "figures/2610.22714/table-031.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 872
+            },
+            {
+              "caption": "Table 17: Training of the one-layer probes and of the tasks from earlier work. FPA, First Passage Attention. MQAR, multi-query associative recall.",
+              "figure_id": "table-17-20",
+              "figure_number": "17",
+              "height": 277,
+              "image_path": "figures/2610.22714/table-032.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 738
+            },
+            {
+              "caption": "Table 13: Three checks of the FPA language model, at steps 1500 and 3250 of 5150 and at the final step, on the same 12 validation windows of 2048 tokens. Local, middle and global heads have median alive spans below 64 tokens, from 64 to 1023 tokens and from 1024 on. Alive sets count as often not suffixes when at least 20% of the queries have an alive key older than a dead one. Document heads keep at least 80% of the keys within a document and at most 5% across documents. The copying items differ from those of Figure 7. FPA, First Passage Attention.",
+              "figure_id": "table-13-11",
+              "figure_number": "13",
+              "height": 299,
+              "image_path": "figures/2610.22714/table-033.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 664
+            },
+            {
+              "caption": "Table 11: RULER and BABILong, mean accuracy over the 13 tasks of RULER and the five tasks qa1 to qa5 of BABILong, at the context lengths of the columns. All models were trained with context 2048. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding.",
+              "figure_id": "table-11-7",
+              "figure_number": "11",
+              "height": 173,
+              "image_path": "figures/2610.22714/table-034.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 486
+            },
+            {
+              "caption": "Table 4: Tuning runs and GPU minutes of the search in the pilots on the two families whose comparisons rest on a declared search. A dagger marks a search that took more than 1.25 times the GPU time of the cheapest compared search of its family. We estimated the GPU minutes of runs that shared the GPU from a calibration of throughput. The configuration of Selective Attention with one mask per head came from later exploratory runs. FPA, First Passage Attention. FoX, Forgetting Transformer. ALiBi, attention with linear biases. NoPE, no positional encoding. RoPE, rotary position embedding. DCP, Dynamic Context Pruning.",
+              "figure_id": "table-4-34",
+              "figure_number": "4",
+              "height": 313,
+              "image_path": "figures/2610.22714/table-035.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 536
+            },
+            {
+              "caption": "Table 5: Every cell of the alive-set family, as seeds out of 15 that ordered the alive keys above the dead keys on at least 90% of the sequences. Selective Attention appears with the selection scale 10 chosen in tuning and with the scale 1 of its paper. The last rows compare the level of the key with the level of the query, whose alive sets are always suffixes. A dash marks a cell that the design did not include. FPA, First Passage Attention. RoPE, rotary position embedding. NoPE, no positional encoding. ALiBi, attention with linear biases. FoX, Forgetting Transformer.",
+              "figure_id": "table-5-45",
+              "figure_number": "5",
+              "height": 581,
+              "image_path": "figures/2610.22714/table-036.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 522
+            },
+            {
+              "caption": "Table 8: Retrieval among alive keys, as seeds out of 15 that succeeded. FPA, First Passage Attention. FoX, Forgetting Transformer.",
+              "figure_id": "table-8-21",
+              "figure_number": "8",
+              "height": 231,
+              "image_path": "figures/2610.22714/table-037.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 472
+            },
+            {
+              "caption": "Table 20: Declared search of the probes and of the tasks from earlier work. Each configuration ran with two tuning seeds, later four, and a grid whose end was selected was extended once by a decade (Table 4 counts the runs). The 12 learning rates are equally spaced on a logarithmic scale and served softmax attention with RoPE, NoPE or ALiBi and stick-breaking attention on the alive sets. After the pilots the straight-through minimum replaced the four definitions of FPA, and its learning rate was selected again. On retrieval FoX and Selective Attention kept the settings selected on the alive sets and the two walks, on the stack they used the default initialisation of PyTorch and the scale 1, and on the tasks from earlier work the gate bias 0 and the scale 1. FPA, First Passage Attention. FoX, Forgetting Transformer. Sel. Att., Selective Attention. DCP, Dynamic Context Pruning. RoPE, rotary position embedding. NoPE, no positional encoding. ALiBi, attention with linear biases.",
+              "figure_id": "table-20-32",
+              "figure_number": "20",
+              "height": 277,
+              "image_path": "figures/2610.22714/table-038.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 1000
+            },
+            {
+              "caption": "Table 23: Eviction of the keys whose bias fell below −θ (FPA and FoX) or whose mask rose above θ (Selective Attention), with the loss change in nats per token and the share of keys kept on SlimPajama test windows. Softmax attention used a sliding window of the mean size that FPA keeps. Block skipping is the pruning of Lin et al. (2025b). FPA, First Passage Attention. FoX, Forgetting Transformer. Sel. Att., Selective Attention.",
+              "figure_id": "table-23-24",
+              "figure_number": "23",
+              "height": 333,
+              "image_path": "figures/2610.22714/table-039.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 570
+            },
+            {
+              "caption": "Table 18: Models of the one-layer probes, with one supervised attention layer on token embeddings of width 64 and the head dimension d. On the alive sets every key has a learned offset per position and head, FPA, FoX, Selective Attention and softmax attention add RoPE, ALiBi adds its fixed slope, and NoPE and stick-breaking attention use the offsets alone. The positive controls of the alive sets use d = r + 2, and the field-only FPA of Table 5 uses d = 1 without positional information. The two- and four-layer models put one or three pre-norm blocks with 4 heads and an MLP of width 256 before the supervised layer. On the alive sets and the two walks an MLP of the one-hot sequence with a hidden layer of width 256 gives the final query. FPA, First Passage Attention. FoX, Forgetting Transformer. RoPE, rotary position embedding. ALiBi, attention with linear biases. NoPE, no positional encoding. MLP, multilayer perceptron.",
+              "figure_id": "table-18-19",
+              "figure_number": "18",
+              "height": 209,
+              "image_path": "figures/2610.22714/table-040.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 886
+            },
+            {
+              "caption": "Table 19: Models of the tasks from earlier work, decoders with LayerNorm before each sublayer, an MLP with the Gaussian error linear unit, tied embeddings initialised asN (0, 0.022) and the head dimension d. The last three columns give the parameters of FPA, of softmax attention with RoPE and of an LSTM of the same depth and width. In variable assignment the attention models use learned absolute positions, elsewhere RoPE, and stick-breaking attention uses none. Variable assignment also has 2000 test sequences with only two values, and flip-flop 10,000 sparse and 2000 dense ones. MLP, multilayer perceptron. MQRAR, multi-query repeated associative recall. MQAR, multi-query associative recall. FPA, First Passage Attention. RoPE, rotary position embedding. LSTM, long short-term memory network.",
+              "figure_id": "table-19-31",
+              "figure_number": "19",
+              "height": 186,
+              "image_path": "figures/2610.22714/table-041.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 968
+            },
+            {
+              "caption": "Table 22: One attention layer with 12 heads of dimension 64 at batch × length, in milliseconds (medians of 20 rounds). The ratios in Section 4.3 are medians over the rounds of the ratio within each round. SDPA, the scaled dot-product attention of PyTorch, with its memory-efficient kernel on this GPU. FPA, First Passage Attention. FoX, Forgetting Transformer. Sel. Att., Selective Attention.",
+              "figure_id": "table-22-25",
+              "figure_number": "22",
+              "height": 196,
+              "image_path": "figures/2610.22714/table-042.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 632
+            },
+            {
+              "caption": "Table 7: Two walks with two heads of dimension 2, as seeds out of 15 that ordered the keys of both walks on at least 90% of the sequences. One mask per head is our variant of Selective Attention, in which every head computes its own selection. FPA, First Passage Attention. DCP, Dynamic Context Pruning.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 140,
+              "image_path": "figures/2610.22714/table-043.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 627
+            },
+            {
+              "caption": "Table 6: Graded depths with fixed and with varied durations, as seeds out of 15 that fitted the training distribution. The sum of dips replaces the minimum of FPA and keeps the same field. FPA, First Passage Attention.",
+              "figure_id": "table-6-10",
+              "figure_number": "6",
+              "height": 118,
+              "image_path": "figures/2610.22714/table-044.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 436
+            },
+            {
+              "caption": "Table 9: Tasks from earlier work, as seeds out of 15 that succeeded. In variable assignment the softmax column used learned absolute positions in place of RoPE. MQRAR, multi-query repeated associative recall. MQAR, multi-query associative recall. FPA, First Passage Attention. RoPE, rotary position embedding. FoX, Forgetting Transformer. Sel. Att., Selective Attention. Stick-br., stick-breaking attention. LSTM, long short-term memory network.",
+              "figure_id": "table-9-22",
+              "figure_number": "9",
+              "height": 208,
+              "image_path": "figures/2610.22714/table-045.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 764
+            }
+          ],
+          "first_seen_at": "2026-10-18T21:00:00-04:00",
+          "hero_figure": "figures/2610.22714/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.22714",
+          "relevance": 8,
+          "selection_reason": "Novel attention mechanism with forget gates and KV cache compression, directly relevant to efficient attention and memory.",
+          "summary_status": "generated",
+          "title": "First Passage Attention",
+          "tldr": "First Passage Attention enables selective forgetting of intermediate context while preserving older relevant tokens, outperforming comparable mechanisms on synthetic memory tasks and long-context passkey retrieval.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-15",
       "paper_count": 5,
       "papers": [
@@ -49649,5 +50991,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 256
+  "total_paper_count": 261
 }
