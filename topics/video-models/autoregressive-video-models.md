@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**53 papers total**
+**56 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-19 | [Dynamics-Aware Sparse Attention for Efficient Autoregressive Video Diffusion](https://arxiv.org/abs/2610.26262) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | DASA makes autoregressive video diffusion more efficient by focusing computation and memory on regions with motion while preserving visual quality. | 8 | 7 |
+| 2026-10-19 | [TriTD: Tri-Partite Trajectory-Distribution Distillation for Real-Time Autoregressive Video Generation](https://arxiv.org/abs/2610.26165) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | TriTD improves autoregressive video diffusion by jointly reducing rollout errors, enabling higher visual quality and real-time generation at 26.8 FPS on a single H100 GPU. | 8 | 7 |
+| 2026-10-19 | [SpriteStage: Long Horizon Animation Generation via Progressive Scene Programming and Replay](https://arxiv.org/abs/2610.24869) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | SpriteStage generates long-form animations by progressively scripting, executing, inspecting, and revising scenes while carrying accepted world states forward. | 8 | 7 |
 | 2026-10-15 | [Speculative Forcing for Efficient Autoregressive Video Generation](https://arxiv.org/abs/2610.22347) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI | Speculative Forcing accelerates autoregressive video generation by safely freezing tokens once their intermediate predictions are sufficiently accurate. | 8 | 8 |
 | 2026-10-14 | [Glance Forcing: Making Bidirectional Diffusion Autoregressive at a Glance](https://arxiv.org/abs/2610.20220) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Glance Forcing efficiently distills bidirectional diffusion into autoregressive video generation using just one PF-ODE trajectory while improving quality over a fully trained baseline. | 8 | 9 |
 | 2026-10-14 | [StreamErase: Towards Ultra-Fast Streaming Video Erasing](https://arxiv.org/abs/2610.20137) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | StreamErase enables real-time, arbitrarily long video object removal by distilling bidirectional erasing quality into a causal streaming model. | 8 | 8 |
