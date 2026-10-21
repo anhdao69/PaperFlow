@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**150 papers total**
+**152 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-20 | [PanoGraphGS: Unifying Panoptic Segmentation and Hierarchical 3D Scene Graphs with Gaussian Splatting](https://arxiv.org/abs/2610.27696) | Embodied AI: Vision-Language Navigation, Robot Navigation; 3D Vision: 3D Foundation Models | PanoGraphGS jointly learns panoptic 3D Gaussian representations and hierarchical scene graphs for consistent, language-guided 3D scene understanding. | 9 | 8 |
+| 2026-10-20 | [HAVANA: A Hierarchical Video-Action Model for Vision-Language Navigation](https://arxiv.org/abs/2610.24122) | Embodied AI: Vision-Language Navigation | HAVANA improves vision-language navigation by separating slow predictive planning from fast reactive trajectory generation. | 9 | 9 |
 | 2026-10-19 | [ReInsVLN: Revisiting Historical Evidence for Training-Free Vision-and-Language Navigation](https://arxiv.org/abs/2610.26545) | Embodied AI: Vision-Language Navigation; Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency; Adaptation and Memory: Embodied Memory | ReInsVLN is a training-free memory framework that compresses and periodically reactivates navigation history, improving VLN performance while reducing inference overhead. | 9 | 8 |
 | 2026-10-19 | [Cartender: Verifiable Language-Conditioned Driving by Learning the Drives Not Taken](https://arxiv.org/abs/2610.26390) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | Cartender enables verifiable language-conditioned driving by learning which alternative instructions and trajectories are feasible—or unsupported—from logged scenes. | 9 | 9 |
 | 2026-10-19 | [EmbodiedWorld-200K: Toward Embodied World Agents via Embodied-Planning Dataset and Interactive World Models](https://arxiv.org/abs/2610.25959) | Embodied AI: Vision-Language Navigation, Robot Navigation; World Models: Video World Models, Interactive World Models | EmbodiedWorld-200K advances open-world embodied agents with a 200K-sample planning dataset and video-world-model-based interactive RL. | 9 | 8 |

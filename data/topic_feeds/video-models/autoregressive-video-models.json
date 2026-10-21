@@ -1,6 +1,157 @@
 {
   "days": [
     {
+      "date": "2026-10-20",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "Moving from controllable videos to genuinely playable worlds requires persistent world state, executable game rules, and low-latency interaction. We outline a roadmap for the next generation of Matrix-Game that separates game execution from visual generation through an executable game harness, and introduce Matrix-Game 4.0 as the first system built on this design. A lightweight game engine maintains world state and executes interaction rules, a multimodal coding agent translates player ideas into game code and dynamic scene captions, and a renderer based on autoregressive video model transforms engine-rendered low-poly proxies into detailed visuals, conditioned on dynamic captions and memory references. This framework provides continuous guidance for visual generation and enables natural-language creation and modification of scenes and gameplay. Our renderer is trained on aligned low-poly and high-fidelity video pairs and distilled into a causal generator that generates in four-frame chunks with one or two denoising steps. Together with targeted inference optimizations, Matrix-Game 4.0 enables 480p, 60 FPS gameplay on a single NVIDIA RTX5090 with a key-press-to-display latency of 112ms. Single-step generation achieves 83FPS steady-state throughput with 18.2GiB of peak GPU memory usage. With fixed prompts, steady-state throughput also reaches 67FPS on an RTX5080 and 58FPS on an RTX5070Ti. We demonstrate customizable shooter and driving games with engine-enforced mechanics, and release code, model weights, and low-poly game assets to support research and creation of playable game worlds.",
+          "arxiv_id": "2610.27999",
+          "arxiv_url": "https://arxiv.org/abs/2610.27999",
+          "authors": [
+            "Jihai Zhang, Runjia Qian, Kaiqin Kong, Biao Jiang, Puyi Wang, Siru Chen, Tianle Li, Guanjie Chen, Junyi Wu, Chubin Chen, Yuanhang Li, Kaichen Huang, Haobo Zhang, Yangguang Li, Wei Yu, Guibin Chen, Yu Cheng, Yahui Zhou"
+          ],
+          "bullets": [
+            "Addresses the gap between controllable video generation and playable worlds requiring persistent state, executable rules, and low-latency interaction.",
+            "Separates game execution from visual generation: an engine manages state and mechanics, while an autoregressive video model renders detailed visuals from low-poly proxies, captions, and memory references.",
+            "A multimodal coding agent converts player ideas into game code and dynamic scene descriptions.",
+            "Demonstrates customizable shooter and driving games with engine-enforced mechanics.",
+            "Achieves 480p, 60 FPS gameplay on an RTX5090 with 112 ms key-press-to-display latency; code, weights, and assets are released."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.GR"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Architecture of the rendering model. The noisy latent of one chunk (one latent frame, four video frames) and the low-poly proxy encoded by TAEHV are concatenated into 148 channels and patchified into 405 tokens per latent frame at 480×864. Thirty causal DiT blocks apply self-attention over a KV cache that holds spatial-memory frames, reference frames, and the latest 20 chunks, cross-attention to the cached text keys and values of the dynamic caption, and a feed-forward network, each modulated by the timestep through AdaLN. The output head predicts a velocity, one or two flow updates produce the clean latent, and TAEHV decodes four frames. The finished chunk is then re-run at t = 0 without the control input to write its keys and values into the cache.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 700,
+              "image_path": "figures/2610.27999/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 810
+            },
+            {
+              "caption": "Figure 6: Overview of the inference optimizations. (a) Per-block GPU time on an RTX 5090, broken down by kernel category. (b) Decoding is moved ahead of the clean-KV update, so frames are output earlier. (c) Instead of shifting the whole KV window at every step, the ring cache writes the new frame into the oldest slot. (d) Self-attention is split into seven window ranges whose quantized keys and values are cached; the partial outputs are combined by log-sum-exp.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 738,
+              "image_path": "figures/2610.27999/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 786
+            },
+            {
+              "caption": "Figure 2: Roadmap of Matrix-Game V4: The multimodal coding agent and the game engine form the harness for the video generation model. The player sends ideas and requests to the agent and actions to the engine (1). The agent writes the world, turning ideas into game code and scenes for the engine, and translates the world, turning the state and events reported by the engine into text descriptions. The engine maintains the world state and the rules in code (2) and sends control signals as a structural rendering of the scene (3). The video generation model renders frames in real time from the text description, its past frames, and the structural rendering (4). The generated frame returns to the player as visual feedback (5).",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 341,
+              "image_path": "figures/2610.27999/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 786
+            },
+            {
+              "caption": "Figure 4: Dynamic captions follow the engine state. Top: low-poly proxy frames of one CitySample driving clip; numbered markers are the visible objects that the engine reports for this frame, each linked by its instance ID to a semantic description. Below: the caption that the rule-based template produces for the same frame, without any vision-language model. Orange text comes from object states and events, and blue text from object positions and distances. As the car moves, parked vehicles leave the description, pedestrians change from standing to approaching, and newly visible objects are announced under “Changes”.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 714,
+              "image_path": "figures/2610.27999/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 786
+            },
+            {
+              "caption": "Figure 8: Game modes written with the coding agent, rendered in real time. Top: in the thirdperson shooter, the agent adds health and ammunition control, shield durability, a faster shotgun, a game-over condition, and simple sound effects. Middle: in the driving game, the agent implements a time trial with route checkpoints and collision penalties. Bottom: the same driving game turned into a pursuit mode, in which the player must intercept a target vehicle and stay close to it for five seconds. The engine evaluates every rule; the video model renders each frame from the engine output.",
+              "figure_id": "figure-8-5",
+              "figure_number": "8",
+              "height": 619,
+              "image_path": "figures/2610.27999/figure-005.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 786
+            },
+            {
+              "caption": "Figure 7: Re-rendering over 40-second held-out rollouts. For each game, the upper row is the low-poly proxy from the engine and the lower row is the frame generated by the distilled causal model at the same time step. The generated frames follow the proxy layout, camera, and object motion throughout the rollout, while the model fills in materials, vegetation, lighting, smoke, and muzzle effects.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 698,
+              "image_path": "figures/2610.27999/figure-006.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 786
+            },
+            {
+              "caption": "Figure 3: UE5 paired training data. (a) Each clip is captured twice in Unreal Engine 5 under the same camera and frame index: once as a low-poly structure render (BBox) that preserves scene layout and motion, and once as the high-fidelity RGB frame. (b) For every 81-frame clip, frame-aligned CSV records of camera pose, actions, visible objects, events, and environment are turned into a prompt: visible object IDs are looked up in a description table, spatial and temporal cues are composed, and a template produces the clip prompt.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 833,
+              "image_path": "figures/2610.27999/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 786
+            },
+            {
+              "caption": "Table 3: Latency, hardware, and openness of recent real-time interactive generation systems. Latency is the end-to-end latency, and resolution is the output resolution at which each system reports its timings. For the systems that generate in chunks, the latency is two chunk generation times. Code World Model (streaming) renders a 17-frame chunk in 5.1 s on one H200. For StreamRender-H3, the chunk time of 258 ms is the sum of the three warm-renderer stage times reported on its project page: 16.67 ms for reference encoding, 217.96 ms for the two-step render, and 23.8 ms for causal video decoding, the last measured at 720p on one GB200. AgentGarten renders a 16-frame chunk in 439 ms on one H100. For Magpie, the latency is the end-to-end time reported by its authors: 0.83 s for the engine to prepare a 20-frame chunk, about 0.1 s for transmission and encoding, and 0.62 s for rendering. Matrix-Game 4.0 latency is measured from a key press to the first frame that reflects it, with the game running at 60 FPS. Open release is checked against the GitHub and Hugging Face pages of each project on October 19, 2026.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 387,
+              "image_path": "figures/2610.27999/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 818
+            },
+            {
+              "caption": "Table 2: Inference speed and latency, applied cumulatively. Each row adds one optimization to all rows above it. FPS is the steady-state generation rate of the model; latency is the time from a key press to the first generated frame that reflects it, with the game running at 60 FPS. Speedup is the FPS ratio to the previous row. Setting: 480× 864, chunk size of one latent frame (four frames), KV window of 21 latent frames, one NVIDIA RTX 5090.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 264,
+              "image_path": "figures/2610.27999/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 656
+            },
+            {
+              "caption": "Table 1: UE5 paired training data. Each clip is a pair of pixel-aligned low-poly and high-fidelity videos at 1280 × 720. Held-out clips come from capture sessions (for air combat, whole multimachine capture batches) that contribute no training clip.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 161,
+              "image_path": "figures/2610.27999/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 776
+            }
+          ],
+          "first_seen_at": "2026-10-20T21:00:00-04:00",
+          "hero_figure": "figures/2610.27999/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.27999",
+          "relevance": 9,
+          "selection_reason": "Real-time playable game worlds using an autoregressive video renderer and game harness; fits interactive world models and autoregressive video models.",
+          "summary_status": "generated",
+          "title": "Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds",
+          "tldr": "Matrix-Game 4.0 combines an executable game engine with a real-time video renderer and coding agent to create and modify playable game worlds from natural language.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-19",
       "paper_count": 3,
       "papers": [
@@ -11659,5 +11810,5 @@
   "schema_version": 1,
   "subtopic_id": "autoregressive-video-models",
   "topic_id": "video-models",
-  "total_paper_count": 56
+  "total_paper_count": 57
 }

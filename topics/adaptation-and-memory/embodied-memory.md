@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**242 papers total**
+**246 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-20 | [Cross-Visibility-Gap Identity Persistence for 4D Scene Graphs](https://arxiv.org/abs/2610.27505) | 3D Vision; Adaptation and Memory: Embodied Memory | CVG-SGM preserves object identities across visibility gaps by storing target–carrier relational bindings, achieving perfect re-linking in controlled and reported real-feature episodes. | 7 | 8 |
+| 2026-10-20 | [ProMemAgent: Long-Horizon Proactive Assistance with Context-Aware Prospective Memory from Sensory Perceptions](https://arxiv.org/abs/2610.27400) | Adaptation and Memory: Embodied Memory | ProMemAgent enables long-horizon proactive assistance by using prospective memory over past sensory contexts to anticipate future user needs. | 7 | 7 |
+| 2026-10-20 | [Learning from Fleet Experience: A Collective Learning Paradigm for Robots](https://arxiv.org/abs/2610.25736) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Collective experience learning lets robot fleets improve a shared policy from deployment failures and successful trajectories without additional expert corrections, achieving high reliability across manipulation tasks. | 9 | 8 |
+| 2026-10-20 | [Latent Multimodal Memory Reasoning](https://arxiv.org/abs/2610.23890) | Adaptation and Memory: Embodied Memory | LMMR organizes long-term multimodal memories in a shared latent concept space and reasons over their temporal and cross-modal relationships for more faithful responses. | 9 | 9 |
 | 2026-10-19 | [BetaMem: Learning to Remember a Changing World for Embodied Agents](https://arxiv.org/abs/2610.26554) | Adaptation and Memory: Embodied Memory | BetaMem is a layered, self-improving memory framework that helps embodied agents maintain accurate, traceable long-term memories under changing environments and resource limits. | 9 | 8 |
 | 2026-10-19 | [ReInsVLN: Revisiting Historical Evidence for Training-Free Vision-and-Language Navigation](https://arxiv.org/abs/2610.26545) | Embodied AI: Vision-Language Navigation; Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency; Adaptation and Memory: Embodied Memory | ReInsVLN is a training-free memory framework that compresses and periodically reactivates navigation history, improving VLN performance while reducing inference overhead. | 9 | 8 |
 | 2026-10-19 | [CondenseVLA: Learnable History Condensation for Efficient Multi-Frame VLA](https://arxiv.org/abs/2610.25927) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | CondenseVLA efficiently integrates recent visual history into robot actions by learning to condense redundant frame features into complementary slot tokens. | 9 | 8 |

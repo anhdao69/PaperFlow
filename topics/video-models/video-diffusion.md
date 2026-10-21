@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**301 papers total**
+**306 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-20 | [SolarRenderer: Few-Step Generative Reference Rendering](https://arxiv.org/abs/2610.28630) | Video Generation and Understanding: Video Diffusion | SolarRenderer is a few-step, structure-conditioned video renderer that turns diverse coarse scene specifications into realistic video, including real-time 768p streaming. | 7 | 8 |
+| 2026-10-20 | [Recast the Past: Stable Long Video Generation with Full Context Memory](https://arxiv.org/abs/2610.27986) | Video Generation and Understanding: Video Diffusion | ReCam enables stable long-video generation by compressing full historical context into memory tokens and using dual-pointer denoising to reduce temporal drift. | 8 | 7 |
+| 2026-10-20 | [Decoupling Action from Egocentric Observation for World Simulation](https://arxiv.org/abs/2610.27946) | Embodied AI: Learning from Human Videos; World Models: Interactive World Models; Video Generation and Understanding: Video Diffusion | EgoACT transfers egocentric actions to new visual contexts by guiding video diffusion directly, preserving realistic hand–object interactions without geometric estimators. | 8 | 7 |
+| 2026-10-20 | [PixelSR: Pixel-Space Orthogonal Flow Decoupling for Real-World Image Super-Resolution](https://arxiv.org/abs/2610.27759) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | PixelSR is a single-stage pixel-space diffusion transformer designed to improve Real-SR perceptual detail without sacrificing structural fidelity. | 6 | 8 |
+| 2026-10-20 | [Push-Pull Attentional Anchoring for Diffusion Concept Erasure](https://arxiv.org/abs/2610.27719) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Diffusion | PPAA erases unwanted concepts from diffusion models by pushing target representations away while anchoring semantic retention to reduce unintended quality loss. | 6 | 7 |
 | 2026-10-19 | [VideoMaMa++: Temporally Consistent Video Matting via Preserve-and-Refine Token](https://arxiv.org/abs/2610.26857) | Video Generation and Understanding: Video Diffusion | VideoMaMa++ improves long-video diffusion matting by preserving and refining masks across chunk boundaries for sharper, more temporally consistent results. | 6 | 7 |
 | 2026-10-19 | [When Guidance Becomes a Guard: Early Interception of Unsafe Inputs in Text-to-Image Generation](https://arxiv.org/abs/2610.26452) | Video Generation and Understanding: Video Diffusion | CSTI detects unsafe or adversarial text-to-image inputs early by analyzing classifier-free guidance signals, avoiding image decoding and generator changes. | 7 | 7 |
 | 2026-10-19 | [RECAP: Reciprocal Sparse Attention and Hierarchical Caching for Efficient Video Diffusion](https://arxiv.org/abs/2610.26244) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | RECAP accelerates video diffusion by combining sparse attention and hierarchical caching with reciprocal error correction, achieving faster and higher-fidelity generation than direct combinations of existing methods. | 8 | 7 |
