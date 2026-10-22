@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**246 papers total**
+**251 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [ProactEgoMem: Benchmarking Proactive Memory in Streaming Egocentric Video](https://arxiv.org/abs/2610.30089) | Video Generation and Understanding: Video Understanding; Adaptation and Memory: Embodied Memory | ProactEgoMem benchmarks whether video agents can proactively capture, update, and maintain useful memories from streaming egocentric video. | 8 | 8 |
+| 2026-10-21 | [GeoMem-VLA: Internalizing 3D Scene Understanding into Temporal Memory for Vision-Language-Action Models](https://arxiv.org/abs/2610.29866) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | GeoMem-VLA equips vision-language-action models with compact, temporally persistent 3D geometric memory for improved robot manipulation. | 9 | 8 |
+| 2026-10-21 | [From VLM Planners to Robotic Agents: Self-Evolving Harnesses for History-Dependent Manipulation](https://arxiv.org/abs/2610.29560) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | SERA turns a high-level vision-language model into a self-evolving robotic agent that uses execution history to improve long-horizon manipulation planning. | 9 | 8 |
+| 2026-10-21 | [Plan First, Act Later: Streaming Reasoning for Executable Memory in Robot Control](https://arxiv.org/abs/2610.29329) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | PAL improves long-horizon robot manipulation by planning future-relevant subtasks into executable memory before action time. | 8 | 7 |
+| 2026-10-21 | [inr2action: Encoding Robot Episodes as Neural Implicit Representations for Recall and Action](https://arxiv.org/abs/2610.28882) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | inr2action stores each robot episode as a fixed-size neural-network weight delta that supports memory-based question answering and action prediction without retrieving frames. | 8 | 8 |
 | 2026-10-20 | [Cross-Visibility-Gap Identity Persistence for 4D Scene Graphs](https://arxiv.org/abs/2610.27505) | 3D Vision; Adaptation and Memory: Embodied Memory | CVG-SGM preserves object identities across visibility gaps by storing target–carrier relational bindings, achieving perfect re-linking in controlled and reported real-feature episodes. | 7 | 8 |
 | 2026-10-20 | [ProMemAgent: Long-Horizon Proactive Assistance with Context-Aware Prospective Memory from Sensory Perceptions](https://arxiv.org/abs/2610.27400) | Adaptation and Memory: Embodied Memory | ProMemAgent enables long-horizon proactive assistance by using prospective memory over past sensory contexts to anticipate future user needs. | 7 | 7 |
 | 2026-10-20 | [Learning from Fleet Experience: A Collective Learning Paradigm for Robots](https://arxiv.org/abs/2610.25736) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Collective experience learning lets robot fleets improve a shared policy from deployment failures and successful trajectories without additional expert corrections, achieving high reliability across manipulation tasks. | 9 | 8 |

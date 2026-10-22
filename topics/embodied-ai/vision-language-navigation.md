@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**152 papers total**
+**154 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [NavBind: Diagnosing Instruction-Action Binding at Route Forks in Navigation VLAs](https://arxiv.org/abs/2610.29203) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | NavBind tests whether navigation VLAs’ actions truly respond to instructions rather than relying on visual cues or history. | 8 | 7 |
+| 2026-10-21 | [LERR-Nav: Learning to Coordinate Exploration, Recovery, and Reminiscing for Object Navigation](https://arxiv.org/abs/2610.15362) | Embodied AI: Vision-Language Navigation, Robot Navigation | LERR-Nav learns to coordinate exploration, recovery, and memory-based revisiting so robots can navigate to objects more reliably in unseen environments. | 9 | 8 |
 | 2026-10-20 | [PanoGraphGS: Unifying Panoptic Segmentation and Hierarchical 3D Scene Graphs with Gaussian Splatting](https://arxiv.org/abs/2610.27696) | Embodied AI: Vision-Language Navigation, Robot Navigation; 3D Vision: 3D Foundation Models | PanoGraphGS jointly learns panoptic 3D Gaussian representations and hierarchical scene graphs for consistent, language-guided 3D scene understanding. | 9 | 8 |
 | 2026-10-20 | [HAVANA: A Hierarchical Video-Action Model for Vision-Language Navigation](https://arxiv.org/abs/2610.24122) | Embodied AI: Vision-Language Navigation | HAVANA improves vision-language navigation by separating slow predictive planning from fast reactive trajectory generation. | 9 | 9 |
 | 2026-10-19 | [ReInsVLN: Revisiting Historical Evidence for Training-Free Vision-and-Language Navigation](https://arxiv.org/abs/2610.26545) | Embodied AI: Vision-Language Navigation; Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency; Adaptation and Memory: Embodied Memory | ReInsVLN is a training-free memory framework that compresses and periodically reactivates navigation history, improving VLN performance while reducing inference overhead. | 9 | 8 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**153 papers total**
+**154 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [LongZero: Enhancing Long-Context Reasoning in LLMs from Zero Data](https://arxiv.org/abs/2610.30132) | Language Foundation Models: Long-Context Models | LongZero improves LLM long-context reasoning through reinforcement learning on self-generated, verifiable tasks without external data. | 8 | 8 |
 | 2026-10-20 | [Local Inference of LLMs on Long Contexts: A Data Systems Perspective](https://arxiv.org/abs/2610.28223) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Long-context LLM inference on a single local GPU is constrained not only by memory capacity but also by substantial self-attention and data-management inefficiencies. | 7 | 6 |
 | 2026-10-19 | [KEEP-Bench: Evaluating Evidence Preservation in Context Compression](https://arxiv.org/abs/2610.26827) | Efficient AI; Language Foundation Models: Long-Context Models | KEEP-Bench shows that context compressors often lose crucial evidence despite strong QA performance, motivating efficient methods that preserve information reliably. | 6 | 6 |
 | 2026-10-19 | [LEAPS: Long-context Evaluation of Adaptive Pattern Learning and State Tracking](https://arxiv.org/abs/2610.25919) | Language Foundation Models: Long-Context Models | LEAPS evaluates long-context models beyond recall, revealing substantial weaknesses in state tracking and pattern learning as contexts grow. | 8 | 7 |

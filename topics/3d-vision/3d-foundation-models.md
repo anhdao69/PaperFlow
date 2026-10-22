@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**348 papers total**
+**354 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [Plausible but Unimplantable: A Trustworthiness Audit of Shape Completion Foundation Models for Cranial Defect Reconstruction](https://arxiv.org/abs/2610.30035) | 3D Vision: 3D Foundation Models | An audit finds that publicly released shape-completion foundation models produce plausible-looking but clinically unimplantable cranial reconstructions in zero-shot use. | 6 | 6 |
+| 2026-10-21 | [BlazeVGGT: 13x Faster VGGT at 2,000 Frames via Camera Token without Training](https://arxiv.org/abs/2610.29454) | 3D Vision: 3D Foundation Models; Efficient AI: Efficient Attention | BlazeVGGT makes VGGT about 13× faster on 2,000-frame sequences by sparsifying redundant cross-view attention without retraining, while improving reported reconstruction accuracy. | 8 | 8 |
+| 2026-10-21 | [AOV-GS: Active Open-Vocabulary Semantic Mapping with 3D Gaussian Splatting](https://arxiv.org/abs/2610.29374) | Embodied AI; 3D Vision: 3D Foundation Models | AOV-GS actively explores environments for semantically informative views, enabling open-vocabulary 3D Gaussian maps without manual segmentation annotations. | 9 | 8 |
+| 2026-10-21 | [UNIVERS: Learning UNIversal Voxel-wise Embedding via Randomized Synthesis for generalizable one-shot landmark localization](https://arxiv.org/abs/2610.29098) | 3D Vision: 3D Foundation Models | UNIVERS enables robust one-shot landmark localization across modalities and arbitrary fields of view by learning voxel embeddings from heavily randomized synthetic data. | 8 | 7 |
+| 2026-10-21 | [ReSeg: Retraining-free segmentation of abdominal organs via generalizable semantic representation learning](https://arxiv.org/abs/2610.29090) | 3D Vision: 3D Foundation Models | ReSeg enables retraining-free, zero-shot abdominal organ segmentation across unseen CT, MRI, and PET domains using synthetic-data-driven semantic representation learning. | 8 | 7 |
+| 2026-10-21 | [Register Anything Model for Generalizable and Robust Point Cloud Registration](https://arxiv.org/abs/2610.28821) | 3D Vision: 3D Foundation Models | RAM is a unified point-cloud registration model that uses geometry-aware normalization and efficient hierarchical matching to generalize robustly across diverse 3D domains. | 7 | 7 |
 | 2026-10-20 | [Joints, Camera, Action! Co-Generating 3D Motion and Video for Arbitrary Rigs](https://arxiv.org/abs/2610.28632) | Embodied AI: Learning from Human Videos; 3D Vision: 3D Foundation Models; Video Generation and Understanding | Joints, Camera, Action! co-generates scene-aware video, camera motion, and replayable 3D motion for arbitrary rigs from text or video. | 6 | 7 |
 | 2026-10-20 | [SceneRig: An Agentic System for Simulation-Ready 3D Scene Reconstruction from Single Images](https://arxiv.org/abs/2610.28585) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | SceneRig reconstructs editable, physically stable 3D scenes from single images for more reliable simulation and robot-policy evaluation. | 9 | 8 |
 | 2026-10-20 | [Brain2Vec: A Self-Supervised 3D Foundation Model for Structural Brain MRI](https://arxiv.org/abs/2610.28411) | 3D Vision: 3D Foundation Models | Brain2Vec is a self-supervised 3D foundation model for structural brain MRI that improves fine-tuning efficiency and provides informative, neuroanatomically meaningful embeddings. | 6 | 7 |

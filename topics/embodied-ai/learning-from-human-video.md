@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**222 papers total**
+**226 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [DONIC: Generalist Dexterous Bimanual Tracking Control from Human Demonstrations](https://arxiv.org/abs/2610.29997) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | DONIC is a generalist policy for dexterous bimanual tracking that learns coordinated manipulation from heterogeneous human demonstrations without finetuning. | 9 | 9 |
+| 2026-10-21 | [DewHand: Direct Metric World-Space Hand Motion Reconstruction from Egocentric Videos](https://arxiv.org/abs/2610.29936) | Embodied AI: Learning from Human Videos; 3D Vision | DewHand jointly reconstructs metrically scaled world-space hand and camera motion from egocentric video, using geometric and hand-specific features plus flow-matching generation to improve accuracy and temporal smoothness under occlusion. | 7 | 8 |
+| 2026-10-21 | [Real2Sem2Real: 3D Semantic Augmentations for Robot Learning from a Single Human RGB Demonstration](https://arxiv.org/abs/2610.28880) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | Real2Sem2Real converts a single monocular human demonstration into thousands of robot demonstrations across diverse object instances for training manipulation policies. | 9 | 8 |
+| 2026-10-21 | [ActiveScale: Scaling Active Perception for Robots across Model, Data, and Hardware](https://arxiv.org/abs/2609.18514) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | ActiveScale improves robotic active perception by jointly scaling VLA modeling, training data, and mobile-manipulation hardware for viewpoint-aware manipulation. | 9 | 8 |
 | 2026-10-20 | [Joints, Camera, Action! Co-Generating 3D Motion and Video for Arbitrary Rigs](https://arxiv.org/abs/2610.28632) | Embodied AI: Learning from Human Videos; 3D Vision: 3D Foundation Models; Video Generation and Understanding | Joints, Camera, Action! co-generates scene-aware video, camera motion, and replayable 3D motion for arbitrary rigs from text or video. | 6 | 7 |
 | 2026-10-20 | [Learning Adaptable Dexterous Skills via Hybrid Dexterous Mimicking](https://arxiv.org/abs/2610.28628) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | AdaDex combines human motion imitation with goal-conditioned reinforcement learning to learn adaptable, human-like dexterous skills from only a few seconds of hand–object motion. | 9 | 8 |
 | 2026-10-20 | [VLM-Guided Contact Retargeting and Generative Partner Modeling for Humanoid-Human Interaction](https://arxiv.org/abs/2610.28523) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | REACT enables a humanoid to perform contact-rich human interactions from onboard sensing by combining VLM-guided contact retargeting, policy distillation, and generative partner-state prediction. | 9 | 9 |

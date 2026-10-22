@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**388 papers total**
+**392 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [SPARE: Sparsity Allocation via Routing Entropy for Efficient MoEs](https://arxiv.org/abs/2610.29662) | Efficient AI: Token Pruning and Eviction | SPARE uses routing entropy to allocate expert pruning across MoE layers, improving accuracy over uniform pruning at the same sparsity budget. | 8 | 8 |
+| 2026-10-21 | [Stochastic Pruning of the DPO Computation Graph: 1.4x Faster Training and Lower Peak Memory](https://arxiv.org/abs/2610.29538) | Efficient AI: Token Pruning and Eviction | Stochastically pruning DPO’s scoring, execution, and backpropagation graph cuts training cost—achieving a 1.426× step-time speedup and about 30% lower training time, with modest quality trade-offs. | 6 | 8 |
+| 2026-10-21 | [Sparsity Should Be ALLOTted by Output: Training-Free Allocation of Block-Sparse Attention for Video Diffusion Transformers](https://arxiv.org/abs/2610.29441) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction, Efficient Attention | ALLOT is a training-free method that allocates block-sparse attention across layer–denoising-step pairs to improve video diffusion quality under a latency budget. | 9 | 8 |
+| 2026-10-21 | [VLA-ACL: Action-Consistent Visual Token Pruning for Efficient Vision-Language-Action Models](https://arxiv.org/abs/2610.08133) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; Efficient AI: Token Pruning and Eviction | VLA-ACL efficiently prunes visual tokens in frozen vision-language-action models by learning which tokens preserve the model’s control actions. | 9 | 8 |
 | 2026-10-20 | [GazeLens for Efficient Egocentric Video Question Answering with Simple Gaze-Driven Adaptive Token Reduction](https://arxiv.org/abs/2610.28502) | Video Generation and Understanding: Video Understanding; Efficient AI: Token Pruning and Eviction | GazeLens improves egocentric video question answering efficiency by selecting informative frames and compressing each into two question- and gaze-aware visual tokens. | 8 | 6 |
 | 2026-10-20 | [Offline Makes Online Better: Calibrated Cache Compression for Video Generation](https://arxiv.org/abs/2610.28192) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | CALM uses offline layer-head sensitivity calibration and dynamic programming to allocate token merging, improving autoregressive video-generation quality at the same KV-cache budget. | 8 | 7 |
 | 2026-10-20 | [RLSplat: Resource-Linear Budget Control for Feed-forward 3D Gaussian Splatting](https://arxiv.org/abs/2610.27712) | 3D Vision: 3D Foundation Models; Efficient AI: Token Pruning and Eviction | RLSplat makes feed-forward 3D Gaussian Splatting truly budget-controllable by reducing representation size, inference latency, and peak memory linearly with the requested Gaussian budget. | 8 | 9 |

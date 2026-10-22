@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**585 papers total**
+**591 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [SAKURA: Serving Attention Key-Value State Under Rate Adaptation for Private Image Editing on Phones](https://arxiv.org/abs/2610.29733) | Efficient AI: KV Cache and Memory Efficiency | SAKURA accelerates private, template-based diffusion image editing on phones by compressing and adaptively streaming reusable attention KV states under changing network bandwidth. | 7 | 7 |
+| 2026-10-21 | [PACE: Periodic and Channel-Aligned Encoding of Four-Bit Recurrent States](https://arxiv.org/abs/2610.29545) | Efficient AI: KV Cache and Memory Efficiency | PACE is a post-hoc recurrent-state quantizer that improves four-bit inference by rounding less often, aligning scales by channel, and selectively using eight-bit heads. | 7 | 8 |
+| 2026-10-21 | [Right On Q: Recovering Reasoning under Quantization via Self-Generated Trajectories](https://arxiv.org/abs/2610.29378) | Efficient AI: KV Cache and Memory Efficiency | OnQ recovers long-horizon reasoning in low-bit LLMs by distilling teacher behavior on the quantized student’s own trajectories with adaptive KL correction. | 8 | 7 |
+| 2026-10-21 | [Compressing Onboard Language Models for Space Robots under a Behavioral-Fidelity Requirement](https://arxiv.org/abs/2610.29302) | Efficient AI: KV Cache and Memory Efficiency | QSelect composes compatible low-bit checkpoints into static onboard models that better preserve full-precision behavior under fixed storage constraints. | 7 | 6 |
+| 2026-10-21 | [Cache Locally, Recompute Selectively for Streaming Video Understanding](https://arxiv.org/abs/2610.29229) | Video Generation and Understanding: Video Understanding; Efficient AI: KV Cache and Memory Efficiency | FrameBlend improves streaming video understanding by selectively recomputing cached video-token representations with query-relevant context, reducing preprocessing cost while increasing accuracy. | 8 | 8 |
+| 2026-10-21 | [To Keep or Not to Keep: Learning KV Cache Retention in Disaggregated LLM Serving Systems](https://arxiv.org/abs/2610.28637) | Efficient AI: KV Cache and Memory Efficiency | KVLearn learns cost-aware KV-cache retention decisions for disaggregated LLM serving, reducing latency and inter-node KV traffic across text and multimodal workloads. | 8 | 8 |
 | 2026-10-20 | [Beyond 4 bits: Data-Centric Post-training Quantization and Recovery](https://arxiv.org/abs/2610.28537) | Efficient AI: KV Cache and Memory Efficiency | A data-centric 2-bit PTQ recipe using vector codebooks and jointly chosen calibration/recovery data preserves most QA accuracy at far lower compute than QAT. | 8 | 7 |
 | 2026-10-20 | [BitMTP: When Multi-Token Prediction Meets Low-Bit Large Language Models](https://arxiv.org/abs/2610.28500) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | BitMTP co-designs multi-token prediction with ultra-low-bit LLM execution to accelerate generation while maintaining comparable task quality. | 8 | 8 |
 | 2026-10-20 | [Stratified Sparse Attention: Reducing the Sparse-to-Dense Gap at Extreme Sparsity](https://arxiv.org/abs/2610.28441) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | Stratified Sparse Attention narrows the accuracy gap between sparse and dense attention at extreme sparsity while enabling faster long-context inference. | 9 | 8 |

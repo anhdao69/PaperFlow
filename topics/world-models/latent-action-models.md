@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**121 papers total**
+**123 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-21 | [Causal world models under physical parameter shifts](https://arxiv.org/abs/2610.29088) | World Models: Latent Action Models | Causal structure and physically explicit parameterization substantially improve world-model prediction under out-of-distribution physical changes. | 9 | 8 |
+| 2026-10-21 | [TacBPM: A Tactile-conditioned Behavior Prior Model for Dexterous Reorientation](https://arxiv.org/abs/2609.18174) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | TacBPM uses a tactile-conditioned behavior prior to help dexterous hands learn stable in-hand reorientation with less exploration than raw joint-control policies. | 8 | 7 |
 | 2026-10-20 | [Exploring Temporal Context-Aware Physical Grounding in Latent World Models](https://arxiv.org/abs/2610.28483) | World Models: Latent Action Models, Interactive World Models | $$-JEPA improves latent world-model planning by grounding temporally aggregated representations in physical states and guiding action search with goal-aware priors. | 9 | 7 |
 | 2026-10-20 | [SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model](https://arxiv.org/abs/2610.28480) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | SuperMimic efficiently scales humanoid whole-body motion tracking by jointly training a policy with one differentiable world model, achieving strong simulation results and physical transfer with far less compute. | 9 | 9 |
 | 2026-10-20 | [Slot-JEPA: Object-Structured Prediction Interfaces for Latent World Models](https://arxiv.org/abs/2610.28074) | Embodied AI: Robot Navigation; World Models: Latent Action Models | Slot-JEPA turns dense JEPA representations into reusable object-centric slots and masks, improving context-aware prediction and goal-conditioned planning. | 10 | 9 |
