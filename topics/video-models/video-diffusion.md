@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**313 papers total**
+**319 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [WorldForge V2: Eliciting Camera-Trajectory Alignment in Video Diffusion Models](https://arxiv.org/abs/2610.31640) | Video Generation and Understanding: Video Diffusion | WorldForge V2 improves camera-trajectory control in video diffusion models while preserving scene appearance and object motion, using training-free guidance plus targeted lightweight adaptation. | 8 | 7 |
+| 2026-10-22 | [AnyGameRenderer: Entity-Consistent Generative Rendering Across Games and an Entity-Level Benchmark](https://arxiv.org/abs/2610.31466) | Video Generation and Understanding: Video Diffusion | AnyGameRenderer converts simple game footage into detailed visuals while preserving each entity’s position, timing, appearance, and count across diverse game genres. | 6 | 6 |
+| 2026-10-22 | [Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation](https://arxiv.org/abs/2610.30926) | Video Generation and Understanding: Video Diffusion | FAPL trains MLLM latents to become actionable for cinematic video generation with sparse temporal guidance and factor-aware control. | 8 | 8 |
+| 2026-10-22 | [CAVC: Convergence-Adaptive Audio-Visual Cache for Modality-Asymmetric Diffusion Generation](https://arxiv.org/abs/2610.30854) | Video Generation and Understanding: Video Diffusion; Efficient AI | CAVC accelerates audio-visual diffusion generation by caching recoverable audio computation mid-sampling while preserving video refinement and restoring joint denoising at the end. | 6 | 7 |
+| 2026-10-22 | [PhyEvolve: Multi-Agent State-Evolution Planning for Physics-Aware Video Generation](https://arxiv.org/abs/2610.30717) | Video Generation and Understanding: Video Diffusion | PhyEvolve improves physics-aware video generation by using multi-agent causal state-evolution planning to enhance prompts without modifying or retraining the video generator. | 8 | 7 |
+| 2026-10-22 | [Latent Space Jam: Layout Guided Video Synthesis](https://arxiv.org/abs/2610.30390) | Video Generation and Understanding: Video Diffusion | A training-free two-pass method controls object layouts and motion in pretrained video diffusion models while preserving temporal consistency and visual quality. | 7 | 7 |
 | 2026-10-21 | [RealMe: Immersive Volumetric Video from Minimal Captures](https://arxiv.org/abs/2610.30023) | 3D Vision; Video Generation and Understanding: Video Diffusion | RealMe uses a high-resolution video diffusion model to turn sparse, low-resolution captures into immersive, temporally and multi-view consistent volumetric videos. | 7 | 7 |
 | 2026-10-21 | [Looking Ahead: Modeling Future Evolution in Autoregressive Video Generation](https://arxiv.org/abs/2610.29989) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Future Chunk Prediction improves autoregressive video models’ understanding of scene evolution by training them to predict temporally separated video chunks without intervening context. | 8 | 8 |
 | 2026-10-21 | [CausalAlign: Causal Alignment of Video Generation Models for Consistent Ego-Motion](https://arxiv.org/abs/2610.29915) | Video Generation and Understanding: Video Diffusion | CausalAlign improves long-horizon camera ego-motion consistency in diffusion video generation models by causally aligning motion representations with a 3D foundation model. | 8 | 8 |

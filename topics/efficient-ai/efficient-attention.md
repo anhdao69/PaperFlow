@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**284 papers total**
+**289 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [Squaring-the-Sphere: Distortion-Free and Seamless Panorama Generation via CubeAtlas](https://arxiv.org/abs/2610.31565) | Efficient AI: Efficient Attention | CubeAtlas enables distortion-free, seamless 360° panorama generation by jointly modeling cubemap faces with efficient sparse attention and perspective-space refinement. | 5 | 7 |
+| 2026-10-22 | [MixPT: Point Transformer with Interleaved Window and Global Attention](https://arxiv.org/abs/2610.31455) | 3D Vision; Efficient AI: Efficient Attention | MixPT balances local detail, global scene interaction, and efficiency by interleaving window and pooled-token global attention in a point transformer. | 6 | 6 |
+| 2026-10-22 | [OpenAttention: One Percent Is Enough with Tail Proxies](https://arxiv.org/abs/2610.30951) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | OpenAttention uses query-aware clustering, error-guided selection, and a count-aware tail proxy to preserve 99% of dense-attention accuracy while reading only 1% of the key-value cache. | 9 | 8 |
+| 2026-10-22 | [Flow-based Spectral Kernel Learning for Nonstationary Attention](https://arxiv.org/abs/2610.30465) | Efficient AI: Efficient Attention | FSKA learns flexible nonstationary attention kernels with normalizing flows, enabling parameter-efficient linear attention with competitive performance. | 7 | 7 |
+| 2026-10-22 | [GANet: A Lightweight Group Attention Network for Plant Disease Identification on Embedded Systems](https://arxiv.org/abs/2610.30225) | Efficient AI: Efficient Attention | GANet is a highly compact attention-based network for recognizing 38 plant diseases on low-power edge devices in near-real-time. | 6 | 6 |
 | 2026-10-21 | [Attn-Forcing: Learning Full-Context Attention Proxies for Streaming Video Generation](https://arxiv.org/abs/2610.30036) | Video Generation and Understanding; Efficient AI: Efficient Attention | Attn-Forcing enables higher-quality streaming video generation by approximating full-history attention with learned visual proxies under bounded memory and computation. | 7 | 8 |
 | 2026-10-21 | [BlazeVGGT: 13x Faster VGGT at 2,000 Frames via Camera Token without Training](https://arxiv.org/abs/2610.29454) | 3D Vision: 3D Foundation Models; Efficient AI: Efficient Attention | BlazeVGGT makes VGGT about 13× faster on 2,000-frame sequences by sparsifying redundant cross-view attention without retraining, while improving reported reconstruction accuracy. | 8 | 8 |
 | 2026-10-21 | [Sparsity Should Be ALLOTted by Output: Training-Free Allocation of Block-Sparse Attention for Video Diffusion Transformers](https://arxiv.org/abs/2610.29441) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction, Efficient Attention | ALLOT is a training-free method that allocates block-sparse attention across layer–denoising-step pairs to improve video diffusion quality under a latency budget. | 9 | 8 |

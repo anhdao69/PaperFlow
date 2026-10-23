@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**354 papers total**
+**355 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [EgoHand: Monocular 3D Hand Reconstruction from Egocentric Video](https://arxiv.org/abs/2610.30293) | 3D Vision: 3D Foundation Models | EgoHand reconstructs 3D hands from monocular egocentric video using diverse training data and camera-aware transformer modeling, achieving strong zero-shot generalization and fast inference. | 8 | 8 |
 | 2026-10-21 | [Plausible but Unimplantable: A Trustworthiness Audit of Shape Completion Foundation Models for Cranial Defect Reconstruction](https://arxiv.org/abs/2610.30035) | 3D Vision: 3D Foundation Models | An audit finds that publicly released shape-completion foundation models produce plausible-looking but clinically unimplantable cranial reconstructions in zero-shot use. | 6 | 6 |
 | 2026-10-21 | [BlazeVGGT: 13x Faster VGGT at 2,000 Frames via Camera Token without Training](https://arxiv.org/abs/2610.29454) | 3D Vision: 3D Foundation Models; Efficient AI: Efficient Attention | BlazeVGGT makes VGGT about 13× faster on 2,000-frame sequences by sparsifying redundant cross-view attention without retraining, while improving reported reconstruction accuracy. | 8 | 8 |
 | 2026-10-21 | [AOV-GS: Active Open-Vocabulary Semantic Mapping with 3D Gaussian Splatting](https://arxiv.org/abs/2610.29374) | Embodied AI; 3D Vision: 3D Foundation Models | AOV-GS actively explores environments for semantically informative views, enabling open-vocabulary 3D Gaussian maps without manual segmentation annotations. | 9 | 8 |

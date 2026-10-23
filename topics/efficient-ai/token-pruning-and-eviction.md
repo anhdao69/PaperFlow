@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**392 papers total**
+**396 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [Muting Tokens: Exploring Token Sparsification for Efficient Audio Transformers](https://arxiv.org/abs/2610.31235) | Efficient AI: Token Pruning and Eviction | A comprehensive study shows that frequency- and input-aware token sparsification can make audio transformers more efficient while preserving stronger performance than attention-only methods. | 8 | 7 |
+| 2026-10-22 | [OpenAttention: One Percent Is Enough with Tail Proxies](https://arxiv.org/abs/2610.30951) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | OpenAttention uses query-aware clustering, error-guided selection, and a count-aware tail proxy to preserve 99% of dense-attention accuracy while reading only 1% of the key-value cache. | 9 | 8 |
+| 2026-10-22 | [MCP vs CLI for AI Agents: A Comparative Analysis of Tool Integration Strategies for Autonomous Systems](https://arxiv.org/abs/2610.30157) | Efficient AI: Token Pruning and Eviction | CLI is efficient for simple local workflows, while MCP offers stronger governance and security for production AI agents; a hybrid approach is recommended. | 7 | 6 |
+| 2026-10-22 | [The Cost of Saying Hello: An Empirical Study of Handshake Overhead in AI Agent Communication Protocols](https://arxiv.org/abs/2610.30151) | Efficient AI: Token Pruning and Eviction | Handshake overhead in AI agent protocols is dominated by round trips and can become substantial when agents inspect large capability inventories. | 8 | 7 |
 | 2026-10-21 | [SPARE: Sparsity Allocation via Routing Entropy for Efficient MoEs](https://arxiv.org/abs/2610.29662) | Efficient AI: Token Pruning and Eviction | SPARE uses routing entropy to allocate expert pruning across MoE layers, improving accuracy over uniform pruning at the same sparsity budget. | 8 | 8 |
 | 2026-10-21 | [Stochastic Pruning of the DPO Computation Graph: 1.4x Faster Training and Lower Peak Memory](https://arxiv.org/abs/2610.29538) | Efficient AI: Token Pruning and Eviction | Stochastically pruning DPO’s scoring, execution, and backpropagation graph cuts training cost—achieving a 1.426× step-time speedup and about 30% lower training time, with modest quality trade-offs. | 6 | 8 |
 | 2026-10-21 | [Sparsity Should Be ALLOTted by Output: Training-Free Allocation of Block-Sparse Attention for Video Diffusion Transformers](https://arxiv.org/abs/2610.29441) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction, Efficient Attention | ALLOT is a training-free method that allocates block-sparse attention across layer–denoising-step pairs to improve video diffusion quality under a latency budget. | 9 | 8 |

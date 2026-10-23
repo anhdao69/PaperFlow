@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**154 papers total**
+**157 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [When LLMs Forget What They Believe: Characterizing State Integrity Collapse in Long-Horizon Dialogues](https://arxiv.org/abs/2610.31314) | Language Foundation Models: Long-Context Models | Long-horizon dialogue can cause LLMs to remember constraints but stop following them, revealing a distinct state-integrity failure that targeted anchoring can partially mitigate. | 7 | 7 |
+| 2026-10-22 | [Mixing Matters: Evidence Position Bias Across Sequence Mixers in Long-Context Question Answering](https://arxiv.org/abs/2610.31135) | Language Foundation Models: Long-Context Models | Evidence position bias in long-context QA varies with architecture, capability, task, and prompt, so the sequence mixer alone does not explain it. | 7 | 6 |
+| 2026-10-22 | [Don't Stop Long-Context Continual Pre-Training Too Early: An Empirical Scaling Law](https://arxiv.org/abs/2610.29352) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Long-Context Models | Long-context continual pre-training keeps improving long-context and downstream capabilities without clear saturation in the evaluated range, and its gains can be modeled predictably as training tokens increase. | 8 | 8 |
 | 2026-10-21 | [LongZero: Enhancing Long-Context Reasoning in LLMs from Zero Data](https://arxiv.org/abs/2610.30132) | Language Foundation Models: Long-Context Models | LongZero improves LLM long-context reasoning through reinforcement learning on self-generated, verifiable tasks without external data. | 8 | 8 |
 | 2026-10-20 | [Local Inference of LLMs on Long Contexts: A Data Systems Perspective](https://arxiv.org/abs/2610.28223) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Long-Context Models | Long-context LLM inference on a single local GPU is constrained not only by memory capacity but also by substantial self-attention and data-management inefficiencies. | 7 | 6 |
 | 2026-10-19 | [KEEP-Bench: Evaluating Evidence Preservation in Context Compression](https://arxiv.org/abs/2610.26827) | Efficient AI; Language Foundation Models: Long-Context Models | KEEP-Bench shows that context compressors often lose crucial evidence despite strong QA performance, motivating efficient methods that preserve information reliably. | 6 | 6 |

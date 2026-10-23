@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**154 papers total**
+**158 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [EBV-CAN: Vision--Language Grounding for Contact-Aided Endoscope Navigation](https://arxiv.org/abs/2610.30786) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | EBV-CAN uses a cached bird’s-eye image, live endoscopic views, and motor state to ground language instructions for contact-aware endoscope navigation. | 8 | 7 |
+| 2026-10-22 | [Asking Less, Adapting Better: Feedback-Efficient Test-Time Adaptation for Vision-and-Language Navigation](https://arxiv.org/abs/2610.30643) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Test-Time Learning | FETA improves vision-and-language navigation under distribution shifts by selecting only informative actions for targeted, feedback-efficient test-time adaptation. | 9 | 7 |
+| 2026-10-22 | [KinoUAV: A Benchmark for Safe and Stable UAV Vision-Language Navigation with Kinodynamic Modeling](https://arxiv.org/abs/2610.30609) | Embodied AI: Vision-Language Navigation, Robot Navigation | KinoUAV is a benchmark and agent for safer, more stable UAV vision-language navigation through kinodynamic trajectory modeling and directional clearance prediction. | 8 | 7 |
+| 2026-10-22 | [OASIS: Online Anchor-centric Scene Inference System for Open-Vocabulary Retrieval and Navigation in Dynamic Environments](https://arxiv.org/abs/2610.30589) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | OASIS enables efficient open-vocabulary object retrieval and navigation in dynamic environments using a sparse, multimodal memory built around stable semantic scene anchors. | 8 | 7 |
 | 2026-10-21 | [NavBind: Diagnosing Instruction-Action Binding at Route Forks in Navigation VLAs](https://arxiv.org/abs/2610.29203) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | NavBind tests whether navigation VLAs’ actions truly respond to instructions rather than relying on visual cues or history. | 8 | 7 |
 | 2026-10-21 | [LERR-Nav: Learning to Coordinate Exploration, Recovery, and Reminiscing for Object Navigation](https://arxiv.org/abs/2610.15362) | Embodied AI: Vision-Language Navigation, Robot Navigation | LERR-Nav learns to coordinate exploration, recovery, and memory-based revisiting so robots can navigate to objects more reliably in unseen environments. | 9 | 8 |
 | 2026-10-20 | [PanoGraphGS: Unifying Panoptic Segmentation and Hierarchical 3D Scene Graphs with Gaussian Splatting](https://arxiv.org/abs/2610.27696) | Embodied AI: Vision-Language Navigation, Robot Navigation; 3D Vision: 3D Foundation Models | PanoGraphGS jointly learns panoptic 3D Gaussian representations and hierarchical scene graphs for consistent, language-guided 3D scene understanding. | 9 | 8 |

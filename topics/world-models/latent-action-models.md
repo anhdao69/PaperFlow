@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**123 papers total**
+**125 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [Skeleton-Grounded Latent Action Model for Robot World Models](https://arxiv.org/abs/2610.31474) | World Models: Latent Action Models | SkeLAM makes robot world models more controllable by separating robot kinematics from other visual dynamics in latent actions. | 10 | 9 |
+| 2026-10-22 | [PiHand: Latent Hand-Object Interaction Priors for Physics-Based Policy Learning](https://arxiv.org/abs/2610.31299) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | PiHand learns a latent, physics-grounded hand–object interaction prior that enables dexterous manipulation policies to generalize across unseen objects, trajectories, and tasks. | 9 | 7 |
 | 2026-10-21 | [Causal world models under physical parameter shifts](https://arxiv.org/abs/2610.29088) | World Models: Latent Action Models | Causal structure and physically explicit parameterization substantially improve world-model prediction under out-of-distribution physical changes. | 9 | 8 |
 | 2026-10-21 | [TacBPM: A Tactile-conditioned Behavior Prior Model for Dexterous Reorientation](https://arxiv.org/abs/2609.18174) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | TacBPM uses a tactile-conditioned behavior prior to help dexterous hands learn stable in-hand reorientation with less exploration than raw joint-control policies. | 8 | 7 |
 | 2026-10-20 | [Exploring Temporal Context-Aware Physical Grounding in Latent World Models](https://arxiv.org/abs/2610.28483) | World Models: Latent Action Models, Interactive World Models | $$-JEPA improves latent world-model planning by grounding temporally aggregated representations in physical states and guiding action search with goal-aware priors. | 9 | 7 |

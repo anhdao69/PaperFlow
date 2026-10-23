@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**58 papers total**
+**59 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-22 | [Direct Forcing: A Single-Stage Training Recipe for Few-Step Autoregressive Text-to-Video Generation](https://arxiv.org/abs/2610.30861) | Video Generation and Understanding: Autoregressive Video Models | Direct Forcing trains a pretrained video model in one stage to generate high-quality text-to-video clips autoregressively in just four steps. | 8 | 8 |
 | 2026-10-21 | [Looking Ahead: Modeling Future Evolution in Autoregressive Video Generation](https://arxiv.org/abs/2610.29989) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Future Chunk Prediction improves autoregressive video models’ understanding of scene evolution by training them to predict temporally separated video chunks without intervening context. | 8 | 8 |
 | 2026-10-20 | [Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds](https://arxiv.org/abs/2610.27999) | World Models: Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | Matrix-Game 4.0 combines an executable game engine with a real-time video renderer and coding agent to create and modify playable game worlds from natural language. | 9 | 8 |
 | 2026-10-19 | [Dynamics-Aware Sparse Attention for Efficient Autoregressive Video Diffusion](https://arxiv.org/abs/2610.26262) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | DASA makes autoregressive video diffusion more efficient by focusing computation and memory on regions with motion while preserving visual quality. | 8 | 7 |
