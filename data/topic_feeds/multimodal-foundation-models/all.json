@@ -1,6 +1,1096 @@
 {
   "days": [
     {
+      "date": "2026-10-23",
+      "paper_count": 5,
+      "papers": [
+        {
+          "abstract": "Merging different models into a single model is highly desirable for multi-task deployment, particularly in regulated domains like healthcare. In such settings, models are often locally fine-tuned due to strict data privacy policies, necessitating that aggregation operates exclusively on the fine-tuned weights. Existing methods apply a uniform merge across all tasks, ignoring the geometric relationships among their learned subspaces. When task updates occupy misaligned subspaces, projecting them onto a shared low-rank basis discards task-relevant directions, a failure mode named \\emph{subspace interference}. Through this study, we show that the per-task projection error of a merged model is governed by the principal-angle alignment between each task and the shared subspace, so that grouping geometrically compatible tasks provably reduces this error within each group. Motivated by this observation, we propose \\textbf{Group-wise Rank-Aware Model Merging (GRAM)}, which uses the principal-angle geometry of task vectors to decide which tasks should be merged together and then performs a standard SVD-based merge within each coalition; the pipeline requires only the fine-tuned weights at merge time. With only one additional model ($\\nK{=}2$), GRAM significantly mitigates subspace interference and consistently outperforms prior merging methods across language understanding (GLUE with Flan-T5), 8-task CLIP vision, and medical instruction tuning (Qwen2-7B-Instruct with four English/Chinese medical LoRAs).",
+          "arxiv_id": "2610.29110",
+          "arxiv_url": "https://arxiv.org/abs/2610.29110",
+          "authors": [
+            "Di Wu",
+            "Shuaidong Pan"
+          ],
+          "bullets": [
+            "Uniform merging can cause subspace interference when task updates occupy misaligned directions.",
+            "Theoretical analysis links per-task projection error to principal-angle alignment with the shared subspace.",
+            "GRAM uses task-vector geometry to form compatible groups, then performs standard SVD-based merging within each group.",
+            "It requires only fine-tuned weights at merge time and uses one additional model (K=2).",
+            "The method consistently outperforms prior merging approaches across language, vision, and medical instruction-tuning settings."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: The GRAM pipeline. Each task vector ∆Wi is decomposed via SVD to extract its top-r leftand right-singular subspaces (Ui, Vi) (left). The collection of Ui’s is fed into a subspace clustering step that partitions the T tasks into K coalitions by chordal distance (middle). Within each coalition, the selected top-ki singular components from member tasks are concatenated and re-orthonormalized via thin SVD to yield a single rank-r merged update (right).",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 341,
+              "image_path": "figures/2610.29110/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Figure 1: How tasks are grouped on the Grassmannian governs merging quality. Insets: three partitions of the per-task low-rank subspaces visualised on the Grassmannian—all tasks merged into a single global coalition (top, low intra-coalition similarity), three groups (middle), and the twogroup GRAM partition (bottom, high intra-coalition similarity). Curve: as intra-coalition similarity increases, merged-model accuracy rises (left axis, solid) and the within-group subspace projection error ∑ pairs∈G(1− cos2 θ) falls (right axis, dashed). Highlighted markers tie each partition to its location on the trade-off curve: GRAM places geometrically compatible tasks in the same coalition, reducing the alignment penalty that global merging incurs.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 379,
+              "image_path": "figures/2610.29110/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 719
+            },
+            {
+              "caption": "Figure 3: Grouping cost vs. number of tasks T on one RTX 3080 (bars: wall-clock time; lines: peak GPU memory). T=8 is the real task set; larger T uses synthetic tasks with the same layer shapes and rank.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 194,
+              "image_path": "figures/2610.29110/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 402
+            },
+            {
+              "caption": "Figure 4: Number of singular values required to capture ≥ 99% of Frobenius energy, per task (rows) and per LoRA layer (columns), on Flan-T5-Base. Decoder layers (left half) are typically low-rank (1–4 significant directions); encoder layers (right half) are higher-rank (10–16). The cross-task and cross-layer heterogeneity motivates the adaptive rank allocator in section 4.3.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 341,
+              "image_path": "figures/2610.29110/figure-004.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 826
+            },
+            {
+              "caption": "Figure 5: Pairwise projection error ∑ s σ 2 i,s sin 2 θs between task subspaces on ViT-B/32, under K=1 (TSV-Merge, left) and K=2 (GRAM, right). Reordering at K=2 by GRAM’s partition exposes a block-diagonal structure: within-group pairs incur lower error than across-group pairs, consistent with Theorem B.3.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 393,
+              "image_path": "figures/2610.29110/figure-005.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 808
+            },
+            {
+              "caption": "Table 3: Medical merging on Qwen2-7B-Instruct with four LoRA experts. MedQA / CMExam: accuracy; HealthcareMagic / cMedQA2: BLEU-4 / ROUGE-1/2/L. Avg Impr.: mean relative improvement over Pretrained across 10 columns; Avg Rank.: mean per-column rank (1 = best). Bold / underline: best / second-best per column among merging methods. Individual: per-task fine-tuned oracle.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 305,
+              "image_path": "figures/2610.29110/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 824
+            },
+            {
+              "caption": "Table 1: GLUE results on Flan-T5-Base and Flan-T5-Large (LoRA r=16): validation accuracy, Spearman ρ×100 for STS-B. Each cell reports Base / Large in that order. Bold: best merged result per column for each variant. Individual: per-task fine-tuned model (oracle upper bound).",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 403,
+              "image_path": "figures/2610.29110/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 824
+            },
+            {
+              "caption": "Table 9: Eight-task vision benchmark results (test accuracy) using CLIP ViT-B/16 with full finetuning. Bold: best merged result per column; underline: second best. Individual adapters use one task-specific model per task (oracle upper bound).",
+              "figure_id": "table-9-4",
+              "figure_number": "9",
+              "height": 275,
+              "image_path": "figures/2610.29110/table-008.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 818
+            },
+            {
+              "caption": "Table 2: Eight-task vision results on fully fine-tuned CLIP ViT-B/32 and ViT-L/14: test accuracy (%). Each cell reports B/32 / L/14 in that order. Bold: best merged result per column for each variant. Individual: per-task fine-tuned model (oracle upper bound).",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 230,
+              "image_path": "figures/2610.29110/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            },
+            {
+              "caption": "Table 4: Effects of the proposed modules. Subscripts (red) report the change relative to full GRAM.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 142,
+              "image_path": "figures/2610.29110/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 304
+            },
+            {
+              "caption": "Table 6: Sensitivity to the number of groups K on Flan-T5-Base and Flan-T5-Large / GLUE; each cell reports Base / Large. Partitions come from the same clustering GRAM uses; every group is re-merged with the adaptive-rank merge (r=16) and freshly evaluated with the Table 1 pipeline, which reproduces the published K=2 row exactly on Large (on Base, re-merged K=1 scores 81.9 vs. 81.7 for the original checkpoint—SVD tie-breaking on near-degenerate spectra). The Weight Averaging row and the Large K∈{1, 8} anchors are the corresponding Table 1 rows.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 168,
+              "image_path": "figures/2610.29110/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 822
+            },
+            {
+              "caption": "Table 5: Clustering-algorithm ablation (Flan-T5-Base / GLUE): four ways of producing the K=2 partition from the same subspace geometry, plus the random control, under identical merging and evaluation.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 126,
+              "image_path": "figures/2610.29110/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 822
+            },
+            {
+              "caption": "Table 7: GRAM vs. random grouping quality. Intra-sim and Inter-sim denote the average subspace similarity (1− d2c/r) within and between groups, respectively. Ratio = Intra-sim / Inter-sim. Higher ratio indicates better separation.",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 186,
+              "image_path": "figures/2610.29110/table-013.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 686
+            },
+            {
+              "caption": "Table 8: Group-routing accuracy (%) of the Mahalanobis task mapper under the partition chain for every K, Flan-T5-Base / GLUE. K=8 requires full task identification.",
+              "figure_id": "table-8-2",
+              "figure_number": "8",
+              "height": 71,
+              "image_path": "figures/2610.29110/table-014.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 806
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2610.29110/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.29110",
+          "relevance": 5,
+          "selection_reason": "Subspace-aware grouping and rank-aware merging of fine-tuned foundation models; transferable to multimodal foundation-model composition.",
+          "summary_status": "generated",
+          "title": "GRAM: Group-wise Rank-Aware Model Merging via Subspace Alignment",
+          "tldr": "GRAM improves multi-task model merging by grouping tasks with geometrically aligned updates before applying low-rank SVD merging.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language models (VLMs) are exact on small sets and drift into estimation on larger ones, a profile reminiscent of children before they master counting. Children cross the barrier with epistemic actions: pointing at each item while reciting number words, moving counted items aside, partitioning the array. We give VLMs the same actions as dumb image tools with no visual intelligence of their own in a training-free agent loop. Our central claim is about measurement, not intervention: a model that counts by marking leaves a normally hidden serial procedure on the image, and the developmental principles of counting turn those marks into an interpretable audit of serial visual reasoning: every tag is classified against point-level ground truth as on-target, duplicate, phantom, or omitted, the answer is checked against the number of tags, and order irrelevance is tested by forcing opposite traversal orders. Across 9 models, 682 images, and 7 harness conditions we find that (i) the exact-counting range is a model-specific signature spanning nearly two orders of magnitude (R80 from 3 to 150 dots); (ii) as an intervention the finger mostly fails: tags help 4 of 9 models on small-count photographs, hurt imprecise pointers, and rarely beat a verbal routine or a blind point list; what the loop buys is an auditable trace, not accuracy; (iii) as measurement it succeeds: a tag-perturbation probe shows that precise pointers read their answers off the tags, pointing precision tracks which models benefit, dense scenes fail by omission, and models rarely revise after seeing their own tags; and (iv) the capacities dissociate: models follow an instructed traversal order yet often change their answer when it reverses, and children's regular-over-scattered advantage appears only under the routine and survives lattices that defeat a rows-times-columns shortcut.",
+          "arxiv_id": "2610.27756",
+          "arxiv_url": "https://arxiv.org/abs/2610.27756",
+          "authors": [
+            "Yingxin Jia",
+            "Hui Geng",
+            "Wenxin Yang",
+            "Mohan Zhang"
+          ],
+          "bullets": [
+            "Exact-counting ability is model-specific, with the reported R80 range spanning 3–150 dots across 9 models.",
+            "Marking items improves counting for only 4 of 9 models on small-count photographs; it can hurt imprecise pointers and rarely outperforms simpler routines.",
+            "Tag-level audits classify errors as on-target, duplicate, phantom, or omitted, exposing whether answers are grounded in the visual trace.",
+            "Precise pointers tend to derive answers from their tags, while dense scenes primarily cause omissions and models seldom revise after tagging.",
+            "Traversal order following, order-invariant counting, and regular-versus-scattered advantages dissociate, indicating multiple underlying counting capacities."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL",
+            "cs.CV",
+            "cs.LG",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The CountAgent loop, drawn with real artifacts from one trajectory (Gemini 3.1 FlashLite, FSC-147, 25 apples). Each turn the VLM emits one JSON action; the harness executes it with dumb PIL primitives, re-renders the working image, and returns it with a verification prompt, for at most T tool calls. The final tags are audited against point ground truth, decomposing a wrong count into principle violations; here the model draws 24 tags, all on-target, misses one apple, and answers 24 against a ground truth of 25.",
+              "figure_id": "figure-1-14",
+              "figure_number": "1",
+              "height": 289,
+              "image_path": "figures/2610.27756/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 799
+            },
+            {
+              "caption": "Figure 4: Left: gain of TAG over DIRECT on the common subset against pointing error (median tag-to-object distance of on-target tags, DotArrays + FSC-147); the models that gain are the models that point. Right: the same comparison in cost–accuracy space, each arrow running from a model’s DIRECT answer (blue dot) to its TAG loop (green improves, red hurts, grey within one point); the loop costs roughly 3× more per image.",
+              "figure_id": "figure-4-26",
+              "figure_number": "4",
+              "height": 295,
+              "image_path": "figures/2610.27756/figure-002.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 802
+            },
+            {
+              "caption": "Figure 12: Final working images from representative trajectories (re-rendered from stored actions), one per failure category: a case the tag loop fixed, a duplicate-heavy case, a phantom-heavy case, an omission-heavy case, and a cardinality-inconsistent case (announced count far from the number of tags). Titles give model, arm, ground truth, announced count and the audit.",
+              "figure_id": "figure-12-34",
+              "figure_number": "12",
+              "height": 678,
+              "image_path": "figures/2610.27756/figure-003.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 802
+            },
+            {
+              "caption": "Figure 5: Developmental signatures. (a) The largest n up to which the isotonic fit of exact accuracy stays ≥ 80% (shaded: subitizing range; tier-3 models were run on a subset of n; the two Geminis include the XL extension, and ≥ marks ranges still censored at the largest tested n; CIs in Table 7). (b) Exact accuracy on regular, random, and clustered arrays for the models that saw all three arrangements.",
+              "figure_id": "figure-5-18",
+              "figure_number": "5",
+              "height": 441,
+              "image_path": "figures/2610.27756/figure-004.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 805
+            },
+            {
+              "caption": "Figure 8: Exact-count accuracy versus number of dots on the DotArrays main battery (three arrangements, four seeds per n), one panel per model, one line per harness arm; the shaded band marks the subitizing range n ≤ 4. Tier-2 models ran fewer arms; tier-3 models ran a subset of n (two arrangements, two seeds per level).",
+              "figure_id": "figure-8-21",
+              "figure_number": "8",
+              "height": 586,
+              "image_path": "figures/2610.27756/figure-005.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 801
+            },
+            {
+              "caption": "Figure 7: Second real trajectory: Gemini 3.1 Flash-Lite with the full toolbox on a 50-dot regular array. DIRECT says 56; the model calls grid, tags 21 dots, then the remaining 29, and answers 50 with every tag on target.",
+              "figure_id": "figure-7-22",
+              "figure_number": "7",
+              "height": 360,
+              "image_path": "figures/2610.27756/figure-006.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 793
+            },
+            {
+              "caption": "Figure 3: Paired change in exact accuracy of each arm over DIRECT on the common subset, with 95 % paired bootstrap CIs over images (B=104; numbers in Table 8). With 50–100 images per cell most single effects are within noise; CI-solid are Flash-Lite’s gains and the imprecise pointers’ losses on DotArrays, Qwen3-VL-32B’s gain on PixMo-Count, and CoT for Flash-Lite.",
+              "figure_id": "figure-3-27",
+              "figure_number": "3",
+              "height": 347,
+              "image_path": "figures/2610.27756/figure-007.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 802
+            },
+            {
+              "caption": "Figure 6: A real trajectory, re-rendered from the stored actions: Gemini 3.1 Pro on an FSC-147 photograph with 46 tree logs. The DIRECT answer is 32; three rounds of tagging reach 46, and the audit of the final tags against the dot annotations finds 44 on-target tags, one duplicate, one phantom, and two omissions. Panels show the working image after each tool call.",
+              "figure_id": "figure-6-19",
+              "figure_number": "6",
+              "height": 311,
+              "image_path": "figures/2610.27756/figure-008.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 793
+            },
+            {
+              "caption": "Figure 10: Principle audit for all point-producing arms (LIST, TAG, FULL, TILES), as Figure 9.",
+              "figure_id": "figure-10-33",
+              "figure_number": "10",
+              "height": 576,
+              "image_path": "figures/2610.27756/figure-009.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 794
+            },
+            {
+              "caption": "Figure 9: Principle audit for the TAG arm: composition of the model’s tags per 100 ground-truth objects on DotArrays and FSC-147. On-target tags plus omitted objects sum to 100; duplicates and phantoms are extra tags; numbers above a bar give totals that exceed the axis.",
+              "figure_id": "figure-9-32",
+              "figure_number": "9",
+              "height": 232,
+              "image_path": "figures/2610.27756/figure-010.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 802
+            },
+            {
+              "caption": "Figure 2: Exact accuracy versus n for the two models whose R80 is right-censored on the main battery (n ≤ 60), continued onto the XL battery (n up to 200, Section D); the shaded band is the subitizing range, the dotted line the 80 % criterion. Both cliffs appear near 150; the verbal routine (CoT) collapses before direct estimation does.",
+              "figure_id": "figure-2-20",
+              "figure_number": "2",
+              "height": 206,
+              "image_path": "figures/2610.27756/figure-011.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 802
+            },
+            {
+              "caption": "Figure 11: Ablations: exact accuracy on the ablation subset with bootstrap 95 % CIs.",
+              "figure_id": "figure-11-31",
+              "figure_number": "11",
+              "height": 223,
+              "image_path": "figures/2610.27756/figure-012.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 725
+            },
+            {
+              "caption": "Table 3: The developmental predictions our protocol operationalises. One-to-one correspondence and cardinality are audited directly; abstraction, arrangement, and order effects are behavioural comparisons; stable order is supplied by the harness (Table 5), so it is scaffolded, not tested.",
+              "figure_id": "table-3-25",
+              "figure_number": "3",
+              "height": 278,
+              "image_path": "figures/2610.27756/table-013.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 789
+            },
+            {
+              "caption": "Table 5: Epistemic tools, the child strategy each mirrors, and the counting principle each supports. All tools are PIL operations with no visual intelligence. Coordinates are in a normalised [0, 1000]2 frame of the original image. The harness itself supplies the stable-order component (tags are numbered consecutively across calls), so stable order is scaffolded, not independently tested.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 296,
+              "image_path": "figures/2610.27756/table-014.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 829
+            },
+            {
+              "caption": "Table 13: Exact-count accuracy (%) with MAE in parentheses on the FULL image sets (272 DotArrays, 200 FSC-147, 180 PixMo-Count) for the models that ran them; tier-3 models only saw the common subset, so their rows repeat Table 1. TILES on PixMo-Count is omitted for the reason given in Table 12.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 547,
+              "image_path": "figures/2610.27756/table-015.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 710
+            },
+            {
+              "caption": "Table 20: Tag-perturbation probe. After the model’s first tag call the harness silently removes one on-target tag (−1) or adds one tag on a still-untagged object (+1) before rendering the working image; tags are renumbered, so the image and the harness message agree and only the model’s own emission differs. n: trajectories in which the perturbation could be applied (a +1 needs an untagged object). follows image: announced count = number of tags visible at the end; follows own: announced count = number of points the model emitted (and ̸= visible); repaired: the removed object was re-tagged by the end, or the model started over with replace (−1) / started over (+1); shift: announced count minus the unperturbed TAG answer on the same image (mean, 95 % CI); ↓ / ↑: fraction of images on which the answer moved down/up. Models that read their tags should shift by about −1 unless they repair.",
+              "figure_id": "table-20-17",
+              "figure_number": "20",
+              "height": 308,
+              "image_path": "figures/2610.27756/table-016.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 760
+            },
+            {
+              "caption": "Table 1: Exact-count accuracy (%) per model and arm on the common subset every model saw (240 images: 50 DotArrays, 100 FSC-147, 90 PixMo-Count); best arm per row in bold; ↑/↓ mark CIsolid changes against DIRECT (95 % paired bootstrap CI over images excludes zero; all intervals in Table 8); unparseable answers count as wrong; tier-2/3 models ran fewer arms. MAE, TAG+CROP, and TILES are in Tables 12 and 13.",
+              "figure_id": "table-1-37",
+              "figure_number": "1",
+              "height": 511,
+              "image_path": "figures/2610.27756/table-017.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 377
+            },
+            {
+              "caption": "Table 2: Capacity profile per model, with 95 % bootstrap CIs over images: counting range R80 under DIRECT (≥: right-censored at the largest n tested); pointing error of the TAG arm (median over images of the per-image median on-target tag-to-object distance, in thousandths of the shorter side; DotArrays + FSC-147); omitted objects, duplicate and phantom tags per 100 ground-truth objects (TAG, DotArrays + FSC-147); cardinality (announced count = number of tags, %); order effect (excess disagreement from reversing the traversal beyond the same-order repeat control, pp; Table 9). Tier-3 models ran the common subset only.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 197,
+              "image_path": "figures/2610.27756/table-018.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 810
+            },
+            {
+              "caption": "Table 4: Positioning relative to prior mark-based methods (cells summarise the published descriptions; “grounding” = pointing accuracy is analysed, but wrong counts are not decomposed into principle violations). Our distinction is not that a VLM can make and inspect marks, it is that the marks are used as a measurement trace: audited point-by-point against ground truth and read through the developmental principles of counting.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 160,
+              "image_path": "figures/2610.27756/table-019.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 790
+            },
+            {
+              "caption": "Table 7: Counting range R80 per model and arm on the DotArrays main battery (for Gemini 3.7 Flash and Gemini 3.1 Pro including the XL extension to n=200), with 95 % bootstrap confidence intervals (images resampled within each level, B=103). ≥ marks right-censored values: the isotonic accuracy fit is still ≥ 80% at the largest tested n.",
+              "figure_id": "table-7-35",
+              "figure_number": "7",
+              "height": 192,
+              "image_path": "figures/2610.27756/table-020.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 522
+            },
+            {
+              "caption": "Table 12: All seven arms on the common subset (240 images): exact-count accuracy (%) with MAE in parentheses; best arm per row in bold. TILES is not reported on PixMo-Count: its geometric merge only removes near-coincident points, so objects larger than the tile overlap are counted in every tile they touch (Section 5.2).",
+              "figure_id": "table-12-3",
+              "figure_number": "12",
+              "height": 547,
+              "image_path": "figures/2610.27756/table-021.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 710
+            },
+            {
+              "caption": "Table 6: Sensitivity of the audit to the matching threshold (tag arm, DotArrays + FSC-147): rates per 100 ground-truth objects.",
+              "figure_id": "table-6-28",
+              "figure_number": "6",
+              "height": 492,
+              "image_path": "figures/2610.27756/table-022.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 502
+            },
+            {
+              "caption": "Table 16: PixMo-Count by ground-truth count: exact accuracy (%) with MAE.",
+              "figure_id": "table-16-29",
+              "figure_number": "16",
+              "height": 549,
+              "image_path": "figures/2610.27756/table-023.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 768
+            },
+            {
+              "caption": "Table 23: Grid-guessing check on the main-battery near-regular arrays (n ≥ 9; each dot is displaced from its lattice cell centre by a jitter of up to ±15% of the cell). For every on-target tag: Pearson correlation and regression slope between the dot’s jitter and the tag’s offset from the same cell centre (a model that emits an even grid has r ≈ 0); median distance from the tag to the dot versus to the cell centre (px); and the fraction of tags closer to the dot than to the centre.",
+              "figure_id": "table-23-10",
+              "figure_number": "23",
+              "height": 210,
+              "image_path": "figures/2610.27756/table-024.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 718
+            },
+            {
+              "caption": "Table 19: Do the tags follow the answer, or the answer the tags? For every image that ran both DIRECT and TAG: the fraction of images on which the model drew exactly as many tags as its DIRECT answer (= direct, %, with 95 % CI) and the Spearman correlation ρ between the per-image tag-count error and the DIRECT error. Right: cardinality (announced count = number of tags; TAG and FULL, DotArrays + FSC-147), the number of trajectories where they differ, and how often the announced count is then closer to the truth than the tag count (closer, %).",
+              "figure_id": "table-19-16",
+              "figure_number": "19",
+              "height": 220,
+              "image_path": "figures/2610.27756/table-025.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 672
+            },
+            {
+              "caption": "Table 10: Strict seriality (TAG-1): one point per tag call, so every mark is placed only after the previous one is seen, versus DIRECT and the batched TAG loop (T=6) on the same DotArrays ablation images. TAG-1 runs with a budget of T=80 tool calls (the largest array has 60 dots), so no object goes untagged by construction; omissions are the model abandoning the traversal. Error rates are per 100 ground-truth objects; cost in US cents per image.",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 143,
+              "image_path": "figures/2610.27756/table-026.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 594
+            },
+            {
+              "caption": "Table 11: Principle audit on images with point ground truth (DotArrays + FSC-147). Per 100 groundtruth objects: on-target tags, omissions (skipped objects), duplicates (second tag on a tagged object), phantoms (tag on nothing). Card.: fraction of trajectories whose announced count equals the number of tags. Prec.: median tag-to-object distance of on-target tags in thousandths of the shorter image side (lower is better).",
+              "figure_id": "table-11-2",
+              "figure_number": "11",
+              "height": 475,
+              "image_path": "figures/2610.27756/table-027.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 527
+            },
+            {
+              "caption": "Table 17: DotArrays factor sets: exact accuracy (%) with MAE. hetero = mixed shapes/colours (abstraction), distractor = red among blue, dense = touching discs, small = 6-px discs.",
+              "figure_id": "table-17-24",
+              "figure_number": "17",
+              "height": 625,
+              "image_path": "figures/2610.27756/table-028.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 636
+            },
+            {
+              "caption": "Table 15: FSC-147 by count bin: exact accuracy (%) with MAE.",
+              "figure_id": "table-15-30",
+              "figure_number": "15",
+              "height": 548,
+              "image_path": "figures/2610.27756/table-029.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 506
+            },
+            {
+              "caption": "Table 14: Ablations on the ablation subset (143 images: DotArrays n ≥ 5 and FSC-147). Exact accuracy (%) with MAE; duplicates and phantoms per 100 ground-truth objects; mean tool calls.",
+              "figure_id": "table-14-5",
+              "figure_number": "14",
+              "height": 507,
+              "image_path": "figures/2610.27756/table-030.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 527
+            },
+            {
+              "caption": "Table 25: Models (OpenRouter identifiers, list prices in USD per million input/output tokens on 2026-08-18) and mean cost per image in US cents for each arm; the last column is the total spend per model in USD.",
+              "figure_id": "table-25-11",
+              "figure_number": "25",
+              "height": 192,
+              "image_path": "figures/2610.27756/table-031.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 790
+            },
+            {
+              "caption": "Table 18: Mirror consistency (an indirect invariance probe motivated by the order-irrelevance principle; the direct traversal-order test is in Table 9): agreement between the count on the original image and on its horizontal mirror, and accuracy on each, for the ablation subset.",
+              "figure_id": "table-18-23",
+              "figure_number": "18",
+              "height": 194,
+              "image_path": "figures/2610.27756/table-032.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 498
+            },
+            {
+              "caption": "Table 24: Seeing the marks versus listing them: paired change in exact accuracy of TAG over LIST (blind pointing) on the common subset, percentage points with 95 % paired bootstrap CIs over images. Bold: the interval excludes zero.",
+              "figure_id": "table-24-13",
+              "figure_number": "24",
+              "height": 125,
+              "image_path": "figures/2610.27756/table-033.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 432
+            },
+            {
+              "caption": "Table 8: Paired change in exact accuracy (percentage points) of each arm over DIRECT on the common subset, with 95 % paired bootstrap confidence intervals over images (B=104). Bold: the interval excludes zero.",
+              "figure_id": "table-8-36",
+              "figure_number": "8",
+              "height": 220,
+              "image_path": "figures/2610.27756/table-034.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 822
+            },
+            {
+              "caption": "Table 9: Traversal-order experiment (order-irrelevance principle) on the 68 DotArrays images of the ablation subset: the TAG loop with an instructed scan order, left-to-right/top-to-bottom (TAG→) versus right-to-left/bottom-to-top (TAG←), each run twice. τ̄ is the mean Kendall correlation between tag sequence and vertical position (positive = top-down), showing that the instructed order is realised; agree↔ = same final count under opposite orders (mean over the four run pairs); agree= = same final count when the same order is run twice (repeat control; mean over both orders); order effect = agree= − agree↔, the excess disagreement attributable to reversing the traversal, with a 95 % paired bootstrap CI over images; acc: exact accuracy under each order and under the uninstructed TAG loop on the same images. Rotation control: the reading-order arm on the image rotated by 180◦ visits the dots in the reverse sequence under the natural instruction; agreerot is its agreement with the unrotated reading-order runs and the rotation effect its excess disagreement over the repeat control.",
+              "figure_id": "table-9-8",
+              "figure_number": "9",
+              "height": 108,
+              "image_path": "figures/2610.27756/table-035.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 790
+            },
+            {
+              "caption": "Table 21: What DIRECT measures. Left: hidden reasoning tokens reported by the provider for the single-turn arms at the “low” effort used throughout (median over all images; ≥ 40: median on DotArrays with n ≥ 40; any: fraction of DIRECT replies with at least one reasoning token). Right: the thinking-off control, the same DIRECT prompt with hidden reasoning disabled (Flash-Lite: enabled=false; GPT-5 mini: effort minimal, which yields zero reasoning tokens) or minimised where the endpoint refuses to disable it (Gemini 3.7 Flash: effort minimal); exact accuracy on the same images and the paired change (pp, 95 % CI), and R80 on DotArrays.",
+              "figure_id": "table-21-15",
+              "figure_number": "21",
+              "height": 218,
+              "image_path": "figures/2610.27756/table-036.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 794
+            },
+            {
+              "caption": "Table 22: Arrangement effect on lattices that defeat a rows-times-columns shortcut. Exact accuracy (%) on the main-battery near-regular and random arrays at n ∈ {12, 20, 30, 40, 50} (20 images each) and on three new lattice sets with the same n, jitter, and seeds-per-level (20 images each): a square lattice rotated by 20–40◦, a hexagonal lattice, and a square lattice with about a quarter of its cells left empty. Right: the regular-minus-random and (rotated+hexagonal+holed)-minus-random differences with 95 % bootstrap CIs (pp).",
+              "figure_id": "table-22-12",
+              "figure_number": "22",
+              "height": 175,
+              "image_path": "figures/2610.27756/table-037.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 694
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2610.27756/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.27756",
+          "relevance": 8,
+          "selection_reason": "VLM counting evaluation based on spatial marking and ordering is directly relevant to spatial reasoning diagnostics in multimodal large language models.",
+          "summary_status": "generated",
+          "title": "Give the Model a Finger: Developmentally Aligned Evaluation of Counting in Vision-Language Models",
+          "tldr": "A developmental counting-inspired tagging procedure reveals that VLMs’ counting failures are mainly serial, omission-prone, and poorly self-corrected, while producing useful auditable traces rather than reliably improving accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models",
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "System One models produce probabilistic judgments that software can consume directly, making reliable confidence as important as answer accuracy. Yet joint training across text, images, and video remains underexplored, and the contributions of supervised fine-tuning (SFT) and reinforcement learning for calibrated decisions (RLCD) are difficult to separate. We introduce UniJev, a trimodal framework that scores candidate answers with a shared head under joint supervised training across text, images, and video. Supervised decision models improve accuracy over their backbone readouts across all three modalities, while the existing RLCD algorithms change accuracy little and have inconsistent effects on visual calibration across recipes. These findings motivate a separate supervised objective for confidence calibration. We introduce Cora (Confidence--Outcome Reliability Alignment), which groups current predictions by confidence and optimizes each prediction's confidence toward the empirical accuracy of its bin. At both 2B and 9B, Cora lowers image and video expected calibration error (ECE) while preserving accuracy, without a reinforcement stage. We release our code at https://github.com/wjnwjnwj/UniJev.",
+          "arxiv_id": "2610.25784",
+          "arxiv_url": "https://arxiv.org/abs/2610.25784",
+          "authors": [
+            "Jianing Wang",
+            "Youwen Jian",
+            "Derong Wang",
+            "Jinyang Yu",
+            "Qingyi Si",
+            "Chuanyu Qin",
+            "Yanghua Xiao",
+            "Hongcheng Guo"
+          ],
+          "bullets": [
+            "Joint supervised training improves answer accuracy across text, images, and video compared with backbone readouts.",
+            "Existing reinforcement learning for calibrated decisions has little effect on accuracy and inconsistent effects on visual calibration.",
+            "Cora calibrates confidence by aligning binned predictions with their empirical accuracy.",
+            "At both 2B and 9B, Cora lowers image and video ECE while preserving accuracy, without reinforcement training.",
+            "The study focuses on text-image-video System One decision models and releases its code publicly."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of UNIJEV and the main findings. A shared trimodal decision model first learns candidate selection through the supervised conversion, then CORA directly aligns confidence with the empirical accuracy of current confidence groups. Most of the observed accuracy gain occurs during the supervised conversion; the evaluated reward-driven continuations do not consistently improve visual calibration; and CORA lowers image and video ECE at both model scales while preserving accuracy.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 518,
+              "image_path": "figures/2610.25784/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 937
+            },
+            {
+              "caption": "Figure 3: CORA training dynamics over 100 updates. Left: per-update group loss (thin) and its 25-update running mean (bold), shown on a logarithmic scale. Center: fraction of each 256-question group included in the loss after applying the minimum-support rule. Right: periodic monitoring accuracy, binary Brier score, and 15-bin ECE.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 269,
+              "image_path": "figures/2610.25784/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 937
+            },
+            {
+              "caption": "Figure 7: Per-bin reliability diagrams of the general-purpose models in Table 2, in table order. Colored bars: empirical accuracy of each 15-bin confidence bin; gray bars: each bin’s share of the slice’s predictions; dashed diagonal: perfect calibration.",
+              "figure_id": "figure-7-8",
+              "figure_number": "7",
+              "height": 836,
+              "image_path": "figures/2610.25784/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 864
+            },
+            {
+              "caption": "Figure 8: Per-bin reliability diagrams of the released decision models in Table 2 (first half, table order). Axes and markings follow Figure 7; modalities a model does not support are marked in place.",
+              "figure_id": "figure-8-11",
+              "figure_number": "8",
+              "height": 1136,
+              "image_path": "figures/2610.25784/figure-004.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 864
+            },
+            {
+              "caption": "Figure 9: Per-bin reliability diagrams of the released decision models in Table 2 (second half, table order). Axes and markings follow Figure 7.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 1168,
+              "image_path": "figures/2610.25784/figure-005.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 863
+            },
+            {
+              "caption": "Figure 4: Text cases T1–T8: three shared correct answers, three shared errors, and two mixed outcomes across science, knowledge, and emotion questions. Asterisks mark annotated answers; numbers are confidence percentages. Candidate letters are display aliases, preserving the order and probabilities used in evaluation.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 1239,
+              "image_path": "figures/2610.25784/figure-006.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 937
+            },
+            {
+              "caption": "Figure 5: Image cases I1–I8: three shared correct answers, three shared errors, and two mixed outcomes across spatial, interface, counting, document, scene-text, chart, and table questions. Predictions and confidences come from the same checkpoints as Table 2.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 1005,
+              "image_path": "figures/2610.25784/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 933
+            },
+            {
+              "caption": "Figure 1: Motivation for reliable trimodal decisions. Joint trimodal training remains underexplored, and the effects of SFT and RLCD on accuracy and calibration are difficult to separate.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 589,
+              "image_path": "figures/2610.25784/figure-008.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 431
+            },
+            {
+              "caption": "Figure 6: Video cases V1–V6: two shared correct answers, two shared errors, and two mixed outcomes for actions, reactions, and scene context. Timestamps locate the displayed excerpts within each cached input.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 1337,
+              "image_path": "figures/2610.25784/figure-009.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 939
+            },
+            {
+              "caption": "Figure 10: Per-bin reliability diagrams of the local training baselines, supervised controls, and CORA (Table 2 order). The five RLCD baselines and CORA (2B) share the soft-label SFT (2B) initialization, enabling a controlled comparison of the continuation recipes; CORA (9B) starts from soft-label SFT (9B). Axes and markings follow Figure 7.",
+              "figure_id": "figure-10-4",
+              "figure_number": "10",
+              "height": 1179,
+              "image_path": "figures/2610.25784/figure-010.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 864
+            },
+            {
+              "caption": "Table 1: Training designs of the methods compared in Table 2. The reference constraint column lists each recipe’s regularization toward a reference model or supervised objective, used to keep updates close to the initialization. c: sampled correctness; pa: selected-answer probability; y: observed label; SF: score-function (REINFORCE-style) gradient; LOO: leave-one-out; GN: group normalization; RPS: ranked probability score. A listed recipe need not describe its released checkpoint; evaluation conventions and selected revisions appear in Appendix A.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 381,
+              "image_path": "figures/2610.25784/table-011.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 962
+            },
+            {
+              "caption": "Table 2: Model comparison on text (764 test questions), image (1,858), and video (502). Each modality reports accuracy (Acc., %), mean maximum candidate probability (Conf.), 15-bin ECE, NLL, and multiclass Brier. The CORA rows report the final checkpoints after 100 supervised calibration updates on the trimodal training set. B denotes nominal parameter scale in billions. – denotes an unsupported modality or undisclosed scale. Released checkpoints use their native interfaces without local retraining. Our supervised controls use hard-label SFT at 2B/9B and soft-label SFT at 2B/9B. Local 2B recipe rows use a shared soft-label SFT initialization and a 500-step budget.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 1077,
+              "image_path": "figures/2610.25784/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 956
+            },
+            {
+              "caption": "Table 3: CORA ablations and sensitivity on the test suite. Every arm shares the soft-label SFT initialization, training mixture, and 100-update protocol; each row changes one factor relative to the default and reports its final checkpoint. The default row is identical to the 2B CORA row in Table 2.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 429,
+              "image_path": "figures/2610.25784/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 858
+            },
+            {
+              "caption": "Table 4: Confidence profiles of every Table 2 row, computed from the published test predictions, in Table 2 order. B: nominal parameter scale in billions; ∆: mean confidence minus accuracy (signed); >0.95: share of predictions with confidence above 0.95; REL: the reliability (calibration) term of the binary Brier decomposition with 15 equal-width bins, ×103; AUROC: area under the receiver operating characteristic curve for confidence against answer correctness; –: unsupported modality or undisclosed scale.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 936,
+              "image_path": "figures/2610.25784/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 962
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2610.25784/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.25784",
+          "relevance": 7,
+          "selection_reason": "Trimodal decision models with joint text, image, and video supervision, plus confidence calibration, directly fit multimodal foundation model research.",
+          "summary_status": "generated",
+          "title": "UniJev: Separating Accuracy from Calibration in Trimodal System One Decision Models",
+          "tldr": "UniJev shows that trimodal accuracy and confidence calibration can be improved separately, with Cora reducing visual calibration error without sacrificing accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "RGB-D semantic segmentation has made notable progress by fusing RGB and Depth, yet mainstream models still learn features almost exclusively from pixel-level supervision, lacking direct high-level semantic constraints. This raises a central question-can external knowledge such as language priors inject stronger semantic discriminability into mainstream RGB-D segmentation models. We present DTFormer, a novel tri-modal (RGB-D-Text) semantic segmentation framework. At its core is Text-guided Semantic Alignment Module (TSAM) that first encodes textual cues into a set of semantic prototypes and then explicitly aligns multi-modal RGB-D features with these prototypes at multiple encoder and decoder layers. This design imposes strong semantic regularization on representation learning, guiding the network toward more discriminative features. Extensive experiments on multiple benchmarks show that DTFormer delivers consistent gains while remaining simple and efficient. Our results demonstrate that explicit semantic alignment offers an effective and practical route to improving RGB-D semantic segmentation. The code will be released upon acceptance.",
+          "arxiv_id": "2610.07014",
+          "arxiv_url": "https://arxiv.org/abs/2610.07014",
+          "authors": [
+            "Ziang Wei",
+            "Yinlong Liu",
+            "Yan Xia",
+            "Alois Knoll",
+            "Hu Cao"
+          ],
+          "bullets": [
+            "Addresses the lack of high-level semantic constraints in pixel-supervised RGB-D segmentation.",
+            "Introduces a tri-modal RGB-D-Text framework with a Text-guided Semantic Alignment Module (TSAM).",
+            "TSAM encodes text into semantic prototypes and aligns multi-modal features at multiple encoder and decoder layers.",
+            "Experiments on multiple benchmarks show consistent gains with a simple and efficient design.",
+            "The approach demonstrates that explicit language-based semantic alignment can strengthen feature discriminability."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1: Comparison of semantic segmentation pipelines. (a) Single-stream encoder-decoder [17], [18]. (b) Depth as a geometric prior [19]. (c) Our DTFormer injects language priors into both encoding and decoding to explicitly align RGB-D representations.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 394,
+              "image_path": "figures/2610.07014/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 396
+            },
+            {
+              "caption": "Fig. 5: Performance vs. FLOPs on NYU Depth V2. DTFormer variants (red) achieve superior mIoU with competitive computational cost.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 377,
+              "image_path": "figures/2610.07014/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 511
+            },
+            {
+              "caption": "Fig. 6: Qualitative comparison on NYU Depth V2. From left to right: RGB input, ground truth, DFormerv2, DTFormer (ours).",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 282,
+              "image_path": "figures/2610.07014/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 475
+            },
+            {
+              "caption": "TABLE I: Comparison with SOTA methods on NYU Depth V2 and SUN-RGBD. Methods are grouped by scale (small, base, large) for fair comparison.",
+              "figure_id": "table-I-17",
+              "figure_number": "I",
+              "height": 798,
+              "image_path": "figures/2610.07014/table-004.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1052
+            },
+            {
+              "caption": "TABLE IV: Training configurations for DTFormer variants on NYU Depth V2 and SUN-RGBD datasets. Multiple batch sizes and input sizes are for NYU Depth V2 and SUN-RGBD datasets respectively.",
+              "figure_id": "table-IV-5",
+              "figure_number": "IV",
+              "height": 331,
+              "image_path": "figures/2610.07014/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 492
+            },
+            {
+              "caption": "TABLE V: Detailed configurations of DTFormer variants. Ci represents the channel number in i-th stage. Ni is the number of building blocks in i-th stage.",
+              "figure_id": "table-V-7",
+              "figure_number": "V",
+              "height": 287,
+              "image_path": "figures/2610.07014/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 488
+            },
+            {
+              "caption": "TABLE XIII: Oracle headroom analysis on semantically confusable NYU Depth V2 class pairs. Baseline denotes DFormerv2-S; Oracle denotes DTFormer-S trained with GT class names.",
+              "figure_id": "table-XIII-14",
+              "figure_number": "XIII",
+              "height": 309,
+              "image_path": "figures/2610.07014/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 416
+            },
+            {
+              "caption": "TABLE VI: TSA-E parameter sharing configuration. Ni is the total number of blocks in that stage.",
+              "figure_id": "table-VI-6",
+              "figure_number": "VI",
+              "height": 238,
+              "image_path": "figures/2610.07014/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 454
+            },
+            {
+              "caption": "TABLE XII: Robustness of the oracle-trained DTFormer-S on NYU Depth V2 under progressive text-prior corruption. ± values denote std over 3 noise realizations.",
+              "figure_id": "table-XII-10",
+              "figure_number": "XII",
+              "height": 248,
+              "image_path": "figures/2610.07014/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 424
+            },
+            {
+              "caption": "TABLE II: RGB-D benchmark statistics.",
+              "figure_id": "table-II-3",
+              "figure_number": "II",
+              "height": 192,
+              "image_path": "figures/2610.07014/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 420
+            },
+            {
+              "caption": "TABLE III: Text guidance configuration in DTFormer.",
+              "figure_id": "table-III-2",
+              "figure_number": "III",
+              "height": 191,
+              "image_path": "figures/2610.07014/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 404
+            },
+            {
+              "caption": "TABLE VII: Variant composition. Ticks indicate whether encoder TSA-E / decoder TSA-D is enabled.",
+              "figure_id": "table-VII-8",
+              "figure_number": "VII",
+              "height": 144,
+              "image_path": "figures/2610.07014/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 454
+            },
+            {
+              "caption": "TABLE XI: Cross-modal attention design. “Cosine”: L2normalized Q,K; “Temp.”: learnable temperature τ .",
+              "figure_id": "table-XI-11",
+              "figure_number": "XI",
+              "height": 144,
+              "image_path": "figures/2610.07014/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 438
+            },
+            {
+              "caption": "TABLE IX: Encoder injection stages for TSA-E. Ticks indicate which stages receive text guidance.",
+              "figure_id": "table-IX-12",
+              "figure_number": "IX",
+              "height": 144,
+              "image_path": "figures/2610.07014/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 429
+            },
+            {
+              "caption": "TABLE X: Text guidance strategies. “Avg. Classes” is the mean number of class names per image.",
+              "figure_id": "table-X-9",
+              "figure_number": "X",
+              "height": 119,
+              "image_path": "figures/2610.07014/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 470
+            },
+            {
+              "caption": "TABLE VIII: Converged gating scalars βe (TSA-E) and βd (TSA-D); ranges/means aggregate across all blocks.",
+              "figure_id": "table-VIII-13",
+              "figure_number": "VIII",
+              "height": 98,
+              "image_path": "figures/2610.07014/table-016.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 420
+            },
+            {
+              "caption": "TABLE XIV: Cross-evaluation under train/test text-source mismatch (GT vs. VLM class names).",
+              "figure_id": "table-XIV-16",
+              "figure_number": "XIV",
+              "height": 96,
+              "image_path": "figures/2610.07014/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 374
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2610.07014/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.07014",
+          "relevance": 5,
+          "selection_reason": "Tri-modal RGB-D-text segmentation with depth-aware semantic alignment, fitting spatial intelligence and multimodal modeling interests.",
+          "summary_status": "generated",
+          "title": "DTFormer: Text-Guided Semantic Alignment for RGB-D Segmentation",
+          "tldr": "DTFormer improves RGB-D semantic segmentation by aligning RGB-D features with language-derived semantic prototypes across the network.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Large Audio Language Models (LALMs) perform well on complex question answering but often show a reasoning gap, where explicit Chain-of-Thought (CoT) reduces accuracy compared to direct answers. We hypothesize that long reasoning sequences shift attention away from the audio input. To address this, we propose SPARE (Semantic Prediction for Audio REasoning), which introduces a register token aligned with the final conclusion using a cosine similarity loss with a Sentence-BERT embedding. This conditions the model's latent space with the target semantic goal before reasoning begins. Experiments on MMAU and MMAR with SALMONN show improved zero-shot reasoning and stronger early attention to audio without additional inference cost.",
+          "arxiv_id": "2609.20849",
+          "arxiv_url": "https://arxiv.org/abs/2609.20849",
+          "authors": [
+            "Francesco Bonzi",
+            "Pooneh Mousavi",
+            "Cem Subakan",
+            "Mirco Ravanelli"
+          ],
+          "bullets": [
+            "Addresses the reasoning gap in Large Audio Language Models, where explicit Chain-of-Thought can hurt accuracy.",
+            "Uses a register token trained to match the final conclusion’s Sentence-BERT embedding via cosine similarity.",
+            "Conditions the model’s latent space on the target semantic goal before reasoning.",
+            "Improves zero-shot reasoning and early attention to audio on MMAU and MMAR with SALMONN.",
+            "Adds no inference-time cost, though the abstract does not specify quantitative gains or broader limitations."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.SD",
+            "eess.AS"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the SPARE training framework. The input sequence consists of audio/prompt tokens followed by a register token [REG], the Chain-of-Thought (CoT) reasoning tokens, and the final conclusion. The training pipeline illustrates how the SALMONNbased LALM is regularized during fine-tuning. A cosine similarity alignment loss is enforced between the latent state h[REG] of the register token and the Sentence-BERT embedding vC of the conclusion.This encourages the model to encode the semantic goal early in the reasoning process",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 350,
+              "image_path": "figures/2609.20849/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 884
+            },
+            {
+              "caption": "Figure 2: Custom Causal Attention Masking. The [REG] token attends to preceding context, but subsequent tokens cannot attend to it. This architecture preserves standard, modificationfree SFT inference behavior.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 259,
+              "image_path": "figures/2609.20849/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 437
+            },
+            {
+              "caption": "Figure 3: We computed an attention score for SPARE (pink) and the SFT baseline (blue) across the First (a) and Last (b) layers. The yaxis measures the attention shift over a uniform baseline ( 1 L ), where values above 0.0 indicate a focus stronger than average and values below indicate a relative lack of focus. The x-axis evaluates attention for both the generated answer and our injected [REG] token, specifically assessing the average attention of all generated answer tokens toward audio frames or text tokens (question + choices + answer), alongside the specific attention of the register token toward those same targets.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 272,
+              "image_path": "figures/2609.20849/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 835
+            },
+            {
+              "caption": "Table 1: Zero-shot accuracy (%) on MMAR and MMAU. All evaluations utilize SALMONN 13B as the backbone. Performance is compared across five configurations: (1) Zeroshot: immediate conclusion; (2) Zero-shot (CoT): Chainof-Thought reasoning; (3) SFT: supervised fine-tuning on YouTube8m; (4) Audio MuToR: MuToR adaptation fine-tuned on YouTube8m; and (5) SPARE: our proposed approach finetuned on YouTube8m. SPARE outperforms all baselines by a significant margin.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 157,
+              "image_path": "figures/2609.20849/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 373
+            },
+            {
+              "caption": "Table 2: Ablation studies for SPARE and Audio MuToR (Zeroshot % accuracy). Results on MMAR and MMAU datasets. For SPARE, we ablate λ; for Audio MuToR, we vary λ, dmin, and dmax. The “Multi-conclusion summary” and “Chapter summary” variants utilize register tokens before every chapter rather than just sequence-initially. (*) denotes the application of λ decay.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 35,
+              "image_path": "figures/2609.20849/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 501
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2609.20849/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.20849",
+          "relevance": 4,
+          "selection_reason": "Improves large audio language model reasoning via semantic summary prediction, fitting multimodal LLMs with additional modalities.",
+          "summary_status": "generated",
+          "title": "Enhancing Audio Reasoning via Semantic Summary Prediction",
+          "tldr": "SPARE improves audio reasoning by conditioning the model on the intended conclusion before it begins reasoning.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-22",
       "paper_count": 35,
       "papers": [
@@ -417366,5 +418456,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "multimodal-foundation-models",
-  "total_paper_count": 2096
+  "total_paper_count": 2101
 }

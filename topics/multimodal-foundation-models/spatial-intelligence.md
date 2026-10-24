@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**681 papers total**
+**683 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [Give the Model a Finger: Developmentally Aligned Evaluation of Counting in Vision-Language Models](https://arxiv.org/abs/2610.27756) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | A developmental counting-inspired tagging procedure reveals that VLMs’ counting failures are mainly serial, omission-prone, and poorly self-corrected, while producing useful auditable traces rather than reliably improving accuracy. | 8 | 8 |
+| 2026-10-23 | [DTFormer: Text-Guided Semantic Alignment for RGB-D Segmentation](https://arxiv.org/abs/2610.07014) | Multimodal Foundation Models: Spatial Intelligence | DTFormer improves RGB-D semantic segmentation by aligning RGB-D features with language-derived semantic prototypes across the network. | 5 | 6 |
 | 2026-10-22 | [AgentVQA: A Unified Benchmark for Agentic Visual Understanding](https://arxiv.org/abs/2610.31494) | Embodied AI; Multimodal Foundation Models: Spatial Intelligence | AgentVQA is an offline benchmark for testing vision-language models’ visual understanding in realistic agentic scenarios across five domains. | 8 | 7 |
 | 2026-10-22 | [GelSlim 5.0: Unifying Vision and Touch with a Single Fingertip Camera](https://arxiv.org/abs/2610.31334) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | GelSlim 5.0 unifies vision and touch in one fingertip camera, using VisTacFusion to estimate object pose and contact geometry from paired or single-modality inputs. | 7 | 7 |
 | 2026-10-22 | [PointerBench: A Diagnostic Benchmark for Fine-Grained GUI Grounding](https://arxiv.org/abs/2610.31274) | Multimodal Foundation Models: Spatial Intelligence | PointerBench diagnoses fine-grained GUI grounding, revealing major weaknesses—especially in character-level text targeting—even among strong multimodal and specialist models. | 6 | 6 |

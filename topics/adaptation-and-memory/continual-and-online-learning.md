@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**584 papers total**
+**585 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [Private Online Prediction from Experts with Small Losses](https://arxiv.org/abs/2610.29575) | Adaptation and Memory: Continual and Online Learning | A differentially private online prediction algorithm achieves near-optimal regret scaling with the best expert’s loss, while adaptive inputs still require horizon-dependent regret. | 6 | 7 |
 | 2026-10-22 | [Jev-DLC: Decision-Level Continual Learning from Typed Feedback](https://arxiv.org/abs/2610.31521) | Adaptation and Memory: Continual and Online Learning | Jev-DLC turns typed user corrections into compact, persistent causal state for continual personalization without storing raw history or retraining the scorer. | 7 | 7 |
 | 2026-10-22 | [HERD: Harness-Evolving Recursive Distillation for Continual Learning](https://arxiv.org/abs/2610.31401) | Adaptation and Memory: Continual and Online Learning | HERD combines evolving in-context harnesses with drift-constrained distillation to learn continually while minimizing forgetting and preserving general capabilities. | 7 | 6 |
 | 2026-10-22 | [Delta N-gram: Forward-Only Continual Writing into a Language Model's Native N-gram Memory](https://arxiv.org/abs/2610.31125) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | Delta N-gram enables forward-only continual writing into a frozen language model’s native N-gram memory using a reversible sparse patch. | 9 | 9 |

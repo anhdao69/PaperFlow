@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**157 papers total**
+**158 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [Boosting Deepresearch and LongContext Ability with Self-Generated Deepresearch Rollouts Traces](https://arxiv.org/abs/2609.20844) | Language Foundation Models: Long-Context Models | DLD-RL strengthens deep-research agents’ long-context understanding by converting self-generated research trajectories into full-context QA training data, improving both research and long-context performance. | 7 | 7 |
 | 2026-10-22 | [When LLMs Forget What They Believe: Characterizing State Integrity Collapse in Long-Horizon Dialogues](https://arxiv.org/abs/2610.31314) | Language Foundation Models: Long-Context Models | Long-horizon dialogue can cause LLMs to remember constraints but stop following them, revealing a distinct state-integrity failure that targeted anchoring can partially mitigate. | 7 | 7 |
 | 2026-10-22 | [Mixing Matters: Evidence Position Bias Across Sequence Mixers in Long-Context Question Answering](https://arxiv.org/abs/2610.31135) | Language Foundation Models: Long-Context Models | Evidence position bias in long-context QA varies with architecture, capability, task, and prompt, so the sequence mixer alone does not explain it. | 7 | 6 |
 | 2026-10-22 | [Don't Stop Long-Context Continual Pre-Training Too Early: An Empirical Scaling Law](https://arxiv.org/abs/2610.29352) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: Long-Context Models | Long-context continual pre-training keeps improving long-context and downstream capabilities without clear saturation in the evaluated range, and its gains can be modeled predictably as training tokens increase. | 8 | 8 |

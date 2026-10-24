@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**2283 papers total**
+**2285 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [Demonstration Synthesis from a Single Scan via Gaussian Splatting for Visuomotor Policy Learning](https://arxiv.org/abs/2609.21112) | Embodied AI: Robot Learning and Manipulation | GaussianFactory turns a single video scan into photorealistic robot demonstrations for training visuomotor policies, achieving strong simulated and real-world task success without a physics engine in the generation loop. | 8 | 8 |
+| 2026-10-23 | [Dynamics-Induced Commitment in Learning-Based Robotic Penalty Kicks](https://arxiv.org/abs/2609.21100) | Embodied AI: Robot Learning and Manipulation | The paper shows that robotic penalty-kick strategies become committed by body dynamics before contact, and that responder-side estimation—not merely perceptual accuracy—strongly shapes learning and defensive success. | 6 | 6 |
 | 2026-10-22 | [Sensorimotor Alignment: A Platonic Proxy for Embodied Policy Success](https://arxiv.org/abs/2610.31670) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Sensorimotor Alignment (S²) is a training-free offline metric that gauges embodied model quality by measuring how closely sensory representations match the geometry of physical motion. | 8 | 8 |
 | 2026-10-22 | [OpenTac: An Open Ecosystem for Customizable, Scalable, and Transferable 3D Tactile Sensing](https://arxiv.org/abs/2610.31661) | Embodied AI: Robot Learning and Manipulation | OpenTac is an open, full-stack ecosystem for designing, fabricating, simulating, transferring, and rapidly reading customizable 3D tactile skins for robot control and learning. | 7 | 8 |
 | 2026-10-22 | [F2G-Pose: Geometry-Aware Foundation Feature Lifting for Direct RGB-D Category-Level Object Pose Estimation](https://arxiv.org/abs/2610.31623) | Embodied AI: Robot Learning and Manipulation; 3D Vision | F2G-Pose is a real-time, single-pass RGB-D framework that jointly predicts category-level object pose, size, and completed shape from one observation. | 7 | 6 |

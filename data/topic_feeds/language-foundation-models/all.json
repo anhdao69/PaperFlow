@@ -1,6 +1,633 @@
 {
   "days": [
     {
+      "date": "2026-10-23",
+      "paper_count": 4,
+      "papers": [
+        {
+          "abstract": "Multi-agent systems built from frozen language models communicate through text, which discards the internal state the sender already computed and makes the receiver pay to rebuild it. Work on internal channels avoids that cost, framing the problem as transfer: agent A sends information to agent B. Every agent pair that must communicate needs its own transfer bridge, and every agent added to a system needs a new bridge fitted against each previous agent. We reframe this problem as sharing: an agent publishes its internal state once into a pool, and every peer reads that pool through a single mechanism fitted to no sender in particular, so adding an agent adds a publisher and no new bridge. Whereas the carrier of the internal state and the fusion mechanism are usually chosen independently in the literature, our main finding is that these two choices are coupled; the deciding factor is where the carrier enters the receiver's computation. Consumability is a property of the receiving computation rather than of the representation. We find that the key-value (KV) cache must be augmented rather than swapped in: the receiver cross-attends over a peer's cache while keeping its own, and with only a small query-side adapter trained, matches the accuracy it gets from reading the source document. Activations invert this. They are best written straight into the receiver, with no bridge, no adapter and no training, which beats exposing them alongside the receiver's own, though that advantage rests on knowing where in the receiver the state belongs. The rule is augment the KV cache, replace the activation, established under one protocol with a shared control ladder. One adapter, trained once, also serves publishers it never trained on, and a pool of several at once, but only those whose internal state lies close to the receiver's own.",
+          "arxiv_id": "2610.22026",
+          "arxiv_url": "https://arxiv.org/abs/2610.22026",
+          "authors": [
+            "Adam Deng",
+            "Shicheng Liu",
+            "Yada Zhu"
+          ],
+          "bullets": [
+            "Reframes multi-agent internal communication as shared publishing to a common pool, avoiding pair-specific transfer bridges.",
+            "Shows that carrier and fusion mechanism are coupled through where peer state enters the receiver’s computation.",
+            "KV-cache sharing works by cross-attending to peer keys and values while preserving the receiver’s own cache, using only a small query-side adapter.",
+            "Activation sharing works best by directly writing into the receiver, without a bridge, adapter, or training.",
+            "A single adapter generalizes to unseen publishers and multiple pooled agents when their states are sufficiently close to the receiver’s."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: The two carriers take opposite mechanisms. (a) The KV cache cannot be substituted, even at the fidelity annotated on the bar, and must be augmented instead. (b) Activations invert this: direct replacement works, training-free. Floors and native references are per carrier.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 357,
+              "image_path": "figures/2610.22026/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 960
+            },
+            {
+              "caption": "Figure 2: Carrier ordering across injection depth: activations dominate values, which dominate keys, and keys never leave the floor band. The clean operating band is shallower than the peak (Section 4.3).",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 404,
+              "image_path": "figures/2610.22026/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 746
+            },
+            {
+              "caption": "Figure 6: The boundaries. (a) Cross-family KV augmentation collapses at every rung of the adaptation ladder, while the same ladder within one model reaches the native ceiling. (b) On the activation carrier, the apparently strongest trained arm fails a mis-source control (0.300 against a floor of 0.19); the additive arm passes it (0.069) at a lower but genuine 0.454.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 336,
+              "image_path": "figures/2610.22026/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 960
+            },
+            {
+              "caption": "Figure 3: Multi-source KV augmentation over a pool of 𝑁 holders, one of which read the answer-bearing passage. (a) Raw cross-attention collapses below the floor by 𝑁=4; the trained query-side bridge decays gracefully and remains above floor at 𝑁=8. Dotted lines are the corresponding controls, which themselves lift above floor at large 𝑁 . (b) Lift over the strongest control at each pool size: positive throughout, eroding with 𝑁 .",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 346,
+              "image_path": "figures/2610.22026/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 960
+            },
+            {
+              "caption": "Figure 4: Held-out senders. (a) The bridge, trained on the receiver’s own pools only, reaches the same accuracy on the nearest held-out sender as on the sender it trained on, and falls to its control on the two more distant senders. (b) Control-subtracted lift against the cosine between the sender’s cache and the receiver’s own. The effect is present at 0.9994 and absent by 0.9933, which measures where the effect falls on the sender axis. Three checkpoints locate a transition, not a radius.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 345,
+              "image_path": "figures/2610.22026/figure-005.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 960
+            },
+            {
+              "caption": "Figure 5: Why the two carriers differ. (a) The measured readout Jacobian gain is 𝑂 (1) both on and off manifold, with a ratio of only 1.47×: the wall is not built by amplification, so no single layer and no stacking of layers blows up a tolerable perturbation. (b) Tolerable displacement by carrier: activations remain usable to cosine 0.90, keys only to ≈ 0.995, about 20× less headroom. Same receiver, same depth; the difference is the consumption point.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 336,
+              "image_path": "figures/2610.22026/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 960
+            },
+            {
+              "caption": "Table 6: The substitution bound across architectures. Each receiver is probed with its own bank of genuine keys and its own anchors. Identity hands the receiver its own exact keys and recovers that receiver’s ceiling in every case, which verifies the harness on each architecture. Nearest genuine substitutes the closest key the receiver itself produced elsewhere. Depth spans 𝐿=6 to 𝐿=36 and the grouped-query factor spans 𝐺=1 (multi-head) to 𝐺=8. 𝑛=120.",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 209,
+              "image_path": "figures/2610.22026/table-007.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 510
+            },
+            {
+              "caption": "Table 2: KV augmentation. The receiver keeps its own cache and cross-attends over the holder’s verbatim cache; only the receiver’s projections adapt. The control feeds a holder cache built on the answer-masked passage. Same-model, 𝑛=200.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 261,
+              "image_path": "figures/2610.22026/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 627
+            },
+            {
+              "caption": "Table 1: Oracle substitution: the receiver’s key is interpolated toward the 𝑘-th nearest key the receiver itself produced elsewhere, so every candidate is on its own manifold. No neighbor rank recovers a graded tolerance. Qwen2.5-1.5B, 𝑛=200, floor 0.18, ceiling 0.665.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 175,
+              "image_path": "figures/2610.22026/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 510
+            },
+            {
+              "caption": "Table 4: The asymmetry. Best result per (carrier, mechanism) cell, each against its own probe’s anchors. Cache numbers are shared-fact accuracy at 𝑛=200 (floor 0.18, ceiling 0.665); activation numbers are conditional accuracy at 𝑛=120 (floor 0.20, ceiling 0.742). Cells are not comparable across columns in absolute terms, only relative to their anchors.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2610.22026/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 794
+            },
+            {
+              "caption": "Table 3: Activation replacement, training-free. The receiver’s hidden states at the fact region are overwritten with the holder’s. Qwen2.5-1.5B, 𝑛=120 (cond 𝑛=89), floor 0.20, ceiling 0.742. The mismatch control is clean at 𝐿 ≤ 12 but not at 𝐿 ≥ 16 (shaded reading in the text).",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 200,
+              "image_path": "figures/2610.22026/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 752
+            },
+            {
+              "caption": "Table 5: Held-out senders. One rank-16 query-side bridge, trained on pools built from the receiver’s own weights only, evaluated against senders it never saw. Senders are Qwen2.5-1.5B checkpoints with the receiver’s geometry and a bit-identical tokeniser, ordered by the cosine between their cache and the receiver’s. We report relative Frobenius difference alongside cosine: the two rank the senders identically, so the ordering is not an artifact of one metric, though two metrics over three checkpoints cannot settle which is the right notion of compatibility. Lift is shared accuracy minus the stronger of the two controls; intervals are 95% normal-approximation intervals on that difference. Pool size 𝑁=4, 𝑛=200, floor 0.18, native ceiling 0.665. The self row reproduces the 𝑁=4 point of Figure 3 exactly.",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 140,
+              "image_path": "figures/2610.22026/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 786
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2610.22026/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.22026",
+          "relevance": 6,
+          "selection_reason": "Internal-state sharing through KV caches and activations in frozen LLM agents is relevant to language-model mechanisms and multi-agent inference.",
+          "summary_status": "generated",
+          "title": "Augment the Cache, Replace the Activation: A 2x2 Study of Internal-State Sharing",
+          "tldr": "A shared internal-state protocol works best when KV caches are augmented with peer states, while activations directly replace the receiver’s corresponding state.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Activation steering adds a vector to a model's hidden states to control a named behaviour. A gain on that behaviour, however, does not show that the vector controls it directly: it may act through a component shared with neighbouring behaviours, which unsteered and random baselines cannot separate. We introduce the competing-target test: a vector is compared with the vector built the same way for a competing target, and an equivalence test states when their difference is below a useful margin. We apply it in open-weight models to vectors for Kantian deontology, which judges an act by the rule it follows, and act utilitarianism, which judges it by the welfare it produces. On held-out situations, prompting a framework raises its score and lowers the other's, whereas vectors for either framework move both scores alike, and none reaches the margin. The two vectors share most of their direction, a request to apply some framework; the same construction separates an optimistic from a pessimistic tone, whose vectors share much less. What a vector shares with its competitors therefore sets what it controls: steering a perspective can deliver a mixture, and measuring a disposition can measure its neighbours, unless tested against the competing target.",
+          "arxiv_id": "2610.19359",
+          "arxiv_url": "https://arxiv.org/abs/2610.19359",
+          "authors": [
+            "Weilun Xu",
+            "Zipeng Sun"
+          ],
+          "bullets": [
+            "A gain on the intended behaviour may reflect components shared with competing behaviours.",
+            "The competing-target test compares a steering vector with one constructed for its competing target and checks whether their difference exceeds a useful margin.",
+            "On held-out situations, prompting one ethical framework raises its score and lowers the other, but either framework’s steering vector moves both scores similarly.",
+            "The ethical vectors share most of their direction, unlike optimistic and pessimistic tone vectors, which are more distinct.",
+            "Steering vectors may therefore produce mixtures of perspectives and require competing-target evaluation to establish specificity."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Prompting separates the frameworks; every steering configuration stays below the margin. Held-out situations of Section 3. (a) Score planes. An arrow joins the two members of a matched pair, from the utilitarian to the Kantian one; for prompting, thin arrows are single situations under either instruction and the bold arrow the mean under the defined instruction; the inset enlarges the origin, where each arrow is the mean pair of one recipe at one positive dose (bold: persona at dose 3) and grey points are random vectors. (b) Equivalence test. Averaged specificity of each configuration, with prompting right of the broken axis: estimate (circle), one-sided 95% upper bound (bar) and situation values (grey dots); filled circles are classed below 1/12 and confirmed by the sign-flip test.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 459,
+              "image_path": "figures/2610.19359/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 917
+            },
+            {
+              "caption": "Figure 4: Single-site edits recover no more than a random direction at the natural norm and at most four tenths of prompting within the quality limits. Heldout situations of Section 5; 95% situation-bootstrap intervals (10,000 resamples). (a) Single-site edits. Selectivity of each edit at layer 20 as a fraction of prompting’s selectivity in the same model (tone rows: of tone prompting’s), measured toward the framework the vector was built for, so a negative value for a utilitarian vector is movement toward the Kantian framework; the dashed line marks prompting. (b) Dose response of the specific directions. Recovery against the multiple of the natural norm for each direction; open markers are outside the quality limits of the usefulness rule.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 838,
+              "image_path": "figures/2610.19359/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 430
+            },
+            {
+              "caption": "Figure 3: A shared component dominates the framework vectors and aligns with a generic request to apply a framework, at every layer. Construction prompts of Section 4; markers and lines by model. (a) Cosines at layer 20 between the shifts named in each row, under the defined instructions; the filler paragraph is a nonmoral paragraph of the definitions’ length. (b) Alignment across layers: the cosine of s with the genericinstruction direction and with the filler direction. (c) Dominance across layers: the share of the squared norm of the sixteen construction vectors carried by the shared and by the framework component. The vertical line marks layer 20.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 498,
+              "image_path": "figures/2610.19359/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 428
+            },
+            {
+              "caption": "Figure 1: The two framework vectors are interchangeable and the two tone vectors are not, implying a vector controls what it shares with its competitor. Arrows give the change in the two competing scores on the held-out situations, averaged over situations and models; the instructions are those of Section 3 and the vectors those of Section 5. In ethical frameworks (a), the defined instructions move the scores apart, whereas the two target-versus-neutral vectors at twice their natural norm and their shared component s move both the same way; for tones (b), the instructions and the vectors built the same way each move toward their own tone. Brackets mark the competing-target specificity.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 226,
+              "image_path": "figures/2610.19359/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 429
+            },
+            {
+              "caption": "Figure 6: The two persona vectors leave both scores at their unsteered values, whereas the named instruction moves them apart. One held-out situation (OLMo-3-7B): the unsteered response, the response under the named Kantian instruction, and the responses under the Kantian and the utilitarian persona vector at dose 3 from the same construction, with the primary evaluator’s scores YK and YU . Situation and vectors were chosen without reference to any score (lowest hash under the frozen salt, scenario-first placement, first construction key).",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 674,
+              "image_path": "figures/2610.19359/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 950
+            },
+            {
+              "caption": "Figure 5: Identical responses need no evaluator, and passing the usefulness rule on development does not buy specificity. Held-out situations of Section 3. (a) Identical responses. Share of matched persona pairs with byte-identical responses, with 95% intervals; hatched, the part also identical to the unsteered response. (b) Reliability against specificity. Gain on the own target score on the development situations, where the usefulness rule was applied (its requirement, dashed vertical), against held-out specificity on that score (the test’s margin, dashed horizontal), for every positive-dose configuration; rings mark the three controls that passed the rule.",
+              "figure_id": "figure-5-13",
+              "figure_number": "5",
+              "height": 279,
+              "image_path": "figures/2610.19359/figure-006.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 917
+            },
+            {
+              "caption": "Table 6: Layer test: no layer beyond 20 is framework-specific at the matched dose, and one natural-norm configuration in Llama reaches the margin. Averaged specificity of the pooled persona pair, with 95% situationbootstrap intervals (10,000 resamples). The matched dose scales dose 3 of layer 20 by the ratio of residual norms; the natural norm is the pair’s own. Unmarked: below 1/12 by the one-sided bound; † undetermined; ∗ (bold) at or above 1/12 with a positive lower bound. The matched-dose configurations form a Holm family per model; the natural-norm configurations are exploratory, and layers 24, 28 and 30 were run in Llama only, after the layer-26 value was read.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 265,
+              "image_path": "figures/2610.19359/table-007.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 758
+            },
+            {
+              "caption": "Table 1: The second evaluator assigns the same classes as the primary evaluator. Agreement on the prespecified subset of 720 held-out responses per model (all prompting responses; persona vectors and four random directions at doses 1.5 and 3): r is the Pearson correlation of the framework score, offset the mean score of the second evaluator minus the primary, and κw and α the quadratically weighted kappa and ordinal Krippendorff’s alpha on the application criterion.",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 236,
+              "image_path": "figures/2610.19359/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 381
+            },
+            {
+              "caption": "Table 5: The shared component carries most of the squared norm, and the framework main effect and its interactions with placement and source exceed the null in every model (p ≤ 0.008). Rows give the squarednorm decomposition of the construction vectors and its within-situation label-permutation null (1,000 draws). The interaction with the construction sample is below 0.0002 of the squared norm in every model.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 331,
+              "image_path": "figures/2610.19359/table-009.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 419
+            },
+            {
+              "caption": "Table 2: Prompting is framework-specific and every steering configuration is below the margin on the held-out situations. Prompting selectivity is the mean over situations of the difference between the two instructions on the same score, with its 95% situation-bootstrap interval and, in parentheses, the development value. The specificity rows give the largest one-sided 95% upper bound of Spec over the six positive-dose configurations and the number classed below 1/12 with the sign-flip confirmation. Identical responses is the share of matched persona pairs with byte-identical responses, in parentheses the share also equal to the unsteered response. Development controls lists each configuration that passed the usefulness rule on development, as its development and held-out gain on its target score. The last row states whether the second evaluator assigns the same classes. Bold: the two quantities the test decides on.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 205,
+              "image_path": "figures/2610.19359/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 939
+            },
+            {
+              "caption": "Table 7: Target-versus-neutral pairs reach the margin in OLMo only, and the patches return the same response for both frameworks. Averaged specificity of each matched pair of the sufficiency edits, with 95% situation-bootstrap intervals (10,000 resamples): the single-site mean, named and oracle pairs at the stated multiples of the natural norm, the three-layer pair and the final-token patches. Unmarked: below 1/12 by the one-sided bound; † undetermined; ∗ (bold) at or above 1/12 with a positive lower bound; ‡ a vector of the pair outside the quality limits of the usefulness rule. Identical: the number of the 16 held-out cells in which the two frameworks’ edits return the same response (Llama, OLMo, Qwen).",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 215,
+              "image_path": "figures/2610.19359/table-011.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 887
+            },
+            {
+              "caption": "Table 3: The headline configuration stays below the margin on every held-out panel and pooled over all 32 situations. Persona vectors at dose 3 on the first held-out panel, on two further panels selected by the same rule, and pooled: averaged specificity with its 95% bootstrap interval, the one-sided 95% upper bound against the margin 1/12, the sign-flip p (exact over the 2n sign patterns; †: Monte Carlo over 200,000 patterns), prompting selectivity for the named and the defined instruction, and the share of matched pairs with identical responses. Bold: the pooled estimates.",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 369,
+              "image_path": "figures/2610.19359/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 812
+            },
+            {
+              "caption": "Table 8: The tone pair reaches the margin at twice the norm under both evaluators. Tone prompting selectivity (the mean, over the two tone instructions, of each instruction’s selectivity toward its own tone) and the tone pair’s averaged specificity at one and two times the natural norm with its 95% situation-bootstrap interval (10,000 resamples), under the primary evaluator and under the second evaluator with the same tone rubric. Unmarked: below 1/12 by the one-sided bound; † undetermined; ∗ (bold) at or above 1/12 with a positive lower bound.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 219,
+              "image_path": "figures/2610.19359/table-013.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 452
+            },
+            {
+              "caption": "Table 4: The Kantian and utilitarian vectors are closely aligned, and the probe direction nearly coincides with the mean direction. Recipe columns give the cosine of the PCA vector (minimum) and the probe vector (mean) with the persona vector; persona columns the mean cosines between the Kantian and utilitarian vectors and between vectors that differ only in placement, source or sample; ρ = √ (1− c)/2 the length of a unit edit along the specific axis of its own pair; projection columns the mean component of the 24 Kantian and 24 utilitarian vectors along the pooled axis, signed toward each vector’s own target; the last column the largest dose as a fraction of the layer-20 residual norm.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 144,
+              "image_path": "figures/2610.19359/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 925
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2610.19359/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.19359",
+          "relevance": 5,
+          "selection_reason": "Activation steering in open-weight LLMs is a transferable technical method for controlling hidden-state behaviour in language foundation models.",
+          "summary_status": "generated",
+          "title": "Steering Vectors for Competing Ethical Frameworks Are Interchangeable: A Competing-Target Test for Activation Steering",
+          "tldr": "Activation-steering vectors for Kantian and utilitarian ethics appear to control a shared “apply a framework” disposition rather than distinct ethical frameworks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "We investigate the problem of role-capability leakage (RCL), in which a role-prompted reasoning model generates convincing in-role text while continuing to exhibit capabilities on benchmarks that exceed those implied by the assigned role. For example, when a model is prompted to assume the role of a kindergarten student, one might expect its performance on a mathematics benchmark to reflect kindergarten-level ability rather than expert-level proficiency in solving calculus problems. We introduce RoleCapBench, a curriculum-grounded benchmark for evaluating RCL across six educational roles and four assessment levels spanning elementary school through A-level, and use it to evaluate three open-weight reasoning models. We find that although the models can generate stylistically convincing in-role responses, they consistently fail to align their underlying capabilities with their assigned roles. Naive role prompting yields strong role-voice scores of 1.218--1.389 while retaining above-role accuracy of 0.811--0.898. RCL persists across a range of prompting conditions, including prompts that explicitly instruct the model to match the role's capability level. To mitigate this problem, we propose Injection, an inference-time intervention that combines explicit, role-specific capability guidelines with a guiding prefilled response prefix. Injection improves role-capability alignment across models, reducing above-role accuracy by up to 0.562 while preserving in-role accuracy with a marginal drop of less than 0.058 across most models. All artifacts, including scripts and evaluation data, will be released upon acceptance.",
+          "arxiv_id": "2609.39846",
+          "arxiv_url": "https://arxiv.org/abs/2609.39846",
+          "authors": [
+            "Pakhapoom Sarapat",
+            "Saksorn Ruangtanusak",
+            "Kunat Pipatanakul",
+            "Pittawat Taveekitworachai"
+          ],
+          "bullets": [
+            "Defines role-capability leakage (RCL): models sound like assigned roles while retaining capabilities beyond those roles.",
+            "Introduces RoleCapBench, covering six educational roles and four assessment levels from elementary school through A-level.",
+            "Evaluates three open-weight reasoning models and finds persistent above-role performance across prompting conditions.",
+            "Proposes Injection, combining role-specific capability guidelines with a prefilled response prefix.",
+            "Injection reduces above-role accuracy by up to 0.562 while generally preserving in-role accuracy, with drops below 0.058 in most models."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI",
+            "cs.HC"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the ROLECAPBENCH evaluation pipeline. We evaluate three reasoning LLMs across six educational roles, eight prompting variants, and four curriculum levels using task accuracy, in-role accuracy, above-role accuracy, role voice, capability consistency, and reasoning coherence.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 381,
+              "image_path": "figures/2609.39846/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 907
+            },
+            {
+              "caption": "Figure 5: Changes in in-role accuracy (∆IA) and above-role accuracy (∆AA) relative to Identity. Each point represents one prompting variant. The desired outcome preserves IA while reducing AA.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 282,
+              "image_path": "figures/2609.39846/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 929
+            },
+            {
+              "caption": "Figure 1: Role-capability leakage (RCL) tests whether a model respects the curriculum boundary of its assigned educational level. A model may sound like a kindergartener yet correctly solve an A-level question, revealing capability leakage.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 345,
+              "image_path": "figures/2609.39846/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 458
+            },
+            {
+              "caption": "Figure 4: Task accuracy by role ladder (including No role) for Gemma-family models under Identity.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 306,
+              "image_path": "figures/2609.39846/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 428
+            },
+            {
+              "caption": "Figure 6: Absolute task accuracy by benchmark difficulty level (rows) and assigned role (columns) for Identity and Injection. Columns progress from kindergarten to university teacher. Black outlines mark cells above the assigned role’s curriculum boundary. Identity leaves accuracy high across much of the grid, including many above-boundary cells, whereas Injection suppresses those cells strongly for Gemma and Qwen and more broadly for OLMo.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 388,
+              "image_path": "figures/2609.39846/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 930
+            },
+            {
+              "caption": "Figure 3: ROLECAPBENCH task accuracy across assigned educational roles under different prompting variants. Dashed lines show the corresponding unrestricted no-role accuracy.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 255,
+              "image_path": "figures/2609.39846/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 935
+            },
+            {
+              "caption": "Table 5: Overall model-level response completeness and generation-length summary across the eight in-character prompt variants defined in Section 3.2, reporting null final-answer rate, minimum/mean/maximum response token counts, and the share of responses that hit the configured max-token limit.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 279,
+              "image_path": "figures/2609.39846/table-007.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 920
+            },
+            {
+              "caption": "Table 7: Configured batch sizes and sampling parameters. “Default” indicates a parameter that was not explicitly set in our model configuration.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 1235,
+              "image_path": "figures/2609.39846/table-008.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 948
+            },
+            {
+              "caption": "Table 6: The full 0/1/2 anchors supplied to the automated judge for role voice, capability consistency, and reasoning coherence. Higher scores indicate stronger expression of the named construct.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 866,
+              "image_path": "figures/2609.39846/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 950
+            },
+            {
+              "caption": "Table 1: Ordered roles and curriculum-exposure boundaries.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 173,
+              "image_path": "figures/2609.39846/table-010.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 406
+            },
+            {
+              "caption": "Table 4: Benchmark composition after filtering, broken down by reported task level and subject.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 656,
+              "image_path": "figures/2609.39846/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 477
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2609.39846/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.39846",
+          "relevance": 5,
+          "selection_reason": "Studies capability leakage and inference-time intervention in role-prompted reasoning models, contributing to LLM behavior and reasoning research.",
+          "summary_status": "generated",
+          "title": "When a Kindergartener Solves Calculus: Measuring Capability Leakage in Role-Prompted Reasoning Models",
+          "tldr": "Role prompting changes a reasoning model’s style more reliably than its underlying expertise, but a targeted inference-time intervention improves capability alignment.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Deepresearch (DR) agents interact with real-world web environments through multi-turn search and visit, causing their contexts to grow rapidly over time. We observe that, even after DR Agentic Reinforcement Learning (DR-RL), 61.6% of the model's remaining prediction errors can still be attributed to insufficient long-context understanding, including longcontext hallucination and failures in cross-document evidence integration. It motivates us to further break the bottleneck of DR-RL by strengthening the model's long-context ability. However, effective LongContext training requires more than simply increasing context length. To bridge the data gap, we propose `DR Rollouts to LongContext-QA (DR-to-Long)'. The method repurposes DR-RL trajectories, which naturally contain search histories, visited webpages, evidence snippets, and final-answer supervision. It then replaces the compact snippets and webpage summaries in each trajectory with the full contents of their corresponding URLs, producing substantially longer multi-document contexts while preserving the original evidence relationships. Building on DR-to-Long, we introduce DLD (DR -> LongQA -> DR)-RL. DLD-RL first performs a short DR-RL stage to collect rollout trajectories, which are then converted into LongQA instances at zero annotation cost. The model is subsequently optimized with LongQA-RL to strengthen LongContext ability, followed by full DR-RL to continue improving its DR capability. Experiments show that DLD-RL outperforms standard DR-RL by 7.3% on three Deepresearch benchmarks and improves performance by 13.5% on three long-context benchmarks.",
+          "arxiv_id": "2609.20844",
+          "arxiv_url": "https://arxiv.org/abs/2609.20844",
+          "authors": [
+            "Zihan Wang",
+            "Hao Wang",
+            "Boyuan Jiang",
+            "Yiqun Zhang",
+            "Shi Feng",
+            "Xiaocui Yang",
+            "Yiwen Ye",
+            "Jianghang Lin",
+            "Xiaozhong Ji",
+            "Jinghao Lin",
+            "Kai Wu"
+          ],
+          "bullets": [
+            "Deep-research agents still face substantial errors from long-context failures, including hallucination and poor cross-document evidence integration.",
+            "DR-to-Long expands existing DR-RL trajectories by replacing snippets and webpage summaries with the full contents of their source URLs.",
+            "DLD-RL alternates short DR-RL, zero-cost conversion to LongQA, LongQA-RL, and subsequent DR-RL.",
+            "The method improves over standard DR-RL by 7.3% across three Deepresearch benchmarks and 13.5% across three long-context benchmarks."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the proposed DLD-RL framework.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 404,
+              "image_path": "figures/2609.20844/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1048
+            },
+            {
+              "caption": "Figure 1: Top left: Analysis of incorrect reasons in DR tasks. Top right: Distribution of trace lengths for correct and incorrect trajectories during training. Bottom: Performance comparison between DLD-RL and DR-RL only.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 445,
+              "image_path": "figures/2609.20844/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 488
+            },
+            {
+              "caption": "Figure 4: Growth of the constructed LongQA context length as more URLs from DeepResearch rollouts are expanded.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 304,
+              "image_path": "figures/2609.20844/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 481
+            },
+            {
+              "caption": "Figure 3: Length distributions of the original Deepresearch rollout trajectories and the LongContext-QA instances constructed through DR-To-Long. We control the LongContextQA’s context length to 64k-128k.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 304,
+              "image_path": "figures/2609.20844/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 468
+            },
+            {
+              "caption": "Table 2: Long-context performance of Deepresearch models and larger reference models. Rows prefixed by “+” denote alternative RL training modes initialized from the corresponding SFT checkpoint. D(Warm)L-RL includes an additional long-context RL stage after D(Warm)-RL. Within each model family, the best result is shown in bold and the second-best is underlined.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 370,
+              "image_path": "figures/2609.20844/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 502
+            },
+            {
+              "caption": "Table 1: Performance comparison on Deepresearch benchmarks. Rows prefixed with “+” denote alternative training strategies initialized from the corresponding SFT checkpoint. D(Warm)L-RL includes an additional long-context RL stage after D(Warm)-RL. Best results are bolded, and second-best results are underlined within model families.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 371,
+              "image_path": "figures/2609.20844/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 500
+            },
+            {
+              "caption": "Table 3: Ablation study of DLD-RL on Deepresearch and long-context benchmarks. Rows prefixed with “+” denote alternative training strategies initialized from the corresponding SFT checkpoint. Results are averaged over the three benchmarks in each category.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 277,
+              "image_path": "figures/2609.20844/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 500
+            },
+            {
+              "caption": "Table 4: Tool-use behaviors on BrowseComp. Rows prefixed by “+” denote successive training stages initialized from the model immediately above.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 142,
+              "image_path": "figures/2609.20844/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 502
+            }
+          ],
+          "first_seen_at": "2026-10-23T21:00:00-04:00",
+          "hero_figure": "figures/2609.20844/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2609.20844",
+          "relevance": 7,
+          "selection_reason": "Focuses on improving LLM long-context understanding using DR rollouts converted into LongQA data plus reinforcement learning.",
+          "summary_status": "generated",
+          "title": "Boosting Deepresearch and LongContext Ability with Self-Generated Deepresearch Rollouts Traces",
+          "tldr": "DLD-RL strengthens deep-research agents’ long-context understanding by converting self-generated research trajectories into full-context QA training data, improving both research and long-context performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-22",
       "paper_count": 61,
       "papers": [
@@ -634684,5 +635311,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "language-foundation-models",
-  "total_paper_count": 3090
+  "total_paper_count": 3094
 }

@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**2096 papers total**
+**2101 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [GRAM: Group-wise Rank-Aware Model Merging via Subspace Alignment](https://arxiv.org/abs/2610.29110) | Multimodal Foundation Models | GRAM improves multi-task model merging by grouping tasks with geometrically aligned updates before applying low-rank SVD merging. | 5 | 7 |
+| 2026-10-23 | [Give the Model a Finger: Developmentally Aligned Evaluation of Counting in Vision-Language Models](https://arxiv.org/abs/2610.27756) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | A developmental counting-inspired tagging procedure reveals that VLMs’ counting failures are mainly serial, omission-prone, and poorly self-corrected, while producing useful auditable traces rather than reliably improving accuracy. | 8 | 8 |
+| 2026-10-23 | [UniJev: Separating Accuracy from Calibration in Trimodal System One Decision Models](https://arxiv.org/abs/2610.25784) | Multimodal Foundation Models: Multimodal Large Language Models | UniJev shows that trimodal accuracy and confidence calibration can be improved separately, with Cora reducing visual calibration error without sacrificing accuracy. | 7 | 7 |
+| 2026-10-23 | [DTFormer: Text-Guided Semantic Alignment for RGB-D Segmentation](https://arxiv.org/abs/2610.07014) | Multimodal Foundation Models: Spatial Intelligence | DTFormer improves RGB-D semantic segmentation by aligning RGB-D features with language-derived semantic prototypes across the network. | 5 | 6 |
+| 2026-10-23 | [Enhancing Audio Reasoning via Semantic Summary Prediction](https://arxiv.org/abs/2609.20849) | Multimodal Foundation Models: Multimodal Large Language Models | SPARE improves audio reasoning by conditioning the model on the intended conclusion before it begins reasoning. | 4 | 6 |
 | 2026-10-22 | [AgentVQA: A Unified Benchmark for Agentic Visual Understanding](https://arxiv.org/abs/2610.31494) | Embodied AI; Multimodal Foundation Models: Spatial Intelligence | AgentVQA is an offline benchmark for testing vision-language models’ visual understanding in realistic agentic scenarios across five domains. | 8 | 7 |
 | 2026-10-22 | [GelSlim 5.0: Unifying Vision and Touch with a Single Fingertip Camera](https://arxiv.org/abs/2610.31334) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | GelSlim 5.0 unifies vision and touch in one fingertip camera, using VisTacFusion to estimate object pose and contact geometry from paired or single-modality inputs. | 7 | 7 |
 | 2026-10-22 | [WeVisOne-VL: Unified Visual Perception from Objects to Pixels](https://arxiv.org/abs/2610.31329) | Multimodal Foundation Models: Multimodal Large Language Models | WeVisOne-VL unifies object- and pixel-level visual perception in one VLM, supporting tasks from detection and OCR to segmentation and matting. | 8 | 6 |

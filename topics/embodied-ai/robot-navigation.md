@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**785 papers total**
+**786 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [SPARROW: Survival-POMCP for Adaptive Robot Routing, Observation, and Waiting](https://arxiv.org/abs/2609.21008) | Embodied AI: Robot Navigation | SPARROW uses belief-space planning to help robots decide when to reroute, observe, or wait around temporary obstacles, reducing travel time in simulation and on a physical robot. | 8 | 7 |
 | 2026-10-22 | [Dispersive Tree Agreements for Multi-Robot Coordination](https://arxiv.org/abs/2610.31540) | Embodied AI: Robot Navigation | WarpWeaver is a decentralized, asynchronous planner that coordinates multiple robots toward near-optimal joint motion in real time, with solutions certified at negotiation quiescence. | 9 | 8 |
 | 2026-10-22 | [A Sparse Topometric Graph for Scalable Cross-Session Indoor Navigation](https://arxiv.org/abs/2610.31432) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | A sparse topometric graph enables scalable, robust cross-session indoor navigation by matching room connectivity and local geometry instead of fine-grained measurements. | 8 | 7 |
 | 2026-10-22 | [Probabilistic Energy Modeling Unifies Versatile Swarm Control](https://arxiv.org/abs/2610.31371) | Embodied AI: Robot Navigation | Probabilistic energy modeling enables one decentralized swarm controller to transfer across missions, swarm sizes, platforms, and environments without retraining. | 7 | 8 |

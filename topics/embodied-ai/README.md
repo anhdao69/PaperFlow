@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**3655 papers total**
+**3660 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [When Does Experience Memory Help Closed-Loop LLM Driving Agents? A Controlled Evaluation with Resampled Warmup Pools, Token-Matched Fillers, and Audited Baselines](https://arxiv.org/abs/2610.27714) | Embodied AI; Adaptation and Memory: Embodied Memory | In one audited HighwayEnv testbed, apparent benefits from experience memory in closed-loop LLM driving agents largely vanish under resampled warmup pools and token-matched filler controls. | 8 | 8 |
+| 2026-10-23 | [MAGMA-Bench: Evaluating Long-Horizon Embodied Agents under Dynamic Tasks and Execution Failures](https://arxiv.org/abs/2610.13534) | Embodied AI | MAGMA-Bench evaluates long-horizon embodied agents on dynamic, failure-prone tasks requiring persistent reasoning and heterogeneous multi-robot coordination. | 7 | 7 |
+| 2026-10-23 | [Demonstration Synthesis from a Single Scan via Gaussian Splatting for Visuomotor Policy Learning](https://arxiv.org/abs/2609.21112) | Embodied AI: Robot Learning and Manipulation | GaussianFactory turns a single video scan into photorealistic robot demonstrations for training visuomotor policies, achieving strong simulated and real-world task success without a physics engine in the generation loop. | 8 | 8 |
+| 2026-10-23 | [Dynamics-Induced Commitment in Learning-Based Robotic Penalty Kicks](https://arxiv.org/abs/2609.21100) | Embodied AI: Robot Learning and Manipulation | The paper shows that robotic penalty-kick strategies become committed by body dynamics before contact, and that responder-side estimation—not merely perceptual accuracy—strongly shapes learning and defensive success. | 6 | 6 |
+| 2026-10-23 | [SPARROW: Survival-POMCP for Adaptive Robot Routing, Observation, and Waiting](https://arxiv.org/abs/2609.21008) | Embodied AI: Robot Navigation | SPARROW uses belief-space planning to help robots decide when to reroute, observe, or wait around temporary obstacles, reducing travel time in simulation and on a physical robot. | 8 | 7 |
 | 2026-10-22 | [Sensorimotor Alignment: A Platonic Proxy for Embodied Policy Success](https://arxiv.org/abs/2610.31670) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Sensorimotor Alignment (S²) is a training-free offline metric that gauges embodied model quality by measuring how closely sensory representations match the geometry of physical motion. | 8 | 8 |
 | 2026-10-22 | [OpenTac: An Open Ecosystem for Customizable, Scalable, and Transferable 3D Tactile Sensing](https://arxiv.org/abs/2610.31661) | Embodied AI: Robot Learning and Manipulation | OpenTac is an open, full-stack ecosystem for designing, fabricating, simulating, transferring, and rapidly reading customizable 3D tactile skins for robot control and learning. | 7 | 8 |
 | 2026-10-22 | [F2G-Pose: Geometry-Aware Foundation Feature Lifting for Direct RGB-D Category-Level Object Pose Estimation](https://arxiv.org/abs/2610.31623) | Embodied AI: Robot Learning and Manipulation; 3D Vision | F2G-Pose is a real-time, single-pass RGB-D framework that jointly predicts category-level object pose, size, and completed shape from one observation. | 7 | 6 |

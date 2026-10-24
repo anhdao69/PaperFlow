@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**263 papers total**
+**264 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [When Does Experience Memory Help Closed-Loop LLM Driving Agents? A Controlled Evaluation with Resampled Warmup Pools, Token-Matched Fillers, and Audited Baselines](https://arxiv.org/abs/2610.27714) | Embodied AI; Adaptation and Memory: Embodied Memory | In one audited HighwayEnv testbed, apparent benefits from experience memory in closed-loop LLM driving agents largely vanish under resampled warmup pools and token-matched filler controls. | 8 | 8 |
 | 2026-10-22 | [METTA: Memory-Enhanced Test-Time Adaptation for Meta-Reinforcement Learning](https://arxiv.org/abs/2610.31656) | Adaptation and Memory: Test-Time Learning, Embodied Memory | METTA enables efficient long-context meta-reinforcement learning by combining linear-time within-episode memory with compact cross-episode task summaries for test-time adaptation. | 8 | 8 |
 | 2026-10-22 | [A Sparse Topometric Graph for Scalable Cross-Session Indoor Navigation](https://arxiv.org/abs/2610.31432) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | A sparse topometric graph enables scalable, robust cross-session indoor navigation by matching room connectivity and local geometry instead of fine-grained measurements. | 8 | 7 |
 | 2026-10-22 | [Subgoal-aware Memory Graph for GUI Agent](https://arxiv.org/abs/2610.31307) | Adaptation and Memory: Embodied Memory | A subgoal-aware memory graph helps GUI agents reuse meaningful segments of past experience for long-horizon mobile tasks, improving SPA-Bench success by 11.11% over a baseline. | 6 | 5 |

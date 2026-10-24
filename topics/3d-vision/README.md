@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**925 papers total**
+**926 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [RadarGSOcc: Doppler-Aware 3D Semantic Occupancy Prediction Using 4D Radar Tensor with Geometric-Semantic Feature Extraction](https://arxiv.org/abs/2610.18686) | 3D Vision | RadarGSOcc efficiently uses Doppler-aware 4D radar tensors for robust 3D semantic occupancy prediction, achieving 25.5% weighted mIoU while reducing computation and parameters. | 7 | 7 |
 | 2026-10-22 | [A Unified Framework for Image-to-3D Part Generation via Variable Granularity](https://arxiv.org/abs/2610.31671) | 3D Vision | FlexPart is a unified image-to-3D part generation model that supports controls from sparse points to dense boxes and masks while improving geometric consistency. | 6 | 6 |
 | 2026-10-22 | [BrickWright: Agentic Creation of Physically Feasible Brick Builds](https://arxiv.org/abs/2610.31651) | 3D Vision | BrickWright enables coding agents to generate LEGO builds that are physically feasible and faithful to text or image prompts by combining an assembly toolkit with validation feedback. | 5 | 7 |
 | 2026-10-22 | [Gate3DGen: A Pre-processing Model that Selectively Purifies Real-World Images for 3D Generation](https://arxiv.org/abs/2610.31649) | 3D Vision | Gate3DGen selectively purifies degraded real-world images before 3D generation while bypassing clean inputs, improving downstream geometry without retraining the generator. | 6 | 6 |

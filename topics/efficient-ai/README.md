@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**2214 papers total**
+**2215 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [LocalTrain: Integer-Only Local Learning for Energy-Efficient CNN Training on Edge FPGAs](https://arxiv.org/abs/2610.17099) | Efficient AI | LocalTrain enables integer-only CNN training with local auxiliary classifiers on edge FPGAs, achieving efficient CIFAR-10 and SVHN training at low power. | 6 | 6 |
 | 2026-10-22 | [Direct Pass@$k$ Optimization for Thought Pruning: Balancing Quality and Diversity in Test-Time Reasoning](https://arxiv.org/abs/2610.31667) | Efficient AI | A pruning method directly optimizes pass@$k$ to balance reasoning-path quality and diversity, improving test-time reasoning efficiency. | 6 | 7 |
 | 2026-10-22 | [Phase Transition from Random Features to Fully Trainable Networks](https://arxiv.org/abs/2610.31663) | Efficient AI | Partially training a neural network can rapidly capture most of the approximation gains of fully trainable networks, with diminishing returns as more parameters become trainable. | 4 | 6 |
 | 2026-10-22 | [BeNice! Closing Looping's Inference-Memory Gap via KV-Sharing](https://arxiv.org/abs/2610.31633) | Efficient AI: KV Cache and Memory Efficiency | BeNice! enables looped models to share KV-caches across recurrences, reducing inference memory and latency without sacrificing validation quality. | 8 | 8 |

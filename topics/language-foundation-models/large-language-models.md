@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**2101 papers total**
+**2104 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-23 | [Augment the Cache, Replace the Activation: A 2x2 Study of Internal-State Sharing](https://arxiv.org/abs/2610.22026) | Language Foundation Models: Large Language Models | A shared internal-state protocol works best when KV caches are augmented with peer states, while activations directly replace the receiver’s corresponding state. | 6 | 7 |
+| 2026-10-23 | [Steering Vectors for Competing Ethical Frameworks Are Interchangeable: A Competing-Target Test for Activation Steering](https://arxiv.org/abs/2610.19359) | Language Foundation Models: Large Language Models | Activation-steering vectors for Kantian and utilitarian ethics appear to control a shared “apply a framework” disposition rather than distinct ethical frameworks. | 5 | 7 |
+| 2026-10-23 | [When a Kindergartener Solves Calculus: Measuring Capability Leakage in Role-Prompted Reasoning Models](https://arxiv.org/abs/2609.39846) | Language Foundation Models: Large Language Models | Role prompting changes a reasoning model’s style more reliably than its underlying expertise, but a targeted inference-time intervention improves capability alignment. | 5 | 7 |
 | 2026-10-22 | [Cost-Aware Abstention for LLM-Based IT Ticket Classification](https://arxiv.org/abs/2610.31657) | Language Foundation Models: Large Language Models | Cost-aware abstention substantially reduces costly IT-ticket misrouting in this evaluation, but traditional classifiers outperform prompted LLMs and results remain scoped to the tested costs and setup. | 6 | 6 |
 | 2026-10-22 | [Low-Bit N-Gram Embeddings for Language Models](https://arxiv.org/abs/2610.31646) | Language Foundation Models: Large Language Models | Low-bit quantization can cut n-gram embedding memory substantially while preserving nearly all of its language-modeling benefits. | 8 | 8 |
 | 2026-10-22 | [Causal Chain of Thought: Mitigating Attention Leakage via Context Isolation](https://arxiv.org/abs/2610.31639) | Language Foundation Models: Large Language Models | CausalCoT improves the causal faithfulness of chain-of-thought reasoning by isolating each sub-question to its direct causal context while maintaining competitive accuracy. | 8 | 8 |
