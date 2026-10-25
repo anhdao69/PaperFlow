@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**396 papers total**
+**398 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Rethinking Sequence Compression with Test-time Regression](https://arxiv.org/abs/2610.31574) | Efficient AI: Token Pruning and Eviction, Efficient Attention | TTR-Compressor uses differentiable test-time regression to turn input-token relationships into compact representations, improving sequence compression for language and multimodal models. | 8 | 8 |
+| 2026-10-24 | [VETO: Video Efficient Token Optimization for Vision Language Models](https://arxiv.org/abs/2610.01785) | Efficient AI: Token Pruning and Eviction | VETO accelerates long-video VLM inference by hierarchically compressing redundant spatial and temporal visual tokens while preserving or improving accuracy. | 8 | 6 |
 | 2026-10-22 | [Muting Tokens: Exploring Token Sparsification for Efficient Audio Transformers](https://arxiv.org/abs/2610.31235) | Efficient AI: Token Pruning and Eviction | A comprehensive study shows that frequency- and input-aware token sparsification can make audio transformers more efficient while preserving stronger performance than attention-only methods. | 8 | 7 |
 | 2026-10-22 | [OpenAttention: One Percent Is Enough with Tail Proxies](https://arxiv.org/abs/2610.30951) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | OpenAttention uses query-aware clustering, error-guided selection, and a count-aware tail proxy to preserve 99% of dense-attention accuracy while reading only 1% of the key-value cache. | 9 | 8 |
 | 2026-10-22 | [MCP vs CLI for AI Agents: A Comparative Analysis of Tool Integration Strategies for Autonomous Systems](https://arxiv.org/abs/2610.30157) | Efficient AI: Token Pruning and Eviction | CLI is efficient for simple local workflows, while MCP offers stronger governance and security for production AI agents; a hybrid approach is recommended. | 7 | 6 |

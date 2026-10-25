@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1372 papers total**
+**1373 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [AnyAct: Universal Action for Self-Evolving Agents](https://arxiv.org/abs/2609.37025) | Adaptation and Memory: Test-Time Learning | AnyAct helps LLM agents act reliably in large, changing tool ecosystems by dynamically selecting, evaluating, and coordinating heterogeneous actions. | 4 | 6 |
 | 2026-10-23 | [Private Online Prediction from Experts with Small Losses](https://arxiv.org/abs/2610.29575) | Adaptation and Memory: Continual and Online Learning | A differentially private online prediction algorithm achieves near-optimal regret scaling with the best expert’s loss, while adaptive inputs still require horizon-dependent regret. | 6 | 7 |
 | 2026-10-23 | [When Does Experience Memory Help Closed-Loop LLM Driving Agents? A Controlled Evaluation with Resampled Warmup Pools, Token-Matched Fillers, and Audited Baselines](https://arxiv.org/abs/2610.27714) | Embodied AI; Adaptation and Memory: Embodied Memory | In one audited HighwayEnv testbed, apparent benefits from experience memory in closed-loop LLM driving agents largely vanish under resampled warmup pools and token-matched filler controls. | 8 | 8 |
 | 2026-10-22 | [METTA: Memory-Enhanced Test-Time Adaptation for Meta-Reinforcement Learning](https://arxiv.org/abs/2610.31656) | Adaptation and Memory: Test-Time Learning, Embodied Memory | METTA enables efficient long-context meta-reinforcement learning by combining linear-time within-episode memory with compact cross-episode task summaries for test-time adaptation. | 8 | 8 |

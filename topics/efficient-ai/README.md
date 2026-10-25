@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**2215 papers total**
+**2221 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Rethinking Sequence Compression with Test-time Regression](https://arxiv.org/abs/2610.31574) | Efficient AI: Token Pruning and Eviction, Efficient Attention | TTR-Compressor uses differentiable test-time regression to turn input-token relationships into compact representations, improving sequence compression for language and multimodal models. | 8 | 8 |
+| 2026-10-24 | [ABNAT: Attention-Based Noise-Aware Training for Robust Transformers on Analog Compute-in-Memory Systems](https://arxiv.org/abs/2610.22065) | Efficient AI | ABNAT improves Transformer robustness to analog compute-in-memory noise by training noisy models to preserve clean attention routes. | 5 | 5 |
+| 2026-10-24 | [Think Before You Speak: Enabling Training-Free Latent Communication Between Language Models](https://arxiv.org/abs/2610.16165) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | CacheFuse enables training-free latent communication between heterogeneous language models by linearly interpolating their KV caches, improving accuracy while reducing communication latency. | 7 | 7 |
+| 2026-10-24 | [VETO: Video Efficient Token Optimization for Vision Language Models](https://arxiv.org/abs/2610.01785) | Efficient AI: Token Pruning and Eviction | VETO accelerates long-video VLM inference by hierarchically compressing redundant spatial and temporal visual tokens while preserving or improving accuracy. | 8 | 6 |
+| 2026-10-24 | [LEMCA: LLM-Guided Synthesis of Efficient Mode-Switching Control Architectures](https://arxiv.org/abs/2609.21319) | Embodied AI: Robot Learning and Manipulation; Efficient AI | LEMCA uses LLM-guided evolutionary program synthesis to automatically design resource-efficient robot controllers that switch modes as task difficulty changes. | 6 | 8 |
+| 2026-10-24 | [Accelerating Sharded Data Parallelism at Scale with Federated Learning](https://arxiv.org/abs/2609.20359) | Efficient AI | FL-inspired hybrid sharded data-parallel algorithms reduce cross-group communication while improving training throughput and model quality at scale. | 6 | 6 |
 | 2026-10-23 | [LocalTrain: Integer-Only Local Learning for Energy-Efficient CNN Training on Edge FPGAs](https://arxiv.org/abs/2610.17099) | Efficient AI | LocalTrain enables integer-only CNN training with local auxiliary classifiers on edge FPGAs, achieving efficient CIFAR-10 and SVHN training at low power. | 6 | 6 |
 | 2026-10-22 | [Direct Pass@$k$ Optimization for Thought Pruning: Balancing Quality and Diversity in Test-Time Reasoning](https://arxiv.org/abs/2610.31667) | Efficient AI | A pruning method directly optimizes pass@$k$ to balance reasoning-path quality and diversity, improving test-time reasoning efficiency. | 6 | 7 |
 | 2026-10-22 | [Phase Transition from Random Features to Fully Trainable Networks](https://arxiv.org/abs/2610.31663) | Efficient AI | Partially training a neural network can rapidly capture most of the approximation gains of fully trainable networks, with diminishing returns as more parameters become trainable. | 4 | 6 |

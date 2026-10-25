@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**603 papers total**
+**604 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Think Before You Speak: Enabling Training-Free Latent Communication Between Language Models](https://arxiv.org/abs/2610.16165) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | CacheFuse enables training-free latent communication between heterogeneous language models by linearly interpolating their KV caches, improving accuracy while reducing communication latency. | 7 | 7 |
 | 2026-10-22 | [BeNice! Closing Looping's Inference-Memory Gap via KV-Sharing](https://arxiv.org/abs/2610.31633) | Efficient AI: KV Cache and Memory Efficiency | BeNice! enables looped models to share KV-caches across recurrences, reducing inference memory and latency without sacrificing validation quality. | 8 | 8 |
 | 2026-10-22 | [Evaluating the Applicability of LLM Inference Optimizations on Apple Silicon](https://arxiv.org/abs/2610.31479) | Efficient AI: KV Cache and Memory Efficiency | Inference optimizations developed for server GPUs do not transfer uniformly to Apple Silicon; their effectiveness depends on the technique, runtime, hardware, and workload. | 7 | 7 |
 | 2026-10-22 | [Drift Says When, Budget Says How Much: Rate-Controlled KV Re-selection for Long-Form Multimodal Generation](https://arxiv.org/abs/2610.31433) | Efficient AI: KV Cache and Memory Efficiency | Rate-Controlled Refresh dynamically re-selects visual KV tokens when attention drifts, improving long-form multimodal generation under a controlled refresh budget. | 8 | 9 |

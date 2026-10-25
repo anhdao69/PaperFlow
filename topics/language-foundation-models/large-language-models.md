@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**2104 papers total**
+**2107 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Africa-Papers: A 10-Billion-Token Multi-Domain Academic Corpus for African Foundation Language Models](https://arxiv.org/abs/2610.28173) | Language Foundation Models: Large Language Models | Africa-Papers is an openly released 10.15-billion-token corpus designed to improve African representation in foundation-model pre-training across scientific and societal domains. | 6 | 7 |
+| 2026-10-24 | [ICLHerd: Herding-Based Data Selection for LLMs with In-Context Learning as a Proxy](https://arxiv.org/abs/2610.27142) | Language Foundation Models: Large Language Models | ICLHerd improves LLM training-data selection by reducing the clustering bias of similarity-based methods through balanced mode-seeking and mode-averaging. | 6 | 7 |
+| 2026-10-24 | [Think Before You Speak: Enabling Training-Free Latent Communication Between Language Models](https://arxiv.org/abs/2610.16165) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | CacheFuse enables training-free latent communication between heterogeneous language models by linearly interpolating their KV caches, improving accuracy while reducing communication latency. | 7 | 7 |
 | 2026-10-23 | [Augment the Cache, Replace the Activation: A 2x2 Study of Internal-State Sharing](https://arxiv.org/abs/2610.22026) | Language Foundation Models: Large Language Models | A shared internal-state protocol works best when KV caches are augmented with peer states, while activations directly replace the receiver’s corresponding state. | 6 | 7 |
 | 2026-10-23 | [Steering Vectors for Competing Ethical Frameworks Are Interchangeable: A Competing-Target Test for Activation Steering](https://arxiv.org/abs/2610.19359) | Language Foundation Models: Large Language Models | Activation-steering vectors for Kantian and utilitarian ethics appear to control a shared “apply a framework” disposition rather than distinct ethical frameworks. | 5 | 7 |
 | 2026-10-23 | [When a Kindergartener Solves Calculus: Measuring Capability Leakage in Role-Prompted Reasoning Models](https://arxiv.org/abs/2609.39846) | Language Foundation Models: Large Language Models | Role prompting changes a reasoning model’s style more reliably than its underlying expertise, but a targeted inference-time intervention improves capability alignment. | 5 | 7 |

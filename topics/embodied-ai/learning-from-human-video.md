@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**229 papers total**
+**230 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [TouchSight: Bare-Handed Tactile Prediction from Egocentric Video via Generative Visual Augmentation](https://arxiv.org/abs/2609.20414) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | TouchSight predicts dense full-hand contact forces from egocentric video alone by using generatively augmented glove recordings to bridge the gap to bare-hand interactions. | 9 | 8 |
 | 2026-10-22 | [Retrieval-Augmented Online Textual Memory for Episodic Memory Video Question Answering](https://arxiv.org/abs/2610.31284) | Embodied AI: Learning from Human Videos; Adaptation and Memory: Embodied Memory | A systematic study shows that effective retrieval for episodic video QA depends on reliable, answer-discriminative evidence—not merely broader temporal coverage. | 8 | 6 |
 | 2026-10-22 | [Robot Motion Transition with Human Motion Prior](https://arxiv.org/abs/2610.30817) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | STAMP connects independently acquired humanoid motions into continuous long-horizon sequences by aligning their spatial and temporal boundaries with a human motion prior. | 7 | 7 |
 | 2026-10-22 | [Motion Retargeting with Spatiotemporal Preferences for Humanoid Loco-Manipulation](https://arxiv.org/abs/2610.30540) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | STR allocates retargeting effort to important motion stages and body parts, improving contact fidelity and downstream humanoid loco-manipulation efficiency. | 8 | 7 |

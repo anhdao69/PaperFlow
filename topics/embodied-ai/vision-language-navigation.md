@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**158 papers total**
+**159 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [NaViRrator: Robot Navigation from Human-Readable Maps through a Learned Visual Route](https://arxiv.org/abs/2609.21316) | Embodied AI: Vision-Language Navigation | NaViRRator converts human-readable map destinations into route-grounded language instructions that pretrained vision-language navigation policies can execute from egocentric observations. | 8 | 7 |
 | 2026-10-22 | [EBV-CAN: Vision--Language Grounding for Contact-Aided Endoscope Navigation](https://arxiv.org/abs/2610.30786) | Embodied AI: Vision-Language Navigation, Vision-Language-Action | EBV-CAN uses a cached bird’s-eye image, live endoscopic views, and motor state to ground language instructions for contact-aware endoscope navigation. | 8 | 7 |
 | 2026-10-22 | [Asking Less, Adapting Better: Feedback-Efficient Test-Time Adaptation for Vision-and-Language Navigation](https://arxiv.org/abs/2610.30643) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Test-Time Learning | FETA improves vision-and-language navigation under distribution shifts by selecting only informative actions for targeted, feedback-efficient test-time adaptation. | 9 | 7 |
 | 2026-10-22 | [KinoUAV: A Benchmark for Safe and Stable UAV Vision-Language Navigation with Kinodynamic Modeling](https://arxiv.org/abs/2610.30609) | Embodied AI: Vision-Language Navigation, Robot Navigation | KinoUAV is a benchmark and agent for safer, more stable UAV vision-language navigation through kinodynamic trajectory modeling and directional clearance prediction. | 8 | 7 |

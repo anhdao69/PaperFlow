@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1280 papers total**
+**1282 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [MM-FinEval: A Multi-Task Multimodal Benchmark for Real-World Financial Forecasting](https://arxiv.org/abs/2609.38523) | Multimodal Foundation Models: Multimodal Large Language Models | MM-FinEval is a tri-modal, multi-task benchmark for testing multimodal LLMs on realistic financial forecasting from earnings calls. | 5 | 5 |
+| 2026-10-24 | [I'll Keep an Ear Out: Teaching AudioLLMs Proactive Audio Assistance](https://arxiv.org/abs/2609.21183) | Multimodal Foundation Models: Multimodal Large Language Models | ISM enables AudioLLMs to proactively monitor audio and alert users at the right moments without explicit queries. | 7 | 7 |
 | 2026-10-23 | [Give the Model a Finger: Developmentally Aligned Evaluation of Counting in Vision-Language Models](https://arxiv.org/abs/2610.27756) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | A developmental counting-inspired tagging procedure reveals that VLMs’ counting failures are mainly serial, omission-prone, and poorly self-corrected, while producing useful auditable traces rather than reliably improving accuracy. | 8 | 8 |
 | 2026-10-23 | [UniJev: Separating Accuracy from Calibration in Trimodal System One Decision Models](https://arxiv.org/abs/2610.25784) | Multimodal Foundation Models: Multimodal Large Language Models | UniJev shows that trimodal accuracy and confidence calibration can be improved separately, with Cora reducing visual calibration error without sacrificing accuracy. | 7 | 7 |
 | 2026-10-23 | [Enhancing Audio Reasoning via Semantic Summary Prediction](https://arxiv.org/abs/2609.20849) | Multimodal Foundation Models: Multimodal Large Language Models | SPARE improves audio reasoning by conditioning the model on the intended conclusion before it begins reasoning. | 4 | 6 |

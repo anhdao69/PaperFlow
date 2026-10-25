@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**289 papers total**
+**290 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Rethinking Sequence Compression with Test-time Regression](https://arxiv.org/abs/2610.31574) | Efficient AI: Token Pruning and Eviction, Efficient Attention | TTR-Compressor uses differentiable test-time regression to turn input-token relationships into compact representations, improving sequence compression for language and multimodal models. | 8 | 8 |
 | 2026-10-22 | [Squaring-the-Sphere: Distortion-Free and Seamless Panorama Generation via CubeAtlas](https://arxiv.org/abs/2610.31565) | Efficient AI: Efficient Attention | CubeAtlas enables distortion-free, seamless 360° panorama generation by jointly modeling cubemap faces with efficient sparse attention and perspective-space refinement. | 5 | 7 |
 | 2026-10-22 | [MixPT: Point Transformer with Interleaved Window and Global Attention](https://arxiv.org/abs/2610.31455) | 3D Vision; Efficient AI: Efficient Attention | MixPT balances local detail, global scene interaction, and efficiency by interleaving window and pooled-token global attention in a point transformer. | 6 | 6 |
 | 2026-10-22 | [OpenAttention: One Percent Is Enough with Tail Proxies](https://arxiv.org/abs/2610.30951) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | OpenAttention uses query-aware clustering, error-guided selection, and a count-aware tail proxy to preserve 99% of dense-attention accuracy while reading only 1% of the key-value cache. | 9 | 8 |

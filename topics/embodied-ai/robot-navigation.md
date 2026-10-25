@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**786 papers total**
+**789 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Context-Aware RGB-Thermal-Radar Obstacle Perception for Resource-Constrained ASVs](https://arxiv.org/abs/2610.23873) | Embodied AI: Robot Navigation | A context-aware RGB-LWIR-radar fusion system helps resource-constrained ASVs maintain calibrated obstacle perception when RGB cameras degrade or fail, including at night. | 7 | 6 |
+| 2026-10-24 | [AirSplan: Risk-Aware Motion Planning for Quadrotors in Cluttered 3D Gaussian Splats](https://arxiv.org/abs/2609.21226) | Embodied AI: Robot Navigation; 3D Vision | AirSplan combines high-fidelity 3D Gaussian Splatting with risk-aware reachability planning to find collision-free quadrotor paths in cluttered environments. | 7 | 7 |
+| 2026-10-24 | [Stochastic Neural Signed Swept Volume for Real-time Chance-Constrained Trajectory Optimization](https://arxiv.org/abs/2609.21211) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | A probabilistic neural signed-distance model of robot swept volumes enables uncertainty-aware, chance-constrained trajectory optimization under noisy perception. | 8 | 8 |
 | 2026-10-23 | [SPARROW: Survival-POMCP for Adaptive Robot Routing, Observation, and Waiting](https://arxiv.org/abs/2609.21008) | Embodied AI: Robot Navigation | SPARROW uses belief-space planning to help robots decide when to reroute, observe, or wait around temporary obstacles, reducing travel time in simulation and on a physical robot. | 8 | 7 |
 | 2026-10-22 | [Dispersive Tree Agreements for Multi-Robot Coordination](https://arxiv.org/abs/2610.31540) | Embodied AI: Robot Navigation | WarpWeaver is a decentralized, asynchronous planner that coordinates multiple robots toward near-optimal joint motion in real time, with solutions certified at negotiation quiescence. | 9 | 8 |
 | 2026-10-22 | [A Sparse Topometric Graph for Scalable Cross-Session Indoor Navigation](https://arxiv.org/abs/2610.31432) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | A sparse topometric graph enables scalable, robust cross-session indoor navigation by matching room connectivity and local geometry instead of fine-grained measurements. | 8 | 7 |

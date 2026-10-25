@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**603 papers total**
+**604 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [AnyAct: Universal Action for Self-Evolving Agents](https://arxiv.org/abs/2609.37025) | Adaptation and Memory: Test-Time Learning | AnyAct helps LLM agents act reliably in large, changing tool ecosystems by dynamically selecting, evaluating, and coordinating heterogeneous actions. | 4 | 6 |
 | 2026-10-22 | [METTA: Memory-Enhanced Test-Time Adaptation for Meta-Reinforcement Learning](https://arxiv.org/abs/2610.31656) | Adaptation and Memory: Test-Time Learning, Embodied Memory | METTA enables efficient long-context meta-reinforcement learning by combining linear-time within-episode memory with compact cross-episode task summaries for test-time adaptation. | 8 | 8 |
 | 2026-10-22 | [Progress Probes $P^2$: Lightweight Runtime Monitoring for Vision-Language-Action Models](https://arxiv.org/abs/2610.31613) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Test-Time Learning | Progress Probes use lightweight linear probes of a VLA’s internal activations to detect when manipulation tasks are going off-course, avoiding external VLM monitors. | 10 | 9 |
 | 2026-10-22 | [Direct Inference on Admissible Sets (Diona)](https://arxiv.org/abs/2610.31526) | Efficient AI; Adaptation and Memory: Test-Time Learning | Diona performs local, training-free regression with uncertainty bounds, offering fast updates and strong accuracy under dense sampling. | 6 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**1104 papers total**
+**1105 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Action Learning for Scientific Simulations](https://arxiv.org/abs/2610.31585) | World Models: Latent Action Models | LEAP learns a reusable trajectory-level action from observed and reference paths, enabling inference, control, optimization, and sampling of dynamical systems. | 6 | 8 |
 | 2026-10-22 | [Reading, Writing, Sharing, and Interacting with the World through Video](https://arxiv.org/abs/2610.31668) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Understanding | This survey unifies video foundation and world models through four operations—reading, writing, sharing, and interacting—to study how videos represent and support reasoning about evolving worlds. | 8 | 5 |
 | 2026-10-22 | [DiffDreamer: Coupling World Models with Differentiable Simulation for Agile Quadrotor Control](https://arxiv.org/abs/2610.31617) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | DiffDreamer combines learned world-model predictions with differentiable quadrotor simulation to improve agile control in dynamic environments. | 9 | 8 |
 | 2026-10-22 | [Skeleton-Grounded Latent Action Model for Robot World Models](https://arxiv.org/abs/2610.31474) | World Models: Latent Action Models | SkeLAM makes robot world models more controllable by separating robot kinematics from other visual dynamics in latent actions. | 10 | 9 |

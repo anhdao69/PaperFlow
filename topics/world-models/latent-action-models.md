@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**125 papers total**
+**126 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Action Learning for Scientific Simulations](https://arxiv.org/abs/2610.31585) | World Models: Latent Action Models | LEAP learns a reusable trajectory-level action from observed and reference paths, enabling inference, control, optimization, and sampling of dynamical systems. | 6 | 8 |
 | 2026-10-22 | [Skeleton-Grounded Latent Action Model for Robot World Models](https://arxiv.org/abs/2610.31474) | World Models: Latent Action Models | SkeLAM makes robot world models more controllable by separating robot kinematics from other visual dynamics in latent actions. | 10 | 9 |
 | 2026-10-22 | [PiHand: Latent Hand-Object Interaction Priors for Physics-Based Policy Learning](https://arxiv.org/abs/2610.31299) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | PiHand learns a latent, physics-grounded hand–object interaction prior that enables dexterous manipulation policies to generalize across unseen objects, trajectories, and tasks. | 9 | 7 |
 | 2026-10-21 | [Causal world models under physical parameter shifts](https://arxiv.org/abs/2610.29088) | World Models: Latent Action Models | Causal structure and physically explicit parameterization substantially improve world-model prediction under out-of-distribution physical changes. | 9 | 8 |

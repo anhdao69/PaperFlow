@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**845 papers total**
+**847 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-24 | [Sparse Feature Policy Unlearning Mitigates State Hallucination in Vision-Language-Action Models](https://arxiv.org/abs/2610.09496) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | SOUL selectively removes sparse features linked to state hallucination in vision-language-action policies, reducing these failures while preserving manipulation ability. | 8 | 7 |
+| 2026-10-24 | [Safe Real-Time Policy Steering via Noise-Space Trajectory Optimization for One-Step Generative Policies](https://arxiv.org/abs/2609.21220) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | INSPO enables real-time constraint-aware steering of one-step generative robot policies by optimizing their input noise instead of repeatedly modifying actions or generation steps. | 8 | 8 |
 | 2026-10-22 | [Sensorimotor Alignment: A Platonic Proxy for Embodied Policy Success](https://arxiv.org/abs/2610.31670) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Sensorimotor Alignment (S²) is a training-free offline metric that gauges embodied model quality by measuring how closely sensory representations match the geometry of physical motion. | 8 | 8 |
 | 2026-10-22 | [Progress Probes $P^2$: Lightweight Runtime Monitoring for Vision-Language-Action Models](https://arxiv.org/abs/2610.31613) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Test-Time Learning | Progress Probes use lightweight linear probes of a VLA’s internal activations to detect when manipulation tasks are going off-course, avoiding external VLM monitors. | 10 | 9 |
 | 2026-10-22 | [Echo: Coupled Action and Task Status Signal Denoising for Vision Language Action Models](https://arxiv.org/abs/2610.31569) | Embodied AI: Vision-Language-Action | Echo jointly denoises task-status signals and robot actions so a single VLA can recognize success or failure and use that information to guide execution. | 10 | 8 |
