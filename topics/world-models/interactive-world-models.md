@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**569 papers total**
+**573 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-25 | [UniAction: Unified Action Conditioning for World Models](https://arxiv.org/abs/2610.32977) | World Models: Video World Models, Interactive World Models | UniAction unifies heterogeneous action conditioning in one world model by encoding actions as sparse semantic elements with spatiotemporal coordinates. | 9 | 8 |
+| 2026-10-25 | [ACWM-RM: A Reference-Free Reward Model from Complementary Mismatch Preferences](https://arxiv.org/abs/2610.32222) | World Models: Interactive World Models | ACWM-RM is a reference-free reward model that jointly evaluates visual quality and action-following fidelity for action-conditioned world models. | 7 | 7 |
+| 2026-10-25 | [$\\Psi$-0.6: Adaptive Streams of Thought in a Unified Vision-Language World Model](https://arxiv.org/abs/2610.32177) | World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Ψ-0.6 is a unified vision-language world model that adaptively combines visual, linguistic, geometric, and simulated reasoning for flexible physical-world inference. | 9 | 8 |
+| 2026-10-25 | [WorldMirror: Agentic Real-to-Sim Generation of Interactive Worlds from In-the-Wild Robot Demonstrations](https://arxiv.org/abs/2610.31834) | World Models: Interactive World Models | WorldMirror turns in-the-wild robot demonstrations into visually faithful, physically interactive simulation worlds through agent-guided iterative reconstruction. | 8 | 8 |
 | 2026-10-22 | [Reading, Writing, Sharing, and Interacting with the World through Video](https://arxiv.org/abs/2610.31668) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Understanding | This survey unifies video foundation and world models through four operations—reading, writing, sharing, and interacting—to study how videos represent and support reasoning about evolving worlds. | 8 | 5 |
 | 2026-10-22 | [DiffDreamer: Coupling World Models with Differentiable Simulation for Agile Quadrotor Control](https://arxiv.org/abs/2610.31617) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | DiffDreamer combines learned world-model predictions with differentiable quadrotor simulation to improve agile control in dynamic environments. | 9 | 8 |
 | 2026-10-22 | [Dual Exam: Controlled Evaluation of Multimodal Agents and World Models](https://arxiv.org/abs/2610.31066) | World Models: Interactive World Models | Dual Exam separately evaluates multimodal agents’ action selection and world models’ state evolution, revealing uneven performance and limited evidence that either predicts successful agent–world-model coupling. | 8 | 7 |

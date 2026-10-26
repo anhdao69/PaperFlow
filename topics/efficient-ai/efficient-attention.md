@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**290 papers total**
+**291 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-25 | [LazyFlash: Forward-Dense, Backward-Sparse Attention for Accelerated Long-Context Fine-Tuning](https://arxiv.org/abs/2610.31911) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | LazyFlash accelerates long-context fine-tuning by keeping attention dense in the forward pass while skipping low-impact blocks during the backward pass. | 8 | 8 |
 | 2026-10-24 | [Rethinking Sequence Compression with Test-time Regression](https://arxiv.org/abs/2610.31574) | Efficient AI: Token Pruning and Eviction, Efficient Attention | TTR-Compressor uses differentiable test-time regression to turn input-token relationships into compact representations, improving sequence compression for language and multimodal models. | 8 | 8 |
 | 2026-10-22 | [Squaring-the-Sphere: Distortion-Free and Seamless Panorama Generation via CubeAtlas](https://arxiv.org/abs/2610.31565) | Efficient AI: Efficient Attention | CubeAtlas enables distortion-free, seamless 360° panorama generation by jointly modeling cubemap faces with efficient sparse attention and perspective-space refinement. | 5 | 7 |
 | 2026-10-22 | [MixPT: Point Transformer with Interleaved Window and Global Attention](https://arxiv.org/abs/2610.31455) | 3D Vision; Efficient AI: Efficient Attention | MixPT balances local detail, global scene interaction, and efficiency by interleaving window and pooled-token global attention in a point transformer. | 6 | 6 |

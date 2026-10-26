@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**319 papers total**
+**321 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-25 | [UniWorld: A Unified World Model for Real-Time Visual World Simulation](https://arxiv.org/abs/2610.32381) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | UniWorld enables real-time, continuous visual world simulation by jointly maintaining persistent appearance and evolving scene geometry in a unified video generator. | 9 | 8 |
+| 2026-10-25 | [SyncVid: World-Equivariant Diffusion for Synchronized Video Generation](https://arxiv.org/abs/2610.31765) | 3D Vision; Video Generation and Understanding: Video Diffusion | SyncVid synchronizes multi-view video generation by coordinating diffusion noise in a canonical 3D space, improving visual quality and cross-view consistency without changing the model architecture. | 8 | 8 |
 | 2026-10-22 | [WorldForge V2: Eliciting Camera-Trajectory Alignment in Video Diffusion Models](https://arxiv.org/abs/2610.31640) | Video Generation and Understanding: Video Diffusion | WorldForge V2 improves camera-trajectory control in video diffusion models while preserving scene appearance and object motion, using training-free guidance plus targeted lightweight adaptation. | 8 | 7 |
 | 2026-10-22 | [AnyGameRenderer: Entity-Consistent Generative Rendering Across Games and an Entity-Level Benchmark](https://arxiv.org/abs/2610.31466) | Video Generation and Understanding: Video Diffusion | AnyGameRenderer converts simple game footage into detailed visuals while preserving each entity’s position, timing, appearance, and count across diverse game genres. | 6 | 6 |
 | 2026-10-22 | [Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation](https://arxiv.org/abs/2610.30926) | Video Generation and Understanding: Video Diffusion | FAPL trains MLLM latents to become actionable for cinematic video generation with sparse temporal guidance and factor-aware control. | 8 | 8 |

@@ -1,6 +1,126 @@
 {
   "days": [
     {
+      "date": "2026-10-25",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "As large language models (LLMs) process increasingly long sequences, attention becomes a major computational bottleneck. Sparse attention mostly targets inference, yet many methods still train densely or cannot support sparse training, and their added complexity makes sparsity hard to turn into wall-clock speedups, leaving dense attention widely used in practice. This paper introduces LazyFlash, a forward-dense, backward-sparse attention method built on the observation that attention training is dominated by the backward pass. LazyFlash keeps the forward pass exactly dense, so the trained model remains a standard dense model that existing systems such as vLLM can serve without any change. For the backward pass, LazyFlash proposes a gradient-aware block sparsification design that ranks query blocks by their attention-output gradient norms and skips those contributing negligibly to parameter updates, turning the dense backward into a block-sparse one. A gradient-mass budget adapts the amount of skipped computation to each head and training step, while importance sampling preserves the dense gradient in expectation. These designs are implemented inside the tiled FlashAttention backward kernel, where skipped blocks are never loaded or computed, translating gradient sparsity into real wall-clock acceleration. Experiments on long-context text and speech LLMs show that LazyFlash maintains downstream performance while achieving up to 5.7x attention-backward speedup over FlashAttention and 1.7x end-to-end training speedup.",
+          "arxiv_id": "2610.31911",
+          "arxiv_url": "https://arxiv.org/abs/2610.31911",
+          "authors": [
+            "Keqi Deng, Ruchao Fan, Jinyu Li"
+          ],
+          "bullets": [
+            "Addresses the training-time bottleneck of dense attention, which limits practical speedups from sparse methods.",
+            "Uses gradient-aware block sparsification to rank query blocks by attention-output gradient norms and skip negligible updates.",
+            "Adapts sparsity with a per-head, per-step gradient-mass budget while importance sampling preserves dense gradients in expectation.",
+            "Integrates skipping into the tiled FlashAttention backward kernel, avoiding loads and computation for skipped blocks.",
+            "Maintains downstream performance while delivering up to 5.7× attention-backward and 1.7× end-to-end training speedups."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of LazyFlash. The forward pass computes every block, so the trained model remains an ordinary dense-attention model. In the backward pass, each query block is kept with a probability set by its output-gradient norm: skipped tiles are never loaded, and kept blocks are reweighted so that the gradient stays unbiased. As the bars illustrate, a small budget on gradient mass translates into a much larger saving in computation.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 486,
+              "image_path": "figures/2610.31911/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 827
+            },
+            {
+              "caption": "Figure 2: Attention time and end-to-end training step time against context length, measured on real LongAlign examples truncated to each length. Forward and backward are shown separately, and the arrows give the speedup over dense attention.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 354,
+              "image_path": "figures/2610.31911/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 825
+            },
+            {
+              "caption": "Table 5: LongBench-Pro accuracy and per-step attention time across backbone sizes. Qwen3-4B and Qwen3-8B have the same attention configuration, and their dense attention times are nearly identical. LazyFlash wins 19 of the 21 accuracy splits.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 336,
+              "image_path": "figures/2610.31911/table-003.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 806
+            },
+            {
+              "caption": "Table 1: LongBench-Pro results after fine-tuning Qwen3-8B-Base (higher is better, ↑), with the attention time per microbatch measured during training. The three indented rows are one MoBAtrained model served in three ways: sparse attention at prefill and decode, sparse attention at prefill only, and fully dense attention. They share the training cost listed on the MoBA row.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 223,
+              "image_path": "figures/2610.31911/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 822
+            },
+            {
+              "caption": "Table 3: Selection rules compared on LongBench-Pro. Random drops query blocks with no signal, the two top-k rules keep a fixed fraction ranked by forward attention mass and by output-gradient norm, and LazyFlash ranks by the gradient norm but sets the amount skipped with a budget on gradient mass. The three alternatives share the CUDA implementation of LazyFlash and are tuned to match its backward time; dense attention is a quality reference and is not matched in cost.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 181,
+              "image_path": "figures/2610.31911/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 810
+            },
+            {
+              "caption": "Table 4: Effect of the budget δ on long-form ASR (lower is better, ↓). Training diverges at δ = 0.5.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 161,
+              "image_path": "figures/2610.31911/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 826
+            },
+            {
+              "caption": "Table 2: Long-form English ASR results on 10-minute utterances (lower is better, ↓). MoBA is shown with dense inference only, the configuration under which it performed best on text in Table 1.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 129,
+              "image_path": "figures/2610.31911/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 822
+            }
+          ],
+          "first_seen_at": "2026-10-25T21:00:00-04:00",
+          "hero_figure": "figures/2610.31911/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.31911",
+          "relevance": 8,
+          "selection_reason": "Backward-sparse attention accelerates long-context LLM fine-tuning, directly fitting efficient attention and long-context methods.",
+          "summary_status": "generated",
+          "title": "LazyFlash: Forward-Dense, Backward-Sparse Attention for Accelerated Long-Context Fine-Tuning",
+          "tldr": "LazyFlash accelerates long-context fine-tuning by keeping attention dense in the forward pass while skipping low-impact blocks during the backward pass.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-24",
       "paper_count": 1,
       "papers": [
@@ -55859,5 +55979,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 290
+  "total_paper_count": 291
 }

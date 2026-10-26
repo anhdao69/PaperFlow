@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**355 papers total**
+**359 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-25 | [AutoMIL: Automated Multiple Instance Learning for Whole-Slide Image Classification](https://arxiv.org/abs/2610.32452) | 3D Vision: 3D Foundation Models | AutoMIL automates key multiple instance learning pipeline decisions for whole-slide image classification, providing an accessible baseline with competitive benchmark performance. | 6 | 5 |
+| 2026-10-25 | [Beyond Pattern Matching in 3D MLLMs: Part-Level Functional Reasoning for Generalizable Recognition](https://arxiv.org/abs/2610.32262) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | PFIR improves generalizable 3D object recognition by inferring function from parts before identifying the object, especially in geometrically ambiguous cases. | 7 | 7 |
+| 2026-10-25 | [Easy-3Dfy: Object-Level Geometric Composition for Single-Image 3D Scene Construction](https://arxiv.org/abs/2610.32250) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Easy-3Dfy improves single-image 3D scene reconstruction by separately generating detailed objects and estimating their spatial layout, then aligning them geometrically for composition. | 7 | 7 |
+| 2026-10-25 | [$\\Psi$-0.6: Adaptive Streams of Thought in a Unified Vision-Language World Model](https://arxiv.org/abs/2610.32177) | World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Ψ-0.6 is a unified vision-language world model that adaptively combines visual, linguistic, geometric, and simulated reasoning for flexible physical-world inference. | 9 | 8 |
 | 2026-10-22 | [EgoHand: Monocular 3D Hand Reconstruction from Egocentric Video](https://arxiv.org/abs/2610.30293) | 3D Vision: 3D Foundation Models | EgoHand reconstructs 3D hands from monocular egocentric video using diverse training data and camera-aware transformer modeling, achieving strong zero-shot generalization and fast inference. | 8 | 8 |
 | 2026-10-21 | [Plausible but Unimplantable: A Trustworthiness Audit of Shape Completion Foundation Models for Cranial Defect Reconstruction](https://arxiv.org/abs/2610.30035) | 3D Vision: 3D Foundation Models | An audit finds that publicly released shape-completion foundation models produce plausible-looking but clinically unimplantable cranial reconstructions in zero-shot use. | 6 | 6 |
 | 2026-10-21 | [BlazeVGGT: 13x Faster VGGT at 2,000 Frames via Camera Token without Training](https://arxiv.org/abs/2610.29454) | 3D Vision: 3D Foundation Models; Efficient AI: Efficient Attention | BlazeVGGT makes VGGT about 13× faster on 2,000-frame sequences by sparsifying redundant cross-view attention without retraining, while improving reported reconstruction accuracy. | 8 | 8 |

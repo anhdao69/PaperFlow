@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**344 papers total**
+**348 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-25 | [UniAction: Unified Action Conditioning for World Models](https://arxiv.org/abs/2610.32977) | World Models: Video World Models, Interactive World Models | UniAction unifies heterogeneous action conditioning in one world model by encoding actions as sparse semantic elements with spatiotemporal coordinates. | 9 | 8 |
+| 2026-10-25 | [RynnUnify: Towards Unified Embodied Brain](https://arxiv.org/abs/2610.32965) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Video World Models; Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | RynnUnify is a 16B unified embodied model that combines physical-world understanding, long-horizon visual planning, and robot control through interleaved video-language reasoning. | 9 | 8 |
+| 2026-10-25 | [UniWorld: A Unified World Model for Real-Time Visual World Simulation](https://arxiv.org/abs/2610.32381) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | UniWorld enables real-time, continuous visual world simulation by jointly maintaining persistent appearance and evolving scene geometry in a unified video generator. | 9 | 8 |
+| 2026-10-25 | [Autoregressive Physics-Informed Neural Operator Surrogates and Joint 4-D Seismic-Production Bayesian History Matching](https://arxiv.org/abs/2610.31677) | World Models: Video World Models; Efficient AI: KV Cache and Memory Efficiency | A physics-informed Fourier neural operator surrogate enables fast joint production–4-D seismic Bayesian history matching in a low-dimensional geological parameter space. | 8 | 8 |
 | 2026-10-22 | [Reading, Writing, Sharing, and Interacting with the World through Video](https://arxiv.org/abs/2610.31668) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Understanding | This survey unifies video foundation and world models through four operations—reading, writing, sharing, and interacting—to study how videos represent and support reasoning about evolving worlds. | 8 | 5 |
 | 2026-10-22 | [PhysTrace: Interpretable Temporal Evaluation of Physical Consistency in Video Generative Models](https://arxiv.org/abs/2610.31429) | World Models: Video World Models; Video Generation and Understanding: Video Understanding | PhysTrace is a training-free framework that temporally localizes and explains physical inconsistencies in generated videos by comparing history-conditioned expectations with observed events. | 7 | 6 |
 | 2026-10-22 | [Learning from Next-Frame Prediction: Towards Unified and Scalable Visual Representation Learning](https://arxiv.org/abs/2610.30724) | World Models: Video World Models; Video Generation and Understanding: Video Understanding | VANE learns scalable visual representations by predicting entire future-frame embeddings, combining semantic next-frame prediction with fine-grained spatial reconstruction across images and videos. | 9 | 8 |

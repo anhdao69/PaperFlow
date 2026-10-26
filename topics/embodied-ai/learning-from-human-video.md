@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**230 papers total**
+**233 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-25 | [EgoForesight: Effectively Scaling Policy Learning with Noisy Egocentric Actions](https://arxiv.org/abs/2610.31845) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | EgoForesight scales robot policy learning with noisy egocentric video actions by weighting supervision by reliability and learning from demonstrated future outcomes. | 9 | 8 |
+| 2026-10-25 | [Scaling cross-situational word learning on children's naturalistic experiences](https://arxiv.org/abs/2610.31842) | Embodied AI: Learning from Human Videos | Cross-situational learning can recover early word meanings from large-scale child-centered video, but it depends strongly on high-quality visual representations and does not yet match children’s learning trajectories. | 6 | 6 |
+| 2026-10-25 | [KiRoSe: Using Kinematic Data for Efficient Segmentation of Robot Demonstrations](https://arxiv.org/abs/2610.31801) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | KiRoSe efficiently segments robot demonstrations by converting kinematic data into compact motion tokens that an open language model interprets as semantic events. | 6 | 7 |
 | 2026-10-24 | [TouchSight: Bare-Handed Tactile Prediction from Egocentric Video via Generative Visual Augmentation](https://arxiv.org/abs/2609.20414) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | TouchSight predicts dense full-hand contact forces from egocentric video alone by using generatively augmented glove recordings to bridge the gap to bare-hand interactions. | 9 | 8 |
 | 2026-10-22 | [Retrieval-Augmented Online Textual Memory for Episodic Memory Video Question Answering](https://arxiv.org/abs/2610.31284) | Embodied AI: Learning from Human Videos; Adaptation and Memory: Embodied Memory | A systematic study shows that effective retrieval for episodic video QA depends on reliable, answer-discriminative evidence—not merely broader temporal coverage. | 8 | 6 |
 | 2026-10-22 | [Robot Motion Transition with Human Motion Prior](https://arxiv.org/abs/2610.30817) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | STAMP connects independently acquired humanoid motions into continuous long-horizon sequences by aligning their spatial and temporal boundaries with a human motion prior. | 7 | 7 |

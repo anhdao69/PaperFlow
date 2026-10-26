@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**158 papers total**
+**161 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-25 | [CounselPlex: A Stressor-Aware Full-Duplex Counseling Model](https://arxiv.org/abs/2610.32702) | Language Foundation Models: LLM Memory, Long-Context Models | CounselPlex improves full-duplex counseling by maintaining and injecting an evolving representation of the seeker’s underlying stressor. | 4 | 6 |
+| 2026-10-25 | [Head Dimension Matters in Language Models for Long-Context Retrieval](https://arxiv.org/abs/2610.32213) | Language Foundation Models: Large Language Models, Long-Context Models | Wider attention heads improve long-context retrieval at fixed model size, even when attention projections are frozen during continual pretraining. | 8 | 7 |
+| 2026-10-25 | [LazyFlash: Forward-Dense, Backward-Sparse Attention for Accelerated Long-Context Fine-Tuning](https://arxiv.org/abs/2610.31911) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | LazyFlash accelerates long-context fine-tuning by keeping attention dense in the forward pass while skipping low-impact blocks during the backward pass. | 8 | 8 |
 | 2026-10-23 | [Boosting Deepresearch and LongContext Ability with Self-Generated Deepresearch Rollouts Traces](https://arxiv.org/abs/2609.20844) | Language Foundation Models: Long-Context Models | DLD-RL strengthens deep-research agents’ long-context understanding by converting self-generated research trajectories into full-context QA training data, improving both research and long-context performance. | 7 | 7 |
 | 2026-10-22 | [When LLMs Forget What They Believe: Characterizing State Integrity Collapse in Long-Horizon Dialogues](https://arxiv.org/abs/2610.31314) | Language Foundation Models: Long-Context Models | Long-horizon dialogue can cause LLMs to remember constraints but stop following them, revealing a distinct state-integrity failure that targeted anchoring can partially mitigate. | 7 | 7 |
 | 2026-10-22 | [Mixing Matters: Evidence Position Bias Across Sequence Mixers in Long-Context Question Answering](https://arxiv.org/abs/2610.31135) | Language Foundation Models: Long-Context Models | Evidence position bias in long-context QA varies with architecture, capability, task, and prompt, so the sequence mixer alone does not explain it. | 7 | 6 |
