@@ -1,6 +1,2083 @@
 {
   "days": [
     {
+      "date": "2026-10-26",
+      "paper_count": 12,
+      "papers": [
+        {
+          "abstract": "Attention over tens of thousands of visual tokens dominates the inference of video diffusion transformers (DiTs). Existing methods reduce this cost through sparsity, low precision, or both, but use a single precision for all kept tiles. We observe that the output error introduced by approximation varies widely across tiles. Many tiles can be skipped with little error, others must be computed but gain little beyond low precision, and a few retain substantial error even at low precision. We present Triage, a training-free attention method that assigns each tile one of three approximation tiers: skipping it by replacing it with its block means, skimming it in NVFP4, or refining it with NVFP4 residual correction. A lightweight router predicts each tile's error under each tier from block statistics and moves a tile to a more accurate tier only when the predicted error reduction justifies the extra compute, with a single price setting this trade-off. A fused kernel executes all three tiers in a single pass on the FP4 tensor cores of RTX Blackwell GPUs. Across Wan2.2, HunyuanVideo, and LTX-2.5, Triage accelerates end-to-end generation by up to 2.32x over dense FlashAttention, and in each of five settings it runs faster than every baseline while reaching 0.3-3.0 dB higher PSNR than the highest-PSNR baseline.",
+          "arxiv_id": "2610.35706",
+          "arxiv_url": "https://arxiv.org/abs/2610.35706",
+          "authors": [
+            "Yeonjae Kim, Omin Kwon, Seong Hoon Seo, Jae W. Lee"
+          ],
+          "bullets": [
+            "Targets the high inference cost of attention over tens of thousands of video tokens.",
+            "Assigns each tile to skip, NVFP4 skim, or NVFP4 residual refinement.",
+            "A lightweight router uses block statistics and one price parameter to balance error against compute.",
+            "A fused kernel executes all tiers in one pass on RTX Blackwell FP4 tensor cores.",
+            "Across three video diffusion models and five settings, it achieves up to 2.32× end-to-end speedup and 0.3–3.0 dB higher PSNR than the strongest baseline."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5. Overview of TRIAGE. Planning (§5): ➊ clustering trees group similar queries and keys into tiles; ➋ the router scores each tile by Ẽt = m̃t (Jt +Rt) √ wh and assigns it to skip, skim, or refine. Execution (§6): ➌ in one pass, skipped tiles use cluster means, skimmed tiles one NVFP4 product, and refined tiles three products that add the residuals. Tile patterns are illustrative.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 509,
+              "image_path": "figures/2610.35706/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 9. Relative output error versus attention speedup over FlashAttention on attention calls captured on the RTX 5090, sweeping the knob of each method (lower right is better). (a, b) TRIAGE (π from 0.025 to 0.9) against the baselines. (c, d) TRIAGE without the refine tier and without both the refine tier and the clustering tree (natural token order). Settings faster than the fastest TRIAGE setting are omitted. Arrows: time of SpargeAttn (a, b) and of TRIAGE without the refine tier (c, d) relative to TRIAGE at equal error; circles: TRIAGE at π = 0.15.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 267,
+              "image_path": "figures/2610.35706/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1003
+            },
+            {
+              "caption": "Figure 7. End-to-end PSNR versus speedup over dense on the RTX 5090, sweeping the knob of each method (π ∈ {0.1, 0.15, 0.3, 0.6} for TRIAGE). Each point averages over the same 50 prompts.",
+              "figure_id": "figure-7-13",
+              "figure_number": "7",
+              "height": 292,
+              "image_path": "figures/2610.35706/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 483
+            },
+            {
+              "caption": "Figure 3. Approximation error across rows and tiles. (a) Median row error versus row entropy at equal modeled compute; percentages: share of rows on which each approach is most accurate (Wan2.2/HunyuanVideo). (b) Row error from approximating a single tile versus its attention mass.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 247,
+              "image_path": "figures/2610.35706/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 483
+            },
+            {
+              "caption": "Figure 2. The 21st of 129 frames of the video that HunyuanVideo generates at 720p for the prompt “On the bed in the bedroom, a puppy is playing with a slipper in its mouth.” The bottom row zooms into the box; labels give the end-to-end speedup over dense and the PSNR against the dense video. (a) SVG-EAR (Zhou et al., 2026), (b) SageAttention3 (Zhang et al., 2025b), and (c) SpargeAttn (Zhang et al., 2025c) follow the policies of Figure 1a–c; (d) TRIAGE.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 257,
+              "image_path": "figures/2610.35706/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 8. Time of one attention call, averaged over the sparse steps of the end-to-end runs, for dense FlashAttention (D, truncated) and TRIAGE at π = 0.15 and 0.3. Arrows: speedup over dense.",
+              "figure_id": "figure-8-12",
+              "figure_number": "8",
+              "height": 273,
+              "image_path": "figures/2610.35706/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 483
+            },
+            {
+              "caption": "Figure 6. Choosing tiers with one price. Each tile takes the tier where a line of slope −π touches its error–compute curve, and a higher price moves tiles to cheaper tiers. Numbers are illustrative.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 270,
+              "image_path": "figures/2610.35706/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 483
+            },
+            {
+              "caption": "Figure 11. LTX-2.5 image-to-video with dense attention and with TRIAGE, from the same image, prompt and seed, at 1088p (1920×1088, 721 frames, 30 s), 1440p (2560×1472, 361 frames, 15 s) and 4K (3840×2176, 169 frames, 7 s). Above each video: setting, end-to-end generation time with dense attention → with TRIAGE, the speedup, the PSNR of the TRIAGE video against the dense one, and the full prompt and seed. Continued in Figures 12–13.",
+              "figure_id": "figure-11-10",
+              "figure_number": "11",
+              "height": 974,
+              "image_path": "figures/2610.35706/figure-008.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 854
+            },
+            {
+              "caption": "Figure 12. LTX-2.5 with dense attention and with TRIAGE, continued from Figure 11 (2/3).",
+              "figure_id": "figure-12-14",
+              "figure_number": "12",
+              "height": 1208,
+              "image_path": "figures/2610.35706/figure-009.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 853
+            },
+            {
+              "caption": "Figure 13. LTX-2.5 with dense attention and with TRIAGE, continued from Figure 11 (3/3).",
+              "figure_id": "figure-13-2",
+              "figure_number": "13",
+              "height": 1120,
+              "image_path": "figures/2610.35706/figure-010.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 853
+            },
+            {
+              "caption": "Figure 10. Tiers that the router assigns at π = 0.15 on the operands of §3, per quintile of the normalized entropy of the rows’ tile masses (Q1 the sharpest, Q5 the most diffuse): the share of the row’s tiles and of its exact attention mass in each tier.",
+              "figure_id": "figure-10-7",
+              "figure_number": "10",
+              "height": 253,
+              "image_path": "figures/2610.35706/figure-011.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1011
+            },
+            {
+              "caption": "Table 4. End-to-end details for Table 1 (means over 50 prompts). Attn.: attention time of a sparse step, including its dense first transformer block, so the speedups are lower than those of the sparse attention calls in Figure 8; E2E: latency of a request, from the prompt to the decoded video. Density: share of tiles computed (skimmed or refined for TRIAGE). Refined: share of all tiles that TRIAGE refines. VBench: subject consistency (Subj.), background consistency (Backg.), motion smoothness (Motion), aesthetic quality (Aesth.), and imaging quality (Imag., divided by 100) and their mean. Bold: the single best accelerated method in each setting, excluding the dense reference (none for ties).",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 740,
+              "image_path": "figures/2610.35706/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 850
+            },
+            {
+              "caption": "Table 3. Attention kernel on the RTX 5090: relative L2 error, kernel time (ms) without preprocessing, and speedup over FlashAttention. 2-pass BF16: the tiles that TRIAGE refines, computed instead in a separate BF16 pass.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 182,
+              "image_path": "figures/2610.35706/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 454
+            },
+            {
+              "caption": "Table 2. Router score ablation at equal kept and refined tiles: error relative to the full score (geometric mean) and share of calls with a higher error, pooled over four budgets.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 140,
+              "image_path": "figures/2610.35706/table-014.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 488
+            },
+            {
+              "caption": "Table 1. End-to-end results over 50 prompts: fidelity to the dense video (PSNR and SSIM, higher is better; LPIPS, lower is better), VBench quality (mean of five dimensions), and speedup over dense (E2E). Density: share of tiles computed, refined ones in parentheses. Tokens: visual tokens per sequence (stage 2 for LTX-2.5). TRIAGE (π): price π. S, L, S+L: sparse, low-bit (4-bit), and combined (8-bit) attention. Bold: best method.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 36,
+              "image_path": "figures/2610.35706/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 492
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.35706/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.35706",
+          "relevance": 8,
+          "selection_reason": "Tiered attention-tile skipping and low-precision refinement for video diffusion transformers, directly relevant to efficient attention and token/tile pruning.",
+          "summary_status": "generated",
+          "title": "Triage: Skip, Skim, or Refine Attention Tiles in Video Diffusion Transformers",
+          "tldr": "Triage speeds up video diffusion attention by adaptively skipping, low-precision computing, or refining each tile based on its predicted error.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Deploying large vision-language models (LVLMs) on resource-constrained embodied agents for 3D visual question answering necessitates cloud-edge collaboration. However, offloading massive visual data to the cloud over bandwidth-limited and noisy channels introduces severe latency and transmission distortion. To address this, we propose TP-JSCC, an efficient token pruning and joint source-channel coding method for LVLMs-based 3D-VQA in Cloud-Edge Collaboration. First, we develop a Local and Global Semantics-based Hybrid Token Pruning (LGS-HTP) module to significantly reduce the visual token count. By decoupling foreground-background tokens and jointly selecting local and global semantics, LGS-HTP effectively reduces redundancy while preserving reasoning-critical tokens. Second, we introduce a lightweight Token Joint Source-Channel Coding (T-JSCC) module to further compress the pruned tokens and ensure their robust transmission over error-prone channels. By employing lightweight cascaded linear layers and Signal-to-Noise Ratio (SNR)-adaptive mechanism, this module adapts to fluctuating channel conditions while maintaining minimal computational overhead. Extensive experiments on ScanQA and SQA3D datasets indicate the exceptional efficiency and robustness of our approach. Specifically, on ScanQA validation set, the LGS-HTP module could achieve 90% pruning ratio while incurring less than a 1% CIDEr loss. Building on this, the T-JSCC further compresses the tokens by 18 times, resulting in an overall 180 times data volume reduction for robust transmission, while saving 90% in computational complexity for LVLM deployment. Our code is available at https://github.com/yuanhui0325/TP-JSCC.",
+          "arxiv_id": "2610.35489",
+          "arxiv_url": "https://arxiv.org/abs/2610.35489",
+          "authors": [
+            "Zhengxin Li, Chongzhen Tian, Hui Yuan, Hao Liu, Sam Kwong"
+          ],
+          "bullets": [
+            "Targets latency and distortion caused by offloading large 3D visual inputs from resource-constrained agents.",
+            "LGS-HTP jointly selects local and global semantic tokens while separating foreground and background information.",
+            "T-JSCC applies lightweight compression with SNR adaptation to handle changing channel conditions.",
+            "On ScanQA validation, it prunes 90% of tokens with less than 1% CIDEr loss and achieves 18× further compression.",
+            "The combined approach reduces transmitted data volume by 180× and deployment computational complexity by 90%, as reported on ScanQA and SQA3D."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 1. Framework of the proposed Token Pruning Joint Source-Channel Coding (TP-JSCC). The LGS-HTP module effectively selects global semantic tokens to reduce visual redundancy and achieve a scalable compression ratio. Simultaneously, the T-JSCC module encodes and transmits the selected sparse tokens to maintain transmission robust to complex wireless channel conditions.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 553,
+              "image_path": "figures/2610.35489/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1005
+            },
+            {
+              "caption": "Fig. 5. Overall architecture of the proposed T-JSCC network. A lightweight MLP network first reduces the token channel dimension to 64. The compressed tokens are then power-normalized and transmitted over error-prone channels. A symmetric MLP decoder is subsequently utilized for token reconstruction. Furthermore, the channel SNR γ is injected into both the encoding and decoding processes to achieve channel-adaptive transmission.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 363,
+              "image_path": "figures/2610.35489/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 960
+            },
+            {
+              "caption": "Fig. 4. Pipeline of the hybrid token selection for the foreground tokens of the i-th view (the background tokens are selected following the same process).",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 268,
+              "image_path": "figures/2610.35489/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 948
+            },
+            {
+              "caption": "Fig. 2. Illustration of the proposed LGS-HTP module for the i-th view. The module comprises four steps: (1) inputs preprocessing for initial mask and token preparation, (2) enhancement for dynamic budget allocation, (3) clustering for semantic grouping, and (4) selection of the final retained tokens.",
+              "figure_id": "figure-2-18",
+              "figure_number": "2",
+              "height": 387,
+              "image_path": "figures/2610.35489/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1006
+            },
+            {
+              "caption": "Fig. 6. Impact of the compressed channel dimension Dc on 3D-VQA performance under 90% pruning.",
+              "figure_id": "figure-6-15",
+              "figure_number": "6",
+              "height": 316,
+              "image_path": "figures/2610.35489/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 508
+            },
+            {
+              "caption": "Fig. 3. Segmentation network for obtaining foreground-background priors.",
+              "figure_id": "figure-3-19",
+              "figure_number": "3",
+              "height": 127,
+              "image_path": "figures/2610.35489/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 519
+            },
+            {
+              "caption": "TABLE VIII COMPARISON WITH SOTA PRUNING METHODS ON THE SCANQA VALIDATION SET AND THE SQA3D TEST SET. THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS FOR EACH PRUNING RATIO ARE HIGHLIGHTED IN BOLD, UNDERLINE, AND italic, RESPECTIVELY.",
+              "figure_id": "table-VIII-5",
+              "figure_number": "VIII",
+              "height": 408,
+              "image_path": "figures/2610.35489/table-007.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 1050
+            },
+            {
+              "caption": "TABLE VII COMPARISON OF LGS-HTP WITH BASELINE TOKEN PRUNING METHODS AT 80% AND 90% PRUNING RATIOS ON THE SCANQA VALIDATION SET. THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS FOR EACH PRUNING RATIO ARE HIGHLIGHTED IN BOLD, UNDERLINE, AND italic, RESPECTIVELY.",
+              "figure_id": "table-VII-7",
+              "figure_number": "VII",
+              "height": 253,
+              "image_path": "figures/2610.35489/table-008.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 520
+            },
+            {
+              "caption": "TABLE IX END-TO-END 3D-VQA PERFORMANCE OF THE PROPOSED METHOD UNDER DIFFERENT SNRS WITH UNIFORM SNR SAMPLING (UFM) DURING TRAINING ON THE SCANQA VALIDATION SET.",
+              "figure_id": "table-IX-4",
+              "figure_number": "IX",
+              "height": 171,
+              "image_path": "figures/2610.35489/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 502
+            },
+            {
+              "caption": "TABLE X END-TO-END 3D-VQA PERFORMANCE OF THE PROPOSED METHOD UNDER DIFFERENT SNRS WITH PROGRESSIVE SNR RANGE EXPANSION (PRG) DURING TRAINING ON THE SCANQA VALIDATION SET.",
+              "figure_id": "table-X-2",
+              "figure_number": "X",
+              "height": 171,
+              "image_path": "figures/2610.35489/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 502
+            },
+            {
+              "caption": "TABLE V EFFECT OF THE T-JSCC LOSS-WEIGHT SETTING λN : λP ON THE SCANQA VALIDATION SET. THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS ARE HIGHLIGHTED IN BOLD, UNDERLINE, AND italic, RESPECTIVELY.",
+              "figure_id": "table-V-17",
+              "figure_number": "V",
+              "height": 273,
+              "image_path": "figures/2610.35489/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 510
+            },
+            {
+              "caption": "TABLE I EFFECT OF THE FOREGROUND-ENHANCEMENT BIAS λbias UNDER 90% TOKEN PRUNING ON THE SCANQA VALIDATION SET. THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS ARE HIGHLIGHTED IN BOLD, UNDERLINE, AND italic, RESPECTIVELY.",
+              "figure_id": "table-I-10",
+              "figure_number": "I",
+              "height": 273,
+              "image_path": "figures/2610.35489/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 490
+            },
+            {
+              "caption": "TABLE VI 3D-VQA PERFORMANCE UNDER DIFFERENT AWGN CHANNEL SNRS ON THE SCANQA VALIDATION SET.",
+              "figure_id": "table-VI-16",
+              "figure_number": "VI",
+              "height": 213,
+              "image_path": "figures/2610.35489/table-013.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 504
+            },
+            {
+              "caption": "TABLE II EFFECT OF Kglo IN LGS-HTP UNDER 80% TOKEN PRUNING ON THE SCANQA VALIDATION SET. THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS ARE HIGHLIGHTED IN BOLD, UNDERLINE, AND italic,",
+              "figure_id": "table-II-11",
+              "figure_number": "II",
+              "height": 200,
+              "image_path": "figures/2610.35489/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 498
+            },
+            {
+              "caption": "TABLE III EFFECT OF Kglo IN LGS-HTP UNDER 90% TOKEN PRUNING ON THE SCANQA VALIDATION SET. THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS ARE HIGHLIGHTED IN BOLD, UNDERLINE, AND italic, RESPECTIVELY.",
+              "figure_id": "table-III-9",
+              "figure_number": "III",
+              "height": 171,
+              "image_path": "figures/2610.35489/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 498
+            },
+            {
+              "caption": "TABLE IV IMPACT OF THE COMPRESSED CHANNEL DIMENSION Dc IN T-JSCC UNDER 90% TOKEN PRUNING ON THE SCANQA VALIDATION SET.",
+              "figure_id": "table-IV-14",
+              "figure_number": "IV",
+              "height": 150,
+              "image_path": "figures/2610.35489/table-016.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 494
+            },
+            {
+              "caption": "TABLE XI ABLATION STUDY OF LGS-HTP COMPONENTS: TOKEN DECOUPLING AND GLOBAL SEMANTIC TOKENS SELECTION STRATEGIES UNDER 90% TOKEN PRUNING ON THE SCANQA VALIDATION SET. THE BEST, SECOND-BEST, AND THIRD-BEST RESULTS ARE HIGHLIGHTED IN BOLD, UNDERLINE, AND italic, RESPECTIVELY.",
+              "figure_id": "table-XI-3",
+              "figure_number": "XI",
+              "height": 169,
+              "image_path": "figures/2610.35489/table-017.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 510
+            },
+            {
+              "caption": "TABLE XII PERFORMANCE COMPARISON BETWEEN THE UNGUIDED PRUNING VARIANT AND OUR PROPOSED GUIDANCE STRATEGY ON THE SCANQA VALIDATION SET. THE BEST RESULTS AMONG THE PRUNED VARIANTS FOR EACH PRUNING RATIO ARE HIGHLIGHTED IN BOLD.",
+              "figure_id": "table-XII-12",
+              "figure_number": "XII",
+              "height": 140,
+              "image_path": "figures/2610.35489/table-018.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 514
+            },
+            {
+              "caption": "TABLE XIII COMPUTATIONAL COMPLEXITY (IN GFLOPS) OF DIFFERENT MODULES AND THE LVLM UNDER VARIOUS COMPRESSION RATIOS.",
+              "figure_id": "table-XIII-13",
+              "figure_number": "XIII",
+              "height": 129,
+              "image_path": "figures/2610.35489/table-019.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 518
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.35489/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.35489",
+          "relevance": 8,
+          "selection_reason": "Token pruning and joint source-channel coding for LVLMs in 3D-VQA; directly fits efficient AI.",
+          "summary_status": "generated",
+          "title": "TP-JSCC: Efficient Token Pruning and Joint Source-Channel Coding for LVLMs-based 3D-VQA in Cloud-Edge Collaboration",
+          "tldr": "TP-JSCC enables efficient and robust cloud-edge 3D-VQA by pruning redundant visual tokens and compressing the remainder for noisy-channel transmission.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Recent generic reference-based image generation models natively support multiple conditions by concatenating all reference image and text tokens into a joint sequence processed by a single Diffusion Transformer (DiT). However, this versatile paradigm comes at an efficiency cost: accommodating multiple references leads to a token explosion, incurring massive $\\mathcal{O}(N^2)$ computational complexity. Most acceleration methods operate inside the DiT, showing limited capability in reducing spatial redundancy and failing to alleviate peak VRAM. While some pre-model token reduction alternatives exist, they inevitably introduce external models. This raises a question: Is it possible to achieve acceleration and memory savings while preserving compatibility with in-model techniques and requiring no additional parameters? In this work, we realize this goal by proposing the early Token reduction via Downsampled self-Probing (ToDoPro). By executing a few denoising steps on spatially $2\\times$ downsampled reference images, this cheap probing stage utilizes the DiT model itself to effectively and efficiently extract reference token importance. Using the probed importance, we apply a hierarchical reduction before the main denoising stage: we completely discard low-importance tokens, substitute mid-importance tokens with their downsampled counterparts to cheaply preserve global context, and keep high-importance tokens. Experiments across three base models and two benchmarks demonstrate that our early reduction accelerates inference significantly and mitigates peak GPU memory. Furthermore, we can improve generation quality by safely filtering out noisy, uninformative reference tokens, enabling the model to concentrate its limited attention capacity on genuinely useful tokens. The code will be released at https://github.com/scy639/ToDoPro",
+          "arxiv_id": "2610.34782",
+          "arxiv_url": "https://arxiv.org/abs/2610.34782",
+          "authors": [
+            "Caiyi Sun, Yujing Sun, Siu-Ming Yiu"
+          ],
+          "bullets": [
+            "Addresses token explosion and quadratic compute from combining multiple image and text references.",
+            "Runs a few denoising steps on 2× downsampled references to estimate token importance without adding external models or parameters.",
+            "Hierarchically discards low-importance tokens, downsamples mid-importance tokens, and preserves high-importance tokens before full denoising.",
+            "Experiments on three base models and two benchmarks show significant inference acceleration and reduced peak GPU memory.",
+            "Filtering noisy, uninformative tokens can improve quality by focusing attention on useful references."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 7: Visual comparison of generation quality across diverse tasks from MultiBanana and Macro datasets (all methods are under the Slow level in Table 1 with comparable speedups). Best viewed when zoomed in.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 302,
+              "image_path": "figures/2610.34782/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Average quality versus speedup across three base models and two benchmarks.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 364,
+              "image_path": "figures/2610.34782/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 827
+            },
+            {
+              "caption": "Figure 2: (a) Most existing acceleration methods operate inside the DiT during the main denoising stage. (b) ToDoPro reduces reference tokens before the main denoising stage begins. A probing stage on downsampled references cheaply extracts token importance, guiding token preservation / low-resolution substitution / discarding. The compressed reference images then enter the main denoising stage, slashing end-to-end latency and activation VRAM while remaining compatible with in-model methods in (a).",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 334,
+              "image_path": "figures/2610.34782/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 331
+            },
+            {
+              "caption": "Figure 8: Qualitative evolution of generated images. At 0% reduction (unpruned baseline), the model mistakenly retains visual distractors (e.g., an extra floating glove). Within a broad window (30% to 94%), our method successfully filters out these distractors, boosting quality. At extreme reduction levels (> 95%), the irreversible loss of informative reference tokens causes quality degradation.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 151,
+              "image_path": "figures/2610.34782/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 579
+            },
+            {
+              "caption": "Figure 5: The illustration of our token reduction by a spatial-temporal downsampled self-probing. By executing a downsampled time step schedule denoising loop on spatially 2× downsampled input images, this probing stage cheaply extracts the reference importance. The extracted importance scores then guide the reduction strategy outside the main denoising run. The visual example is generated using FLUX.2-Klein-4B (4-step).",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 335,
+              "image_path": "figures/2610.34782/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Alignment of reference utilization scores with pseudo ground-truth importance across different query sets (Ω). The set (Ω = G∪P ) consistently yields the best overall alignment, demonstrating that querying reference tokens via both generative and prompt tokens optimally proxies the importance.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 161,
+              "image_path": "figures/2610.34782/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 406
+            },
+            {
+              "caption": "Figure 4: Analysis of layer-wise attention dynamics. (a) Layer-wise visualizations of the reference utilization score show stochastic anomalous values, and a single layer is usually biased because different layers may have different functions and focuses. (b) Computing the mean utilization score across layers smooths out the bias and instantaneous noise, achieving better alignment with the oracle token importance.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 197,
+              "image_path": "figures/2610.34782/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Figure 9: Average score and latency of Ours (slow) (Flux.2-Klein) on MACRO with 2–10 reference images.",
+              "figure_id": "figure-9-4",
+              "figure_number": "9",
+              "height": 225,
+              "image_path": "figures/2610.34782/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 568
+            },
+            {
+              "caption": "Table 2: Compatibility of Ours(fast) with existing in-model acceleration methods on FLUX.2-Klein4B, yielding compounded inference speedups.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 218,
+              "image_path": "figures/2610.34782/table-009.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Comparison of efficiency and quality on MultiBanana and MACRO (Flux.2-Klein-4B).",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 263,
+              "image_path": "figures/2610.34782/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 830
+            },
+            {
+              "caption": "Table 3: Ablation study on Ours(fast) on MultiBanana (controlled to the same reduction ratio). Base model: Flux.2-Klein-4B.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 96,
+              "image_path": "figures/2610.34782/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Effective Attention Ratio (EAR) on all samples from the object composition task of MultiBanana. Baseline: Flux.2-Klein-4B. All variants use the same reduction ratio (Slow level).",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 105,
+              "image_path": "figures/2610.34782/table-012.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34782/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.34782",
+          "relevance": 8,
+          "selection_reason": "Early token reduction for diffusion transformers directly matches token pruning and eviction for efficient inference and memory savings.",
+          "summary_status": "generated",
+          "title": "ToDoPro: Faster and Better Reference-Based Generation: Early Token Reduction via Downsampled Self-Probing",
+          "tldr": "ToDoPro uses the DiT itself to identify and reduce redundant reference tokens early, accelerating reference-based image generation while lowering peak memory and potentially improving quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Multi-modal video fusion aims to generate temporally coherent videos with salient targets and rich structural details by integrating complementary information from heterogeneous sensors. However, existing video fusion methods commonly rely on optical flow estimation and feature warping for inter-frame alignment and cross-frame information aggregation to maintain temporal consistency, thereby introducing considerable computational overhead and making the fusion performance vulnerable to flow estimation errors. To address these limitations, this paper proposes an efficient multi-modal video fusion network with dynamic region-guided temporal interaction. Specifically, the proposed spatio-temporal interaction module leverages the Test-Time Training paradigm to model temporal dependencies with linear complexity. Building on this design, the module restricts temporal modeling to key dynamic regions in the video sequence, as static background regions provide limited temporal cues. By excluding low-variation tokens from unnecessary temporal interaction, this selective strategy contributes to improved fusion quality and temporal consistency. In addition, leveraging the strong ability of pretrained MAE features to capture global structural dependencies, we introduce a feature-level temporal consistency constraint to suppress local flickering by aligning the inter-frame variation directions of the fused and source videos. We further propose a new MAE-based temporal metric that quantifies directional distance between their temporal variations within dynamic regions. Experimental results demonstrate that, compared with existing state-of-the-art methods, our method achieves superior fusion quality and temporal consistency on multiple benchmark datasets, while exhibiting high computational efficiency under edge-device deployment settings.",
+          "arxiv_id": "2610.34765",
+          "arxiv_url": "https://arxiv.org/abs/2610.34765",
+          "authors": [
+            "Jingxue Huang, Xiaosong Li, Yi Lin"
+          ],
+          "bullets": [
+            "Addresses the computational cost and error sensitivity of optical-flow-based frame alignment.",
+            "Uses test-time training for linear-complexity spatio-temporal interaction.",
+            "Focuses temporal modeling on dynamic regions while skipping low-variation background tokens.",
+            "Applies a pretrained-MAE-based consistency constraint to reduce local flickering.",
+            "Reports superior fusion quality and temporal consistency with high efficiency on edge-device settings across multiple benchmarks."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of the proposed multi-modal video fusion framework.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 783,
+              "image_path": "figures/2610.34765/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 851
+            },
+            {
+              "caption": "Fig. 3. Qualitative comparison of all methods on the M3SVD, VTUAV, HDO and VTMOT datasets.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 413,
+              "image_path": "figures/2610.34765/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1060
+            },
+            {
+              "caption": "Fig. 1. Comparison with an existing video fusion method [4] in terms of temporal interaction schemes, fusion quality and computational efficiency. All reported metrics are evaluated on the VTMOT dataset.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 491,
+              "image_path": "figures/2610.34765/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Fig. 6. Comparison of segmentation results produced by different video fusion methods on scene ‘0118 1913’ of the M3SVD dataset. The bottom row of each image presents cropped views of the blue-boxed region at two-frame intervals from T to T + 8. The segmentation prompt used for this scene is ’the person on the right side wearing a hoodie.’",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 348,
+              "image_path": "figures/2610.34765/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 458
+            },
+            {
+              "caption": "Fig. 7. Bubble chart comparing the computational efficiency and fusion performance of different methods. The bubble size is determined by the average rank of each method over all datasets and evaluation metrics, where a larger bubble denotes better overall performance.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 269,
+              "image_path": "figures/2610.34765/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 329
+            },
+            {
+              "caption": "Fig. 8. Visualization of variation responses in the pixel space and different pretrained feature spaces for Scene ’002’ from the HDO dataset. (a) Adjacentframe variation. (b) Variation from the temporal mean.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 170,
+              "image_path": "figures/2610.34765/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 513
+            },
+            {
+              "caption": "Fig. 10. Visual comparison of temporal consistency between two ablation variants: (II) w/o STIM and (VI) w/o Ltemp&Lrev.",
+              "figure_id": "figure-10-3",
+              "figure_number": "10",
+              "height": 253,
+              "image_path": "figures/2610.34765/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 405
+            },
+            {
+              "caption": "Fig. 9. Computational efficiency of ViT and Ours with respect to the number of input frames at two spatial resolutions. For each line chart, the left and right groups correspond to resolutions of 640×480 and 1280×1024, respectively.",
+              "figure_id": "figure-9-2",
+              "figure_number": "9",
+              "height": 182,
+              "image_path": "figures/2610.34765/figure-008.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 494
+            },
+            {
+              "caption": "TABLE IV SENSITIVITY COMPARISON OF TEMPORAL METRICS UNDER DIFFERENT DEGRADATION TYPES. EACH DEGRADATION TYPE IS EVALUATED UNDER PROGRESSIVELY MORE CHALLENGING SETTINGS. VALUES IN PARENTHESES DENOTE RELATIVE CHANGES WITH RESPECT TO THE CLEAN BASELINE. THE BASELINE VALUES ARE OBTAINED FROM THE PROPOSED METHOD ON THE HDO DATASET WITHOUT DEGRADATION. THE MOST DESIRABLE RESPONSE IN EACH ROW, JOINTLY CONSIDERING SENSITIVITY, CORRECT RESPONSE DIRECTION, AND MONOTONICITY, IS HIGHLIGHTED IN BOLD.",
+              "figure_id": "table-IV-7",
+              "figure_number": "IV",
+              "height": 214,
+              "image_path": "figures/2610.34765/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 533
+            },
+            {
+              "caption": "TABLE III QUANTITATIVE COMPARISON WITH DIFFERENT ρ ON HDO DATASET. THE",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 185,
+              "image_path": "figures/2610.34765/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 510
+            },
+            {
+              "caption": "TABLE VI ABLATION STUDY OF ARCHITECTURAL VARIANTS, PRETRAINED FEATURE SPACES, AND LOSS TERMS ON THE HDO DATASET. THE BEST RESULTS ARE HIGHLIGHTED IN BOLD.",
+              "figure_id": "table-VI-1",
+              "figure_number": "VI",
+              "height": 154,
+              "image_path": "figures/2610.34765/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 494
+            },
+            {
+              "caption": "TABLE II IOU OF THE TOP-K HIGH-RESPONSE REGIONS SELECTED FROM THE PIXEL-LEVEL VARIATION MAP AND DIFFERENT PRETRAINED FEATURE MAPS. THE BEST RESULT IN EACH ROW IS HIGHLIGHTED IN BOLD.",
+              "figure_id": "table-II-12",
+              "figure_number": "II",
+              "height": 119,
+              "image_path": "figures/2610.34765/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 284
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34765/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.34765",
+          "relevance": 7,
+          "selection_reason": "Efficient video fusion with dynamic region-guided token selection and linear-complexity temporal interaction directly fits efficient AI token pruning and efficient attention.",
+          "summary_status": "generated",
+          "title": "Efficient Multi-modal Video Fusion Network with Dynamic Region-Guided Temporal Interaction",
+          "tldr": "An efficient multi-modal video fusion network improves temporal consistency by modeling only dynamic regions and enforcing feature-level temporal alignment without optical-flow warping.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Visual-token compression is usually evaluated by clean accuracy and efficiency, but these averages do not reveal failures that compression introduces under an image shift where the uncompressed model stays correct. We introduce VTC-AUDIT, which estimates this incremental risk only on pairs where the full model is correct on both images and the compressed model is correct on the clean image. The four arms then cross two binary choices: which image selects the retained token positions, and which image supplies the visual features. We audit three open 8-9B vision-language models on four tasks and eight pre-specified shifts. We evaluate two training-free compressors---hard-pruning DivPrune and prune-and-merge ApET---at a matched 25% retained-position budget, producing 708,000 inference records. Reselecting positions on the shifted image, rather than reusing the clean-image positions, raises the failure rate in all six model-compressor settings. The increase is 3.04-9.60 percentage points for DivPrune and 2.05-4.20 percentage points for ApET, with every 95% interval above zero. Repeating the audit on a separately resampled second manifest reproduces all six increases. In a pooled monitor audit across the four benchmarks, support Jaccard instability fails the practical AUROC criterion of 0.65 in all six settings, whereas clean compressed-model uncertainty clears it. Thus, support turnover is a weak ranking signal under the audited benchmark mixture, while clean compressed-model uncertainty is substantially more informative. These results suggest that future visual-token compression evaluations should report conditional reliability alongside clean accuracy and efficiency.",
+          "arxiv_id": "2610.34545",
+          "arxiv_url": "https://arxiv.org/abs/2610.34545",
+          "authors": [
+            "Isaac (Rucheng), Li"
+          ],
+          "bullets": [
+            "Measures incremental risk only when the full model remains correct under both clean and shifted images and the compressed model is correct on the clean image.",
+            "Crosses whether retained token positions and visual features come from the clean or shifted image, auditing hard-pruning and prune-and-merge compressors at a matched 25% budget.",
+            "Across three vision-language models, four tasks, and eight shifts, selecting positions from the shifted image increases failure rates in all six model–compressor settings.",
+            "The increases are reproduced on an independently resampled manifest, supporting the robustness of the finding.",
+            "Support Jaccard instability is a weak ranking signal, while clean compressed-model uncertainty is more informative in the pooled audit."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Table 1. Full-model performance, clean compressed performance, and eligibility (seed 42). “Score” is the mean benchmark score σ, and “σ = 1” is the percentage of outputs receiving full credit. Shifted full-model values pool the eight shifts. Eligibility is the percentage of configurations satisfying the conditions in Sec. 3.3. All entries are percentages.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 365,
+              "image_path": "figures/2610.34545/table-001.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1036
+            },
+            {
+              "caption": "Table 4. Task–shift heterogeneity of the reselection contrast (seed 42). Each entry is ∆u,m = SCFRdyn − SCFRfrz in percentage points, computed over both severities within each shift family. The table reports all 96 model–compressor–task–shift-family cells. Eligible cell sizes range from 256 to 857 configurations (129–430 unique image clusters), with medians of 617 configurations and 312 clusters. Cell-level contrasts characterize heterogeneity; aggregate contrasts and their intervals are reported in Table 2.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 303,
+              "image_path": "figures/2610.34545/table-002.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 614
+            },
+            {
+              "caption": "Table 5. Shift-severity analysis (seed 42). For each model–compressor setting, the table reports dynamic SCFR, frozen SCFR, and their difference ∆u,m at mild and strong severity. SCFR values are percentages; ∆u,m is in percentage points. Differences are computed from unrounded rates.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 200,
+              "image_path": "figures/2610.34545/table-003.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 894
+            },
+            {
+              "caption": "Table 3. Partial-credit sensitivity of the reselection effect (seed 42). Score loss is 1− σ and is reported as a percentage, macro-averaged over task–shift-family cells on the same eligible population as SCFR. ∆score is dynamic minus frozen score loss in percentage points, with 95% benchmark-stratified image-cluster bootstrap intervals. Contrasts are computed from unrounded rates. The TextVQA panel isolates the graded benchmark.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 230,
+              "image_path": "figures/2610.34545/table-004.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 818
+            },
+            {
+              "caption": "Table 2. Primary intervention results (seed 42). SCFR values and persistence are percentages. ∆u,m is the dynamic–frozen difference in percentage points. Persistence is the fraction of dynamic failures that also fail in the counterfactual arm. Contrasts are computed from unrounded rates.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 200,
+              "image_path": "figures/2610.34545/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 894
+            },
+            {
+              "caption": "Table 6. Monitor audit (seed 42). AUROCs are reported with 95% benchmark-stratified image-cluster bootstrap intervals. U± is the orientation-free upper 95% bound for Jaccard instability, and L95 is the lower 95% bound for clean uncertainty. The practical AUROC target is 0.65.",
+              "figure_id": "table-6-6",
+              "figure_number": "6",
+              "height": 179,
+              "image_path": "figures/2610.34545/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 702
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34545/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.34545",
+          "relevance": 7,
+          "selection_reason": "Audits visual-token compression reliability under image shifts; directly relevant to token pruning/eviction.",
+          "summary_status": "generated",
+          "title": "VTC-AUDIT: An Interventional Reliability Audit for Visual-Token Compression under Paired Image Shifts",
+          "tldr": "VTC-AUDIT shows that visual-token compression can add substantial shift-related failures, and recommends conditional reliability audits alongside clean accuracy and efficiency.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language-action (VLA) models are increasingly used for robot manipulation because they map camera images and a language instruction directly to actions. Robots that cannot be tethered to a workstation, such as mobile manipulators and humanoids, must run them on onboard embedded boards, where the prefill latency of the language backbone grows with the hundreds of visual tokens processed at every control step. To meet real-time limits, training-free accelerators recompute only a subset of the visual tokens and skip the rest, either by pruning them or by reusing their cached key-value (KV) states. The two options save nearly the same computation, yet existing methods apply only one of them to every skipped token. Through a token-level diagnostic, we show that which option keeps the action closer to full recomputation depends on the token's drift, the change in its shallow-layer value since its cache was computed. On both backbones tested, reusing tokens below a drift threshold was no worse than pruning them, whereas beyond it, reuse yields up to 4.4x the action error of pruning; the same diagnostic calibrates this threshold per backbone. Building on this finding, we propose TRIAGE, which deems a cache valid when its drift is below this threshold and it is not too old. TRIAGE recomputes a fixed budget of tokens, prioritizing important tokens with invalid caches, reuses every other token with a valid cache, and prunes the rest; prune-only and reuse-only methods are the two extremes of this partition. Because the budget fixes the number of recomputed tokens, it directly sets the prefill latency. On LIBERO and SimplerEnv, TRIAGE stays within 3 pp of full recomputation in average success rate while cutting prefill latency on a Jetson AGX Orin by up to 48%, and with only 7% of visual tokens recomputed, it beats the strongest baseline by 24.4 pp on LIBERO-Object.",
+          "arxiv_id": "2610.34519",
+          "arxiv_url": "https://arxiv.org/abs/2610.34519",
+          "authors": [
+            "Sooyoung Kwon, Carlee Joe-Wong, Kyunghan Lee"
+          ],
+          "bullets": [
+            "Targets onboard VLA inference, where processing hundreds of visual tokens causes high prefill latency.",
+            "Finds that reuse is effective for low-drift tokens, while pruning is preferable for high-drift tokens.",
+            "Uses a calibrated drift threshold and cache age to classify tokens as reusable, invalid-and-recompute, or prune.",
+            "A fixed recomputation budget directly controls latency.",
+            "On LIBERO and SimplerEnv, remains within 3 percentage points of full recomputation while reducing Jetson AGX Orin prefill latency by up to 48%; with 7% of tokens recomputed, it exceeds the strongest LIBERO-Object baseline by 24.4 points."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.AI",
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3. Overview of TRIAGE. Shallow layers mark each token as important (blue) and its cache as invalid (red). The budget B goes to important, invalid tokens first; every other token is reused if valid and pruned otherwise, so B alone sets the prefill latency.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 253,
+              "image_path": "figures/2610.34519/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1044
+            },
+            {
+              "caption": "Fig. 5. TRIAGE lies on the Pareto frontier in every setting. Success rate versus prefill latency on a Jetson AGX Orin (top) and an RTX 3090 (bottom), averaged over the LIBERO suites or the SimplerEnv settings; dashed: Pareto frontier. No baseline is both more accurate and faster.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 513,
+              "image_path": "figures/2610.34519/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1030
+            },
+            {
+              "caption": "Fig. 1. Recompute only what neither reuse nor pruning can handle. Blue: important tokens; red: tokens changed since frame t−1 (stale caches). Reuse-only recomputes every changed token (18) and prune-only every important token (17). TRIAGE recomputes only tokens that are both (7), reuses valid caches, and prunes the rest.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 381,
+              "image_path": "figures/2610.34519/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 2. Drift decides between reuse and pruning. (a, b) Reuse − prune action error ∆ (Eq. (2), ×10−3) versus drift of the probed tokens on LIBERO-Spatial; blue region: reuse is better. Black: pooled over cache ages (95% bootstrap CI); thin: individual ages. Reuse is never worse below δ = 0.3 (dashed) but clearly worse above 0.5. (c) Drift grows with cache age (median, solid; 90th percentile, dashed), so the age limit T rarely binds.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 388,
+              "image_path": "figures/2610.34519/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 491
+            },
+            {
+              "caption": "Fig. 6. TRIAGE is robust to its hyperparameters. LIBERO-Goal, OpenVLA, B = 28 (default: 70.6%). Each row changes one setting from the default (δ = 0.3, T = 10, µ = 0.06, signal layer 2); paired difference with 95% bootstrap interval over 500 episodes. Every interval contains zero.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 355,
+              "image_path": "figures/2610.34519/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 504
+            },
+            {
+              "caption": "Fig. 4. Only combining pruning and reuse survives small budgets. LIBERO-Object, OpenVLA (500 episodes per budget; Wilson 95% intervals). x-axis: visual tokens recomputed per query, out of 256. Drop-all / keep-all prune / reuse every non-recomputed token. Drop-all degrades steadily and keep-all collapses below B = 46, while TRIAGE leads VLAPruner by 24.4 pp at B = 18.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 329,
+              "image_path": "figures/2610.34519/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 510
+            },
+            {
+              "caption": "TABLE I RESULTS ON LIBERO: TRIAGE STAYS WITHIN 3 PP OF FULL RECOMPUTATION WITH THE LOWEST JETSON P99 LATENCY",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 451,
+              "image_path": "figures/2610.34519/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 882
+            },
+            {
+              "caption": "TABLE II OPENVLA ON SIMPLERENV (GOOGLE ROBOT): WITHOUT RETUNING, TRIAGE MATCHES FULL RECOMPUTATION",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 233,
+              "image_path": "figures/2610.34519/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 764
+            },
+            {
+              "caption": "TABLE III ERROR OF REUSED CACHES GROWS WITH AGE ONLY JUST BELOW δ (OPENVLA, MEDIAN RELATIVE CHANGE IN ATTENTION)",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 240,
+              "image_path": "figures/2610.34519/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 335
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34519/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.34519",
+          "relevance": 9,
+          "selection_reason": "Training-free VLA inference acceleration via joint token reuse and pruning with drift-based cache validity fits VLA and token/KV efficiency.",
+          "summary_status": "generated",
+          "title": "TRIAGE: Efficient Vision-Language-Action Inference Needs Both Reuse and Pruning",
+          "tldr": "TRIAGE combines token reuse and pruning based on cache drift to reduce VLA prefill latency while preserving near-full-recomputation robot performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large reasoning models are costly to serve because they are large and because they generate long chains of thought (CoT). Weight pruning and CoT compression address these two costs separately, but they interfere in that pruning adds redundant reasoning on problems the model still solves and incomplete reasoning on those it no longer solves, and on harder problems makes the model less compressible by subsequent length-preference optimization. We trace this to a blind spot on each side: pruning criteria do not distinguish necessary from redundant reasoning, and preference-based CoT compression receives no training signal on problems a pruned model always or never solves. We propose Contrastive Set-Difference (CSD), which identifies neurons enriched in redundant reasoning by contrasting their activations on long and short correct solutions of the same problem and prunes them preferentially, and we extend preference pairs to the problems a pruned model always or never solves. Pruning 20\\% of DeepSeek-R1-Distill-Qwen-7B, the combination uses 8--22\\% fewer thinking tokens on four math benchmarks than pruning with reasoning-aware calibration (RAC) followed by the same compression, with accuracy within 0.5 points.",
+          "arxiv_id": "2610.34336",
+          "arxiv_url": "https://arxiv.org/abs/2610.34336",
+          "authors": [
+            "Tao Jing, Chen Kang, Feifei Zhai, Pengyuan Liu, Dong Yu"
+          ],
+          "bullets": [
+            "Pruning and chain-of-thought compression can interfere: pruning may induce redundant or incomplete reasoning and reduce later compressibility.",
+            "The method, Contrastive Set-Difference (CSD), contrasts neuron activations between long and short correct solutions to identify neurons associated with redundant reasoning.",
+            "It also adds preference-training pairs from problems a pruned model always solves or always fails to solve.",
+            "With 20% pruning of DeepSeek-R1-Distill-Qwen-7B, the combined approach used 8–22% fewer thinking tokens across four math benchmarks than RAC followed by the same compression.",
+            "Accuracy remained within 0.5 percentage points of the comparison pipeline."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Table 2: Main results. Acc is pass@1 (%) and Think the mean number of thinking tokens, with samples truncated before </think> counted at the budget. Pruned models remove 20% of decoder linear parameters, all from MLP neurons.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 363,
+              "image_path": "figures/2610.34336/table-001.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 713
+            },
+            {
+              "caption": "Table 1: Preference pairs: self, dense-anchored (Dense), and length-anchor (Length). Length-anchor pairs use problems without self pairs on which the pruned model has at least two correct solutions. The chosen response yc is the pruned model’s shortest correct solution (k shortest for self pairs), except for dense-anchored pairs, where it is the dense model’s shortest correct solution. Self pairs target both redundant and incomplete reasoning, dense-anchored pairs target incomplete reasoning, and length-anchor pairs target redundant reasoning.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 134,
+              "image_path": "figures/2610.34336/table-002.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 431
+            },
+            {
+              "caption": "Table 3: CSD relative to RAC-S before and after PLPO. ∆Acc is the difference in pass@1 in points and ∆Think the relative change in mean thinking length, both computed from Table 2. ∆Geo is the geometric mean over problems of the ratio of per-problem mean thinking lengths, minus one, computed from the per-problem results; in parentheses, the mean per-problem log ratio divided by its standard error over problems, which covers evaluation sampling only, not variation between training runs. AIME pools the two years with equal weight per problem.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 165,
+              "image_path": "figures/2610.34336/table-003.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 750
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34336/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.34336",
+          "relevance": 8,
+          "selection_reason": "Introduces Contrastive Set-Difference (CSD) to prune redundant reasoning neurons in pruned models, improving the compressibility of Chain-of-Thought outputs.",
+          "summary_status": "generated",
+          "title": "Improving the Chain-of-Thought Compressibility of Pruned Reasoning Models via Long--Short Contrastive Pruning",
+          "tldr": "Long–Short Contrastive Pruning makes pruned reasoning models more compressible, reducing thinking tokens while largely preserving accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Instruction-based image editors built on diffusion transformers run tens of denoising steps. Training-free acceleration either reuses features across steps (step caching) or stops computing the regions an edit leaves untouched (region freezing), and the two have been combined before. We ask how a high speed-up target should be split between them. On Qwen-Image-2.1, freezing does more than remove tokens: it lowers the cost of every step, so the step cache can reach the same overall speed-up with a conservative threshold that keeps its error small. A per-step cost model fitted on development runs predicts held-out latency with a median error of 4.0% and reproduces the speed ceilings of the region methods we re-implemented (2.73$\\times$ predicted vs. 2.70$\\times$ measured for RegionE). Driving frozen tokens to the model's one-step $x_0$ estimate beats returning them to the reference image on every development sample, and in 90% of measured cases the composed error stays below the sum of the two individual errors. The resulting method, FreezePlan, keeps five full steps and gives the rest of the budget to TaylorSeer. On a pre-registered test split it runs 5.05$\\times$ faster end to end at 29.8 dB PSNR to the original output, with no significant drop in a VLM judge score; TaylorSeer at 5.02$\\times$ reaches 23.5 dB. The curve extends to 5.99$\\times$ at 28.0 dB. Swapping in the region selectors of prior methods under our schedule lowers median PSNR by only 0.5--0.6 dB, which places the gain in the schedule and budget split rather than in the selector.",
+          "arxiv_id": "2610.34177",
+          "arxiv_url": "https://arxiv.org/abs/2610.34177",
+          "authors": [
+            "Baiyan Li, Ganxuan Yang"
+          ],
+          "bullets": [
+            "Region freezing reduces the cost of every denoising step, allowing step caching to operate in a lower-error regime.",
+            "A fitted per-step cost model predicts held-out latency with 4.0% median error and accurately estimates method speed ceilings.",
+            "Using the model’s one-step x₀ estimate for frozen tokens outperforms restoring the reference image across development samples.",
+            "FreezePlan keeps five full steps and allocates the remaining computation budget to TaylorSeer.",
+            "On a preregistered test split, it achieves 5.05× end-to-end speedup at 29.8 dB PSNR with no significant VLM-judge score drop; it reaches 5.99× at 28.0 dB."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG",
+            "cs.MM"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 5. “Replace the cup in her hands with a slice of strawberry cake” on an original anime illustration (outside the benchmark), at about 5× real speed-up. Labels: speed-up · PSNR to the 40-step output; bottom row: crop of the edited region. Step caching alone (TaylorSeer, DBCache) breaks down; fewer steps give a plausible but different cake; the re-implemented region methods (SpotEdit, RegionE, both with TaylorSeer) cannot reach this speed with their schedules. FreezePlan (5.11×) matches the dense output.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 317,
+              "image_path": "figures/2610.34177/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1067
+            },
+            {
+              "caption": "Fig. 1. FreezePlan (Sec. III-E). (a) Schedule: τ full steps, one region decision, compact steps over active tokens with step caching, one optional refresh. (b) In a compact step, frozen tokens move straight to their anchor c = x̂0(στ ) and their K/V is appended once to the prefix cache that active tokens attend to. The cached-step pattern in (a) is illustrative.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 379,
+              "image_path": "figures/2610.34177/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 898
+            },
+            {
+              "caption": "Fig. 6. Split B, about 5×; rows chosen by the rule above (crops of the edited region below each row). Labels: speed-up · PSNR to the 40-step output.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 1205,
+              "image_path": "figures/2610.34177/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1002
+            },
+            {
+              "caption": "Fig. 7. All five original anime illustrations, about 5×, same configurations as split B.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 1272,
+              "image_path": "figures/2610.34177/figure-004.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 917
+            },
+            {
+              "caption": "Fig. 3. Composition on the development set. (a) Measured composed PSNR vs. the PSNR implied by summing the individual MSEs; 90% of points lie above the diagonal. (b) Speed-up vs. cache threshold δ; labels give PSNR. With freezing, 5× is reached at δ = 0.3.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 302,
+              "image_path": "figures/2610.34177/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 517
+            },
+            {
+              "caption": "Fig. 2. Frozen-token anchor (development set, unchanged tokens). (a) Latent error reduction of the x0 anchor over the reference anchor vs. the step of the estimate (median and IQR over 44 samples). (b) Decoded PSNR of the unchanged region to the dense output and to the input.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 297,
+              "image_path": "figures/2610.34177/figure-006.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 517
+            },
+            {
+              "caption": "Fig. 4. Speed–fidelity on test split B. (a) PSNR to the dense output vs. real speed-up; (b) ∆VLM. Shaded: the ≥5× regime.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 252,
+              "image_path": "figures/2610.34177/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 513
+            },
+            {
+              "caption": "TABLE II TEST SPLIT B (44 SAMPLES, PRE-REGISTERED). MEDIANS; ∆VLM: MEAN PAIRED DIFFERENCE TO THE DENSE OUTPUT WITH 95% CI. †FASTEST SETTING THE METHOD REACHES.",
+              "figure_id": "table-II-12",
+              "figure_number": "II",
+              "height": 224,
+              "image_path": "figures/2610.34177/table-008.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "TABLE III TOP: REGION SELECTORS UNDER THE SCHEDULE AND CACHE OF FREEZEPLAN (POST HOC). BOTTOM: ONE COMPONENT REMOVED AT A TIME. TEST SPLIT B; ρ: MEAN FRACTION OF TOKENS COMPUTED PER STEP.",
+              "figure_id": "table-III-11",
+              "figure_number": "III",
+              "height": 188,
+              "image_path": "figures/2610.34177/table-009.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 466
+            },
+            {
+              "caption": "TABLE V OUT-OF-SAMPLE PREDICTION ON SPLIT B (1056 RUNS).",
+              "figure_id": "table-V-4",
+              "figure_number": "V",
+              "height": 161,
+              "image_path": "figures/2610.34177/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 529
+            },
+            {
+              "caption": "TABLE IV COMPOSED MSE RELATIVE TO THE ADDITIVE BOUND (180 CASES). CIS BOOTSTRAP OVER SAMPLES.",
+              "figure_id": "table-IV-2",
+              "figure_number": "IV",
+              "height": 145,
+              "image_path": "figures/2610.34177/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 520
+            },
+            {
+              "caption": "TABLE I SPEED CEILINGS IMPLIED BY EQ. (1) (ALL NON-FULL STEPS FREE) AND THE HIGHEST MEASURED SPEED-UP ON THE TEST SPLIT.",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 120,
+              "image_path": "figures/2610.34177/table-012.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 450
+            },
+            {
+              "caption": "TABLE VI FALLBACK RATE AND ACTIVE FRACTION ON SPLIT B.",
+              "figure_id": "table-VI-9",
+              "figure_number": "VI",
+              "height": 90,
+              "image_path": "figures/2610.34177/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 529
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34177/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.34177",
+          "relevance": 7,
+          "selection_reason": "Training-free acceleration for diffusion image editing via region freezing and step caching; directly reduces compute by pruning spatial tokens and reusing features.",
+          "summary_status": "generated",
+          "title": "Freeze What Is Settled, Cache What Is Smooth: Spatial Freezing Keeps Step Caching in Its Low-Error Regime",
+          "tldr": "FreezePlan combines spatial region freezing with conservative step caching to achieve 5.05× faster diffusion image editing while preserving output quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Speculative decoding significantly accelerates autoregressive text generation in Large Language Models (LLMs), but its efficacy depends largely on two key factors: the distributional alignment between the draft and the target model, and the draft model's latency during inference. However, existing approaches typically utilize independently pretrained small draft models or seek to prune the target model to a manually chosen architecture, thereby failing to explicitly balance the trade-off between draft model alignment and token generation efficiency. To address this gap, we formulate draft model design as an optimization problem and propose T2D, a framework that constructs draft models directly from the target model using latency-aware structured pruning and knowledge distillation. In this manner, T2D obtains draft models that are jointly optimized for both measured inference latency and cross-entropy loss on the target model's responses, resulting in superlative speculative decoding performance. Through extensive experiments on multi-domain speculative decoding benchmarks and across several target model families of differing scale, we demonstrate how T2D prunes up to 92\\% of the target model to obtain highly performant draft models compared to competitive baselines. Moreover, draft models obtained via T2D can also be utilized by other speculative decoding token-alignment and knowledge distillation methods in a plug-and-play fashion, leading to further gains. Our findings underscore the importance of jointly navigating the draft model architecture-alignment frontier to unlock the full potential of speculative decoding for LLMs.",
+          "arxiv_id": "2610.34103",
+          "arxiv_url": "https://arxiv.org/abs/2610.34103",
+          "authors": [
+            "Shahriar Kabir Nahin, Xiao Ye, Muhao Chen, Ben Zhou, Anshuman Chhabra"
+          ],
+          "bullets": [
+            "Addresses the trade-off between draft-model inference latency and distributional alignment with the target model.",
+            "Uses latency-aware structured pruning plus knowledge distillation to formulate draft-model design as an optimization problem.",
+            "Prunes up to 92% of the target model while maintaining strong speculative decoding performance across multiple domains and target-model scales.",
+            "The resulting draft models can plug into other token-alignment and distillation methods for additional gains.",
+            "Scope: effectiveness depends on measured latency and cross-entropy alignment with the target model’s responses."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the T2D training pipeline. Learnable gates mask layers, attention heads, and FFN channels to jointly optimize the pruned architecture and model weights using a frozen latency predictor, target-generated cross-entropy loss, and a reference-guided penalty.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 425,
+              "image_path": "figures/2610.34103/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 441
+            },
+            {
+              "caption": "Figure 4: Pruning ratio of the Llama-2-7B-Chat model over the training period along with the kept percentage (ratio) of the Layers, Heads, and FFN. We also plot latency and CE loss.",
+              "figure_id": "figure-4-14",
+              "figure_number": "4",
+              "height": 214,
+              "image_path": "figures/2610.34103/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 381
+            },
+            {
+              "caption": "Figure 3: Trade-off curve of acceptance ratio and latency across pruning ratio and speedup of the draft model across pruning ratio of Llama-2-7B-Chat model when pruned with ShortGPT.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 205,
+              "image_path": "figures/2610.34103/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 322
+            },
+            {
+              "caption": "Figure 5: Pruning ratio of the target model (Vicuna-13B-v1.5) over the training period, along with the kept percentage (ratio) of the Layers, Heads, and FFN. We also plot latency and CE loss.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 268,
+              "image_path": "figures/2610.34103/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 475
+            },
+            {
+              "caption": "Figure 6: Pruning ratio of the target model (Qwen2.5-7B-Instruct) over the training period, along with the kept percentage (ratio) of the Layers, Heads, and FFN. We also plot latency and CE loss.",
+              "figure_id": "figure-6-13",
+              "figure_number": "6",
+              "height": 226,
+              "image_path": "figures/2610.34103/figure-005.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 475
+            },
+            {
+              "caption": "Figure 1: Example speculative-decoding traces for the same output sequence using draft models with different latencies and acceptance ratios (Accepted-to-draft token length ratio). The top row illustrates that a more accurate but slower draft model can result in longer overall decoding time, highlighting the trade-off between draft-model latency and acceptance ratio.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 192,
+              "image_path": "figures/2610.34103/figure-006.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 979
+            },
+            {
+              "caption": "Figure 7: Pruning ratio of the target model (Qwen3-14B) over the training period, along with the kept percentage (ratio) of the Layers, Heads, and FFN. We also plot latency and CE loss.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 227,
+              "image_path": "figures/2610.34103/figure-007.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 475
+            },
+            {
+              "caption": "Figure 8: Pruning ratio of the target model (Nemotron-32B) over the training period, along with the kept percentage (ratio) of the Layers, Heads, and FFN. We also plot latency and CE loss.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 226,
+              "image_path": "figures/2610.34103/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 475
+            },
+            {
+              "caption": "Figure 9: Examples of speculative decoding outputs across different domains.",
+              "figure_id": "figure-9-4",
+              "figure_number": "9",
+              "height": 921,
+              "image_path": "figures/2610.34103/figure-009.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 979
+            },
+            {
+              "caption": "Table 6: Hyperparameters used for pruning and fine-tuning in T2D framework for Llama-2-7B-Chat.",
+              "figure_id": "table-6-18",
+              "figure_number": "6",
+              "height": 391,
+              "image_path": "figures/2610.34103/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 677
+            },
+            {
+              "caption": "Table 1: Speculative decoding speedup across different evaluation domains. For each target model, we compare draft models constructed by ShortGPT, Wide, and T2D. The highest speedup (×) for each target model and domain is shown in bold.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 375,
+              "image_path": "figures/2610.34103/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 968
+            },
+            {
+              "caption": "Table 9: Example response generated by the T2D Llama-2 draft model, with observations on response quality.",
+              "figure_id": "table-9-16",
+              "figure_number": "9",
+              "height": 835,
+              "image_path": "figures/2610.34103/table-012.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 956
+            },
+            {
+              "caption": "Table 2: Speculative decoding performance comparison of draft models under the AdaSpec distillation method (best in bold)",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 100,
+              "image_path": "figures/2610.34103/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 181
+            },
+            {
+              "caption": "Table 5: Statistics of the generated training data. Both models are prompted with the same set of 250K instructiontuning queries.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 151,
+              "image_path": "figures/2610.34103/table-014.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 627
+            },
+            {
+              "caption": "Table 7: Architectural specifications of the T2D-derived draft models for all T2D models.",
+              "figure_id": "table-7-17",
+              "figure_number": "7",
+              "height": 164,
+              "image_path": "figures/2610.34103/table-015.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 794
+            },
+            {
+              "caption": "Table 4: Number of evaluation samples from SPEED Bench used in our experiments.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 73,
+              "image_path": "figures/2610.34103/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 968
+            },
+            {
+              "caption": "Table 8: Speculative decoding speedup (×) of Sheared-Llama-1.3B and T2D. The highest speedup for each domain is shown in bold.",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 85,
+              "image_path": "figures/2610.34103/table-017.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 968
+            },
+            {
+              "caption": "Table 3: Speculative decoding speedup (×) comparison between finetuned Sheared-Llama and T2D with Llama-27B-Chat as the target model. The highest speedup is shown in bold.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 82,
+              "image_path": "figures/2610.34103/table-018.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 319
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34103/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.34103",
+          "relevance": 8,
+          "selection_reason": "Proposes T2D, a framework for pruning and adapting draft models to optimize speculative decoding efficiency and alignment simultaneously.",
+          "summary_status": "generated",
+          "title": "T2D: Target-to-Draft Model Pruning & Adaptation for Efficient Speculative Decoding",
+          "tldr": "T2D builds latency-efficient draft models directly from a target LLM by jointly optimizing structural pruning and target-model alignment for speculative decoding.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "We introduce TrackTok, an efficient video tokenization framework that produces object-centric tokens, i.e., tokens that consistently encode the same semantic objects across time, even as it moves, deforms, or undergoes partial occlusion. Conventional patch-based or existing holistic tokenizers produce token identities often tied to fixed image locations. In contrast, our approach learns temporally persistent object-centric representations that bind visual features across frames into stable semantic units. This enables substantially more compact, continuous latent video representations, reducing the number of tokens required for downstream generative modeling with state-of-the-art flow models, while preserving the semantic structure needed for high-quality synthesis. Our tokenizer offers a favorable quality-efficiency trade-off. TrackTok achieves comparable class-conditional generative FVD on UCF-101 dataset at 8 times fewer latent tokens and better latency, and outperforms existing 1D tokenization baselines on frame prediction task on Kinetics-600 across low token budgets. These results suggest that object-aligned and temporally persistent tokenization is a promising direction for scalable video generation, where reducing latent token counts is critical for efficient modeling. Our code for this work is available at https://github.com/phamleyennhi/tracktok.",
+          "arxiv_id": "2610.33857",
+          "arxiv_url": "https://arxiv.org/abs/2610.33857",
+          "authors": [
+            "Nhi Pham, Christopher Wewer, Bernt Schiele, Jonas Fischer, Jan Eric Lenssen"
+          ],
+          "bullets": [
+            "Addresses the instability of patch-based and holistic tokens whose identities are tied to fixed image locations.",
+            "Learns tokens that track the same objects across motion, deformation, and partial occlusion.",
+            "Produces compact continuous latent representations for downstream flow-based video generation.",
+            "Matches class-conditional FVD on UCF-101 with 8× fewer latent tokens and lower latency.",
+            "Outperforms 1D tokenization baselines on Kinetics-600 frame prediction at low token budgets."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Method Overview. TrackTok encodes an input video V into a 1D set of object-centric, semantically persistent, latent tokens Z . Its encoder E is composed of semantic feature extraction with V-JEPA 2.1 [16], the construction of input-dependent queries Q using centroids of k-Means clusters C, and a ViT performing attention based on semantic similarity instead of spatial position. The decoder D reconstructs the three-dimensional RGB video from the 1D latent set Z .",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 373,
+              "image_path": "figures/2610.33857/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 822
+            },
+            {
+              "caption": "Figure 6: Token Impact Across Time. We sample four frames from the input clip together with reconstructed frames and token impact visualizations (c.f. Sec. 4.1). For each sample, we apply PCA on token features and map the top three components to RGB as color for the corresponding token impact mask. The visualization highlights the semantic object alignment and temporal tracking of tokens learned by TrackTok in contrast to AdapTok’s or LARP’s tokens, which are dominated by high-frequency textures and edges. Both baselines also show degraded reconstruction quality at 128 tokens. Furthermore, leveraging only V-JEPA 2.1 without our cluster queries (CQ) still results in tokens encoding fixed regions of the video. Refer to Appendix E for more uncurated examples.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 599,
+              "image_path": "figures/2610.33857/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 823
+            },
+            {
+              "caption": "Figure 5: Class-Conditional Generation on UCF-101 Across Token Budgets. We show samples for diverse action categories, including hand motions (rows 1–2), dynamic natural scenes (row 3), and human body pose sequences (rows 4–5). Even at 32 tokens, our generated videos retain recognizable object structure, motion coherence, and semantic consistency across frames, comparable to LARP with 32× as many tokens. We include more qualitative examples in Appendix E.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 352,
+              "image_path": "figures/2610.33857/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 820
+            },
+            {
+              "caption": "Figure 4: Left: UCF-101 reconstruction quality. Our rFVD remains stable while LARP and AdapTok significantly degrade at low token count. Right: Generation quality vs. latency, lower-isbetter. Ours at 32 tokens achieves 8× lower latency and comparable quality to LARP at 1024 tokens.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 245,
+              "image_path": "figures/2610.33857/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Frame Prediction on Kinetics-600, lower is better (gFVD). Ours outperforms baselines at low token regime.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 271,
+              "image_path": "figures/2610.33857/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 413
+            },
+            {
+              "caption": "Figure 8: Ablation Study. We provide (a) qualitative samples of the Fencing class and (b) quantitative ablation of the encoder design.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 462,
+              "image_path": "figures/2610.33857/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 404
+            },
+            {
+              "caption": "Figure 7: Object Alignment & Temporal Consistency. TrackTok’s tokens encode semantic units and track them consistently across frames.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 463,
+              "image_path": "figures/2610.33857/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 393
+            },
+            {
+              "caption": "Table 1: Class-Conditional Video Generation on UCF-101. We report generation FVD (gFVD) across methods under comparable token budgets, token-to-pixel (T/P) ratios, training data size, and number of trainable parameters. While prior methods achieve lower gFVD at moderate compression rates, TrackTok remains competitive even under extreme compression (128 tokens, 0.012% T/P), highlighting a favorable efficiency–quality trade-off in the low-token regime. † denotes models trained using the same setup as ours. Best and second best are highlighted per token budget.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 739,
+              "image_path": "figures/2610.33857/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 782
+            },
+            {
+              "caption": "Table 2: Object Discovery and Tracking. For equal token counts, TrackTok’s tokens are more strongly aligned with individual objects as well as more temporally consistent than those of baselines.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 104,
+              "image_path": "figures/2610.33857/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 408
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33857/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.33857",
+          "relevance": 9,
+          "selection_reason": "Introduces object-centric video tokenization that reduces token count for efficient video generation and understanding, directly addressing token efficiency and video representation.",
+          "summary_status": "generated",
+          "title": "TrackTok: Object-Centric Video Tokenization with Semantically Persistent Tokens",
+          "tldr": "TrackTok tokenizes videos into semantically persistent object-centric tokens, enabling efficient generation with far fewer latent tokens while maintaining video quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Visual token pruning substantially reduces the inference cost of multimodal large language models (MLLMs), yet existing methods are mostly training-free and plug-and-play. They treat the resulting performance drop as an inevitable cost of compression and pursue increasingly complex pruning rules. We rethink this view through two questions: how much of the loss can post-training rescue, and, building on this recovery, how can joint compression push pruning to its limit? We curate a 282K-sample post-training mixture covering general VQA, reasoning, OCR, and grounding, and post-train 36 configurations that drop or merge tokens under a unified protocol. Post-training rescues most of the loss, even for OCR and grounding, and its adaptation gain in closing the gap between the pruned and the dense model grows as the budget tightens. For joint compression, we find that the vision encoder, not the LLM, dominates prefill time in native-resolution MLLMs, so where tokens are removed matters more than how many: keeping 40% of tokens at the encoder runs faster than keeping 10% at the projector. Our best configuration prunes the encoder lightly and the projector aggressively, leaves the LLM intact, and keeps general understanding and reasoning at the dense level. It accelerates the LLM stage by 3.49x but the end-to-end time-to-first-token by only 1.54x, showing that LLM-stage speedups overstate end-to-end gains. We hope these findings offer insights for future research on joint visual token compression. Our data, protocol, and code will be released.",
+          "arxiv_id": "2610.33688",
+          "arxiv_url": "https://arxiv.org/abs/2610.33688",
+          "authors": [
+            "Peiran Yin, Hao Wu, Zihao Yang, Haozhe Hu, Xudong Wang, Xiaoyu Shen"
+          ],
+          "bullets": [
+            "Post-training largely restores pruning-induced performance loss, including on OCR and grounding tasks.",
+            "A 282K-sample mixture spanning VQA, reasoning, OCR, and grounding supports a unified evaluation of 36 compression configurations.",
+            "In native-resolution MLLMs, the vision encoder dominates prefill time, making encoder-side pruning more impactful than projector-side pruning.",
+            "The best setup lightly prunes the encoder, aggressively prunes the projector, and keeps the LLM unchanged while preserving general understanding and reasoning at dense-model levels.",
+            "A 3.49× LLM-stage speedup translates to only a 1.54× end-to-end time-to-first-token improvement."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of our unified framework. Pruning methods are organized by mechanism, dropping or merging, and by level, encoder, projector, or LLM. Post-training recovery is evaluated across General, Reasoning, OCR, and Grounding under single-stage and joint pruning configurations.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 475,
+              "image_path": "figures/2610.33688/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 946
+            },
+            {
+              "caption": "Figure 4: Retained visual tokens and layer-24 text-to-vision attention for six pruning methods at 20% keep on a RefCOCO grounding example. Colored patches denote retained tokens, with color indicating relative attention from the last text token; transparent regions are pruned tokens, and the white box marks the ground-truth region.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 490,
+              "image_path": "figures/2610.33688/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 946
+            },
+            {
+              "caption": "Figure 1: Training-free vs. post-trained retention by capability. Results on Qwen2.5-VL7B at 20% keep, with each pruning level averaged over its dropping and merging methods. Arrows mark the gain from post-training, and the dashed line marks the dense model.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 263,
+              "image_path": "figures/2610.33688/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 442
+            },
+            {
+              "caption": "Figure 5: Multi-level compression search with post-training. AIM is fixed at 10% keep at the projector. (a) Encoder-level ToMe with a dense LLM. (b) LLM-level PACT with a dense encoder. (c) LLM-level PDrop and (d) LLM-level PACT with ToMe fixed at 80%. Blue circles and red squares denote GRR and ATR, dashed lines mark the constraints GRR = 100 and ATR = 85, and highlighted points mark the lowest feasible keep ratio.",
+              "figure_id": "figure-5-18",
+              "figure_number": "5",
+              "height": 237,
+              "image_path": "figures/2610.33688/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 942
+            },
+            {
+              "caption": "Figure 3: Training-free vs. post-trained ATR",
+              "figure_id": "figure-3-19",
+              "figure_number": "3",
+              "height": 252,
+              "image_path": "figures/2610.33688/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 443
+            },
+            {
+              "caption": "Figure 6: LLM prefill latency versus the number of tokens processed by the LLM on Qwen2.5VL-7B. Points are dense and projector-level AIM at 40/20/10/7% keep, and the dashed line is the affine fit. The shaded band marks the lengthindependent cost a.",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 262,
+              "image_path": "figures/2610.33688/figure-006.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 403
+            },
+            {
+              "caption": "Table 3: Quality and prefill latency of our feasible configurations and of training-free pruning methods. E, P, and L denote pruning at the encoder, projector, and LLM, each followed by its keep ratio in percent. Each latency is followed by its speedup over the Dense row; the speedup of TTFT is the end-to-end speedup.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 525,
+              "image_path": "figures/2610.33688/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 837
+            },
+            {
+              "caption": "Table 1: Per-task retention under encoder- and projector-level pruning, before and after post-training. GRR averages General and Reasoning; ATR averages all four task groups. ▼ flags training-free scores below 5 (near-total failure); ▲ flags the paired post-trained score, every one of which recovers above 60.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 736,
+              "image_path": "figures/2610.33688/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 975
+            },
+            {
+              "caption": "Table 2: LLM-level recovery attribution. All values are retention percentages relative to Dense-Free = 100.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 638,
+              "image_path": "figures/2610.33688/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 944
+            },
+            {
+              "caption": "Table 9: Full encoder-level pruning results on Qwen2.5-VL-7B and LLaVA-OV-1.5-8B. Ratio is the layer-averaged visual-token keep ratio in percent, and Free and Post denote the model before and after post-training. VQAv2 and VQADoc denote VQA-v2 and DocVQA.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 652,
+              "image_path": "figures/2610.33688/table-010.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 939
+            },
+            {
+              "caption": "Table 10: Full projector-level pruning results on Qwen2.5-VL-7B and LLaVA-OV-1.5-8B. Ratio is the layer-averaged visual-token keep ratio in percent, and Free and Post denote the model before and after post-training.",
+              "figure_id": "table-10-17",
+              "figure_number": "10",
+              "height": 648,
+              "image_path": "figures/2610.33688/table-011.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 939
+            },
+            {
+              "caption": "Table 11: Full LLM-level pruning results on Qwen2.5-VL-7B and LLaVA-OV-1.5-8B. Ratio is the layer-averaged visual-token keep ratio in percent, and Free and Post denote the model before and after post-training.",
+              "figure_id": "table-11-2",
+              "figure_number": "11",
+              "height": 652,
+              "image_path": "figures/2610.33688/table-012.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 939
+            },
+            {
+              "caption": "Table 5: Overlap between the supplementary post-training data and the evaluation benchmarks. Img., Q., and Triplet count the evaluation images, image–question pairs, and image–question–answer triplets that also appear in the supplementary data, respectively.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 433,
+              "image_path": "figures/2610.33688/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 623
+            },
+            {
+              "caption": "Table 13: Detailed grounding performance of LLaVA-OV-1.5-8B under encoder-, projector-, and LLMlevel visual token pruning. For each split, we report IoU, Acc@0.5, and Center Acc. “Free” denotes the training-free pruning result, while “Post” denotes the result after post-training. All values are reported as percentages.",
+              "figure_id": "table-13-16",
+              "figure_number": "13",
+              "height": 768,
+              "image_path": "figures/2610.33688/table-014.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 939
+            },
+            {
+              "caption": "Table 12: Detailed grounding performance of Qwen2.5-VL-7B under encoder-, projector-, and LLM-level visual token pruning. For each split, we report IoU, Acc@0.5, and Center Acc. “Free” denotes the training-free pruning result, while “Post” denotes the result after post-training. All values are reported as percentages.",
+              "figure_id": "table-12-3",
+              "figure_number": "12",
+              "height": 742,
+              "image_path": "figures/2610.33688/table-015.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 939
+            },
+            {
+              "caption": "Table 4: Composition of the post-training data mixture, listed by data source.",
+              "figure_id": "table-4-15",
+              "figure_number": "4",
+              "height": 450,
+              "image_path": "figures/2610.33688/table-016.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 506
+            },
+            {
+              "caption": "Table 6: Data ablation on Qwen2.5-VL-7B with AIM at 10% keep at the projector. All runs use the full post-training recipe of the main experiments (all modules trainable, one epoch). Training-Free is AIM-10 without post-training. Each “w/o” row removes one group of training sources; the paired",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 213,
+              "image_path": "figures/2610.33688/table-017.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 950
+            },
+            {
+              "caption": "Table 7: Cross-ratio generalization of LLM-level PACT on Qwen2.5-VL-7B. Rows give the keep ratio used in post-training and columns the keep ratio at inference. Diagonal entries use matched training and inference ratios.",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 223,
+              "image_path": "figures/2610.33688/table-018.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 513
+            },
+            {
+              "caption": "Table 8: Encoder-level operators at 40% keep on Qwen2.5-VL-7B, measured under the latency setting of Section 3 (dense: 213.06 ms).",
+              "figure_id": "table-8-13",
+              "figure_number": "8",
+              "height": 102,
+              "image_path": "figures/2610.33688/table-019.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 456
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33688/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.33688",
+          "relevance": 9,
+          "selection_reason": "Rethinks visual token pruning in MLLMs, introducing post-training recovery and joint compression strategies, fitting Efficient AI and Multimodal Foundation Models.",
+          "summary_status": "generated",
+          "title": "Rescuing Your Pruning: Rethinking Visual Token Pruning and Post-Training Recovery in MLLMs",
+          "tldr": "Post-training can recover most of the accuracy lost to visual token pruning, while pruning location—not just token count—is critical for end-to-end MLLM speed.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large vision-language models (VLMs), which process both visual inputs and text queries, incur high inference costs due to the large number of visual tokens, making visual token pruning a natural approach for improving efficiency. Recent work has leveraged query information to guide token selection, often through heuristics derived from attention patterns or token dynamics. However, these approaches do not explicitly exploit the underlying structure of query-vision interactions. We address this gap by observing that the query-vision interaction matrix, naturally induced by the query and key projections already present in transformer attention, is effectively low-rank, with a small number of dominant latent interaction modes capturing query-relevant semantics. Motivated by this observation, we propose Query-Vision Decomposition (QViD), a novel training-free query-aware visual token pruning method that exploits this structure. Extensive experiments on both image and video understanding benchmarks show that QViD consistently improves performance under matched token budgets, with the largest gains appearing under aggressive compression regimes.",
+          "arxiv_id": "2610.33215",
+          "arxiv_url": "https://arxiv.org/abs/2610.33215",
+          "authors": [
+            "Harshithanjani Athi, Sravan Kumar Ankireddy, Jianzhong Charlie Zhang, Hyeji Kim"
+          ],
+          "bullets": [
+            "Visual token counts make large VLM inference computationally expensive.",
+            "Existing query-aware pruning methods often rely on attention heuristics without modeling query–vision interaction structure explicitly.",
+            "QViD decomposes the query–vision interaction matrix into dominant latent modes that capture query-relevant semantics.",
+            "Experiments on image and video understanding benchmarks show consistent gains at matched token budgets, especially with aggressive compression."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: QViD Pipeline. QViD performs query-aware visual-token pruning by explicitly modeling query–vision interactions. At pruning layer ℓ, it forms the interaction matrix M = QtxtK ⊤ vis, extracts its dominant low-rank modes with SVD, and scores each visual token by its participation in these modes. The top-K tokens are retained for subsequent reasoning, preserving query-relevant visual evidence while reducing sequence length. Integer values in the illustrative matrices are used only for ease of presentation.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 394,
+              "image_path": "figures/2610.33215/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 810
+            },
+            {
+              "caption": "Figure 7: Additional Qualitative Token-Score Visualizations. We compare token-score maps from QViD, V2Drop, and SparseVLM across multiple image-query pairs. Brighter regions indicate higher token scores. QViD tends to assign high scores to query-relevant visual regions, while the baseline methods often produce more diffuse score maps.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 1228,
+              "image_path": "figures/2610.33215/figure-002.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 462
+            },
+            {
+              "caption": "Figure 1: Comparison of Visual-Token Scoring. Compared with prior methods such as V2Drop and SparseVLM, QViD concentrates high scores on query-relevant image regions, leading to more effective visual-token pruning.",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 139,
+              "image_path": "figures/2610.33215/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 814
+            },
+            {
+              "caption": "Figure 4: Accuracy–Compute Tradeoff on LLaVA-1.5-7B. We compare V2Drop, and QViD at 64, 128, and 192 retained visual tokens on POPE, GQA, and TextVQA. The gray dashed line and star indicate the full-token baseline with 576 visual tokens. QViD achieves a stronger accuracy–compute tradeoff, especially under aggressive pruning, by retaining more query-relevant visual tokens at comparable TFLOPs.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 288,
+              "image_path": "figures/2610.33215/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 810
+            },
+            {
+              "caption": "Figure 5: Low-Rank Structure of Query–Vision Interactions. We plot the normalized singularvalue spectrum σk/σ1 of M = QtxtK ⊤ vis at the pruning layer of LLaVA-1.5-7B. Across datasets, the spectra decay rapidly, showing that query–vision interactions are concentrated in a few dominant directions. Faint curves show individual samples, solid curves show the mean, and shaded bands indicate variation across heads.",
+              "figure_id": "figure-5-21",
+              "figure_number": "5",
+              "height": 338,
+              "image_path": "figures/2610.33215/figure-005.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 612
+            },
+            {
+              "caption": "Figure 6: Dominant SVD Components Capture Task-Relevant Structure. Top SVD components emphasize task-critical query tokens, while residual components are less aligned with the question. The spectra show that query–vision interactions are concentrated in a few dominant directions.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 385,
+              "image_path": "figures/2610.33215/figure-006.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 790
+            },
+            {
+              "caption": "Figure 3: Qualitative Observations. (a) The query–vision interaction matrix has a rapidly decaying singular-value spectrum. (b) Dominant SVD components emphasize query-relevant tokens, while residual components are less aligned with the task.",
+              "figure_id": "figure-3-23",
+              "figure_number": "3",
+              "height": 203,
+              "image_path": "figures/2610.33215/figure-007.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 809
+            },
+            {
+              "caption": "Figure 8: Additional Query-Token Score Visualizations. For each example, we compare querytoken scores obtained from the dominant SVD components with scores from the residual components. The dominant components place higher weight on semantically informative query tokens, while residual components are less aligned with the task-relevant words.",
+              "figure_id": "figure-8-19",
+              "figure_number": "8",
+              "height": 1228,
+              "image_path": "figures/2610.33215/figure-008.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 444
+            },
+            {
+              "caption": "Table 1: Image Understanding Results on LLaVA-1.5-7B. QViD achieves the best average performance at all retention ratios, with the largest gain under aggressive compression at 64 tokens. Methods are sorted by average performance within each retention setting.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 692,
+              "image_path": "figures/2610.33215/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 727
+            },
+            {
+              "caption": "Table 9: Detailed Efficiency Results on LLaVA-1.5-7B. We report measured latency, throughput, speedup, and total TFLOPs for different pruning methods and retained-token budgets. TFLOPs include pruning overhead.",
+              "figure_id": "table-9-17",
+              "figure_number": "9",
+              "height": 296,
+              "image_path": "figures/2610.33215/table-010.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 694
+            },
+            {
+              "caption": "Table 3: Video Understanding and Compute Comparison. (a) Results on LLaVA-OV-7B show that QViD consistently outperforms V2Drop under matched token budgets, with the largest gains under aggressive compression. Avg. denotes the mean normalized performance relative to the full-token baseline. (b) Total TFLOPs on LLaVA-1.5-7B include pruning overhead; reduction is computed relative to the full-token baseline.",
+              "figure_id": "table-3-12",
+              "figure_number": "3",
+              "height": 344,
+              "image_path": "figures/2610.33215/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 828
+            },
+            {
+              "caption": "Table 4: Ablations on QViD Scoring with LLaVA-1.5-7B. (a) SVD scoring outperforms columnnorm scoring from the same query–vision interaction matrix. (b) Using only a small number of dominant SVD components recovers most of the benefit of QViD, indicating that token relevance is concentrated in a few interaction modes.",
+              "figure_id": "table-4-20",
+              "figure_number": "4",
+              "height": 280,
+              "image_path": "figures/2610.33215/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 820
+            },
+            {
+              "caption": "Table 6: Full Layer Sweep on Qwen2-VL-7B. We vary the QViD scoring layer ℓ across three retention ratios. Avg. is computed as the mean normalized performance relative to the full-token baseline. Bold denotes the best value in each column within a retention block.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 592,
+              "image_path": "figures/2610.33215/table-013.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 702
+            },
+            {
+              "caption": "Table 10: Additional Multimodal Benchmark Results on LLaVA-v1.5-7B. We compare QViD with V2Drop at matched token budgets on AI2D, ChartQA, MMMU, OCRBench, and SEEDBench. Avg. denotes the mean normalized performance relative to the full-token baseline.",
+              "figure_id": "table-10-9",
+              "figure_number": "10",
+              "height": 334,
+              "image_path": "figures/2610.33215/table-014.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 677
+            },
+            {
+              "caption": "Table 5: Layer Selection Ablation on LLaVA-1.5-7B. We vary the scoring layer ℓ while retaining 128 visual tokens. MME denotes the sum of MME-Perception and MME-Cognition. Avg. denotes the mean normalized performance relative to the full-token baseline across all reported metrics. Bold denotes the best value in each column.",
+              "figure_id": "table-5-18",
+              "figure_number": "5",
+              "height": 211,
+              "image_path": "figures/2610.33215/table-015.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 582
+            },
+            {
+              "caption": "Table 15: 95% confidence intervals on Qwen2-VL-7B over three independent random seeds.",
+              "figure_id": "table-15-10",
+              "figure_number": "15",
+              "height": 333,
+              "image_path": "figures/2610.33215/table-016.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 830
+            },
+            {
+              "caption": "Table 11: MMMU-Pro Standard Results on Qwen2-VL-7B. We compare QViD with V2Drop under matched retention ratios on the 1,730-sample standard-format split.",
+              "figure_id": "table-11-8",
+              "figure_number": "11",
+              "height": 229,
+              "image_path": "figures/2610.33215/table-017.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 302
+            },
+            {
+              "caption": "Table 2: Image Understanding Results on Qwen2-VL-7B. QViD improves average performance at all retention ratios, with the largest gains at 11.1% retention. Avg. is mean normalized performance relative to the full-token baseline.",
+              "figure_id": "table-2-13",
+              "figure_number": "2",
+              "height": 63,
+              "image_path": "figures/2610.33215/table-018.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 690
+            },
+            {
+              "caption": "Table 13: HallusionBench and COCO Captioning Results on LLaVA-v1.5-7B. We compare QViD with V2Drop at matched token budgets. HallusionBench is reported using aAcc, fAcc, and qAcc, while COCO Captioning is reported using CIDEr. QViD improves both hallucination-related metrics and caption quality under visual-token compression.",
+              "figure_id": "table-13-14",
+              "figure_number": "13",
+              "height": 366,
+              "image_path": "figures/2610.33215/table-019.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 498
+            },
+            {
+              "caption": "Table 12: Video Understanding Results on Video-LLaVA-7B. We compare QViD with V2Drop on MVBench and VideoMME under token compression. Avg. denotes the mean normalized performance over MVBench and VideoMME Overall relative to the full-token baseline.",
+              "figure_id": "table-12-15",
+              "figure_number": "12",
+              "height": 316,
+              "image_path": "figures/2610.33215/table-020.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 444
+            },
+            {
+              "caption": "Table 14: HallusionBench and COCO Captioning Results on Qwen2-VL-7B. We compare QViD with V2Drop at matched retention ratios where available. HallusionBench is reported using aAcc, fAcc, and qAcc, while COCO Captioning is reported using CIDEr. QViD preserves stronger hallucination robustness and substantially better captioning quality under compression.",
+              "figure_id": "table-14-22",
+              "figure_number": "14",
+              "height": 342,
+              "image_path": "figures/2610.33215/table-021.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 544
+            },
+            {
+              "caption": "Table 7: Ablation on the Number of SVD Components for LLaVA-v1.5-7B. nsvd denotes the number of singular-vector components used to compute the visual-token importance scores. We vary nsvd, the number of singular-vector components used for QViD scoring, across three token budgets. Avg. denotes the mean normalized performance relative to the full-token baseline across all reported metrics.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 146,
+              "image_path": "figures/2610.33215/table-022.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 518
+            },
+            {
+              "caption": "Table 8: Scoring-Rule Ablation on LLaVA-1.5-7B. We compare different scoring rules derived from the query–vision interaction matrix at matched token budgets. Avg. denotes the mean normalized performance relative to the full-token baseline across all reported metrics.",
+              "figure_id": "table-8-1",
+              "figure_number": "8",
+              "height": 69,
+              "image_path": "figures/2610.33215/table-023.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 564
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33215/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.33215",
+          "relevance": 8,
+          "selection_reason": "Directly addresses visual token pruning for efficiency in VLMs.",
+          "summary_status": "generated",
+          "title": "Vision Token Pruning via Query-Vision Interaction Decomposition",
+          "tldr": "QViD is a training-free method that prunes visual tokens by exploiting low-rank query–vision interactions, improving VLM efficiency and performance under fixed token budgets.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-25",
       "paper_count": 12,
       "papers": [
@@ -78437,5 +80514,5 @@
   "schema_version": 1,
   "subtopic_id": "token-pruning-and-eviction",
   "topic_id": "efficient-ai",
-  "total_paper_count": 410
+  "total_paper_count": 422
 }

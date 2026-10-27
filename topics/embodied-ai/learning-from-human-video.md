@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**233 papers total**
+**236 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-26 | [EXE: Egocentric Cross-Embodiment Pretraining via Factorized Latent Actions for VLA Models](https://arxiv.org/abs/2610.33685) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | EXE pretrains VLA models on egocentric human videos by separating transferable manipulation skills from human-specific motion, improving robot control across embodiments. | 9 | 8 |
+| 2026-10-26 | [ViT-H: Generative Video-To-Humanoid Control with Motion Tracking Feedback](https://arxiv.org/abs/2610.32966) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | ViT-H generates executable humanoid motions directly from monocular videos and improves them using downstream motion-tracking feedback. | 9 | 8 |
+| 2026-10-26 | [Retiming Robot Demonstrations with a Learned Speed Prior](https://arxiv.org/abs/2610.32676) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | A learned speed prior retimes robot demonstrations to task-appropriate, consistent pacing, improving motion smoothness and enabling faster execution without reducing success. | 9 | 8 |
 | 2026-10-25 | [EgoForesight: Effectively Scaling Policy Learning with Noisy Egocentric Actions](https://arxiv.org/abs/2610.31845) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | EgoForesight scales robot policy learning with noisy egocentric video actions by weighting supervision by reliability and learning from demonstrated future outcomes. | 9 | 8 |
 | 2026-10-25 | [Scaling cross-situational word learning on children's naturalistic experiences](https://arxiv.org/abs/2610.31842) | Embodied AI: Learning from Human Videos | Cross-situational learning can recover early word meanings from large-scale child-centered video, but it depends strongly on high-quality visual representations and does not yet match children’s learning trajectories. | 6 | 6 |
 | 2026-10-25 | [KiRoSe: Using Kinematic Data for Efficient Segmentation of Robot Demonstrations](https://arxiv.org/abs/2610.31801) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | KiRoSe efficiently segments robot demonstrations by converting kinematic data into compact motion tokens that an open language model interprets as semantic events. | 6 | 7 |

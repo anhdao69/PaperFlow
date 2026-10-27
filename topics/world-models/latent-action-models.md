@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**128 papers total**
+**129 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-26 | [EXE: Egocentric Cross-Embodiment Pretraining via Factorized Latent Actions for VLA Models](https://arxiv.org/abs/2610.33685) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | EXE pretrains VLA models on egocentric human videos by separating transferable manipulation skills from human-specific motion, improving robot control across embodiments. | 9 | 8 |
 | 2026-10-25 | [DynaSlots: Slot-Centric 3D Dynamics Pretraining for Robot Manipulation](https://arxiv.org/abs/2610.32330) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | DynaSlots pretrains robot-manipulation representations by modeling localized 3D dynamics per temporally consistent object slot instead of using a single scene-level action. | 9 | 8 |
 | 2026-10-25 | [Does LeWorldModel Preserve Local Action Geometry?](https://arxiv.org/abs/2610.31716) | World Models: Latent Action Models | LeWorldModel only partially preserves the local geometry of action effects, with fidelity varying substantially by perturbation scale and representation. | 8 | 7 |
 | 2026-10-24 | [Action Learning for Scientific Simulations](https://arxiv.org/abs/2610.31585) | World Models: Latent Action Models | LEAP learns a reusable trajectory-level action from observed and reference paths, enabling inference, control, optimization, and sampling of dynamical systems. | 6 | 8 |

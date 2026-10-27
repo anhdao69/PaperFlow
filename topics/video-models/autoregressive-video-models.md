@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**59 papers total**
+**61 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-26 | [Learning the Autoregressive: Direct Score-Difference Estimation with Amortized Future Credit for Video Distillation](https://arxiv.org/abs/2610.34092) | Video Generation and Understanding: Autoregressive Video Models | Leta improves few-step autoregressive video distillation by directly estimating teacher–student score differences and crediting earlier chunks for their future impact. | 7 | 8 |
+| 2026-10-26 | [Mix Forcing: Causal Pre-Training via Mixture Attention for Interactive World Models](https://arxiv.org/abs/2610.33589) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Mix Forcing converts bidirectional video diffusion models into efficient autoregressive world models while preserving visual quality and enabling long-horizon interactive generation. | 9 | 9 |
 | 2026-10-22 | [Direct Forcing: A Single-Stage Training Recipe for Few-Step Autoregressive Text-to-Video Generation](https://arxiv.org/abs/2610.30861) | Video Generation and Understanding: Autoregressive Video Models | Direct Forcing trains a pretrained video model in one stage to generate high-quality text-to-video clips autoregressively in just four steps. | 8 | 8 |
 | 2026-10-21 | [Looking Ahead: Modeling Future Evolution in Autoregressive Video Generation](https://arxiv.org/abs/2610.29989) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | Future Chunk Prediction improves autoregressive video models’ understanding of scene evolution by training them to predict temporally separated video chunks without intervening context. | 8 | 8 |
 | 2026-10-20 | [Matrix-Game 4.0: Harnessing Video Models for Real-Time Playable Game Worlds](https://arxiv.org/abs/2610.27999) | World Models: Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | Matrix-Game 4.0 combines an executable game engine with a real-time video renderer and coding agent to create and modify playable game worlds from natural language. | 9 | 8 |

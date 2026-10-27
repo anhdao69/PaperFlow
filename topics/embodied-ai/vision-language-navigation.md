@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**165 papers total**
+**171 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-26 | [Preemptive Instruction Following with Resumption](https://arxiv.org/abs/2610.35576) | Embodied AI: Vision-Language Navigation | PIFR evaluates whether embodied-navigation agents can handle interruptions, complete inserted tasks, and resume long-horizon plans from changed states. | 8 | 7 |
+| 2026-10-26 | [MemVLN: Streaming Episodic Memory for Vision-Language Navigation](https://arxiv.org/abs/2610.35066) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | MEMVLN equips streaming vision-language navigation agents with bounded, pose-aware episodic memory to improve long-horizon navigation in simulated and physical environments. | 9 | 8 |
+| 2026-10-26 | [Behavior Spatial Benchmark: Evaluating Spatial Understanding for Robotics](https://arxiv.org/abs/2610.34051) | Embodied AI: Vision-Language Navigation, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | BEHAVIOR-Spatial evaluates whether vision-language models and robot policies truly understand and follow spatial instructions in physical scenes. | 9 | 8 |
+| 2026-10-26 | [Explaining Navigation Decisions: Stage-Aware Visual Attribution for Vision-Language Navigation](https://arxiv.org/abs/2610.34028) | Embodied AI: Vision-Language Navigation | A stage-aware attribution framework explains VLN actions by linking instruction stages to relevant visual evidence across current and historical observations. | 9 | 8 |
+| 2026-10-26 | [One Scan is Enough: Demonstration-Free Adaptation for Language-Guided Navigation](https://arxiv.org/abs/2610.33794) | Embodied AI: Vision-Language Navigation | A single brief iPhone scan can adapt a language-guided navigation policy to a new building without human demonstrations or labels, achieving 85% real-robot success across five environments. | 9 | 9 |
+| 2026-10-26 | [MOON: Learning When to Forget and How to Move On in Vision-and-Language Navigation](https://arxiv.org/abs/2610.33546) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | MOON helps vision-and-language navigation agents recover from route deviations by learning when to clear misleading visual history and how to continue afterward. | 9 | 8 |
 | 2026-10-25 | [SP-Guide: Enhancing Aerial Vision-Language Navigation with Spatial Priors](https://arxiv.org/abs/2610.32697) | Embodied AI: Vision-Language Navigation | SP-Guide improves aerial vision-language navigation by using physically grounded spatial priors to better align visual observations with language instructions and refine terminal goals. | 9 | 6 |
 | 2026-10-25 | [Natural-Language to Nav2: Operational Policies for Costmap-Based Navigation](https://arxiv.org/abs/2610.32633) | Embodied AI: Vision-Language Navigation | A natural-language interface converts operator instructions into validated Nav2 costmap policies, enabling adaptive navigation without modifying the existing planner or controller. | 7 | 6 |
 | 2026-10-25 | [OWLS: Open-world Language-conditioned Speed Fields for Zero-Shot Rover Navigation](https://arxiv.org/abs/2610.32596) | Embodied AI: Vision-Language Navigation | OWLS uses open-vocabulary vision-language models to convert camera-based terrain semantics into speed fields for zero-shot rover navigation without task-specific training or mapping. | 8 | 7 |

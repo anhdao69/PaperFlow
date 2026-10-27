@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**161 papers total**
+**165 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-26 | [Quantitative Generalization Bounds for Multi-Layer Transformers: A Few Long Strings can Beat Many Short Ones](https://arxiv.org/abs/2610.35715) | Language Foundation Models: Long-Context Models | The paper develops joint theoretical generalization bounds for fixed-precision, multi-layer transformers across both sample distribution and sequence length, showing that longer training strings can be far more valuable than more samples. | 5 | 7 |
+| 2026-10-26 | [Write What Matters: Disentangling Token Selection from Slot Allocation in Recurrent Memory](https://arxiv.org/abs/2610.34180) | Language Foundation Models: LLM Memory, Long-Context Models | Factorizing token selection from slot allocation reveals that selective writing helps sparse-fact recall, while always writing is better in information-dense contexts. | 7 | 8 |
+| 2026-10-26 | [Rethinking Retrieval in the Long-Context Era: Training-Free Semantic Trees for Adaptive Context Construction](https://arxiv.org/abs/2610.34146) | Language Foundation Models: Long-Context Models | A training-free semantic-tree framework selects and organizes the most relevant evidence from full documents, improving long-context QA while substantially shortening answer contexts. | 8 | 7 |
+| 2026-10-26 | [HyScale: Scaling Long-Context Training for Learned Sparse Attention](https://arxiv.org/abs/2610.32057) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | HyScale accelerates million-token training for learned sparse attention by avoiding full score tables and replaying selection during recomputation. | 8 | 8 |
 | 2026-10-25 | [CounselPlex: A Stressor-Aware Full-Duplex Counseling Model](https://arxiv.org/abs/2610.32702) | Language Foundation Models: LLM Memory, Long-Context Models | CounselPlex improves full-duplex counseling by maintaining and injecting an evolving representation of the seeker’s underlying stressor. | 4 | 6 |
 | 2026-10-25 | [Head Dimension Matters in Language Models for Long-Context Retrieval](https://arxiv.org/abs/2610.32213) | Language Foundation Models: Large Language Models, Long-Context Models | Wider attention heads improve long-context retrieval at fixed model size, even when attention projections are frozen during continual pretraining. | 8 | 7 |
 | 2026-10-25 | [LazyFlash: Forward-Dense, Backward-Sparse Attention for Accelerated Long-Context Fine-Tuning](https://arxiv.org/abs/2610.31911) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | LazyFlash accelerates long-context fine-tuning by keeping attention dense in the forward pass while skipping low-impact blocks during the backward pass. | 8 | 8 |

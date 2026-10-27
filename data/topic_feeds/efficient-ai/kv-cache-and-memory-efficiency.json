@@ -1,6 +1,2144 @@
 {
   "days": [
     {
+      "date": "2026-10-26",
+      "paper_count": 10,
+      "papers": [
+        {
+          "abstract": "Interactive world models keep the KV of past chunks as retrieval memory so that revisited places stay consistent. On a single consumer machine (one RTX 4090, 32 GiB of host memory, one NVMe SSD), long sessions with such memory hit two walls. The first is capacity: the KV of Matrix-Game 2.0 exhausts host memory after 45 seconds of video in bf16 and after 2.8 minutes in int4. The second is the model's positional horizon of 4.3 minutes. We show that this memory is capacity-bound rather than bandwidth-bound and that its access set is known before compute, because the camera pose is an input. An analytical model built on these observations predicts spill points to within one chunk and classifies zero versus non-zero stalls correctly on held-out configurations. Guided by it, WorldPager stores int4 KV in a GPU/DRAM/NVMe hierarchy instead of recomputing it, prefetches each chunk's memory from the extrapolated pose, never waits on a miss, and writes back in the background; to our knowledge, it is the first to place the KV memory of an interactive world model on an NVMe tier with zero-stall prefetching. With training-free position handling, it generates 37.5 minutes of video continuously with zero stalls and constant host memory, at about 9.5 frames per second. On a sealed test set, int4 storage shows no measurable quality loss; on long-gap revisits it lowers image quality by about one MUSIQ point.",
+          "arxiv_id": "2610.35529",
+          "arxiv_url": "https://arxiv.org/abs/2610.35529",
+          "authors": [
+            "Bingnan Liu, Ruini Xue"
+          ],
+          "bullets": [
+            "Addresses host-memory exhaustion and the model’s limited positional horizon during long interactive sessions.",
+            "Uses an analytical access model based on known camera poses to predict spill points and classify potential stalls.",
+            "Stores KV memory in a GPU/DRAM/NVMe hierarchy, prefetches before computation, avoids waiting on misses, and writes back asynchronously.",
+            "Generates 37.5 minutes of continuous video at about 9.5 FPS with zero stalls and constant host memory on a single RTX 4090 system.",
+            "Reports no measurable quality loss with int4 storage on a sealed test set, but about a one-point MUSIQ drop for long-gap revisits."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. WorldPager overview. KV of past chunks is stored as int4 blocks (one block per layer and chunk) in a pinned DRAM pool and spills to NVMe. While chunk c is denoised, the retrieval set of chunk c+1 is computed from the extrapolated camera pose and staged to the GPU by a prefetch thread. A miss reuses the previous retrieval set instead of waiting. Cold dirty blocks are written to NVMe by a background thread.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 175,
+              "image_path": "figures/2610.35529/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 514
+            },
+            {
+              "caption": "Fig. 3. Prefetching keeps the median stall at zero down to 0.25 GB/s, whereas on-demand swap-in stalls at every bandwidth. Stall per chunk (P50; triangles: P99 of prefetching) when NVMe reads are limited by a software token bucket and every retrieved block comes from NVMe (32 GiB, 36 chunks, 99–165 chunks per point). Crosses: predictions of the analytical model registered before the runs; predicted zero stalls are drawn at the axis floor.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 245,
+              "image_path": "figures/2610.35529/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 490
+            },
+            {
+              "caption": "Fig. 1. Two walls for MG2 on one RTX 4090. Capacity stops every design without an NVMe tier early (chunk 21, 60, or 226 at 32 GiB), and without position handling every design stops by the positional wall at chunk 341; WorldPager reaches 3000 chunks. All bars are measured; the 64 GiB int4 run uses an extended position table so that it isolates the capacity wall, and it stops at chunk 496 against a registered model prediction of 492. WorldPager runs under 32 GiB with an NVMe tier (37.5 min of video).",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 227,
+              "image_path": "figures/2610.35529/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 498
+            },
+            {
+              "caption": "Fig. 4. Chunk time and host memory stay flat for 3000 chunks while KV spills to NVMe. One 3000-chunk session (37.5 min of video) under 32 GiB with all components enabled (1 rollout). Top: chunk time; the step at chunk 341 is the position re-mapping. Bottom: host RSS stays flat while KV spills to NVMe after the pool fills at chunk 226.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 319,
+              "image_path": "figures/2610.35529/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 494
+            },
+            {
+              "caption": "TABLE III DESIGN CHOICES AND THE MODEL TERMS THEY ANSWER (SEC. II).",
+              "figure_id": "table-III-11",
+              "figure_number": "III",
+              "height": 176,
+              "image_path": "figures/2610.35529/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 508
+            },
+            {
+              "caption": "TABLE VII LINGBOT-WORLD, 256 CHUNKS (ITS NATIVE LIMIT), SYSTEM METRICS ONLY (FIRST OF TWO REPETITIONS).",
+              "figure_id": "table-VII-9",
+              "figure_number": "VII",
+              "height": 108,
+              "image_path": "figures/2610.35529/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 529
+            },
+            {
+              "caption": "TABLE VIII POSITIONING. “–”: NOT APPLICABLE OR NOT STATED IN THE PAPER. ENTRIES SUMMARIZE EACH PAPER’S OWN DESCRIPTION (SEE SEC. VI).",
+              "figure_id": "table-VIII-7",
+              "figure_number": "VIII",
+              "height": 251,
+              "image_path": "figures/2610.35529/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 1044
+            },
+            {
+              "caption": "TABLE IV PER-CHUNK COST AT 32 GIB (A YAW, 36 CHUNKS; MEDIAN / P99 OVER 165 CHUNKS) AND THE CHUNK AT WHICH EACH DESIGN EXHAUSTS MEMORY.",
+              "figure_id": "table-IV-1",
+              "figure_number": "IV",
+              "height": 154,
+              "image_path": "figures/2610.35529/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 529
+            },
+            {
+              "caption": "TABLE II HELD-OUT VALIDATION OF THE ANALYTICAL MODEL: ALL SPILL-POINT AND ZERO/NON-ZERO STALL PREDICTIONS HOLD, AND 22 OF 24 MG2 CRITERIA ARE MET. PREDICTIONS WERE REGISTERED BEFORE THE RUNS AND NOT ADJUSTED.",
+              "figure_id": "table-II-12",
+              "figure_number": "II",
+              "height": 113,
+              "image_path": "figures/2610.35529/table-009.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "TABLE I PREMISES OF KV OFFLOADING IN LLM DECODING VERSUS WORLD-MODEL MEMORY (QUALITATIVE; OUR MEASUREMENTS FOR THE RIGHT COLUMN).",
+              "figure_id": "table-I-8",
+              "figure_number": "I",
+              "height": 101,
+              "image_path": "figures/2610.35529/table-010.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 529
+            },
+            {
+              "caption": "TABLE IX INT4 MINUS BF16 PER SCENE AND SEED (EVENT MEANS, NO INTERVALS). D: DRIFT FLAG.",
+              "figure_id": "table-IX-3",
+              "figure_number": "IX",
+              "height": 296,
+              "image_path": "figures/2610.35529/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 529
+            },
+            {
+              "caption": "TABLE V BACKGROUND WRITE-BACK REMOVES NEARLY ALL OF THE EVICTION COST. CHUNK-TIME INCREMENT OVER THE POOL-NOT-FULL INTERVAL (32 GIB, A YAW, 256 CHUNKS, 3 ROLLOUTS).",
+              "figure_id": "table-V-6",
+              "figure_number": "V",
+              "height": 95,
+              "image_path": "figures/2610.35529/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 529
+            },
+            {
+              "caption": "TABLE VI INT4 STORAGE DOES NOT HARM REVISIT CONSISTENCY AND LOWERS LONG-GAP MUSIQ BY ABOUT ONE POINT. INT4 MINUS BF16 TIERED STORAGE ON LONG-GAP REVISITS (3 SCENES, 5 SEEDS, 39 EVENTS PER TIER; 95% EVENT-LEVEL BOOTSTRAP INTERVALS). EACH EVENT IS FIRST AVERAGED OVER THE SEEDS KEPT, SO THE THREE SCENES WEIGH EQUALLY; AFTER THE DRIFT EXCLUSION SCENES KEEP 2, 5, AND 3 SEEDS, AND THE VALUES DIFFER FROM A PLAIN MEAN OVER THE 10 RUNS IN APPENDIX A. ∆LPIPS < 0: REVISIT CLOSER TO FIRST VISIT. ∆MUSIQ < 0: LOWER IMAGE QUALITY.",
+              "figure_id": "table-VI-10",
+              "figure_number": "VI",
+              "height": 35,
+              "image_path": "figures/2610.35529/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 529
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.35529/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.35529",
+          "relevance": 7,
+          "selection_reason": "Presents tiered memory and zero-stall prefetching for interactive world model KV caches, relevant to efficient inference and world model deployment.",
+          "summary_status": "generated",
+          "title": "WorldPager: Zero-Stall Tiered Memory for Long-Horizon World Models on a Single Consumer GPU",
+          "tldr": "WorldPager enables continuous, zero-stall long-horizon world-model video by paging int4 KV memory across GPU, DRAM, and NVMe with pose-guided prefetching.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large language models incur substantial training and inference costs in personalized search and recommendation, as growing interaction histories lengthen request inputs and repeatedly expose the same item text to the model. We propose \\textbf{C}omposable and \\textbf{R}eusable \\textbf{I}tem \\textbf{M}emory (CRIM), a framework that separates item-level semantic encoding from request-level history modeling. A small set of learnable summary tokens compresses each item into compact continuous memories, while segment-level readout tokens (REC tokens) introduce predictive supervision within the interaction history. These memories are independent of users and queries and can therefore be reused across requests. At inference time, CRIM composes cached memories in interaction order and incorporates an optional query to produce a personalized retrieval representation, reducing repeated item-text encoding while retaining request-dependent contextual modeling. We further introduce a joint training mechanism that combines cached memories with sampled live re-encoding. Re-encoding only a few history items per request allows the retrieval objective to jointly optimize the item and request encoders at limited computational cost, while periodic cache refreshes maintain consistency. Extensive evaluation and cost analysis on MovieLens-1M, Qilin, and our new LazSeq dataset show that CRIM achieves state-of-the-art retrieval performance with substantially lower inference costs at the same backbone scale, while limiting item re-encoding during joint training. We will publicly release our code and dataset.",
+          "arxiv_id": "2610.35323",
+          "arxiv_url": "https://arxiv.org/abs/2610.35323",
+          "authors": [
+            "Haolin Li, Haipeng Zhang, Mang Li, Zhaohui Xia, Xun Zhu, Miao Li, Yu Zhang, Ji Wu"
+          ],
+          "bullets": [
+            "Addresses rising training and inference costs caused by long interaction histories and repeated item-text encoding.",
+            "Separates item semantic encoding from request-level modeling using learnable summary tokens and predictive REC tokens.",
+            "Composes cached, user- and query-independent item memories in interaction order, with an optional query for personalization.",
+            "Jointly trains cached memories with limited live re-encoding and periodic cache refreshes to maintain consistency.",
+            "Evaluations on MovieLens-1M, Qilin, and LazSeq report state-of-the-art retrieval with substantially lower inference costs at the same backbone scale."
+          ],
+          "categories": [
+            "cs.IR",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of CRIM. The IME encodes each item into reusable continuous memories. The RE composes cached memory blocks in interaction order, incorporates an optional query, and produces a representation for retrieval against separately encoded catalog candidates.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 512,
+              "image_path": "figures/2610.35323/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1047
+            },
+            {
+              "caption": "Figure 6: LazSeq construction. (a) Requests are filtered by query–history lexical overlap. (b) Item frequencies in history and target positions determine the retained candidate set; requests are kept when their target is retained.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 414,
+              "image_path": "figures/2610.35323/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1015
+            },
+            {
+              "caption": "Figure 4: Joint training: sampled positions use live IME outputs; the others reuse cached memories. Retrieval, segment prediction, and reconstruction provide supervision.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 653,
+              "image_path": "figures/2610.35323/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 400
+            },
+            {
+              "caption": "Figure 5: Cumulative A100 compute on LazSeq: optimization, initial cache, and warm-cache inference. Inset: published service volumes [1, 8, 9, 12, 28, 31]; the two P logos denote Pinterest Search and Pixie recommendations. Lazada: 30M searches/day (2020) [27]. Stars mark conversions from requests/s to requests/day (Appendix A.3).",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 364,
+              "image_path": "figures/2610.35323/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 464
+            },
+            {
+              "caption": "Figure 1: Recall@100 versus mean request latency on LazSeq (single A100, histories up to 500 interactions). The inset reports mean serving input lengths, including memory slots, REC tokens, queries, and special tokens.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 299,
+              "image_path": "figures/2610.35323/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 506
+            },
+            {
+              "caption": "Figure 3: Semantic pretraining: summary tokens compress item identity and text under restricted-attention reconstruction and full-context distillation with a frozen backbone.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 418,
+              "image_path": "figures/2610.35323/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 417
+            },
+            {
+              "caption": "Table 1: Full-catalog retrieval on LazSeq (histories up to 500 items). Bold/underlined values mark the best/second-best results; dashes denote metrics unavailable from beam-limited outputs.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 581,
+              "image_path": "figures/2610.35323/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1056
+            },
+            {
+              "caption": "Table 5: CRIM training configurations for the main results.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 259,
+              "image_path": "figures/2610.35323/table-008.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 810
+            },
+            {
+              "caption": "Table 4: LazSeq supervision and pretraining ablations (%). R, N, and M denote Recall, NDCG, and MRR. Best retrieval metrics are bold.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 170,
+              "image_path": "figures/2610.35323/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 506
+            },
+            {
+              "caption": "Table 9: Inference-time input interventions on LazSeq. Values are percentages. Best values within each group are bold.",
+              "figure_id": "table-9-14",
+              "figure_number": "9",
+              "height": 377,
+              "image_path": "figures/2610.35323/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 506
+            },
+            {
+              "caption": "Table 10: Recall@100 (%) by retained history length and training frequency on the same 2,999 requests. Dense denotes Qwen3-Embedding-4B. Best values per row are bold.",
+              "figure_id": "table-10-15",
+              "figure_number": "10",
+              "height": 190,
+              "image_path": "figures/2610.35323/table-011.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 506
+            },
+            {
+              "caption": "Table 8: Memory capacity on LazSeq. R and N use cutoff 100; M is full-catalog MRR. Metrics are percentages. Cache includes FP32 item memories and candidate vectors. Best retrieval metrics are bold.",
+              "figure_id": "table-8-13",
+              "figure_number": "8",
+              "height": 148,
+              "image_path": "figures/2610.35323/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 506
+            },
+            {
+              "caption": "Table 7: Training-time history re-encoding and item-memory cache refresh on LazSeq. Metrics are percentages; evaluation uses rebuilt caches. Best retrieval metrics are bold.",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 147,
+              "image_path": "figures/2610.35323/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 506
+            },
+            {
+              "caption": "Table 2: Full-catalog retrieval on Qilin (histories up to 100 items). Bold/underlined values mark the best/second-best results; dashes denote metrics unavailable from beam-limited outputs.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 66,
+              "image_path": "figures/2610.35323/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 506
+            },
+            {
+              "caption": "Table 3: Full-catalog retrieval on ML1M (histories up to 100 items). Bold/underlined values mark the best/second-best results; dashes denote metrics unavailable from beam-limited outputs.",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 66,
+              "image_path": "figures/2610.35323/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 506
+            },
+            {
+              "caption": "Table 6: Objective ablations across seeds 42, 43, and 44. Values are mean ± sample standard deviation, in percentages. Best means are bold.",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 35,
+              "image_path": "figures/2610.35323/table-016.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 506
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.35323/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.35323",
+          "relevance": 6,
+          "selection_reason": "Cached item memories reduce repeated item-text encoding and inference cost in LLM-based retrieval, matching memory-efficient inference and LLM external-memory interests.",
+          "summary_status": "generated",
+          "title": "CRIM: Composable and Reusable Item Memory for Efficient Personalized Retrieval",
+          "tldr": "CRIM makes personalized retrieval more efficient by caching compact, reusable item memories while preserving request-specific history modeling.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "llm-memory"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Adaptive robot perception systems must balance detector accuracy, inference latency, and energy consumption, particularly when high ambient temperatures cause processors to thermally throttle. We propose Thermal-Headroom Routing (THR), a lightweight model-selection policy that forecasts processor temperature using a closed-form RC thermal model and excludes detector configurations predicted to cross a throttling threshold. We evaluate THR with four YOLO11 configurations across seven real-world perception traces, eight ambient temperatures, and 20 randomized seeds, comparing it with latency-aware routing, fixed-threshold thermostats, duty caps, and a matched-compute-budget control. At ambient temperatures of 45-55 degrees C and a tight inference deadline, THR eliminates throttling in simulation, reduces deadline misses by 3.9-7.5 percentage points, and reduces energy per on-time frame by approximately 12-13% relative to a latency-belief router. A separate experiment using deadline-paced, nonoverlapping frame execution yields miss-rate reductions of 6.2-9.5 percentage points. A tuned thermostat or duty cap can match THR at a fixed operating point; predictive routing is most useful when ambient conditions or calibrated thermal parameters differ from those used to tune static policies. Measurements on an Apple M5 support the single-node heating approximation but do not validate hardware throttling. The results characterize the conditions under which thermal forecasting improves the efficiency and timeliness of resource-constrained robot perception.",
+          "arxiv_id": "2610.35231",
+          "arxiv_url": "https://arxiv.org/abs/2610.35231",
+          "authors": [
+            "Sparsh Roy, Kevin Zhou, Arhaan Shah, Shreyan Garg, Vihaan Joshi-Apte, Maxim Kudryashov, Nanda Cheruvanthala"
+          ],
+          "bullets": [
+            "Addresses the trade-off between detection accuracy, latency, and energy when high temperatures cause processor throttling.",
+            "Uses a closed-form RC thermal model to predict temperature and avoids detector configurations likely to exceed a throttling threshold.",
+            "Evaluated four YOLO11 configurations across seven perception traces, eight ambient temperatures, and 20 randomized seeds against static and latency-aware baselines.",
+            "At 45–55°C with tight deadlines, it eliminates simulated throttling, lowers deadline misses, and cuts energy per on-time frame relative to a latency-belief router.",
+            "Predictive routing is most beneficial when operating conditions or thermal parameters differ from those used to tune static policies; hardware throttling itself was not validated."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.CV",
+            "cs.PF"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3. Accuracy against deadline-miss rate (E2 and E9), mean over seven traces. The grey line is a fixed C1 cap between 0.2 and 1.0. Every temperature-aware policy lies on it; Belief sits off the curve at 55 °C because throttling raises its miss rate.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 445,
+              "image_path": "figures/2610.35231/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 2. Ambient sweep (E2), base deadline. Lines are the mean over seven traces; bands span the lowest and highest trace. Left: deadline-miss rate. Middle: share of the mission throttled. Right: longest run of consecutive misses (log scale). THR (red) and the thermostat never throttle. The cap tuned at 45 °C wastes accuracy below 45 °C (lower miss, Table 4) and throttles above it.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 321,
+              "image_path": "figures/2610.35231/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1027
+            },
+            {
+              "caption": "Figure 5. Apple M5 GPU temperature under nonstop YOLO11 inference (thin) with the fitted one-node RC step response (thick).",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 310,
+              "image_path": "figures/2610.35231/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 496
+            },
+            {
+              "caption": "Figure 4. Heat plus fault-coupled contention at 45 °C (E3): reduction in miss rate relative to Belief, 95% CIs over 20 seeds.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 296,
+              "image_path": "figures/2610.35231/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 479
+            },
+            {
+              "caption": "Figure 1. SoC temperature during one 2-minute mission at 45 °C (fog trace, seed 0). Static C1 and Belief go through repeated throttle cycles. THR alternates C1 and C2 and stays just below the release threshold.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 281,
+              "image_path": "figures/2610.35231/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 496
+            },
+            {
+              "caption": "TABLE 9. THR WITH A WRONG THERMAL MODEL AT 45 °C (E4): RANGE OF THE MISS REDUCTION RELATIVE TO BELIEF, HOLM-SIGNIFICANT TRACES, ACCURACY RANGE AND THE LARGEST THROTTLED SHARE.",
+              "figure_id": "table-9-9",
+              "figure_number": "9",
+              "height": 140,
+              "image_path": "figures/2610.35231/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 454
+            },
+            {
+              "caption": "TABLE 7. DEADLINE SWEEP (E5): MEANS OVER 7 TRACES FOR BELIEF (B), THE 88 °C THERMOSTAT (TST) AND THR. U IS ON-TIME UTILITY. THE LAST TWO COLUMNS COUNT TRACES WHERE THR IS HOLM-SIGNIFICANTLY BETTER / WORSE THAN BELIEF ON MISS RATE AND ON U.",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 264,
+              "image_path": "figures/2610.35231/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 656
+            },
+            {
+              "caption": "TABLE 5. A DIFFERENT TRUE CHIP (E6). THR USES THE MATCHING MODEL. ∆ THR: REDUCTION IN MISS RATE RELATIVE TO BELIEF (PP, RANGE OVER TRACES) AND HOLM-SIGNIFICANT TRACES. MAX THR.: LARGEST THROTTLED SHARE OVER TRACES (%) FOR BELIEF, THE 88 °C THERMOSTAT AND THR.",
+              "figure_id": "table-5-3",
+              "figure_number": "5",
+              "height": 169,
+              "image_path": "figures/2610.35231/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 764
+            },
+            {
+              "caption": "TABLE 8. E3: REDUCTION IN MISS RATE RELATIVE TO BELIEF (PP). J IS JOINT; J+T IS JOINT + THR. ∗ : HOLM-SIGNIFICANT.",
+              "figure_id": "table-8-8",
+              "figure_number": "8",
+              "height": 206,
+              "image_path": "figures/2610.35231/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 466
+            },
+            {
+              "caption": "TABLE 10. BURSTS UNDER FAULT-COUPLED CONTENTION (E1). BURST SHARE: % OF FRAMES IN RUNS OF AT LEAST 3 MISSES. MAX RUN IN FRAMES.",
+              "figure_id": "table-10-10",
+              "figure_number": "10",
+              "height": 206,
+              "image_path": "figures/2610.35231/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 404
+            },
+            {
+              "caption": "TABLE 6. E11, CONSISTENT FRAME TIMING (ONE DECISION PER D), MEAN OVER TRACES. THR.: % OF THE MISSION THROTTLED FOR BELIEF (B), THE 88 °C THERMOSTAT (TST), THE CAP TUNED AT 45 °C AND THR. ∆: THR’S MISS REDUCTION RELATIVE TO BELIEF (PP, RANGE OVER TRACES). LAST FOUR COLUMNS: TRACES WHERE THR IS HOLM-SIGNIFICANTLY BETTER / WORSE THAN EACH POLICY ON MISS RATE (MB: MATCHED BUDGET).",
+              "figure_id": "table-6-4",
+              "figure_number": "6",
+              "height": 137,
+              "image_path": "figures/2610.35231/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 375
+            },
+            {
+              "caption": "TABLE 2. EFFICIENCY, QUALITY AND COST IN E2 (BASE DEADLINE), MEAN OVER 7 TRACES AND 20 SEEDS. MISS AND THR. (THROTTLED) IN %. BLACKOUT IS THE LONGEST RUN OF CONSECUTIVE MISSES (S). P IS MEAN SOC POWER (W) AND Eot IS ENERGY PER ON-TIME FRAME (J). ACC. IS PSEUDO-GT AGREEMENT.",
+              "figure_id": "table-2-12",
+              "figure_number": "2",
+              "height": 421,
+              "image_path": "figures/2610.35231/table-012.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 420
+            },
+            {
+              "caption": "TABLE 11. APPLE M5 UNDER NONSTOP YOLO11 INFERENCE. LAT.: MEDIAN LATENCY OVER THE RUN, ITS FIRST 30 S AND ITS LAST 30 S (MS). ∆P : GPU+CPU POWER ABOVE IDLE (W). τ AND ∆T : FITTED TIME CONSTANT (S) AND STEADY-STATE RISE ABOVE IDLE ( °C). R = ∆T/∆P (°C/W). RMSE OF THE FIT ( °C).",
+              "figure_id": "table-11-6",
+              "figure_number": "11",
+              "height": 102,
+              "image_path": "figures/2610.35231/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 350
+            },
+            {
+              "caption": "TABLE 1. THERMAL-PLANT PARAMETERS (FIXED BEFORE ANY RUN).",
+              "figure_id": "table-1-5",
+              "figure_number": "1",
+              "height": 73,
+              "image_path": "figures/2610.35231/table-014.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 388
+            },
+            {
+              "caption": "TABLE 4. A C1 CAP TUNED ONCE AT 45 °C AGAINST THR AT OTHER AMBIENTS (MEAN OVER TRACES). THR. AND MISS IN %.",
+              "figure_id": "table-4-14",
+              "figure_number": "4",
+              "height": 63,
+              "image_path": "figures/2610.35231/table-015.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 350
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.35231/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.35231",
+          "relevance": 8,
+          "selection_reason": "Proposes Thermal-Headroom Routing (THR), a lightweight model-selection policy for robot perception that forecasts processor temperature to avoid thermal throttling. This addresses efficiency and timeliness in resource-constrained AI systems.",
+          "summary_status": "generated",
+          "title": "Thermal-Headroom Routing for Efficient Robot Perception in Extreme Heat",
+          "tldr": "Thermal-Headroom Routing uses thermal forecasting to select robot perception models, reducing throttling, deadline misses, and energy use in extreme heat.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "End-to-end full-duplex spoken dialogue models enable natural, real-time spoken interactions with interruptions, backchannels, and overlapping speech. Prior evaluations have assessed diverse interaction capabilities and identified some degradation patterns across conversational turns. However, how model behavior evolves over extended sessions remains insufficiently understood. In this work, we address this gap by systematically characterizing long-session degradation and developing efficient methods to mitigate it. We introduce a closed-loop evaluation framework for long-session stability and apply it to several publicly available full-duplex speech models, revealing degradation over time in responsiveness, spoken content quality, and voice consistency. To mitigate this degradation, we propose a self-distillation-based training framework for lightweight LoRA adaptation that improves long-session stability with a small amount of additional training. We further introduce a two-resolution context (TRC) architecture that preserves recent interactions in full detail while compressing older interaction history into key-value representations. We evaluate our methods on three models with distinct architectures, assessing long-session stability, information retention, and computational efficiency. Across all three models, we show that LoRA adaptation mitigates performance degradation over ten-minute sessions, while adding TRC extends these gains beyond the training session length and reduces KV-cache growth by more than 90%.",
+          "arxiv_id": "2610.34991",
+          "arxiv_url": "https://arxiv.org/abs/2610.34991",
+          "authors": [
+            "Junho Kim, CheHyun Lee, Donghun Kang, Youngho Cho, Dongwook Lee, Heeseung Kim, Sungroh Yoon"
+          ],
+          "bullets": [
+            "Long sessions cause declines in responsiveness, spoken content quality, and voice consistency.",
+            "A closed-loop evaluation framework measures stability, information retention, and efficiency over extended interactions.",
+            "Self-distillation with lightweight LoRA adaptation mitigates degradation across three architecturally distinct models.",
+            "Two-resolution context preserves recent exchanges in detail while compressing older history into key-value representations.",
+            "LoRA improves stability over ten-minute sessions, while TRC extends gains beyond training-session lengths and reduces KV-cache growth by more than 90%."
+          ],
+          "categories": [
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Closed-loop simulation protocol. Overview of the simulation loop, in which model responses are incorporated into the dialogue context to condition subsequent user turns.",
+              "figure_id": "figure-1-18",
+              "figure_number": "1",
+              "height": 356,
+              "image_path": "figures/2610.34991/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 744
+            },
+            {
+              "caption": "Figure 5: System prompt example for user utterance generation.",
+              "figure_id": "figure-5-21",
+              "figure_number": "5",
+              "height": 494,
+              "image_path": "figures/2610.34991/figure-002.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 829
+            },
+            {
+              "caption": "Figure 12: User-simulator prompts for trajectory generation. Braced placeholders abbreviate unchanged portions. In the system prompt, the revisiting rule replaces the repetition prohibition, and conversation-context rules are appended. In the user message, the summary and current-segment dialogue replace the dialogue history; before the first segment boundary, the summary is “(conversation just started)”.",
+              "figure_id": "figure-12-7",
+              "figure_number": "12",
+              "height": 669,
+              "image_path": "figures/2610.34991/figure-003.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 829
+            },
+            {
+              "caption": "Figure 2: Behavioral degradation over long sessions. Each point summarizes a one-minute interval, plotted at its midpoint. The gray band in (f) marks the first minute reserved for speaker enrollment. Shaded regions indicate 95% confidence intervals estimated using 2,000 episode-level cluster bootstrap replicates. Detailed numerical results and accompanying statistics are reported in Appendix A.6.",
+              "figure_id": "figure-2-31",
+              "figure_number": "2",
+              "height": 418,
+              "image_path": "figures/2610.34991/figure-004.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 714
+            },
+            {
+              "caption": "Figure 7: System prompt for conversation-quality evaluation.",
+              "figure_id": "figure-7-6",
+              "figure_number": "7",
+              "height": 865,
+              "image_path": "figures/2610.34991/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 829
+            },
+            {
+              "caption": "Figure 10: System prompt and user message for dialogue summarization. Braced placeholders indicate the dialogue to be summarized.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 436,
+              "image_path": "figures/2610.34991/figure-006.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 829
+            },
+            {
+              "caption": "Figure 6: User message example for a normal response. Braced placeholders indicate the selected persona and topic instructions and the current dialogue history.",
+              "figure_id": "figure-6-30",
+              "figure_number": "6",
+              "height": 448,
+              "image_path": "figures/2610.34991/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 829
+            },
+            {
+              "caption": "Figure 8: Input and output examples for conversation-quality evaluation.",
+              "figure_id": "figure-8-10",
+              "figure_number": "8",
+              "height": 442,
+              "image_path": "figures/2610.34991/figure-008.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 829
+            },
+            {
+              "caption": "Figure 3: TRC and privileged-context self-distillation. (a) Attention visibility for raw-token (top) and gisttoken (bottom) queries, shown with five tokens per tile and four tiles in the local window. Solid outlines mark visible context; dashed outlines mark masked context. Raw queries attend to the prefix, gists outside the window, and local raw tokens; gist queries attend to the prefix, all preceding gists, and their own tile. (b) The teacher restarts with a dialogue summary at segment boundaries, while the illustrated TRC student follows the concatenated trajectory continuously. Teacher predictions supervise the student at aligned positions.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 196,
+              "image_path": "figures/2610.34991/figure-009.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Information retention. Recall accuracy against probe distance for Base and TRC. An additional TRC setting with a tile duration of 480 ms was evaluated only for Raon-SpeechChat. Exact accuracies for all conditions and probe distances are reported in Table 23.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2610.34991/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 727
+            },
+            {
+              "caption": "Figure 11: Teacher system prompt after a segment boundary. Braced placeholders indicate the base prompt and the summary of preceding dialogue.",
+              "figure_id": "figure-11-8",
+              "figure_number": "11",
+              "height": 161,
+              "image_path": "figures/2610.34991/figure-011.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Long-session behavior within and beyond the training horizon. Each cell reports early → late performance over the indicated time range. A dash indicates that the sample size does not meet the minimum requirement for reporting specified in Appendix A.4.",
+              "figure_id": "table-1-17",
+              "figure_number": "1",
+              "height": 711,
+              "image_path": "figures/2610.34991/table-012.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 836
+            },
+            {
+              "caption": "Table 6: Text and voice conditioning for baseline models. A dash indicates that no explicit input of that type is supplied.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 223,
+              "image_path": "figures/2610.34991/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 714
+            },
+            {
+              "caption": "Table 9: Operational rules for long-session simulation.",
+              "figure_id": "table-9-34",
+              "figure_number": "9",
+              "height": 504,
+              "image_path": "figures/2610.34991/table-014.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 828
+            },
+            {
+              "caption": "Table 7: User-simulation and evaluation components.",
+              "figure_id": "table-7-32",
+              "figure_number": "7",
+              "height": 324,
+              "image_path": "figures/2610.34991/table-015.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 827
+            },
+            {
+              "caption": "Table 8: Operational classification of model utterances",
+              "figure_id": "table-8-33",
+              "figure_number": "8",
+              "height": 190,
+              "image_path": "figures/2610.34991/table-016.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 636
+            },
+            {
+              "caption": "Table 10: User-simulator persona instructions (verbatim).",
+              "figure_id": "table-10-22",
+              "figure_number": "10",
+              "height": 357,
+              "image_path": "figures/2610.34991/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 814
+            },
+            {
+              "caption": "Table 12: User-simulator generation requests. For each request type, the table lists the action type and summarizes the content goal.",
+              "figure_id": "table-12-20",
+              "figure_number": "12",
+              "height": 305,
+              "image_path": "figures/2610.34991/table-018.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 748
+            },
+            {
+              "caption": "Table 16: Selected baseline failure cases. Only relevant turns are shown; ellipses mark text omissions. Paired model-text and ASR rows are aligned to the same speech interval.",
+              "figure_id": "table-16-24",
+              "figure_number": "16",
+              "height": 938,
+              "image_path": "figures/2610.34991/table-019.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 844
+            },
+            {
+              "caption": "Table 14: Conversation-quality scoring rubric.",
+              "figure_id": "table-14-29",
+              "figure_number": "14",
+              "height": 434,
+              "image_path": "figures/2610.34991/table-020.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 827
+            },
+            {
+              "caption": "Table 11: User-simulator topic instructions (verbatim).",
+              "figure_id": "table-11-12",
+              "figure_number": "11",
+              "height": 923,
+              "image_path": "figures/2610.34991/table-021.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 814
+            },
+            {
+              "caption": "Table 2: Long-context memory and latency cost. Prompt-excluded BF16 KV growth and L40 backbone latency. P95 range spans the four context checkpoints. The PersonaPlex baseline uses a fixed 4-min KV ring; its KV growth is reported before saturation.",
+              "figure_id": "table-2-26",
+              "figure_number": "2",
+              "height": 221,
+              "image_path": "figures/2610.34991/table-022.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 810
+            },
+            {
+              "caption": "Table 15: Ten-minute baseline results. Parentheses indicate the number of normal turn-taking responses for FTO, resolved response opportunities for RT, all evaluated episodes for TS, and episodes included in aggregation for CQ, WER, and speaker similarity. A dash indicates that the reporting threshold is not met; Ref. marks the first minute used for speaker enrollment.",
+              "figure_id": "table-15-13",
+              "figure_number": "15",
+              "height": 1125,
+              "image_path": "figures/2610.34991/table-023.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 844
+            },
+            {
+              "caption": "Table 17: Twenty-minute long-session results. Values in parentheses indicate sample counts. A dash indicates that the reporting threshold is not met, and Ref. denotes the first minute used for speaker enrollment.",
+              "figure_id": "table-17-2",
+              "figure_number": "17",
+              "height": 1287,
+              "image_path": "figures/2610.34991/table-024.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 826
+            },
+            {
+              "caption": "Table 22: Topic instructions for teacher-trajectory generation (verbatim). Topics marked with † are held out for validation.",
+              "figure_id": "table-22-23",
+              "figure_number": "22",
+              "height": 1248,
+              "image_path": "figures/2610.34991/table-025.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 814
+            },
+            {
+              "caption": "Table 21: Persona instructions for teacher-trajectory generation (verbatim).",
+              "figure_id": "table-21-27",
+              "figure_number": "21",
+              "height": 812,
+              "image_path": "figures/2610.34991/table-026.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 814
+            },
+            {
+              "caption": "Table 5: Baseline configuration and decoding settings. Step denotes the duration of input audio processed per inference step. Audio rates are input/output. Decoding entries give temperature, top-k, and top-p; a dash indicates no separate audio-decoding setting.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 129,
+              "image_path": "figures/2610.34991/table-027.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 640
+            },
+            {
+              "caption": "Table 4: Released checkpoints used in the long-session simulation.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 130,
+              "image_path": "figures/2610.34991/table-028.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 464
+            },
+            {
+              "caption": "Table 19: Model-specific content–control assignment rules.",
+              "figure_id": "table-19-15",
+              "figure_number": "19",
+              "height": 212,
+              "image_path": "figures/2610.34991/table-029.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 827
+            },
+            {
+              "caption": "Table 23: Single-needle retention accuracy with greedy decoding. Each entry is the percentage of correct responses among 100 scorable probes. For Raon-SpeechChat, the two TRC conditions use tile durations of 480 and 960 ms with the same 9.6 s local window.",
+              "figure_id": "table-23-19",
+              "figure_number": "23",
+              "height": 213,
+              "image_path": "figures/2610.34991/table-030.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 472
+            },
+            {
+              "caption": "Table 18: Model-specific temporal units and TRC window and tile sizes.",
+              "figure_id": "table-18-14",
+              "figure_number": "18",
+              "height": 141,
+              "image_path": "figures/2610.34991/table-031.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 710
+            },
+            {
+              "caption": "Table 20: Training configuration for Ours (TRC) and Ours (LoRA).",
+              "figure_id": "table-20-16",
+              "figure_number": "20",
+              "height": 213,
+              "image_path": "figures/2610.34991/table-032.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 368
+            },
+            {
+              "caption": "Table 13: Aggregation and reporting thresholds.",
+              "figure_id": "table-13-28",
+              "figure_number": "13",
+              "height": 171,
+              "image_path": "figures/2610.34991/table-033.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 682
+            },
+            {
+              "caption": "Table 3: Hidden-state supervision. PersonaPlex performance at 0–2 / 18–20 minutes of conversation.",
+              "figure_id": "table-3-25",
+              "figure_number": "3",
+              "height": 88,
+              "image_path": "figures/2610.34991/table-034.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 400
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34991/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.34991",
+          "relevance": 7,
+          "selection_reason": "Two-resolution context compression reduces KV-cache growth by over 90% for long-session models.",
+          "summary_status": "generated",
+          "title": "Diagnosing and Mitigating Long-Session Degradation in Full-Duplex Speech Models",
+          "tldr": "The study diagnoses degradation in full-duplex speech models during extended conversations and improves stability using LoRA self-distillation plus compressed long-term context.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "GUI agents built on vision-language models interact with continuously evolving interfaces, yet conventional inference repeatedly recomputes representations of largely overlapping observations and histories. This mismatch makes multi-step interaction costly, while changes in context, interface content, and action arguments prevent straightforward cache reuse. We introduce GUIFlow, a framework for full-pipeline incremental inference in multi-image GUI interaction. Our central insight is that advancing a decision need not require rebuilding all supporting representations: each interaction step can instead selectively update computational states maintained across the trajectory. To support new decisions as the context evolves, GUIFlow adapts how past computation is reused: historical KV states are position-aligned and injected into the current context; change signals guide selective updates of current-observation states in the vision encoder and language model; and earlier action responses serve as speculative drafts verified by the target model. Together, these mechanisms enable cross-step reuse throughout visual encoding, prefill, and decoding without additional training, a separate draft model, or changes to the model-visible inputs and action interface. Experiments demonstrate up to 3.39x geometric-mean speedup across offline multi-image benchmarks and up to 3.49x in online, closed-loop interaction on OSWorld, while maintaining task performance broadly comparable to the dense baseline.",
+          "arxiv_id": "2610.34959",
+          "arxiv_url": "https://arxiv.org/abs/2610.34959",
+          "authors": [
+            "Ye Li, Haoran Ding, Huanan Liu, Yuan Meng, Yutian Shen, Yuansong Wang, Kangye Ji, Hanyun Cui, Hongbo Duan, Chen Tang, Jiawei Li, Shu-Tao Xia, Zhi Wang"
+          ],
+          "bullets": [
+            "Addresses the high cost of repeatedly recomputing overlapping observations and histories during GUI interaction.",
+            "Reuses position-aligned historical KV states and uses change signals to selectively update vision-encoder and language-model states.",
+            "Speculatively reuses prior action responses and verifies them with the target model.",
+            "Provides full-pipeline reuse across visual encoding, prefill, and decoding without a separate draft model or additional training.",
+            "Reports up to 3.39× offline and 3.49× online speedups, with task performance broadly comparable to dense inference."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of GUIFlow. GUIFlow treats successive GUI decisions as incremental updates to existing computation rather than independent inference passes. (A) Historical State Integration. Historical KV states are positionally aligned and injected into the current context. (B) CurrentObservation Refinement. Pixel changes guide visual-encoder updates, while source-aware KV deviations guide deeper language-model updates. (C) Verified Incremental Decoding. Conditioned on the prefill state formed by (A) and (B), the target model verifies historical response drafts, accepting matching tokens and correcting mismatches. Together, these mechanisms exploit temporal redundancy across visual encoding, prefill, and decoding without additional training or a separate draft model.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 546,
+              "image_path": "figures/2610.34959/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 820
+            },
+            {
+              "caption": "Figures 4–7 provide eight additional successful OSWorld trajectories spanning presentation editing, file operations, document editing, image manipulation, email organization, system configuration, and code editing. In every example, Dense inference and GUIFlow follow the same interaction stages and reach the completed state, while GUIFlow consistently accumulates less task execution time. Across these trajectories, the observed speedups range from 2.01× to 2.24×, with 8.97–22.61 seconds saved per task. These trajectories complement Figure 3 by illustrating lower cumulative task execution time across applications and trajectory lengths. All timelines report task execution time.",
+              "figure_id": "figure-4–7-2",
+              "figure_number": "4–7",
+              "height": 449,
+              "image_path": "figures/2610.34959/figure-002.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 829
+            },
+            {
+              "caption": "Figure 7: Additional system-configuration and code-editing trajectories. GUIFlow saves 22.61 and 14.39 seconds, respectively, while preserving all interaction stages.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 940,
+              "image_path": "figures/2610.34959/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Figure 1: Incremental changes in GUI observations and internal representations. (a–c) Imagelevel changes. A local edit modifies only a small part of successive screenshots; across the evaluated tasks, more than 70% of observation pairs have RGB-image error at most 5% at each temporal gap ∆t ∈ {1, 2, 3, 4}. (d–f) Representation-level changes. For the same observation pair, KV-drift maps at layer 6 and the final layer 36 show broadly similar spatial concentrations of change. Along the illustrated trajectory, a large share of tokens has small KV drift (dK , dV ≤ 0.1) during stable-interface segments, with drops around substantial interface changes. Together, these observations motivate selectively updating changing states rather than rebuilding all representations at every step.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 425,
+              "image_path": "figures/2610.34959/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Qualitative comparison of task execution time on an OSWorld task. Dense inference and GUIFlow complete the same seven interaction stages. GUIFlow reduces task execution time from 25.76 to 11.95 seconds, corresponding to a 2.16× speedup and 13.81 seconds saved. The horizontal axis measures cumulative task execution time.",
+              "figure_id": "figure-3-7",
+              "figure_number": "3",
+              "height": 421,
+              "image_path": "figures/2610.34959/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 829
+            },
+            {
+              "caption": "Figure 4: Additional presentation-editing trajectories. GUIFlow preserves all interaction stages while reducing cumulative task execution time by 11.11 and 20.62 seconds, respectively.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 476,
+              "image_path": "figures/2610.34959/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Additional file- and email-organization trajectories. GUIFlow saves 14.05 and 17.53 seconds while retaining the completed task sequence.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 940,
+              "image_path": "figures/2610.34959/figure-007.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 829
+            },
+            {
+              "caption": "Figure 6: Additional document- and image-editing trajectories. GUIFlow saves 8.97 and 13.17 seconds while completing the same editing stages as Dense inference.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 914,
+              "image_path": "figures/2610.34959/figure-008.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Main results on offline multi-image navigation. FLOPs (T) are averaged per step; speedup is the Dense/method FLOPs ratio, with an equal-weight geometric mean across datasets. GUIFlow achieves 3.37–3.39× geometric-mean speedups while maintaining scores close to Dense.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 503,
+              "image_path": "figures/2610.34959/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 827
+            },
+            {
+              "caption": "Table 3: FLOPs and wall-clock efficiency of GUIFlow. Total latency covers per-step processing and inference, excluding environment execution. Speedups use Dense/GUIFlow ratios of unrounded means; online records come from different trajectories.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 277,
+              "image_path": "figures/2610.34959/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 827
+            },
+            {
+              "caption": "Table 5: Sensitivity to TokenLease probe depth and reuse limit on Qwen3-VL-8B in OSWorld. The layer sweep fixes Mcur = 2, and the reuse-limit sweep fixes Lp = 6. † marks the shared default value of the swept parameter; quality uses all 361 tasks, with missing results scored as zero. Bold marks the best value within each sweep.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 264,
+              "image_path": "figures/2610.34959/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 827
+            },
+            {
+              "caption": "Table 4: Cumulative component ablation on Qwen3-VL-8B in OSWorld. Checkmarks indicate enabled components; quality uses 361 tasks, with missing results scored as zero. TokenLease uses Lp = 6 and Mcur = 3 in both enabled configurations. FLOPs and Total average valid task measurements; Total sums server processing time and excludes environment execution.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 38,
+              "image_path": "figures/2610.34959/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 827
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34959/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.34959",
+          "relevance": 8,
+          "selection_reason": "Incremental KV reuse and selective state updates for efficient vision-language model inference.",
+          "summary_status": "generated",
+          "title": "GUIFlow: Temporal Redundancy-Aware Incremental Inference for GUI Agents",
+          "tldr": "GUIFlow accelerates multi-step GUI agents by selectively reusing and updating computations across changing visual and interaction contexts, achieving substantial speedups without retraining or changing the agent interface.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Reasoning language models generate thousands of tokens per answer, and generation speed is limited by memory bandwidth, so storing weights in two bits instead of bfloat16 can potentially make inference 8$\\times$ cheaper. Two-bit methods are usually judged by perplexity and multiple-choice question-answering accuracy, both of which say little about whether a model can still reason through more difficult problems. We present ThinkBit, a strictly scalar two-bit framework built to preserve reasoning, in which every weight is an integer codeword times a bfloat16 scale shared by a group of weights. We first use a sensitivity metric to assign each layer a ternary, 2-bit, or 3-bit tier to allocate bitwidths optimally among layers. This is followed by a layerwise Gumbel-softmax-based scalar quantization algorithm that searches for optimal codewords block by block. Since a layerwise scheme does not capture how quantized layers interact with each other, we recalibrate scales, with the codewords frozen, using a knowledge-distillation-based loss against the teacher model. We then perform a short quantization-aware training (QAT) stage that lets the model mimic the base model's distribution by reassigning codewords. Finally, a paired reasoning test on training problems selects the final checkpoint between the recalibration stage and the QAT stage. On Qwen3-1.7B at matched size, our recalibrated checkpoint scores 46.7 on MATH-500 against 30.0 for EfficientQAT trained on the same data, and 73.0 after QAT on reasoning traces; at 0.52 GB it is smaller than every published 2-bit GGUF of the model yet more accurate on MATH-500. We show that this framework scales and up to 14B, a 3.74 GB model scores 94.8 on MATH-500, against 97.5 for the 29.5 GB bfloat16 model.",
+          "arxiv_id": "2610.34886",
+          "arxiv_url": "https://arxiv.org/abs/2610.34886",
+          "authors": [
+            "Rhea Sanjay Sukthanker, Pashmina Cameron"
+          ],
+          "bullets": [
+            "Targets the memory-bandwidth bottleneck of long-form reasoning by compressing model weights to roughly 2 bits.",
+            "Assigns ternary, 2-bit, or 3-bit precision per layer using sensitivity, then searches quantization codewords block by block with Gumbel-softmax.",
+            "Recalibrates shared scales using knowledge distillation and applies short quantization-aware training to better match the base model’s output distribution.",
+            "Uses paired reasoning tests to select between recalibration and QAT checkpoints rather than relying only on perplexity or multiple-choice accuracy.",
+            "On Qwen3-1.7B, reports 46.7 MATH-500 after recalibration and 73.0 after QAT; a 3.74 GB model reaches 94.8 versus 97.5 for the 29.5 GB bfloat16 model."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: The framework at a glance. Every weight is an integer codeword times a bf16 scale shared by a group of 128 weights; one checkpoint is kept per model. The rest of this section gives the evidence for each stage.",
+              "figure_id": "figure-4-34",
+              "figure_number": "4",
+              "height": 346,
+              "image_path": "figures/2610.34886/figure-001.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 907
+            },
+            {
+              "caption": "Figure 2: Qwen3-1.7B training curves. (a) Scale recalibration (codewords frozen): held-out KL to bf16 falls from 0.641 to 0.282. (b) Long QAT from the recalibrated model: KL increases briefly while codewords start to move, then falls from 0.311 to 0.199 (QAT is scored on the text that follows its own training slice, so its starting KL differs from the end of (a)). (c) Share of integer codewords that differ from the recalibrated model.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 335,
+              "image_path": "figures/2610.34886/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 961
+            },
+            {
+              "caption": "Figure 3: Accuracy against whole-model size for every file of each Qwen3 model scored in our harness: (a–c) sampled, strictly scored MATH-500; (d, e) AIME@16. Filled stars: QAT+R-h2 (selected); hollow stars: Rec-h2; diamonds: official EfficientQAT and BitDistiller trained on our base mixture (at 1.7B also with a 2-bit head and embedding); hexagons: PrismML Bonsai (ternary and 1-bit); lines join the model’s published GGUF files (Unsloth [75]; UD- prefix omitted) and bf16. The shaded corner holds every file that is both larger and less accurate than the selected checkpoint, i.e. Pareto-dominated by it; dominated files are drawn hollow. Grey triangles in (a): Qwen3-0.6B at 4 and 8 bits. Dotted lines: 2.6 and 4 bits per parameter (the size groups of the tables).",
+              "figure_id": "figure-3-20",
+              "figure_number": "3",
+              "height": 594,
+              "image_path": "figures/2610.34886/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 732
+            },
+            {
+              "caption": "Figure 9: Qwen3-1.7B: score against whole-model bytes (generation metrics greedy). Grey: published llama.cpp quantizations (Unsloth [75]; the UD- prefix is omitted in labels). Red star: ours with a 2-bit head and embedding (QAT-h2); orange diamond: ours with the bf16 tied embedding (QAT-hbf16). Dotted: bf16. Over 30 individually scored sub-scores (RACE excluded; greedy MATH counted; differences of at most 0.5 points count as ties) the 0.52 GB QAT checkpoint (QAT-h2) wins 23–26 against each 2-bit GGUF.",
+              "figure_id": "figure-9-17",
+              "figure_number": "9",
+              "height": 298,
+              "image_path": "figures/2610.34886/figure-004.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 772
+            },
+            {
+              "caption": "Figure 5: GSQ perplexity relative to the model’s own bf16 as blocks are quantized (before recalibration), Qwen3-1.7B.",
+              "figure_id": "figure-5-18",
+              "figure_number": "5",
+              "height": 378,
+              "image_path": "figures/2610.34886/figure-005.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 578
+            },
+            {
+              "caption": "Figure 6: QAT latent initialization α × learning rate on Qwen3-1.7B (short runs from the recalibrated model). (a) Heldout KL relative to the start. (b) Share of codewords changed. With α = 0 fewer than 0.003% of codewords are reassigned. Validation sequences are the chunks that follow each run’s training slice, so runs with different training lengths are scored on different held-out text; this is why the starting KL (0.251) differs from long QAT’s (0.311). KL values are comparable within a run, not across runs.",
+              "figure_id": "figure-6-23",
+              "figure_number": "6",
+              "height": 286,
+              "image_path": "figures/2610.34886/figure-006.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 730
+            },
+            {
+              "caption": "Figure 7: Where long QAT reassigns codewords on Qwen3-1.7B. (a) Share of each projection type’s codewords that QAT changes; value projections (orange) change most, query and key projections (dark blue) least. (b) Share changed in each transformer block, with the share per tier in the inset text. Codewords at the first and last transformer blocks are reassigned more than other blocks(c) Distribution, before QAT, of the distance |W/s− c| between each codeword c and its bf16 weight W/s, in grid steps with the recalibrated scales, for all codewords (grey) and for those that QAT reassigns (orange). The dotted line at 0.5 is the rounding boundary: most reassigned codewords lie beyond it, and 99.8% of reassignments move one step toward the bf16 weight.",
+              "figure_id": "figure-7-14",
+              "figure_number": "7",
+              "height": 342,
+              "image_path": "figures/2610.34886/figure-007.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 970
+            },
+            {
+              "caption": "Figure 8: Qwen3-1.7B: retention on 14 benchmarks after recalibration and after QAT (Rec-hbf16, QAT-hbf16) (RACE omitted; its test passages appear in MMLU’s auxiliary training data). Numbers above bars are QAT retention.",
+              "figure_id": "figure-8-16",
+              "figure_number": "8",
+              "height": 331,
+              "image_path": "figures/2610.34886/figure-008.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 825
+            },
+            {
+              "caption": "Table 8: Removing any stage keeps the 7-task mean within 1.5 points but costs 6.0–14.6 points of sampled MATH-500. Qwen3-1.7B variants (bf16 head and embedding); paired tests in table 9. Shaded: full framework; bold: best quantized value. “Revert” restores the pre-QAT codewords in one layer class. ◦WikiText-2 from a separate pass (bf16: 16.72).",
+              "figure_id": "table-8-35",
+              "figure_number": "8",
+              "height": 503,
+              "image_path": "figures/2610.34886/table-009.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 980
+            },
+            {
+              "caption": "Table 2: Checkpoint names. At 1.7B, Rec-h2 uses a second recalibration pass that quantizes the head and embedding to 2-bits; Rec-h2 (1 pass) uses one.",
+              "figure_id": "table-2-29",
+              "figure_number": "2",
+              "height": 288,
+              "image_path": "figures/2610.34886/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 782
+            },
+            {
+              "caption": "Table 7: At 0.52 GB, QAT+R-h2 reasons better than every Qwen3-1.7B file of up to 4 bits per parameter; Ternary Bonsai leads the non-reasoning columns. Same harness for all files; bits/param use the original 1.72B parameters. Rows grouped by bits per parameter; bold: best in the ≤2.6-bit group. §QAT on the reasoning mixture. ‡Second recalibration pass that quantizes the head and embedding. ∗Not separately re-packed. †Official code on our base mixture, same tokens. ◦Released files [55]. ¶Bits per Qwen3-0.6B parameter. BFCL NL: BFCL non-live.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 535,
+              "image_path": "figures/2610.34886/table-011.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 980
+            },
+            {
+              "caption": "Table 5: Two-bit models fail mainly by not finishing their reasoning; at 14B almost every trace finishes. Sampled MATH-500 split into the share of traces that close </think> and the accuracy on those. Bold: best quantized value per model.",
+              "figure_id": "table-5-2",
+              "figure_number": "5",
+              "height": 311,
+              "image_path": "figures/2610.34886/table-012.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 640
+            },
+            {
+              "caption": "Table 6: At every size, QAT+R-h2 is the most accurate checkpoint on MATH-500 and AIME@16 among files of at most 2.6 bits per parameter. MATH-500: sampled; AIME@16: mean pass@1 over 16 samples. Bonsai [55] and GGUF [75] files run in our harness. Rows grouped by bits per parameter; bold: best in the ≤2.6-bit group. §Trained on the reasoning mixture. †Official code on our base mixture, same tokens as Rec-h2, bf16 head and embedding. ‡Same with a 2-bit head and embedding. ¶Trained with 4,096-token sequences.",
+              "figure_id": "table-6-25",
+              "figure_number": "6",
+              "height": 893,
+              "image_path": "figures/2610.34886/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 980
+            },
+            {
+              "caption": "Table 9: Codeword search and recalibration each raise sampled MATH-500 significantly, and every selector decision agrees with MATH-500. Paired contrasts on MATH-500 (n=500) and on the 313 selection problems. Bold: significant after Holm correction. Status: abl, stage ablation; check, robustness check; sel, selector decision. §Separate evaluation run (Rec: 47.2 there, 47.45 in the main run).",
+              "figure_id": "table-9-22",
+              "figure_number": "9",
+              "height": 444,
+              "image_path": "figures/2610.34886/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 980
+            },
+            {
+              "caption": "Table 3: Data used by each stage. ∗Longer QAT on the reasoning mixture, used for the selected checkpoints.",
+              "figure_id": "table-3-28",
+              "figure_number": "3",
+              "height": 255,
+              "image_path": "figures/2610.34886/table-015.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 748
+            },
+            {
+              "caption": "Table 16: Every stage removal is equivalent to the full framework on the 7-task mean (margin ±1.5); skipping QAT is not. ∆: QAT-hbf16 minus the named checkpoint.",
+              "figure_id": "table-16-5",
+              "figure_number": "16",
+              "height": 209,
+              "image_path": "figures/2610.34886/table-016.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 782
+            },
+            {
+              "caption": "Table 11: Evaluation settings. GGUF files are dequantized to bf16; RACE is excluded from retention means because its passages appear in MMLU’s auxiliary data.",
+              "figure_id": "table-11-26",
+              "figure_number": "11",
+              "height": 382,
+              "image_path": "figures/2610.34886/table-017.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 718
+            },
+            {
+              "caption": "Table 27: At 3.74 GB our checkpoints beat UD-IQ2_XXS (4.47 GB) on reasoning; Q2_K and larger files remain stronger. Qwen3-14B by whole-model bytes. M500: sampled MATH-500; A24/25: greedy AIME; A@16: mean pass@1 over 16 samples; HE: HumanEval; MT: BFCL multi-turn. Rows grouped by bits per parameter. †Not packed; ∗computed from the grids; §separate evaluation run.",
+              "figure_id": "table-27-30",
+              "figure_number": "27",
+              "height": 254,
+              "image_path": "figures/2610.34886/table-018.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 990
+            },
+            {
+              "caption": "Table 22: With a forced answer the 0.52 GB checkpoints and Q2_K tie, so the strict lead of Rec-h2 comes from finishing more traces. Greedy thinking-mode MATH-500 on Qwen3-1.7B with the answer forced after the given number of thinking tokens.",
+              "figure_id": "table-22-15",
+              "figure_number": "22",
+              "height": 290,
+              "image_path": "figures/2610.34886/table-019.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 718
+            },
+            {
+              "caption": "Table 1: The two relaxations used by codeword search. Gumbel-softmax trains a smooth stand-in for the rounded weight with an exact gradient; ReinMax trains the rounded weight itself with an approximate gradient.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 163,
+              "image_path": "figures/2610.34886/table-020.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 822
+            },
+            {
+              "caption": "Table 4: Recalibration recovers most of what codeword search loses; QAT further improves likelihood but not reasoning. Qwen3-1.7B after each stage (bf16 head and embedding); Bold: best quantized value.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 142,
+              "image_path": "figures/2610.34886/table-021.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 722
+            },
+            {
+              "caption": "Table 10: Notation.",
+              "figure_id": "table-10-3",
+              "figure_number": "10",
+              "height": 992,
+              "image_path": "figures/2610.34886/table-022.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 794
+            },
+            {
+              "caption": "Table 26: QAT+R-h2 closes more traces than Q2_K and is more accurate on them; the earlier 0.52 GB checkpoints win only by closing more traces. Sampled MATH-500 split into traces that close within 32k tokens and strict accuracy on them. Rows grouped by bits per parameter.",
+              "figure_id": "table-26-21",
+              "figure_number": "26",
+              "height": 744,
+              "image_path": "figures/2610.34886/table-023.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 744
+            },
+            {
+              "caption": "Table 24: Packed files decode bit-exactly and are within 0.6% of the sizes computed from the grids. Bits per quantized weight include the group scales.",
+              "figure_id": "table-24-11",
+              "figure_number": "24",
+              "height": 241,
+              "image_path": "figures/2610.34886/table-024.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 652
+            },
+            {
+              "caption": "Table 12: The 7-task means of table 4 task by task (length-normalized accuracy for ARC, HellaSwag and PIQA). Chance-normalized retention after GSQ / recalibration / QAT: 47.6 / 73.1 / 84.2%.",
+              "figure_id": "table-12-27",
+              "figure_number": "12",
+              "height": 211,
+              "image_path": "figures/2610.34886/table-025.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 682
+            },
+            {
+              "caption": "Table 18: Under the base mixture the selector kept the recalibrated checkpoint in every decision, and MATH-500 agrees. A, B: strict accuracy on the 313 selection problems.",
+              "figure_id": "table-18-31",
+              "figure_number": "18",
+              "height": 209,
+              "image_path": "figures/2610.34886/table-026.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 590
+            },
+            {
+              "caption": "Table 21: Recalibration and QAT make single blocks less faithful but bring the output distribution closer to bf16. Relative block-output error (local: bf16 input; propagated: fully quantized model) and output KL on WikiText-2.",
+              "figure_id": "table-21-24",
+              "figure_number": "21",
+              "height": 117,
+              "image_path": "figures/2610.34886/table-027.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 556
+            },
+            {
+              "caption": "Table 14: Codeword search beats stronger GPTQ starts on reasoning after the same recalibration (rec.) and QAT, while likelihood barely separates them. Bold: best per column.",
+              "figure_id": "table-14-8",
+              "figure_number": "14",
+              "height": 139,
+              "image_path": "figures/2610.34886/table-028.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 979
+            },
+            {
+              "caption": "Table 13: Keeping query and key projections at 2 bits or more changes reasoning by less than 2 points (MATH-500 +1.8, p=0.12). Otherwise identical settings.",
+              "figure_id": "table-13-19",
+              "figure_number": "13",
+              "height": 187,
+              "image_path": "figures/2610.34886/table-029.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 694
+            },
+            {
+              "caption": "Table 20: Recalibration does not move scales toward the weight-space optimum, and weight error rises in every tier. Per-group scale changes on Qwen3-1.7B; corr.: correlation of r with log(s⋆/s0).",
+              "figure_id": "table-20-33",
+              "figure_number": "20",
+              "height": 173,
+              "image_path": "figures/2610.34886/table-030.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 618
+            },
+            {
+              "caption": "Table 25: Serving from packed containers cuts weight memory 1.7–3.0× and speeds up batch-1 decoding at 8B and 14B. vLLM on one H100; memory in GiB.",
+              "figure_id": "table-25-10",
+              "figure_number": "25",
+              "height": 152,
+              "image_path": "figures/2610.34886/table-031.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 690
+            },
+            {
+              "caption": "Table 15: Quantizing the head and embedding costs no detectable accuracy. Further paired contrasts (pointwise tests, not Holm-corrected).",
+              "figure_id": "table-15-7",
+              "figure_number": "15",
+              "height": 107,
+              "image_path": "figures/2610.34886/table-032.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 980
+            },
+            {
+              "caption": "Table 23: Codeword search mainly raises accuracy on closed traces; recalibration and QAT mainly change how many traces close. Problem-matched sampled MATH-500 differences (95% CI); bold: p<0.01.",
+              "figure_id": "table-23-9",
+              "figure_number": "23",
+              "height": 117,
+              "image_path": "figures/2610.34886/table-033.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 760
+            },
+            {
+              "caption": "Table 19: The scales carry recalibration: scales alone reach the same held-out KL as scales plus RMSNorm gains. Qwen3-1.7B, same data and schedule.",
+              "figure_id": "table-19-32",
+              "figure_number": "19",
+              "height": 140,
+              "image_path": "figures/2610.34886/table-034.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 586
+            },
+            {
+              "caption": "Table 17: At 0.52 GB, Rec-h2 beats QAT-h2 and the larger Q2_K; at 14B every two-bit checkpoint beats the smallest GGUF. Paired MATH-500 contrasts (AIME@16 where noted). Bold: significant after Holm correction together with table 9. §Separate evaluation run. Status: pre-reg., pre-registered; post hoc, chosen after earlier results; check, robustness check.",
+              "figure_id": "table-17-6",
+              "figure_number": "17",
+              "height": 59,
+              "image_path": "figures/2610.34886/table-035.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 980
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34886/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.34886",
+          "relevance": 8,
+          "selection_reason": "Two-bit weight quantization with bitwidth allocation and scale recalibration reduces LLM memory footprint while preserving reasoning.",
+          "summary_status": "generated",
+          "title": "ThinkBit: Search Codewords, Recalibrate Scales, Select by Reasoning",
+          "tldr": "ThinkBit is a scalar 2-bit quantization framework that preserves challenging mathematical reasoning through sensitivity-based bit allocation, codeword search, scale recalibration, and reasoning-guided checkpoint selection.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language-action (VLA) models are increasingly used for robot manipulation because they map camera images and a language instruction directly to actions. Robots that cannot be tethered to a workstation, such as mobile manipulators and humanoids, must run them on onboard embedded boards, where the prefill latency of the language backbone grows with the hundreds of visual tokens processed at every control step. To meet real-time limits, training-free accelerators recompute only a subset of the visual tokens and skip the rest, either by pruning them or by reusing their cached key-value (KV) states. The two options save nearly the same computation, yet existing methods apply only one of them to every skipped token. Through a token-level diagnostic, we show that which option keeps the action closer to full recomputation depends on the token's drift, the change in its shallow-layer value since its cache was computed. On both backbones tested, reusing tokens below a drift threshold was no worse than pruning them, whereas beyond it, reuse yields up to 4.4x the action error of pruning; the same diagnostic calibrates this threshold per backbone. Building on this finding, we propose TRIAGE, which deems a cache valid when its drift is below this threshold and it is not too old. TRIAGE recomputes a fixed budget of tokens, prioritizing important tokens with invalid caches, reuses every other token with a valid cache, and prunes the rest; prune-only and reuse-only methods are the two extremes of this partition. Because the budget fixes the number of recomputed tokens, it directly sets the prefill latency. On LIBERO and SimplerEnv, TRIAGE stays within 3 pp of full recomputation in average success rate while cutting prefill latency on a Jetson AGX Orin by up to 48%, and with only 7% of visual tokens recomputed, it beats the strongest baseline by 24.4 pp on LIBERO-Object.",
+          "arxiv_id": "2610.34519",
+          "arxiv_url": "https://arxiv.org/abs/2610.34519",
+          "authors": [
+            "Sooyoung Kwon, Carlee Joe-Wong, Kyunghan Lee"
+          ],
+          "bullets": [
+            "Targets onboard VLA inference, where processing hundreds of visual tokens causes high prefill latency.",
+            "Finds that reuse is effective for low-drift tokens, while pruning is preferable for high-drift tokens.",
+            "Uses a calibrated drift threshold and cache age to classify tokens as reusable, invalid-and-recompute, or prune.",
+            "A fixed recomputation budget directly controls latency.",
+            "On LIBERO and SimplerEnv, remains within 3 percentage points of full recomputation while reducing Jetson AGX Orin prefill latency by up to 48%; with 7% of tokens recomputed, it exceeds the strongest LIBERO-Object baseline by 24.4 points."
+          ],
+          "categories": [
+            "cs.RO",
+            "cs.AI",
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 3. Overview of TRIAGE. Shallow layers mark each token as important (blue) and its cache as invalid (red). The budget B goes to important, invalid tokens first; every other token is reused if valid and pruned otherwise, so B alone sets the prefill latency.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 253,
+              "image_path": "figures/2610.34519/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1044
+            },
+            {
+              "caption": "Fig. 5. TRIAGE lies on the Pareto frontier in every setting. Success rate versus prefill latency on a Jetson AGX Orin (top) and an RTX 3090 (bottom), averaged over the LIBERO suites or the SimplerEnv settings; dashed: Pareto frontier. No baseline is both more accurate and faster.",
+              "figure_id": "figure-5-2",
+              "figure_number": "5",
+              "height": 513,
+              "image_path": "figures/2610.34519/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1030
+            },
+            {
+              "caption": "Fig. 1. Recompute only what neither reuse nor pruning can handle. Blue: important tokens; red: tokens changed since frame t−1 (stale caches). Reuse-only recomputes every changed token (18) and prune-only every important token (17). TRIAGE recomputes only tokens that are both (7), reuses valid caches, and prunes the rest.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 381,
+              "image_path": "figures/2610.34519/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 512
+            },
+            {
+              "caption": "Fig. 2. Drift decides between reuse and pruning. (a, b) Reuse − prune action error ∆ (Eq. (2), ×10−3) versus drift of the probed tokens on LIBERO-Spatial; blue region: reuse is better. Black: pooled over cache ages (95% bootstrap CI); thin: individual ages. Reuse is never worse below δ = 0.3 (dashed) but clearly worse above 0.5. (c) Drift grows with cache age (median, solid; 90th percentile, dashed), so the age limit T rarely binds.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 388,
+              "image_path": "figures/2610.34519/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 491
+            },
+            {
+              "caption": "Fig. 6. TRIAGE is robust to its hyperparameters. LIBERO-Goal, OpenVLA, B = 28 (default: 70.6%). Each row changes one setting from the default (δ = 0.3, T = 10, µ = 0.06, signal layer 2); paired difference with 95% bootstrap interval over 500 episodes. Every interval contains zero.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 355,
+              "image_path": "figures/2610.34519/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 504
+            },
+            {
+              "caption": "Fig. 4. Only combining pruning and reuse survives small budgets. LIBERO-Object, OpenVLA (500 episodes per budget; Wilson 95% intervals). x-axis: visual tokens recomputed per query, out of 256. Drop-all / keep-all prune / reuse every non-recomputed token. Drop-all degrades steadily and keep-all collapses below B = 46, while TRIAGE leads VLAPruner by 24.4 pp at B = 18.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 329,
+              "image_path": "figures/2610.34519/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 510
+            },
+            {
+              "caption": "TABLE I RESULTS ON LIBERO: TRIAGE STAYS WITHIN 3 PP OF FULL RECOMPUTATION WITH THE LOWEST JETSON P99 LATENCY",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 451,
+              "image_path": "figures/2610.34519/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 882
+            },
+            {
+              "caption": "TABLE II OPENVLA ON SIMPLERENV (GOOGLE ROBOT): WITHOUT RETUNING, TRIAGE MATCHES FULL RECOMPUTATION",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 233,
+              "image_path": "figures/2610.34519/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 764
+            },
+            {
+              "caption": "TABLE III ERROR OF REUSED CACHES GROWS WITH AGE ONLY JUST BELOW δ (OPENVLA, MEDIAN RELATIVE CHANGE IN ATTENTION)",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 240,
+              "image_path": "figures/2610.34519/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 335
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34519/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.34519",
+          "relevance": 9,
+          "selection_reason": "Training-free VLA inference acceleration via joint token reuse and pruning with drift-based cache validity fits VLA and token/KV efficiency.",
+          "summary_status": "generated",
+          "title": "TRIAGE: Efficient Vision-Language-Action Inference Needs Both Reuse and Pruning",
+          "tldr": "TRIAGE combines token reuse and pruning based on cache drift to reduce VLA prefill latency while preserving near-full-recomputation robot performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Typed decision-making tasks in agents, such as UI element selection, product recommendation, and chart matching, require models to choose from a set of discrete candidates. While prior work demonstrates that text-only System One models achieve four key properties including candidate-order invariance, scalability, and cache reuse via separate request-candidate encoding, extending them to multimodal settings where candidates are visual remains underexplored. We introduce Iris, a framework that accommodates image, text, or hybrid candidates while preserving the core decision module. We prove that order invariance and exact cache reuse hold for any per-candidate encoder under Iris, and derive the closed-form latency reduction. We construct a visual-candidate benchmark from Multimodal-Mind2Web (K=16, deduplicated, order-shuffled, three generalization splits). Independent encoding (Iris) achieves 78.4 / 72.1 / 74.8 percent accuracy with zero-flip rate under candidate reordering. Joint encoding reaches 90.6 / 89.5 / 91.6 percent but suffers an 8 to 10 percent answer-flip rate when shuffled. To bridge this gap, we propose a design that encodes each candidate conditioned on the request state without inter-candidate cross-attention; it preserves strict order invariance, enables forked cache sharing, and attains 91.7 / 86.5 / 90.0 percent accuracy at one-third of OneJev latency with calibrated null probabilities (AUROC 0.93 to 0.97). Reusing image candidates across requests cuts latency by 37x at K=256 and 191x at K=2048. On MetaEncoder benchmarks, Iris-4B achieves 100 percent on JevBench original and easy, outperforming 30B MetaEncoder and 27B OpenJev. Finally, we resolve a systems bottleneck on Ampere GPUs: reformulating Qwen3.5 patch-embedding Conv3d into its exact matrix-product form accelerates processing by 350x. Code, data, and checkpoints: https://github.com/lllfx/Iris.",
+          "arxiv_id": "2610.33702",
+          "arxiv_url": "https://arxiv.org/abs/2610.33702",
+          "authors": [
+            "Fengxin Li"
+          ],
+          "bullets": [
+            "Targets typed-choice tasks such as UI selection, recommendation, and chart matching with visual candidates.",
+            "Uses per-candidate encoding, including request-conditioned encoding without inter-candidate cross-attention, to preserve strict order invariance and reusable caches.",
+            "The proposed design reaches 91.7/86.5/90.0% accuracy across three splits, with one-third of OneJev’s latency and AUROC 0.93–0.97 for calibrated null probabilities.",
+            "Reusing image candidates reduces latency by 37× at K=256 and 191× at K=2048.",
+            "An exact Conv3d-to-matrix-product reformulation accelerates Qwen3.5 patch embedding by 350× on Ampere GPUs."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Accuracy against order dependence on Mind2Web, one marker per model and split. The two released Iris models sit at a flip rate of exactly zero; the retrained OneJev buys 1–3 points of accuracy on two splits with an 8–10% flip rate, and the released OneJev answers largely by position.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 443,
+              "image_path": "figures/2610.33702/figure-001.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 723
+            },
+            {
+              "caption": "Figure 3: A Multimodal-Mind2Web step as Iris sees it. Left: the task, the last previous actions and the question form the text state. Right: each candidate (14 here, after deduplication) is the element’s own crop with a short label; the gold element is outlined in red, at a shuffled position.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 468,
+              "image_path": "figures/2610.33702/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 959
+            },
+            {
+              "caption": "Figure 1: Jeva encodes the request and each text candidate independently and lets the state read a candidate memory. Iris keeps that decision module and the four properties it guarantees, and lets the state and every candidate carry images: a screenshot crop, a chart, a product photo. The vision tower that Jeva loads and discards is used; nothing in the decision path changes.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 495,
+              "image_path": "figures/2610.33702/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 898
+            },
+            {
+              "caption": "Figure 2: What a candidate’s vector may depend on. (a) Joint encoding: the answer depends on the order and number of candidates and nothing is reusable. (b) Independent encoding: ui is a function of ci alone, so the decision is order-invariant, unbounded in K and cacheable across requests (Proposition 1). (c) State-conditioned encoding: each candidate continues from a fork of the state’s cache—order invariance and null handling are unchanged, the state pass is shared within a request, and cross-request reuse is given up.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 275,
+              "image_path": "figures/2610.33702/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 962
+            },
+            {
+              "caption": "Figure 5: MMEB-V2 reranking per task. Retrieval tuning helps wherever the query or the candidate is text and does nothing where both are images: a per-candidate vector cannot carry a comparison with the query image.",
+              "figure_id": "figure-5-16",
+              "figure_number": "5",
+              "height": 614,
+              "image_path": "figures/2610.33702/figure-005.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 742
+            },
+            {
+              "caption": "Figure 6: Latency against K with none, half, or all of the image candidates already cached (solid: measured; dashed: Proposition 2 with the measured constants). At full reuse a request costs the state pass plus host-side assembly whatever K is.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 442,
+              "image_path": "figures/2610.33702/figure-006.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 733
+            },
+            {
+              "caption": "Figure 7: Cross-task accuracy of the conditioned stage-2 checkpoints: total, on steps with a positive, and correct abstention on the 81 null steps.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 395,
+              "image_path": "figures/2610.33702/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 741
+            },
+            {
+              "caption": "Table 2: Element selection on Multimodal-Mind2Web with K=16: first-choice accuracy and decision flip rate over five candidate orders (original, reversed, three seeded random), on the cross-task / cross-website / cross-domain splits. Jeva’s row uses text candidates and is the reference point for the same positives. OneJev cannot take image candidates: “labels” gives it each candidate’s text label with the page screenshot in the state (its native setting); “crops in state” lists every candidate’s crop inside the state and keeps letter slots for the candidates, the only way a letter-slot model can look at the crops; “retrained” fine-tunes OneJev-4B with LoRA on the same 7,751 training steps in that format (Appendix A). Trained rows report the final checkpoint; the “selected” row is the periodic checkpoint with the best cross-task accuracy (epoch 2, step 50; Appendix C.1), so its cross-task number (†) is a selection-split number, not a test number; the “abstention stage” row continues that checkpoint for one epoch on a null-oversampled subset of the training steps (§5.4). Chance is 6.25%. For Iris, all-order accuracy equals first-order accuracy on every split: a record answered correctly is answered correctly in every order.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 275,
+              "image_path": "figures/2610.33702/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 980
+            },
+            {
+              "caption": "Table 1: How System One designs handle visual candidates. r: fraction of candidates already cached. ∗With the candidate list inside the request (needed for closed-set accuracy) the request itself is not reusable. The state-conditioned Iris encoder (§3.5) shares the state pass across a request’s candidates and questions but not across requests.",
+              "figure_id": "table-1-15",
+              "figure_number": "1",
+              "height": 182,
+              "image_path": "figures/2610.33702/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 980
+            },
+            {
+              "caption": "Table 4: Reranking the top 16 of Qwen3-VL-Embedding-2B on MMEB-V2 image retrieval (hit@1, 1,000 queries per task). Iris’s flip rate is 0.00 on every task. The zero-shot row has never seen a retrieval candidate; the tuned row is the released mixture model (§5.7), trained on 4,000 M-BEIR train queries of each of ten tasks (all but VisDial and Wiki-SS-NQ, which measure transfer) with hard negatives from the same first stage.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 212,
+              "image_path": "figures/2610.33702/table-010.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 982
+            },
+            {
+              "caption": "Table 8: Settings. Everything not listed is Jeva-4B’s default.",
+              "figure_id": "table-8-3",
+              "figure_number": "8",
+              "height": 588,
+              "image_path": "figures/2610.33702/table-011.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 998
+            },
+            {
+              "caption": "Table 3: Accuracy (%) on the typed-decision benchmarks used by MetaEncoder. Reported numbers are from [4], Table 2. ImaJev-Bench: the 154 dev rows with public labels (of 173). Iris’s flip rate is 0.00 on every split.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 155,
+              "image_path": "figures/2610.33702/table-012.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 979
+            },
+            {
+              "caption": "Table 9: Cross-task accuracy (%) of the conditioned stage-2 checkpoints, original order. From 1.2 epochs on, accuracy on steps with a positive is stable and the total is driven by the volatile abstention rate on the 81 null steps.",
+              "figure_id": "table-9-10",
+              "figure_number": "9",
+              "height": 252,
+              "image_path": "figures/2610.33702/table-013.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 577
+            },
+            {
+              "caption": "Table 5: Null detection on the Mind2Web null steps (81 / 44 / 222 steps per split).",
+              "figure_id": "table-5-12",
+              "figure_number": "5",
+              "height": 163,
+              "image_path": "figures/2610.33702/table-014.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 944
+            },
+            {
+              "caption": "Table 6: Typed outputs on 2,000 held-out OneJev-Data rows.",
+              "figure_id": "table-6-13",
+              "figure_number": "6",
+              "height": 128,
+              "image_path": "figures/2610.33702/table-015.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 936
+            },
+            {
+              "caption": "Table 7: Latency under candidate reuse: K image candidates of which a fraction r is already in the hybrid cache, fresh state every request; one A800, 5 repetitions. Predicted is T (r) of Proposition 2 with the measured constants. S(1) is the measured speedup at full reuse.",
+              "figure_id": "table-7-8",
+              "figure_number": "7",
+              "height": 212,
+              "image_path": "figures/2610.33702/table-016.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 886
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33702/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.33702",
+          "relevance": 6,
+          "selection_reason": "Multimodal decision framework with order-invariant candidate encoding and reusable inference cache; relevant to memory-efficient inference and latency reduction.",
+          "summary_status": "generated",
+          "title": "Seeing the Options: Typed Decisions over Visual Candidates with Reusable Option Memory",
+          "tldr": "Iris enables order-invariant, cacheable decisions over visual, textual, or hybrid candidates while achieving strong accuracy and major latency savings.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Vision-language-action (VLA) models enable robots to perform tasks specified through natural-language instructions, but their large weight footprint challenges deployment on memory-constrained onboard platforms. Ultra-low-bit quantization reduces this footprint, yet preserving task performance and controlling weight recovery costs remain challenging. We propose Action-Guided Quantization, which combines action sensitivity with a measured proxy for weight recovery cost to allocate matrix bitwidths under storage budgets. Per-channel calibration compensates for quantization error, while a uniform bitwidth within each matrix preserves regular layouts. Bit-dependent grouped lossless coding reduces resident weight storage, and block-wise recovery limits temporary buffers. On LIBERO, AGQ achieves 92.7% task success at W3, exceeding AWQ and GPTQ by 1.2 and 3.7 percentage points, respectively, and retains 70.5% success at W2.5. An asymmetric configuration, denoted W1.5$^{*}$, uses W4 vision weights and a parameter-weighted average of 1.5 bits for language weights. With lossless coding, it achieves $6.10\\times$ complete-model compression relative to BF16 while retaining 25.5% task success. Code and experimental results are available at https://github.com/Qiuxu00/AGQ",
+          "arxiv_id": "2610.33074",
+          "arxiv_url": "https://arxiv.org/abs/2610.33074",
+          "authors": [
+            "Xuhong Qiu, Zhuoyu Wu, Qiawei Zheng, Wenhui Ou, Wenqi Fang, Rapha\\\"{e}l C. -W. Phan"
+          ],
+          "bullets": [
+            "Targets the large memory footprint of vision-language-action models on onboard, memory-constrained robots.",
+            "Allocates matrix bitwidths under storage budgets using action sensitivity and a proxy for weight recovery cost.",
+            "Uses per-channel calibration, matrix-uniform bitwidths, lossless coding, and block-wise recovery to reduce storage and recovery overhead.",
+            "On LIBERO, achieves 92.7% success at W3 and 70.5% at W2.5; W3 exceeds AWQ and GPTQ by 1.2 and 3.7 percentage points.",
+            "A W1.5* configuration with lossless coding provides 6.10× compression relative to BF16 while retaining 25.5% task success."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of AGQ: (a) VLA architecture; (b) action-guided bit allocation incorporating a measured proxy for weight recovery cost; (c) per-channel quantizer calibration; and (d) grouped lossless coding and block-wise execution.",
+              "figure_id": "figure-2-4",
+              "figure_number": "2",
+              "height": 629,
+              "image_path": "figures/2610.33074/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1064
+            },
+            {
+              "caption": "Fig. 1. Low-bit quantization of VLA models. Lines show task success rates (left axis) for Ours and Baseline (QVLA), while bars show target-weight compression ratios relative to BF16 (right axis). QVLA reports 0% at W2.5; lower-bit results are zero-valued extensions for visualization. W1.5*: W4 vision + W1.5 language.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 270,
+              "image_path": "figures/2610.33074/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 497
+            },
+            {
+              "caption": "Fig. 3. W2.5 success rates across four suites and overall. Random allocation also undergoes calibration. QVLA values are from ActQuant [7].",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 293,
+              "image_path": "figures/2610.33074/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 456
+            },
+            {
+              "caption": "TABLE I MATRIX-WISE BIT ALLOCATION WITH SUPPORTING PROBE ANALYSIS",
+              "figure_id": "table-I-5",
+              "figure_number": "I",
+              "height": 426,
+              "image_path": "figures/2610.33074/table-004.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 529
+            },
+            {
+              "caption": "TABLE II CLOSED-LOOP TASK SUCCESS RATES (%) ON LIBERO",
+              "figure_id": "table-II-2",
+              "figure_number": "II",
+              "height": 385,
+              "image_path": "figures/2610.33074/table-005.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "TABLE III STORAGE AND INFERENCE EFFICIENCY OF OPENVLA-OFT",
+              "figure_id": "table-III-1",
+              "figure_number": "III",
+              "height": 239,
+              "image_path": "figures/2610.33074/table-006.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 529
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33074/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.33074",
+          "relevance": 9,
+          "selection_reason": "Ultra-low-bit quantization for VLA models; directly relevant to embodied VLA and memory-efficient deployment.",
+          "summary_status": "generated",
+          "title": "AGQ: Action-Guided Ultra-Low-Bit Quantization for Vision-Language-Action Models",
+          "tldr": "AGQ enables memory-efficient VLA deployment by allocating ultra-low-bit weights according to action sensitivity and recovery cost while preserving task performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "vision-language-action"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We introduce Nemotron 3.5 Bolt 74B-A9B 24GB, a hybrid Mamba-Transformer vision-language model that optimizes speed and intelligence per GB of memory used for local agentic workloads. Derived from the Nemotron 3.5 Super VL 120B-A12B model family, Nemotron 3.5 Bolt 74B-A9B 24GB combines Star Elastic compression with 2-bit Quantization-Aware Distillation for memory-constrained deployment. The model is optimized for reasoning, agentic tool use, and web & terminal interactions. We also trained a LiLiCorr speculative drafter that is released alongside the model to reach our target inference speed. The resulting model achieves a higher accuracy than leading models with similar memory footprints and speed across many benchmarks for general agentic capabilities (e.g., GDPVal v2), web browsing (e.g., BrowseComp), and terminal use (e.g., Terminal-Bench 2.1), with a relatively high TPS of 84 on RTX Spark that is comparable to models with much lower active parameter counts and more than sufficient for long-horizon agentic applications.",
+          "arxiv_id": "2610.33039",
+          "arxiv_url": "https://arxiv.org/abs/2610.33039",
+          "authors": [
+            "Ganesh Ajjanagadde, Chris Alexiuk, Luke Alonso, Kumar Anshuman, Maor Ashkenazi, Nave Assaf, Gorkem Batmaz, Omer Belhasin, Shai Ben Nun, Akhiad Bercovich, Pritam Biswas, Caroline Blanco, Tijmen Blankevoort, Michael Boone, Christopher Borden, Kari Briski, Bryan Catanzaro, Zijia Chen, Aishwarya Chhabra, Hung-Yueh Chiang, Annamalai Chockalingam, Jonathan Cohen, Joey Conway, Olivier Delalleau, Gerardo Delgado Cabrera, Leon Derczynski, Li Ding, Will Efstratis, Michael Elad, Ellie Evans, Wes Feely, Michael Fukuyama, Gaurav Garg, Rishabh Garg, Arvind Gopalakrishnan, Shishir Goyal, Kartik Gulia, Hao Guo, Negar Habibi, Scott Hara, Ehsan Hosseini Asl, Rohit Jena, Udi Karpas, Bilal Kartal, Mayank Kaushik, Manoj Kilaru, Mackenzie Kosseim, Oleksii Kuchaiev, Matthieu Le, Raymond Lee, Jian Leong, Jonathan Li, Sheldon Liang, Mingjie Liu, Eileen Long, Katherine Luna, Chenjie Luo, Mingyuan Ma, Arsh Maknojia, Richard Mazzarese, Jessica Medina, Puhui Meng, Yoav Miron, Pavlo Molchanov, David Mosallanezhad, Chetan Mungekar, Marina Neseem, Oluwatobi Olabiyi, Jason Paul, Bhavesh Pawar, Seth Poulos, Anav Prasad, Meredith Price, Sweta Priyadarshi, Haifeng Qian, Vinay Raman, Kaustubh Rao, Hayley Ross, Matan Rusanovsky, Sudeep Sabnis, Karan Sapra, Micah Schaffer, Schmitty, Alex Settle, Ashton Sharabiani, Haran Kumar Shiv Kumar, Rameshwar Shivbhakta, Guillermo Siman, Barnaby Simkin, Oliver Simons, Andrii Skliar, Padmavathy Subramanian, Yoshi Suhara, Ali Taghibakhshi, Nima Tajbakhsh, Andrew Tao, Roy Uziel, Prasoon Varshney, Jose Vergara, Huy Vu, Mengru Wang, Rochelle Woods, Pinky Xu, Dina Yared, Chenhan Yu, Chaosen Zhang, Jian Zhang, Yiheng Zhang, Ran Zilberstein"
+          ],
+          "bullets": [
+            "Targets reasoning, tool use, web browsing, and terminal interactions for local deployment.",
+            "Combines a hybrid Mamba-Transformer architecture with Star Elastic compression and 2-bit Quantization-Aware Distillation.",
+            "Includes a LiLiCorr speculative drafter to improve inference speed.",
+            "Reports strong accuracy across agentic, web-browsing, and terminal-use benchmarks, with 84 TPS on RTX Spark.",
+            "Scope: optimized for memory-constrained local workloads rather than general-purpose deployment claims beyond the reported benchmarks."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2 | Star Elastic compression pipeline. Architecture search and knowledge distillation jointly optimize the student weights, routed-expert counts, and MoE intermediate widths. A budget penalty guides the architecture router toward the deployment memory target. See (Taghibakhshi et al., 2026) for full details.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 763,
+              "image_path": "figures/2610.33039/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 920
+            },
+            {
+              "caption": "Figure 4 | Per-benchmark performance of Nemotron 3.5 Bolt compared with the Nemotron 3.5 Super VL parent and community models. (a) Mean score across nine benchmarks versus total parameters (bottom axis); upper ticks give each model’s active parameter count at its total-parameter position. Both counts are in billions. The arrow marks compression from the parent to Nemotron 3.5 Bolt. (b) Individual benchmark scores. † GDPval-AA v2 is an index; the other scores are percentages.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 440,
+              "image_path": "figures/2610.33039/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 979
+            },
+            {
+              "caption": "Figure 9 | Per-benchmark performance of Nemotron 3.5 Bolt 74B-A9B 24GB compared with the Nemotron 3.5 Super VL parent and community models. (a) Mean score across benchmarks versus deployment memory. (b) Individual benchmark scores. Accuracy scores consider BF16 precision for all the models, except the Nemotron 3.5 Bolt 74B-A9B 24GB which is 2-bit. Deployment size considers all models at NVFP4, except Nemotron 3.5 VL (BF16), Nemotron 3.5 Bolt (BF16 - SFT + RL healing on compressed checkpoint) and Nemotron 3.5 Bolt 74B-A9B 24GB (2 bit).",
+              "figure_id": "figure-9-11",
+              "figure_number": "9",
+              "height": 461,
+              "image_path": "figures/2610.33039/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 983
+            },
+            {
+              "caption": "Figure 6 | Vision benchmarks recovery after compression",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 510,
+              "image_path": "figures/2610.33039/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 983
+            },
+            {
+              "caption": "Figure 3 | MoE intermediate width and number of routed experts across MoE layers, ordered by backbone depth.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 340,
+              "image_path": "figures/2610.33039/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 957
+            },
+            {
+              "caption": "Figure 8 | Benchmark accuracy after 10B and 26B training tokens. Longer quantization-aware training improves results across benchmarks.",
+              "figure_id": "figure-8-2",
+              "figure_number": "8",
+              "height": 508,
+              "image_path": "figures/2610.33039/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 887
+            },
+            {
+              "caption": "Figure 7 | Quantization-Aware-Distillation workflow",
+              "figure_id": "figure-7-3",
+              "figure_number": "7",
+              "height": 296,
+              "image_path": "figures/2610.33039/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 983
+            },
+            {
+              "caption": "Figure 5 | Post-training journey after compression",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 198,
+              "image_path": "figures/2610.33039/figure-008.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 971
+            },
+            {
+              "caption": "Figure 1 | Illustration of soft masking for one layer and axis. Gumbel-softmax weights combine nested prefix masks; the dashed arrow shows the gradient path.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 229,
+              "image_path": "figures/2610.33039/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 816
+            },
+            {
+              "caption": "Table 1 | Parent and obtained architecture. *Each MoE layer’s routed-expert count and intermediate width belong to their respective sets.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 281,
+              "image_path": "figures/2610.33039/table-010.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 983
+            },
+            {
+              "caption": "Table 2 | Precision and estimated memory for Nemotron 3.5 Bolt. Deployment settings are given in Section 8.2.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 592,
+              "image_path": "figures/2610.33039/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 983
+            },
+            {
+              "caption": "Table 7 | Accuracy benchmark comparison across Nemotron, Qwen, and Gemma models",
+              "figure_id": "table-7-14",
+              "figure_number": "7",
+              "height": 291,
+              "image_path": "figures/2610.33039/table-012.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 985
+            },
+            {
+              "caption": "Table 5 | Mean request acceptance length (AL) of LiLiCorr on the SPEED-Bench qualitative split, with draft length 7 and concurrency 64 in vLLM. The step-208,000 drafter uses attention sinks and 1,024-token sliding-window attention. The verifier is iteration 6226. Each category contains 80 requests, with 880 requests overall. Results use five seeds. 𝑡𝑒𝑚𝑝 = 0 uses greedy decoding. 𝑡𝑒𝑚𝑝 = 1 uses probabilistic draft sampling with top-𝑝 = 0.95.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 398,
+              "image_path": "figures/2610.33039/table-013.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 741
+            },
+            {
+              "caption": "Table 8 | Performance benchmark comparison across Nemotron, Qwen, and Gemma models",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 60,
+              "image_path": "figures/2610.33039/table-014.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 983
+            },
+            {
+              "caption": "Table 6 | Estimated acceptance length (AL) on AA AgentPerf Local with natural acceptance.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 89,
+              "image_path": "figures/2610.33039/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 346
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33039/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.33039",
+          "relevance": 7,
+          "selection_reason": "Hybrid vision-language model optimized for local memory-constrained deployment with compression and speculative decoding.",
+          "summary_status": "generated",
+          "title": "Nemotron 3.5 Bolt 74B-A9B 24GB: A Hybrid Vision-Language Model for Local AI",
+          "tldr": "Nemotron 3.5 Bolt 74B-A9B 24GB is a compressed hybrid vision-language model designed for fast, capable local agentic AI under tight memory limits.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-25",
       "paper_count": 6,
       "papers": [
@@ -121484,5 +123622,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 610
+  "total_paper_count": 620
 }

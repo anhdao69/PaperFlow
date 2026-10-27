@@ -1,6 +1,1257 @@
 {
   "days": [
     {
+      "date": "2026-10-26",
+      "paper_count": 6,
+      "papers": [
+        {
+          "abstract": "Attention over tens of thousands of visual tokens dominates the inference of video diffusion transformers (DiTs). Existing methods reduce this cost through sparsity, low precision, or both, but use a single precision for all kept tiles. We observe that the output error introduced by approximation varies widely across tiles. Many tiles can be skipped with little error, others must be computed but gain little beyond low precision, and a few retain substantial error even at low precision. We present Triage, a training-free attention method that assigns each tile one of three approximation tiers: skipping it by replacing it with its block means, skimming it in NVFP4, or refining it with NVFP4 residual correction. A lightweight router predicts each tile's error under each tier from block statistics and moves a tile to a more accurate tier only when the predicted error reduction justifies the extra compute, with a single price setting this trade-off. A fused kernel executes all three tiers in a single pass on the FP4 tensor cores of RTX Blackwell GPUs. Across Wan2.2, HunyuanVideo, and LTX-2.5, Triage accelerates end-to-end generation by up to 2.32x over dense FlashAttention, and in each of five settings it runs faster than every baseline while reaching 0.3-3.0 dB higher PSNR than the highest-PSNR baseline.",
+          "arxiv_id": "2610.35706",
+          "arxiv_url": "https://arxiv.org/abs/2610.35706",
+          "authors": [
+            "Yeonjae Kim, Omin Kwon, Seong Hoon Seo, Jae W. Lee"
+          ],
+          "bullets": [
+            "Targets the high inference cost of attention over tens of thousands of video tokens.",
+            "Assigns each tile to skip, NVFP4 skim, or NVFP4 residual refinement.",
+            "A lightweight router uses block statistics and one price parameter to balance error against compute.",
+            "A fused kernel executes all tiers in one pass on RTX Blackwell FP4 tensor cores.",
+            "Across three video diffusion models and five settings, it achieves up to 2.32× end-to-end speedup and 0.3–3.0 dB higher PSNR than the strongest baseline."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5. Overview of TRIAGE. Planning (§5): ➊ clustering trees group similar queries and keys into tiles; ➋ the router scores each tile by Ẽt = m̃t (Jt +Rt) √ wh and assigns it to skip, skim, or refine. Execution (§6): ➌ in one pass, skipped tiles use cluster means, skimmed tiles one NVFP4 product, and refined tiles three products that add the residuals. Tile patterns are illustrative.",
+              "figure_id": "figure-5-15",
+              "figure_number": "5",
+              "height": 509,
+              "image_path": "figures/2610.35706/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 9. Relative output error versus attention speedup over FlashAttention on attention calls captured on the RTX 5090, sweeping the knob of each method (lower right is better). (a, b) TRIAGE (π from 0.025 to 0.9) against the baselines. (c, d) TRIAGE without the refine tier and without both the refine tier and the clustering tree (natural token order). Settings faster than the fastest TRIAGE setting are omitted. Arrows: time of SpargeAttn (a, b) and of TRIAGE without the refine tier (c, d) relative to TRIAGE at equal error; circles: TRIAGE at π = 0.15.",
+              "figure_id": "figure-9-6",
+              "figure_number": "9",
+              "height": 267,
+              "image_path": "figures/2610.35706/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 1003
+            },
+            {
+              "caption": "Figure 7. End-to-end PSNR versus speedup over dense on the RTX 5090, sweeping the knob of each method (π ∈ {0.1, 0.15, 0.3, 0.6} for TRIAGE). Each point averages over the same 50 prompts.",
+              "figure_id": "figure-7-13",
+              "figure_number": "7",
+              "height": 292,
+              "image_path": "figures/2610.35706/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 483
+            },
+            {
+              "caption": "Figure 3. Approximation error across rows and tiles. (a) Median row error versus row entropy at equal modeled compute; percentages: share of rows on which each approach is most accurate (Wan2.2/HunyuanVideo). (b) Row error from approximating a single tile versus its attention mass.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 247,
+              "image_path": "figures/2610.35706/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 483
+            },
+            {
+              "caption": "Figure 2. The 21st of 129 frames of the video that HunyuanVideo generates at 720p for the prompt “On the bed in the bedroom, a puppy is playing with a slipper in its mouth.” The bottom row zooms into the box; labels give the end-to-end speedup over dense and the PSNR against the dense video. (a) SVG-EAR (Zhou et al., 2026), (b) SageAttention3 (Zhang et al., 2025b), and (c) SpargeAttn (Zhang et al., 2025c) follow the policies of Figure 1a–c; (d) TRIAGE.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 257,
+              "image_path": "figures/2610.35706/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 8. Time of one attention call, averaged over the sparse steps of the end-to-end runs, for dense FlashAttention (D, truncated) and TRIAGE at π = 0.15 and 0.3. Arrows: speedup over dense.",
+              "figure_id": "figure-8-12",
+              "figure_number": "8",
+              "height": 273,
+              "image_path": "figures/2610.35706/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 483
+            },
+            {
+              "caption": "Figure 6. Choosing tiers with one price. Each tile takes the tier where a line of slope −π touches its error–compute curve, and a higher price moves tiles to cheaper tiers. Numbers are illustrative.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 270,
+              "image_path": "figures/2610.35706/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 483
+            },
+            {
+              "caption": "Figure 11. LTX-2.5 image-to-video with dense attention and with TRIAGE, from the same image, prompt and seed, at 1088p (1920×1088, 721 frames, 30 s), 1440p (2560×1472, 361 frames, 15 s) and 4K (3840×2176, 169 frames, 7 s). Above each video: setting, end-to-end generation time with dense attention → with TRIAGE, the speedup, the PSNR of the TRIAGE video against the dense one, and the full prompt and seed. Continued in Figures 12–13.",
+              "figure_id": "figure-11-10",
+              "figure_number": "11",
+              "height": 974,
+              "image_path": "figures/2610.35706/figure-008.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 854
+            },
+            {
+              "caption": "Figure 12. LTX-2.5 with dense attention and with TRIAGE, continued from Figure 11 (2/3).",
+              "figure_id": "figure-12-14",
+              "figure_number": "12",
+              "height": 1208,
+              "image_path": "figures/2610.35706/figure-009.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 853
+            },
+            {
+              "caption": "Figure 13. LTX-2.5 with dense attention and with TRIAGE, continued from Figure 11 (3/3).",
+              "figure_id": "figure-13-2",
+              "figure_number": "13",
+              "height": 1120,
+              "image_path": "figures/2610.35706/figure-010.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 853
+            },
+            {
+              "caption": "Figure 10. Tiers that the router assigns at π = 0.15 on the operands of §3, per quintile of the normalized entropy of the rows’ tile masses (Q1 the sharpest, Q5 the most diffuse): the share of the row’s tiles and of its exact attention mass in each tier.",
+              "figure_id": "figure-10-7",
+              "figure_number": "10",
+              "height": 253,
+              "image_path": "figures/2610.35706/figure-011.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1011
+            },
+            {
+              "caption": "Table 4. End-to-end details for Table 1 (means over 50 prompts). Attn.: attention time of a sparse step, including its dense first transformer block, so the speedups are lower than those of the sparse attention calls in Figure 8; E2E: latency of a request, from the prompt to the decoded video. Density: share of tiles computed (skimmed or refined for TRIAGE). Refined: share of all tiles that TRIAGE refines. VBench: subject consistency (Subj.), background consistency (Backg.), motion smoothness (Motion), aesthetic quality (Aesth.), and imaging quality (Imag., divided by 100) and their mean. Bold: the single best accelerated method in each setting, excluding the dense reference (none for ties).",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 740,
+              "image_path": "figures/2610.35706/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 850
+            },
+            {
+              "caption": "Table 3. Attention kernel on the RTX 5090: relative L2 error, kernel time (ms) without preprocessing, and speedup over FlashAttention. 2-pass BF16: the tiles that TRIAGE refines, computed instead in a separate BF16 pass.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 182,
+              "image_path": "figures/2610.35706/table-013.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 454
+            },
+            {
+              "caption": "Table 2. Router score ablation at equal kept and refined tiles: error relative to the full score (geometric mean) and share of calls with a higher error, pooled over four budgets.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 140,
+              "image_path": "figures/2610.35706/table-014.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 488
+            },
+            {
+              "caption": "Table 1. End-to-end results over 50 prompts: fidelity to the dense video (PSNR and SSIM, higher is better; LPIPS, lower is better), VBench quality (mean of five dimensions), and speedup over dense (E2E). Density: share of tiles computed, refined ones in parentheses. Tokens: visual tokens per sequence (stage 2 for LTX-2.5). TRIAGE (π): price π. S, L, S+L: sparse, low-bit (4-bit), and combined (8-bit) attention. Bold: best method.",
+              "figure_id": "table-1-8",
+              "figure_number": "1",
+              "height": 36,
+              "image_path": "figures/2610.35706/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 492
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.35706/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.35706",
+          "relevance": 8,
+          "selection_reason": "Tiered attention-tile skipping and low-precision refinement for video diffusion transformers, directly relevant to efficient attention and token/tile pruning.",
+          "summary_status": "generated",
+          "title": "Triage: Skip, Skim, or Refine Attention Tiles in Video Diffusion Transformers",
+          "tldr": "Triage speeds up video diffusion attention by adaptively skipping, low-precision computing, or refining each tile based on its predicted error.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Multi-modal video fusion aims to generate temporally coherent videos with salient targets and rich structural details by integrating complementary information from heterogeneous sensors. However, existing video fusion methods commonly rely on optical flow estimation and feature warping for inter-frame alignment and cross-frame information aggregation to maintain temporal consistency, thereby introducing considerable computational overhead and making the fusion performance vulnerable to flow estimation errors. To address these limitations, this paper proposes an efficient multi-modal video fusion network with dynamic region-guided temporal interaction. Specifically, the proposed spatio-temporal interaction module leverages the Test-Time Training paradigm to model temporal dependencies with linear complexity. Building on this design, the module restricts temporal modeling to key dynamic regions in the video sequence, as static background regions provide limited temporal cues. By excluding low-variation tokens from unnecessary temporal interaction, this selective strategy contributes to improved fusion quality and temporal consistency. In addition, leveraging the strong ability of pretrained MAE features to capture global structural dependencies, we introduce a feature-level temporal consistency constraint to suppress local flickering by aligning the inter-frame variation directions of the fused and source videos. We further propose a new MAE-based temporal metric that quantifies directional distance between their temporal variations within dynamic regions. Experimental results demonstrate that, compared with existing state-of-the-art methods, our method achieves superior fusion quality and temporal consistency on multiple benchmark datasets, while exhibiting high computational efficiency under edge-device deployment settings.",
+          "arxiv_id": "2610.34765",
+          "arxiv_url": "https://arxiv.org/abs/2610.34765",
+          "authors": [
+            "Jingxue Huang, Xiaosong Li, Yi Lin"
+          ],
+          "bullets": [
+            "Addresses the computational cost and error sensitivity of optical-flow-based frame alignment.",
+            "Uses test-time training for linear-complexity spatio-temporal interaction.",
+            "Focuses temporal modeling on dynamic regions while skipping low-variation background tokens.",
+            "Applies a pretrained-MAE-based consistency constraint to reduce local flickering.",
+            "Reports superior fusion quality and temporal consistency with high efficiency on edge-device settings across multiple benchmarks."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overview of the proposed multi-modal video fusion framework.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 783,
+              "image_path": "figures/2610.34765/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 851
+            },
+            {
+              "caption": "Fig. 3. Qualitative comparison of all methods on the M3SVD, VTUAV, HDO and VTMOT datasets.",
+              "figure_id": "figure-3-5",
+              "figure_number": "3",
+              "height": 413,
+              "image_path": "figures/2610.34765/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1060
+            },
+            {
+              "caption": "Fig. 1. Comparison with an existing video fusion method [4] in terms of temporal interaction schemes, fusion quality and computational efficiency. All reported metrics are evaluated on the VTMOT dataset.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 491,
+              "image_path": "figures/2610.34765/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Fig. 6. Comparison of segmentation results produced by different video fusion methods on scene ‘0118 1913’ of the M3SVD dataset. The bottom row of each image presents cropped views of the blue-boxed region at two-frame intervals from T to T + 8. The segmentation prompt used for this scene is ’the person on the right side wearing a hoodie.’",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 348,
+              "image_path": "figures/2610.34765/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 458
+            },
+            {
+              "caption": "Fig. 7. Bubble chart comparing the computational efficiency and fusion performance of different methods. The bubble size is determined by the average rank of each method over all datasets and evaluation metrics, where a larger bubble denotes better overall performance.",
+              "figure_id": "figure-7-11",
+              "figure_number": "7",
+              "height": 269,
+              "image_path": "figures/2610.34765/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 329
+            },
+            {
+              "caption": "Fig. 8. Visualization of variation responses in the pixel space and different pretrained feature spaces for Scene ’002’ from the HDO dataset. (a) Adjacentframe variation. (b) Variation from the temporal mean.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 170,
+              "image_path": "figures/2610.34765/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 513
+            },
+            {
+              "caption": "Fig. 10. Visual comparison of temporal consistency between two ablation variants: (II) w/o STIM and (VI) w/o Ltemp&Lrev.",
+              "figure_id": "figure-10-3",
+              "figure_number": "10",
+              "height": 253,
+              "image_path": "figures/2610.34765/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 405
+            },
+            {
+              "caption": "Fig. 9. Computational efficiency of ViT and Ours with respect to the number of input frames at two spatial resolutions. For each line chart, the left and right groups correspond to resolutions of 640×480 and 1280×1024, respectively.",
+              "figure_id": "figure-9-2",
+              "figure_number": "9",
+              "height": 182,
+              "image_path": "figures/2610.34765/figure-008.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 494
+            },
+            {
+              "caption": "TABLE IV SENSITIVITY COMPARISON OF TEMPORAL METRICS UNDER DIFFERENT DEGRADATION TYPES. EACH DEGRADATION TYPE IS EVALUATED UNDER PROGRESSIVELY MORE CHALLENGING SETTINGS. VALUES IN PARENTHESES DENOTE RELATIVE CHANGES WITH RESPECT TO THE CLEAN BASELINE. THE BASELINE VALUES ARE OBTAINED FROM THE PROPOSED METHOD ON THE HDO DATASET WITHOUT DEGRADATION. THE MOST DESIRABLE RESPONSE IN EACH ROW, JOINTLY CONSIDERING SENSITIVITY, CORRECT RESPONSE DIRECTION, AND MONOTONICITY, IS HIGHLIGHTED IN BOLD.",
+              "figure_id": "table-IV-7",
+              "figure_number": "IV",
+              "height": 214,
+              "image_path": "figures/2610.34765/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 533
+            },
+            {
+              "caption": "TABLE III QUANTITATIVE COMPARISON WITH DIFFERENT ρ ON HDO DATASET. THE",
+              "figure_id": "table-III-6",
+              "figure_number": "III",
+              "height": 185,
+              "image_path": "figures/2610.34765/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 510
+            },
+            {
+              "caption": "TABLE VI ABLATION STUDY OF ARCHITECTURAL VARIANTS, PRETRAINED FEATURE SPACES, AND LOSS TERMS ON THE HDO DATASET. THE BEST RESULTS ARE HIGHLIGHTED IN BOLD.",
+              "figure_id": "table-VI-1",
+              "figure_number": "VI",
+              "height": 154,
+              "image_path": "figures/2610.34765/table-011.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 494
+            },
+            {
+              "caption": "TABLE II IOU OF THE TOP-K HIGH-RESPONSE REGIONS SELECTED FROM THE PIXEL-LEVEL VARIATION MAP AND DIFFERENT PRETRAINED FEATURE MAPS. THE BEST RESULT IN EACH ROW IS HIGHLIGHTED IN BOLD.",
+              "figure_id": "table-II-12",
+              "figure_number": "II",
+              "height": 119,
+              "image_path": "figures/2610.34765/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 284
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.34765/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.34765",
+          "relevance": 7,
+          "selection_reason": "Efficient video fusion with dynamic region-guided token selection and linear-complexity temporal interaction directly fits efficient AI token pruning and efficient attention.",
+          "summary_status": "generated",
+          "title": "Efficient Multi-modal Video Fusion Network with Dynamic Region-Guided Temporal Interaction",
+          "tldr": "An efficient multi-modal video fusion network improves temporal consistency by modeling only dynamic regions and enforcing feature-level temporal alignment without optical-flow warping.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Deep learning facilitates rapid single shot three dimensional (3D) reconstruction using fringe projection profilometry (FPP), but recovering accurate surface height from a single high frequency fringe image remains challenging because both long-range spatial consistency and fine geometric details must be preserved. Convolutional networks are limited in modeling long range dependencies, whereas window-based Transformers establish global interactions only progressively with increasing depth. To address these limitations, a hybrid Mamba Transformer network is proposed for fringe to height regression. The network adopts a Swin based U shaped architecture and introduces visual state space modeling at the intermediate resolution encoder stage. An axial and dilated vision state space (ADVSS) block is further developed to enhance prescan feature encoding through local, dilated, and axial depthwise convolutions while retaining four directional selective scanning. This design combines linear complexity long range modeling with direction aware preservation of local fringe structures. Experiments on a publicly available FPP dataset show that the proposed method outperforms hNet, SwinConvUNet, UHRNet, and HiDNet in mean absolute error(MAE), root mean square error (RMSE), absolute relative error, and structural similarity index measure (SSIM). Using only one deformed fringe image, the proposed method achieves an RMSE of 0.548 mm and an SSIM of 0.9985, reducing RMSE by 65.2% and 59.6% relative to UHRNet and HiDNet, respectively. These results demonstrate the effectiveness of combining selective state space modeling with hierarchical window based attention for accurate single-shot FPP reconstruction.",
+          "arxiv_id": "2610.33988",
+          "arxiv_url": "https://arxiv.org/abs/2610.33988",
+          "authors": [
+            "Xinjie Zhou, XiaoLei Li"
+          ],
+          "bullets": [
+            "Addresses the difficulty of preserving both global spatial consistency and fine geometric details in single-shot fringe projection profilometry.",
+            "Uses a Swin-based U-shaped encoder–decoder with visual state space modeling at an intermediate resolution.",
+            "Introduces an axial and dilated vision state space block with local, dilated, and axial convolutions plus four-directional selective scanning.",
+            "On a public FPP dataset, outperforms hNet, SwinConvUNet, UHRNet, and HiDNet across MAE, RMSE, absolute relative error, and SSIM.",
+            "Achieves 0.548 mm RMSE and 0.9985 SSIM from a single deformed fringe image; evaluation is limited to the reported public dataset and metrics."
+          ],
+          "categories": [
+            "cs.CV",
+            "physics.optics"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 2. Overall architecture of the proposed Hybrid Mamba-Transformer network",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 611,
+              "image_path": "figures/2610.33988/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 673
+            },
+            {
+              "caption": "Fig. 1 Proposed method (a) training procedure (b) the reconstruction workflow for a tested object.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 427,
+              "image_path": "figures/2610.33988/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 723
+            },
+            {
+              "caption": "Fig. 7.Training and validation RMSE curves of our method and four representative methods(hNet, SwinConvUNet, UHRNet, and HiDNet). The insets show the final 40 epochs and the corresponding final RMSE values. Left: training set; right: validation set. Insets show the last 40 epochs with final RMSE values (mm).",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 342,
+              "image_path": "figures/2610.33988/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 866
+            },
+            {
+              "caption": "Fig. 8. Qualitative reconstruction comparison for a representative test sample: (a) input fringe pattern; (b) ground-truth height map; (c) – (g) height maps reconstructed using hNet, SwinConvUNet, UHRNet, HiDNet, and our method, respectively; and (h) absolute-error profiles sampled along the red dotted line in (b).",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 573,
+              "image_path": "figures/2610.33988/figure-004.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 850
+            },
+            {
+              "caption": "Fig. 10. Single-shot 3D reconstruction of multiple overlapping objects. From left to right and top to bottom: the captured fringe pattern, the ground-truth height, and the height map followed by the absolute-error map of hNet, SwinConvUNet, UHRNet, HiDNet, and the proposed method. The error maps are in millimeters, All absolute-error maps use a common range of 0–8 mm",
+              "figure_id": "figure-10-3",
+              "figure_number": "10",
+              "height": 514,
+              "image_path": "figures/2610.33988/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 817
+            },
+            {
+              "caption": "Fig. 9. Single-shot height reconstruction of two spatially isolated objects. The panels show the input fringe pattern, ground-truth height map, and reconstructed height and absolute-error maps obtained using hNet, SwinConvUNet, UHRNet, HiDNet, and the proposed method. All absolute-error maps use a common range of 0–8 mm.",
+              "figure_id": "figure-9-2",
+              "figure_number": "9",
+              "height": 502,
+              "image_path": "figures/2610.33988/figure-006.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 800
+            },
+            {
+              "caption": "Fig. 6 Partial samples used in datasets",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 456,
+              "image_path": "figures/2610.33988/figure-007.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 408
+            },
+            {
+              "caption": "Table 2. Architecture ablations of the encoder, bottleneck, and skip connection on the test set.",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 272,
+              "image_path": "figures/2610.33988/table-008.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 856
+            },
+            {
+              "caption": "Table 4. Input-channel ablations under matched architectures.",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 233,
+              "image_path": "figures/2610.33988/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 904
+            },
+            {
+              "caption": "Table 3. Component ablations of the ADVSSBlock (relative to Mode E)",
+              "figure_id": "table-3-9",
+              "figure_number": "3",
+              "height": 183,
+              "image_path": "figures/2610.33988/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 850
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33988/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.33988",
+          "relevance": 8,
+          "selection_reason": "Introduces a hybrid Mamba-Transformer network for single-shot 3D reconstruction, combining efficient long-range modeling with local detail preservation.",
+          "summary_status": "generated",
+          "title": "Hybrid Mamba-Transformer Network for Single-Shot 3D Reconstruction from Fringe Patterns",
+          "tldr": "A hybrid Swin Transformer–Mamba network enables accurate single-shot 3D reconstruction from one high-frequency fringe image by combining long-range modeling with fine-detail preservation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "3d-foundation-models"
+              ],
+              "topic_id": "3d-vision"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Automated classification of gastrointestinal (GI) findings in endoscopic images could support early diagnosis, but architectures are often chosen on accuracy alone. We present a controlled, reproducible benchmark of ResNet50 and ViT-B/16 for eight-class GI classification on the public Kvasir dataset (4,000 images), using a stratified split (400 test images) and stratified group 5-fold cross-validation over all images. In cross-validation, ResNet50 and ViT-B/16 reached 92.12% and 91.70% accuracy, and a two one-sided tests (TOST) procedure showed equivalence within a +/-3 percentage-point margin (difference +0.43 points, 90% CI -0.33 to +1.18; p < 0.001). The architectures differed mainly in cost: ResNet50 had 3.6 times fewer parameters and 4.3 times fewer operations, 2.5-fold lower single-image CPU latency (69 vs. 177 ms) and 3.8-fold higher GPU throughput. Cross-validated calibration was similar (expected calibration error 0.021 vs. 0.023). An edge-oriented transformer, MobileViT-S, was most accurate on the test split (95.5%) but lost 9.4 points when an acquisition artefact present in some classes (the ScopeGuide inset) was occluded, whereas ResNet50 was not significantly affected. On 500 unseen polyp images with expert masks, both models' Grad-CAM maps focused on the lesion (3.6 times chance). On a de-duplicated external subset of GastroVision (1,998 images), accuracy fell to 78-80% for all three models and differences between them remained small. Accuracy differences between architectures were thus small relative to the effects of shortcut learning and domain shift, whereas efficiency differences were large. An efficient CNN is a defensible default for resource-constrained screening, but no model is deployment-ready without local validation.",
+          "arxiv_id": "2610.33965",
+          "arxiv_url": "https://arxiv.org/abs/2610.33965",
+          "authors": [
+            "Akwasi Asare"
+          ],
+          "bullets": [
+            "On Kvasir’s eight-class task, ResNet50 and ViT-B/16 were statistically equivalent within a 3-point accuracy margin.",
+            "ResNet50 used fewer parameters and operations, with lower CPU latency and higher GPU throughput than ViT-B/16.",
+            "MobileViT-S achieved the highest test-split accuracy but was vulnerable to the ScopeGuide artefact, indicating shortcut learning.",
+            "Both ResNet50 and ViT-B/16 showed similar calibration and lesion-focused Grad-CAM explanations.",
+            "Accuracy dropped substantially on the external GastroVision subset, highlighting domain-shift risks and the need for local validation."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the revised benchmarking pipeline: provenance and near-duplicate screening, preprocessing, the primary stratified split and stratified group 5-fold cross-validation, the three architectures trained under an identical protocol, and the evaluation of accuracy, equivalence, calibration, efficiency, interpretability, shortcut reliance and external generalization.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 698,
+              "image_path": "figures/2610.33965/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 627
+            },
+            {
+              "caption": "Figure 5: ResNet50 architecture — convolutional stem, four stages of bottleneck residual blocks with identity skip connections, global average pooling, and an 8-way classification head.",
+              "figure_id": "figure-5-28",
+              "figure_number": "5",
+              "height": 335,
+              "image_path": "figures/2610.33965/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 948
+            },
+            {
+              "caption": "Figure 6: ViT-B/16 architecture — patch embedding of 16×16 patches with positional encoding, twelve transformer encoder blocks (multi-head self-attention and MLP), and a classification-token MLP head producing the 8-way output.",
+              "figure_id": "figure-6-22",
+              "figure_number": "6",
+              "height": 394,
+              "image_path": "figures/2610.33965/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 948
+            },
+            {
+              "caption": "Figure 7: Training and validation loss and accuracy curves of ViT-B/16 (upper panels; best validation macro-F1 0.935 at epoch 20, early stopping at epoch 27) and ResNet50 (lower panels; best validation macro-F1 0.935 at epoch 8, early stopping at epoch 15).",
+              "figure_id": "figure-7-26",
+              "figure_number": "7",
+              "height": 649,
+              "image_path": "figures/2610.33965/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 979
+            },
+            {
+              "caption": "Figure 2: Representative endoscopic images (four per class) from each of the eight Kvasir classes.",
+              "figure_id": "figure-2-33",
+              "figure_number": "2",
+              "height": 1085,
+              "image_path": "figures/2610.33965/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 452
+            },
+            {
+              "caption": "Figure 3: The ScopeGuide picture-in-picture inset, an acquisition artefact that occurs only in lower-GI and procedural classes. Top row: images in which the inset was detected automatically (red box: the region blacked out in the shortcut test, Section 4.6); bottom row: images without the inset.",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 269,
+              "image_path": "figures/2610.33965/figure-006.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 976
+            },
+            {
+              "caption": "Figure 4: The six highest-ranked near-duplicate image pairs that cross the training, validation and test subsets of the primary split, with their perceptual-hash Hamming distance and embedding cosine similarity. These pairs are identical images stored under different file names. All candidate pairs were merged into groups that were kept within a single cross-validation fold, and the 37 affected test images were removed in a sensitivity analysis (Section 4.3).",
+              "figure_id": "figure-4-14",
+              "figure_number": "4",
+              "height": 785,
+              "image_path": "figures/2610.33965/figure-007.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 302
+            },
+            {
+              "caption": "Figure 9: Multi-class ROC curves of ViT-B/16 (left) and ResNet50 (right) with per-class and micro-averaged AUC.",
+              "figure_id": "figure-9-25",
+              "figure_number": "9",
+              "height": 416,
+              "image_path": "figures/2610.33965/figure-008.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 960
+            },
+            {
+              "caption": "Figure 8: Confusion matrices of ViT-B/16 (left) and ResNet50 (right) on the held-out test set (n = 400).",
+              "figure_id": "figure-8-24",
+              "figure_number": "8",
+              "height": 392,
+              "image_path": "figures/2610.33965/figure-009.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 979
+            },
+            {
+              "caption": "Figure 10: Out-of-fold confusion matrices of ResNet50 (left) and ViT-B/16 (right) from the 5-fold crossvalidation (n = 4,000).",
+              "figure_id": "figure-10-11",
+              "figure_number": "10",
+              "height": 390,
+              "image_path": "figures/2610.33965/figure-010.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 979
+            },
+            {
+              "caption": "Figure 11: Convergence across the five cross-validation folds. Left: validation macro-F1 per epoch (mean ± SD); right: wall-clock minutes needed to reach 99% of each fold’s best validation macro-F1.",
+              "figure_id": "figure-11-32",
+              "figure_number": "11",
+              "height": 326,
+              "image_path": "figures/2610.33965/figure-011.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 948
+            },
+            {
+              "caption": "Figure 13: Per-class (one-vs-rest) reliability diagrams of ResNet50 and ViT-B/16 on the primary split (ε = 0.05), with per-class ECE (15 equal-width bins) in the legends.",
+              "figure_id": "figure-13-2",
+              "figure_number": "13",
+              "height": 433,
+              "image_path": "figures/2610.33965/figure-012.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 979
+            },
+            {
+              "caption": "Figure 12: Reliability diagrams (15 equal-width bins; numbers are images per bin) for ResNet50 and ViT-B/16 trained with (left) and without (right) label smoothing.",
+              "figure_id": "figure-12-1",
+              "figure_number": "12",
+              "height": 393,
+              "image_path": "figures/2610.33965/figure-013.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 948
+            },
+            {
+              "caption": "Figure 17: ViT-B/16 attention-rollout maps for the first test image of each class.",
+              "figure_id": "figure-17-17",
+              "figure_number": "17",
+              "height": 458,
+              "image_path": "figures/2610.33965/figure-014.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 979
+            },
+            {
+              "caption": "Figure 18: Lesion-level localization on unseen Kvasir-SEG polyp images. First column: image with the expert polyp mask (green contour); remaining columns: Grad-CAM (ResNet50, ViT-B/16), ViT-B/16 attention rollout, SHAP (ResNet50, ViT-B/16) and LIME (ResNet50, ViT-B/16) maps for the class polyps, with the mask outlined in white. The black square is the ScopeGuide region, which is removed in Kvasir-SEG.",
+              "figure_id": "figure-18-16",
+              "figure_number": "18",
+              "height": 392,
+              "image_path": "figures/2610.33965/figure-015.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 979
+            },
+            {
+              "caption": "Figure 19: Confusion matrices of ResNet50 (left) and ViT-B/16 (right) on the de-duplicated GastroVision subset (n = 1,998). GastroVision has no ulcerative-colitis images, so that row is empty and every prediction of ulcerative colitis is an error.",
+              "figure_id": "figure-19-13",
+              "figure_number": "19",
+              "height": 390,
+              "image_path": "figures/2610.33965/figure-016.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 979
+            },
+            {
+              "caption": "Figure 15: Grad-CAM heatmaps of ViT-B/16 (top) and ResNet50 (bottom) for the first test image of each class. Note the ResNet50 activation on the ScopeGuide inset in the normal-cecum example.",
+              "figure_id": "figure-15-34",
+              "figure_number": "15",
+              "height": 923,
+              "image_path": "figures/2610.33965/figure-017.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 979
+            },
+            {
+              "caption": "Figure 16: LIME attributions (first image; ResNet50 above ViT-B/16) and SHAP GradientExplainer attributions (second image; ResNet50 above ViT-B/16) for the first test image of each class.",
+              "figure_id": "figure-16-27",
+              "figure_number": "16",
+              "height": 1094,
+              "image_path": "figures/2610.33965/figure-018.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 582
+            },
+            {
+              "caption": "Figure 14: Positive predictive value as a function of prevalence for esophagitis, polyps and ulcerative colitis, computed from cross-validated sensitivity and false-positive rate (shaded: down to the upper 95% bound of the false-positive rate).",
+              "figure_id": "figure-14-30",
+              "figure_number": "14",
+              "height": 263,
+              "image_path": "figures/2610.33965/figure-019.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 979
+            },
+            {
+              "caption": "Table 1: Class distribution and accessible provenance metadata of the Kvasir dataset used in this study (no EXIF metadata were present in any image).",
+              "figure_id": "table-1-23",
+              "figure_number": "1",
+              "height": 540,
+              "image_path": "figures/2610.33965/table-020.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 968
+            },
+            {
+              "caption": "Table 6: Per-class F1-score with 95% bootstrap confidence intervals for both models on the test set.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 771,
+              "image_path": "figures/2610.33965/table-021.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 982
+            },
+            {
+              "caption": "Table 7: Stratified group 5-fold cross-validation of ResNet50 and ViT-B/16 (n = 4,000 pooled out-of-fold predictions per model).",
+              "figure_id": "table-7-10",
+              "figure_number": "7",
+              "height": 615,
+              "image_path": "figures/2610.33965/table-022.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 972
+            },
+            {
+              "caption": "Table 2: ViT-B/16 per-class classification report on the held-out test set.",
+              "figure_id": "table-2-19",
+              "figure_number": "2",
+              "height": 565,
+              "image_path": "figures/2610.33965/table-023.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 964
+            },
+            {
+              "caption": "Table 3: ResNet50 per-class classification report on the held-out test set.",
+              "figure_id": "table-3-18",
+              "figure_number": "3",
+              "height": 564,
+              "image_path": "figures/2610.33965/table-024.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 964
+            },
+            {
+              "caption": "Table 8: Summary comparison of ResNet50, ViT-B/16 and MobileViT-S across accuracy, efficiency, calibration and robustness.",
+              "figure_id": "table-8-20",
+              "figure_number": "8",
+              "height": 565,
+              "image_path": "figures/2610.33965/table-025.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 968
+            },
+            {
+              "caption": "Table 9: Standardized inference benchmark and training cost (Tesla T4 GPU; Intel Xeon 2.0 GHz CPU, 4 threads; PyTorch 2.10). Latencies are medians, with the interquartile range in brackets, over 1,000 timed GPU or 150 timed CPU iterations. Training cost is the cross-validation mean for ResNet50 and ViT-B/16 and the primary run for MobileViT-S.",
+              "figure_id": "table-9-31",
+              "figure_number": "9",
+              "height": 685,
+              "image_path": "figures/2610.33965/table-026.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 968
+            },
+            {
+              "caption": "Table 4: Overall test-set performance of ResNet50 and ViT-B/16 with 95% confidence intervals and the paired statistical comparison (n = 400).",
+              "figure_id": "table-4-35",
+              "figure_number": "4",
+              "height": 444,
+              "image_path": "figures/2610.33965/table-027.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 972
+            },
+            {
+              "caption": "Table 17: External evaluation on GastroVision (seven classes shared with Kvasir; 1,998 images after removing 152 near-duplicates of Kvasir images): per-class sensitivity and overall performance.",
+              "figure_id": "table-17-12",
+              "figure_number": "17",
+              "height": 590,
+              "image_path": "figures/2610.33965/table-028.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 968
+            },
+            {
+              "caption": "Table 14: Lesion-level localization of the class polyps on unseen Kvasir-SEG images (mean [95% bootstrap CI]). The chance level of energy-in-lesion equals the lesion’s area fraction.",
+              "figure_id": "table-14-9",
+              "figure_number": "14",
+              "height": 567,
+              "image_path": "figures/2610.33965/table-029.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 964
+            },
+            {
+              "caption": "Table 11: Per-class (one-vs-rest) expected calibration error (15 equal-width bins) with 95% bootstrap confidence intervals. ε = label smoothing; CV = cross-validation out-of-fold predictions (n = 4,000).",
+              "figure_id": "table-11-3",
+              "figure_number": "11",
+              "height": 552,
+              "image_path": "figures/2610.33965/table-030.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 964
+            },
+            {
+              "caption": "Table 13: Calibration of the cross-validated predictions re-weighted to an illustrative screening-like class prior (normal landmarks 25% each; esophagitis and polyps 8% each; ulcerative colitis and the two dyed classes 3% each), without and with prior-shift correction of the softmax outputs; 95% bootstrap confidence intervals.",
+              "figure_id": "table-13-21",
+              "figure_number": "13",
+              "height": 542,
+              "image_path": "figures/2610.33965/table-031.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 968
+            },
+            {
+              "caption": "Table 10: Calibration metrics with 95% bootstrap confidence intervals: primary split with (ε = 0.05) and without (ε = 0) label smoothing, MobileViT-S, and cross-validation (CV) out-of-fold predictions.",
+              "figure_id": "table-10-4",
+              "figure_number": "10",
+              "height": 494,
+              "image_path": "figures/2610.33965/table-032.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 964
+            },
+            {
+              "caption": "Table 16: Share of attribution mass falling on the ScopeGuide inset (mean over 40 test images containing the inset), compared with the inset’s area fraction, the level expected for a map that ignores the inset.",
+              "figure_id": "table-16-6",
+              "figure_number": "16",
+              "height": 442,
+              "image_path": "figures/2610.33965/table-033.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 968
+            },
+            {
+              "caption": "Table 12: Positive predictive values (PPV) at 1–20% prevalence, computed from cross-validated sensitivity and false-positive rate (FPR); “precision at 12.5%” is the observed precision at the dataset prevalence.",
+              "figure_id": "table-12-29",
+              "figure_number": "12",
+              "height": 376,
+              "image_path": "figures/2610.33965/table-034.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 926
+            },
+            {
+              "caption": "Table 5: McNemar’s paired contingency table comparing ResNet50 and ViT on the shared test set.",
+              "figure_id": "table-5-36",
+              "figure_number": "5",
+              "height": 224,
+              "image_path": "figures/2610.33965/table-035.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 972
+            },
+            {
+              "caption": "Table 15: Shortcut test: accuracy on the 149 test images containing the ScopeGuide inset, before and after blacking out the inset.",
+              "figure_id": "table-15-8",
+              "figure_number": "15",
+              "height": 252,
+              "image_path": "figures/2610.33965/table-036.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 964
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33965/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2610.33965",
+          "relevance": 7,
+          "selection_reason": "Provides a benchmark comparing the efficiency (latency, throughput) of ResNet50 and Vision Transformers, highlighting architectural trade-offs for resource-constrained deployment.",
+          "summary_status": "generated",
+          "title": "Accuracy Is Not Enough: An Efficiency- and Statistics-Aware Benchmark of ResNet50 and Vision Transformer for Explainable Multi-Class Gastrointestinal Diseases Classification",
+          "tldr": "ResNet50 matches ViT-B/16 accuracy for GI disease classification while being substantially more efficient, but shortcut learning and domain shift limit deployment readiness.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "High-resolution remote sensing (RS) imagery provides fine spatial detail over large areas, making it essential for fine-grained scene understanding. Referring Remote Sensing Image Segmentation (RRSIS) aims to segment regions described by natural language, yet many existing methods rely on sequential alignment--fusion pipelines with limited joint modeling of cross-scale visual hierarchies and linguistic dependencies. Moreover, dense attention mechanisms struggle with the sparsity and wide spatial dispersion of RS targets, while current datasets offer limited structured evaluation of multi-target references, multi-hop relational reasoning, and multi-granularity descriptions, limiting both model development and evaluation. To address these challenges, we propose a Cross-Scale Sparse Attention Model (CSSAM), which aligns multiscale visual features with complex referring expressions through two key modules. The Cross-scale Modality-aligned Fusion Module (CMFM) performs unified cross-scale cross-modal fusion, while the Dynamic Multimodal Sparse Hybrid Attention (DMSHA) selectively attends to informative visual--textual tokens, reducing dense visual interactions. Furthermore, we introduce M$^{3}$RRSIS-D, a RRSIS dataset explicitly designed around three core reasoning dimensions: multi-target (M$^{1}$), reference-dependent multi-hop (M$^{2}$), and multi-granularity (M$^{3}$) expressions. Extensive experiments on M$^{3}$RRSIS-D and two public RRSIS benchmarks demonstrate that CSSAM achieves competitive performance across accuracy, fine-grained reasoning, and high-IoU localization metrics, validating its effectiveness for complex semantic reasoning in realistic RS scenarios. Code, dataset, and model weights will be released upon acceptance.",
+          "arxiv_id": "2610.33551",
+          "arxiv_url": "https://arxiv.org/abs/2610.33551",
+          "authors": [
+            "Yuxi Li, Lu Si, Xia Liao, Yidong Shen, Zheng Wei, Jun Zhang, Xin Yuan"
+          ],
+          "bullets": [
+            "Targets the difficulty of segmenting spatially sparse, widely dispersed regions described by complex natural-language references.",
+            "Uses CMFM for unified cross-scale cross-modal fusion and DMSHA to selectively attend to informative visual–textual tokens.",
+            "Introduces M³RRSIS-D, covering multi-target, reference-dependent multi-hop, and multi-granularity expressions.",
+            "Experiments on the new dataset and two public benchmarks report competitive accuracy, fine-grained reasoning, and high-IoU localization.",
+            "Code, data, and model weights are planned for release upon acceptance."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the motivation and model design. Top: cross-scale dependency and sparse target distribution in RRSIS. Bottom: schematic comparison of LGCE, FIANet, and RMSIN with CSSAM’s cross-scale fusion and sparse attention.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 608,
+              "image_path": "figures/2610.33551/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 705
+            },
+            {
+              "caption": "Figure 5: Architecture of the DMSHA module, consisting of three components: (1) projection and offset prediction, (2) cross-scale key–value sampling, and (3) sparse cross-modal attention integration.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 400,
+              "image_path": "figures/2610.33551/figure-002.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 702
+            },
+            {
+              "caption": "Figure 6: Architecture of (a) the fusion gate and (b) the segmentation head.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 306,
+              "image_path": "figures/2610.33551/figure-003.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 703
+            },
+            {
+              "caption": "Figure 4: CSSAM architecture: (1) visual and textual encoders, (2) CMFM, (3) DMSHA, (4) a fusion gate, and (5) a segmentation head. The encoders and CMFM attention operations follow established designs; DMSHA introduces query-dependent, text-conditioned cross-scale sampling.",
+              "figure_id": "figure-4-9",
+              "figure_number": "4",
+              "height": 264,
+              "image_path": "figures/2610.33551/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 705
+            },
+            {
+              "caption": "Figure 2: M3RRSIS-D dataset. Left: data contribution, showcasing three semantic dimensions in the M3RRSIS-D dataset—multi-target (M1), multi-hop (M2), and multi-granularity (M3)—that capture the complexity of real-world remote sensing data. Right: top categories and descriptive keywords of M3RRSISD.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 418,
+              "image_path": "figures/2610.33551/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 706
+            },
+            {
+              "caption": "Figure 3: Data sources and annotation workflow of M3RRSIS-D.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 257,
+              "image_path": "figures/2610.33551/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 708
+            },
+            {
+              "caption": "Figure 7: Visualization examples on M1 (multi-target), M2 (multi-hop reasoning), and M3 (multigranularity) queries.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 400,
+              "image_path": "figures/2610.33551/figure-007.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 705
+            },
+            {
+              "caption": "Figure 8: Validation IoU distribution and illustrative failures. (a) Counts for 8,585 queries in left-inclusive, right-exclusive bins; the last bin includes 100%. (b–c) M1 and M2 failures. (d–e) M3 expressions sharing the same image and ground truth. Each example shows the image, ground truth, and CSSAM prediction.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 707,
+              "image_path": "figures/2610.33551/figure-008.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 704
+            },
+            {
+              "caption": "Table 2: Comparison of CSSAM with state-of-the-art methods on M3RRSIS-D. CMPC/CMPC+ use R-101 and LSTM; LAVT, RMSIN, FIANet, and CSSAM use Swin-B and BERT; RSRefSeg uses CLIP+SAM.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 302,
+              "image_path": "figures/2610.33551/table-009.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 710
+            },
+            {
+              "caption": "Table 5: Sampling-budget accuracy and inference efficiency. Memory is in GB, latency in ms/query, and throughput in queries/s. Arrows indicate the preferred direction. OOM indicates out-of-memory.",
+              "figure_id": "table-5-1",
+              "figure_number": "5",
+              "height": 296,
+              "image_path": "figures/2610.33551/table-010.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 710
+            },
+            {
+              "caption": "Table 3: Fine-grained comparison on M3RRSIS-D: (a) the three reasoning dimensions; (b) M3 granularity levels, with each cell reporting mIoU/oIoU. Rankings are within each dimension in (a), and within each metric and level in (b).",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 756,
+              "image_path": "figures/2610.33551/table-011.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 710
+            },
+            {
+              "caption": "Table 6: Comparison on the RRSIS-D test split. Competing results are literature-reported; “–” denotes an unreported metric.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 402,
+              "image_path": "figures/2610.33551/table-012.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 710
+            },
+            {
+              "caption": "Table 7: Comparison on the RefSegRS test split. Competing results are literature-reported; “–” denotes an unreported metric.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 304,
+              "image_path": "figures/2610.33551/table-013.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 710
+            },
+            {
+              "caption": "Table 1: Comparison of RRSIS datasets in terms of dataset scale and semantic annotation structure, where “✓” indicates the dimension is annotated, “◦” indicates the dimension may be present but is not annotated, and “✗” indicates that the dimension is absent.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 158,
+              "image_path": "figures/2610.33551/table-014.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 710
+            },
+            {
+              "caption": "Table 4: Component and design ablations on M3RRSIS-D. ✓/✗ denote enabled/disabled modules. Each ablation is compared with the shared default from Table 2. Bold and underlined values mark the best and second best in groups with multiple variants. Internal-design, loss, head, and allocation variants use final epoch-20 weights and all 8,585 validation expressions.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 679,
+              "image_path": "figures/2610.33551/table-015.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 710
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.33551/hero.webp",
+          "novelty": 5,
+          "pdf_url": "https://arxiv.org/pdf/2610.33551",
+          "relevance": 5,
+          "selection_reason": "Proposes dynamic multimodal sparse attention to reduce dense visual interactions, fitting efficient attention.",
+          "summary_status": "generated",
+          "title": "Cross-Scale Sparse Attention for Referring Segmentation in Remote Sensing",
+          "tldr": "CSSAM improves referring segmentation in remote-sensing imagery by jointly fusing multiscale vision and language features with sparse attention, supported by a new reasoning-focused dataset.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We present HyScale, a long-context training system for learned sparse attention. Learned sparse attention is a promising architecture for million-token contexts, widely adopted in production since DeepSeek-V3.2. Selection, however, grows into the training bottleneck. For each query, it scores every previous token whereas sparse attention reads only $k$; worse, current systems materialize a full score table and repeat selection during recomputation. Our key insight is that the output of selection is not an activation, but rather a set of indices. Building on it, HyScale introduces HyTopK and selection replay. HyTopK finds each query's exact top-$k$ on the fly without a score table, while selection replay reuses forward-pass selection in recomputation. Together with holistic system optimizations tackling end-to-end training challenges, HyScale speeds up GLM-5.1 training on 1M-token sequences by 2.07$\\times$ over Megatron-LM on 512 H20 GPUs. It also speeds up the CSA layers of DeepSeek-V4-Flash and the QSA layers of Qwen3.8-Flash-Next by 2.01$\\times$ and 1.57$\\times$ at 1M tokens on 32 H800 GPUs.",
+          "arxiv_id": "2610.32057",
+          "arxiv_url": "https://arxiv.org/abs/2610.32057",
+          "authors": [
+            "Yangshen Deng, Xinjing Huang, Yulong Wang, Yunzhuo Liu, Jun Hu, Shuyong Tan, Chun-Chih Tseng, Mingji Han, Ray Ying, Key Zhang, Luo Mai"
+          ],
+          "bullets": [
+            "Learned sparse attention makes selection a training bottleneck because each query scores all prior tokens, despite reading only top-k tokens.",
+            "HyTopK computes exact top-k indices on the fly without materializing a full score table.",
+            "Selection replay reuses forward-pass selection during recomputation, reducing redundant work.",
+            "Combined with end-to-end system optimizations, HyScale achieves reported speedups of 2.07×, 2.01×, and 1.57× on 1M-token training workloads.",
+            "The evaluation covers GLM-5.1, DeepSeek-V4-Flash CSA layers, and Qwen3.8-Flash-Next QSA layers on H20 and H800 GPUs."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.DC"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 7: Breakdown of one training step of the full GLM5.1 at 1M, first pipeline stage.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 223,
+              "image_path": "figures/2610.32057/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 487
+            },
+            {
+              "caption": "Figure 1: One training step of GLM-5.1 in Megatron-LM on 512 H20 GPUs (PP8×CP32×DP2 at 256K, PP8×CP64 at 512K, PP4×CP128 at 1M) with 8K tokens per GPU and full activation recomputation of every layer (Korthikanti et al., 2023), first pipeline stage. Step times exclude the pipeline wait, with the attention layer in color and the rest of the step in gray.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 208,
+              "image_path": "figures/2610.32057/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 476
+            },
+            {
+              "caption": "Figure 6: Full GLM-5.1 on 512 H20 GPUs from its released weights, with 8K tokens per GPU and 4M tokens per step; each sample is one sequence. The runs use PP8×CP32×DP2×EP64 at 256K, PP8×CP64×EP64 at 512K, and PP4×CP128×EP128 at 1M. Both systems force balanced MoE routing and use momentum-free SGD with MegatronLM’s distributed optimizer. Step times average steps 4 to 10.",
+              "figure_id": "figure-6-8",
+              "figure_number": "6",
+              "height": 259,
+              "image_path": "figures/2610.32057/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 994
+            },
+            {
+              "caption": "Figure 3: A learned sparse attention layer in HyScale, drawn in the same lanes as Figure 2 (not to scale). Green numbers mark where each technique removes the inefficiency that Figure 2 marks in red. The forward pass selects while scoring with HyTopK, without writing the score table ( 1⃝), the recomputation rescores only the saved keys ( 2⃝), and, as a system optimization (§3.4), each CP collective runs behind computation that does not consume it.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 304,
+              "image_path": "figures/2610.32057/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 481
+            },
+            {
+              "caption": "Figure 8: CP scaling of one GLM-5.1 attention layer on H20. Panels (a) and (b) show strong scaling at 256K and 512K context, and (c) and (d) weak scaling at 8K and 16K queries per GPU. Layer time includes the forward pass, the recomputation, and the backward pass on the slowest rank.",
+              "figure_id": "figure-8-11",
+              "figure_number": "8",
+              "height": 367,
+              "image_path": "figures/2610.32057/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1012
+            },
+            {
+              "caption": "Figure 12: Sampling efficiency: share of failed queries at each buffer size. Labels count failures at HyTopK’s default 16K-slot buffer (red line).",
+              "figure_id": "figure-12-3",
+              "figure_number": "12",
+              "height": 417,
+              "image_path": "figures/2610.32057/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 2: Execution of one learned sparse attention layer on one GPU in Megatron-LM under CP and full activation recomputation (not to scale), showing the materialized n×L score table ( 1⃝) and the repeated selection in recomputation ( 2⃝). Each row is one pass, with CP communication drawn below the computation.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 302,
+              "image_path": "figures/2610.32057/figure-007.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 481
+            },
+            {
+              "caption": "Figure 9: Cumulative ablation of one GLM-5.1 layer on H20 at 8K queries per GPU.",
+              "figure_id": "figure-9-12",
+              "figure_number": "9",
+              "height": 251,
+              "image_path": "figures/2610.32057/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 477
+            },
+            {
+              "caption": "Figure 10: Cumulative ablation of single CSA and QSA layers on 32 H800 GPUs.",
+              "figure_id": "figure-10-5",
+              "figure_number": "10",
+              "height": 251,
+              "image_path": "figures/2610.32057/figure-009.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 477
+            },
+            {
+              "caption": "Figure 11: End-to-end efficiency of HyTopK’s top-k selection for GLM-5.1 on one H20 GPU. Labels in (a) give HyTopK’s speedup over Megatron-LM with its default 1 GiB memory limit on the score table, and (b) is relative to HyTopK’s base selection time.",
+              "figure_id": "figure-11-4",
+              "figure_number": "11",
+              "height": 238,
+              "image_path": "figures/2610.32057/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 479
+            },
+            {
+              "caption": "Figure 4: Costs of the policies in Table 1 for one GLM-5.1 layer on one GPU (L = 1M, n = 8K, k = 2048, HI = 32, dI = 128), on log axes. Operator-level policies lie on the top or right edge, and both variants of selection replay lie in the lower-left corner.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 252,
+              "image_path": "figures/2610.32057/figure-011.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 406
+            },
+            {
+              "caption": "Table 1: Costs of selection recomputation policies for one layer on one GPU, in bytes beyond the layer input and in operations rerun. The upper policies are operator-level, and the lower two are selection replay.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 203,
+              "image_path": "figures/2610.32057/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 415
+            }
+          ],
+          "first_seen_at": "2026-10-26T21:00:00-04:00",
+          "hero_figure": "figures/2610.32057/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.32057",
+          "relevance": 8,
+          "selection_reason": "System for scaling learned sparse attention training directly targets efficient attention and long-context models.",
+          "summary_status": "generated",
+          "title": "HyScale: Scaling Long-Context Training for Learned Sparse Attention",
+          "tldr": "HyScale accelerates million-token training for learned sparse attention by avoiding full score tables and replaying selection during recomputation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-25",
       "paper_count": 1,
       "papers": [
@@ -55979,5 +57230,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 291
+  "total_paper_count": 297
 }
