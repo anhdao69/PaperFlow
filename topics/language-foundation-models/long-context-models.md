@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**165 papers total**
+**167 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-27 | [Multi-State Linear Attention with Generalized Second-Order Routing](https://arxiv.org/abs/2610.37645) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | MERLIN improves long-context multi-state linear attention by using first- and second-order key statistics for more content-aware routing across memory states. | 8 | 8 |
+| 2026-10-27 | [GTFormer: A Syntax-Free Graph Network Alternative to Transformers for 8192$\\times$ Length Extrapolation in Linear Time](https://arxiv.org/abs/2610.37524) | Efficient AI; Language Foundation Models: Long-Context Models | GTFormer replaces quadratic self-attention with a syntax-free hierarchical graph network that extrapolates from length 512 to 4,194,304 tokens in linear memory. | 7 | 8 |
 | 2026-10-26 | [Quantitative Generalization Bounds for Multi-Layer Transformers: A Few Long Strings can Beat Many Short Ones](https://arxiv.org/abs/2610.35715) | Language Foundation Models: Long-Context Models | The paper develops joint theoretical generalization bounds for fixed-precision, multi-layer transformers across both sample distribution and sequence length, showing that longer training strings can be far more valuable than more samples. | 5 | 7 |
 | 2026-10-26 | [Write What Matters: Disentangling Token Selection from Slot Allocation in Recurrent Memory](https://arxiv.org/abs/2610.34180) | Language Foundation Models: LLM Memory, Long-Context Models | Factorizing token selection from slot allocation reveals that selective writing helps sparse-fact recall, while always writing is better in information-dense contexts. | 7 | 8 |
 | 2026-10-26 | [Rethinking Retrieval in the Long-Context Era: Training-Free Semantic Trees for Adaptive Context Construction](https://arxiv.org/abs/2610.34146) | Language Foundation Models: Long-Context Models | A training-free semantic-tree framework selects and organizes the most relevant evidence from full documents, improving long-context QA while substantially shortening answer contexts. | 8 | 7 |

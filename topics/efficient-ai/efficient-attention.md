@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**297 papers total**
+**298 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-27 | [Multi-State Linear Attention with Generalized Second-Order Routing](https://arxiv.org/abs/2610.37645) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | MERLIN improves long-context multi-state linear attention by using first- and second-order key statistics for more content-aware routing across memory states. | 8 | 8 |
 | 2026-10-26 | [Triage: Skip, Skim, or Refine Attention Tiles in Video Diffusion Transformers](https://arxiv.org/abs/2610.35706) | Efficient AI: Token Pruning and Eviction, Efficient Attention | Triage speeds up video diffusion attention by adaptively skipping, low-precision computing, or refining each tile based on its predicted error. | 8 | 8 |
 | 2026-10-26 | [Efficient Multi-modal Video Fusion Network with Dynamic Region-Guided Temporal Interaction](https://arxiv.org/abs/2610.34765) | Efficient AI: Token Pruning and Eviction, Efficient Attention | An efficient multi-modal video fusion network improves temporal consistency by modeling only dynamic regions and enforcing feature-level temporal alignment without optical-flow warping. | 7 | 7 |
 | 2026-10-26 | [Hybrid Mamba-Transformer Network for Single-Shot 3D Reconstruction from Fringe Patterns](https://arxiv.org/abs/2610.33988) | 3D Vision: 3D Foundation Models; Efficient AI: Efficient Attention | A hybrid Swin Transformer–Mamba network enables accurate single-shot 3D reconstruction from one high-frequency fringe image by combining long-range modeling with fine-detail preservation. | 8 | 8 |

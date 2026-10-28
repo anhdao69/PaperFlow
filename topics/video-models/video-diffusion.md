@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**329 papers total**
+**332 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-27 | [Taming Noise Initialization for Zero-shot Video Restoration with Image Diffusion Priors](https://arxiv.org/abs/2610.37290) | Video Generation and Understanding: Video Diffusion | A zero-shot video restoration method improves temporal consistency by initializing image-diffusion restoration with degradation-aware, adaptively refined noise rather than simple Gaussian noise. | 5 | 6 |
+| 2026-10-27 | [A First-Step Bias Restores Lost Diversity in Diffusion Model Distillation](https://arxiv.org/abs/2610.37110) | Video Generation and Understanding: Video Diffusion | ReSeed restores much of the diversity lost during diffusion distillation by adapting only the first denoising step to better preserve seed-dependent variation. | 6 | 7 |
+| 2026-10-27 | [Hy-Nomas: Towards Free-form Interactive World Generation](https://arxiv.org/abs/2610.36729) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion | Hy-Nomas is an 8B video world model that generates free-form, multi-turn interactive worlds while maintaining history and responding to text and camera controls. | 9 | 8 |
 | 2026-10-26 | [VidEdit3D: Flexible 3D Gaussian Editing with Video Diffusion](https://arxiv.org/abs/2610.35756) | Video Generation and Understanding: Video Diffusion | VidEdit3D enables flexible, instruction-aligned 3D Gaussian editing by treating multi-view scene editing as video editing with video diffusion priors. | 7 | 7 |
 | 2026-10-26 | [OmniShowcase: Omnidirectional Subject-Consistent Video Generation from Multi-View Images](https://arxiv.org/abs/2610.35684) | Video Generation and Understanding: Video Diffusion | OmniShowcase improves subject-consistent video generation from multi-view images by conditioning video models on reconstructed 3D surface-normal turntables and training on geometry-grounded camera trajectories. | 7 | 7 |
 | 2026-10-26 | [Beyond Distribution Matching: Self-Supervised Representation Forcing for Few-Step Video Generation](https://arxiv.org/abs/2610.35594) | Video Generation and Understanding: Video Diffusion | Self Flow Forcing strengthens few-step video diffusion distillation by adding self-supervised internal-representation prediction to DMD, improving spatial fidelity and temporal coherence with minimal overhead. | 7 | 7 |

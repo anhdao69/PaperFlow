@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**236 papers total**
+**240 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-27 | [Ego-CEVR: Learning Cross-Embodiment Visual Representations from Human Egocentric Videos](https://arxiv.org/abs/2610.37509) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | Ego-CEVR learns hierarchical visual representations from human and robot videos to support robot manipulation across embodiments. | 8 | 7 |
+| 2026-10-27 | [Mimetic Embodiment Transfer of Human-Humanoid Interaction from In-the-Wild Videos](https://arxiv.org/abs/2610.36615) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | HumiTransfer converts in-the-wild human-human interaction videos into physically executable interactions for humanoid robots while preserving key spatial and contact relationships. | 8 | 7 |
+| 2026-10-27 | [CARD: Contact-Anchored Retargeting for Dexterous Manipulation](https://arxiv.org/abs/2610.36539) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | CARD retargets human dexterous manipulation to robots by preserving contact forces—not just hand kinematics—across multiple demonstration modalities. | 9 | 8 |
+| 2026-10-27 | [SOMA: A Benchmark for Fine-Grained Egocentric Behavior and Body-Motion Understanding](https://arxiv.org/abs/2610.36384) | Embodied AI: Learning from Human Videos; Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | SOMA benchmarks fine-grained body-motion understanding in egocentric video and reveals substantial gaps between current MLLMs and human performance. | 7 | 7 |
 | 2026-10-26 | [EXE: Egocentric Cross-Embodiment Pretraining via Factorized Latent Actions for VLA Models](https://arxiv.org/abs/2610.33685) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | EXE pretrains VLA models on egocentric human videos by separating transferable manipulation skills from human-specific motion, improving robot control across embodiments. | 9 | 8 |
 | 2026-10-26 | [ViT-H: Generative Video-To-Humanoid Control with Motion Tracking Feedback](https://arxiv.org/abs/2610.32966) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | ViT-H generates executable humanoid motions directly from monocular videos and improves them using downstream motion-tracking feedback. | 9 | 8 |
 | 2026-10-26 | [Retiming Robot Demonstrations with a Learned Speed Prior](https://arxiv.org/abs/2610.32676) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | A learned speed prior retimes robot demonstrations to task-appropriate, consistent pacing, improving motion smoothness and enabling faster execution without reducing success. | 9 | 8 |

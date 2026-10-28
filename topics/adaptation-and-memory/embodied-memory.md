@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**275 papers total**
+**277 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-27 | [From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents](https://arxiv.org/abs/2610.37482) | Adaptation and Memory: Embodied Memory | Task Advancement Memory helps GUI agents track verified progress and reuse successful operations, improving long-horizon task completion while reducing interaction costs. | 6 | 7 |
+| 2026-10-27 | [Remember Where You Walk: Learning Spatial Memory for End-to-End Legged Robot Exploration](https://arxiv.org/abs/2610.37203) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | LSMM gives legged-robot RL agents spatially grounded memory, enabling them to retain and reconstruct maze layouts over long exploration horizons. | 8 | 7 |
 | 2026-10-26 | [RoboDoctor: Training-Free Recursive Self-Improvement for Robot Policies](https://arxiv.org/abs/2610.35604) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | RoboDoctor enables robot policies to improve during execution without changing model weights by using feedback to diagnose, intervene, revise actions, and retain experience. | 7 | 7 |
 | 2026-10-26 | [MemVLN: Streaming Episodic Memory for Vision-Language Navigation](https://arxiv.org/abs/2610.35066) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | MEMVLN equips streaming vision-language navigation agents with bounded, pose-aware episodic memory to improve long-horizon navigation in simulated and physical environments. | 9 | 8 |
 | 2026-10-26 | [Memory-Aware Keyframe Management for Dense Maps on Memory-Constrained Robots](https://arxiv.org/abs/2610.33574) | Adaptation and Memory: Embodied Memory | A memory-aware map manager enables language models and dense 3D maps to coexist on constrained robots by budgeting memory directly and loading semantic spatial zones on demand. | 6 | 7 |

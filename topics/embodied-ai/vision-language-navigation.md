@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**171 papers total**
+**173 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-27 | [Structured Maps for Landmark-Based Route Instructions with LLMs](https://arxiv.org/abs/2610.36582) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | An SVG-based structured text representation helps LLMs select human-preferred landmarks for navigation as effectively as, or better than, map images. | 7 | 7 |
+| 2026-10-27 | [ASPEN: Adaptive Semantic Reasoning via Command Persistence Prediction for Efficient Navigation VLAs](https://arxiv.org/abs/2610.36285) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Efficient AI | ASPEN reduces costly VLA reasoning by predicting when the previous navigation command can safely be reused, cutting VLA calls and inference time while preserving navigation behavior. | 8 | 7 |
 | 2026-10-26 | [Preemptive Instruction Following with Resumption](https://arxiv.org/abs/2610.35576) | Embodied AI: Vision-Language Navigation | PIFR evaluates whether embodied-navigation agents can handle interruptions, complete inserted tasks, and resume long-horizon plans from changed states. | 8 | 7 |
 | 2026-10-26 | [MemVLN: Streaming Episodic Memory for Vision-Language Navigation](https://arxiv.org/abs/2610.35066) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | MEMVLN equips streaming vision-language navigation agents with bounded, pose-aware episodic memory to improve long-horizon navigation in simulated and physical environments. | 9 | 8 |
 | 2026-10-26 | [Behavior Spatial Benchmark: Evaluating Spatial Understanding for Robotics](https://arxiv.org/abs/2610.34051) | Embodied AI: Vision-Language Navigation, Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | BEHAVIOR-Spatial evaluates whether vision-language models and robot policies truly understand and follow spatial instructions in physical scenes. | 9 | 8 |

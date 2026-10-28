@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**129 papers total**
+**133 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-27 | [Vision-Language Agents Can Learn in Their Own Latent Worlds](https://arxiv.org/abs/2610.36925) | Embodied AI: Vision-Language-Action; World Models: Latent Action Models, Interactive World Models | Dwell enables vision-language agents to learn from interaction by predicting and improving actions entirely in their own latent space. | 9 | 9 |
+| 2026-10-27 | [RynnWorld-Latent: A Cross-Embodiment World Model Conditioned on Universal Latent Actions](https://arxiv.org/abs/2610.36791) | World Models: Latent Action Models, Video World Models, Interactive World Models | RynnWorld-Latent learns controllable visual dynamics across humans, robots, and simulations by conditioning a video world model on shared 3D-grounded latent actions. | 9 | 8 |
+| 2026-10-27 | [OSWAM: An Effective World Action Model with One-Step Action Generation](https://arxiv.org/abs/2610.35850) | Embodied AI: Robot Navigation; World Models: Latent Action Models | OSWAM enables high-quality one-step action generation for autonomous driving and embodied control by initializing diffusion with structured action priors and distilling future-aware information. | 9 | 9 |
+| 2026-10-27 | [Adapt for Planning, Not just Prediction: Optimistic Test-Time World Model Adaptation](https://arxiv.org/abs/2610.35636) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | Optimistic, goal-aware test-time adaptation improves world-model planning under distribution shift more than prediction-only adaptation. | 10 | 9 |
 | 2026-10-26 | [EXE: Egocentric Cross-Embodiment Pretraining via Factorized Latent Actions for VLA Models](https://arxiv.org/abs/2610.33685) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | EXE pretrains VLA models on egocentric human videos by separating transferable manipulation skills from human-specific motion, improving robot control across embodiments. | 9 | 8 |
 | 2026-10-25 | [DynaSlots: Slot-Centric 3D Dynamics Pretraining for Robot Manipulation](https://arxiv.org/abs/2610.32330) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | DynaSlots pretrains robot-manipulation representations by modeling localized 3D dynamics per temporally consistent object slot instead of using a single scene-level action. | 9 | 8 |
 | 2026-10-25 | [Does LeWorldModel Preserve Local Action Geometry?](https://arxiv.org/abs/2610.31716) | World Models: Latent Action Models | LeWorldModel only partially preserves the local geometry of action effects, with fidelity varying substantially by perturbation scale and representation. | 8 | 7 |
