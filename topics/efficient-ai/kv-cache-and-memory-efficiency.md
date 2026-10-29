@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**633 papers total**
+**634 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Where Prefill Expert Reduction Hurts MoE Models: A Few Prompt Tokens Carry Most of the Short-Answer F1 Loss](https://arxiv.org/abs/2610.22454) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Reducing routed experts during MoE prefill mainly hurts short-answer F1 through a small set of task-interface tokens, and protecting those tokens preserves quality while retaining latency gains. | 8 | 7 |
 | 2026-10-27 | [Channel Selection for Mixture-of-Experts Decoding Needs No Calibration Data](https://arxiv.org/abs/2610.37386) | Efficient AI: KV Cache and Memory Efficiency | Calibration-free top-k channel selection provides predictable MoE read budgets and preserves accuracy, while a weight-only reader achieves substantial decoding speedups with sparse expert reads. | 7 | 7 |
 | 2026-10-27 | [CoS-VQ: Coordinated Shared-Scale Vector Quantization for Large Language Models](https://arxiv.org/abs/2610.37336) | Efficient AI: KV Cache and Memory Efficiency | CoS-VQ improves low-bit LLM quantization by jointly optimizing codeword indices and shared scales without increasing codeword dimensionality. | 7 | 7 |
 | 2026-10-27 | [DCKV: Learned Transform Coding of the Prompt KV Cache in Hybrid Language Models](https://arxiv.org/abs/2610.36950) | Efficient AI: KV Cache and Memory Efficiency | DCKV is an end-to-end learned codec that compresses hybrid language-model prompt KV caches by over 55× with limited benchmark degradation. | 9 | 8 |

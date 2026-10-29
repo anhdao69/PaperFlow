@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**1168 papers total**
+**1170 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [The Trinity:Capability-Driven Recursive Self-Improvement for Multimodal Agents](https://arxiv.org/abs/2610.36077) | Embodied AI; World Models | The Trinity enables recursive self-improvement for multimodal agents by organizing tasks around shared capabilities and jointly evolving simulated worlds and reusable Harness modules. | 7 | 8 |
+| 2026-10-28 | [Rollback: Experience Backtracking in World Models for Policy Improvement](https://arxiv.org/abs/2610.36068) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | Rollback improves robot policies by rewinding world models to key decisions, exploring counterfactual actions, and using real-world feedback to refine the model. | 10 | 9 |
 | 2026-10-27 | [ThinkWorld: World Imagination Reinforces Chain-of-Dynamics Reasoning](https://arxiv.org/abs/2610.37666) | Embodied AI: Vision-Language-Action; World Models: Interactive World Models | ThinkWorld improves VLA robot generalization by representing actions as dynamics-aware motion-token chains and refining them with imagined-world reinforcement from both robot demonstrations and unlabeled human videos. | 9 | 8 |
 | 2026-10-27 | [Can LLMs Uncover Hidden Physical Laws through Free Exploration?](https://arxiv.org/abs/2610.37649) | Embodied AI; World Models | LongChang tests whether LLMs can autonomously discover altered physical laws through open-ended experimentation, finding limited success even for the strongest evaluated model. | 8 | 7 |
 | 2026-10-27 | [Understanding the limits of latent world models](https://arxiv.org/abs/2610.37588) | World Models: Interactive World Models | The paper introduces a principled test for whether latent world models faithfully capture environmental dynamics and finds that none of the evaluated models does so. | 9 | 8 |

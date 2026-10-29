@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**896 papers total**
+**899 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [OmniBrain-0: A Unified Agentic Model for Embodied Intelligence](https://arxiv.org/abs/2610.36013) | Embodied AI: Vision-Language Navigation, Vision-Language-Action, Robot Learning and Manipulation | OmniBrain-0 is a compact unified embodied agent that combines manipulation and navigation with planning, progress tracking, and failure recovery at lower overhead than a larger closed-source teacher. | 9 | 7 |
+| 2026-10-28 | [Design and Evaluation of LLM Chaining-Based Task Planning for General Purpose Service Robots](https://arxiv.org/abs/2609.29043) | Embodied AI: Vision-Language-Action | An LLM-chaining architecture improves GPSR task planning consistency by separating instruction classification from action generation, but real-robot execution remains a key bottleneck. | 7 | 6 |
+| 2026-10-28 | [CereVLA: Cerebellum-Inspired Consequence-Aware Residual Governance for Efficient Vision-Language-Action Execution](https://arxiv.org/abs/2609.27468) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | CereVLA improves efficient action-chunked VLA execution by predicting and suppressing residual corrections likely to cause downstream errors. | 9 | 8 |
 | 2026-10-27 | [ThinkWorld: World Imagination Reinforces Chain-of-Dynamics Reasoning](https://arxiv.org/abs/2610.37666) | Embodied AI: Vision-Language-Action; World Models: Interactive World Models | ThinkWorld improves VLA robot generalization by representing actions as dynamics-aware motion-token chains and refining them with imagined-world reinforcement from both robot demonstrations and unlabeled human videos. | 9 | 8 |
 | 2026-10-27 | [Gym-Anything-RT: Scaling Real-Time Environments for Vision-Language Agents](https://arxiv.org/abs/2610.37567) | Embodied AI: Vision-Language-Action | Gym-Anything-RT benchmarks vision-language agents’ ability to act in evolving environments using 100 automatically generated real-time minigames. | 6 | 7 |
 | 2026-10-27 | [World Dreamer v5-lite: A Multi-Robot World Action Model with One Dreamer](https://arxiv.org/abs/2610.37518) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | World Dreamer v5-lite enables coordinated multi-robot control by grounding separate robot actions in a shared, pose-aware world state. | 10 | 8 |

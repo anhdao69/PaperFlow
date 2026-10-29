@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1470 papers total**
+**1476 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Stratum: Repository Memory for Coding Agents Beyond the Context Window](https://arxiv.org/abs/2610.36153) | Adaptation and Memory: Test-Time Learning | Stratum gives coding agents persistent, repository-level memory that helps them carry debugging knowledge across sessions while reducing retrieval cost. | 8 | 7 |
+| 2026-10-28 | [How Much Does the Hint Matter? Scope Conditions for Hindsight Self-Distillation in Financial Reasoning](https://arxiv.org/abs/2610.36082) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Fin-SD improves small-model financial reasoning by distilling feedback applied at the first detected error, without requiring an external teacher or stronger hint generator. | 8 | 8 |
+| 2026-10-28 | [EMMA: Event-Driven Multimodal Memory System with Multi-Agent Retrieval](https://arxiv.org/abs/2610.23892) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | EMMA enables long-video understanding by organizing content into semantic events and using multi-agent retrieval to find and validate fine-grained evidence. | 8 | 8 |
+| 2026-10-28 | [Detecting Chain-of-Thought Hijacking in Backdoored Multimodal Large Reasoning Models](https://arxiv.org/abs/2610.16598) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | InertiaGuard detects visual trigger-induced chain-of-thought hijacking by identifying unusually deterministic answer revisions in multimodal reasoning traces. | 8 | 8 |
+| 2026-10-28 | [Learning New Words from Unlabeled Test Data in Automatic Speech Recognition](https://arxiv.org/abs/2609.28877) | Adaptation and Memory: Test-Time Learning | An ASR adaptation method learns spellings and contextual representations for recurring out-of-vocabulary words directly from unlabeled test speech, improving OOV recognition. | 7 | 7 |
+| 2026-10-28 | [Deploying Foundation Models for Embodied Navigation](https://arxiv.org/abs/2609.25666) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | The paper improves foundation-model-based embodied navigation by addressing personalization bias and limited context through habit-aware planning and active memory control. | 8 | 7 |
 | 2026-10-27 | [When Should We Intervene at Test Time?](https://arxiv.org/abs/2610.37658) | Adaptation and Memory: Test-Time Learning | PORTAL adaptively decides when to apply test-time interventions and how much label feedback to request, avoiding harmful updates while preserving useful gains. | 8 | 7 |
 | 2026-10-27 | [From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents](https://arxiv.org/abs/2610.37482) | Adaptation and Memory: Embodied Memory | Task Advancement Memory helps GUI agents track verified progress and reuse successful operations, improving long-horizon task completion while reducing interaction costs. | 6 | 7 |
 | 2026-10-27 | [Remember Where You Walk: Learning Spatial Memory for End-to-End Legged Robot Exploration](https://arxiv.org/abs/2610.37203) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | LSMM gives legged-robot RL agents spatially grounded memory, enabling them to retain and reconstruct maze layouts over long exploration horizons. | 8 | 7 |

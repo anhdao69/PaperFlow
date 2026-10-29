@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**644 papers total**
+**648 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Stratum: Repository Memory for Coding Agents Beyond the Context Window](https://arxiv.org/abs/2610.36153) | Adaptation and Memory: Test-Time Learning | Stratum gives coding agents persistent, repository-level memory that helps them carry debugging knowledge across sessions while reducing retrieval cost. | 8 | 7 |
+| 2026-10-28 | [How Much Does the Hint Matter? Scope Conditions for Hindsight Self-Distillation in Financial Reasoning](https://arxiv.org/abs/2610.36082) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Fin-SD improves small-model financial reasoning by distilling feedback applied at the first detected error, without requiring an external teacher or stronger hint generator. | 8 | 8 |
+| 2026-10-28 | [Detecting Chain-of-Thought Hijacking in Backdoored Multimodal Large Reasoning Models](https://arxiv.org/abs/2610.16598) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | InertiaGuard detects visual trigger-induced chain-of-thought hijacking by identifying unusually deterministic answer revisions in multimodal reasoning traces. | 8 | 8 |
+| 2026-10-28 | [Learning New Words from Unlabeled Test Data in Automatic Speech Recognition](https://arxiv.org/abs/2609.28877) | Adaptation and Memory: Test-Time Learning | An ASR adaptation method learns spellings and contextual representations for recurring out-of-vocabulary words directly from unlabeled test speech, improving OOV recognition. | 7 | 7 |
 | 2026-10-27 | [When Should We Intervene at Test Time?](https://arxiv.org/abs/2610.37658) | Adaptation and Memory: Test-Time Learning | PORTAL adaptively decides when to apply test-time interventions and how much label feedback to request, avoiding harmful updates while preserving useful gains. | 8 | 7 |
 | 2026-10-27 | [Live-OPSD: On-Policy Self-Distillation for Proactive Streaming Large Video Models](https://arxiv.org/abs/2610.36959) | Multimodal Foundation Models; Adaptation and Memory: Test-Time Learning | Live-OPSD improves proactive streaming video assistants by self-distilling hint-guided judgments onto their own unhinted outputs. | 9 | 8 |
 | 2026-10-27 | [Self-Keyed In-Parameter Memorization for External Memory-Free Dialogue Recall in Frozen Language Models](https://arxiv.org/abs/2610.36948) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | SKIM stores dialogue turns directly in frozen model parameters using self-generated question keys, enabling later recall without external memory. | 7 | 8 |

@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**724 papers total**
+**729 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Perceiving and Predicting Dynamic Sports: Spatiotemporal Intelligence in Vision Models for Egocentric Tennis Video](https://arxiv.org/abs/2610.37619) | Embodied AI: Learning from Human Videos; Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | The study evaluates vision models for perceiving and predicting tennis dynamics from egocentric video, finding strong localization and contact-time prediction while revealing challenges in metric depth and ball forecasting. | 8 | 7 |
+| 2026-10-28 | [PerceptRL: Making Visual Perception Rewardable in MLLMs from Answers to Interactions](https://arxiv.org/abs/2610.37471) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | PerceptRL improves fine-grained visual perception in MLLMs by turning verified caption errors into rewardable QA tasks and training multi-turn visual inspection with grounding-aware feedback. | 8 | 8 |
+| 2026-10-28 | [EMMA: Event-Driven Multimodal Memory System with Multi-Agent Retrieval](https://arxiv.org/abs/2610.23892) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | EMMA enables long-video understanding by organizing content into semantic events and using multi-agent retrieval to find and validate fine-grained evidence. | 8 | 8 |
+| 2026-10-28 | [What Makes a Good Visual Representation for Spatial Understanding in MLLMs?](https://arxiv.org/abs/2610.17844) | Multimodal Foundation Models: Spatial Intelligence | Visual representations with stronger 3D structure—and transfer mechanisms matched to their form—better enable MLLMs to understand spatial scenes. | 9 | 8 |
+| 2026-10-28 | [SO(3)-RoPE for Spherical Transformers](https://arxiv.org/abs/2610.06229) | Multimodal Foundation Models: Spatial Intelligence | SO(3)-RoPE builds spherical geometry into transformer attention, improving accuracy and runtime for rotating-sphere dynamics prediction. | 8 | 8 |
 | 2026-10-27 | [Representing the Unseen: Rethinking Visual Imagination for Spatial Reasoning](https://arxiv.org/abs/2610.37437) | Multimodal Foundation Models: Spatial Intelligence | Spatial reasoning about unseen states improves when systems adapt the representation they use instead of relying solely on imagined RGB views. | 8 | 8 |
 | 2026-10-27 | [Euclidean Crowding-Driven Adaptive Euclidean-Hyperbolic Graph Learning](https://arxiv.org/abs/2610.37373) | Multimodal Foundation Models: Spatial Intelligence | This work explains why hyperbolic geometry better represents hierarchical graphs and introduces EH-Fusion, which adaptively combines Euclidean and hyperbolic representations based on local structure. | 8 | 8 |
 | 2026-10-27 | [Zhengrong-Spatial-Aware 1.0: Advancing 3D Multimodal Intelligence](https://arxiv.org/abs/2610.37216) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | The report develops and validates two end-to-end pipelines for adapting multimodal models to 3D spatial visual question answering, substantially improving benchmark accuracy. | 6 | 5 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**827 papers total**
+**828 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [REACH: An RL-based Hierarchical Humanoid Crawling Framework for Adaptable Confined Space Traversal](https://arxiv.org/abs/2610.36546) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | REACH enables a Unitree G1 humanoid to adaptively switch between variable-height walking and crawling for robust traversal of confined spaces. | 8 | 8 |
 | 2026-10-27 | [Learning Visuomotor Quadrotor Flight Through Dynamic Narrow Gaps via Differentiable Simulation](https://arxiv.org/abs/2610.37557) | Embodied AI: Robot Navigation | A differentiable pathwise objective enables a vision-and-inertial policy to learn dynamic narrow-gap quadrotor flight from scratch and transfer to real hardware. | 8 | 8 |
 | 2026-10-27 | [Rendering-Free Event Frame Simulation for Fast Reinforcement Learning of Autonomous Robot Navigation](https://arxiv.org/abs/2610.37543) | Embodied AI: Robot Navigation | A rendering-free event simulator enables dramatically faster reinforcement learning for agile robot navigation and transfers effectively to both simulated and real-world drones. | 8 | 8 |
 | 2026-10-27 | [Leveraging Distributed Sensing and Hyperdimensional Computing for Non-Line-of-Sight Passive Object Sensing](https://arxiv.org/abs/2610.37519) | Embodied AI: Robot Navigation | A distributed wireless sensing framework using hyperdimensional computing detects passive objects outside a robot’s field of view, achieving up to 89% accuracy under severe occlusions with low computational complexity. | 6 | 7 |

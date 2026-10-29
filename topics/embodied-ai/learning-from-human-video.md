@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**240 papers total**
+**241 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Perceiving and Predicting Dynamic Sports: Spatiotemporal Intelligence in Vision Models for Egocentric Tennis Video](https://arxiv.org/abs/2610.37619) | Embodied AI: Learning from Human Videos; Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | The study evaluates vision models for perceiving and predicting tennis dynamics from egocentric video, finding strong localization and contact-time prediction while revealing challenges in metric depth and ball forecasting. | 8 | 7 |
 | 2026-10-27 | [Ego-CEVR: Learning Cross-Embodiment Visual Representations from Human Egocentric Videos](https://arxiv.org/abs/2610.37509) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | Ego-CEVR learns hierarchical visual representations from human and robot videos to support robot manipulation across embodiments. | 8 | 7 |
 | 2026-10-27 | [Mimetic Embodiment Transfer of Human-Humanoid Interaction from In-the-Wild Videos](https://arxiv.org/abs/2610.36615) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | HumiTransfer converts in-the-wild human-human interaction videos into physically executable interactions for humanoid robots while preserving key spatial and contact relationships. | 8 | 7 |
 | 2026-10-27 | [CARD: Contact-Anchored Retargeting for Dexterous Manipulation](https://arxiv.org/abs/2610.36539) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | CARD retargets human dexterous manipulation to robots by preserving contact forces—not just hand kinematics—across multiple demonstration modalities. | 9 | 8 |

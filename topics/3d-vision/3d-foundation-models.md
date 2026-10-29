@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**376 papers total**
+**380 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [GroundControl: Satellite-Conditioned Multi-View Diffusion for Reconstruction-Free Novel View Synthesis](https://arxiv.org/abs/2610.37545) | 3D Vision: 3D Foundation Models | GroundControl improves outdoor novel-view synthesis by conditioning multi-view diffusion on both street-level images and satellite imagery, without reconstructing a 3D scene. | 8 | 8 |
+| 2026-10-28 | [Physical structure as an organizing principle for universal Hamiltonian learning](https://arxiv.org/abs/2610.36135) | 3D Vision: 3D Foundation Models | UniTB uses physically structured, E(3)-equivariant machine learning to build fast, broadly transferable Hamiltonians for materials screening while preserving realistic downstream properties. | 7 | 8 |
+| 2026-10-28 | [Arbitrary-Scale Anisotropic 3D MRI Super-Resolution with Gaussian Prototypes](https://arxiv.org/abs/2610.24858) | 3D Vision: 3D Foundation Models | GSMR3D is a single continuous MRI super-resolution model that handles arbitrary isotropic and anisotropic scales while preserving image quality and clinically relevant information. | 7 | 8 |
+| 2026-10-28 | [SonarVoxNet: Diver Detection in 3D Bounding Box using 3D Sonar](https://arxiv.org/abs/2610.01644) | 3D Vision: 3D Foundation Models | SonarVoxNet enables full 3D diver detection and orientation estimation from sparse, noisy 3D sonar by modeling unrestricted rotations. | 8 | 8 |
 | 2026-10-27 | [Honeycomb-Surfels: Compact Hexagonal Primitives for Efficient Scene Rendering and Reconstruction](https://arxiv.org/abs/2610.37668) | 3D Vision: 3D Foundation Models | Hexels use compact hexagonal surface primitives with local color fields to improve rendering and reconstruction quality while reducing memory and computation. | 6 | 7 |
 | 2026-10-27 | [ScIntBench: Physical Interaction Plausibility in 3D Scene Generation](https://arxiv.org/abs/2610.37326) | 3D Vision: 3D Foundation Models | ScIntBench evaluates whether generated 3D indoor scenes remain physically usable during manipulation, revealing major gaps between static plausibility and interaction readiness. | 7 | 8 |
 | 2026-10-27 | [3D-SceneQ: Empowering 3D LLM With Query-Guided Adaptive Pruning and Multi-Modal Feature Enhancement](https://arxiv.org/abs/2610.37202) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; 3D Vision: 3D Foundation Models; Efficient AI: Token Pruning and Eviction | 3D-SceneQ improves 3D-language reasoning by pruning irrelevant objects according to the query and enriching 3D features with 2D multimodal information. | 8 | 7 |

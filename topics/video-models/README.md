@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**1104 papers total**
+**1109 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Perceiving and Predicting Dynamic Sports: Spatiotemporal Intelligence in Vision Models for Egocentric Tennis Video](https://arxiv.org/abs/2610.37619) | Embodied AI: Learning from Human Videos; Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | The study evaluates vision models for perceiving and predicting tennis dynamics from egocentric video, finding strong localization and contact-time prediction while revealing challenges in metric depth and ball forecasting. | 8 | 7 |
+| 2026-10-28 | [LociArt: A Unified Paradigm for Free-Style Local Video Stylization](https://arxiv.org/abs/2610.36456) | Video Generation and Understanding: Video Diffusion | LociArt introduces a unified framework for controllable local video stylization that applies specified styles to selected regions while preserving other content and maintaining temporal consistency. | 7 | 7 |
+| 2026-10-28 | [FL4N: Feed-forward Latent Model for 4D Novel View Synthesis](https://arxiv.org/abs/2610.35854) | 3D Vision; Video Generation and Understanding | FL4N enables real-time 4D novel view synthesis by modeling space and time in a unified latent representation rather than explicit 4D primitives. | 7 | 7 |
+| 2026-10-28 | [Keepsake: Selective Spatial Memory for Long-Horizon Video Generation](https://arxiv.org/abs/2610.06588) | Video Generation and Understanding: Video Understanding | Keepsake continually retains the most irreplaceable observations in a fixed-capacity video memory, improving long-horizon consistency while storing far fewer frames. | 8 | 8 |
+| 2026-10-28 | [Controlling Polar Exposure to Delay Memorization in Diffusion Models](https://arxiv.org/abs/2610.02780) | Video Generation and Understanding: Video Diffusion | QGD adaptively controls optimization exposure in diffusion models to delay memorization while preserving sample-quality progress. | 9 | 9 |
 | 2026-10-27 | [VideoLVR: Latent Visual Reasoning over Grounded Video Evidence](https://arxiv.org/abs/2610.37613) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | VideoLVR lets multimodal models revisit compact latent visual evidence during video reasoning, reducing visual forgetting without greatly expanding context. | 8 | 8 |
 | 2026-10-27 | [Zero-Shot Multimodal Event Spotting in Soccer Broadcasts](https://arxiv.org/abs/2610.37583) | Video Generation and Understanding: Video Understanding | A zero-shot multimodal framework spots, classifies, localizes, and ranks soccer events in full-match broadcasts using visual storyboards and commentary, without task-specific training. | 6 | 6 |
 | 2026-10-27 | [As the Story Unfolds: Watching a Film and Identifying Characters as a Human Does](https://arxiv.org/abs/2610.37579) | Video Generation and Understanding: Video Understanding | This work introduces online character naming in films, using video and dialogue to identify who a mentioned name refers to as the story unfolds. | 6 | 7 |

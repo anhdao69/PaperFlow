@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**277 papers total**
+**279 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [EMMA: Event-Driven Multimodal Memory System with Multi-Agent Retrieval](https://arxiv.org/abs/2610.23892) | Multimodal Foundation Models: Spatial Intelligence; Adaptation and Memory: Embodied Memory | EMMA enables long-video understanding by organizing content into semantic events and using multi-agent retrieval to find and validate fine-grained evidence. | 8 | 8 |
+| 2026-10-28 | [Deploying Foundation Models for Embodied Navigation](https://arxiv.org/abs/2609.25666) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | The paper improves foundation-model-based embodied navigation by addressing personalization bias and limited context through habit-aware planning and active memory control. | 8 | 7 |
 | 2026-10-27 | [From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents](https://arxiv.org/abs/2610.37482) | Adaptation and Memory: Embodied Memory | Task Advancement Memory helps GUI agents track verified progress and reuse successful operations, improving long-horizon task completion while reducing interaction costs. | 6 | 7 |
 | 2026-10-27 | [Remember Where You Walk: Learning Spatial Memory for End-to-End Legged Robot Exploration](https://arxiv.org/abs/2610.37203) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | LSMM gives legged-robot RL agents spatially grounded memory, enabling them to retain and reconstruct maze layouts over long exploration horizons. | 8 | 7 |
 | 2026-10-26 | [RoboDoctor: Training-Free Recursive Self-Improvement for Robot Policies](https://arxiv.org/abs/2610.35604) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | RoboDoctor enables robot policies to improve during execution without changing model weights by using feedback to diagnose, intervene, revise actions, and retain experience. | 7 | 7 |

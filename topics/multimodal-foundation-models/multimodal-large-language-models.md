@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1359 papers total**
+**1363 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Can Discrete Tokens Serve as Semantically Lossless Representations of Visual Signals?](https://arxiv.org/abs/2610.37662) | Multimodal Foundation Models: Multimodal Large Language Models | Discrete visual tokens can match continuous representations for multimodal understanding when their effective bit budget is increased through Factorized Vector Quantization. | 8 | 8 |
+| 2026-10-28 | [PerceptRL: Making Visual Perception Rewardable in MLLMs from Answers to Interactions](https://arxiv.org/abs/2610.37471) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence | PerceptRL improves fine-grained visual perception in MLLMs by turning verified caption errors into rewardable QA tasks and training multi-turn visual inspection with grounding-aware feedback. | 8 | 8 |
+| 2026-10-28 | [Detecting Chain-of-Thought Hijacking in Backdoored Multimodal Large Reasoning Models](https://arxiv.org/abs/2610.16598) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Test-Time Learning | InertiaGuard detects visual trigger-induced chain-of-thought hijacking by identifying unusually deterministic answer revisions in multimodal reasoning traces. | 8 | 8 |
+| 2026-10-28 | [Feed the Panel Dimensions, Not Verdicts: Rubric-Decomposed Fusion of Vision-Language Aesthetic Judges](https://arxiv.org/abs/2609.27110) | Multimodal Foundation Models: Multimodal Large Language Models | Feeding VLM panels rubric-based aesthetic dimensions—not just holistic verdicts—makes fusion reliably improve on the best individual judge on EVA, but offers little benefit on PARA. | 5 | 6 |
 | 2026-10-27 | [VideoLVR: Latent Visual Reasoning over Grounded Video Evidence](https://arxiv.org/abs/2610.37613) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | VideoLVR lets multimodal models revisit compact latent visual evidence during video reasoning, reducing visual forgetting without greatly expanding context. | 8 | 8 |
 | 2026-10-27 | [When Visual Evidence Is Insufficient: How Instructions, Post-Training, and Internal Activations Shape Refusal in Multimodal Language Models](https://arxiv.org/abs/2610.37430) | Multimodal Foundation Models: Multimodal Large Language Models | Refusal on visually unanswerable questions reflects a mix of evidence recognition, instructions, post-training, and internal representations—not necessarily genuine awareness of missing visual evidence. | 6 | 6 |
 | 2026-10-27 | [Beyond the Readout: A Latent Numerical Frame Shared Across Modality and Operation](https://arxiv.org/abs/2610.37422) | Multimodal Foundation Models: Multimodal Large Language Models | Causal interventions show that Gemma4-12B-it forms a shared, abstract numerical representation across text and images, expressed through different coordinate frames and unfolded digit by digit. | 7 | 8 |

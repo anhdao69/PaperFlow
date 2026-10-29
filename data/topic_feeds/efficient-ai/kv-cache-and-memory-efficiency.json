@@ -1,6 +1,249 @@
 {
   "days": [
     {
+      "date": "2026-10-28",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "Running prompt tokens through fewer routed experts during prefill makes mixture-of-experts (MoE) serving cheaper, but what it damages has not been measured. We locate the damage with token-, layer- and attention-path interventions in four MoE families on short-answer question answering. At half the experts the F1 loss is mostly answer form: the model still finds the answer but no longer answers briefly. The loss is made at a few tokens: the two chat-template tokens before the answer in Qwen3-30B-A3B, and the first 8-32 tokens, where the instruction sits, in DeepSeek-V2-Lite. Keeping them at full experts removes most of the F1 loss and about half and a fifth of the increase in answer NLL. These tokens are not the familiar suspects: reduction leaves the first-token sink within 4%, and restoring super experts or massive activations recovers at most a quarter of the loss. On real prompts the localisation becomes a placement rule: with about 4% of tokens at full experts, putting them on the task interface keeps F1 within one point of the unmodified model, while the same budget scattered in the documents is about 3 points worse in both prespecified primary tests of this comparison. Time to first token falls about 14% on 11K-token prompts.",
+          "arxiv_id": "2610.22454",
+          "arxiv_url": "https://arxiv.org/abs/2610.22454",
+          "authors": [
+            "Zhiyuan Wang",
+            "Han Wang",
+            "Shuo Zhang"
+          ],
+          "bullets": [
+            "At half the experts, models usually identify the answer but lose F1 because responses become less concise.",
+            "Damage concentrates on two chat-template tokens in Qwen3-30B-A3B and the first 8–32 instruction tokens in DeepSeek-V2-Lite.",
+            "Keeping these tokens at full experts removes most F1 loss and reduces roughly half to one-fifth of the answer-NLL increase.",
+            "Allocating full experts to about 4% of task-interface tokens keeps F1 within one point of the unmodified model; scattering the budget in documents is about three points worse.",
+            "This placement rule reduces time to first token by about 14% on 11K-token prompts."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Why the last tokens matter in Qwen3. (a) The account. (b) Attention each token receives from the query that predicts the first answer token (log scale). (c) Increase in the loss of the model’s own answer when one attention path is blocked: the first answer token needs the last two prompt tokens to see the instruction and documents; the stop token needs the answer to see those two tokens. (d) Damage left after repairing one band of layers when the last eight tokens run two experts: the mean increase in the answer’s NLL as a share of the increase with no repair, over 300 prompts. A value above 100% means that the partial repair made the loss larger; the 95% prompt-bootstrap interval of this ratio excludes 100% for experts kept in layers 0–3 (120% [103, 141]) and 44–47 (113% [105, 121]) and for the clean state restored in layers 8–11 (126% [107, 148]). Repairing one band mixes repaired and reduced computation, a state the model sees under neither condition. The ratio is of means, which a few prompts dominate.",
+              "figure_id": "figure-3-19",
+              "figure_number": "3",
+              "height": 518,
+              "image_path": "figures/2610.22454/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 995
+            },
+            {
+              "caption": "Figure 2: Which tokens need their experts (Qwen3-30B-A3B, HotpotQA F1 against the unmodified model). (a) Keeping the last N prompt tokens full: the two-token boundary accounts for much of the format effect; a 32-token tail preserves the question as well. (b) The same number of full tokens placed last, first, or at random on this template. (c) Reducing only the named tokens to two experts: the damage of the last eight is the damage of the last two, which are redundant with each other.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 397,
+              "image_path": "figures/2610.22454/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 994
+            },
+            {
+              "caption": "Figure 1: Form and content separate. Qwen3-30B-A3B, HotpotQA, 2,000 questions; change against the unmodified model. (a, b) Reducing every prompt token mostly lowers precision; reducing only the last eight tokens lowers only precision; reducing all but the last eight lowers recall and precision alike. (c) The answer lengthens exactly when the last tokens are reduced.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 399,
+              "image_path": "figures/2610.22454/figure-003.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 988
+            },
+            {
+              "caption": "Figure 4: Prompt roles and expert budgets. Left: the tokens each rule reduces in the illustrated prompt; generated tokens retain all experts. Right: segment loss density measured with an exploratory label-free probe (Supplement S3.4; thresholds not prospectively validated), relative to segment token share; task segments carry far more of the model’s answer loss than their share of tokens. For simplicity panel (a) draws the demonstrations as wholly reduced under Interface-Full; the serving rule reduces only the documents inside them.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 482,
+              "image_path": "figures/2610.22454/figure-004.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 995
+            },
+            {
+              "caption": "Figure 5: Where the loss is made, by model family. HotpotQA F1 against each unmodified model when the named prompt tokens run half of their experts (2,000 questions, 95% intervals). The head is the chat prefix, the instruction and the two demonstrations. Which end carries the loss differs by model; with 32 tokens kept at each end (rightmost bar, the KeepEnds rule) no model shows a detectable loss on this task (Qwen1.5’s F1 rises).",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 588,
+              "image_path": "figures/2610.22454/figure-005.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 996
+            },
+            {
+              "caption": "Figure 6: The effect follows the answer boundary. (a) Reducing only the last two tokens (the last eight for the prompt end under reasoning) to 8 → 2 in four settings: it damages precision whenever those tokens are followed directly by the answer, and not when generated reasoning separates them from it (shaded). (b) With reasoning on, a prompt reduced to four experts is not separated from the unmodified model by the 95% interval in this earlier run; that alone does not establish equivalence. At two experts, prompt reduction again changes answer form.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 373,
+              "image_path": "figures/2610.22454/figure-006.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 994
+            },
+            {
+              "caption": "Table 3: Where the full-expert budget goes (vLLM 0.31, F1 points, task-averaged, 95% bootstrap intervals over questions unless marked 90%). Batches: joint (760 prompts, H100, exploratory), neg. (negative control), interf. (interface), place. (placement; H200), A100 (2,000 long-system HotpotQA questions). Status: pri/sec prespecified primary/secondary, post post hoc; the prespecified equivalence margins were ±2. Seven placements of the negative control: one in neg., one in interf., five in place.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 371,
+              "image_path": "figures/2610.22454/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1002
+            },
+            {
+              "caption": "Table 9: Cycle-1 TTFT by prompt length (joint batch, Qwen3-30B-A3B): median per-prompt ratio to the unmodified model. LongBench: 360 prompts, median 10.9K tokens; HotpotQA: 400 prompts, medians 1.8K and 2.3K for the two layouts. One server start per method; no interval across starts. Throughput was not measured by length.",
+              "figure_id": "table-9-18",
+              "figure_number": "9",
+              "height": 231,
+              "image_path": "figures/2610.22454/table-008.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 448
+            },
+            {
+              "caption": "Table 5: Quality and latency in one batch (Qwen3-30B-A3B, vLLM 0.31, one H100, 760 marked prompts, 8 → 4 on reduced tokens). Slots: routed-expert work relative to the unmodified model. Quality: F1 change against the unmodified model on the marked prompts (task-averaged, 95% interval; a positive value means a higher score than the reference row, so the unmarked prompt scores 0.39 above the marked one). 90%: the 90% interval that decides non-inferiority (≥: lower bound above −1). Interface-Full minus: the same-question difference between Interface-Full and that method. Latency columns: median per-prompt ratio to the unmodified model in the same cycle. 760: cycle 1, all prompts, the same prompts as the quality column. 128: cycles 2 / 3 (restarted servers) on a fixed timing subset of 16 prompts per task, which over-weights long LongBench prompts (median prompt 7.6K tokens in the subset against 2.6K over all 760 prompts); TTFT and end-to-end latency are measured one request at a time, throughput at concurrency four. Full cycle-1 ratios are in Appendix G.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 99,
+              "image_path": "figures/2610.22454/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 1002
+            },
+            {
+              "caption": "Table 4: Further results of the direct-test batch. Scores and answer NLL averaged over the 200 questions; F1 of each condition’s greedy generation.",
+              "figure_id": "table-4-15",
+              "figure_number": "4",
+              "height": 368,
+              "image_path": "figures/2610.22454/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 577
+            },
+            {
+              "caption": "Table 12: Interface batch, per task: change against the unmodified model (F1 points). Descriptive only. DeepSeek rows: standard / instruction-in-the-middle HotpotQA.",
+              "figure_id": "table-12-6",
+              "figure_number": "12",
+              "height": 254,
+              "image_path": "figures/2610.22454/table-011.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 860
+            },
+            {
+              "caption": "Table 7: Where each claim comes from. Quality and latency come from the same mask, implementation and prompts only in the joint batch. Other rows are separate batches, each compared with its own unmodified model.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 779,
+              "image_path": "figures/2610.22454/table-012.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 890
+            },
+            {
+              "caption": "Table 13: Placement batch (vLLM 0.31, one H200, quality only, F1 points). Unadjusted 95% bootstrap intervals; p is Holm-adjusted within each model over the listed secondary comparisons. Rows marked descr. are descriptive. First k full: the first k prompt tokens at full experts, the rest uniform; last k full likewise at the end.",
+              "figure_id": "table-13-11",
+              "figure_number": "13",
+              "height": 481,
+              "image_path": "figures/2610.22454/table-013.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 960
+            },
+            {
+              "caption": "Table 1: Where the loss is made, by family (HotpotQA, half the experts, earlier unmarked batch; change against the unmodified model with 95% intervals; DeepSeek’s 8–32 comes from the vLLM 0.31 prefix sweep of Section 3.3). Qwen1.5’s loss is measured by containment (whether the gold answer appears), since its F1 rises.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 119,
+              "image_path": "figures/2610.22454/table-014.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 1002
+            },
+            {
+              "caption": "Table 8: Joint batch, cycle 1 (all 760 prompts): median TTFT ratio, median end-to-end ratio and throughput ratio at concurrency four, each against the unmodified model in the same cycle.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 254,
+              "image_path": "figures/2610.22454/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 527
+            },
+            {
+              "caption": "Table 6: Negative-control batch (Qwen3-30B-A3B, vLLM 0.31, one H100, 2,098 marked prompts, 8 → 4, quality only). F1 differences on seven QA datasets, equally weighted; code is edit similarity. Intervals are unadjusted 95% bootstrap intervals with HotpotQA questions resampled across their three layouts; p is Holm-adjusted over the six prespecified secondary comparisons. The last three rows were added after the data were seen and are not part of the correction.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 298,
+              "image_path": "figures/2610.22454/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 627
+            },
+            {
+              "caption": "Table 11: Interface batch (vLLM 0.31, one H100, quality only, F1 points). Unadjusted 95% bootstrap intervals; p is Holm-adjusted within each model over the listed secondary comparisons. Both primaries are undecided under their prespecified rules (Appendix I). Header only: the eight-token assistant header full and the rest of Interface-Full’s budget at random in the documents. No header: the Interface-Full mask with the header reduced and its budget moved into the documents. The last three rows are post hoc.",
+              "figure_id": "table-11-5",
+              "figure_number": "11",
+              "height": 175,
+              "image_path": "figures/2610.22454/table-017.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 860
+            },
+            {
+              "caption": "Table 14: Reducing single spans, by family (family batch, HotpotQA, 2,000 questions, half of each model’s experts; change against the unmodified model with 95% intervals). F1, except containment for Qwen1.5, whose F1 rises under reduction. “Only X”: X reduced, every other prompt token full; “keep X”: X full, every other prompt token reduced. The head is the chat prefix, the instruction and the two demonstrations. Qwen3’s single-token rows come from a separate batch (Section 3.2).",
+              "figure_id": "table-14-17",
+              "figure_number": "14",
+              "height": 37,
+              "image_path": "figures/2610.22454/table-018.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 1002
+            },
+            {
+              "caption": "Table 15: What a loss of form looks like. HotpotQA answers of the unmodified model, with every prompt token at half of its experts, and under KeepEnds. The reduced model still finds the answer; it no longer gives “only the short answer”.",
+              "figure_id": "table-15-16",
+              "figure_number": "15",
+              "height": 37,
+              "image_path": "figures/2610.22454/table-019.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 998
+            }
+          ],
+          "first_seen_at": "2026-10-28T21:00:00-04:00",
+          "hero_figure": "figures/2610.22454/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.22454",
+          "relevance": 8,
+          "selection_reason": "Analyzes the impact of expert reduction in MoE models during prefill, identifying specific critical tokens (instruction, chat template) that cause performance loss and proposing a placement rule for efficient serving.",
+          "summary_status": "generated",
+          "title": "Where Prefill Expert Reduction Hurts MoE Models: A Few Prompt Tokens Carry Most of the Short-Answer F1 Loss",
+          "tldr": "Reducing routed experts during MoE prefill mainly hurts short-answer F1 through a small set of task-interface tokens, and protecting those tokens preserves quality while retaining latency gains.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-27",
       "paper_count": 13,
       "papers": [
@@ -126078,5 +126321,5 @@
   "schema_version": 1,
   "subtopic_id": "kv-cache-and-memory-efficiency",
   "topic_id": "efficient-ai",
-  "total_paper_count": 633
+  "total_paper_count": 634
 }

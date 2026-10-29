@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**332 papers total**
+**334 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [LociArt: A Unified Paradigm for Free-Style Local Video Stylization](https://arxiv.org/abs/2610.36456) | Video Generation and Understanding: Video Diffusion | LociArt introduces a unified framework for controllable local video stylization that applies specified styles to selected regions while preserving other content and maintaining temporal consistency. | 7 | 7 |
+| 2026-10-28 | [Controlling Polar Exposure to Delay Memorization in Diffusion Models](https://arxiv.org/abs/2610.02780) | Video Generation and Understanding: Video Diffusion | QGD adaptively controls optimization exposure in diffusion models to delay memorization while preserving sample-quality progress. | 9 | 9 |
 | 2026-10-27 | [Taming Noise Initialization for Zero-shot Video Restoration with Image Diffusion Priors](https://arxiv.org/abs/2610.37290) | Video Generation and Understanding: Video Diffusion | A zero-shot video restoration method improves temporal consistency by initializing image-diffusion restoration with degradation-aware, adaptively refined noise rather than simple Gaussian noise. | 5 | 6 |
 | 2026-10-27 | [A First-Step Bias Restores Lost Diversity in Diffusion Model Distillation](https://arxiv.org/abs/2610.37110) | Video Generation and Understanding: Video Diffusion | ReSeed restores much of the diversity lost during diffusion distillation by adapting only the first denoising step to better preserve seed-dependent variation. | 6 | 7 |
 | 2026-10-27 | [Hy-Nomas: Towards Free-form Interactive World Generation](https://arxiv.org/abs/2610.36729) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion | Hy-Nomas is an 8B video world model that generates free-form, multi-turn interactive worlds while maintaining history and responding to text and camera controls. | 9 | 8 |

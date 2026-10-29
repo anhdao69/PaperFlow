@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**430 papers total**
+**431 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Visual Sufficiency Landscapes: Understanding Query-Conditioned Reliability in Visual Token Pruning](https://arxiv.org/abs/2610.24968) | Efficient AI: Token Pruning and Eviction | Visual sufficiency landscapes measure how many visual-token subsets preserve a model’s behavior and improve prediction of when pruning will fail. | 9 | 8 |
 | 2026-10-27 | [Metacognitive Decoding: Efficient Inference for Diffusion Language Agents](https://arxiv.org/abs/2610.37642) | Efficient AI: Token Pruning and Eviction | A lightweight metacognitive controller makes diffusion language agents more efficient by adapting token finalization and response length to interaction needs. | 7 | 7 |
 | 2026-10-27 | [3D-SceneQ: Empowering 3D LLM With Query-Guided Adaptive Pruning and Multi-Modal Feature Enhancement](https://arxiv.org/abs/2610.37202) | Multimodal Foundation Models: Multimodal Large Language Models, Spatial Intelligence; 3D Vision: 3D Foundation Models; Efficient AI: Token Pruning and Eviction | 3D-SceneQ improves 3D-language reasoning by pruning irrelevant objects according to the query and enriching 3D features with 2D multimodal information. | 8 | 7 |
 | 2026-10-27 | [Mechanistic Failure Modes of Weight Pruning in Transformer Language Models](https://arxiv.org/abs/2610.37126) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Weight pruning can preserve or obscure output-level performance while severely damaging the internal circuits that produce model behavior. | 8 | 7 |

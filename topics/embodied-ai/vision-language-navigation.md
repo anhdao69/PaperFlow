@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**173 papers total**
+**175 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [OmniBrain-0: A Unified Agentic Model for Embodied Intelligence](https://arxiv.org/abs/2610.36013) | Embodied AI: Vision-Language Navigation, Vision-Language-Action, Robot Learning and Manipulation | OmniBrain-0 is a compact unified embodied agent that combines manipulation and navigation with planning, progress tracking, and failure recovery at lower overhead than a larger closed-source teacher. | 9 | 7 |
+| 2026-10-28 | [Deploying Foundation Models for Embodied Navigation](https://arxiv.org/abs/2609.25666) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | The paper improves foundation-model-based embodied navigation by addressing personalization bias and limited context through habit-aware planning and active memory control. | 8 | 7 |
 | 2026-10-27 | [Structured Maps for Landmark-Based Route Instructions with LLMs](https://arxiv.org/abs/2610.36582) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | An SVG-based structured text representation helps LLMs select human-preferred landmarks for navigation as effectively as, or better than, map images. | 7 | 7 |
 | 2026-10-27 | [ASPEN: Adaptive Semantic Reasoning via Command Persistence Prediction for Efficient Navigation VLAs](https://arxiv.org/abs/2610.36285) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Efficient AI | ASPEN reduces costly VLA reasoning by predicting when the previous navigation command can safely be reused, cutting VLA calls and inference time while preserving navigation behavior. | 8 | 7 |
 | 2026-10-26 | [Preemptive Instruction Following with Resumption](https://arxiv.org/abs/2610.35576) | Embodied AI: Vision-Language Navigation | PIFR evaluates whether embodied-navigation agents can handle interruptions, complete inserted tasks, and resume long-horizon plans from changed states. | 8 | 7 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**2369 papers total**
+**2371 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-28 | [Visual Sufficiency Landscapes: Understanding Query-Conditioned Reliability in Visual Token Pruning](https://arxiv.org/abs/2610.24968) | Efficient AI: Token Pruning and Eviction | Visual sufficiency landscapes measure how many visual-token subsets preserve a model’s behavior and improve prediction of when pruning will fail. | 9 | 8 |
+| 2026-10-28 | [Where Prefill Expert Reduction Hurts MoE Models: A Few Prompt Tokens Carry Most of the Short-Answer F1 Loss](https://arxiv.org/abs/2610.22454) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models | Reducing routed experts during MoE prefill mainly hurts short-answer F1 through a small set of task-interface tokens, and protecting those tokens preserves quality while retaining latency gains. | 8 | 7 |
 | 2026-10-27 | [Multi-State Linear Attention with Generalized Second-Order Routing](https://arxiv.org/abs/2610.37645) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | MERLIN improves long-context multi-state linear attention by using first- and second-order key statistics for more content-aware routing across memory states. | 8 | 8 |
 | 2026-10-27 | [Metacognitive Decoding: Efficient Inference for Diffusion Language Agents](https://arxiv.org/abs/2610.37642) | Efficient AI: Token Pruning and Eviction | A lightweight metacognitive controller makes diffusion language agents more efficient by adapting token finalization and response length to interaction needs. | 7 | 7 |
 | 2026-10-27 | [EnvSched: Environment-Aware Scheduling for Rollout-Efficient Agent Reinforcement Learning](https://arxiv.org/abs/2610.37609) | Efficient AI | EnvSched improves rollout efficiency in agent RL by scheduling diverse, informative environment–task pairs using rollout-history-based reward-variance predictions. | 6 | 7 |
