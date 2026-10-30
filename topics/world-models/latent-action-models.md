@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**133 papers total**
+**138 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-29 | [Continuous-Action World Models: Learning Cross-Embodiment Spatiotemporal Dynamics Priors](https://arxiv.org/abs/2610.40401) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | CoAWM learns shared spatiotemporal action priors across robot embodiments and control frequencies, then uses them to generate task-conditioned actions at arbitrary query times. | 9 | 9 |
+| 2026-10-29 | [Certified Access: Test-Time Compute on Conservative Physics-Structured AI Memory](https://arxiv.org/abs/2610.39073) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | A physics-structured memory framework certifies test-time compute by controlling reachability, energy, phase volume, and stored-state transport. | 9 | 9 |
+| 2026-10-29 | [Self-Supervised Latent Action-Conditioned World Modeling for Time Series](https://arxiv.org/abs/2610.37963) | World Models: Latent Action Models | ACTS-WM improves time-series representations by learning latent actions that explain transitions and conditioning JEPA-based world-model predictions on them. | 8 | 7 |
+| 2026-10-29 | [When More Planning Hurts: Learned Planners for World Models](https://arxiv.org/abs/2610.37891) | World Models: Latent Action Models | On PushT, a lightweight fixed action updater solves half the held-out scenes, while extra planning updates can reduce success rather than improve it. | 7 | 7 |
+| 2026-10-29 | [LaWAM: Latent World Action Models for Efficient Dynamics-Aware Robot Policies](https://arxiv.org/abs/2606.15768) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | LaWAM enables dynamics-aware robot control by conditioning policies on efficiently predicted latent visual subgoals instead of costly future video. | 9 | 8 |
 | 2026-10-27 | [Vision-Language Agents Can Learn in Their Own Latent Worlds](https://arxiv.org/abs/2610.36925) | Embodied AI: Vision-Language-Action; World Models: Latent Action Models, Interactive World Models | Dwell enables vision-language agents to learn from interaction by predicting and improving actions entirely in their own latent space. | 9 | 9 |
 | 2026-10-27 | [RynnWorld-Latent: A Cross-Embodiment World Model Conditioned on Universal Latent Actions](https://arxiv.org/abs/2610.36791) | World Models: Latent Action Models, Video World Models, Interactive World Models | RynnWorld-Latent learns controllable visual dynamics across humans, robots, and simulations by conditioning a video world model on shared 3D-grounded latent actions. | 9 | 8 |
 | 2026-10-27 | [OSWAM: An Effective World Action Model with One-Step Action Generation](https://arxiv.org/abs/2610.35850) | Embodied AI: Robot Navigation; World Models: Latent Action Models | OSWAM enables high-quality one-step action generation for autonomous driving and embodied control by initializing diffusion with structured action priors and distilling future-aware information. | 9 | 9 |

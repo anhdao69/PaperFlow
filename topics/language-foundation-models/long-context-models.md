@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**167 papers total**
+**169 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-29 | [Incentivizing Self-Learning in Large Language Models via Reinforcement Learning](https://arxiv.org/abs/2610.39671) | Language Foundation Models: Long-Context Models | Reinforcement learning with a textbook-navigation interface teaches LLMs to autonomously acquire and apply knowledge, substantially improving mathematical proof solving and broader long-context reasoning. | 7 | 7 |
+| 2026-10-29 | [Nemotron 3.5 Super and Lightning: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Models for Agentic AI](https://arxiv.org/abs/2610.38095) | Multimodal Foundation Models: Multimodal Large Language Models; Language Foundation Models: Large Language Models, Long-Context Models | Nemotron 3.5 Super and Lightning are open hybrid Mamba-Transformer MoE models optimized for efficient reasoning, long-context, multimodal, and agentic AI workloads. | 8 | 7 |
 | 2026-10-27 | [Multi-State Linear Attention with Generalized Second-Order Routing](https://arxiv.org/abs/2610.37645) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | MERLIN improves long-context multi-state linear attention by using first- and second-order key statistics for more content-aware routing across memory states. | 8 | 8 |
 | 2026-10-27 | [GTFormer: A Syntax-Free Graph Network Alternative to Transformers for 8192$\\times$ Length Extrapolation in Linear Time](https://arxiv.org/abs/2610.37524) | Efficient AI; Language Foundation Models: Long-Context Models | GTFormer replaces quadratic self-attention with a syntax-free hierarchical graph network that extrapolates from length 512 to 4,194,304 tokens in linear memory. | 7 | 8 |
 | 2026-10-26 | [Quantitative Generalization Bounds for Multi-Layer Transformers: A Few Long Strings can Beat Many Short Ones](https://arxiv.org/abs/2610.35715) | Language Foundation Models: Long-Context Models | The paper develops joint theoretical generalization bounds for fixed-precision, multi-layer transformers across both sample distribution and sequence length, showing that longer training strings can be far more valuable than more samples. | 5 | 7 |

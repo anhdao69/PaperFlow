@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**175 papers total**
+**179 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-29 | [Surrogate Uncertainty for Black-box Visual Grounding](https://arxiv.org/abs/2610.39798) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Multimodal Large Language Models | An external Bayesian surrogate estimates uncertainty around black-box VLM grounding predictions, improving calibration, task performance, and robot robustness. | 8 | 8 |
+| 2026-10-29 | [AtomTree: A Hierarchical Framework for State-Aware Embodied Instruction Following with LLMs](https://arxiv.org/abs/2610.38744) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | AtomTree improves zero-shot embodied instruction following by continuously planning from the current state and backtracking when actions fail. | 8 | 7 |
+| 2026-10-29 | [What Should a Navigator Remember? Spatiotemporal Memory for Zero-Shot Vision-Language Navigation](https://arxiv.org/abs/2610.38318) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | A structured spatiotemporal memory helps an 8B vision-language navigator perform zero-shot navigation by retaining task progress, observation history, and spatial geometry. | 9 | 7 |
+| 2026-10-29 | [MATCH: Execution-Aware Hierarchical Reinforcement Learning for Vision-and-Language Navigation in Continuous Environment](https://arxiv.org/abs/2610.38248) | Embodied AI: Vision-Language Navigation | MATCH jointly trains a language-conditioned planner and an adaptive action executor to improve instruction-following navigation in continuous environments. | 9 | 8 |
 | 2026-10-28 | [OmniBrain-0: A Unified Agentic Model for Embodied Intelligence](https://arxiv.org/abs/2610.36013) | Embodied AI: Vision-Language Navigation, Vision-Language-Action, Robot Learning and Manipulation | OmniBrain-0 is a compact unified embodied agent that combines manipulation and navigation with planning, progress tracking, and failure recovery at lower overhead than a larger closed-source teacher. | 9 | 7 |
 | 2026-10-28 | [Deploying Foundation Models for Embodied Navigation](https://arxiv.org/abs/2609.25666) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | The paper improves foundation-model-based embodied navigation by addressing personalization bias and limited context through habit-aware planning and active memory control. | 8 | 7 |
 | 2026-10-27 | [Structured Maps for Landmark-Based Route Instructions with LLMs](https://arxiv.org/abs/2610.36582) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Spatial Intelligence | An SVG-based structured text representation helps LLMs select human-preferred landmarks for navigation as effectively as, or better than, map images. | 7 | 7 |
