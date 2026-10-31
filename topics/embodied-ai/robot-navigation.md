@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**851 papers total**
+**852 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Differentiable Dynamics for Autonomous Micro-Mobility Navigation](https://arxiv.org/abs/2609.31885) | Embodied AI: Robot Navigation | The paper introduces differentiable micro-mobility dynamics models that improve trajectory matching and closed-loop navigation realism over a differentiable kinematic bicycle model. | 6 | 6 |
 | 2026-10-29 | [Learned Terminal Costs for Short-Horizon Model Predictive Control of Autonomous Trucks in Interactive Highway Traffic](https://arxiv.org/abs/2610.40257) | Embodied AI: Robot Navigation | A hybrid MPC–RL controller uses learned terminal costs to improve short-horizon autonomous truck driving in interactive highway traffic while maintaining zero collisions. | 7 | 6 |
 | 2026-10-29 | [Decision-Level Error Attribution and Depth-Aware Safety Evaluation of Monocular RGB Human Tracking for Autonomous Robot Navigation](https://arxiv.org/abs/2610.40199) | Embodied AI: Robot Navigation | Decision-level analysis shows that missed detections, rather than localization error or the safety rule, are the main source of missed dangers in monocular RGB human tracking for robot navigation. | 7 | 6 |
 | 2026-10-29 | [Escaping Path Mirages in Offline Goal-Conditioned Reinforcement Learning](https://arxiv.org/abs/2610.40130) | Embodied AI: Robot Navigation | BGP improves offline goal-conditioned RL by avoiding misleading stochastic trajectory branches during long-horizon planning. | 7 | 7 |

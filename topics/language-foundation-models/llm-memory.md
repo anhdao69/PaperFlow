@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**765 papers total**
+**766 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Beyond Similarity Search: Knowledge Graph Metadata Enrichment for Enterprise Retrieval-Augmented Generation](https://arxiv.org/abs/2610.37728) | Language Foundation Models: LLM Memory | A two-stage GraphRAG design improved enterprise retrieval over dense-vector RAG and text-to-SQL in a controlled SEC filing benchmark, while remaining weaker on structured aggregation queries. | 4 | 5 |
 | 2026-10-29 | [When to Assist and What to Suggest: Joint Gating and Memory-Grounded Hint Generation in One Compact Decoder](https://arxiv.org/abs/2610.40611) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | A single 1B decoder can jointly decide when to assist and generate memory-grounded hints, matching separate 1B pipelines while reducing latency, though end-to-end quality remains below its oracle-gate ceiling. | 7 | 7 |
 | 2026-10-29 | [FIRME: Registry-Anchored Memory Graphs for Evolving, Heterogeneous Investor Knowledge](https://arxiv.org/abs/2610.40482) | Language Foundation Models: LLM Memory | FIRME maintains evolving investor knowledge by anchoring observations to canonical relationships with persistent aliases, provenance, time, and context, improving matching and reattachment across periods. | 5 | 6 |
 | 2026-10-29 | [Retrieving from Your Own Mistakes: On-Policy Training of Embedding Models for Multi-Hop Retrieval-Augmented Generation](https://arxiv.org/abs/2610.40409) | Language Foundation Models: LLM Memory | On-policy training teaches chain embedding retrievers to recover from their own retrieval mistakes, improving complete evidence retrieval for multi-hop RAG. | 6 | 7 |

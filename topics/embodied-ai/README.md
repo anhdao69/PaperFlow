@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**4028 papers total**
+**4033 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [LLM-guided Planar Loco-Manipulation for Quadruped Robots](https://arxiv.org/abs/2610.40248) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | An LLM-guided planner enables quadruped robots to navigate clutter by composing object interactions and geometric targets, with strong simulated and hardware results. | 8 | 7 |
+| 2026-10-30 | [PRIME W0: Physical Priors from World Models for Embodied Manipulation](https://arxiv.org/abs/2610.39528) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | PRIME W0 enhances vision-language-action models for embodied manipulation by combining hierarchical VLM features, world-model dynamics, temporal context, and kinematics-aware action generation. | 9 | 9 |
+| 2026-10-30 | [OpenFlyV2: An onboard vision-language-action model for aerial perception and navigation](https://arxiv.org/abs/2610.39287) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | OpenFlyV2 is an onboard vision-language-action model that combines semantic understanding, spatial reasoning, and closed-loop aerial control on a resource-constrained drone. | 9 | 8 |
+| 2026-10-30 | [End-to-end QP-based policies: A unified perspective on robust control and robot learning](https://arxiv.org/abs/2609.31905) | Embodied AI: Robot Learning and Manipulation | An end-to-end quadratic-programming policy framework unifies robust control and robot learning while retaining model-based interpretability and supporting known or unknown dynamics. | 6 | 7 |
+| 2026-10-30 | [Differentiable Dynamics for Autonomous Micro-Mobility Navigation](https://arxiv.org/abs/2609.31885) | Embodied AI: Robot Navigation | The paper introduces differentiable micro-mobility dynamics models that improve trajectory matching and closed-loop navigation realism over a differentiable kinematic bicycle model. | 6 | 6 |
 | 2026-10-29 | [SwapBot: Tool-Centric Robot Manipulation via Interchangeable End-Effectors and Tactile Sensing](https://arxiv.org/abs/2610.40646) | Embodied AI: Robot Learning and Manipulation | SwapBot enables robots to autonomously swap and use diverse household tools through modular adapters with tactile sensing, improving contact-rich manipulation. | 9 | 8 |
 | 2026-10-29 | [Probing Spatial State Representations in Visual Foundation Models](https://arxiv.org/abs/2610.40636) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | Visual foundation models encode visible spatial structure, but their representations do not consistently maintain, update, or use spatial state for action. | 8 | 8 |
 | 2026-10-29 | [SymAnt: Grounding Long-Horizon Action Anticipation with Adaptable Symbolic Priors](https://arxiv.org/abs/2610.40632) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | SymAnt combines neural prediction with editable symbolic scene and knowledge graphs to anticipate long-horizon action sequences from short video observations. | 7 | 6 |

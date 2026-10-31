@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1518 papers total**
+**1519 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Retrieval as Traversal: Value-Indexed Memory for Stateful Long-Context Agents](https://arxiv.org/abs/2610.40545) | Adaptation and Memory: Embodied Memory | A value-indexed, persistent local traversal mechanism aims to make stateful retrieval easier by grouping complementary memories while avoiding redundant co-retrieval. | 7 | 7 |
 | 2026-10-29 | [Rethinking Neural Thickets Without Weight Perturbations](https://arxiv.org/abs/2610.40649) | Adaptation and Memory: Test-Time Learning; Language Foundation Models | Neural Thickets gains can largely be explained by output diversity, validation-based selection, and voting rather than nearby weight-space experts. | 7 | 8 |
 | 2026-10-29 | [When to Assist and What to Suggest: Joint Gating and Memory-Grounded Hint Generation in One Compact Decoder](https://arxiv.org/abs/2610.40611) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | A single 1B decoder can jointly decide when to assist and generate memory-grounded hints, matching separate 1B pipelines while reducing latency, though end-to-end quality remains below its oracle-gate ceiling. | 7 | 7 |
 | 2026-10-29 | [PhysVLMM: Interaction-Conditioned Physical Belief Maps for Articulated Objects in Robot Scene Maps](https://arxiv.org/abs/2610.40539) | World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | PhysVLMM builds uncertainty-aware physical beliefs for articulated objects, sharing pull evidence across similar parts to make safer, faster action predictions. | 7 | 8 |

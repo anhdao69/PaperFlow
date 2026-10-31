@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1396 papers total**
+**1397 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [From Reward Signal to Visual Utility: A Controlled Audit of Medical VLM Post-Training](https://arxiv.org/abs/2609.31450) | Multimodal Foundation Models: Multimodal Large Language Models | A controlled audit finds that medical VLM post-training can improve answer accuracy without improving—and sometimes reducing—the model’s useful reliance on visual evidence. | 6 | 6 |
 | 2026-10-29 | [PhysCount: Do MLLMs Count Visual Appearances or Physical Entities?](https://arxiv.org/abs/2610.40530) | Multimodal Foundation Models: Multimodal Large Language Models | PhysCount shows that MLLMs can count visible appearances more easily than they can infer the underlying physical entities they represent. | 6 | 7 |
 | 2026-10-29 | [Textual Response-Aware Guidance for Zero-Shot Adversarial Robustness of Vision-Language Models](https://arxiv.org/abs/2610.40309) | Multimodal Foundation Models: Multimodal Large Language Models | TRAG improves zero-shot adversarial robustness in vision-language models by constraining visual representation drift according to text-encoder responses around semantic anchors. | 6 | 6 |
 | 2026-10-29 | [Distributional Reward Calibration and Budget-Neutral Credit Assignment for Multimodal RLVR](https://arxiv.org/abs/2610.40250) | Multimodal Foundation Models: Multimodal Large Language Models | TACE calibrates reward distributions and redistributes token credit in GRPO while preserving total credit and its sign. | 6 | 7 |

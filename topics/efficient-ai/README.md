@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**2441 papers total**
+**2442 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Rimuru: Unified Memory Management for Modern LLM Serving via Elastic Expert Offloading](https://arxiv.org/abs/2610.40305) | Efficient AI: KV Cache and Memory Efficiency | Rimuru improves LLM serving memory efficiency by dynamically sharing device memory across heterogeneous tensors through elastic expert offloading. | 7 | 7 |
 | 2026-10-29 | [Read, Allocate, Route: Role-Coupled Tokenization for Pixel-Space Generative Transformers](https://arxiv.org/abs/2610.40647) | Multimodal Foundation Models; Efficient AI: Token Pruning and Eviction | SpecSlot increases pixel-space image detail without lengthening the globally attended token sequence, improving quality–compute trade-offs. | 8 | 8 |
 | 2026-10-29 | [On the Fundamental Limits of Prefill-Based Decoding Length Prediction](https://arxiv.org/abs/2610.40541) | Efficient AI | Prefill-based decode-length prediction is fundamentally limited by autoregressive sampling noise, so benchmark results should control evaluation conditions and compare against stochasticity-derived bounds. | 6 | 7 |
 | 2026-10-29 | [Nonlinear Dynamical Systems as Scalable and Efficient Physical Neural Networks](https://arxiv.org/abs/2610.40471) | Efficient AI | Modern training and compression techniques can make nonlinear dynamical physical neural networks substantially more accurate and potentially far more energy-efficient than conventional digital implementations. | 6 | 6 |

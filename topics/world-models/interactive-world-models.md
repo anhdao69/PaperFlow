@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**616 papers total**
+**617 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [PRIME W0: Physical Priors from World Models for Embodied Manipulation](https://arxiv.org/abs/2610.39528) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | PRIME W0 enhances vision-language-action models for embodied manipulation by combining hierarchical VLM features, world-model dynamics, temporal context, and kinematics-aware action generation. | 9 | 9 |
 | 2026-10-29 | [world2vec: Mechanistic world models through latent dynamics learning](https://arxiv.org/abs/2610.40637) | World Models: Interactive World Models | world2vec learns compact, mechanistically faithful world models from observations and actions alone, supporting both control and scientific system identification. | 8 | 8 |
 | 2026-10-29 | [L3G-World: Real-Time Infinite World Generation with Latent 3D Gaussian Memory](https://arxiv.org/abs/2610.40614) | World Models: Interactive World Models | L3G-World enables real-time, spatially consistent infinite-world generation using a compact latent 3D Gaussian memory rendered directly into a video diffusion model’s latent space. | 8 | 8 |
 | 2026-10-29 | [Fight World Model: Customizable Combat through Visual Interaction Proxies](https://arxiv.org/abs/2610.40607) | World Models: Interactive World Models | Fight World Model makes combat video generation rule-consistent and customizable by separating executable game logic from visual rendering. | 7 | 7 |

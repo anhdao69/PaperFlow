@@ -1,6 +1,154 @@
 {
   "days": [
     {
+      "date": "2026-10-30",
+      "paper_count": 1,
+      "papers": [
+        {
+          "abstract": "Autonomous micro-mobility vehicles (MMVs) such as wheelchairs, scooters, and bicycles have the potential to improve mobility access and support safe low-speed transportation in pedestrian-shared spaces. Achieving MMV autonomy will require realistic, predictable MMV motion. However, many existing autonomous vehicle stacks rely on simplified kinematic models that fail to capture key MMV characteristics such as tire slip, friction, and wheel layouts, limiting realism and gradient-based optimization. In this paper, we explore differentiable formulations of dynamics models for autonomous micro-mobility systems. We first construct DiffKBM, a differentiable version of the kinematic bicycle model (KBM). Then, we introduce DiffGM3, a differentiable formulation of the General Micro-Mobility Model (GM3), a unified tire-based dynamics formulation for micro-mobility vehicles that supports a wide range of MMV configurations. DiffKBM and DiffGM3 enable end-to-end differentiable optimization through MMV dynamics, making them suitable for integration into differentiable autonomy stacks. We evaluate these dynamics models in both open-loop and closed-loop settings: (1) open-loop trajectory matching, where DiffKBM and DiffGM3 are integrated as a dynamics layer within DiffStack and optimized to reproduce real-world MMV trajectories, and (2) closed-loop autonomous navigation, where DiffKBM and DiffGM3 are paired with a differentiable MPC controller in CrowdNav pedestrian scenarios. In the open-loop setting, DiffGM3 outperforms DiffKBM in reproducing trajectories with improvements in ADE and NLL across bicycle, scooter, and motorcycle modes, and reductions in planning loss for bicycle and motorcycle trajectories. We also find that, in closed-loop settings, DiffGM3 improves on DiffKBM's CrowdNav performance by producing 55\\% fewer collisions and a 75\\% lower discomfort frequency for the bicycle mode.",
+          "arxiv_id": "2609.31885",
+          "arxiv_url": "https://arxiv.org/abs/2609.31885",
+          "authors": [
+            "Grace Cai",
+            "Joey Lee",
+            "Nithin Parepally",
+            "Laura Zheng",
+            "Ming C. Lin"
+          ],
+          "bullets": [
+            "Targets limitations of simplified vehicle models that omit tire slip, friction, and diverse wheel layouts.",
+            "Constructs DiffKBM, a differentiable kinematic bicycle model, and DiffGM3, a differentiable general micro-mobility dynamics model.",
+            "Evaluates both models in open-loop trajectory matching and closed-loop navigation with differentiable MPC in pedestrian scenarios.",
+            "DiffGM3 outperforms DiffKBM across bicycle, scooter, and motorcycle trajectory evaluations.",
+            "For bicycle navigation, DiffGM3 yields 55% fewer collisions and 75% lower discomfort frequency than DiffKBM."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 4: Overview of the DiffMPC pipeline integrated with DiffKBM or DiffGM3. At each timestep, the environment provides a state estimate xt , which is passed to the optimizer with the goal position and surrounding pedestrian states pedst . The optimizer proposes a control sequence u0:T−1 and uses either DiffKBM or DiffGM3 parameterized by learnable parameters ρKBM or ρGM3 to roll out predicted future states x0:T . A cost function is defined with learnable cost weights ρC. Because both the dynamics and the cost function are differentiable, gradients can be back-propagated through the prediction and cost modules to enable end-to-end learning of MMV dynamics parameters. The first control action u0 is applied to the environment, and the process repeats in a receding-horizon loop.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 217,
+              "image_path": "figures/2609.31885/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1002
+            },
+            {
+              "caption": "Fig. 2: DiffGM3 contains several differentiable components with sets of learnable parameters ρlean,ρtire, and ρVI. First, the steering control input δ is converted into tire-specific steering angles δi. This, along with the MMV’s previous longitudinal velocity vx, lateral velocity vy, and yaw rate r, is used to calculate tire velocities. Meanwhile, longitudinal and lateral accelerations, ax and ay, are used to transfer load among the tires, and the previous lean angle γ and roll rate γ̇ are used to determine the next lean angle. In addition to wheel angular velocity Ω, the results from these modules are inputs to the tire brush model, where forces and moments are computed. The outputs for each tire are integrated into the vehicle dynamics to obtain longitudinal, lateral, and yaw acceleration. Finally, the resulting position is calculated with Euler integration. This fully differentiable formulation allows gradients to backpropagate to each module so parameters can be tuned on MMV trajectory data.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 229,
+              "image_path": "figures/2609.31885/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1052
+            },
+            {
+              "caption": "Fig. 5: Closed-loop Navigation in Pedestrian Crowds Comparison between DiffGM3 Bicycle and DiffKBM: We show two unique scenarios each for DiffGM3 and DiffKBM. Longer pedestrian paths reflect the longer navigation time taken by the MMV to avoid moving pedestrians to reach its goal. Scenario 1: DiffGM3’s route reflects its ability to use real-world kinematics to avoid pedestrians when necessary, while DiffKBM’s simple kinematics forces it to attempt to fit right in between two pedestrians, resulting in a collision. Scenario 2: While both models reach the goal, DiffGM3’s longer route demonstrates less discomfort and higher minimum distance from pedestrians relative to DiffKBM’s direct route.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 224,
+              "image_path": "figures/2609.31885/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1048
+            },
+            {
+              "caption": "Fig. 3: Open-loop Trajectory Matching Comparison between the DiffKBM and DiffGM3: (a) On bicycle trajectories, DiffGM3 is able to stay on path because it has learnable parameters to prevent overturning. However, in some cases, it stops before the goal as shown by the red arrow, leading to a higher goal cost in the planning loss function. (b) On the other hand, the DiffKBM reaches its goal but veers off the ground-truth straight path, as indicated by the red arrow. This is due to the DiffKBM’s lack of support for realignment in its formula for yaw. (c) For a scooter, DiffGM3 is able to steer the scooter to its goal while avoiding other agents. (d) On the same trajectory, the DiffKBM causes the ego agent to turn towards another agent and slow down, preventing it from reaching its goal.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 242,
+              "image_path": "figures/2609.31885/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1002
+            },
+            {
+              "caption": "Fig. 1: DiffKBM implements wheelbase L as a learnable parameter in the steering component. The resulting turning rate θ̇ along with velocity are used in Euler integration to obtain the position. By making KBM end-to-end differentiable, we are able to tune L for an MMV with unknown wheelbase length.",
+              "figure_id": "figure-1-8",
+              "figure_number": "1",
+              "height": 119,
+              "image_path": "figures/2609.31885/figure-005.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 512
+            },
+            {
+              "caption": "TABLE I: Physical Parameters in the tire brush model.",
+              "figure_id": "table-I-3",
+              "figure_number": "I",
+              "height": 140,
+              "image_path": "figures/2609.31885/table-006.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 421
+            },
+            {
+              "caption": "TABLE II: Input Variables in the tire brush model.",
+              "figure_id": "table-II-4",
+              "figure_number": "II",
+              "height": 138,
+              "image_path": "figures/2609.31885/table-007.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 329
+            },
+            {
+              "caption": "TABLE V: Closed-loop Pedestrian Crowd Navigation Performance Comparison between DiffGM3 and DiffKBM: DiffGM3 prioritizes safety and demonstrates significantly fewer collisions across all vehicle configurations relative to DiffKBM. Specifically, in the baseline comparison between the two bicycle models, DiffGM3 produces 55% fewer collisions, with a 3% better success rate. DiffGM3’s incomplete rate and slower navigation time can be explained by its tendency to avoid collisions by veering away from the goal, resulting in situations where the vehicle is unable to arrive at the goal within the time limit. This also explains why DiffGM3’s discomfort frequency is 50%-75% better than DiffKBM’s across all modes. Moreover, DiffKBM’s faster navigation times are primarily the result of collisions ending the scenario early.",
+              "figure_id": "table-V-6",
+              "figure_number": "V",
+              "height": 140,
+              "image_path": "figures/2609.31885/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1044
+            },
+            {
+              "caption": "TABLE IV: Open-loop Trajectory Matching Evaluation Results: DiffGM3 outperforms DiffKBM in ADE (Bicycle: - 1.16%, Scooter -9.84%, Motorcycle: -2.37%) and NLL (Bicycle: -3.02%, Scooter -2.05%, Motorcycle: -4.75%) on all modes. For planning loss, DiffGM3 outperforms DiffKBM on bicycle (-4.16%) and motorcycle (-28.9%) trajectories, but performs worse on scooters (19.39%).",
+              "figure_id": "table-IV-1",
+              "figure_number": "IV",
+              "height": 131,
+              "image_path": "figures/2609.31885/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "TABLE III: DiffGM3 parameters optimized using IMPTC trajectories. Align gain kalign and damping coefficients dyaw,droll help to stabilize the MMV and reduce oversteering. Moments of inertia Iz, Ix, and tire parameters are tuned because they are not easily measurable.",
+              "figure_id": "table-III-10",
+              "figure_number": "III",
+              "height": 82,
+              "image_path": "figures/2609.31885/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 344
+            }
+          ],
+          "first_seen_at": "2026-10-30T21:00:00-04:00",
+          "hero_figure": "figures/2609.31885/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2609.31885",
+          "relevance": 6,
+          "selection_reason": "Differentiable dynamics models for autonomous micro-mobility navigation and closed-loop planning fit robot navigation.",
+          "summary_status": "generated",
+          "title": "Differentiable Dynamics for Autonomous Micro-Mobility Navigation",
+          "tldr": "The paper introduces differentiable micro-mobility dynamics models that improve trajectory matching and closed-loop navigation realism over a differentiable kinematic bicycle model.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-navigation"
+              ],
+              "topic_id": "embodied-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-29",
       "paper_count": 23,
       "papers": [
@@ -134401,5 +134549,5 @@
   "schema_version": 1,
   "subtopic_id": "robot-navigation",
   "topic_id": "embodied-ai",
-  "total_paper_count": 851
+  "total_paper_count": 852
 }

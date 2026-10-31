@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**1030 papers total**
+**1034 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Robust LIDAR Sensor-to-Sensor Domain Generalization via Accumulated-Point Scene Completion](https://arxiv.org/abs/2610.39516) | 3D Vision | A source-only occupancy-supervision strategy improves LiDAR semantic-segmentation transfer to unseen sensors without target data or added inference cost. | 6 | 6 |
+| 2026-10-30 | [Learning to Code the World: Harness Evolution for Compositional 3D Reconstruction](https://arxiv.org/abs/2610.37046) | 3D Vision | SceneEvolve improves editable, compositional 3D reconstruction by evolving a reusable code-based harness around a small open-source agent, without updating the model itself. | 7 | 7 |
+| 2026-10-30 | [OC-GS: Gaussian Splatting for Irregular Turntable Capture](https://arxiv.org/abs/2609.31572) | 3D Vision | OC-GS improves Gaussian-splatting reconstruction from sparse, irregular turntable views by jointly refining view angles within a shared motion model. | 5 | 5 |
+| 2026-10-30 | [ClearGS: Reliability-Aware Gaussian Splatting from Handheld Videos](https://arxiv.org/abs/2609.31509) | 3D Vision | ClearGS improves 3D Gaussian Splatting from uneven-quality handheld videos by reliability-aware frame weighting and render-guided restoration without clean reference images. | 5 | 6 |
 | 2026-10-29 | [SonoWorld4D: From One Video to a 4D Audio-Visual Scene via Diffusion Synchronization](https://arxiv.org/abs/2610.40640) | 3D Vision | SonoWorld4D converts a monocular video into an explorable 4D scene with synchronized novel-view visuals and spatial audio. | 5 | 8 |
 | 2026-10-29 | [HairDeck: Animation-Ready Stylized Hair Cards from a Single Image](https://arxiv.org/abs/2610.40599) | 3D Vision | HairDeck generates animatable, stylized hair cards and spring-bone rigs from a single image using set-based diffusion, producing higher-quality results faster than prior methods. | 5 | 7 |
 | 2026-10-29 | [CrossWeave: Cross-Modal Scene and Instance Retrieval from Sparse 2D-3D Alignment](https://arxiv.org/abs/2610.40525) | 3D Vision | CrossWeave uses sparse 2D–3D patch-point correspondences and optimal-transport aggregation to jointly retrieve scenes and instances with one model. | 6 | 7 |

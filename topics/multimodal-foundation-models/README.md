@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**2307 papers total**
+**2311 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [PRIME W0: Physical Priors from World Models for Embodied Manipulation](https://arxiv.org/abs/2610.39528) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | PRIME W0 enhances vision-language-action models for embodied manipulation by combining hierarchical VLM features, world-model dynamics, temporal context, and kinematics-aware action generation. | 9 | 9 |
+| 2026-10-30 | [OpenFlyV2: An onboard vision-language-action model for aerial perception and navigation](https://arxiv.org/abs/2610.39287) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | OpenFlyV2 is an onboard vision-language-action model that combines semantic understanding, spatial reasoning, and closed-loop aerial control on a resource-constrained drone. | 9 | 8 |
+| 2026-10-30 | [Balancing Multimodal Learning via Functional Progress](https://arxiv.org/abs/2610.03035) | Multimodal Foundation Models | FGMO balances multimodal optimization by comparing modality progress in function space and adjusting learning rates to coordinate their contributions. | 5 | 7 |
+| 2026-10-30 | [From Reward Signal to Visual Utility: A Controlled Audit of Medical VLM Post-Training](https://arxiv.org/abs/2609.31450) | Multimodal Foundation Models: Multimodal Large Language Models | A controlled audit finds that medical VLM post-training can improve answer accuracy without improving—and sometimes reducing—the model’s useful reliance on visual evidence. | 6 | 6 |
 | 2026-10-29 | [Read, Allocate, Route: Role-Coupled Tokenization for Pixel-Space Generative Transformers](https://arxiv.org/abs/2610.40647) | Multimodal Foundation Models; Efficient AI: Token Pruning and Eviction | SpecSlot increases pixel-space image detail without lengthening the globally attended token sequence, improving quality–compute trade-offs. | 8 | 8 |
 | 2026-10-29 | [Probing Spatial State Representations in Visual Foundation Models](https://arxiv.org/abs/2610.40636) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | Visual foundation models encode visible spatial structure, but their representations do not consistently maintain, update, or use spatial state for action. | 8 | 8 |
 | 2026-10-29 | [PhysCount: Do MLLMs Count Visual Appearances or Physical Entities?](https://arxiv.org/abs/2610.40530) | Multimodal Foundation Models: Multimodal Large Language Models | PhysCount shows that MLLMs can count visible appearances more easily than they can infer the underlying physical entities they represent. | 6 | 7 |

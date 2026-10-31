@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**919 papers total**
+**922 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [LLM-guided Planar Loco-Manipulation for Quadruped Robots](https://arxiv.org/abs/2610.40248) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | An LLM-guided planner enables quadruped robots to navigate clutter by composing object interactions and geometric targets, with strong simulated and hardware results. | 8 | 7 |
+| 2026-10-30 | [PRIME W0: Physical Priors from World Models for Embodied Manipulation](https://arxiv.org/abs/2610.39528) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | PRIME W0 enhances vision-language-action models for embodied manipulation by combining hierarchical VLM features, world-model dynamics, temporal context, and kinematics-aware action generation. | 9 | 9 |
+| 2026-10-30 | [OpenFlyV2: An onboard vision-language-action model for aerial perception and navigation](https://arxiv.org/abs/2610.39287) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | OpenFlyV2 is an onboard vision-language-action model that combines semantic understanding, spatial reasoning, and closed-loop aerial control on a resource-constrained drone. | 9 | 8 |
 | 2026-10-29 | [Probing Spatial State Representations in Visual Foundation Models](https://arxiv.org/abs/2610.40636) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | Visual foundation models encode visible spatial structure, but their representations do not consistently maintain, update, or use spatial state for action. | 8 | 8 |
 | 2026-10-29 | [Improving Fine-Grained Manipulation through Demonstration Expansion and Execution Design](https://arxiv.org/abs/2610.40430) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | DEED improves fine-grained robot manipulation by expanding demonstrations across instructions and visual conditions, then using task-aware closed-loop execution. | 8 | 7 |
 | 2026-10-29 | [Continuous-Action World Models: Learning Cross-Embodiment Spatiotemporal Dynamics Priors](https://arxiv.org/abs/2610.40401) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | CoAWM learns shared spatiotemporal action priors across robot embodiments and control frequencies, then uses them to generate task-conditioned actions at arbitrary query times. | 9 | 9 |

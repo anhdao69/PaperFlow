@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**2526 papers total**
+**2529 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [LLM-guided Planar Loco-Manipulation for Quadruped Robots](https://arxiv.org/abs/2610.40248) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | An LLM-guided planner enables quadruped robots to navigate clutter by composing object interactions and geometric targets, with strong simulated and hardware results. | 8 | 7 |
+| 2026-10-30 | [PRIME W0: Physical Priors from World Models for Embodied Manipulation](https://arxiv.org/abs/2610.39528) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | PRIME W0 enhances vision-language-action models for embodied manipulation by combining hierarchical VLM features, world-model dynamics, temporal context, and kinematics-aware action generation. | 9 | 9 |
+| 2026-10-30 | [End-to-end QP-based policies: A unified perspective on robust control and robot learning](https://arxiv.org/abs/2609.31905) | Embodied AI: Robot Learning and Manipulation | An end-to-end quadratic-programming policy framework unifies robust control and robot learning while retaining model-based interpretability and supporting known or unknown dynamics. | 6 | 7 |
 | 2026-10-29 | [SwapBot: Tool-Centric Robot Manipulation via Interchangeable End-Effectors and Tactile Sensing](https://arxiv.org/abs/2610.40646) | Embodied AI: Robot Learning and Manipulation | SwapBot enables robots to autonomously swap and use diverse household tools through modular adapters with tactile sensing, improving contact-rich manipulation. | 9 | 8 |
 | 2026-10-29 | [Gym-Anything for Robotics: Scaling physical simulations with digital agents](https://arxiv.org/abs/2610.40565) | Embodied AI: Robot Learning and Manipulation | Gym-Anything for Robotics uses coding agents and adversarial auditing to automatically build broad, challenging robotics simulations for scalable embodied-AI training. | 8 | 8 |
 | 2026-10-29 | [A Tutorial on Shape Servoing of Deformable Objects-Part I: Fundamentals](https://arxiv.org/abs/2610.40559) | Embodied AI: Robot Learning and Manipulation | This tutorial introduces data-driven Jacobian-based shape servoing for manipulating deformable objects toward desired shapes without requiring an accurate mechanical model. | 6 | 4 |

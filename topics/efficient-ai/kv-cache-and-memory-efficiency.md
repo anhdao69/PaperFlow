@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**646 papers total**
+**647 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Rimuru: Unified Memory Management for Modern LLM Serving via Elastic Expert Offloading](https://arxiv.org/abs/2610.40305) | Efficient AI: KV Cache and Memory Efficiency | Rimuru improves LLM serving memory efficiency by dynamically sharing device memory across heterogeneous tensors through elastic expert offloading. | 7 | 7 |
 | 2026-10-29 | [Glance: The Generator Is Its Own Reranker](https://arxiv.org/abs/2610.40454) | Efficient AI: KV Cache and Memory Efficiency | Glance turns a single generator into both an answerer and passage reranker, improving retrieval and QA context selection while reducing duplicated model residency and processing. | 8 | 7 |
 | 2026-10-29 | [A Unified Hessian-Guided Framework for Post-Training Quantization](https://arxiv.org/abs/2610.40345) | Efficient AI: KV Cache and Memory Efficiency | A Hessian-guided framework jointly optimizes key quantization decisions to improve low-bit LLM post-training quantization. | 7 | 7 |
 | 2026-10-29 | [Low-Bit GDN Recurrent-State Quantization: Global Gradient-aware Allocation and Pure-Write Sliding Windows](https://arxiv.org/abs/2610.39931) | Efficient AI: KV Cache and Memory Efficiency | GGA and PW improve low-bit recurrent-state quantization by allocating precision where gradients matter and preserving recent writes, boosting task performance while reducing overly long generation. | 8 | 8 |

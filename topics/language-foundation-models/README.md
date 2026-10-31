@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**3395 papers total**
+**3396 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Beyond Similarity Search: Knowledge Graph Metadata Enrichment for Enterprise Retrieval-Augmented Generation](https://arxiv.org/abs/2610.37728) | Language Foundation Models: LLM Memory | A two-stage GraphRAG design improved enterprise retrieval over dense-vector RAG and text-to-SQL in a controlled SEC filing benchmark, while remaining weaker on structured aggregation queries. | 4 | 5 |
 | 2026-10-29 | [Elucidating the Design Space of LM Data Attribution](https://arxiv.org/abs/2610.40655) | Language Foundation Models: Large Language Models | A controlled benchmark reveals that document redundancy and distractors hinder LM data attribution, while localized token scoring with negative log-odds gradients substantially improves tracing accuracy. | 6 | 7 |
 | 2026-10-29 | [Rethinking Neural Thickets Without Weight Perturbations](https://arxiv.org/abs/2610.40649) | Adaptation and Memory: Test-Time Learning; Language Foundation Models | Neural Thickets gains can largely be explained by output diversity, validation-based selection, and voting rather than nearby weight-space experts. | 7 | 8 |
 | 2026-10-29 | [From extreme weather to agricultural consequences with agentic AI](https://arxiv.org/abs/2610.40641) | Language Foundation Models: Large Language Models | WxCrop uses causally analyzed weather indices plus agricultural data to estimate crop losses from past and forecast extreme-weather events. | 7 | 6 |

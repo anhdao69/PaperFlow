@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**664 papers total**
+**665 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [Similar Scores, Opposite Failures: Human Correction as an Instrument for Video Caption Evaluation](https://arxiv.org/abs/2610.38511) | Video Generation and Understanding: Video Understanding | Standard caption-overlap metrics miss important human-judged video-caption failures, while review granularity and failure profiles reveal substantial differences between models with similar scores. | 7 | 6 |
 | 2026-10-29 | [SymAnt: Grounding Long-Horizon Action Anticipation with Adaptable Symbolic Priors](https://arxiv.org/abs/2610.40632) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | SymAnt combines neural prediction with editable symbolic scene and knowledge graphs to anticipate long-horizon action sequences from short video observations. | 7 | 6 |
 | 2026-10-29 | [AVPS-360: A Spatial Audio-Visual Benchmark for Instance Segmentation and Tracking of Sound-Producing Persons](https://arxiv.org/abs/2610.40480) | Video Generation and Understanding: Video Understanding | AVPS-360 introduces a spatial audio-visual benchmark and baseline for segmenting and tracking intermittently sound-producing people in 360° videos. | 4 | 5 |
 | 2026-10-29 | [Hierarchical Step Decomposition for Training-free Online Video Step Grounding](https://arxiv.org/abs/2610.40153) | Video Generation and Understanding: Video Understanding | HSD enables training-free online video step grounding by building coherent events from streaming video and refining uncertain step predictions with substeps. | 7 | 6 |

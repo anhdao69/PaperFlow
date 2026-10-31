@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**179 papers total**
+**180 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-30 | [OpenFlyV2: An onboard vision-language-action model for aerial perception and navigation](https://arxiv.org/abs/2610.39287) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | OpenFlyV2 is an onboard vision-language-action model that combines semantic understanding, spatial reasoning, and closed-loop aerial control on a resource-constrained drone. | 9 | 8 |
 | 2026-10-29 | [Surrogate Uncertainty for Black-box Visual Grounding](https://arxiv.org/abs/2610.39798) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Multimodal Large Language Models | An external Bayesian surrogate estimates uncertainty around black-box VLM grounding predictions, improving calibration, task performance, and robot robustness. | 8 | 8 |
 | 2026-10-29 | [AtomTree: A Hierarchical Framework for State-Aware Embodied Instruction Following with LLMs](https://arxiv.org/abs/2610.38744) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | AtomTree improves zero-shot embodied instruction following by continuously planning from the current state and backtracking when actions fail. | 8 | 7 |
 | 2026-10-29 | [What Should a Navigator Remember? Spatiotemporal Memory for Zero-Shot Vision-Language Navigation](https://arxiv.org/abs/2610.38318) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | A structured spatiotemporal memory helps an 8B vision-language navigator perform zero-shot navigation by retaining task progress, observation history, and spatial geometry. | 9 | 7 |
