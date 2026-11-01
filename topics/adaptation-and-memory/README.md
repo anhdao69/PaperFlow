@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1519 papers total**
+**1522 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [Beyond Multi-Stage Pipelines: A Label-Correlation Ensemble for Multi-Label Retinal Fundus Disease Classification](https://arxiv.org/abs/2610.23747) | Adaptation and Memory: Test-Time Learning | A controlled study finds that a flat ensemble with label-correlation modeling outperforms a complex staged cascade for multi-label retinal disease classification, especially on rare conditions. | 6 | 6 |
+| 2026-10-31 | [The Premise Is the Problem: Exchangeability Failure in Self-Monitored Test-Time Adaptation](https://arxiv.org/abs/2610.07038) | Adaptation and Memory: Test-Time Learning | Self-monitoring test-time adaptation can fail because feedback-dependent forecast errors violate the assumptions needed for reliable monitoring. | 8 | 7 |
+| 2026-10-31 | [Nociception as a Control Primitive: Afferent Channels and Nociceptive Memory for Agents Deployed in One Body](https://arxiv.org/abs/2609.34840) | Embodied AI; Adaptation and Memory: Embodied Memory | Nociceptive feedback plus memory helps a fixed-policy agent adapt within a single lifetime, extending body life and improving output when threats are unpredictable and costly to ignore. | 6 | 8 |
 | 2026-10-30 | [Retrieval as Traversal: Value-Indexed Memory for Stateful Long-Context Agents](https://arxiv.org/abs/2610.40545) | Adaptation and Memory: Embodied Memory | A value-indexed, persistent local traversal mechanism aims to make stateful retrieval easier by grouping complementary memories while avoiding redundant co-retrieval. | 7 | 7 |
 | 2026-10-29 | [Rethinking Neural Thickets Without Weight Perturbations](https://arxiv.org/abs/2610.40649) | Adaptation and Memory: Test-Time Learning; Language Foundation Models | Neural Thickets gains can largely be explained by output diversity, validation-based selection, and voting rather than nearby weight-space experts. | 7 | 8 |
 | 2026-10-29 | [When to Assist and What to Suggest: Joint Gating and Memory-Grounded Hint Generation in One Compact Decoder](https://arxiv.org/abs/2610.40611) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | A single 1B decoder can jointly decide when to assist and generate memory-grounded hints, matching separate 1B pipelines while reducing latency, though end-to-end quality remains below its oracle-gate ceiling. | 7 | 7 |

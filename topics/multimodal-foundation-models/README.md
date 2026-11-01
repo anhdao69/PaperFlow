@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**2311 papers total**
+**2315 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [EviGround-CT: Sentence-to-Volume Grounding for Verifying LLM-Generated Chest CT Reports](https://arxiv.org/abs/2610.33038) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision | EviGround-CT verifies LLM-generated chest CT findings by grounding each positive sentence to a 3D evidence mask, improving evidence-supported precision. | 7 | 7 |
+| 2026-10-31 | [RankAlign: Vision-Language Representation Alignment via Rank Transformation](https://arxiv.org/abs/2610.31145) | Multimodal Foundation Models | RankAlign improves unpaired vision-language class matching by converting similarity kernels into rank-based representations that are robust to differing similarity scales. | 6 | 7 |
+| 2026-10-31 | [Multimodal Decoupling for Diversified Recommendation through Semantic and Structural Shaping](https://arxiv.org/abs/2610.26024) | Multimodal Foundation Models: Multimodal Large Language Models | MOSS improves recommendation diversity while preserving accuracy by decoupling multimodal semantics and reshaping representation structure and optimization. | 7 | 7 |
+| 2026-10-31 | [Frequency Routing and Identity Conditioning for Thermal-to-Visible Face Translation](https://arxiv.org/abs/2610.17859) | Multimodal Foundation Models: Spatial Intelligence | FreqID-Control improves thermal-to-visible face translation by routing thermal cues by frequency and conditioning generation on shared identity information. | 7 | 8 |
 | 2026-10-30 | [PRIME W0: Physical Priors from World Models for Embodied Manipulation](https://arxiv.org/abs/2610.39528) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | PRIME W0 enhances vision-language-action models for embodied manipulation by combining hierarchical VLM features, world-model dynamics, temporal context, and kinematics-aware action generation. | 9 | 9 |
 | 2026-10-30 | [OpenFlyV2: An onboard vision-language-action model for aerial perception and navigation](https://arxiv.org/abs/2610.39287) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | OpenFlyV2 is an onboard vision-language-action model that combines semantic understanding, spatial reasoning, and closed-loop aerial control on a resource-constrained drone. | 9 | 8 |
 | 2026-10-30 | [Balancing Multimodal Learning via Functional Progress](https://arxiv.org/abs/2610.03035) | Multimodal Foundation Models | FGMO balances multimodal optimization by comparing modality progress in function space and adjusting learning rates to coordinate their contributions. | 5 | 7 |

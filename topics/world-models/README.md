@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**1209 papers total**
+**1214 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [WorldProbe: When Video World Models Fall Apart under Long-Horizon Spatial Exploration](https://arxiv.org/abs/2610.39721) | World Models: Video World Models | WorldProbe shows that video world models often lose long-range spatial consistency during adaptive, extended camera exploration despite maintaining local visual quality. | 9 | 8 |
+| 2026-10-31 | [Weighted Adjoint Matching: Finetuning Flow Matching Models with Time-Dependent Control Cost](https://arxiv.org/abs/2610.20035) | World Models: Video World Models | Weighted Adjoint Matching finetunes diffusion or flow-matching models by protecting early semantic structure while rewarding late-stage detail refinement. | 7 | 8 |
+| 2026-10-31 | [DeltaWAM: Change-Centric Visual Foresight via Delta Tokens for an Efficient World-Action Model](https://arxiv.org/abs/2609.33177) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models | DeltaWAM predicts compact visual changes rather than full future frames, enabling efficient robotic action generation with strong LIBERO performance and low inference cost. | 9 | 9 |
+| 2026-10-31 | [WorldTS: World Modeling for Multimodal Covariate-aware Time Series Forecasting](https://arxiv.org/abs/2609.31162) | World Models | WorldTS improves time-series forecasting by modeling latent dynamics conditioned directly on multimodal external covariates. | 6 | 6 |
+| 2026-10-31 | [I Act Therefore I Am: When Is JEPA's Action-Conditioning Enough to Learn Causal Mechanisms?](https://arxiv.org/abs/2609.31161) | World Models: Latent Action Models | The paper characterizes when action-conditioned JEPAs can recover causal latent states rather than merely predict future observations, and proposes A-JEPA to do so. | 8 | 7 |
 | 2026-10-30 | [PRIME W0: Physical Priors from World Models for Embodied Manipulation](https://arxiv.org/abs/2610.39528) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Interactive World Models; Multimodal Foundation Models: Spatial Intelligence | PRIME W0 enhances vision-language-action models for embodied manipulation by combining hierarchical VLM features, world-model dynamics, temporal context, and kinematics-aware action generation. | 9 | 9 |
 | 2026-10-30 | [Dirac-Interconnected Neural Elements: Discovering Modularity in Physical Systems Without Reduction](https://arxiv.org/abs/2610.02960) | World Models | DINEs learn both physical subsystem behavior and their Dirac-structure interconnections directly from data while preserving the systems’ unreduced differential-algebraic form. | 6 | 8 |
 | 2026-10-29 | [world2vec: Mechanistic world models through latent dynamics learning](https://arxiv.org/abs/2610.40637) | World Models: Interactive World Models | world2vec learns compact, mechanistically faithful world models from observations and actions alone, supporting both control and scientific system identification. | 8 | 8 |

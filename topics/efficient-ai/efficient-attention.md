@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**308 papers total**
+**309 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [FloodDiffusion 2: Efficient and Path Controllable Streaming Motion Generation](https://arxiv.org/abs/2609.33167) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | FloodDiffusion 2 enables faster, more controllable streaming motion generation through efficient attention, geometry-aware training, and precise trajectory conditioning. | 7 | 7 |
 | 2026-10-29 | [Understanding axial attention in TSFMs through single location regression](https://arxiv.org/abs/2610.40188) | Efficient AI: Efficient Attention | This work theoretically explains when axial attention can be Bayes-optimal for sparse 2D time-series prediction and how to train it successfully. | 4 | 7 |
 | 2026-10-29 | [ElasticFormer: Detecting Objects in HRW Shots via Elastic Computing Vision Transformer](https://arxiv.org/abs/2610.39946) | Efficient AI: Efficient Attention | ElasticFormer dynamically focuses computation on likely foreground regions in gigapixel wide-shot images, reducing backbone cost while improving detection performance. | 7 | 7 |
 | 2026-10-29 | [BiHashFormer: Hash-Driven Dual-Branch Transformer for Efficient Object Detection in HRW Shots](https://arxiv.org/abs/2610.39937) | Efficient AI: Efficient Attention | BiHashFormer uses hash-based dual-branch attention to efficiently detect objects in sparse, gigapixel wide-shot images while recovering missed targets. | 7 | 7 |

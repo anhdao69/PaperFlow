@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**377 papers total**
+**380 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [WorldProbe: When Video World Models Fall Apart under Long-Horizon Spatial Exploration](https://arxiv.org/abs/2610.39721) | World Models: Video World Models | WorldProbe shows that video world models often lose long-range spatial consistency during adaptive, extended camera exploration despite maintaining local visual quality. | 9 | 8 |
+| 2026-10-31 | [Weighted Adjoint Matching: Finetuning Flow Matching Models with Time-Dependent Control Cost](https://arxiv.org/abs/2610.20035) | World Models: Video World Models | Weighted Adjoint Matching finetunes diffusion or flow-matching models by protecting early semantic structure while rewarding late-stage detail refinement. | 7 | 8 |
+| 2026-10-31 | [DeltaWAM: Change-Centric Visual Foresight via Delta Tokens for an Efficient World-Action Model](https://arxiv.org/abs/2609.33177) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models | DeltaWAM predicts compact visual changes rather than full future frames, enabling efficient robotic action generation with strong LIBERO performance and low inference cost. | 9 | 9 |
 | 2026-10-29 | [Wizard: Manipulate Any World in Real Time via Agentic Control](https://arxiv.org/abs/2610.40339) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding | Wizard enables real-time, fine-grained control of characters in customizable game worlds while generalizing zero-shot across unseen scenes, characters, and actions. | 9 | 8 |
 | 2026-10-29 | [Video Generation Meets Agent Harness: Agentic Video Generation, Agentic World Modeling and Recursive Self-Improvement](https://arxiv.org/abs/2610.40191) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding | The report frames video generation and world modeling as agentic systems coordinated by executable harnesses that plan, act, evaluate, and improve over time. | 8 | 7 |
 | 2026-10-29 | [UniRA: Unified Representation Alignment and Auto-Encoding for Efficient Diffusion Generation](https://arxiv.org/abs/2610.39948) | World Models: Video World Models; Efficient AI | UniRA unifies representation alignment and auto-encoding to accelerate diffusion-transformer training while preserving high-quality generation and improving representation usefulness. | 8 | 9 |

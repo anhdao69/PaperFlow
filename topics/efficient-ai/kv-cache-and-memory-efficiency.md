@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**647 papers total**
+**648 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [FloodDiffusion 2: Efficient and Path Controllable Streaming Motion Generation](https://arxiv.org/abs/2609.33167) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | FloodDiffusion 2 enables faster, more controllable streaming motion generation through efficient attention, geometry-aware training, and precise trajectory conditioning. | 7 | 7 |
 | 2026-10-30 | [Rimuru: Unified Memory Management for Modern LLM Serving via Elastic Expert Offloading](https://arxiv.org/abs/2610.40305) | Efficient AI: KV Cache and Memory Efficiency | Rimuru improves LLM serving memory efficiency by dynamically sharing device memory across heterogeneous tensors through elastic expert offloading. | 7 | 7 |
 | 2026-10-29 | [Glance: The Generator Is Its Own Reranker](https://arxiv.org/abs/2610.40454) | Efficient AI: KV Cache and Memory Efficiency | Glance turns a single generator into both an answerer and passage reranker, improving retrieval and QA context selection while reducing duplicated model residency and processing. | 8 | 7 |
 | 2026-10-29 | [A Unified Hessian-Guided Framework for Post-Training Quantization](https://arxiv.org/abs/2610.40345) | Efficient AI: KV Cache and Memory Efficiency | A Hessian-guided framework jointly optimizes key quantization decisions to improve low-bit LLM post-training quantization. | 7 | 7 |

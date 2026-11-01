@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1397 papers total**
+**1398 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [Multimodal Decoupling for Diversified Recommendation through Semantic and Structural Shaping](https://arxiv.org/abs/2610.26024) | Multimodal Foundation Models: Multimodal Large Language Models | MOSS improves recommendation diversity while preserving accuracy by decoupling multimodal semantics and reshaping representation structure and optimization. | 7 | 7 |
 | 2026-10-30 | [From Reward Signal to Visual Utility: A Controlled Audit of Medical VLM Post-Training](https://arxiv.org/abs/2609.31450) | Multimodal Foundation Models: Multimodal Large Language Models | A controlled audit finds that medical VLM post-training can improve answer accuracy without improving—and sometimes reducing—the model’s useful reliance on visual evidence. | 6 | 6 |
 | 2026-10-29 | [PhysCount: Do MLLMs Count Visual Appearances or Physical Entities?](https://arxiv.org/abs/2610.40530) | Multimodal Foundation Models: Multimodal Large Language Models | PhysCount shows that MLLMs can count visible appearances more easily than they can infer the underlying physical entities they represent. | 6 | 7 |
 | 2026-10-29 | [Textual Response-Aware Guidance for Zero-Shot Adversarial Robustness of Vision-Language Models](https://arxiv.org/abs/2610.40309) | Multimodal Foundation Models: Multimodal Large Language Models | TRAG improves zero-shot adversarial robustness in vision-language models by constraining visual representation drift according to text-encoder responses around semantic anchors. | 6 | 6 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**852 papers total**
+**854 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [Adaptive search with path-constrained mobile sensors using multi-arm bandits](https://arxiv.org/abs/2610.40431) | Embodied AI: Robot Navigation | An adaptive multi-armed-bandit strategy enables energy-constrained mobile sensors to search feasible paths and detect regions of interest with near-optimal theoretical guarantees. | 7 | 6 |
+| 2026-10-31 | [Closed-Loop Aware Planning via Imitation-Free Speed Scoring for End-to-End Autonomous Driving](https://arxiv.org/abs/2610.36079) | Embodied AI: Robot Navigation | CLAP-AD adds imitation-free speed selection to end-to-end driving, enabling test-time speed control while preserving strong closed-loop performance. | 8 | 8 |
 | 2026-10-30 | [Differentiable Dynamics for Autonomous Micro-Mobility Navigation](https://arxiv.org/abs/2609.31885) | Embodied AI: Robot Navigation | The paper introduces differentiable micro-mobility dynamics models that improve trajectory matching and closed-loop navigation realism over a differentiable kinematic bicycle model. | 6 | 6 |
 | 2026-10-29 | [Learned Terminal Costs for Short-Horizon Model Predictive Control of Autonomous Trucks in Interactive Highway Traffic](https://arxiv.org/abs/2610.40257) | Embodied AI: Robot Navigation | A hybrid MPC–RL controller uses learned terminal costs to improve short-horizon autonomous truck driving in interactive highway traffic while maintaining zero collisions. | 7 | 6 |
 | 2026-10-29 | [Decision-Level Error Attribution and Depth-Aware Safety Evaluation of Monocular RGB Human Tracking for Autonomous Robot Navigation](https://arxiv.org/abs/2610.40199) | Embodied AI: Robot Navigation | Decision-level analysis shows that missed detections, rather than localization error or the safety rule, are the main source of missed dangers in monocular RGB human tracking for robot navigation. | 7 | 6 |

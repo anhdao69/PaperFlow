@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**1034 papers total**
+**1038 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [EviGround-CT: Sentence-to-Volume Grounding for Verifying LLM-Generated Chest CT Reports](https://arxiv.org/abs/2610.33038) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision | EviGround-CT verifies LLM-generated chest CT findings by grounding each positive sentence to a 3D evidence mask, improving evidence-supported precision. | 7 | 7 |
+| 2026-10-31 | [Latent Space Is Not Flat: Rethinking Latent Structure for 3D Medical Image Synthesis](https://arxiv.org/abs/2609.32794) | 3D Vision | Latent medical-image representations are highly anisotropic, so separating low-rank global structure from local residual variation improves 3D synthesis and tumor inpainting. | 6 | 7 |
+| 2026-10-31 | [Hierarchical Frequency-Domain Compression of Implicit Geometric Representations for Large-Scale Point Clouds](https://arxiv.org/abs/2609.32789) | 3D Vision | A hierarchical Fourier-based framework compresses large point clouds into compact implicit fields while preserving fine geometric detail and reconstruction quality. | 6 | 6 |
+| 2026-10-31 | [From Feed-Forward to Flow: Unifying Reconstruction and Generation Is Easier Than You Think](https://arxiv.org/abs/2609.32761) | 3D Vision | A shared flow-based model can unify reconstruction and generation: one-step inference favors consistent reconstruction, while multi-step inference adds plausible, context-guided detail. | 7 | 8 |
 | 2026-10-30 | [Robust LIDAR Sensor-to-Sensor Domain Generalization via Accumulated-Point Scene Completion](https://arxiv.org/abs/2610.39516) | 3D Vision | A source-only occupancy-supervision strategy improves LiDAR semantic-segmentation transfer to unseen sensors without target data or added inference cost. | 6 | 6 |
 | 2026-10-30 | [Learning to Code the World: Harness Evolution for Compositional 3D Reconstruction](https://arxiv.org/abs/2610.37046) | 3D Vision | SceneEvolve improves editable, compositional 3D reconstruction by evolving a reusable code-based harness around a small open-source agent, without updating the model itself. | 7 | 7 |
 | 2026-10-30 | [OC-GS: Gaussian Splatting for Irregular Turntable Capture](https://arxiv.org/abs/2609.31572) | 3D Vision | OC-GS improves Gaussian-splatting reconstruction from sparse, irregular turntable views by jointly refining view angles within a shared motion model. | 5 | 5 |

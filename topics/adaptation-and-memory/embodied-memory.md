@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**287 papers total**
+**288 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [Nociception as a Control Primitive: Afferent Channels and Nociceptive Memory for Agents Deployed in One Body](https://arxiv.org/abs/2609.34840) | Embodied AI; Adaptation and Memory: Embodied Memory | Nociceptive feedback plus memory helps a fixed-policy agent adapt within a single lifetime, extending body life and improving output when threats are unpredictable and costly to ignore. | 6 | 8 |
 | 2026-10-30 | [Retrieval as Traversal: Value-Indexed Memory for Stateful Long-Context Agents](https://arxiv.org/abs/2610.40545) | Adaptation and Memory: Embodied Memory | A value-indexed, persistent local traversal mechanism aims to make stateful retrieval easier by grouping complementary memories while avoiding redundant co-retrieval. | 7 | 7 |
 | 2026-10-29 | [PhysVLMM: Interaction-Conditioned Physical Belief Maps for Articulated Objects in Robot Scene Maps](https://arxiv.org/abs/2610.40539) | World Models: Interactive World Models; Adaptation and Memory: Embodied Memory | PhysVLMM builds uncertainty-aware physical beliefs for articulated objects, sharing pull evidence across similar parts to make safer, faster action predictions. | 7 | 8 |
 | 2026-10-29 | [Soei: Structured Observability of Evidence and Intent for Multi-Agent AI Software Engineering](https://arxiv.org/abs/2610.39468) | Adaptation and Memory: Embodied Memory | Soei is a privacy-conscious observability framework that reconstructs who did what in multi-agent coding sessions and separates claimed completion from independently verified evidence. | 7 | 7 |

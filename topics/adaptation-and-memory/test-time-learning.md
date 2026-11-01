@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**668 papers total**
+**670 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [Beyond Multi-Stage Pipelines: A Label-Correlation Ensemble for Multi-Label Retinal Fundus Disease Classification](https://arxiv.org/abs/2610.23747) | Adaptation and Memory: Test-Time Learning | A controlled study finds that a flat ensemble with label-correlation modeling outperforms a complex staged cascade for multi-label retinal disease classification, especially on rare conditions. | 6 | 6 |
+| 2026-10-31 | [The Premise Is the Problem: Exchangeability Failure in Self-Monitored Test-Time Adaptation](https://arxiv.org/abs/2610.07038) | Adaptation and Memory: Test-Time Learning | Self-monitoring test-time adaptation can fail because feedback-dependent forecast errors violate the assumptions needed for reliable monitoring. | 8 | 7 |
 | 2026-10-29 | [Rethinking Neural Thickets Without Weight Perturbations](https://arxiv.org/abs/2610.40649) | Adaptation and Memory: Test-Time Learning; Language Foundation Models | Neural Thickets gains can largely be explained by output diversity, validation-based selection, and voting rather than nearby weight-space experts. | 7 | 8 |
 | 2026-10-29 | [When to Assist and What to Suggest: Joint Gating and Memory-Grounded Hint Generation in One Compact Decoder](https://arxiv.org/abs/2610.40611) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: LLM Memory | A single 1B decoder can jointly decide when to assist and generate memory-grounded hints, matching separate 1B pipelines while reducing latency, though end-to-end quality remains below its oracle-gate ceiling. | 7 | 7 |
 | 2026-10-29 | [JEDI: Joint-Embedding Demonstration Compression for In-Context Imitation Learning](https://arxiv.org/abs/2610.40356) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | JEDI compresses multimodal demonstrations into query-relevant latent slots that preserve execution details for stronger in-context robot imitation. | 8 | 8 |

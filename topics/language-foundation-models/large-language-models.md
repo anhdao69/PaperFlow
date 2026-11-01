@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**2306 papers total**
+**2309 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [Tail Competition Explains Scaling in Best-of-N Sampling for Verifiable Problems](https://arxiv.org/abs/2610.19362) | Language Foundation Models: Large Language Models | Best-of-N performance is governed by competition between the extreme reward tails of correct and incorrect responses, so more sampling can eventually hurt when incorrect responses have heavier tails. | 8 | 8 |
+| 2026-10-31 | [FRACTION: Fraud Explanation Generation via Agentic Graph Context Navigation](https://arxiv.org/abs/2610.18023) | Language Foundation Models: Large Language Models | FRACTION improves graph fraud explanations by navigating relevant neighbor information with graph tools and training an agent to produce rubric-aligned, human-readable explanations. | 7 | 7 |
+| 2026-10-31 | [In-context classification: Calibration and noise in linear attention with softmax readout](https://arxiv.org/abs/2610.17061) | Language Foundation Models: Large Language Models | A high-dimensional theory explains how calibration, context noise, and parameter-estimation noise shape in-context binary classification in linear-attention models with softmax readout. | 7 | 8 |
 | 2026-10-29 | [Elucidating the Design Space of LM Data Attribution](https://arxiv.org/abs/2610.40655) | Language Foundation Models: Large Language Models | A controlled benchmark reveals that document redundancy and distractors hinder LM data attribution, while localized token scoring with negative log-odds gradients substantially improves tracing accuracy. | 6 | 7 |
 | 2026-10-29 | [From extreme weather to agricultural consequences with agentic AI](https://arxiv.org/abs/2610.40641) | Language Foundation Models: Large Language Models | WxCrop uses causally analyzed weather indices plus agricultural data to estimate crop losses from past and forecast extreme-weather events. | 7 | 6 |
 | 2026-10-29 | [ShallowDefend: Harnessing Shallow Safety Alignment for Multi-Turn Defender](https://arxiv.org/abs/2610.40627) | Language Foundation Models: Large Language Models | ShallowDefend turns shallow safety alignment into a defense by requiring an explicit safety decision before generating each response. | 7 | 7 |

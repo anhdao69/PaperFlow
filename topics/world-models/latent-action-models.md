@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**138 papers total**
+**139 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [I Act Therefore I Am: When Is JEPA's Action-Conditioning Enough to Learn Causal Mechanisms?](https://arxiv.org/abs/2609.31161) | World Models: Latent Action Models | The paper characterizes when action-conditioned JEPAs can recover causal latent states rather than merely predict future observations, and proposes A-JEPA to do so. | 8 | 7 |
 | 2026-10-29 | [Continuous-Action World Models: Learning Cross-Embodiment Spatiotemporal Dynamics Priors](https://arxiv.org/abs/2610.40401) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | CoAWM learns shared spatiotemporal action priors across robot embodiments and control frequencies, then uses them to generate task-conditioned actions at arbitrary query times. | 9 | 9 |
 | 2026-10-29 | [Certified Access: Test-Time Compute on Conservative Physics-Structured AI Memory](https://arxiv.org/abs/2610.39073) | World Models: Latent Action Models; Adaptation and Memory: Test-Time Learning | A physics-structured memory framework certifies test-time compute by controlling reachability, energy, phase volume, and stored-state transport. | 9 | 9 |
 | 2026-10-29 | [Self-Supervised Latent Action-Conditioned World Modeling for Time Series](https://arxiv.org/abs/2610.37963) | World Models: Latent Action Models | ACTS-WM improves time-series representations by learning latent actions that explain transitions and conditioning JEPA-based world-model predictions on them. | 8 | 7 |

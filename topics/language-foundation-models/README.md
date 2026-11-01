@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**3396 papers total**
+**3402 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [FinLLM-KG: Knowledge Graph-Enhanced LLMs for Financial Sentiment Analysis in Algorithmic Trading](https://arxiv.org/abs/2610.36083) | Language Foundation Models: LLM Memory | FinLLM-KG enhances financial sentiment analysis by injecting temporally grounded company knowledge into causal LLMs at inference time, improving interpretability and simulated portfolio performance. | 5 | 6 |
+| 2026-10-31 | [Tail Competition Explains Scaling in Best-of-N Sampling for Verifiable Problems](https://arxiv.org/abs/2610.19362) | Language Foundation Models: Large Language Models | Best-of-N performance is governed by competition between the extreme reward tails of correct and incorrect responses, so more sampling can eventually hurt when incorrect responses have heavier tails. | 8 | 8 |
+| 2026-10-31 | [FRACTION: Fraud Explanation Generation via Agentic Graph Context Navigation](https://arxiv.org/abs/2610.18023) | Language Foundation Models: Large Language Models | FRACTION improves graph fraud explanations by navigating relevant neighbor information with graph tools and training an agent to produce rubric-aligned, human-readable explanations. | 7 | 7 |
+| 2026-10-31 | [In-context classification: Calibration and noise in linear attention with softmax readout](https://arxiv.org/abs/2610.17061) | Language Foundation Models: Large Language Models | A high-dimensional theory explains how calibration, context noise, and parameter-estimation noise shape in-context binary classification in linear-attention models with softmax readout. | 7 | 8 |
+| 2026-10-31 | [UniOPSD: Unifying Outcome and Hindsight Feedback for Agentic Reinforcement Learning](https://arxiv.org/abs/2609.34810) | Language Foundation Models | UniOPSD adaptively combines outcome rewards and hindsight feedback to improve credit assignment for language-model agents in long-horizon reinforcement learning. | 6 | 7 |
+| 2026-10-31 | [Beyond Prompt or Skill? Attribution-Guided Optimization of Modular LLM Programs](https://arxiv.org/abs/2609.32492) | Language Foundation Models | SPARO jointly optimizes prompts, reusable skills, and routing policies by attributing failures to the responsible component and applying targeted updates. | 6 | 7 |
 | 2026-10-30 | [Beyond Similarity Search: Knowledge Graph Metadata Enrichment for Enterprise Retrieval-Augmented Generation](https://arxiv.org/abs/2610.37728) | Language Foundation Models: LLM Memory | A two-stage GraphRAG design improved enterprise retrieval over dense-vector RAG and text-to-SQL in a controlled SEC filing benchmark, while remaining weaker on structured aggregation queries. | 4 | 5 |
 | 2026-10-29 | [Elucidating the Design Space of LM Data Attribution](https://arxiv.org/abs/2610.40655) | Language Foundation Models: Large Language Models | A controlled benchmark reveals that document redundancy and distractors hinder LM data attribution, while localized token scoring with negative log-odds gradients substantially improves tracing accuracy. | 6 | 7 |
 | 2026-10-29 | [Rethinking Neural Thickets Without Weight Perturbations](https://arxiv.org/abs/2610.40649) | Adaptation and Memory: Test-Time Learning; Language Foundation Models | Neural Thickets gains can largely be explained by output diversity, validation-based selection, and voting rather than nearby weight-space experts. | 7 | 8 |

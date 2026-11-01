@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**248 papers total**
+**249 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-10-31 | [HuGe: Scaling Humanoid Generalist Vision-Language-Action Models with Egocentric Experience](https://arxiv.org/abs/2610.34186) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | HuGe scales humanoid vision-language-action models by combining large-scale egocentric human experience with robot data and embodiment-aware adaptation. | 9 | 8 |
 | 2026-10-29 | [SymAnt: Grounding Long-Horizon Action Anticipation with Adaptable Symbolic Priors](https://arxiv.org/abs/2610.40632) | Embodied AI: Learning from Human Videos; Video Generation and Understanding: Video Understanding | SymAnt combines neural prediction with editable symbolic scene and knowledge graphs to anticipate long-horizon action sequences from short video observations. | 7 | 6 |
 | 2026-10-29 | [TouchBridge: Tactile-Conditioned Human-to-Robot Transfer for Dexterous Manipulation](https://arxiv.org/abs/2610.40349) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | TouchBridge converts human demonstrations into robot training data using tactile-conditioned retargeting, achieving near-teleoperation performance while collecting demonstrations 7× faster. | 8 | 8 |
 | 2026-10-29 | [AcrossDEX 1.0: From Human Motion Pretraining to Bimanual Dexterous Manipulation across Hand Embodiments](https://arxiv.org/abs/2610.40210) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | AcrossDEX 1.0 transfers human bimanual motion knowledge to visually controlled dexterous robots across two different hand embodiments. | 9 | 8 |
