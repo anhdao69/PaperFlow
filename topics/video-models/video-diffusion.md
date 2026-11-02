@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**342 papers total**
+**345 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-01 | [A Better Critic Matters for Distribution Matching Distillation](https://arxiv.org/abs/2610.42135) | Video Generation and Understanding: Video Diffusion; Efficient AI | Reliable critics are essential for DMD: scaling them with the teacher and conditioning them on generation step improves few-step distillation across image and video generation tasks. | 6 | 7 |
+| 2026-11-01 | [GeoFlip: Benchmarking Geometry-Sensitive Physics in Video Generation](https://arxiv.org/abs/2610.42002) | Video Generation and Understanding: Video Diffusion | GeoFlip benchmarks whether video generation models produce physically correct outcomes when only the initial scene geometry changes, revealing major weaknesses in geometry-conditioned physics. | 7 | 7 |
+| 2026-11-01 | [Optimizing Stochastic Policy Geometry for Few-Step Flow Reinforcement Learning](https://arxiv.org/abs/2610.41949) | Video Generation and Understanding: Video Diffusion | Geo-FSRL optimizes the stochastic transition geometry used by GRPO in few-step flow reinforcement learning, improving reward performance for 4-step image and video generation. | 6 | 7 |
 | 2026-10-29 | [Composing and Steering Diffusion Models with Generalized Feynman-Kac Correctors](https://arxiv.org/abs/2610.40383) | Video Generation and Understanding: Video Diffusion | GFKC enables correct, training-free sampling from arbitrary combinations of pretrained diffusion models, including reward-steered targets. | 3 | 7 |
 | 2026-10-29 | [Regional Anchor Routing for Multi-Object Motion Transfer](https://arxiv.org/abs/2610.39478) | Multimodal Foundation Models; Video Generation and Understanding: Video Diffusion | RART enables efficient multi-object motion transfer by anchoring each reference motion to its intended target region and injecting it at aligned frames in a frozen video diffusion transformer. | 8 | 8 |
 | 2026-10-29 | [Seeing and Imagining as One: Unified Video Generation and 4D Perception for Embodied World Modeling](https://arxiv.org/abs/2610.39232) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | GenSight unifies future video generation and dense 4D perception in one video diffusion transformer for embodied world modeling. | 8 | 8 |

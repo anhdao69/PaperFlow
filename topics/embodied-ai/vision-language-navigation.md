@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**180 papers total**
+**181 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-01 | [Ask to Evolve: A Unified Harness for Lifelong Embodied Navigation with Hybrid Action Space and Persistent Memory](https://arxiv.org/abs/2610.39446) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | EvoLife unifies flexible navigation, proactive help-seeking, and persistent spatial memory for lifelong embodied navigation. | 9 | 8 |
 | 2026-10-30 | [OpenFlyV2: An onboard vision-language-action model for aerial perception and navigation](https://arxiv.org/abs/2610.39287) | Embodied AI: Vision-Language Navigation, Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | OpenFlyV2 is an onboard vision-language-action model that combines semantic understanding, spatial reasoning, and closed-loop aerial control on a resource-constrained drone. | 9 | 8 |
 | 2026-10-29 | [Surrogate Uncertainty for Black-box Visual Grounding](https://arxiv.org/abs/2610.39798) | Embodied AI: Vision-Language Navigation; Multimodal Foundation Models: Multimodal Large Language Models | An external Bayesian surrogate estimates uncertainty around black-box VLM grounding predictions, improving calibration, task performance, and robot robustness. | 8 | 8 |
 | 2026-10-29 | [AtomTree: A Hierarchical Framework for State-Aware Embodied Instruction Following with LLMs](https://arxiv.org/abs/2610.38744) | Embodied AI: Vision-Language Navigation; Adaptation and Memory: Embodied Memory | AtomTree improves zero-shot embodied instruction following by continuously planning from the current state and backtracking when actions fail. | 8 | 7 |

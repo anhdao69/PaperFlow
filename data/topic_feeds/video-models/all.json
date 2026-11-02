@@ -1,6 +1,2186 @@
 {
   "days": [
     {
+      "date": "2026-11-01",
+      "paper_count": 11,
+      "papers": [
+        {
+          "abstract": "Dense 3D tracking from monocular video requires establishing point correspondences over time, estimating their depth, and inferring their trajectories during occlusion. Existing methods typically learn these tasks jointly, a demanding objective given the scarcity of 4D supervision. We show that strong pretrained 2D trackers and 3D geometry models provide an effective foundation: lifted trajectories, with occluded segments simply interpolated, already rival dedicated 3D trackers using the same geometry. However, lifted trajectories inherit correspondence and depth errors, and under occlusion, their depth comes from the occluder rather than the tracked point. We introduce ReLift, an efficient feed-forward framework that recasts dense 3D tracking as geometric trajectory repair and completion. At its core, a trajectory corrector alternates attention along and across trajectories to preserve reliable observations, repair corrupted positions, and complete missing motion. Using only geometric inputs allows us to train directly on 3D trajectories with simulated lifting errors, decoupling training from images and from any specific tracker or geometry model. Concentrating 4D supervision on trajectory refinement yields a reusable model that consistently improves lifted trajectories across trackers and geometry providers without retraining, so it benefits directly from future advances in either component. On WorldTrack, ReLift achieves state-of-the-art mean accuracy, improving on the strongest baselines by 2.1 APD on all points and 3.0 on dynamic points, with faster configurations remaining competitive with leading 3D trackers while running faster than 4RC. Visit our supplementry page for more examples and code.",
+          "arxiv_id": "2610.42136",
+          "arxiv_url": "https://arxiv.org/abs/2610.42136",
+          "authors": [
+            "Assaf Singer, Maroun Khriesh, Noam Rotstein, Yoni Kasten, Or Litany"
+          ],
+          "bullets": [
+            "Addresses correspondence, depth, and occlusion errors inherited from lifting 2D tracks into 3D.",
+            "Uses a feed-forward trajectory corrector with attention along and across trajectories.",
+            "Trains only on geometric 3D trajectories with simulated lifting errors, independent of images, trackers, or geometry models.",
+            "Improves trajectories across different trackers and geometry providers without retraining.",
+            "Achieves state-of-the-art WorldTrack accuracy, with gains of 2.1 APD on all points and 3.0 APD on dynamic points; faster variants remain competitive."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Inference pipeline of ReLift. Frozen pretrained models lift video observations (a–b) into corrupted and incomplete 3D trajectories (c). The corrector adds residuals to initialized XYZ coordinates to produce the final trajectories (d–e). Below: ray–point tokens ϕti are grouped into Cframe tracklets and embedded as tokens hni, then processed by alternating temporal and across-track attention. The output head predicts frame-level XYZ residuals, which are added to the initialized trajectories. We train the corrector on simulated lifts from clean trajectory annotations (Sec. 3.4).",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 326,
+              "image_path": "figures/2610.42136/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 806
+            },
+            {
+              "caption": "Figure 5: Simulated versus provider-generated lifts. APD3D gains on all points, in percentage points over the initialized lift, with AllTracker and DA3 (left) or VGGT-Ω (right). “Real” denotes non-simulated, provider-generated training lifts. All runs use the same architecture and 150,000 training steps. Appendix D.1 reports a control with matched training windows.",
+              "figure_id": "figure-5-17",
+              "figure_number": "5",
+              "height": 214,
+              "image_path": "figures/2610.42136/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 690
+            },
+            {
+              "caption": "Figure 4: Qualitative comparison. Top to bottom: DyCheck spin (Gao et al., 2022) and DAVIS car-shadow and libby (Perazzi et al., 2016). Trajectories of the same reference pixels are shown from matched novel viewpoints. Ours uses AllTracker and VGGT-Ω; TrackCraft3R shares this geometry, while 4RC and V-DPM use their own reconstructions. Yellow boxes mark magnified regions.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 361,
+              "image_path": "figures/2610.42136/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Gains from trajectory repair and completion. APD3D gains (%) over the initialized lift (Sec. 3.2), per dataset and averaged, for all six tracker–geometry combinations; hatching denotes CoWTracker. Occluded selects ground-truth-occluded point–frames from All, retaining the Allpoint alignment. This subset may differ from the corrector’s masked inputs.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 248,
+              "image_path": "figures/2610.42136/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 816
+            },
+            {
+              "caption": "Figure 6: Simulated versus AllTracker+DA3 training lifts with matched data. Both models train on the same 3,890 filtered windows for 150,000 steps. APD3D gains on all points are reported in percentage points over the initialized lift, with AllTracker and DA3 (left) or VGGT-Ω (right). “Mean” averages the four datasets.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 242,
+              "image_path": "figures/2610.42136/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 780
+            },
+            {
+              "caption": "Figure 9: Effect of trajectory correction. Left to right: input frame, initialized lift, and corrected trajectories (C = 4). Top: DAVIS camel; bottom: skate-park. CoWTracker’s 2D tracks and DA3 geometry are held fixed; both trajectory panels use the same point cloud and novel viewpoint.",
+              "figure_id": "figure-9-1",
+              "figure_number": "9",
+              "height": 336,
+              "image_path": "figures/2610.42136/figure-006.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 826
+            },
+            {
+              "caption": "Figure 8: Additional qualitative comparisons. Top: DAVIS soccerball; bottom: lady-running. Ours uses CoWTracker with VGGT-Ω (top) and AllTracker with DA3 (bottom), with the same corrector weights (C = 4). TrackCraft3R uses VGGT-Ω in both rows (unlike ours in lady-running); 4RC and V-DPM use their own reconstructions. Methods track the same reference pixels, shown on their respective reconstructions from matched novel viewpoints.",
+              "figure_id": "figure-8-15",
+              "figure_number": "8",
+              "height": 213,
+              "image_path": "figures/2610.42136/figure-007.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 826
+            },
+            {
+              "caption": "Table 1: Dense 3D tracking on WorldTrack. APD3D (%) on all (All) and dynamic (Dyn) points after RANSAC Sim(3) alignment; bold best, underline second best. Time includes the complete pipeline. †Timing at 2562 instead of 5122. ‡Restricted ADT coverage for MotionCrafter, also affecting its means (Appendix B.2).",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 286,
+              "image_path": "figures/2610.42136/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Table 11: Image-plane accuracy on WorldTrack. APD2D (%) on all (All) and dynamic (Dyn) points. 3D trajectories are projected through the cameras in Table 10; native 2D references are scored without projection. Bold and underline rank 3D methods only. Scoring details are in Appendix C.4. ‡Restricted ADT coverage for MotionCrafter, also affecting its means (Appendix B.2).",
+              "figure_id": "table-11-18",
+              "figure_number": "11",
+              "height": 438,
+              "image_path": "figures/2610.42136/table-009.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 830
+            },
+            {
+              "caption": "Table 15: Run time and peak allocated GPU memory. Complete pipelines at three nominal resolutions. OOM: out of memory; FAIL: St4RTrack’s upsampling exceeds an implementation tensor-size limit; –: not run. †Hard-coded input resolution overridden for this experiment. OpenD4RT runs only at 2562; ours uses C = 4.",
+              "figure_id": "table-15-14",
+              "figure_number": "15",
+              "height": 382,
+              "image_path": "figures/2610.42136/table-010.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Training corruption distributions. U denotes uniform sampling. Noise levels and outlier rates are drawn once per training example.",
+              "figure_id": "table-4-20",
+              "figure_number": "4",
+              "height": 380,
+              "image_path": "figures/2610.42136/table-011.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 786
+            },
+            {
+              "caption": "Table 5: Baseline configurations. Input grids are H ×W ; settings apply to the accuracy comparisons. Runtime measurements use the settings in Appendix D.4.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 262,
+              "image_path": "figures/2610.42136/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 827
+            },
+            {
+              "caption": "Table 6: Dense tracking on Kubric. TrackCraft3R’s (Nam et al., 2026) 50 24-frame Kubric (Greff et al., 2022) clips, with ground-truth trajectories for every reference pixel. APD3D (%) on all and dynamic tracks and EPE (scene units) under RANSAC Sim(3) and global-scale alignment; bold best, underline second best.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 491,
+              "image_path": "figures/2610.42136/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 602
+            },
+            {
+              "caption": "Table 9: WorldTrack under global-scale alignment. APD3D (%) on all (All) and dynamic (Dyn) points, fitting only scale (Appendix B.1). MotionCrafter’s coordinate-frame mismatch makes its scores non-comparable under this alignment. ‡Restricted ADT coverage for MotionCrafter, also affecting its means (Appendix B.2).",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 324,
+              "image_path": "figures/2610.42136/table-014.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 830
+            },
+            {
+              "caption": "Table 8: End-point error on WorldTrack. Mean 3D position error over evaluated point–frames, in metres after all-point RANSAC Sim(3) alignment. Lower is better. ‡Restricted ADT coverage for MotionCrafter, also affecting its mean (Appendix B.2).",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 463,
+              "image_path": "figures/2610.42136/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 552
+            },
+            {
+              "caption": "Table 2: Contribution of training corruptions. Removing wrong-surface corruptions causes the largest drop. APD3D (%), averaged over four datasets; gains over the initialized lift are shown in parentheses, in percentage points. Each variant is retrained with the same data, network, loss and budget (Appendix D.1).",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 76,
+              "image_path": "figures/2610.42136/table-016.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 827
+            },
+            {
+              "caption": "Table 10: Camera sources for APD2D. Cameras are predicted, supplied by a geometry provider, or recovered from model outputs; no ground-truth camera parameters are used.",
+              "figure_id": "table-10-19",
+              "figure_number": "10",
+              "height": 151,
+              "image_path": "figures/2610.42136/table-017.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 814
+            },
+            {
+              "caption": "Table 12: Contribution of training corruptions on occluded points. APD3D (%) on groundtruth-occluded point–frames, averaged over the four datasets. Scoring retains the all-point RANSAC Sim(3) alignment. Parentheses report percentage-point gains over the initialized lift.",
+              "figure_id": "table-12-5",
+              "figure_number": "12",
+              "height": 211,
+              "image_path": "figures/2610.42136/table-018.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 636
+            },
+            {
+              "caption": "Table 7: AJ and OA on WorldTrack (%). Predicted visibility is thresholded at 0.5. AJ uses allpoint RANSAC Sim(3) alignment; OA requires no geometric alignment. Higher is better.",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 203,
+              "image_path": "figures/2610.42136/table-019.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 830
+            },
+            {
+              "caption": "Table 13: Ray masking. APD3D (%) for separately trained correctors that mask or retain rays where the input mask is zero, using AllTracker and C = 4. All and Occ share the all-point RANSAC Sim(3) alignment; Occ scores ground-truth-occluded point–frames.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 177,
+              "image_path": "figures/2610.42136/table-020.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 786
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42136/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.42136",
+          "relevance": 7,
+          "selection_reason": "Dense 3D tracking from monocular video via trajectory repair; combines 3D geometry and temporal correspondence.",
+          "summary_status": "generated",
+          "title": "ReLift: Dense 3D Tracking as Lifted Trajectory Repair",
+          "tldr": "ReLift improves dense monocular 3D tracking by repairing and completing noisy lifted trajectories using geometric trajectory refinement.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Distribution Matching Distillation (DMD) trains a few-step student using the difference between a teacher's score and an online critic's estimate of the student distribution's score. We investigate what the critic needs, in capacity and in information, to provide a reliable training signal. On the capacity side, controlled experiments across seven SiT model sizes on ImageNet show that increasing teacher size while keeping a small critic fixed can degrade student quality and cause training collapse. Scaling the critic alongside the teacher, a strategy we call joint scaling, prevents collapse in our experiments and allows the student to benefit from larger teachers. On the information side, rather than forcing the critic to model a step-agnostic mixture of student outputs, we introduce a step-aware critic (STAC) that conditions on the student's generation step to estimate step-specific scores. Together, joint scaling and STAC consistently improve few-step distillation across class-conditional ImageNet generation, text-to-image generation with SDXL and FLUX.2, and text-to-video generation with Wan2.1.",
+          "arxiv_id": "2610.42135",
+          "arxiv_url": "https://arxiv.org/abs/2610.42135",
+          "authors": [
+            "Zongze Wu (Adobe), Xianbang Wang (MIT), Zhengyang Geng (Adobe), Mingdeng Cao (Adobe), Zhoutong Zhang (Adobe), Richard Zhang (Adobe), Eli Shechtman (Adobe), Ruiming Cao (Adobe)"
+          ],
+          "bullets": [
+            "Larger teachers can hurt student quality and trigger training collapse when the critic remains small.",
+            "Joint scaling—growing the critic alongside the teacher—prevents collapse in controlled ImageNet experiments.",
+            "STAC conditions the critic on the student’s generation step instead of modeling a step-agnostic output mixture.",
+            "Joint scaling and STAC improve few-step distillation for class-conditional images, text-to-image, and text-to-video generation."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview. We study (a) step conditioning and (b) joint teacher–critic scaling. In (b), T and F denote teacher/critic capacity: T > F can be unstable, T < F inefficient, and T = F favorable here.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 193,
+              "image_path": "figures/2610.42135/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 774
+            },
+            {
+              "caption": "Figure 1: Few-step students distilled with a critic as large as the teacher. Top, samples of a 4-step FLUX.2 [klein] 4B student distilled with a 32B teacher and a 32B critic with STAC. Bottom, three frames each of six videos from a 4-step Wan2.1 1.3B student distilled with a 14B teacher and a 14B critic with STAC. (Settings: FLUX.2 1024× 1024, Wan2.1 480p.)",
+              "figure_id": "figure-1-9",
+              "figure_number": "1",
+              "height": 592,
+              "image_path": "figures/2610.42135/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 814
+            },
+            {
+              "caption": "Figure 8: Controlled comparison of STAC on Wan2.1. VBench scores during training for bidirectional DMD (top) and autoregressive Self Forcing (bottom), without and with STAC. STAC leads in VBench total at every evaluation in both regimes. (Settings: 1.3B teacher, student, and critic; ODE initialization from the CausVid repository (Yin et al., 2025); 4 steps, 480p, 2k iterations; bidirectional DMD uses no backward simulation, while the autoregressive runs use an online Self Forcing rollout.)",
+              "figure_id": "figure-8-33",
+              "figure_number": "8",
+              "height": 379,
+              "image_path": "figures/2610.42135/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 808
+            },
+            {
+              "caption": "Figure 6: Generation quality varies sharply across steps. Clean predictions of a 4-step SDXL student along one generation path with a shared prompt and seed. Colored boxes and insets magnify the regions discussed below. The first step already fixes the overall color and layout but still carries significant artifacts; the second step refines the image substantially, yet artifacts remain in detailed regions such as the face and the wheel; the third step retains only small residual artifacts around the mouth, which the last step removes.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 330,
+              "image_path": "figures/2610.42135/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Per-update training compute versus FID. Best FID versus TFLOPs per student update for every non-collapsed teacher/critic pair of the S-student grids at (a) 1 and (b) 4 steps. Matched pairs are labeled by size and joined in size order; the nonlinear FID axis expands the low-FID region. At comparable per-update compute, matched pairs sit at or near the lowest FID, while most mismatched pairs lie above them. (Settings: ImageNet 256× 256, w/o CFG; learning rates as in Figure 10; FLOPs from Table 6.)",
+              "figure_id": "figure-4-37",
+              "figure_number": "4",
+              "height": 296,
+              "image_path": "figures/2610.42135/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 724
+            },
+            {
+              "caption": "Figure 5: Scaling the teacher and critic on ImageNet. Every panel varies the teacher and critic sizes while the student is fixed. (a) FID over training for a 1-step B student under four teacher/critic pairs (B/B, XL/B, B/XL, XL/XL); the mismatched XL/B pair degrades only late, so (a) runs to 200k updates to expose it. (b, c) A 1-step S student over a grid of L, XL, and H teachers and S-to-H critics: (b) reports the best FID over training, and (c) the FID at a fixed 100k-update budget. Red boxes mark the diagonal, matched teacher/critic pairs. For both students, matched pairs give the lowest FID, while mismatched pairs often degrade and sometimes collapse (best FID of 100 or higher). (Settings: ImageNet 256× 256, w/o CFG; (a) default learning rates; (b, c) the best learning-rate pair per cell by the lowest FID over training.)",
+              "figure_id": "figure-5-38",
+              "figure_number": "5",
+              "height": 295,
+              "image_path": "figures/2610.42135/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 722
+            },
+            {
+              "caption": "Figure 11: Guidance for DMD students and their teachers. FID against guidance scale for (a) 1-step B students distilled under CFG, (b) their teachers sampled with CFG, and (c) students distilled with a weak B model as the autoguidance reference. The students’ best CFG scale, about 1.3, lies below the teachers’ 1.5, and autoguidance does not improve on CFG. (Settings: ImageNet 256× 256, F = T for M, XL, and H; students report their best FID over training.)",
+              "figure_id": "figure-11-3",
+              "figure_number": "11",
+              "height": 321,
+              "image_path": "figures/2610.42135/figure-007.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 803
+            },
+            {
+              "caption": "Figure 19: SDXL samples of 4-step students across distillation methods. Each row shares a prompt and seed across PCM, SDXL-Lightning, DMD2, and its STAC continuation, with the prompt given below it. Compared with the other methods in this figure, DMD2 + STAC gives sharp images with coherent objects and faithful attributes. (Settings: 4 steps, 1024× 1024, shared seed per prompt.)",
+              "figure_id": "figure-19-14",
+              "figure_number": "19",
+              "height": 1166,
+              "image_path": "figures/2610.42135/figure-008.webp",
+              "kind": "figure",
+              "page": 34,
+              "width": 790
+            },
+            {
+              "caption": "Figure 20: Wan2.1 samples of 4-step 1.3B students across teacher/critic pairs. Each row shows four frames of one video, and the three rows of a block share the prompt given below them. Big and small denote the 14B and 1.3B models. Frame change is the mean absolute luminance difference between consecutive shown frames, expressed as a percentage of the intensity range; higher values indicate greater temporal change, which may reflect either motion or artifacts. Red boxes mark artifacts. Relative to the big-teacher/small-critic pair, matching the critic to the big teacher recovers part of the temporal change and yields more plausible videos. (Settings: autoregressive Wan2.1-T2V-1.3B students with the Self Forcing rollout, 4 steps, 480p; teacher/critic pairs of Table 5.)",
+              "figure_id": "figure-20-17",
+              "figure_number": "20",
+              "height": 744,
+              "image_path": "figures/2610.42135/figure-009.webp",
+              "kind": "figure",
+              "page": 35,
+              "width": 804
+            },
+            {
+              "caption": "Figure 9: Joint scaling and STAC on a two-dimensional example. Samples of a 2-step, depth-3 student at each sampling step (rows), with energy distance (ED) to the target. The first column shows the single-roll target and an undistilled depth-3 teacher sampled with 20 Euler steps. The next three columns vary the teacher (T ) and critic (F ) depths, and the last adds STAC to the depth-6 pair. Deepening only the teacher makes both steps worse, deepening the critic as well reverses this, and STAC brings both steps closer to the single roll. (Settings: 4k DMD updates, five critic updates per student update; Table 13.)",
+              "figure_id": "figure-9-13",
+              "figure_number": "9",
+              "height": 453,
+              "image_path": "figures/2610.42135/figure-010.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 826
+            },
+            {
+              "caption": "Figure 13: More critic updates for a small critic. FID during training with the student-size critic at one and five updates per student update, and with an XL critic at one update, for (a) a B student with an L teacher, (b) a B student with an XL teacher, and (c) an S student with an XL teacher. Five updates speed up early training and avoid the collapse in (a), though the student-size critic stays at a higher FID than the single-update XL critic. (Settings: ImageNet 256× 256, 1-step students, w/o CFG.)",
+              "figure_id": "figure-13-30",
+              "figure_number": "13",
+              "height": 279,
+              "image_path": "figures/2610.42135/figure-011.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 821
+            },
+            {
+              "caption": "Figure 14: Critic warm-up. (a) FID of a 1-step S student under an H teacher with an S critic. The S critic is either trained concurrently from the start or warmed up for 10k/40k updates before student training begins. Both warm-ups fail to prevent collapse compared to the matched H critic. (b) Validation loss of an S critic fitted to a frozen student. (Settings: ImageNet 256× 256, w/o CFG.)",
+              "figure_id": "figure-14-29",
+              "figure_number": "14",
+              "height": 272,
+              "image_path": "figures/2610.42135/figure-012.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 821
+            },
+            {
+              "caption": "Figure 12: Teacher scaling under velocity KD and MeanFlow distillation. Best FID against teacher size for (a) an S student regressed onto each larger teacher’s velocity (the S teacher was not evaluated) and (b) S and B students distilled with MeanFlow at 1 and 4 steps. No teacher collapses these students, and the gain from a larger teacher shrinks as it grows. (Settings: ImageNet 256× 256; KD: learning rate 10−4, 200k updates; MFD: official MeanFlow recipe with default guidance coefficients, 200k updates for S and 60k for B students.)",
+              "figure_id": "figure-12-4",
+              "figure_number": "12",
+              "height": 269,
+              "image_path": "figures/2610.42135/figure-013.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 809
+            },
+            {
+              "caption": "Figure 3: The joint scaling phenomenon. Starting from an S-sized teacher, critic, and student and fixing the student size, each panel scales (a, left) the teacher, (b, middle) the critic, or (c, right) both along the ladder, with the horizontal axis the parameter count of the scaled network. Scaling only the teacher initially improves FID but eventually degrades it and causes collapse at H; scaling only the critic yields marginal gains; scaling both improves the student at every size. (Settings: 1-step S student, ImageNet 256× 256, w/o CFG; best FID with the per-cell learning-rate selection of Appendix B.2.)",
+              "figure_id": "figure-3-25",
+              "figure_number": "3",
+              "height": 191,
+              "image_path": "figures/2610.42135/figure-014.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 802
+            },
+            {
+              "caption": "Figure 10: The expanded teacher–critic scaling grid. Best FID per teacher/critic pair for S and B students at 1 and 4 steps. Red boxes mark the matched pairs, and hatched cells mark collapsed runs, whose best FID is 100 or higher under all nine learning-rate pairs. Every collapse occurs with a critic smaller than its teacher. (Settings: ImageNet 256× 256, w/o CFG, 200k updates; learning-rate selection as in Figure 5b.)",
+              "figure_id": "figure-10-20",
+              "figure_number": "10",
+              "height": 775,
+              "image_path": "figures/2610.42135/figure-015.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 812
+            },
+            {
+              "caption": "Figure 18: FLUX.2 samples of 4-step 4B students across teacher/critic pairs. Each row shares a prompt (listed below) and initial noise. The first two columns display the 50-step 4B and 9B teachers for reference. The subsequent columns show 4-step students distilled under the 4B/4B, 9B/4B, and 9B/9B teacher/critic pairs, alongside the 9B/9B pair combined with STAC. (Settings: students initialized from FLUX.2 [klein] base 4B, 4 steps; teachers sampled with 50 Euler steps at CFG 2.0; resolution 512× 512.)",
+              "figure_id": "figure-18-16",
+              "figure_number": "18",
+              "height": 990,
+              "image_path": "figures/2610.42135/figure-016.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 771
+            },
+            {
+              "caption": "Figure 17: Uncurated ImageNet 256×256 samples of 1-step B students. Each 3× 3 grid shows nine samples of one selected class. The first column is the B teacher without guidance, with its FID from Table 6, and the other columns are the students of Figure 5a at 200k updates, labeled by their teacher/critic pair, their FID (Table 1), and the change from B/B. Scaling both networks (XL/XL) gives more coherent objects than B/B, and scaling only the critic (B/XL) changes little, whereas scaling only the teacher (XL/B) produces near-duplicate samples within each class, indicating low diversity. (Settings: w/o CFG.)",
+              "figure_id": "figure-17-28",
+              "figure_number": "17",
+              "height": 913,
+              "image_path": "figures/2610.42135/figure-017.webp",
+              "kind": "figure",
+              "page": 32,
+              "width": 663
+            },
+            {
+              "caption": "Figure 15: Step information in re-noised predictions. Lower bound on the mutual information I(K;Xt) from a classifier predicting the step index of a 4-step B student, evaluated at (a) 30k and (b) 100k updates with online weights, and (c) at 100k updates with EMA weights. The step is readable at low and moderate score-evaluation levels, and STAC lowers this classifier-derived bound at nearly every level. (Settings: ImageNet 256× 256, XL teacher and critic, w/o CFG; 10k fixed noise–class pairs, 8k/2k training/held-out split.)",
+              "figure_id": "figure-15-7",
+              "figure_number": "15",
+              "height": 208,
+              "image_path": "figures/2610.42135/figure-018.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 810
+            },
+            {
+              "caption": "Figure 16: Loss variability with and without STAC. Coefficients of variation of (a) the critic loss and (b) the DM loss during the training of a 4-step student. STAC (solid) has a lower CV than the step-agnostic baseline (dashed) at every evaluation after the first. (Settings: XL student, teacher, and critic, ImageNet 256× 256, CFG = 1.3.)",
+              "figure_id": "figure-16-8",
+              "figure_number": "16",
+              "height": 182,
+              "image_path": "figures/2610.42135/figure-019.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 821
+            },
+            {
+              "caption": "Table 3: FLUX.2 benchmark at 1024 × 1024. Left: our 4B students with 4-step sampling, distilled with different teacher (T ) and critic (F ) sizes. The 4B and 9B models used as teachers or critics come from FLUX.2 [klein] base; the 32B models come from FLUX.2 [dev]. Right: the official base model of the teacher’s size, sampled with 50 steps and CFG 4.0. Details in Appendix B.4.",
+              "figure_id": "table-3-23",
+              "figure_number": "3",
+              "height": 300,
+              "image_path": "figures/2610.42135/table-020.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 826
+            },
+            {
+              "caption": "Table 6: The teacher and critic ladder. Architecture, forward and backward GFLOPs per sample, and teacher FID of the seven SiT sizes after 800k pretraining updates. Teacher FID falls steadily from S to H. (Settings: ImageNet 256× 256, w/o CFG; teacher sampling as in Table 7.)",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 242,
+              "image_path": "figures/2610.42135/table-021.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 776
+            },
+            {
+              "caption": "Table 4: Comparison with distilled SDXL systems. SDXL systems with 4-step sampling on 10k COCO prompts at 512× 512. The first seven rows are the values reported by Liu et al. (2025), and our rows follow the same protocol. CLIP-S and ImageReward are multiplied by 100. Continuing DMD2 training with STAC improves clearly over the official checkpoint on every metric, whereas the same continuation without STAC falls below it. Detailed settings in Appendix B.3.",
+              "figure_id": "table-4-22",
+              "figure_number": "4",
+              "height": 228,
+              "image_path": "figures/2610.42135/table-022.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 672
+            },
+            {
+              "caption": "Table 19: Cost analysis of STAC on SDXL and Wan2.1. Changes relative to each system’s baseline without STAC, with the inference architecture unchanged. STAC adds a negligible amount of memory and iteration time.",
+              "figure_id": "table-19-35",
+              "figure_number": "19",
+              "height": 94,
+              "image_path": "figures/2610.42135/table-023.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 652
+            },
+            {
+              "caption": "Table 7: Hyperparameter choices of ImageNet teacher pretraining.",
+              "figure_id": "table-7-18",
+              "figure_number": "7",
+              "height": 256,
+              "image_path": "figures/2610.42135/table-024.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 806
+            },
+            {
+              "caption": "Table 5: Critic size and STAC for 1.3B Wan2.1 students. The first rows are Self Forcing’s CausVid reproduction and our Self Forcing evaluation (Yin et al., 2025; Huang et al., 2025). Controlled rows share a Causal Forcing ODE initialization and Self Forcing rollout; the default is 14B/1.3B, and the last adds STAC to 14B/14B. A 14B critic improves all metrics (Dynamic: 52.06 to 57.52); STAC improves them further. (4 steps, 480p VBench; Appendix B.5.)",
+              "figure_id": "table-5-32",
+              "figure_number": "5",
+              "height": 221,
+              "image_path": "figures/2610.42135/table-025.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 682
+            },
+            {
+              "caption": "Table 9: Hyperparameter choices of ImageNet distillation experiments. Sizes, learning rates, and budgets of individual comparisons are given with each experiment.",
+              "figure_id": "table-9-26",
+              "figure_number": "9",
+              "height": 348,
+              "image_path": "figures/2610.42135/table-026.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 814
+            },
+            {
+              "caption": "Table 10: Hyperparameter choices of SDXL experiments. Our core comparison table (Table 4) uses the configurations on the right, while ablations in Table 18 use a more lightweight setting on the left.",
+              "figure_id": "table-10-36",
+              "figure_number": "10",
+              "height": 349,
+              "image_path": "figures/2610.42135/table-027.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 826
+            },
+            {
+              "caption": "Table 11: Hyperparameter choices of FLUX.2 experiments (Table 3).",
+              "figure_id": "table-11-5",
+              "figure_number": "11",
+              "height": 483,
+              "image_path": "figures/2610.42135/table-028.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 830
+            },
+            {
+              "caption": "Table 12: Hyperparameter choices of the main Wan2.1 experiments (Table 5).",
+              "figure_id": "table-12-6",
+              "figure_number": "12",
+              "height": 325,
+              "image_path": "figures/2610.42135/table-029.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 830
+            },
+            {
+              "caption": "Table 13: Hyperparameter choices of the two-dimensional toy experiment.",
+              "figure_id": "table-13-12",
+              "figure_number": "13",
+              "height": 257,
+              "image_path": "figures/2610.42135/table-030.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 814
+            },
+            {
+              "caption": "Table 18: Step conditioning of the SDXL critic. Four cross-attention step tokens yield the best FID, outperforming both AdaGN and larger token counts (8 or 16). (Settings: SDXL student and critic, 4 steps, 8k updates, 10k COCO prompts; pure DMD without GAN loss.)",
+              "figure_id": "table-18-34",
+              "figure_number": "18",
+              "height": 252,
+              "image_path": "figures/2610.42135/table-031.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 827
+            },
+            {
+              "caption": "Table 1: Training dynamics. The four runs of Figure 5a, a 1-step B student under B and XL teachers (T ) and critics (F ) with one recipe: the lowest FID over training, the FID at 100k and 200k updates, and IS, precision, and recall at the lowest-FID checkpoint. XL/XL leads on every metric except precision, where it trails the best by 0.002, and only the two matched pairs reach their lowest FID at the end of training. (Settings: ImageNet 256× 256, w/o CFG, default learning rates, 200k updates.)",
+              "figure_id": "table-1-24",
+              "figure_number": "1",
+              "height": 173,
+              "image_path": "figures/2610.42135/table-032.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 632
+            },
+            {
+              "caption": "Table 2: Cumulative results and step-input ablations on ImageNet. Left: a 4-step B student under B/B and XL/XL teacher–critic pairs, without and with STAC (“+ STAC”); joint scaling and STAC each lower FID, and together they give the best student. Right: comparison of the XL/XL student with STAC against three controls that replace its learned in-context step tokens, namely const tokens shared by all steps, step-specific but random and untrained frozen tokens, and an AdaLN branch that injects the step through adaptive normalization. Relative to the XL/XL baseline without STAC (FID 8.08), all three controls recover a smaller FID gain than STAC (6.90). Every run shares the recipe, and IS is given with its standard deviation over splits. (Settings: ImageNet 256× 256, w/o CFG, default learning rates, FID at 100k updates.)",
+              "figure_id": "table-2-10",
+              "figure_number": "2",
+              "height": 129,
+              "image_path": "figures/2610.42135/table-033.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 763
+            },
+            {
+              "caption": "Table 16: Teachers and critics from different checkpoints. Best FID of a 1-step B student. Teachers (rows) and critics (columns) come from our B and XL models pretrained for 800k updates, alongside the highly converged XL model from Ma et al. (2024) trained for 7M updates (XL, 7M). Shaded cells denote shared initial weights. Regardless of the teacher’s training duration, matching the critic’s architectural size (XL) gives stable and strong performance, whereas a B critic degrades under both XL teachers. (Settings: ImageNet 256× 256, w/o CFG, default learning rates, 100k updates.)",
+              "figure_id": "table-16-21",
+              "figure_number": "16",
+              "height": 151,
+              "image_path": "figures/2610.42135/table-034.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 332
+            },
+            {
+              "caption": "Table 17: Low-rank critics on the frozen teacher. Best FID of a 1-step B student under an XL teacher. LoRA critics adapt the frozen XL teacher, and the full-parameter critics are the corresponding cells of Figure 10b, with the learning rates selected per cell. The best LoRA result is underlined. Even at rank 1, every LoRA critic beats the full B critic, though none reaches the full XL critic. (Settings: ImageNet 256× 256, w/o CFG; LoRA runs: ηG = 1.2× 10−5, 100k updates, batch size 64, scaling α/ √ r with α = 8, zero-initialized up-projection.)",
+              "figure_id": "table-17-11",
+              "figure_number": "17",
+              "height": 255,
+              "image_path": "figures/2610.42135/table-035.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 610
+            },
+            {
+              "caption": "Table 8: The pure DMD baseline. FID of 1-step students after 200k updates at three sizes, with student, critic, and teacher of equal size, for the uniform and logit-normal samplers of the score-evaluation level and two student learning rates. Each change lowers FID at every size, and the last row is our default ImageNet recipe. (Settings: ImageNet 256× 256, w/o CFG, one critic update per student update.)",
+              "figure_id": "table-8-19",
+              "figure_number": "8",
+              "height": 155,
+              "image_path": "figures/2610.42135/table-036.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 552
+            },
+            {
+              "caption": "Table 14: Forcing a small critic with an extreme learning rate. Best FID of 1- and 4-step S students under the H teacher with an S critic. We compare the searched learning rates against an aggressively scaled critic learning rate (16× default), alongside the matched S/S and H/H baselines. Although the larger learning rate prevents the collapse, the generation quality stays far behind that of the matched H/H pair. (Settings: ImageNet 256× 256, w/o CFG, best FID over training; 16× runs use (ηG, ηF ) = (8× 10−6, 1.6× 10−5); other cells use the best of the nine searched pairs, as in Figure 10.)",
+              "figure_id": "table-14-31",
+              "figure_number": "14",
+              "height": 118,
+              "image_path": "figures/2610.42135/table-037.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 577
+            },
+            {
+              "caption": "Table 15: Joint scaling with classifier-free guidance. Best FID for each teacher (columns) with the critic fixed at XL. Rows vary the student and its step count. Every row is best at the XL teacher, the one matching the critic, and worse again at the larger H teacher. (Settings: ImageNet 256 × 256, CFG = 1.2; other settings follow Appendix B.2.)",
+              "figure_id": "table-15-2",
+              "figure_number": "15",
+              "height": 140,
+              "image_path": "figures/2610.42135/table-038.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 592
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42135/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.42135",
+          "relevance": 6,
+          "selection_reason": "Improves few-step distillation for diffusion models, reducing inference steps; evaluated on text-to-video generation.",
+          "summary_status": "generated",
+          "title": "A Better Critic Matters for Distribution Matching Distillation",
+          "tldr": "Reliable critics are essential for DMD: scaling them with the teacher and conditioning them on generation step improves few-step distillation across image and video generation tasks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "A panoramic video captures all directions around the camera, but relevant evidence can appear in different directions and at different times. Understanding it requires models to connect observations across the viewing sphere and time. We introduce PanoVideoBench, the first manually annotated benchmark for comprehensive panoramic video understanding. Its 1,000 questions span five categories and 15 question types, with diagnostic annotations for target search and panoramic capabilities. Evaluation of 11 proprietary, open-source, and panoramic-specialized models identifies cross-view tracking and sphere-time evidence integration as their weakest capabilities. To strengthen these capabilities, we construct PanoVideoCoT, the first reasoning dataset grounded in real panoramic video, through sphere-time-grounded synthesis that converts verified panoramic observations and successful agentic explorations into 13,465 QA-CoT pairs. Starting from a general video MLLM, PanoVideoReasoner learns from this corpus through Panoramic CoT SFT and Evidence-Privileged On-Policy Self-Distillation, a panoramic instantiation of Vision-OPD's OPSD in which the teacher uses verified perspective views to guide student-generated trajectories. It reaches 55.7% on PanoVideoBench, improving the backbone by 12.5 points and the previous SOTA by 2.6. The gains concentrate on the same spatial, cross-view, and temporal capabilities exposed by the benchmark, showing that grounded sphere-time supervision can equip a general video MLLM with panoramic reasoning.",
+          "arxiv_id": "2610.42082",
+          "arxiv_url": "https://arxiv.org/abs/2610.42082",
+          "authors": [
+            "Lidong Lu, Lidong Zou, Xinyi Mao, Jiaxin Lv, Zhenquan Li, Liangrui Dong, Tong Lu, Guo Chen"
+          ],
+          "bullets": [
+            "Introduces PanoVideoBench, a manually annotated benchmark with 1,000 questions across five categories and 15 types.",
+            "Evaluation of 11 models finds cross-view tracking and integrating evidence across space and time to be the main weaknesses.",
+            "Constructs PanoVideoCoT with 13,465 reasoning QA pairs from verified panoramic observations and agentic explorations.",
+            "Trains PanoVideoReasoner using Panoramic CoT SFT and evidence-privileged on-policy self-distillation.",
+            "Achieves 55.7% on PanoVideoBench, improving its backbone by 12.5 points and prior state of the art by 2.6 points."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: A 360◦ video shows the whole scene, but the evidence can still be hard to find. PanoVideoBench evaluates how models find and connect evidence across direction and time. PanoVideoCoT turns verified sphere-time evidence and solution trajectories into reasoning supervision, improving Qwen3.5-9B by 12.5 points and establishing a new SOTA.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 495,
+              "image_path": "figures/2610.42082/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 824
+            },
+            {
+              "caption": "Figure 2: Question composition and diagnostic coverage in PanoVideoBench. The sunburst reports the five semantic categories and 15 question types. The heatmaps cross evidence-search settings and semantic categories with five panoramic capabilities. Percentages indicate dataset-wide frequency, and cells give question counts.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 431,
+              "image_path": "figures/2610.42082/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 770
+            },
+            {
+              "caption": "Figure 3: Statistics of PanoVideoCoT. The source-video plots summarize duration and resolution. The remaining plots report angular evidence span, target-search setting, CoT length, and the co-occurrence of panoramic capabilities. Together they show how the corpus combines visually detailed source videos with supervision that connects evidence across viewing directions and time.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 313,
+              "image_path": "figures/2610.42082/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 799
+            },
+            {
+              "caption": "Figure 4: Accuracy across target-search settings and panoramic capabilities. The left radar shows Direction-Guided (S0), Landmark-Guided (S1), Event-/Moving-Entity-Guided (S2), and Unconstrained Panoramic Search (S3). The right radar shows Find, then Read (C0), See the Fine Detail (C1), Reason on the Sphere (C2), Track Across Views (C3), and Integrate Evidence Across Sphere–Time (C4). C0 denotes local readout, whereas C1–C4 can co-occur when a question requires several panoramic operations; each righthand score uses all questions carrying that label.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 322,
+              "image_path": "figures/2610.42082/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 607
+            },
+            {
+              "caption": "Figure 5: Maintaining motion and orientation through a turn. The sequence follows the same person from a frontal view through the turn until his back faces the camera and he moves toward the left staircase. PanoVideoReasoner selects A, whereas Qwen3.8-27B reverses both the final orientation and destination.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 823,
+              "image_path": "figures/2610.42082/figure-005.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 810
+            },
+            {
+              "caption": "Figure 6: Confirming a fine detail across panoramic views. The orange chest emblem appears at several times and different ERP positions as the wearer turns. PanoVideoReasoner identifies the repeated mark as D and selects C; Qwen3.8-27B reads it as B at all evaluated input resolutions.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 796,
+              "image_path": "figures/2610.42082/figure-006.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 810
+            },
+            {
+              "caption": "Figure 7: Composing outcomes across two distant time windows. The upper sequence tracks the first group through the doorway at 145–153 seconds; the lower sequence shows a different pedestrian remaining outside at 185–193 seconds.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 1031,
+              "image_path": "figures/2610.42082/figure-007.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 810
+            },
+            {
+              "caption": "Table 3: PanoVideoBench comparison. Overall reports accuracy on all 1,000 questions; APP, SPA, ACT, MOT, and TEM report accuracy for the five semantic categories. Models are grouped into proprietary, open-source general-purpose, and open-source panoramic systems. Best results are in bold; second-best are underlined.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 385,
+              "image_path": "figures/2610.42082/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 782
+            },
+            {
+              "caption": "Table 2: Comparison with existing panoramic training datasets. The table compares source scale and modality, whether the visual data are real, the forms of supervision, and how questions and solutions are constructed. #Vis. and #Train report visual sources and training instances. VG, TG, E-QG, and ReSolve denote visual grounding, temporal grounding, evidence-grounded question generation, and independent visual re-solving; checkmarks indicate that a property is provided.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 262,
+              "image_path": "figures/2610.42082/table-009.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Input analysis on PanoVideoBench. (a) varies ERP resolution. (b) compares the default ERP input with an eight-view perspective mosaic (8V) and an orientation-overlaid ERP (Ovl); Appendix C.3 gives their construction and sampling details. Qwen and Gemma abbreviate Qwen3.8-27B and Gemma-431B-it; Bold and underlining mark each model’s best and second best.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2610.42082/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 416
+            },
+            {
+              "caption": "Table 5: Training ablations. All variants use the same Qwen3.5-9B backbone and PanoVideoCoT samples. (a) examines first-stage supervision: base, answer-only SFT, and CoT SFT. (b) starts from the CoT SFT checkpoint and compares second-stage OPSD with uniform (Unif.), question-guided (Q-g.), and evidence-privileged (EP) teacher views. Bold and underlining mark the top two results.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 188,
+              "image_path": "figures/2610.42082/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 388
+            },
+            {
+              "caption": "Table 1: Comparison with existing panoramic benchmarks. The table separates input modality, evaluation size, manual annotation, and task coverage. Manual denotes direct human annotation of the evaluation questions and gold answers. I, V, and A denote image, video, and audio; C360I denotes correlated panoramic images, and FOA denotes first-order Ambisonics. APP, SPA, ACT, MOT, TEM, and AV denote appearance and detail perception, spatial and viewpoint reasoning, action and state understanding, motion and identity tracking, temporal event reasoning, and audio-visual reasoning. Checkmarks indicate an explicitly evaluated dimension, and #Eval reports the number of evaluation questions.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 217,
+              "image_path": "figures/2610.42082/table-012.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 825
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42082/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.42082",
+          "relevance": 8,
+          "selection_reason": "Benchmark and training for panoramic video reasoning in video MLLMs; targets cross-view and temporal understanding.",
+          "summary_status": "generated",
+          "title": "Think in 360{\\deg}: Benchmarking and Bootstrapping Panoramic Video Reasoning",
+          "tldr": "PanoVideoBench exposes weaknesses in panoramic video reasoning, while PanoVideoReasoner improves these abilities through grounded sphere-time reasoning supervision.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Autoregressive video generation enables efficient inference through streaming prediction. However, existing methods are typically restricted to fixed sampling steps, limiting the flexibility to balance generation quality and efficiency, while one-step generation suffers from degraded visual quality and error accumulation over long sequences, leading to content drift and generation collapse. To address these issues, we propose Any Forcing, a unified framework for achieving Any-Step Generality and One-Step Stability. Specifically, we introduce a unified adversarial discriminator that jointly performs real-distribution alignment, inter-step consistency alignment, and first-frame quality enhancement, enabling flexible sampling while preserving one-step generation quality. Furthermore, we propose a training-free adaptive long-term memory selection mechanism that selects historical states based on global semantic relevance and local value contribution, while remapping their temporal positions to preserve temporal relationships within the memory cache, thereby enabling stable one-step long-video generation. Experiments demonstrate that Any Forcing achieves high-quality and stable one-step autoregressive video generation, achieving 20.9 FPS and 24.7 FPS for short and long video generation on a single H100 GPU, respectively.",
+          "arxiv_id": "2610.42031",
+          "arxiv_url": "https://arxiv.org/abs/2610.42031",
+          "authors": [
+            "Jiahua Xu, Yijie Fang, Nannan Wang, Xunhao Lin, Li Cao, Lei Hao, Mingrui Zhu, Fei Gao, Xinbo Gao"
+          ],
+          "bullets": [
+            "Targets fixed-step sampling limitations and one-step quality degradation, error accumulation, content drift, and collapse.",
+            "Uses a unified adversarial discriminator for real-distribution alignment, inter-step consistency, and first-frame quality enhancement.",
+            "Introduces training-free adaptive long-term memory selection based on semantic relevance and local contribution, with temporal-position remapping.",
+            "Reports stable one-step generation at 20.9 FPS for short videos and 24.7 FPS for long videos on a single H100 GPU."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3. Overview of Any Forcing. Left: A unified discriminator jointly performs real-distribution alignment, inter-step consistency alignment, and first-frame enhancement, complemented by teacher ODE endpoint supervision during early training. Right: Adaptive long-term memory selection combines a global sink, a dynamic memory pool, and recent local context. Global semantic relevance and local value contribution determine memory admission before generating the next frame, followed by position mapping within the trained RoPE horizon. For better visualization, we use video frames as an example to show the mechanism, where Fj represents the j-th frame.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 435,
+              "image_path": "figures/2610.42031/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1031
+            },
+            {
+              "caption": "Figure 11. Comparison across all 16 VBench dimensions. Top: 5s generation with uniform four-step and two-step sampling, followed by one-step generation with four and two first-frame steps. Bottom: corresponding one-step comparisons for 30s (left two panels) and 60s (right two panels). Any Forcing is highlighted in red. The radar plots use axis-specific display ranges shared by all methods within each panel; outermost labels denote axis limits rather than method scores. SC: Subject Consistency; BC: Background Consistency; TF: Temporal Flickering; MS: Motion Smoothness; DD: Dynamic Degree; AQ: Aesthetic Quality; IQ: Imaging Quality; OC: Object Class; MO: Multiple Objects; HA: Human Action; SR: Spatial Relationship; AS: Appearance Style; TS: Temporal Style; Overall: Overall Consistency.",
+              "figure_id": "figure-11-14",
+              "figure_number": "11",
+              "height": 560,
+              "image_path": "figures/2610.42031/figure-002.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1020
+            },
+            {
+              "caption": "Figure 1 Visual comparison of short- and long-video generation. Existing methods exhibit degraded visual quality and suffer from long-horizon error accumulation under one-step sampling. Any Forcing achieves stable one-step generation and long-horizon consistency.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 968,
+              "image_path": "figures/2610.42031/figure-003.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1102
+            },
+            {
+              "caption": "Figure 2. Motivation of Any Forcing. Existing methods struggle to balance sampling-step generality and one-step quality, while insufficient global relevance or local contribution undermines onestep stability in long-video generation. Any Forcing addresses these challenges through a unified adversarial discriminator and adaptive long-term memory selection mechanism.",
+              "figure_id": "figure-2-6",
+              "figure_number": "2",
+              "height": 233,
+              "image_path": "figures/2610.42031/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 498
+            },
+            {
+              "caption": "Figure 12. Comparisons of 60-second video generation on a Tokyo street scene (top) and a coastal landscape (bottom). All methods adopt the 1∗ sampling configuration.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 931,
+              "image_path": "figures/2610.42031/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1015
+            },
+            {
+              "caption": "Figure 8. Interface for the blind pairwise user study. Participants compare videos generated from the same prompt and select their preferred result based on visual quality and semantic alignment.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 541,
+              "image_path": "figures/2610.42031/figure-006.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 10. Qualitative examples of generation with the current noisy query included in local value evaluation. Red arrows indicate regions of content degradation, including duplicated sheep heads.",
+              "figure_id": "figure-10-20",
+              "figure_number": "10",
+              "height": 609,
+              "image_path": "figures/2610.42031/figure-007.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 1024
+            },
+            {
+              "caption": "Figure 9. Adversarial training dynamics with and without ODE endpoint warm-up over the first 300 training steps. Columns show realdistribution alignment, inter-step consistency, and first-frame enhancement; rows show generator and discriminator losses, respectively. The shaded region indicates the 200-step warm-up stage.",
+              "figure_id": "figure-9-5",
+              "figure_number": "9",
+              "height": 470,
+              "image_path": "figures/2610.42031/figure-008.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 7. Sensitivity analysis of recent-context length (left) and long-term memory capacity (right). Recent frames denote the number of retained local-context frames after candidate removal.",
+              "figure_id": "figure-7-18",
+              "figure_number": "7",
+              "height": 285,
+              "image_path": "figures/2610.42031/figure-009.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 489
+            },
+            {
+              "caption": "Figure 5. Human preference results. The corresponding sampling settings are indicated to the right of the bars. We report the win rate of Any Forcing against others in blind pairwise comparisons.",
+              "figure_id": "figure-5-9",
+              "figure_number": "5",
+              "height": 279,
+              "image_path": "figures/2610.42031/figure-010.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 483
+            },
+            {
+              "caption": "Figure 6. Performance analysis of short (left) and long (right) video generation on a single H100 GPU. 1∗ and 1† use four and two first-frame steps, respectively, followed by one step per frame. The bubble size indicates the number of sampling steps (left) and the historical-frame budget H , excluding the current frame (right).",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 255,
+              "image_path": "figures/2610.42031/figure-011.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 487
+            },
+            {
+              "caption": "Figure 13. Comparisons of Any Forcing under different sampling schedules. The top, middle, and bottom groups show 5-, 30-, and 60- second generation, respectively.",
+              "figure_id": "figure-13-13",
+              "figure_number": "13",
+              "height": 989,
+              "image_path": "figures/2610.42031/figure-012.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 1021
+            },
+            {
+              "caption": "Table 6. Implementation settings of Any Forcing.",
+              "figure_id": "table-6-15",
+              "figure_number": "6",
+              "height": 623,
+              "image_path": "figures/2610.42031/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 1022
+            },
+            {
+              "caption": "Table 1. Comparison on VBench for 5-second video generation at 480p resolution. For the few-step setting, the left and right groups use four and two denoising steps, respectively. For the one-step setting, 1∗ and 1† use four and two denoising steps for the first latent frame, respectively, followed by one step for subsequent frames. Best and second-best results within each sampling group are bold and underlined, respectively. Sem.: Semantic. We report three representative quality and semantic metrics here: IQ: Imaging Quality; AQ: Aesthetic Quality; OC: Object Class. Detailed results can be found in Supplementary Material E.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 392,
+              "image_path": "figures/2610.42031/table-014.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1032
+            },
+            {
+              "caption": "Table 2. Comparison on VBench for 30- and 60-second video generation at 480p resolution. 1∗ and 1† use four and two sampling steps for the first latent frame, respectively, followed by one step for subsequent frames. Best and second-best results within each one-step sampling group and video length are bold and underlined, respectively.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 370,
+              "image_path": "figures/2610.42031/table-015.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 1032
+            },
+            {
+              "caption": "Table 3. Ablation study of the proposed components on VBench. The left and right groups correspond to 1∗ and 1† sampling, respectively. Best and second-best results within each sampling group are bold and underlined, respectively.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 802,
+              "image_path": "figures/2610.42031/table-016.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 495
+            },
+            {
+              "caption": "Table 4. Ablation study of adaptive long-term memory selection on VBench. GSR: Global Semantic Relevance; LVC: Local Value Contribution; PM: Position Mapping. Best and second-best results are bold and underlined, respectively.",
+              "figure_id": "table-4-16",
+              "figure_number": "4",
+              "height": 140,
+              "image_path": "figures/2610.42031/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 498
+            },
+            {
+              "caption": "Table 5. Sensitivity analysis of the first-frame enhancement weight λFE on VBench. The left and right groups correspond to 1∗ and 1† sampling, respectively. Best and second-best results within each sampling group are bold and underlined, respectively.",
+              "figure_id": "table-5-17",
+              "figure_number": "5",
+              "height": 118,
+              "image_path": "figures/2610.42031/table-018.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 475
+            },
+            {
+              "caption": "Table 7. Effect of including the current noisy query in local value evaluation.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 100,
+              "image_path": "figures/2610.42031/table-019.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 510
+            },
+            {
+              "caption": "Table 8. Effect of preventing positional collisions.",
+              "figure_id": "table-8-19",
+              "figure_number": "8",
+              "height": 101,
+              "image_path": "figures/2610.42031/table-020.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 502
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42031/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.42031",
+          "relevance": 8,
+          "selection_reason": "Framework for flexible-step and stable one-step autoregressive video generation.",
+          "summary_status": "generated",
+          "title": "Any Forcing: Any-Step Generality and One-Step Stability for Autoregressive Video Generation",
+          "tldr": "Any Forcing enables flexible-step autoregressive video generation while stabilizing high-quality one-step generation, including for long videos.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "autoregressive-video-models"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Video generation models synthesize realistic motion, but can they respond correctly to changes in initial geometry? We introduce GeoFlip, a video generation benchmark centered on physical outcome flips induced by geometry. With shared physical settings and textual prompts held fixed, GeoFlip applies controlled interventions to support extent, object placement, and mechanism configuration, constructing paired scenes with contrasting reference events, such as remaining stable versus falling or tipping. These pairs test whether models translate geometric differences in the first frame into correct physical evolution. The benchmark comprises 482 scene pairs and 964 reference videos across six physical categories, with reference outcomes established through procedural scene construction, physics simulation, and numerical validation and verification of physical events. We evaluate 16 models for image to video generation along three dimensions: event correctness, structural integrity, and similarity to reference videos. We examine evaluation consistency with independent vision language judges. On the 442 conditions shared by all models, the highest event correctness averaged across tasks is 27.98%, revealing substantial limitations in physical generation conditioned on geometry. Model strengths vary across physical mechanisms, and the three evaluation dimensions capture distinct capabilities. Typical failures include ignoring geometric changes, generating incorrect object motion, bending rigid objects, and introducing additional components. Rank correlations between judges reach 0.906 for event correctness and 0.929 for structural integrity. By combining controlled geometric interventions, verifiable physical references, and multidimensional evaluation, GeoFlip assesses progress from visual realism toward physical consistency conditioned on geometry.",
+          "arxiv_id": "2610.42002",
+          "arxiv_url": "https://arxiv.org/abs/2610.42002",
+          "authors": [
+            "Yuqi Li, Junming Liu, Bowen Hu, Ruize Niu, Huiran Duan, Yingli Tian, Hao Wu"
+          ],
+          "bullets": [
+            "Introduces 482 paired scenes and 964 reference videos spanning six physical categories, with controlled changes to support extent, object placement, and mechanism configuration.",
+            "Evaluates 16 image-to-video models on event correctness, structural integrity, and similarity to reference videos.",
+            "Across 442 shared conditions, the best average event-correctness score is only 27.98%.",
+            "Common failures include ignoring geometry changes, incorrect object motion, bending rigid objects, and adding extra components.",
+            "Independent vision-language judges show high agreement for event correctness and structural integrity, with rank correlations of 0.906 and 0.929."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: Event correctness and structural integrity. Each point represents one model on the same 442 conditions. Both axes report task-macro percentages from GPT judgments. Numbered markers denote the top three overall ranks in Table 2.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 527,
+              "image_path": "figures/2610.42002/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 636
+            },
+            {
+              "caption": "Figure 2: Benchmark construction and paired evaluation of geometry-induced physical outcome flips.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 573,
+              "image_path": "figures/2610.42002/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 7: Cross-judge score consistency. GPT and Opus assess the same 346 conditions for 16 models. Scores are task-macro percentages over 30 tasks; structural integrity is the clear rate. Colors identify models consistently across both panels, dashed lines indicate equal scores, and Spearman ρ measures ranking consistency.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 733,
+              "image_path": "figures/2610.42002/figure-003.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 823
+            },
+            {
+              "caption": "Figure 5: Performance across physical mechanisms. (a,b) Task-macro scores within each category; outlined cells mark category leaders. Supp., Torq., Grav., Cont., Elas., and Pull. denote support, torque, gravity, contact, elastic, and pulley mechanisms. (c) Shifting the top block by 0.182 m changes the reference from stable to collapsed. LingBot reproduces this contrast; Wan2.2 collapses in both conditions. Outcomes are shown at 1.5 s.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 518,
+              "image_path": "figures/2610.42002/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 3: Construction and evaluation protocol. Controlled geometry edits yield validated reference events; Δd denotes separation change over 0–1 s. Wan2.2, MiniMax, and HunyuanVideo-1.5 independently generate from each first frame and a shared prompt. GPT and Opus read sampled frames; reference labels enter only the event scorer. Insets illustrate structural violations. PSNR/SSIM assess reference similarity.",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 502,
+              "image_path": "figures/2610.42002/figure-005.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 6: Three types of physical failure. (a) MiniMax-H3 misses the geometry-induced outcome flip. (b) Wan2.2 produces the correct collapse label but also overturns the middle block. (c) SkyReels-V2 bends a rigid object, while I2VGen-XL creates extra fragments. Insets highlight geometry and failure details; timestamps identify the displayed frames.",
+              "figure_id": "figure-6-9",
+              "figure_number": "6",
+              "height": 490,
+              "image_path": "figures/2610.42002/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 1: Plausible motion can miss geometry-dependent outcomes. Increasing overhang flips the reference outcome, while Wan2.2-I2V-A14B falls in both conditions. Initial geometry is enlarged (0 s); outcomes are shown at 1.5 s.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 506,
+              "image_path": "figures/2610.42002/figure-007.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 876
+            },
+            {
+              "caption": "Table 2: Overall model ranking. Event and structure scores are task-macro percentages on 442 shared GeoFlip conditions, judged by GPT. PSNR/SSIM use 40-clip. Rows follow the mean rank across the three evaluation dimensions; colors mark the top three models.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 561,
+              "image_path": "figures/2610.42002/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 1068
+            },
+            {
+              "caption": "Table 3: Evaluation reliability. Reference-event recognition by Opus and cross-judge agreement on the shared evaluation subset.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 412,
+              "image_path": "figures/2610.42002/table-009.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 628
+            },
+            {
+              "caption": "Table 1: Comparison of benchmark protocols. ✔: supported; ▲: partial; ✘: absent.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 279,
+              "image_path": "figures/2610.42002/table-010.webp",
+              "kind": "table",
+              "page": 2,
+              "width": 1076
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42002/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.42002",
+          "relevance": 7,
+          "selection_reason": "Benchmark testing geometry-conditioned physical consistency in video generation; directly relevant to video diffusion models.",
+          "summary_status": "generated",
+          "title": "GeoFlip: Benchmarking Geometry-Sensitive Physics in Video Generation",
+          "tldr": "GeoFlip benchmarks whether video generation models produce physically correct outcomes when only the initial scene geometry changes, revealing major weaknesses in geometry-conditioned physics.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "High accuracy on streaming video benchmarks does not establish whether a model uses visual history. Our review of OVO-Bench and StreamingBench finds that recent frames suffice for 32% of sampled historical questions, while models also answer many questions correctly from the question and options alone. We introduce TwinPast to test whether answers correctly follow changes in history, using 350 human-reviewed video pairs spanning five historical tasks. Each pair holds the recent video context, question, and ordered options fixed while changing critical historical evidence and the correct answer. Each video is evaluated independently, and PairAcc requires correct answers for both histories. We evaluate 34 model and input configurations. For Qwen3-VL-8B and DeepSeek-Flash, historical inputs improve performance on TwinPast, reversing the recent-frame advantage on existing benchmarks. The strongest evaluated streaming system reaches 49.14% PairAcc, compared with 66.57-91.43% for the evaluated general-purpose models. This gap persists across all five tasks. Case studies further show that models select states from the wrong time or contradict recorded event order despite retaining the relevant evidence. These findings highlight the need to connect historical memory and retrieval with reasoning that uses evidence according to the question's temporal references and event relations.",
+          "arxiv_id": "2610.41983",
+          "arxiv_url": "https://arxiv.org/abs/2610.41983",
+          "authors": [
+            "Haotian Yang, Yong Chen, Cheng Peng, Haobo Wang, Zhongle Xie, Xuanru Li, Gang Chen"
+          ],
+          "bullets": [
+            "Existing benchmarks can be solved using recent frames or the question and options alone in many cases, weakening claims of historical understanding.",
+            "TwinPast contains 350 human-reviewed video pairs across five historical tasks, changing critical past evidence while keeping recent context and questions fixed.",
+            "Its PairAcc metric requires a model to answer correctly under both histories, testing whether predictions follow historical changes.",
+            "Across 34 model/input configurations, the strongest streaming system achieved 49.14% PairAcc, below evaluated general-purpose models at 66.57–91.43%.",
+            "Failures include selecting states from the wrong time and contradicting the recorded order of events, motivating better temporal retrieval and evidence-based reasoning."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. TwinPast task examples: contrasting histories yield different answers to the same question with identical recent frames.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 620,
+              "image_path": "figures/2610.41983/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1012
+            },
+            {
+              "caption": "Figure 3. Task wise paired answers: (a) same option; (b) both correct (PairAcc).",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 537,
+              "image_path": "figures/2610.41983/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1020
+            },
+            {
+              "caption": "Figure 4. Errors despite available evidence. (a) ReKV’s answers match initial rather than queried states. (b) OneStreamer contradicts its recorded event order.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 693,
+              "image_path": "figures/2610.41983/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 496
+            },
+            {
+              "caption": "Table 1. Input comparison (%). OVO Avg equally weights Real-Time/Backward task macros; StreamingBench groups are question weighted.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 542,
+              "image_path": "figures/2610.41983/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 972
+            },
+            {
+              "caption": "Table 2. TwinPast results (%). Task scores and Acc. measure branch accuracy; PairAcc requires both branches correct.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 1013,
+              "image_path": "figures/2610.41983/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 906
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41983/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41983",
+          "relevance": 7,
+          "selection_reason": "Benchmark for historical evidence use in streaming video understanding; directly targets temporal reasoning and long-video understanding.",
+          "summary_status": "generated",
+          "title": "TwinPast: Benchmarking Historical Evidence Use in Streaming Video Understanding with Evidence Contrastive Video Pairs",
+          "tldr": "TwinPast shows that streaming video models often fail to use historical evidence correctly, even when they retain relevant past information.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Few-step flow models generate samples through a handful of large denoising transitions. Applying GRPO to such models requires introducing stochasticity into the denoising transitions, and when a single transition spans a wide range of noise levels, the choice of the resulting stochastic policy becomes a major factor in optimization. Recent constructions constrain the policy to preserve the target flow coefficients, but this constraint admits a family of policies and offers no criterion for choosing among them. We introduce Geo-FSRL (Geometry-Optimized Few-Step Reinforcement Learning), built on a selection principle: at a fixed conditioning state and timestep pair, choose the admissible policy that minimizes the conditional KL divergence induced by any given nonzero velocity-output update. Within a coefficient-preserving family of isotropic Gaussian transitions, this criterion reduces to minimizing a single scalar geometry factor that determines the conditional KL for every velocity-output update. The same factor governs velocity-space Fisher information and conditional transition log-likelihood-ratio variance. We derive the unique closed-form optimizer within this family, shared across all nonzero update magnitudes and directions, with transition coefficients determined by both the source and target noise levels. Because the minimized geometry factor still varies across timesteps, we further adopt gradient-scale matching from prior work and derive closed-form policy-gradient and KL weights that normalize explicit score scales and reference-KL curvature. Geo-FSRL trains on the original few-step schedule and retains the deterministic solver at inference. Our method achieves higher final reward scores than Flow-GRPO and Flow-CPS on both image generation and video generation models under the 4-step setting. Code is available at https://github.com/ModelTC/LightX2V/tree/main/lightx2v_rl",
+          "arxiv_id": "2610.41949",
+          "arxiv_url": "https://arxiv.org/abs/2610.41949",
+          "authors": [
+            "Zhuguanyu Wu, Congjia Chen, Ruihao Gong, Yang Yong, Shiqiao Gu, Yi Xu, Xianglong Liu"
+          ],
+          "bullets": [
+            "Few-step flow models require stochastic denoising transitions for policy optimization, but existing coefficient-preserving constructions do not specify which policy to choose.",
+            "Geo-FSRL selects the admissible isotropic Gaussian policy minimizing conditional KL divergence under velocity-output updates.",
+            "This criterion reduces to a scalar geometry factor that also controls velocity-space Fisher information and transition log-likelihood-ratio variance.",
+            "The method derives a unique closed-form transition optimizer and timestep-dependent policy-gradient and KL weights through gradient-scale matching.",
+            "Experiments report higher final reward scores than Flow-GRPO and Flow-CPS on both image and video generation models in the 4-step setting; inference retains the deterministic solver."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 5: Additional text-to-image examples from the Qwen-Image-Lightning base model and GeoFSRL under joint HPSv3 and CLIPScore training or HPSv3-only training. Each row uses the displayed prompt.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 1225,
+              "image_path": "figures/2610.41949/figure-001.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 829
+            },
+            {
+              "caption": "Figure 1: Four-step image validation rewards versus optimizer updates: (a) HPSv3-only; (b,c) joint HPSv3 and CLIPScore. Flow-CPS curves use matched weights for their respective ϕ values. DiffusionNFT denotes the tested four-step adaptation.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 234,
+              "image_path": "figures/2610.41949/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 816
+            },
+            {
+              "caption": "Figure 6: Selected frames from videos generated by the four-step distilled Wan2.1 base model and Geo-FSRL under joint reward optimization. For each prompt, the upper row shows the base model and the lower row (“After FSRL”) shows Geo-FSRL, with four frames per video. Some prompts are shortened for display.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 1208,
+              "image_path": "figures/2610.41949/figure-003.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 826
+            },
+            {
+              "caption": "Figure 7: Additional video comparisons under joint reward optimization. Each prompt has two rows of four selected frames: the four-step distilled Wan2.1 base model above and Geo-FSRL (“After FSRL”) below. Some prompts are shortened for display.",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 1208,
+              "image_path": "figures/2610.41949/figure-004.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 826
+            },
+            {
+              "caption": "Figure 4: Qwen-Image-Lightning, Flow-CPS, and Geo-FSRL on the displayed prompts. Multireward training optimizes HPSv3 and CLIPScore; HPSv3-only training optimizes HPSv3 alone.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 441,
+              "image_path": "figures/2610.41949/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Validation HPSv3 with and without policy reweighting for (a) Geo-FSRL and (b) FlowCPS. All curves use the same 256 validation prompts; horizontal axes count optimizer updates. KL reweighting remains enabled throughout. Scores are reported in Table 3.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 282,
+              "image_path": "figures/2610.41949/figure-006.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 727
+            },
+            {
+              "caption": "Figure 2: Four-step video validation rewards versus optimizer updates under joint optimization. Flow-CPS uses matched weights; DiffusionNFT denotes the tested four-step adaptation.",
+              "figure_id": "figure-2-14",
+              "figure_number": "2",
+              "height": 234,
+              "image_path": "figures/2610.41949/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 822
+            },
+            {
+              "caption": "Table 3: Single-reward policy-weighting ablation on the validation set. Each method uses its own matched weights; KL weighting remains enabled throughout. Gain is the change from enabling policy weighting.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 117,
+              "image_path": "figures/2610.41949/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 525
+            },
+            {
+              "caption": "Table 2: Human evaluation of 20 image pairs by five evaluators blinded to method identity. We report the percentage of preference votes for each method.",
+              "figure_id": "table-2-8",
+              "figure_number": "2",
+              "height": 94,
+              "image_path": "figures/2610.41949/table-009.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 577
+            },
+            {
+              "caption": "Table 1: Final validation reward scores for single-reward setting and multi-reward setting text-toimage training.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 240,
+              "image_path": "figures/2610.41949/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 788
+            },
+            {
+              "caption": "Table 6: Training hyperparameters for the image and video GRPO-based experiments. The geometry multiplier cgeo applies to the matched weights of Geo-FSRL and Flow-CPS.",
+              "figure_id": "table-6-10",
+              "figure_number": "6",
+              "height": 427,
+              "image_path": "figures/2610.41949/table-011.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 586
+            },
+            {
+              "caption": "Table 4: Final validation reward scores for joint text-to-video training.",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 140,
+              "image_path": "figures/2610.41949/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 776
+            },
+            {
+              "caption": "Table 5: Finite transitions from t to s (0 < s < t < 1) in the form of Eq. 4. The last column is the deviation from the coefficient-preserving condition α2 t,s + β2 t,s = s2. The Flow-GRPO row is the standard uncapped Euler–Maruyama construction at interior timesteps; endpoint and noise-cap variants are given in Appendix A.1.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 148,
+              "image_path": "figures/2610.41949/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 736
+            },
+            {
+              "caption": "Table 7: Analytic Wan coefficients (five decimal places). Flow-CPS with ϕ = 0.3 is the reported video baseline; ϕ = 0.7 is shown for analytic comparison.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 139,
+              "image_path": "figures/2610.41949/table-014.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 776
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41949/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41949",
+          "relevance": 6,
+          "selection_reason": "Optimizes stochastic policy geometry for few-step flow RL, applied to image and video generation; relevant to video diffusion models.",
+          "summary_status": "generated",
+          "title": "Optimizing Stochastic Policy Geometry for Few-Step Flow Reinforcement Learning",
+          "tldr": "Geo-FSRL optimizes the stochastic transition geometry used by GRPO in few-step flow reinforcement learning, improving reward performance for 4-step image and video generation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Flow matching depends critically on the coupling used to pair source and target samples. Optimal transport (OT) couplings can reduce velocity conflict and straighten trajectories; but, in practice, challenges remain: the source comes from a continuous distribution, only a finite number of target samples data are accessible, and the neural network has finite capacity. For these reasons, making the coupling more OT-like may not consistently improve sampling quality, in particular in the low number-of-function-evaluation (NFE) regime. Motivated by this, we introduce ReCouple, a controllable framework that constructs coarse-grained OT couplings, to better understand rollout-free OT-based post-training. We also consider extensions of this basic framework: ReCouple+ extends this toward the continuous-source setting by increasing source resolution, converging to semi-discrete OT in the appropriate limit; and ReCouple++ further adds spatial regularization, motivated by the observation that straight trajectories need not correspond to spatially simple velocity fields. Empirical validation demonstrates the effectiveness of these methods, and it reveals an NFE-dependent interplay between coupling optimality, neural realizability, and generation quality.",
+          "arxiv_id": "2610.41269",
+          "arxiv_url": "https://arxiv.org/abs/2610.41269",
+          "authors": [
+            "Soon Hoe Lim, Aditi Gupta, Michael W. Mahoney, N. Benjamin Erichson"
+          ],
+          "bullets": [
+            "Flow matching quality depends strongly on how source and target samples are coupled.",
+            "More OT-like couplings can reduce velocity conflict and straighten trajectories, but may not help with finite data, continuous sources, limited network capacity, or low NFE.",
+            "ReCouple constructs coarse-grained OT couplings; ReCouple+ increases source resolution toward semi-discrete OT.",
+            "ReCouple++ adds spatial regularization because straight trajectories do not necessarily yield spatially simple velocity fields.",
+            "Experiments show an NFE-dependent trade-off between coupling optimality, neural realizability, and sampling quality."
+          ],
+          "categories": [
+            "stat.ML",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1 Generated samples on the 2D multimodal task across methods and NFEs. Post-training using the ReCouple family improves recovery of the target modes, particularly at low NFEs.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 529,
+              "image_path": "figures/2610.41269/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 958
+            },
+            {
+              "caption": "Figure 2 Qualitative comparison on ImageNet-256 using pretrained SiT-XL/2 at NFE 25. Each row shows samples generated from the same initial noise and class condition using the SiT baseline, Minibatch OT, ReCouple, ReCouple-AS, and ReCouple++. This matched comparison highlights the differences in visual fidelity and semantic consistency induced by each sampling strategy.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 552,
+              "image_path": "figures/2610.41269/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 925
+            },
+            {
+              "caption": "Figure 3 Sparse OT graph comparison at B = 8 for ReCouple and RandomBlockSelect.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 533,
+              "image_path": "figures/2610.41269/figure-003.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 933
+            },
+            {
+              "caption": "Figure 4 Gap to optimal coupling cost and OT-edge recall across R at B = 8. OT-edge recall is the fraction of edges in the global empirical OT matching that are contained in the admissible block graph.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 356,
+              "image_path": "figures/2610.41269/figure-004.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 962
+            },
+            {
+              "caption": "Figure 5 Held-out gap to optimal coupling cost and OT-edge recall across B for various choices of R.",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 359,
+              "image_path": "figures/2610.41269/figure-005.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 933
+            },
+            {
+              "caption": "Table 2 CIFAR-10 FID results with the Rectified Flow pretrained backbone. Lower is better. We fix R = 32 and B = 2048 for ReCouple, ReCouple-AS, ReCouple+, and ReCouple++. We use M = 10 for ReCouple+ and ReCouple++. Results are averaged over three seeds.",
+              "figure_id": "table-2-16",
+              "figure_number": "2",
+              "height": 400,
+              "image_path": "figures/2610.41269/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 896
+            },
+            {
+              "caption": "Table 3 CIFAR-10 FID results with the OT-CFM pretrained backbone. Same setting as Table 2.",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 398,
+              "image_path": "figures/2610.41269/table-007.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 896
+            },
+            {
+              "caption": "Table 1 Evaluation on the 2D multimodal task. We report the 2-Wasserstein distance (W2, lower is better) at different NFEs, together with the neural acceleration energy Eacc (lower is better).",
+              "figure_id": "table-1-9",
+              "figure_number": "1",
+              "height": 337,
+              "image_path": "figures/2610.41269/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 808
+            },
+            {
+              "caption": "Table 11 Sample standard deviation of CIFAR-10 FID with the OT-CFM pretrained backbone, corresponding to Table 3. Standard deviations are computed over three seeds. For the OT-CFM backbone row, the standard deviation reflects sampling-seed variability; for the fine-tuned methods, it reflects variability across training seeds.",
+              "figure_id": "table-11-10",
+              "figure_number": "11",
+              "height": 400,
+              "image_path": "figures/2610.41269/table-009.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 854
+            },
+            {
+              "caption": "Table 10 Sample standard deviation of CIFAR-10 FID with the Rectified Flow pretrained backbone, corresponding to Table 2. Standard deviations are computed over three seeds. For the RF backbone row, the standard deviation reflects sampling-seed variability; for the fine-tuned methods, it reflects variability across training seeds.",
+              "figure_id": "table-10-3",
+              "figure_number": "10",
+              "height": 399,
+              "image_path": "figures/2610.41269/table-010.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 854
+            },
+            {
+              "caption": "Table 9 Wall-clock cost comparison for the CIFAR-10 experiments. Times are reported in minutes. Preparation is the one-time method-specific cost for constructing the required coupling, pair bank, or teacher targets and is shared across compatible runs. Post-training time is reported as mean ± sample standard deviation over three training seeds. FID evaluation, backbone pretraining, and scheduler waiting are excluded. †Teacher preparation uses the recorded historical allocation wall time with four concurrent GPUs and is therefore not directly hardware-normalized against the other preparation times.",
+              "figure_id": "table-9-2",
+              "figure_number": "9",
+              "height": 400,
+              "image_path": "figures/2610.41269/table-011.webp",
+              "kind": "table",
+              "page": 39,
+              "width": 825
+            },
+            {
+              "caption": "Table 12 CIFAR-10 ablations with the RF backbone at low NFEs. For ReCouple, we jointly vary the block size B and number of projection proposals R. For ReCouple+ and ReCouple++, we vary the pooling factor M and spatial-regularization strength η, respectively, while fixing the remaining hyperparameters to their default values. Each cell reports FID as mean ± sample standard deviation over three seeds (lower is better).",
+              "figure_id": "table-12-14",
+              "figure_number": "12",
+              "height": 470,
+              "image_path": "figures/2610.41269/table-012.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 812
+            },
+            {
+              "caption": "Table 13 CIFAR-10 ablations with the RF backbone at higher NFEs. Experimental settings are identical to Table 12. Each cell reports FID as mean ± sample standard deviation over three seeds (lower is better).",
+              "figure_id": "table-13-13",
+              "figure_number": "13",
+              "height": 471,
+              "image_path": "figures/2610.41269/table-013.webp",
+              "kind": "table",
+              "page": 41,
+              "width": 804
+            },
+            {
+              "caption": "Table 7 Additional distributional metrics on the 2D task at NFE 1. Higher is better for precision, recall, density, and coverage; lower is better for sliced Wasserstein distance (sW2).",
+              "figure_id": "table-7-17",
+              "figure_number": "7",
+              "height": 313,
+              "image_path": "figures/2610.41269/table-014.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 779
+            },
+            {
+              "caption": "Table 8 Additional distributional metrics on the 2D task at NFE 8. Higher is better for precision, recall, density, and coverage; lower is better for sliced Wasserstein distance (sW2).",
+              "figure_id": "table-8-18",
+              "figure_number": "8",
+              "height": 312,
+              "image_path": "figures/2610.41269/table-015.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 779
+            },
+            {
+              "caption": "Table 4 ImageNet-256 FID results using the pretrained SiT-XL/2 backbone. All metrics are computed using 50K generated samples with Euler integration. Lower is better; the best result at each NFE is shown in bold. ReCouple++ uses pooling factor M = 2.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 202,
+              "image_path": "figures/2610.41269/table-016.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 950
+            },
+            {
+              "caption": "Table 5 Matched best-of-R candidate selection for the standard Gaussian source to four-mode Gaussian target experiment (N = 128, B = 8). ReCouple chooses the best of R random projection-induced block geometries, while RandomBlock&Select chooses the best of R independent geometry-blind balanced block geometries, using the same block-OT objective. Values are mean ± standard deviation over 50 independent candidate pools. The unrestricted global empirical OT cost is C⋆. OT-edge recall is the fraction of edges of the global OT permutation retained by the selected block graph; the geometry-blind baseline is B/N = 0.0625.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 187,
+              "image_path": "figures/2610.41269/table-017.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 775
+            },
+            {
+              "caption": "Table 14 Coupling diagnostics for the CIFAR-10 RF ablations. Relative cost reduction is 100(1− C/Cind), where C is the average sum of squared pixelwise endpoint differences and Cind is the cost of independent pairing using the same source pool and empirical target marginal for each M . For M = 1, we additionally report the normalized endpoint-cost gap to global empirical OT, (C − COT)/(Cind − COT). For each B, R ∈ {4, 16, 32} yields the same assignment; all ReCouple++ settings share the M = 5 ReCouple+ plan.",
+              "figure_id": "table-14-6",
+              "figure_number": "14",
+              "height": 214,
+              "image_path": "figures/2610.41269/table-018.webp",
+              "kind": "table",
+              "page": 42,
+              "width": 798
+            },
+            {
+              "caption": "Table 6 Coupling-construction diagnostics on the 2D task. Preparation times exclude neural post-training.",
+              "figure_id": "table-6-19",
+              "figure_number": "6",
+              "height": 104,
+              "image_path": "figures/2610.41269/table-019.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 935
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41269/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2610.41269",
+          "relevance": 5,
+          "selection_reason": "Coarse-grained OT coupling and rollout-free post-training for flow matching are transferable to generative video and world-model pipelines.",
+          "summary_status": "generated",
+          "title": "Coarse-Graining Optimal Transport for Rollout-Free Post-Training of Flow Matching",
+          "tldr": "ReCouple provides controllable, rollout-free coarse-grained OT couplings for flow matching, exposing how coupling optimality, model realizability, and NFE affect generation quality.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Computer vision models learn hand action only from its visual consequences, without access to the underlying embodied motor signals. We address this absence with MotorSense, the first large-scale paired egocentric video and surface electromyography (EMG) dataset. MotorSense pairs bimanual EMG bands with egocentric video and yields synchronized video, bimanual EMG and IMU, and audio across 100 hours of unscripted manipulation. EMG offers a powerful scalable alternative to manual annotation: it captures finger movement, hand configuration, and the forces exerted between hand and environment as a dense signal free of occlusion and labeler bias, whereas manual annotation is costly, subjective, and unreliable under occlusion. We use MotorSense to learn sensorimotor alignment, producing an organization of action that is shared across the visual and motoric spaces, through cross-modal pre-training between video and EMG. The resultant vision models are then transferred to downstream tasks that benefit from sensorimotor alignment: in this case, action recognition, 3D hand reconstruction, and 3D contact reconstruction. We further demonstrate a generative application in which EMG motor signals are used to condition a video diffusion model, yielding videos of fine-grained hand manipulation. Across four action-centric computer vision tasks and eight popular video datasets, we demonstrate that sensorimotor alignment provides a stronger foundation for visual representation learning than conventional self-supervised learning methods over video, outperforming every baseline across all tasks and datasets evaluated.",
+          "arxiv_id": "2610.41127",
+          "arxiv_url": "https://arxiv.org/abs/2610.41127",
+          "authors": [
+            "Eadom Dessalene, Michael Maynord, Amir-Hossein Shahidzadeh, Botao He, Yasamin Tabatabaee, Ruoshi Liu, Ruohan Gao, Paul Pu Liang, Yiannis Aloimonos"
+          ],
+          "bullets": [
+            "Pairs egocentric video with bimanual EMG, IMU, and audio across 100 hours of unscripted manipulation.",
+            "Uses EMG as a dense, occlusion-free alternative to costly and subjective manual action annotation.",
+            "Learns shared sensorimotor representations through video–EMG cross-modal pretraining.",
+            "Transfers the learned representations to action recognition, 3D hand reconstruction, and 3D contact reconstruction.",
+            "Also conditions video diffusion on EMG to generate fine-grained hand-manipulation videos; the approach outperforms evaluated video self-supervised baselines across four tasks and eight datasets."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of MOTORSENSE. (A) Sensorimotor Alignment. Windows 1, . . . , N of bimanual EMG (left) and egocentric video (right) are embedded by an EMG encoder and a video encoder and aligned with a symmetric contrastive objective (Section 3.2): the video and EMG embeddings of the same window (Vi, Ei) are pulled together, while embeddings from different windows are pushed apart. (B) Downstream Tasks. The learned representations are used for downstream tasks: 1) video diffusion consisting of a single reference frame as input along with EMG control signals, 2) action recognition, 3) 3D hand-object Reconstruction, 4) 3D hand contact prediction.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 357,
+              "image_path": "figures/2610.41127/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 829
+            },
+            {
+              "caption": "Figure 7: Qualitative results for video diffusion. We compare our proposed motor conditioning to a video diffusion model conditioned solely on the video history (unimodal conditioning), for a sequence involving the stirring of tofu in a pan. The video conditioning model misinterprets the action performed, generating a video of a scooping action as opposed to a stirring action, whereas our method correctly generates a video of the stirring of tofu.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 493,
+              "image_path": "figures/2610.41127/figure-002.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 829
+            },
+            {
+              "caption": "Figure 8: Qualitative results for video diffusion. We compare our proposed motor conditioning to a video diffusion model conditioned solely on the video history (unimodal conditioning), for a sequence involving the spreading of mayonnaise with a spoon. The video conditioning model misinterprets the action performed, generating a rotation of the bread as opposed to a spreading action of the spoon, whereas our method correctly generates a video of the spreading of mayonnaise with a spoon.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 373,
+              "image_path": "figures/2610.41127/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 826
+            },
+            {
+              "caption": "Figure 9: Qualitative results for video diffusion. We compare our proposed motor conditioning to a video diffusion model conditioned solely on the video history (unimodal conditioning), for a bimanual manipulation sequence involving the peeling of an avocado. The video conditioning model renders the index finger as resting against the thumb, whereas our method correctly positions the index finger against the surface of the avocado for the peeling action.",
+              "figure_id": "figure-9-12",
+              "figure_number": "9",
+              "height": 486,
+              "image_path": "figures/2610.41127/figure-004.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 829
+            },
+            {
+              "caption": "Figure 4: Self-supervised sensorimotor alignment organizes video and EMG by hand action. (a) t-SNE plot of the joint embedding space for video (green) and EMG (purple) derived from the two towers of our self-supervised contrastive model (Section 3.2). A \"modality gap\" is observed [37] between video and EMG clusters. (b) The clips associated with each pair: the video query (left) and the clip whose EMG was retrieved (right). Each retrieved clip performs the query’s hand action—cutting, mixing in a bowl, drying—with a different object, scene, and recording. (c) The EMG embeddings of (a), coloured by verb with marker shape denoting the object. Despite the network never being trained over these labels, windows of the same action form compact regions (e.g. mix salad, scrape bowl) and verbs group together (the cut family in red). Best viewed zoomed-in and in colour.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 492,
+              "image_path": "figures/2610.41127/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 829
+            },
+            {
+              "caption": "Figure 1: EMG captures both categorical and continuous structure of hand actions. (Top) For three discrete hand configurations repeated twice—fist, point, and flat—each pose produces a distinct and reproducible EMG signature: fist is marked by a suppressed purple channel (#7) with respect to flat and a pronounced red channel (#1) with respect to point; point exhibits lower overall amplitude, with less purple than flat and less red than fist; flat is distinguished by pronounced purple and red activation. Sharp grey rectangles reflect the boundaries between hand gestures and rest states. (Bottom) A pick-and-lift sequence combines gradual and abrupt transitions: the hand moves smoothly from rest through pregrasp into grasp, changes sharply as force is applied at lift, then settles—non-instantaneously—into a steady hold. The EMG mirrors this structure, with channels quiet at rest, building subtly through pregrasp and grasp, peaking sharply as the lift begins, and stabilizing during hold.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 502,
+              "image_path": "figures/2610.41127/figure-006.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Figure 2: The bimanual EMG sensing setup of MOTORSENSE. Middle: the MindRove Armband used for data collection, worn on the left and right wrists (top and bottom row, respectively), with colored dots marking the electrode sensors equidistantly arranged around the band. Right: crosssectional anatomy of the lower forearm with each electrode overlaid. Left: example 8-channel EMG recordings from the left and right wristbands gathered during a manipulation task primarily involving the right hand; each colored trace corresponds to one electrode.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 277,
+              "image_path": "figures/2610.41127/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 500
+            },
+            {
+              "caption": "Figure 5: Qualitative results on ARCTIC [20] for 3D hand-object reconstruction. Each row shows the RGB input, reconstructions from a vision backbone trained without EMG and with EMG (MOTORSENSE pre-training), and ground truth. Incorporating EMG during pre-training yields 3D hands and objects that more closely match the ground truth.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 212,
+              "image_path": "figures/2610.41127/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 417
+            },
+            {
+              "caption": "Figure 6: The MOTORSENSE data collection workflow. Each session is organized into four stages, flowing left to right: hardware setup (connecting the two MindRove armbands over separate Wi-Fi access points and verifying installation of Aria Studio), device fitting (placing the bands slightly above each wrist, powering on and configuring the Aria glasses, and confirming correct mounting via a clench test), recording (launching the EMG and Aria streams together and proceeding with unscripted manipulation), and post-recording (stopping both streams, offloading Aria recordings via Aria Studio, and resetting the hardware for the next session).",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 177,
+              "image_path": "figures/2610.41127/figure-009.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Action recognition results across benchmarks. Top-1 accuracy (%) with the backbone frozen (top) or fine-tuned end-to-end (bottom) on EPIC-Kitchens-100 [10], SomethingSomething v2 [26], Ego-Exo4D [28], and an annotated subset of MOTORSENSE. All rows use a Hiera-B backbone initialized from K400-MAE [50]; ρSimCLR, ρMoCo, and ρBYOL [22] are pre-trained on the same MOTORSENSE recordings with RGB-only objectives. Best result per column in bold; ∆ rows give our margin over the best baseline.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 409,
+              "image_path": "figures/2610.41127/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Image-to-video generation on held-out MOTORSENSE recordings. All methods other than the top row share the same frozen video diffusion backbone and differ only in their conditioning signal and the trainable HyperNetwork/LoRA parameters. Evaluation is performed over a bounding box produced by Aria MPS [18] (applied jointly to generated and original images). Best results are shown in bold.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2610.41127/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 727
+            },
+            {
+              "caption": "Table 3: Hand contact reconstruction on MOTORSENSE. IoU (%) between predicted and annotated contact regions on hands in contact, and AUROC (%) for detecting whether a hand is in contact; mean ± std over three seeds. Best in bold; ∆ is our margin over the best baseline.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 208,
+              "image_path": "figures/2610.41127/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 424
+            },
+            {
+              "caption": "Table 5: Pre-training ablations. Action top-1 accuracy on EPIC-KITCHENS-100 and MotorSense with a Hiera-B backbone; each ablated row changes a single setting of the reference (EMG+IMU, 8 electrodes per arm, same-recording batches, time-resolved embeddings). Single seed per evaluation. Best pre-trained result per column in bold.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 248,
+              "image_path": "figures/2610.41127/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 668
+            },
+            {
+              "caption": "Table 2: 3D hand reconstruction. Mean per-joint position error (mm; lower is better) relative to the hand root (MPJPE) and in camera coordinates without root alignment (A-MPJPE) on ARCTIC [20], H2O [34], and HOT3D [3], using a hand-only ArcticNet-SF [20] with a ResNet-50 backbone initialized from ImageNet alone or after sensorimotor alignment on MOTORSENSE. ∆ is the change in error from our pre-training.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 163,
+              "image_path": "figures/2610.41127/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 794
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41127/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.41127",
+          "relevance": 8,
+          "selection_reason": "Egocentric video and EMG sensorimotor alignment for action understanding; learns transferable embodied knowledge from human interaction videos.",
+          "summary_status": "generated",
+          "title": "MotorSense: A Video-EMG Dataset of Motoric Representations for Action Understanding",
+          "tldr": "MotorSense introduces a large-scale synchronized video–EMG dataset and cross-modal pretraining approach that aligns visual and motor representations for improved action understanding and hand manipulation generation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "learning-from-human-video"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The reasoning capabilities of vision-language models (VLMs) can be limited by incomplete or inaccurate visual observations in the general domain. In unmanned aerial vehicle (UAV) scenes, small targets, subtle attributes, and changing viewpoints further complicate perception and understanding. Therefore, we introduce Drone-PUR, a dataset and benchmark organized around visual clue discovery, interpretation, and integration, corresponding to the three capability dimensions of perception, understanding, and reasoning. Reasoning samples are designed to require models to combine multiple visual clues to derive visually grounded conclusions. Its 11 tasks provide 175k training and 20k test samples spanning single images, image sequences, cross-modal images, and multiple viewpoints. All test samples undergo human review. Evaluating 22 general-purpose VLMs reveals persistent limitations in spatial judgment and cross-modal and cross-view reasoning. Across models, stronger perception is associated with better reasoning, while single-task fine-tuning further reveals selective bidirectional transfer between these capabilities. To examine domain adaptation, we develop UAV-PUR from Qwen3-VL through staged fine-tuning with auxiliary supervision. Its 4B and 8B variants improve overall multiple-choice accuracy by 18.33 and 17.52 percentage points over their pretrained counterparts, respectively. The dataset and project resources are available at https://drone-pur.github.io.",
+          "arxiv_id": "2610.40801",
+          "arxiv_url": "https://arxiv.org/abs/2610.40801",
+          "authors": [
+            "Jiahe Wu, Bing Cao, Xingyue Guo, Ruipu Zhao, Beiming Yu, Jiekang Feng, Qinghua Hu, Pengfei Zhu"
+          ],
+          "bullets": [
+            "Targets incomplete visual observations involving small objects, subtle attributes, changing viewpoints, and multimodal inputs.",
+            "Organizes tasks around visual clue discovery, interpretation, and integration across images, sequences, cross-modal images, and viewpoints.",
+            "Contains 175k training and 20k human-reviewed test samples; evaluations cover 22 general-purpose VLMs.",
+            "Finds persistent weaknesses in spatial judgment and cross-modal/cross-view reasoning, with stronger perception linked to better reasoning.",
+            "UAV-PUR models adapted from Qwen3-VL improve multiple-choice accuracy by 18.33 and 17.52 percentage points for 4B and 8B variants, respectively."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 13. Qualitative comparisons of open-ended detection and grounding on Drone-PUR. OD predictions are displayed separately for each model, with TP, FP, FN, and F1 scores reported below. For VG, MMR-G, MVR-G, and MIG, predictions from four models are overlaid on the target image, with corresponding IoU scores. Green boxes indicate ground truth; model predictions follow the color legend. Enlarged crops highlight target details and grounding differences.",
+              "figure_id": "figure-13-3",
+              "figure_number": "13",
+              "height": 869,
+              "image_path": "figures/2610.40801/figure-001.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 939
+            },
+            {
+              "caption": "Fig. 9. Paired comparison of multiple-choice and open-ended predictions across six models. Stacked bars show the proportions of samples answered correctly in both formats, only one format, or neither.",
+              "figure_id": "figure-9-11",
+              "figure_number": "9",
+              "height": 538,
+              "image_path": "figures/2610.40801/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 518
+            },
+            {
+              "caption": "Fig. 10. Effects of visual clue masking on reasoning accuracy. On the same task subsets, progressive key-clue masking is compared with masking regions matched in area and shape. Zero denotes full input. Horizontal dotted lines indicate each model’s text-only baseline.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 232,
+              "image_path": "figures/2610.40801/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1019
+            },
+            {
+              "caption": "Fig. 12. Qualitative examples of multimodal and multi-view reasoning. Blue and orange borders mark essential clues from different input images; gray borders mark distracting regions. Model icons indicate selected options, with green and red denoting correct and incorrect answers, respectively. Only the GT option and options selected by the displayed models are shown.",
+              "figure_id": "figure-12-6",
+              "figure_number": "12",
+              "height": 770,
+              "image_path": "figures/2610.40801/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 439
+            },
+            {
+              "caption": "Fig. 11. Modality and view ablation study on MMR and MVR. Signed annotations indicate single-image accuracy changes relative to full-input performance.",
+              "figure_id": "figure-11-8",
+              "figure_number": "11",
+              "height": 216,
+              "image_path": "figures/2610.40801/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1023
+            },
+            {
+              "caption": "Fig. 8. Cross-task transfer following single-task fine-tuning on Drone-PUR.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 407,
+              "image_path": "figures/2610.40801/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 462
+            },
+            {
+              "caption": "Fig. 7. Pearson correlations across tasks and capability dimensions.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 406,
+              "image_path": "figures/2610.40801/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 463
+            },
+            {
+              "caption": "TABLE I PERFORMANCE ON THE DRONE-PUR MULTIPLE-CHOICE BENCHMARK. WE REPORT API-EVALUATED MODELS, LOCALLY EVALUATED MODELS, AND FINE-TUNED MODELS. THE BEST AND SECOND-BEST SCORES WITHIN EACH MODEL CATEGORY ARE SHOWN IN BOLD AND UNDERLINED, RESPECTIVELY.",
+              "figure_id": "table-I-13",
+              "figure_number": "I",
+              "height": 759,
+              "image_path": "figures/2610.40801/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE VI ABLATION OF TRAINING STAGES, AUXILIARY SUPERVISION, AND MERGER ADAPTATION. WITHIN EACH SIZE GROUP, THE BEST AND SECOND-BEST SCORES ARE SHOWN IN BOLD AND UNDERLINED, RESPECTIVELY.",
+              "figure_id": "table-VI-7",
+              "figure_number": "VI",
+              "height": 396,
+              "image_path": "figures/2610.40801/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 529
+            },
+            {
+              "caption": "TABLE III PERFORMANCE COMPARISON ON THE FIVE SUBTASKS OF PSJ.",
+              "figure_id": "table-III-4",
+              "figure_number": "III",
+              "height": 469,
+              "image_path": "figures/2610.40801/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 516
+            },
+            {
+              "caption": "TABLE II PERFORMANCE COMPARISON ON THE SUBTASKS OF MMR AND MVR.",
+              "figure_id": "table-II-5",
+              "figure_number": "II",
+              "height": 469,
+              "image_path": "figures/2610.40801/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 506
+            },
+            {
+              "caption": "TABLE V OPEN-ENDED COUNTING PERFORMANCE AND UNDERESTIMATION RATES.",
+              "figure_id": "table-V-12",
+              "figure_number": "V",
+              "height": 321,
+              "image_path": "figures/2610.40801/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 516
+            },
+            {
+              "caption": "TABLE IV OPEN-ENDED DETECTION AND GROUNDING PERFORMANCE.",
+              "figure_id": "table-IV-10",
+              "figure_number": "IV",
+              "height": 303,
+              "image_path": "figures/2610.40801/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 523
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.40801/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.40801",
+          "relevance": 7,
+          "selection_reason": "UAV-scene VLM benchmark emphasizing spatial and cross-view reasoning; fits spatial intelligence and video understanding.",
+          "summary_status": "generated",
+          "title": "Drone-PUR: From Visual Clue Discovery to Understanding and Reasoning in UAV Scenes",
+          "tldr": "Drone-PUR benchmarks and improves VLM perception, understanding, and reasoning in challenging UAV scenes through 11 visually grounded tasks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Streaming video assistance requires models to answer asynchronous questions from an observed prefix under a fixed context budget. Existing approaches model response timing or compress history, but an online state formed before future questions are known can omit visual details before later questions reveal their relevance; the retained state alone cannot recover them. We introduce Watch-Think-Interact (WTI), a closed-loop framework for multi-question streaming video reasoning. WTI maintains compact natural-language memory entries tagged with source-video time ranges; these entries support direct reasoning when sufficient and otherwise anchor selective recall of finer visual evidence. For each question, WTI answers when current context and memory suffice, continues watching when required evidence has not appeared, or recalls a relevant past interval and decides again after incorporating the returned chunks, without replaying the full observed history. To train this behavior, we construct WTI-82K, comprising 82,335 timed questions across 4,812 causally aligned trajectories, and develop Stream-GDPO to optimize complete multi-question streaming rollouts using trajectory-level feedback for response timing, source-video recall, and memory updates. WTI achieves state-of-the-art aggregate performance among the compared open-source streaming baselines, reaching 83.3% on StreamingBench and 73.6% weighted overall accuracy on OVO-Bench.",
+          "arxiv_id": "2609.37035",
+          "arxiv_url": "https://arxiv.org/abs/2609.37035",
+          "authors": [
+            "Ziheng Huang",
+            "Yicheng Bao",
+            "Xueheng Li",
+            "Zhenkun Gao",
+            "Bangwei Liu",
+            "Kunquan Li",
+            "Yuxiang Shen",
+            "Bangyan Li",
+            "Xuejiao Wang",
+            "Changbo Wang",
+            "Gaoqi He"
+          ],
+          "bullets": [
+            "Addresses the problem that early online summaries may omit visual details needed by later questions under a fixed context budget.",
+            "Stores compact natural-language memories linked to source-video time ranges, enabling targeted recall without replaying the full history.",
+            "Uses a closed-loop policy that decides whether to answer, continue watching, or retrieve past visual evidence before answering.",
+            "Trains with Stream-GDPO on WTI-82K, optimizing response timing, video recall, and memory updates across complete question trajectories.",
+            "Reports 83.3% on StreamingBench and 73.6% weighted accuracy on OVO-Bench, achieving state-of-the-art performance among compared open-source baselines."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of Watch-Think-Interact. For each arriving chunk, WTI updates a short thinking state and chooses to remain silent, answer, or recall. Recall returns visual evidence and loops back to the decision at the same time step; controller-triggered memory updates separately compress elapsed observations into a bounded temporal index. Stream-GDPO optimizes the resulting complete interaction trajectories.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 571,
+              "image_path": "figures/2609.37035/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 3: WTI-82K construction pipeline. WTI-82K converts videos into streaming-causal trajectories by standardizing clips, aligning chunk-level evidence chains, generating QAs from aligned evidence, placing query and answerable times, and checking timestamp bounds, answer availability, action grammar, and evidence-interval fields. The resulting samples cover Real-Time, Backward Tracing, and Proactive interactions under the same visibility constraints as inference.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 456,
+              "image_path": "figures/2609.37035/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 1: Motivation for Watch-Think-Interact. In causal streaming video, asynchronous questions may require current, past, or not-yet-observed evidence. WTI uses a bounded active window for current perception, compact time-indexed memory for direct reasoning and temporal localization, and selective recall to reload a past visual interval.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 519,
+              "image_path": "figures/2609.37035/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 4: Training-time GSPO/Stream-GDPO diagnostics. Panels report outcome accuracy, BT recall triggering, post-recall outcome accuracy, and memory quality; faint and bold curves show raw and rolling values.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 164,
+              "image_path": "figures/2609.37035/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1032
+            },
+            {
+              "caption": "Table 1: Results on OVO-Bench. Scores are grouped by Real-Time, Backward, and Forward tasks; Avg. gives the corresponding group average, and Overall gives the benchmark average.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 475,
+              "image_path": "figures/2609.37035/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1026
+            },
+            {
+              "caption": "Table 5: Component ablation across OVO-BT and offline long-video benchmarks.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 131,
+              "image_path": "figures/2609.37035/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 354
+            },
+            {
+              "caption": "Table 4: Training-objective ablation across streaming and offline long-video benchmarks; GDPO denotes Stream-GDPO.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 131,
+              "image_path": "figures/2609.37035/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 646
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2609.37035/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.37035",
+          "relevance": 8,
+          "selection_reason": "Streaming video reasoning with memory and RL, directly relevant to video understanding.",
+          "summary_status": "generated",
+          "title": "Watch-Think-Interact: Bootstrapping Long-Horizon Multi-Turn Streaming Video Reasoning with Reinforcement Learning",
+          "tldr": "WTI enables long-horizon streaming video assistants to answer multi-turn questions by combining compact time-tagged memory, selective visual recall, and reinforcement learning for when to watch, recall, or respond.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-31",
       "paper_count": 1,
       "papers": [
@@ -219714,5 +221894,5 @@
   "schema_version": 1,
   "subtopic_id": null,
   "topic_id": "video-models",
-  "total_paper_count": 1143
+  "total_paper_count": 1154
 }

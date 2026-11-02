@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**380 papers total**
+**383 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-01 | [Generated storm lifecycles fill the rare-event tail of short rainfall records](https://arxiv.org/abs/2610.41365) | World Models: Video World Models | StormGen generates physically plausible, spatially coherent 24-hour rainfall lifecycles from a storm’s first hours, helping extend sparse records with realistic extreme-event scenarios. | 5 | 6 |
+| 2026-11-01 | [One Verdict Is Not Enough: Regression Testing Learned World Models and Their Test Harnesses](https://arxiv.org/abs/2610.41130) | World Models: Video World Models | TetraState reveals configuration- and harness-level regressions in learned world models that aggregate accuracy and verdict-flip checks can miss. | 9 | 9 |
+| 2026-11-01 | [WorldBridge: Bridging Video and Action for Task Generalization in World Action Models](https://arxiv.org/abs/2610.40748) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models | WorldBridge improves robot task generalization by combining broad video prediction with sparse action supervision through a structured video-to-action model. | 9 | 7 |
 | 2026-10-31 | [WorldProbe: When Video World Models Fall Apart under Long-Horizon Spatial Exploration](https://arxiv.org/abs/2610.39721) | World Models: Video World Models | WorldProbe shows that video world models often lose long-range spatial consistency during adaptive, extended camera exploration despite maintaining local visual quality. | 9 | 8 |
 | 2026-10-31 | [Weighted Adjoint Matching: Finetuning Flow Matching Models with Time-Dependent Control Cost](https://arxiv.org/abs/2610.20035) | World Models: Video World Models | Weighted Adjoint Matching finetunes diffusion or flow-matching models by protecting early semantic structure while rewarding late-stage detail refinement. | 7 | 8 |
 | 2026-10-31 | [DeltaWAM: Change-Centric Visual Foresight via Delta Tokens for an Efficient World-Action Model](https://arxiv.org/abs/2609.33177) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models | DeltaWAM predicts compact visual changes rather than full future frames, enabling efficient robotic action generation with strong LIBERO performance and low inference cost. | 9 | 9 |

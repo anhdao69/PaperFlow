@@ -1,6 +1,2525 @@
 {
   "days": [
     {
+      "date": "2026-11-01",
+      "paper_count": 10,
+      "papers": [
+        {
+          "abstract": "Agentic workflows are increasingly shifting towards long-horizon tasks, such as open-ended scientific work, where models benefit from long context windows. However, at ultra-long context (above 1M tokens), full attention is prohibitively expensive. A promising approach is sparse attention, in which a dedicated indexer selects a subset of keys for the attention. Yet current methods of indexing either still have quadratic cost in context size or lose accuracy at ultra-long context scale. We address this with Latent Sparse Attention (LSA), an efficient attention method that maintains accuracy at ultra-long context. In LSA, keys are hierarchically clustered in a learned latent space, and queries score the hierarchy of clusters instead of scoring every key, making prefill, decode and training faster at long context. We propose two variants, Distilled-LSA (D-LSA), which can be applied to pre-trained models via distillation, and Native-LSA (N-LSA), which is trained natively on the next-token loss alone. On GLM-5.3-FLASH (QWEN-3.8-27B) at 10M tokens, D-LSA speeds up one attention layer by 22.7x (72.4x) in prefill and 4.6x (42.5x) in decode over its original sparse attention (full attention), while keeping similar accuracy across a variety of tasks. N-LSA matches the accuracy of full attention with a training speedup of 1.6x per layer at 128k tokens. LSA offers practical and efficient attention for models to benefit from ultra-long context.",
+          "arxiv_id": "2610.42147",
+          "arxiv_url": "https://arxiv.org/abs/2610.42147",
+          "authors": [
+            "Ales Kubicek, Andrea Caciolai, Liangzu Peng, Sukrit Sumant, Benjamin Hoover, Fraser Greenlee, Ruairidh M. Battleday, Radim Urban, Torsten Hoefler, James C. R. Whittington"
+          ],
+          "bullets": [
+            "Targets the prohibitive cost and accuracy degradation of existing sparse attention beyond 1M tokens.",
+            "Organizes keys into a learned latent hierarchy, allowing queries to score clusters rather than all keys.",
+            "Introduces Distilled-LSA for adapting pretrained models and Native-LSA for native next-token-loss training.",
+            "At 10M tokens, D-LSA substantially accelerates prefill and decode while maintaining similar accuracy across evaluated tasks.",
+            "N-LSA matches full-attention accuracy and provides per-layer training speedups at 128k tokens."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. D-LSA and N-LSA overview. Top: one attention layer. The keys are pooled and clustered into buckets. A query ( ) scores the bucket centroids ( ) and attends only to the selected long-range keys (plus sink and window). Bottom: accuracy and performance (P: prefill, D: decode, T: training) for both D-LSA and N-LSA. D-LSA is shown with flat search. Its subquadratic variant, D-LSA (Tree), follows a similar trend (Figure 5).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 445,
+              "image_path": "figures/2610.42147/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 492
+            },
+            {
+              "caption": "Figure 12. Reasoning tokens against baselines. Reasoning tokens of each method relative to the baseline of its model, on the same questions. Grey bands mark the expected variation, and markers inside them show no measurable change in reasoning length.",
+              "figure_id": "figure-12-4",
+              "figure_number": "12",
+              "height": 329,
+              "image_path": "figures/2610.42147/figure-002.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 479
+            },
+            {
+              "caption": "Figure 6. D-LSA speedup of one global attention layer. Prefill and decode speedup over the baseline attention (log scale), Full Attention for QWEN-3.8-27B and Block Sparse Attention (Flat) for GLM-5.3-FLASH, required memory at 10M with one index key per block of four keys for Block Sparse Attention (Flat), and prefill scaling up to 100M (log-log), extrapolated beyond 10M (shaded).",
+              "figure_id": "figure-6-23",
+              "figure_number": "6",
+              "height": 433,
+              "image_path": "figures/2610.42147/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1006
+            },
+            {
+              "caption": "Figure 5. D-LSA accuracy is on par with full attention and sparse attention baselines on downstream tasks. Shown on knowledge, reasoning and long-context tasks up to 10M tokens. Baseline scores are given with their 95% confidence interval.",
+              "figure_id": "figure-5-17",
+              "figure_number": "5",
+              "height": 375,
+              "image_path": "figures/2610.42147/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1006
+            },
+            {
+              "caption": "Figure 3. D-LSA design. Left: D-LSA (Flat). Indexer keys: 1 projection and L2 norm, 2 pooling (4:1), 3 bottom-up agglomerative",
+              "figure_id": "figure-3-18",
+              "figure_number": "3",
+              "height": 367,
+              "image_path": "figures/2610.42147/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 4. N-LSA design. The attention layer of N-LSA, which can be trained from scratch on the next-token loss alone.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 425,
+              "image_path": "figures/2610.42147/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 492
+            },
+            {
+              "caption": "Figure 7. N-LSA training speedup. Models trained natively on the NTP loss with Full Attention, SWA, NSA, PISA and N-LSA. Left: one attention layer, forward and backward, on one H200. Right: validation loss over the training time of the whole model in the decay phase (all on the same data and number of tokens).",
+              "figure_id": "figure-7-24",
+              "figure_number": "7",
+              "height": 205,
+              "image_path": "figures/2610.42147/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 477
+            },
+            {
+              "caption": "Figure 11. D-LSA accuracy on RULER individual tasks. The 13 tasks of RULER from 4k to 10M tokens on QWEN-3.8-27B and GLM-5.3-FLASH, by task group, with their average.",
+              "figure_id": "figure-11-28",
+              "figure_number": "11",
+              "height": 590,
+              "image_path": "figures/2610.42147/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 1006
+            },
+            {
+              "caption": "Figure 8. Top-k Oracle Attention on RULER. QWEN-3.8-27B at 128k tokens. Each query attends to a 4-token sink, a 512-token window and the top-k long-range keys, one list shared by all heads. Process: sum over all heads, pick top-k, renormalise per head over the shared selection.",
+              "figure_id": "figure-8-21",
+              "figure_number": "8",
+              "height": 379,
+              "image_path": "figures/2610.42147/figure-009.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1008
+            },
+            {
+              "caption": "Figure 2. Traditional sparse attention at ultra-long context. One global attention layer of GLM-5.3-FLASH (512k to 10M tokens) on one H200, prefilling the last chunk of 32,768 queries and decoding one token. Speedup of sparse attention over full attention (blue), share of the indexer (%), and potential speedup over sparse attention if the indexer were ‘free’ (green).",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 400,
+              "image_path": "figures/2610.42147/figure-010.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 483
+            },
+            {
+              "caption": "Figure 18. D-LSA with tensor parallelism (TP8). Top: MLA (GLM-5.3-FLASH). Bottom: GQA (QWEN-3.8-27B). Indexer keys:",
+              "figure_id": "figure-18-6",
+              "figure_number": "18",
+              "height": 656,
+              "image_path": "figures/2610.42147/figure-011.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 19. D-LSA with context parallelism (CP8). Top: prefill of GLM-5.3-FLASH (PCP8 + DCP8), each rank holding a contiguous",
+              "figure_id": "figure-19-25",
+              "figure_number": "19",
+              "height": 648,
+              "image_path": "figures/2610.42147/figure-012.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 14. Block size of Block Sparse Attention (Tree). RULER and PaperTrail up to 1M tokens with blocks of 8, 16 and 64 keys (npool), each selecting the same 4,608 keys, against the baseline of each model and D-LSA (Flat).",
+              "figure_id": "figure-14-12",
+              "figure_number": "14",
+              "height": 331,
+              "image_path": "figures/2610.42147/figure-013.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 483
+            },
+            {
+              "caption": "Figure 17. B Bucket scan on H200. Left: the thread blocks (colours) over tiles of tq index queries and spans of centroid tiles, and below,",
+              "figure_id": "figure-17-22",
+              "figure_number": "17",
+              "height": 456,
+              "image_path": "figures/2610.42147/figure-014.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 9. LongDocs. Tokens of the distillation mix by domain and source (left) and by sequence length (right), with the in-house agent traces hatched.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 269,
+              "image_path": "figures/2610.42147/figure-015.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 479
+            },
+            {
+              "caption": "Figure 10. PaperTrail. 1 A sample, its fabricated, host and back-",
+              "figure_id": "figure-10-19",
+              "figure_number": "10",
+              "height": 710,
+              "image_path": "figures/2610.42147/figure-016.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 492
+            },
+            {
+              "caption": "Figure 13. D-LSA accuracy on PaperTrail per tier. Tier 1, tier 2 and tier 3 questions, each averaged over the three domains and three repeats.",
+              "figure_id": "figure-13-5",
+              "figure_number": "13",
+              "height": 329,
+              "image_path": "figures/2610.42147/figure-017.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 481
+            },
+            {
+              "caption": "Figure 15. Implementation of the steps of D-LSA. Badges as in Figure 3.",
+              "figure_id": "figure-15-10",
+              "figure_number": "15",
+              "height": 188,
+              "image_path": "figures/2610.42147/figure-018.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 486
+            },
+            {
+              "caption": "Figure 16. Threshold estimate. For one query i. Top: the sampled scores, with θi at or just below the nθ-th best. Bottom: the row, of which about γp buckets score at or above θi and are listed, the top-p among them.",
+              "figure_id": "figure-16-15",
+              "figure_number": "16",
+              "height": 177,
+              "image_path": "figures/2610.42147/figure-019.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 481
+            },
+            {
+              "caption": "Table 4. Native training accuracy. Accuracy (%) of models trained from scratch with Full Attention, SWA, NSA, PISA and N-LSA. Every sparse method attends to about 2,560 keys per query.",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 159,
+              "image_path": "figures/2610.42147/table-020.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 479
+            },
+            {
+              "caption": "Table 7. Accuracy compared to the baseline. Baseline scores are in bold. Other rows show the difference to the baseline in points. Differences smaller than the 95% confidence interval (CI) of the baseline are not significant.",
+              "figure_id": "table-7-26",
+              "figure_number": "7",
+              "height": 275,
+              "image_path": "figures/2610.42147/table-021.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 466
+            },
+            {
+              "caption": "Table 6. Evaluation setup. Questions, repeats, generation and metric of every benchmark, with RULER questions per task.",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 142,
+              "image_path": "figures/2610.42147/table-022.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 483
+            },
+            {
+              "caption": "Table 8. PaperTrail not-in-corpus questions and controls. Score (%) on the questions whose answer is not in the papers at 512k tokens, for Full Attention, Block Sparse Attention (Flat) and (Tree), and D-LSA (Flat), (Tree) and (Training-Free). The controls ask the scored questions over parts of a sample, with GLM-5.3-FLASH and D-LSA (Training-Free).",
+              "figure_id": "table-8-3",
+              "figure_number": "8",
+              "height": 329,
+              "image_path": "figures/2610.42147/table-023.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 458
+            },
+            {
+              "caption": "Table 9. Hardware specs. Specifications of the GPUs we use, as given by NVIDIA (NVIDIA, 2026c;d;a;b).",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 206,
+              "image_path": "figures/2610.42147/table-024.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 400
+            },
+            {
+              "caption": "Table 5. Notation. D-LSA symbols and their description.",
+              "figure_id": "table-5-20",
+              "figure_number": "5",
+              "height": 87,
+              "image_path": "figures/2610.42147/table-025.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 492
+            },
+            {
+              "caption": "Table 11. Indexer kernels. Time of each step of the indexer of D-LSA on one H200, with its CuTe DSL and its Triton kernels, and the regime of its main CuTe DSL kernel.",
+              "figure_id": "table-11-16",
+              "figure_number": "11",
+              "height": 432,
+              "image_path": "figures/2610.42147/table-026.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 492
+            },
+            {
+              "caption": "Table 13. Communication added by the indexer. Collectives that the indexer of D-LSA adds to one layer for TP alone, PCP and DCP, with MLA (GLM-5.3-FLASH) and GQA (QWEN-3.827B), beyond those of the attention. Sizes are per rank, and decode frequencies per request.",
+              "figure_id": "table-13-8",
+              "figure_number": "13",
+              "height": 113,
+              "image_path": "figures/2610.42147/table-027.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 492
+            },
+            {
+              "caption": "Table 12. Tree search in decode. Time of the selection of one layer for one decode step, from the scoring of the centroids to the index lists, in µs, with the flat and the tree search, on one H200, replayed from a CUDA graph. The faster search is in bold.",
+              "figure_id": "table-12-9",
+              "figure_number": "12",
+              "height": 109,
+              "image_path": "figures/2610.42147/table-028.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 290
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42147/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.42147",
+          "relevance": 9,
+          "selection_reason": "Subquadratic sparse attention for ultra-long context via latent hierarchical key selection; directly fits efficient attention and long-context models.",
+          "summary_status": "generated",
+          "title": "Latent Sparse Attention: Towards Subquadratic Ultra-Long Context Attention",
+          "tldr": "Latent Sparse Attention enables efficient ultra-long-context attention by hierarchically routing queries to learned key clusters instead of examining every key.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The quadratic scaling of attention is a fundamental bottleneck limiting the long-context capabilities of large language models (LLMs). A variety of approaches have attempted to circumvent this, but they either fail to match attention's expressiveness (e.g., sliding-window or linear attention variants with fixed-size state) or only achieve constant-factor speedups (e.g., sparse attention methods whose indexers themselves scale quadratically). In this paper, we derive an asymptotically subquadratic sparse attention method based on a hierarchical, tree-structured indexer, which we call Zyphra Hierarchical Attention (ZHA). ZHA constructs a tree of recursively compressed key summaries over the KV cache, which future queries traverse from the top down to retrieve a sparse subset of keys. Crucially, by iteratively growing the tree's depth, the total cost including routing and final attention grows sublinearly in sequence length, resulting in overall subquadratic (but superlinear) scaling for attention. We demonstrate that ZHA can be cheaply applied to existing pretrained models with only a short KL distillation training stage over a few billion tokens, and maintains performance on long-context retrieval and challenging reasoning, mathematical, and agentic coding evaluation tasks. Moreover, we show that our method is highly robust to tree geometry including very deep trees of up to 6 levels. Finally, we develop a detailed performance model and show that our approach scales subquadratically, dramatically outperforms competing methods beyond 1 million context, and ultimately has the potential to extend effective context windows to the hundreds of millions or billions of tokens.",
+          "arxiv_id": "2610.42112",
+          "arxiv_url": "https://arxiv.org/abs/2610.42112",
+          "authors": [
+            "Leon Lufkin, Cutter Dawes, Alexander Speicher, Kamesh Krishnamurthy, Tom\\'as Figliolia, Beren Millidge"
+          ],
+          "bullets": [
+            "Addresses quadratic attention cost, which limits long-context scaling.",
+            "Builds a hierarchical tree of compressed key summaries that queries traverse to select sparse keys.",
+            "Joint routing and attention cost grows subquadratically—sublinear in sequence length for the relevant computation, but still superlinear overall.",
+            "Can be added to pretrained models using a short KL-distillation stage and maintains long-context retrieval, reasoning, math, and coding performance.",
+            "The authors report strong scaling beyond 1 million tokens and potential context windows of hundreds of millions to billions of tokens; performance depends on the method’s tree-based indexing scope."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of the ZHA architecture: (a) tree construction and (b) sparse routing. During tree construction, for each chunk of contiguous key nodes, we construct a compressed key node at the higher level by an attention-weighted sum of the keys, where the attention is computed with respect to the learned reference queries. In practice, we use multiple reference queries and store the key nodes for each in parallel. This process continues recursively with higher level key nodes being constructed from the summaries of lower levels. During routing, we start at the top of the tree and compute dot-product similarity scores between our query and the key nodes of that level. We select the set of nodes to expand using top-p, and then recursively descend the tree until we reach the leaf nodes corresponding to raw KV cache entries. The union of all the leaves we reach defines the sparse KV cache subset that we dispatch to the main attention.",
+              "figure_id": "figure-3-39",
+              "figure_number": "3",
+              "height": 460,
+              "image_path": "figures/2610.42112/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 960
+            },
+            {
+              "caption": "Figure 8: For a fixed top-p, and hence sparsity level, ZHA (here, R = 1, C = 8, p = 0.75) scales subquadratically according to our decode roofline model, eventually dramatically outperforming both dense attention and the MSA sparse attention variant. Importantly, we have not empirically validated the scaling at these ultra-long context lengths due to the lack of existing LLMs which can operate at these contexts. Because of this, while we can obtain subquadratic latency, it is unclear to what extent reasoning and retrieval performance degrades at the level of depths required for these ultra-long contexts. Latencies are modeled per-token decode times for the attention subsystem of one layer at batch size 1.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 384,
+              "image_path": "figures/2610.42112/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 504
+            },
+            {
+              "caption": "Figure 7: Per-level selection scales sublinearly in the ZHA router with predictable power-law exponent. (a)–(e): For ZHA geometries with depths L = 2–6 (C = 4, R = 16, p = 0.8), per-level selection counts (normalized by first-bin count per-level) on AIME problems fitted by power-law scaling curves. (f): Per-level exponents fitted by cumulative top-down model, demonstrating that the across-depth variation in their exponents is well-described by a simple model that accumulates top-down contributions.",
+              "figure_id": "figure-7-35",
+              "figure_number": "7",
+              "height": 389,
+              "image_path": "figures/2610.42112/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1026
+            },
+            {
+              "caption": "Figure 24: Modeled BF16 decode latency for dense attention, MSA, and ZHA (R = 1, C = 8) at p = 0.7, 0.75, 0.8, with the H100 assumptions and nondecreasing latency-minimizing depth of Figure 8. Latencies are modeled per-token decode times for the attention subsystem of one layer at batch size 1.",
+              "figure_id": "figure-24-36",
+              "figure_number": "24",
+              "height": 427,
+              "image_path": "figures/2610.42112/figure-004.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 504
+            },
+            {
+              "caption": "Figure 5: (a) Reasoning and (b) retrieval evaluation scores with dense attention, MSA, and deep (C4 L6) or wide (C256 L1) ZHA (p = 0.95, R = 16, converted from Qwen3.6-35B-A3B). Appendix B gives evaluation details and results across routing thresholds. We observe that ZHA with both wide and deep geometries maintains performance even at high sparsity levels, while MSA suffers performance degradation especially on retrieval tasks such as RULER and LongBench v2.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 341,
+              "image_path": "figures/2610.42112/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1063
+            },
+            {
+              "caption": "Figure 6: Geometry and sparsity have predictable effects on RULER accuracy (mean across tasks). Greater sparsity without degrading performance is achieved by: (a) decreasing compression CL, (b) increasing depth at fixed compression (CL = 4096), or (c) making key summaries more expressive (with increasing reference-query number R) at fixed chunk size and depth. (The horizontal dotted lines in panels (a)–(c) show dense attention.) (d) For the simple geometry-to-performance model, predictions versus measurements across 64K, 128K, and 256K, holding out each length in turn (RMSE: 1.44 percentage points).",
+              "figure_id": "figure-6-21",
+              "figure_number": "6",
+              "height": 231,
+              "image_path": "figures/2610.42112/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1061
+            },
+            {
+              "caption": "Figure 11: Dense top-p set size for individual query heads in Qwen3.6-35B-A3B, using the same six-book cohort and thresholds as Figure 1. Rows identify full-attention layers and columns identify query heads, with zero-based indices. Each panel averages only across books. All panels share logarithmic axis limits; colors denote p and the dotted black line gives the p = 1 reference.",
+              "figure_id": "figure-11-29",
+              "figure_number": "11",
+              "height": 731,
+              "image_path": "figures/2610.42112/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1031
+            },
+            {
+              "caption": "Figure 20: Measured RULER-13 accuracy at 256K versus (a) measured decode key share and (b) modeled decode-attention speedup over dense for Qwen3.6-35B-A3B (115 settings, 28 geometries). Speedups are H100 BF16 attention-layer projections at batch size one, not measured end-to-end timings; missing higher-level union counts use the slower modeled scenario. Colors denote R, markers C, and curves sweep p within each geometry. Black lines mark Pareto frontiers; dotted horizontal lines show dense accuracy, and the vertical guide marks 1×.",
+              "figure_id": "figure-20-4",
+              "figure_number": "20",
+              "height": 425,
+              "image_path": "figures/2610.42112/figure-008.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 1050
+            },
+            {
+              "caption": "Figure 4: Illustrative ZHA tree geometries of the three core tree parameters. We can trade off depth and width for a given level of compression in the tree, since compression scales as CL. Secondly, at the cost of additional compute, we can increase the number of reference queries.",
+              "figure_id": "figure-4-25",
+              "figure_number": "4",
+              "height": 737,
+              "image_path": "figures/2610.42112/figure-009.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "Figure 2: Fraction of KV entries of a 256K sequence covered by the union of top-p attention subsets as the number of future queries increases, for several values of p. We observe that for the higher p values we use in practice, a substantial fraction of the total KV cache is included in the union of the queries.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 357,
+              "image_path": "figures/2610.42112/figure-010.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 494
+            },
+            {
+              "caption": "Figure 10: (a) Cosine similarity distribution of every pair of reference queries within a KV group; (b) norm distribution of every reference query. Reference queries within a KV group become slightly more similar and their norms more concentrated as the tree gets shallower and its chunks larger.",
+              "figure_id": "figure-10-32",
+              "figure_number": "10",
+              "height": 902,
+              "image_path": "figures/2610.42112/figure-011.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 529
+            },
+            {
+              "caption": "Figure 9: Reference-query selection rates per tree level for the C4 L6 ZHA router on natural text. (a) Within each KV group and level, reference queries are independently ranked by selection frequency. Each point shows the level’s share of selections at that rank, averaged over layers and KV groups. Higher levels concentrate selections among fewer reference queries, while lower levels use them more uniformly. (b) Spearman correlation between levels’ selection rates. Higher levels have strongly aligned reference-query rankings. Agreement generally weakens as levels become further separated, with the chunk level showing the greatest divergence from the upper levels.",
+              "figure_id": "figure-9-31",
+              "figure_number": "9",
+              "height": 671,
+              "image_path": "figures/2610.42112/figure-012.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 459
+            },
+            {
+              "caption": "Figure 21: Held-out dense-attention latency and timing divided by prediction. Within each subfigure, rows are MHA, GQA4, GQA8, and MQA; columns are causal prefill and decode. Colours distinguish d ∈ {64, 128, 256}. Dots show all recorded timing samples and short ticks mark medians; solid lines in the latency views show worker-aware predictions. Each CUDA-event sample averages a replay batch, not an individual invocation. The lower views show tFlash/tmodel; the dashed 1× line denotes exact prediction, and values below it indicate overprediction. Matching views retain the same layout, colours, marks, and axis limits across precisions; the ratio views share the same ratio scale.",
+              "figure_id": "figure-21-9",
+              "figure_number": "21",
+              "height": 1079,
+              "image_path": "figures/2610.42112/figure-013.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 25: Retrieval traversals at 64K tokens for (a) single-needle and (b) multi-key 2 RULER tasks (Qwen3.6-35B-A3B, C16 L3, R = 16, p = 0.9). Both show layer 35, query head 8, while emitting the first answer digit. Dark blue blocks are scored and expanded nodes; light blue blocks scored but pruned nodes; grey blocks are nodes which were never scored by the router. Dense-attention rows show chunk-level mass on a logarithmic scale. The green marker indicates the ground-truth needle location. Boxed regions are enlarged below to reveal finer traversal details. These examples illustrate task-dependent routing with top-p: for single-needle, the router explores few branches before reaching the answer-containing chunk; for multi-key 2, whose context contains many distractor needles, it explores substantially more upper-level nodes. Both traversals ultimately attend to a single answer-containing chunk.",
+              "figure_id": "figure-25-3",
+              "figure_number": "25",
+              "height": 812,
+              "image_path": "figures/2610.42112/figure-014.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 1050
+            },
+            {
+              "caption": "Figure 31: Reference-query cosine similarities with references independently ordered by top-level selection frequency within each geometry and KV group, most to least frequent. Frequencies were measured during routed prefill on 16 RULER prompts at 64K tokens and p = 0.9. No cross-geometry matching is applied; diagonal structure therefore indicates correspondence in both direction and selection rank.",
+              "figure_id": "figure-31-14",
+              "figure_number": "31",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-015.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 32: Mean cosine similarities of centered reference keys across geometries, evaluated on the same 60 top-level nodes from four RULER prompts at 64K tokens. Each node covers 4096 keys. Within each node and KV group, the mean over the 16 reference keys is subtracted before computing cosine similarities, which are then averaged over nodes. C16 L3 references are clustered using reference-key cosine similarity; other geometries are Hungarian-matched using the same measure. The cross-geometry correspondence extends to the pooled key representations.",
+              "figure_id": "figure-32-1",
+              "figure_number": "32",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-016.webp",
+              "kind": "figure",
+              "page": 43,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 30: Reference-query cosine similarities across the four Qwen3.6-35B-A3B ZHA geometries. The C16 L3 references are ordered by average-linkage clustering with cosine distance; references in each other geometry are Hungarian-matched to them by cosine similarity. Matched references therefore occupy corresponding positions. Diagonal structure within the off-diagonal blocks indicates similar reference directions across geometries.",
+              "figure_id": "figure-30-33",
+              "figure_number": "30",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-017.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 22: Per-level selection scaling for C = 4, R = 16, and p = 0.7, 0.9, 0.95, extending Figure 7. The first five columns show depths 2–6; the sixth compares observed median exponents with the r = 1/2 profile. Bars show pointwise 95% whole-problem bootstrap intervals.",
+              "figure_id": "figure-22-26",
+              "figure_number": "22",
+              "height": 703,
+              "image_path": "figures/2610.42112/figure-018.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 1051
+            },
+            {
+              "caption": "Figure 26: Agreement between tree levels in reference-query selection for Qwen3.6-35B-A3B ZHA (R = 16). Columns show C4 L6, C8 L4, C16 L3 and C64 L2; rows show RULER at 64K tokens and natural text at 32K tokens. For each layer/KV group, Spearman correlation is computed between the 16 reference-query selection shares at each pair of levels, then averaged over 20 groups (10 layers × 2 KV groups). Parenthesized axis labels give node spans in keys. Adjacent levels are similar in their reference selection rate while further apart levels have a different selection priority. This behavior holds across all geometries.",
+              "figure_id": "figure-26-10",
+              "figure_number": "26",
+              "height": 658,
+              "image_path": "figures/2610.42112/figure-019.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 1061
+            },
+            {
+              "caption": "Figure 23: Observed top-level exponents versus total tree depth for C = 4, R = 16. Dotted lines fit constant (gray) and linear (blue) depth dependence separately at each p, using only the five top-level observations. Bars show pointwise 95% whole-problem bootstrap intervals.",
+              "figure_id": "figure-23-27",
+              "figure_number": "23",
+              "height": 360,
+              "image_path": "figures/2610.42112/figure-020.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 12: Dense top-p set size for Nemotron-3.5-Lightning-30B-A3B using the same six-book cohort as Figure 1.",
+              "figure_id": "figure-12-28",
+              "figure_number": "12",
+              "height": 384,
+              "image_path": "figures/2610.42112/figure-021.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 492
+            },
+            {
+              "caption": "Figure 19: Per-task geometry, sparsity, and prediction accuracy for Qwen3.6-35B-A3B with reference-query-only routing; the final group shows the direct aggregate fit. Panels (a), (b), and (d) fix R = 16. (a) Measured accuracy at 256K versus decode keys attended across 11 geometries, colored by CL. (b) The matched CL = 4096 geometries, colored by depth L. (c) The C = 8, L = 2 slice at 256K, colored by reference count R. Curves sweep p ∈ {0.7, 0.8, 0.9, 0.95}, with p = 0.99 included where available; markers denote depth in (a,b) and R in (c). Key shares use each task’s native decode counters (pooled counters for the aggregate), and the key-share axes are logarithmic. Dotted horizontal lines show dense attention. (d) All 150 leave-one-length-out predictions per response over 64K, 128K, and 256K, colored and marked by held-out length; inset values give RMSE in percentage points and dashed diagonals show equality. Each task has four independent parameters in equation (2), fitted at the other two lengths across R ∈ {1, 2, 4, 16} using the measured dense baseline at the held-out length. Accuracy uses 100 examples per task; vertical-axis ranges vary by task.",
+              "figure_id": "figure-19-2",
+              "figure_number": "19",
+              "height": 1023,
+              "image_path": "figures/2610.42112/figure-022.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 1041
+            },
+            {
+              "caption": "Figure 14: Qwen3.6-35B-A3B decode key shares for deep (C4 L6, blue) and wide (C256 L1, green) ZHA (R = 16) at p ∈ {0.95, 0.9, 0.8}, compared with MSA (top-16 blocks of 128 tokens). (a) Reasoning; (b) retrieval. Darker shades indicate higher p; the dashed line marks dense attention (100%).",
+              "figure_id": "figure-14-11",
+              "figure_number": "14",
+              "height": 297,
+              "image_path": "figures/2610.42112/figure-023.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1067
+            },
+            {
+              "caption": "Figure 13: Qwen3.6-35B-A3B scores and decode key shares across routing thresholds for deep (C4 L6, blue) and wide (C256 L1, green) ZHA, with R = 16. Darker shades indicate higher p. (a) Reasoning; (b) retrieval. Labels above bars show the benchmark scores and labels inside bars give key shares where available.",
+              "figure_id": "figure-13-12",
+              "figure_number": "13",
+              "height": 298,
+              "image_path": "figures/2610.42112/figure-024.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1059
+            },
+            {
+              "caption": "Figure 16: Dense attention vs. the wide ZHA router (16 reference queries per KV group, 256-token chunks, one level; top-p 0.95) on Qwen3.6-35B-A3B, with the router in BF16 and in NVFP4 (router operands, reference-key cache and scoring in FP4; backbone, KV cache and the sparse attention in BF 16). (a) Reasoning (b) Retrieval",
+              "figure_id": "figure-16-19",
+              "figure_number": "16",
+              "height": 259,
+              "image_path": "figures/2610.42112/figure-025.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 15: Dense attention vs. a ZHA router with one reference query per KV group, 8-token chunks, fan 8 and two levels (R1 C8 L2) on Qwen3.6-35B-A3B, with uniform routing top-p 0.8, 0.75 and 0.7. (a) Reasoning (b) Retrieval.",
+              "figure_id": "figure-15-18",
+              "figure_number": "15",
+              "height": 258,
+              "image_path": "figures/2610.42112/figure-026.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 17: Nemotron-3.5-Lightning-30B-A3B scores and decode key shares across routing thresholds for deep (C4 L6, blue) and wide (C256 L1, green) ZHA, with R = 16. Darker shades indicate higher p. (a) Reasoning; (b) retrieval. Labels above bars show the benchmark scores and labels inside bars give key shares where available.",
+              "figure_id": "figure-17-20",
+              "figure_number": "17",
+              "height": 244,
+              "image_path": "figures/2610.42112/figure-027.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 18: The 28 geometries used in the RULER fits. Each panel fixes the reference count R; dotted curves mark constant top-level comparession CL. These geometries are evaluated at p ∈ {0.7, 0.8, 0.9, 0.95, 0.99} and sequence lengths of 64K, 128K, and 256K.",
+              "figure_id": "figure-18-34",
+              "figure_number": "18",
+              "height": 299,
+              "image_path": "figures/2610.42112/figure-028.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 1047
+            },
+            {
+              "caption": "Figure 28: Outlier selection across levels: layer 39, KV group 1 of the C4 L6 ZHA router on RULER at 64K tokens. Upper levels agree closely, while L1 reference rankings are negatively correlated with the top levels (L1 versus L6: ρ = −0.35).",
+              "figure_id": "figure-28-23",
+              "figure_number": "28",
+              "height": 287,
+              "image_path": "figures/2610.42112/figure-029.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 29: Outlier selection across levels: Similar reference rankings across all levels: layer 3, KV group 1 of the C4 L6 ZHA router on RULER at 64K tokens. Chunk and top-level rankings remain strongly aligned (ρ = 0.86).",
+              "figure_id": "figure-29-22",
+              "figure_number": "29",
+              "height": 287,
+              "image_path": "figures/2610.42112/figure-030.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 27: Typical selection behavior across levels: layer 19, KV group 0 of the C4 L6 ZHA router on RULER at 64K tokens. Adjacent levels have similar reference rankings, but agreement weakens over larger level separations; the chunk and top-level rankings are nearly unrelated (L1 versus L6: ρ = 0.12).",
+              "figure_id": "figure-27-24",
+              "figure_number": "27",
+              "height": 288,
+              "image_path": "figures/2610.42112/figure-031.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1023
+            },
+            {
+              "caption": "Table I: Percentage of individual rollout–layer–head fits for which the affine model beats the power law, ρ = (1−R2 lin)/(1−R2 pow) < 1, evaluated in log-y space at the leaf level. Raw and Cum-max denote raw and cumulative-maximum targets. Each percentage uses 9,600 paired fits (30 problems × 16 rollouts × 10 layers × 2 KV heads), without averaging across rollouts before fitting.",
+              "figure_id": "table-I-17",
+              "figure_number": "I",
+              "height": 950,
+              "image_path": "figures/2610.42112/table-032.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 994
+            },
+            {
+              "caption": "Table VII: Kernel and worker variables for the roofline model.",
+              "figure_id": "table-VII-37",
+              "figure_number": "VII",
+              "height": 774,
+              "image_path": "figures/2610.42112/table-033.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 1056
+            },
+            {
+              "caption": "Table VI: Variables for the ZHA roofline model.",
+              "figure_id": "table-VI-7",
+              "figure_number": "VI",
+              "height": 658,
+              "image_path": "figures/2610.42112/table-034.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 1054
+            },
+            {
+              "caption": "Table IV: Evaluation datasets, scoring metrics, and inference protocols.",
+              "figure_id": "table-IV-6",
+              "figure_number": "IV",
+              "height": 568,
+              "image_path": "figures/2610.42112/table-035.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 1043
+            },
+            {
+              "caption": "Table IX: Additional variables for the MSA roofline model.",
+              "figure_id": "table-IX-16",
+              "figure_number": "IX",
+              "height": 479,
+              "image_path": "figures/2610.42112/table-036.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 932
+            },
+            {
+              "caption": "Table II: Training setup and compute for the evaluated ZHA routers and MSA index. Backbones are frozen; ZHA trains only reference queries. Deep and wide ZHA use R = 16.",
+              "figure_id": "table-II-38",
+              "figure_number": "II",
+              "height": 427,
+              "image_path": "figures/2610.42112/table-037.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 810
+            },
+            {
+              "caption": "Table VIII: Variables for tree construction and maintenance.",
+              "figure_id": "table-VIII-30",
+              "figure_number": "VIII",
+              "height": 245,
+              "image_path": "figures/2610.42112/table-038.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 1027
+            },
+            {
+              "caption": "Table III: Final per-level ZHA training KL, averaged over logged points in the last 100 steps.",
+              "figure_id": "table-III-5",
+              "figure_number": "III",
+              "height": 130,
+              "image_path": "figures/2610.42112/table-039.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 548
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42112/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.42112",
+          "relevance": 9,
+          "selection_reason": "Subquadratic sparse attention with hierarchical tree indexer for long-context LLMs; directly relevant to efficient attention and long-context processing.",
+          "summary_status": "generated",
+          "title": "Subquadratic Attention with a Hierarchical Tree-Structured Indexer",
+          "tldr": "Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear attention scales linearly with sequence length, but its finite-state memory can limit long-context retrieval. In gated linear recurrences, memory retention depends on state decay, which is shaped jointly by gate parameters A_log and dt_bias and by input activations. In controlled Gated DeltaNet (GDN) experiments, both parameters remain highly correlated with their initial values after training, highlighting the importance of initialization. Therefore, we introduce Dual-Axis Memory Initialization (DAMI), which jointly configures these parameters before training. DAMI assigns geometric timescales across heads for varied retrieval distances and a low-high-low input-sensitivity profile across layers. A small activation sample calibrates the GDN-family implementation to match both behavioral targets without adding trainable parameters. Across GDN, KDA, GDN2, Mamba-2, and RWKV-7, DAMI improves average RULER-style retrieval accuracy by 5.29 to 16.71 percentage points over the corresponding random-initialization baselines. Performance on language modeling, commonsense reasoning, and 2K real-world retrieval remains broadly comparable to those baselines. Our code is available at https://speedai.com/research/dami.",
+          "arxiv_id": "2610.41994",
+          "arxiv_url": "https://arxiv.org/abs/2610.41994",
+          "authors": [
+            "Zhangchi Feng, Harry Jiang, Yangyifei Luo, Ray Zhang, Richong Zhang"
+          ],
+          "bullets": [
+            "Finite-state memory and initialization can limit long-context retrieval in linear attention.",
+            "DAMI jointly configures gate parameters before training using geometric head-wise timescales and a low-high-low layer-wise sensitivity profile.",
+            "A small activation sample calibrates the implementation to these targets without adding trainable parameters.",
+            "Across five gated linear-attention families, DAMI raises average RULER-style retrieval accuracy by 5.29–16.71 percentage points over random initialization.",
+            "Language modeling, commonsense reasoning, and 2K real-world retrieval performance remains broadly comparable to baseline initialization."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of DAMI initialization. (a) Head-wise timescales and layer-wise sensitivities define dual-axis targets. (b) Calibration proceeds layer by layer using projected activations without gradients. (c) Each head’s dt_bias is solved before A_log using calibration-set statistics. (d) Schematic parameter layouts illustrate the head and layer axes.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 515,
+              "image_path": "figures/2610.41994/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 937
+            },
+            {
+              "caption": "Figure 4: Effect of dt_bias on local Softplus sensitivity. Dashed and dotted curves show the asymptotic approximations; ϕ′(−4) ≈ 0.018 and ϕ′(4) ≈ 0.982.",
+              "figure_id": "figure-4-13",
+              "figure_number": "4",
+              "height": 309,
+              "image_path": "figures/2610.41994/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 431
+            },
+            {
+              "caption": "Figure 5: Normalized target sensitivity profiles across layers. The horizontal axis is normalized depth rℓ = (ℓ−1)/(L−1); the vertical axis is (S⋆ ℓ −Smin)/(Smax− Smin). Curves indicate initialization targets.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 245,
+              "image_path": "figures/2610.41994/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 447
+            },
+            {
+              "caption": "Figure 3: Initial–trained Pearson correlations of GDN memory parameters.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 245,
+              "image_path": "figures/2610.41994/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 443
+            },
+            {
+              "caption": "Figure 1: Dual-axis memory initialization. (a) Diverse head-wise timescales broaden memory coverage across evidence–query distances; curves illustrate normalized exponential decay. (b) Schematic uniform-high and uniform-low Random regimes illustrate recent-pair bias and mixed memories, contrasted with DAMI’s low– high–low sensitivity profile. Text excerpts are from RULER; placements and outcomes are schematic.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 415,
+              "image_path": "figures/2610.41994/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 450
+            },
+            {
+              "caption": "Figure 6: GDN retrieval accuracy by relative distance at four context lengths. Points show task-averaged accuracy in 16 shared bins.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 429,
+              "image_path": "figures/2610.41994/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 435
+            },
+            {
+              "caption": "Table 2: Answer-containment accuracy (%) on the fixed v1 RULER-style NIAH benchmark. Each task–length setting contains the same 500 pregenerated samples for all models. Bold denotes the best result within each architecture; Avg. is the unweighted mean over the 11 settings.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 431,
+              "image_path": "figures/2610.41994/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 950
+            },
+            {
+              "caption": "Table 3: Language modeling and commonsense results. WikiText reports perplexity (lower is better); other tasks report accuracy (%, higher is better). Bold denotes the best result within each architecture. WinoG., ARC-E, ARC-C, OBQA, and SIQA denote WinoGrande, ARCEasy, ARC-Challenge, OpenBookQA, and Social IQa, respectively.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 431,
+              "image_path": "figures/2610.41994/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 461
+            },
+            {
+              "caption": "Table 4: Real-world retrieval at 2K tokens (%). TQA denotes TriviaQA; Avg. is the unweighted mean over six tasks. Bold denotes the best result within each architecture.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 411,
+              "image_path": "figures/2610.41994/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 458
+            },
+            {
+              "caption": "Table 8: GDN sensitivity-level and peak-location perturbations (%). Shift denotes profile translation; Peak denotes the peak layer.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 175,
+              "image_path": "figures/2610.41994/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 461
+            },
+            {
+              "caption": "Table 7: GDN retrieval with four layer-wise sensitivity profiles (%).",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 154,
+              "image_path": "figures/2610.41994/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 461
+            },
+            {
+              "caption": "Table 5: GDN single-parameter replacement ablations (%). The named parameter is restored to Random; the other retains its DAMI value.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 154,
+              "image_path": "figures/2610.41994/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 458
+            },
+            {
+              "caption": "Table 6: Effects of timescale coverage and spacing on GDN retrieval (%).",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 154,
+              "image_path": "figures/2610.41994/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 458
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41994/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41994",
+          "relevance": 8,
+          "selection_reason": "Improves long-context retrieval in gated linear attention via memory initialization, directly relevant to long-context models and efficient attention.",
+          "summary_status": "generated",
+          "title": "DAMI: Dual-Axis Memory Initialization for Enhanced Long-Context Retrieval in Gated Linear Attention",
+          "tldr": "DAMI improves long-context retrieval in gated linear attention by initializing memory decay and input sensitivity across heads and layers.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Transformers retain an explicit history of the sequence, allowing attention to directly retrieve past representations. However, the size of the KV-Cache and the cost of a new token increase with the context length. State Space Models compress the past into a fixed-size recurrent state, at the cost of reduced addressability. We present the Dynamical Memory Transformer (DMT), a hybrid architecture that separates sequence encoding from information reading. The encoder uses several memory units, each implemented by a dynamical system with a complex diagonal recurrent matrix. An input-dependent leak rate controls their updates. The decoder then uses attention to read and combine their outputs, without going through the token history. The formulation of the recurrence allows an associative scan with O(T ) total work and O(log T ) parallel depth, with fixed dimensions. During autoregressive inference, the recurrent states and the convolution cache remain fixed in size. We compare DMT with Mamba and Transformer on cognitive and language modeling tasks, and show its strengths and limitations: DMT achieves the best results on several cognitive tasks and language modeling performance close to that of Transformer, but remains behind Mamba in language modeling. On selective copy, DMT also shows stronger length extrapolation than Mamba and Transformer. These results demonstrate that parallel dynamical memory units are a promising mechanism for retaining and using information over sequences.",
+          "arxiv_id": "2610.41850",
+          "arxiv_url": "https://arxiv.org/abs/2610.41850",
+          "authors": [
+            "Yannis Bendi-Ouis (Mnemosyne), Xavier Hinaut (Mnemosyne)"
+          ],
+          "bullets": [
+            "Addresses Transformer KV-cache growth and the limited addressability of fixed-state State Space Models.",
+            "Uses multiple complex-diagonal dynamical memory units with input-dependent leak rates to encode sequences.",
+            "A decoder attends to memory outputs rather than the full token history; recurrence supports O(T) work and O(log T) parallel depth.",
+            "Matches Transformer closely in language modeling, outperforms both baselines on several cognitive tasks, and remains behind Mamba on language modeling.",
+            "Shows stronger selective-copy length extrapolation than Mamba and Transformer; performance has task-dependent limitations."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of DMT. The memory units progressively encode the sequence into fixed-size recurrent states. Decoder attention reads and combines their outputs at the current time. Between two inference steps, the architecture retains the recurrent states and the convolution cache, without retaining an explicit history of all tokens.",
+              "figure_id": "figure-1-15",
+              "figure_number": "1",
+              "height": 852,
+              "image_path": "figures/2610.41850/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 882
+            },
+            {
+              "caption": "Figure 2: Evolution of mean scores as a function of the number of parameters. These curves illustrate the ability of each architecture to scale under small budgets. Each point was obtained by averaging the results of 50 models, with the learning rate and weight decay fixed.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 420,
+              "image_path": "figures/2610.41850/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 967
+            },
+            {
+              "caption": "Figure 10: Comparison of the best configuration obtained for each architecture. Left: the best validation loss for each seed from 0 to 4. Right: mean test perplexity and its mean standard deviation over the 5 seeds.",
+              "figure_id": "figure-10-6",
+              "figure_number": "10",
+              "height": 381,
+              "image_path": "figures/2610.41850/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 968
+            },
+            {
+              "caption": "Figure 11: Results on OpenWebText with one run per architecture: (a) validation loss, (b) validation perplexity and (c) next-token prediction accuracy on the 49 test shards.",
+              "figure_id": "figure-11-34",
+              "figure_number": "11",
+              "height": 286,
+              "image_path": "figures/2610.41850/figure-004.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 960
+            },
+            {
+              "caption": "Figure 8: Next-character prediction accuracy on the test set as a function of the number of epochs. Each point corresponds to one of the 720 trained models.",
+              "figure_id": "figure-8-25",
+              "figure_number": "8",
+              "height": 563,
+              "image_path": "figures/2610.41850/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 964
+            },
+            {
+              "caption": "Figure 7: Evolution of training loss, validation loss and validation accuracy on Tiny Shakespeare, for each of the ten seeds per architecture. The displayed learning rate/weight decay combination is the one with the best mean accuracy. Each curve stops at the run’s early stopping point.",
+              "figure_id": "figure-7-26",
+              "figure_number": "7",
+              "height": 265,
+              "image_path": "figures/2610.41850/figure-006.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 962
+            },
+            {
+              "caption": "Figure 6: Exact-match accuracy on the 1 000 cross_situation test examples when the output of one memory unit is zeroed throughout the sequence. Other parameters remain unchanged and the model is not retrained.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 446,
+              "image_path": "figures/2610.41850/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 963
+            },
+            {
+              "caption": "Figure 4: Activity of the four memory units as a function of the words in cross_situation. Plot A shows the mean leak rate, and plot B the mean state variation. The words at the bottom of each plot correspond to the vocabulary for this task. The categories at the top of each plot correspond to the roles of each word.",
+              "figure_id": "figure-4-28",
+              "figure_number": "4",
+              "height": 580,
+              "image_path": "figures/2610.41850/figure-008.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 965
+            },
+            {
+              "caption": "Figure 26: Mean best validation loss and standard deviation over three seeds, for the 15 configurations after five epochs. Configurations in bold are the five selected configurations for each architecture.",
+              "figure_id": "figure-26-12",
+              "figure_number": "26",
+              "height": 424,
+              "image_path": "figures/2610.41850/figure-009.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 971
+            },
+            {
+              "caption": "Figure 25: Validation loss of the top 15 configurations of each architecture after five epochs on seed 0. The x-axis differs for each architecture according to its scores.",
+              "figure_id": "figure-25-11",
+              "figure_number": "25",
+              "height": 421,
+              "image_path": "figures/2610.41850/figure-010.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 971
+            },
+            {
+              "caption": "Figure 27: Ranking of the 5 final configurations for each architecture according to their best mean validation loss, with standard deviation over seeds 0 to 4.",
+              "figure_id": "figure-27-9",
+              "figure_number": "27",
+              "height": 303,
+              "image_path": "figures/2610.41850/figure-011.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 961
+            },
+            {
+              "caption": "Figure 23: Test perplexity obtained for each seed from 0 to 4, for the learning rate/weight decay combination selected on validation for each architecture with an arbitrary configuration. These results correspond to the first hyperparameter search phase.",
+              "figure_id": "figure-23-20",
+              "figure_number": "23",
+              "height": 340,
+              "image_path": "figures/2610.41850/figure-012.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 766
+            },
+            {
+              "caption": "Figure 12: Zero-shot evaluation of the models obtained after training on OpenWebText on the WikiText-2 and LAMBADA OpenAI language benchmarks.",
+              "figure_id": "figure-12-33",
+              "figure_number": "12",
+              "height": 302,
+              "image_path": "figures/2610.41850/figure-013.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 968
+            },
+            {
+              "caption": "Figure 5: ROC-AUC of the linear readouts for Objects, Colors and Positions for both situations. Results are averaged over five seeds after aligning the units. ROC-AUC measures the readout’s ability to distinguish the presence and absence of a class: a value of 0.5 corresponds to chance, and 1 to perfect separation.",
+              "figure_id": "figure-5-14",
+              "figure_number": "5",
+              "height": 404,
+              "image_path": "figures/2610.41850/figure-014.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 960
+            },
+            {
+              "caption": "Figure 3: Evolution of performance on selective_copy as sequence length increases, after training at length 256. Thick curves show the median over five seeds, shaded areas the interquartile range and thin curves each seed. DMT and Mamba process the entire sequence; Transformer uses a sliding window of 277 tokens.",
+              "figure_id": "figure-3-21",
+              "figure_number": "3",
+              "height": 387,
+              "image_path": "figures/2610.41850/figure-015.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 971
+            },
+            {
+              "caption": "Figure 14: Median GPU time for a training pass with a batch of 4 (left) and initial context processing with a batch of 1 (right). Transformer exceeds the available VRAM at the two largest lengths during training.",
+              "figure_id": "figure-14-18",
+              "figure_number": "14",
+              "height": 319,
+              "image_path": "figures/2610.41850/figure-016.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 963
+            },
+            {
+              "caption": "Figure 15: Peak allocated hardware memory during the training update (left) and initial context processing (right).",
+              "figure_id": "figure-15-22",
+              "figure_number": "15",
+              "height": 319,
+              "image_path": "figures/2610.41850/figure-017.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 963
+            },
+            {
+              "caption": "Figure 16: Time to generate a token during autoregressive inference, with a batch of 4 (left), and size of the recurrent state or KV-cache after initial context processing (right), with a batch of 1.",
+              "figure_id": "figure-16-23",
+              "figure_number": "16",
+              "height": 303,
+              "image_path": "figures/2610.41850/figure-018.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 963
+            },
+            {
+              "caption": "Figure 17: Difference in validation loss relative to complete DMT after five epochs, paired by seed. Circles show the three seeds; solid points and bars indicate the mean and standard deviation.",
+              "figure_id": "figure-17-31",
+              "figure_number": "17",
+              "height": 472,
+              "image_path": "figures/2610.41850/figure-019.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 970
+            },
+            {
+              "caption": "Figure 18: Mean validation loss as a function of total time for five epochs for all tested variants and the original complete variant. Variants 3 and 4 are superposed. We moved variant 4 up-left its real position. The arrow indicates where it should really be.",
+              "figure_id": "figure-18-7",
+              "figure_number": "18",
+              "height": 433,
+              "image_path": "figures/2610.41850/figure-020.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 970
+            },
+            {
+              "caption": "Figure 21: Similarity of the final states of the memory units, measured by linear CKA on the test set (left), and mean decoder attention across units (right). CKA measures similarity between two sets of representations: a value close to 0 indicates low similarity, while a value close to 1 indicates high similarity.",
+              "figure_id": "figure-21-27",
+              "figure_number": "21",
+              "height": 390,
+              "image_path": "figures/2610.41850/figure-021.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 970
+            },
+            {
+              "caption": "Figure 24: Mean test perplexity and standard deviation as a function of warmup and min_lr_ratio, with learning rate and weight decay fixed.",
+              "figure_id": "figure-24-19",
+              "figure_number": "24",
+              "height": 353,
+              "image_path": "figures/2610.41850/figure-022.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 967
+            },
+            {
+              "caption": "Figure 28: Mean test perplexity and standard deviation of the final configurations, presented in the order established on validation. Only completed training runs are included; some configurations therefore have fewer than five test seeds. The axes are zoomed separately.",
+              "figure_id": "figure-28-8",
+              "figure_number": "28",
+              "height": 325,
+              "image_path": "figures/2610.41850/figure-023.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 971
+            },
+            {
+              "caption": "Figure 20: Evolution of leak rate and state variation over four correctly solved cross_situation sentences. Each plot presents one sentence and the two associated activities. Dashed lines delimit the connector between the two situations.",
+              "figure_id": "figure-20-5",
+              "figure_number": "20",
+              "height": 1046,
+              "image_path": "figures/2610.41850/figure-024.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 909
+            },
+            {
+              "caption": "Figure 19: Spearman correlation between DMT’s different architectural parameters and performance obtained on CogScale, across all budgets, hyperparameters and configurations.",
+              "figure_id": "figure-19-4",
+              "figure_number": "19",
+              "height": 241,
+              "image_path": "figures/2610.41850/figure-025.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 967
+            },
+            {
+              "caption": "Figure 29: Evolution of validation loss on OpenWebText as a function of billions of tokens processed. The left plot (a) shows complete training and the right plot (b) a zoom on the end of training. These runs use a single seed. Due to computational resources, DMT stops earlier than the others (see Experimental protocol, Section 4.7).",
+              "figure_id": "figure-29-30",
+              "figure_number": "29",
+              "height": 249,
+              "image_path": "figures/2610.41850/figure-026.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 968
+            },
+            {
+              "caption": "Table 2: Results averaged over 5 seeds for the best configuration obtained through grid search. The reported score is mean accuracy in % and its standard deviation. The best score for each task, difficulty and architecture is shown in bold.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 245,
+              "image_path": "figures/2610.41850/table-027.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 978
+            },
+            {
+              "caption": "Table 4: Range of dimensions in the 60 configurations defined per architecture. The bounds do not form a Cartesian grid: only the combinations detailed in the following tables are used.",
+              "figure_id": "table-4-29",
+              "figure_number": "4",
+              "height": 117,
+              "image_path": "figures/2610.41850/table-028.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 510
+            },
+            {
+              "caption": "Table 1: Asymptotic comparison for a sequence length T . The table distinguishes total work during training, parallel depth and the memory medium retained between two inference steps. Constants, the vocabulary projection, batch size and memory transfers are omitted. The Transformer and SSM rows give simplified costs of attention or state processing; projections and feedforward layers are not all detailed.",
+              "figure_id": "table-1-32",
+              "figure_number": "1",
+              "height": 116,
+              "image_path": "figures/2610.41850/table-029.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 840
+            },
+            {
+              "caption": "Table 5: DMT configurations in the TinyStories search. Parameter counts include input and output projections.",
+              "figure_id": "table-5-24",
+              "figure_number": "5",
+              "height": 1048,
+              "image_path": "figures/2610.41850/table-030.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 758
+            },
+            {
+              "caption": "Table 7: Transformer configurations in the TinyStories search. Parameter counts include input and output projections.",
+              "figure_id": "table-7-13",
+              "figure_number": "7",
+              "height": 1048,
+              "image_path": "figures/2610.41850/table-031.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 716
+            },
+            {
+              "caption": "Table 6: Mamba configurations in the TinyStories search. Parameter counts include input and output projections.",
+              "figure_id": "table-6-16",
+              "figure_number": "6",
+              "height": 1048,
+              "image_path": "figures/2610.41850/table-032.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 681
+            },
+            {
+              "caption": "Table 3: Configurations selected for language modeling.",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 186,
+              "image_path": "figures/2610.41850/table-033.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 868
+            },
+            {
+              "caption": "Table 8: Arithmetic means over all 45 short generations or all five long generations per model, on one NVIDIA GeForce RTX 3090, batch size 1, FP32. TTFT includes prompt processing; checkpoint loading and tokenization are excluded. Decoding rates include sampling. DMT and Mamba retain recurrent states; Transformer recomputes a rolling 1,024-token window after its context limit.",
+              "figure_id": "table-8-17",
+              "figure_number": "8",
+              "height": 150,
+              "image_path": "figures/2610.41850/table-034.webp",
+              "kind": "table",
+              "page": 46,
+              "width": 540
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41850/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.41850",
+          "relevance": 8,
+          "selection_reason": "Introduces Dynamical Memory Transformer (DMT), a hybrid architecture combining dynamical systems with attention to achieve constant cost attention and efficient memory retention.",
+          "summary_status": "generated",
+          "title": "Dynamical Memory Transformer: Selective Recurrent Memories with Constant Cost Attention",
+          "tldr": "Dynamical Memory Transformer combines selective recurrent memories with attention-based reading to provide fixed-size inference state and efficient long-context processing.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Looped language models can strengthen reasoning through repeated computation with shared weights, increasing execution depth without adding independent parameters. However, each additional pass increases training floating-point operations (FLOPs), making these gains more expensive to obtain. To address this cost, we propose UpLoop, a pretraining schedule that uses upcycling to train looped Transformers while exactly matching a standard dense baseline in final parameter count, total training tokens, and training FLOPs. Specifically, UpLoop begins with a shallow Transformer, progressively grows its depth by copying learned layers, and uses the computation saved early to support repeated execution of a shared middle block later in training. Experiments across model scales show improvements in language modeling and downstream performance, with the average score across 22 downstream tasks increasing from 22.99 to 27.52 at 1.3B parameters. These gains also extend to mathematical reasoning after supervised fine-tuning.",
+          "arxiv_id": "2610.41720",
+          "arxiv_url": "https://arxiv.org/abs/2610.41720",
+          "authors": [
+            "Cheng Liang, Tengfei Zhang, Ya Zhang, Yanfeng Wang, Zhouhan Lin"
+          ],
+          "bullets": [
+            "Looped models can improve reasoning through shared-weight repeated computation, but normally require more training FLOPs.",
+            "UpLoop starts with a shallow Transformer, copies learned layers to grow depth, and later repeats a shared middle block.",
+            "It exactly matches a standard dense baseline in final parameter count, training tokens, and total training FLOPs.",
+            "Across model scales, it improves language modeling and downstream performance; at 1.3B parameters, the 22-task average rises from 22.99 to 27.52.",
+            "Benefits also extend to mathematical reasoning after supervised fine-tuning."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3. Overview of UpLoop. (a) Ribbon thickness denotes the execution depth over training tokens. UpLoop runs shallower than Vanilla early in training and loops a middle block late, so the compute saved early (A) equals the extra compute spent on looping. (b) Each stage is initialised by copying layers of the previous stage; grey bands keep layers and blue bands copy them.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 352,
+              "image_path": "figures/2610.41720/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 938
+            },
+            {
+              "caption": "Figure 2. Training dynamics and performance of UpLoop and Vanilla with equal training tokens and FLOPs at each scale. (a) Validation NLL during 370M pre-training. (b, c) Downstream accuracy and held-out NLL versus training FLOPs. (d) Downstream accuracy versus unique non-embedding parameters. See Appendix C for evaluation details.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 332,
+              "image_path": "figures/2610.41720/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1003
+            },
+            {
+              "caption": "Figure 4. Gradient alignment across calls. In the final 370M models, bars show mean cosine similarity between prediction-loss gradients from two calls to each shared layer, averaged over four shared layers and 12 windows.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 240,
+              "image_path": "figures/2610.41720/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 447
+            },
+            {
+              "caption": "Figure 6. VarAssign accuracy by target position. First 4 and Last denote targets among the first four assignments and in the last of five assignments, respectively. Results equally average Math and Code, with 1,000 examples per task.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 270,
+              "image_path": "figures/2610.41720/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 451
+            },
+            {
+              "caption": "Figure 5. Layer substitution. In 370M UpLoop, bars show mean ∆NLL relative to native execution for substitutions between distinct layers with shared or different initial ancestry. Attention or MLP updates in the first call to the shared block are replaced using the same input and tokenwise norm matching. Results average 64 windows.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 248,
+              "image_path": "figures/2610.41720/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 454
+            },
+            {
+              "caption": "Figure 7. Cross-call substitution of attention weights and values. A and V reuse first-call attention weights and values, respectively. V norm matched rescales reused values to current norms per token and head; AV norm matched combines reused attention weights with norm-matched values. Each condition averages separate interventions at the four core positions over 64 windows.",
+              "figure_id": "figure-7-4",
+              "figure_number": "7",
+              "height": 274,
+              "image_path": "figures/2610.41720/figure-006.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 446
+            },
+            {
+              "caption": "Figure 8. Stagewise transmission of differences induced by oldvalue substitution. Each point is the ratio of output-difference RMS to input-difference RMS for the corresponding stage. The remaining-network term measures transmission from changes in normalized attention updates to changes in final hidden states. Ratios are averaged across the four core positions within each window, then across 64 windows.",
+              "figure_id": "figure-8-3",
+              "figure_number": "8",
+              "height": 277,
+              "image_path": "figures/2610.41720/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 435
+            },
+            {
+              "caption": "Table 5. Perturbation propagation. In the 370M models, we inject a single perturbation after the first call to the shared block and report trajectory distance divided by the initial perturbation distance. Results average 512 windows after the normal two calls and an extended eight calls to the shared block.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 148,
+              "image_path": "figures/2610.41720/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 412
+            },
+            {
+              "caption": "Table 2. Downstream performance of UpLoop and Vanilla on knowledge, language, mathematics and reasoning tasks with equal training tokens and FLOPs at each scale. See Appendix C for evaluation details.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 750,
+              "image_path": "figures/2610.41720/table-009.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 741
+            },
+            {
+              "caption": "Table 3. Comparison with alternative training strategies at 370M. Training tokens and FLOPs are normalized to UpLoop.",
+              "figure_id": "table-3-1",
+              "figure_number": "3",
+              "height": 289,
+              "image_path": "figures/2610.41720/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 435
+            },
+            {
+              "caption": "Table 1. Zero-shot accuracy (%) of UpLoop and Vanilla from 370M to 1.3B parameters with equal training tokens and FLOPs at each scale. See Appendix C for evaluation details.",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 204,
+              "image_path": "figures/2610.41720/table-011.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 769
+            },
+            {
+              "caption": "Table 4. GSM8K exact-match accuracy after supervised finetuning at 1.3B parameters. Experimental details are provided in Appendix D.",
+              "figure_id": "table-4-7",
+              "figure_number": "4",
+              "height": 87,
+              "image_path": "figures/2610.41720/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 462
+            },
+            {
+              "caption": "Table 6. UpLoop accuracy (%) under second-pass reading blocks. Native denotes unmodified execution; Target and Control block query access to the target and an unrelated value, respectively, in all four layers of the shared block during its second call. Results equally average Math and Code, with 128 examples per task. Drop is Control minus Target, in percentage points.",
+              "figure_id": "table-6-12",
+              "figure_number": "6",
+              "height": 98,
+              "image_path": "figures/2610.41720/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 329
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41720/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41720",
+          "relevance": 7,
+          "selection_reason": "Proposes UpLoop, a method to train looped Transformers efficiently via upcycling, matching dense baseline FLOPs.",
+          "summary_status": "generated",
+          "title": "UpLoop: Training Looped Transformers via Upcycling at No Extra Pretraining Compute",
+          "tldr": "UpLoop trains looped Transformers within the same parameter, token, and FLOP budget as dense baselines by progressively upcycling layers and reallocating saved computation to repeated execution.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Residual connections underpin Transformers, but they implicitly tie the residual width carried through depth to the compute width used inside each layer. We introduce Hierarchical Residuals (HiRes), a minimalist architectural change that decouples these dimensions, widening the residual state while keeping per-layer compute width fixed. HiRes groups layers into blocks: standard d-dimensional PreNorm layers operate inside each block, while a wider D-dimensional PostNorm outer residual connects blocks. Learned read/write projections bridge the two spaces at block boundaries, leaving individual Transformer layers unchanged. Across different model sizes and depths, HiRes consistently outperforms vanilla residual addition, with fitted scaling laws indicating a 1.30-fold improvement in FLOPs efficiency. On OLMoE-1B-7B pretraining for 500B tokens, HiRes achieves 0.0208 lower training loss and 1.14-point higher downstream accuracy. HiRes is also competitive with other residual expansion methods such as VWN, mHC and AttnRes with less activation memory and I/O costs. Built from only dense projections and normalizations, it requires neither specialized kernels nor infrastructure-level optimizations. HiRes thus exposes residual width as a practical scaling variable using only standard operators.",
+          "arxiv_id": "2610.41711",
+          "arxiv_url": "https://arxiv.org/abs/2610.41711",
+          "authors": [
+            "Ziteng Wang, Jianqiao Lu, Xinyu Ma, Jintao Zhang, Jun Zhu, Yiyuan Ma, Jianfei Chen"
+          ],
+          "bullets": [
+            "Problem: Standard residuals force the state width carried through depth to match each layer’s compute width.",
+            "Method: Group layers into blocks with d-dimensional PreNorm layers and a wider D-dimensional PostNorm outer residual, linked by learned projections.",
+            "Contribution: Makes residual width an independent scaling variable using only dense projections and normalizations.",
+            "Results: Reports 1.30× better FLOPs efficiency, 0.0208 lower training loss, and 1.14-point higher downstream accuracy in the stated experiments.",
+            "Scope: Designed to reduce activation memory and I/O relative to other residual-expansion methods without specialized kernels or infrastructure changes."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2 HiRes achieves better scaling properties. (a) Validation loss versus training FLOPs with fitted laws. At L = 3.00 (inset), the baseline needs 1.30× the FLOPs of HiRes with n = 2. (b) Compute multiplier at matched loss: baseline FLOPs over family FLOPs, at runs (markers) and along the fitted laws (lines).",
+              "figure_id": "figure-2-18",
+              "figure_number": "2",
+              "height": 594,
+              "image_path": "figures/2610.41711/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 971
+            },
+            {
+              "caption": "Figure 6 Boundary normalization lowers loss and regulates residual scale at (d, L) = (768, 12). (a) HiNorm training loss under different boundary normalization frequencies. (b) Boundary normalization regulates residual accumulation as in other residual-expansion methods; dotted lines mark the HiRes block boundaries (B = 4).",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 446,
+              "image_path": "figures/2610.41711/figure-002.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 971
+            },
+            {
+              "caption": "Figure 1 HiRes uses a two-level residual hierarchy. (a) Vanilla PreNorm carries one d-dimensional residual stream. (b) HiRes carries a D-dimensional PostNorm outer residual across layer blocks. (c) Each block reads D → d, runs 2L/B vanilla sublayers on the d-dimensional inner residual, and writes back d→D. Gray and navy paths have width d and D; orange trapezoids are the added dense interfaces, and dashed frames mark repeated residual units.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 463,
+              "image_path": "figures/2610.41711/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 982
+            },
+            {
+              "caption": "Figure 5 Ablation on expansion ratio n and block count B in HiRes. Beyond the default n = 2, B = 4 (star), gains roughly follow the shifted scaling law (dashed), which translates the baseline scaling law (dotted) through the star, accounting for the benefit from increasing parameters.",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 447,
+              "image_path": "figures/2610.41711/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 971
+            },
+            {
+              "caption": "Figure 4 HiRes on 500B-token OLMoE-1B-7B pretraining. HiRes ends with 0.0208 lower training loss, 0.0180 lower validation loss, and a 1.14-point higher average accuracy. See Appendix C.4 for details.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 379,
+              "image_path": "figures/2610.41711/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 970
+            },
+            {
+              "caption": "Figure 9 Extra kernel time per step at (1280, 20) over the shared frozen backbone (242.5ms). (a) Fusion (best Triton versus best PyTorch) cuts the overhead of the other methods by 2–6× but leaves HiRes nearly unchanged. (b) Fused overhead by kernel type (upper bars) and its compute- and bandwidth-limited floors at the GPU’s advertised bf16 and HBM peaks (lower bars): HiRes spends most of it in cuBLAS GEMMs, the others in their own mixing kernels.",
+              "figure_id": "figure-9-4",
+              "figure_number": "9",
+              "height": 445,
+              "image_path": "figures/2610.41711/figure-006.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 971
+            },
+            {
+              "caption": "Figure 3 HiRes scales better with depth. HiRes wins at every depth and bends less at L = 128; B = 8 stays nearly straight.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 327,
+              "image_path": "figures/2610.41711/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 432
+            },
+            {
+              "caption": "Table 2 HiRes stays competitive across scales. Activation I/O is the analytic count per token per sublayer for optimized implementations (Appendix E); peak memory and throughput are measured with each method’s optimized Triton implementation (Appendix F), whereas HiRes is nearly as fast with vanilla PyTorch implementation (Appendix Table 13). Bold/underlined: best/second-best among residual-expansion methods.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 455,
+              "image_path": "figures/2610.41711/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 808
+            },
+            {
+              "caption": "Table 8 Downstream performance for different residual expansion methods. Best and second-best values are bold and underlined. HiRes remains competitive across model scales.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 813,
+              "image_path": "figures/2610.41711/table-009.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 714
+            },
+            {
+              "caption": "Table 5 Parameters, training FLOPs, and losses for model size scaling. At every model size, loss falls from the baseline to HiNorm,HiRes n = 1, and HiRes n = 2. HiNorm and HiRes use B = 4.",
+              "figure_id": "table-5-19",
+              "figure_number": "5",
+              "height": 510,
+              "image_path": "figures/2610.41711/table-010.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 798
+            },
+            {
+              "caption": "Table 6 HiRes beats baseline at every depth, and B = 8 helps most at L = 128. All models use d = 512 and 30B tokens.",
+              "figure_id": "table-6-15",
+              "figure_number": "6",
+              "height": 511,
+              "image_path": "figures/2610.41711/table-011.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 752
+            },
+            {
+              "caption": "Table 9 On OLMoE-1B-7B, HiRes improves losses and most downstream tasks after 500B tokens. (a) Model and training settings inherited from OLMoE [30], plus the HiRes configuration. (b) Losses and 12-task downstream accuracy (%). Bold: the better of the two.",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 419,
+              "image_path": "figures/2610.41711/table-012.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 881
+            },
+            {
+              "caption": "Table 7 Parameters and training FLOPs of the compared residual expansion methods. FLOPs are reported in units of 1019.",
+              "figure_id": "table-7-14",
+              "figure_number": "7",
+              "height": 273,
+              "image_path": "figures/2610.41711/table-013.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 614
+            },
+            {
+              "caption": "Table 13 Best PyTorch- and Triton-stage performance of eachmethod. Throughput and peak-memory overhead are relative to the frozen baseline. Within each stage, best/second-best values are bold/underlined. HiRes leads in throughput and memory without custom Triton kernels.",
+              "figure_id": "table-13-3",
+              "figure_number": "13",
+              "height": 294,
+              "image_path": "figures/2610.41711/table-014.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 848
+            },
+            {
+              "caption": "Table 1 HiRes versus other residual-expansion methods at (d, L) = (768, 12) and 50B tokens. Suffixes give the expansion rate for HC/mHC/VWN and the block count for Block AttnRes. With a 2× wider residual state, HiRes is competitive even with the 4× variants of HC, mHC, and VWN. Bold/underlined: best/second-best among residual-expansion methods. Appendix C.3 details the configurations and lists their parameters and training FLOPs.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 141,
+              "image_path": "figures/2610.41711/table-015.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 882
+            },
+            {
+              "caption": "Table 3 Ablations on HiRes components. Removing or freezing any one component of HiRes (n = 2, B = 4) hurts.",
+              "figure_id": "table-3-16",
+              "figure_number": "3",
+              "height": 294,
+              "image_path": "figures/2610.41711/table-016.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 460
+            },
+            {
+              "caption": "Table 11 Supplementary interface ablations at (d, L) = (768, 12). All models train for 50B tokens.",
+              "figure_id": "table-11-17",
+              "figure_number": "11",
+              "height": 571,
+              "image_path": "figures/2610.41711/table-017.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 622
+            },
+            {
+              "caption": "Table 4 Scale-dependent training recipes.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 208,
+              "image_path": "figures/2610.41711/table-018.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 748
+            },
+            {
+              "caption": "Table 10 Ablation results on expansion ratio n and block count B. Loss improves quickly up to n = 2 and B = 4 and slowly beyond. All runs use (d, L) = (768, 12) and 50B tokens.",
+              "figure_id": "table-10-13",
+              "figure_number": "10",
+              "height": 402,
+              "image_path": "figures/2610.41711/table-019.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 448
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41711/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41711",
+          "relevance": 7,
+          "selection_reason": "Introduces Hierarchical Residuals (HiRes), an architectural efficiency improvement for Transformers that decouples residual width from compute width.",
+          "summary_status": "generated",
+          "title": "Hierarchical Residuals: A Minimalist Decoupling of Residual Width from Compute Width",
+          "tldr": "HiRes decouples residual width from per-layer compute width, improving scaling efficiency with a simple Transformer modification.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We introduce Radial Kernel Attention (RKA) for long-range modeling in polymer machine learning force fields. Local neighbor graphs constrain communication across polymer chains and their surrounding environments, while explicit all-pair attention incurs quadratic cost. RKA maps atomic distances from the cluster centroid to learned radial features and combines their overlap with content-dependent queries and keys. Factorized aggregation and readout enable global feature exchange at linear cost in atom count for fixed feature dimensions. We insert the invariant scalar update between EquiformerV3 local blocks and obtain conservative forces by differentiating the total energy, including its radial coordinate dependence. We evaluate energy and force prediction for finite polymer-derived clusters in OPoly26. Our models are trained on the official training split for 12 epochs and evaluated directly after training on the complete official validation split. A matched 5M comparison shows that RKA reduces per-atom energy and force MAEs by 67.4% and 36.3%, respectively. The 20M RKA model is compared with UMA-S-1.2 and UMA-S-1.2.1 on the same validation structures. The 20M model attains a total-energy MAE of 15.81 meV and a force MAE of 2.619 meV/angstrom; its per-atom energy MAE is 0.1182 meV/atom. RKA provides a compact global communication pathway that improves energy and force prediction on the evaluated polymer-derived clusters.",
+          "arxiv_id": "2610.41675",
+          "arxiv_url": "https://arxiv.org/abs/2610.41675",
+          "authors": [
+            "Wenbo Fu, Chenghui Mao, Chengwen Hu, Haifeng Lv, Zhou Lv"
+          ],
+          "bullets": [
+            "Addresses the tension between local neighbor graphs that miss long-range interactions and quadratic-cost all-pair attention.",
+            "Maps centroid-relative atomic distances to learned radial features and combines them with content-dependent queries and keys.",
+            "Uses factorized aggregation and readout for linear scaling with atom count at fixed feature dimensions.",
+            "Inserted between EquiformerV3 local blocks, with conservative forces obtained by differentiating the energy.",
+            "On OPoly26 polymer-derived clusters, matched 5M models reduce per-atom energy and force MAEs by 67.4% and 36.3%; the 20M model achieves 15.81 meV total-energy MAE and 2.619 meV/angstrom force MAE."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: RKA in an equivariant atomic potential. Each local block updates the geometric representation. RKA reads its scalar channels and positions, and writes a scalar residual before the next block. The final scalar readout gives atomic energies. Shared elemental references and screened repulsion complete the total energy, whose coordinate derivative defines the forces. Charge/spin conditioning and repulsion are present in both 5M models.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 261,
+              "image_path": "figures/2610.41675/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 940
+            },
+            {
+              "caption": "Figure 1: Radial Kernel Attention. A finite structure defines a centroid and node radii. Learned radial features organize content-dependent key–value statistics over the entire structure. Each node reads the shared statistics through its radial features and query, and receives a scalar residual update. The basis curves are schematic, rather than fitted checkpoint values.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 264,
+              "image_path": "figures/2610.41675/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 937
+            },
+            {
+              "caption": "Table 1: Configurations of our polymer force fields. The 5M pair shares its local architecture, conditioning, and repulsion. Parameter counts are reported in millions to two decimal places.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 352,
+              "image_path": "figures/2610.41675/table-003.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 681
+            },
+            {
+              "caption": "Table 3: Complete-model comparison on all 201,865 official validation structures, with no skipped structures. Parameter counts are the reported model totals in millions. All error columns are MAEs; lower is better.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 153,
+              "image_path": "figures/2610.41675/table-004.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 702
+            },
+            {
+              "caption": "Table 2: Effect of RKA on the shared 5M backbone. Both models include charge/spin conditioning and screened repulsion, train for 12 epochs, and use the same official validation structures. Lower MAE is better.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 139,
+              "image_path": "figures/2610.41675/table-005.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 735
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41675/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41675",
+          "relevance": 7,
+          "selection_reason": "Introduces Radial Kernel Attention (RKA) for long-range modeling in force fields, achieving linear complexity in atom count through factorized aggregation.",
+          "summary_status": "generated",
+          "title": "Radial Kernel Attention for Long-Range Modeling in Polymer Machine Learning Force Fields",
+          "tldr": "Radial Kernel Attention adds a linear-cost global communication pathway that substantially improves energy and force prediction for polymer machine-learning force fields.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context diffusion repeatedly pays for both token interaction and feed-forward computation. We formulate these costs as two separate budgets: the edges available to an attention graph and the experts activated for each token. This view connects local, dilated, and global attention with conditional expert computation without assuming that sparsity alone preserves document-level information. We specify normalized masked attention, distinguish denoising depth from sampling iterations, and derive graph and compute bounds. A reported sparse-expert configuration, denoted DualBudget, is analyzed across scientific summarization, multi-hop question answering, dialogue, and sentence-pair prediction. All supplied table measurements are retained. The length study shows gains over the listed baselines through 16K, together with measurable degradation as length increases. Ablations reveal mixed changes across the three reported scores, while the cost record indicates a 20% reduction relative to DiffuSeq under an unspecified timing convention. The analysis separates these observations from unmeasured claims about training speed, absorbing states, global coherence, and deployment memory.",
+          "arxiv_id": "2610.41487",
+          "arxiv_url": "https://arxiv.org/abs/2610.41487",
+          "authors": [
+            "Alexandros Christoforos, Chadbourne Davis, Paul Raj"
+          ],
+          "bullets": [
+            "Models long-context diffusion costs using two budgets: attention-graph edges and activated feed-forward experts.",
+            "Unifies local, dilated, and global attention with conditional expert computation without assuming sparsity preserves document-level information.",
+            "Defines normalized masked attention, distinguishes denoising depth from sampling iterations, and derives graph and compute bounds.",
+            "Evaluates the DualBudget configuration on scientific summarization, multi-hop QA, dialogue, and sentence-pair prediction.",
+            "Results show gains over listed baselines through 16K, mixed ablation effects, and measurable degradation as sequence length grows."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: One denoising evaluation and its two computational budgets. (a) The denoiser predicts a clean state for the sampling update. (b) Sparse token interactions. (c) Selected expert computation. Highlighting is schematic and specifies no measured activation count.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 394,
+              "image_path": "figures/2610.41487/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 4: Two measured trajectories from the supplied length sweeps: summarization R1 and HotpotQA answer F1. Points reproduce table values; connecting segments guide the eye and do not introduce measurements between tested lengths.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 347,
+              "image_path": "figures/2610.41487/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 983
+            },
+            {
+              "caption": "Figure 3: Reported inference cost and 2-gram novelty. Coordinates reproduce the three source rows. The cost unit, normalization, and uncertainty are unspecified, so the plot supports an ordering within this record rather than a general latency claim.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 355,
+              "image_path": "figures/2610.41487/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 481
+            },
+            {
+              "caption": "Figure 2: Constructed attention masks illustrating local and dilated access with global positions. Rows are queries and columns are keys. These are protocol illustrations, not learned masks or benchmark measurements.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 294,
+              "image_path": "figures/2610.41487/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 480
+            },
+            {
+              "caption": "Table 7: Six reported ablation configurations. A/B/C preserve the three numeric columns because the source prose’s metric labels conflict with the matching summarization baseline. No uncertainty estimates are available.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 202,
+              "image_path": "figures/2610.41487/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 660
+            },
+            {
+              "caption": "Table 3: Dialogue scores under the source evaluation. Values retain their original fractional scale.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 420
+            },
+            {
+              "caption": "Table 2: Aggregate HotpotQA answer and supportingfact scores.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 416
+            },
+            {
+              "caption": "Table 8: Reported inference cost and 2-gram novelty. The source table does not define the timing unit or normalization.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 404
+            },
+            {
+              "caption": "Table 1: Scientific summarization: aggregate ROUGE comparison. This record is separate from the length sweep.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 316
+            },
+            {
+              "caption": "Table 6: HotpotQA scores at 8K, 12K, and 16K. Each pair is exact match / F1.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 387,
+              "image_path": "figures/2610.41487/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 416
+            },
+            {
+              "caption": "Table 5: Scientific summarization across reported context lengths. All three ROUGE metrics are retained.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 152,
+              "image_path": "figures/2610.41487/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 698
+            },
+            {
+              "caption": "Table 4: QQP accuracy under the recorded protocol; this is not a direct measure of generated paraphrase quality.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 220
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41487/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41487",
+          "relevance": 6,
+          "selection_reason": "Sparse long-context text diffusion under attention and expert budgets is relevant to efficient attention and long-context generation.",
+          "summary_status": "generated",
+          "title": "Sparse Text Diffusion under Dual Budgets: Context Connectivity and Expert Activation",
+          "tldr": "A dual-budget framework analyzes sparse diffusion models by separately constraining attention connectivity and expert activation, with reported gains through 16K tokens but degradation at longer lengths and a 20% cost reduction under an unspecified timing convention.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Gated Delta Networks (GDNs) offer linear-time sequence modeling, yet long-context prefill remains costly due to dense intra-chunk computation, recurrent-state updates, and intermediate state storage. We introduce SparseGDN, a hardware-aware framework that combines structured intra-chunk approximation with input-dependent recurrent-event selection while producing outputs for every token. A block-adjacent solver reduces local Delta-solve computation, while a dynamic selector allocates recurrent-update budgets across head pairs. The GPU implementation materializes updates only for selected events and reconstructs token outputs using compact state snapshots and group-local interactions, reducing computation and memory traffic. We evaluate SparseGDN on Qwen3.5-4B and Qwen3.5-9B across RULER tasks and context lengths from 4K to 128K. Retaining approximately 29% of recurrent events on average, SparseGDN achieves 1.50-1.94x GDN-core prefill speedups over native FLA kernels, including online selection overhead.",
+          "arxiv_id": "2610.41420",
+          "arxiv_url": "https://arxiv.org/abs/2610.41420",
+          "authors": [
+            "Jiedong Zhuang, Peng Zhao, Jialin Tang, Haoji Hu"
+          ],
+          "bullets": [
+            "Targets the high cost of dense intra-chunk computation, recurrent-state updates, and intermediate storage in long-context GDN prefill.",
+            "Uses a block-adjacent solver for approximate local Delta computation and an input-dependent selector for recurrent-event allocation across head pairs.",
+            "Materializes only selected updates and reconstructs token outputs from compact state snapshots and group-local interactions.",
+            "On Qwen3.5-4B/9B across RULER and 4K–128K contexts, retaining about 29% of recurrent events yields 1.50–1.94× GDN-core prefill speedups over native FLA kernels, including selection overhead."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3 End-to-end SparseGDN execution pipeline. The block-adjacent intra-chunk kernel computes transformed values U, compact update coefficients, and selector scores. The dynamic selector converts these scores into a structured event mask. Only selected events trigger deferred W materialization and recurrent-state updates, producing compact event states. During output reconstruction, the mapped output kernel retrieves the appropriate preceding event state from HBM and applies the accumulated gap decay, while computing group-local interactions and producing outputs for every token.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 373,
+              "image_path": "figures/2610.41420/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 976
+            },
+            {
+              "caption": "Figure 1 GDN-core prefill latency across context lengths for Qwen3.5-9B and Qwen3.5-4B. Compared with FLA GDN, SparseGDN additionally includes the online selector overhead. Latency is aggregated over all 24 GDN layers. SparseGDN reduces latency at every context length, reaching 1.93× and 1.94× speedup at 128K for the 9B and 4B models, respectively. Lower is better.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 839,
+              "image_path": "figures/2610.41420/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1079
+            },
+            {
+              "caption": "Figure 9 Accuracy--efficiency trade-off across retention budgets. Each panel plots the aggregate RULER score difference ∆, defined in Table 3, against the geometric mean GDN-core speedup over 4K–128K. Point labels show measured recurrent-event keep rates. Solid lines connect nondominated configurations among the evaluated sparse operating points. The cross marks the approximately 49%-keep configuration, which is dominated by the approximately 39%-keep configuration for both models under these aggregate metrics. Speedups include online selection. Higher and farther right is better.",
+              "figure_id": "figure-9-17",
+              "figure_number": "9",
+              "height": 413,
+              "image_path": "figures/2610.41420/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 966
+            },
+            {
+              "caption": "Figure 10 Tail-window ranking quality, scan cost, and illustrative task scores. Left: change in retained nonanchor dense-decode importance mass relative to Tail-16 on 130 stratified 8K requests per model, with task-stratified paired 95% bootstrap confidence intervals. Pair-tier assignments, exact per-pair keep counts, and anchors are fixed to Tail-16. The gray curve reports standalone score-kernel latency per layer at 8K. Right: illustrative 128K score curves. The shaded bands highlight the default Tail-16 window in both panels.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 452,
+              "image_path": "figures/2610.41420/figure-004.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 970
+            },
+            {
+              "caption": "Figure 5 Dynamic event selection and packing. Here, ZBi denotes the i-th 16-token block of the pre-activation output-gate tensor Z within a chunk. Chunk scores determine the retention order within each head pair. Recurrent lifetime and output-visibility proxies weight the estimated gains from larger budgets, which determine the low-, medium-, and high-retention tiers. The example assigns 9, 4, and 3 pairs to these tiers. Selected events are packed in temporal order into CSR chains for recurrent execution.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 335,
+              "image_path": "figures/2610.41420/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 980
+            },
+            {
+              "caption": "Figure 11 Complete-model prefill peak allocated memory across context lengths. Measurements use BF16, batch size one, use_cache=True. The shaded region shows the absolute memory saved by SparseGDN wherever both paths complete. The dashed line marks the nominal 80 GB device capacity as a reference. Crosses indicate Native OOM at 256K and are placed on this reference line for display; they do not represent measured allocation peaks. SparseGDN completes at that length for both models. Lower is better.",
+              "figure_id": "figure-11-16",
+              "figure_number": "11",
+              "height": 423,
+              "image_path": "figures/2610.41420/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 970
+            },
+            {
+              "caption": "Figure 7 Per-stage GDN-core prefill latency. The top and bottom rows show Qwen3.5-4B and Qwen3.5-9B, respectively. The left column compares native Intra with SparseGDN Intra plus online Selector; the middle and right columns compare H and O. For SparseGDN, H includes deferred W materialization. Each component reports the median of per-iteration CUDA-event times summed over all 24 GDN layers. The stacked Intra-plus-Selector bars sum the two component medians. Boxed values denote the corresponding native-to-sparse latency ratios. Lower latency is better.",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 381,
+              "image_path": "figures/2610.41420/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 982
+            },
+            {
+              "caption": "Figure 8 GDN-core speedup across batch sizes and context lengths. Speedup is Native/Sparse, includes online selection, and uses batch latencies aggregated over all 24 GDN layers. Crosses mark configurations without a paired speedup because Native runs out of memory. Crosses are placed at a fixed height for display and do not represent measured speedups. The corresponding sparse-only outcomes are detailed in Table 2. Every completed paired configuration favors SparseGDN. Higher is better.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 415,
+              "image_path": "figures/2610.41420/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 970
+            },
+            {
+              "caption": "Figure 2 Two empirical structures observed in layer 16 of native-dense Qwen3.5-4B on an 8K RULER input (niah_multikey_3, row 0). (a) Adjacent chunk-boundary states are frequently nearly stationary, while the magnitudes of their changes vary substantially across value heads. (b) The left panel shows |M−1 − I|, averaged over 123 complete 64-token chunks and all 32 value heads. Here M is the native Delta-solve matrix defined in Section 2.3; subtracting I removes the unit diagonal, and absolute values are taken elementwise before averaging. The coefficients concentrate near the causal diagonal and weaken across more distant token blocks. This observed locality motivates the block-adjacent approximation, whose computation support is shown in the right panel.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 279,
+              "image_path": "figures/2610.41420/figure-009.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 985
+            },
+            {
+              "caption": "Figure 6 Tier-aware scheduling of heterogeneous recurrent event chains. High-, medium-, and low-retention head pairs induce event chains with different workloads. Scheduling them in physical-head order can place a long high-tier chain behind shorter tasks, creating an SM straggler and extending kernel completion time (left). SparseGDN orders chains by expected workload and uses event-count-adaptive execution to distribute them across SMs (right), reducing load imbalance and tail latency. The red dashed line denotes kernel completion.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 223,
+              "image_path": "figures/2610.41420/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 976
+            },
+            {
+              "caption": "Table 6 Kernel-pipeline ablations at batch size one on a GPU. Speedup is the ratio of reference to optimized median latency over the stages listed in Scope. Each variant uses five warmup forwards and 30 interleaved CUDA-event measurements. Within each measurement, the indicated stage times are summed across all 24 GDN layers before computing the median across measurements. Separately timed Selector work is excluded; statistics fused into Intra remain included. Geomean is the geometric mean of speedups over the six lengths from 4K to 128K; the 128K column reports the longest-context result. Each row uses its own reference, so the isolated speedups should not be multiplied. Compact+mapped reports the joint effect of compact state storage and mapped output reads.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 218,
+              "image_path": "figures/2610.41420/table-011.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 664
+            },
+            {
+              "caption": "Table 4 Algorithmic component ablation on all 13 RULER tasks at 4K (1,300 examples per model). Scores and their arithmetic differences are expressed on the percentage scale. ∆ is the score difference from Native, computed from unrounded scores. Full64 + adaptive restores the full lower-triangular 64-token intra-chunk solve while retaining adaptive event selection; Block-adjacent + all retains every recurrent event. Adaptive and random variants use matched approximately 29% event budgets. All custom variants retain the same group-local output rule; Native uses the dense operator. Adaptive masks are recomputed for each Intra variant. Bold highlights the proposed method.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 195,
+              "image_path": "figures/2610.41420/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 736
+            },
+            {
+              "caption": "Table 1 RULER scores, recurrent-event sparsity, and GDN-core speedup for Qwen3.5-4B and Qwen3.5-9B. Scores follow the official RULER scoring rules and are reported as percentages. ∆ is the arithmetic difference between the Sparse and Base columns, computed from unrounded scores. Both scores and their differences are expressed on the percentage scale. Speedup compares native Intra+H+O against SparseGDN Selector+Intra+H+O, using the 24-layer GDN-core timing protocol in Section 3.1. Event sparsity is the mean fraction of valid recurrent pair–chunk events omitted across evaluation requests; padding chunks are excluded. The All row averages across the six context lengths.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 251,
+              "image_path": "figures/2610.41420/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 936
+            },
+            {
+              "caption": "Table 2 Batched GDN-core speedup (Native/Sparse). OOM† indicates that Native runs out of memory in the benchmark harness, while SparseGDN completes in a separate process. Plain OOM indicates that Native runs out of memory and sparse completion has not been independently verified. Speedups include online selection and cover only the GDN core.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 198,
+              "image_path": "figures/2610.41420/table-014.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 622
+            },
+            {
+              "caption": "Table 3 Retention-rate trade-off over all six context lengths. Keep is the mean fraction of valid recurrent pair–chunk events retained across evaluation requests; padding chunks are excluded. ∆ = Ssparse−Sbase is the arithmetic difference in aggregate RULER scores, computed from unrounded scores over 7,800 examples per model using the official scoring rules. Scores and their differences are expressed on the percentage scale. Speedup is the geometric mean of the six GDN-core speedups at batch size one under the timing protocol in Section 3.1, including online selection. Higher speedup and ∆ are better.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 195,
+              "image_path": "figures/2610.41420/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 706
+            },
+            {
+              "caption": "Table 7 Complete-model prefill peak allocated memory. “Incr.” denotes the peak allocation above memory already live at forward entry. “Incr. reduction” is the relative decrease in this increment, computed from unrounded values. Native OOMs during its first 256K warmup, so no completed-forward peak or increment is available. Lower is better.",
+              "figure_id": "table-7-15",
+              "figure_number": "7",
+              "height": 140,
+              "image_path": "figures/2610.41420/table-016.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 786
+            },
+            {
+              "caption": "Table 5 Effect of adaptive tier counts on Qwen3.5-9B. Scores are official RULER percentages over 100 examples per task at each context length (13 tasks; 7,800 examples in total). All is the mean over the six lengths. Score differences reported in the text are computed from unrounded values. Keep is the mean per-request fraction of valid recurrent pair–chunk events retained, expressed as a percentage. Both variants use the same retention tiers; realized keep rates are not forced to match. Bold indicates the higher score at each length and in aggregate.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 94,
+              "image_path": "figures/2610.41420/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 752
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41420/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.41420",
+          "relevance": 8,
+          "selection_reason": "Hardware-aware sparse linear attention with recurrent-event selection improves long-context prefill computation and memory traffic.",
+          "summary_status": "generated",
+          "title": "SparseGDN: Chunk Sparse in Linear Attention",
+          "tldr": "SparseGDN accelerates long-context GDN prefill by sparsifying local computation and recurrent updates while preserving outputs for every token.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The bottleneck of attention mechanisms, which are the fundamental building block of modern language models, is their quadratic complexity in terms of context size. There has thus been an increasing interest in the compression of the context, also called KV-cache compression. In this article, we consider the problem of compressing the context of attention mechanisms by first formulating it in the Hilbert space associated with its kernel. In this formalism, attention can be represented as the ratio of two linear maps whose interpolant is also the ratio of interpolants, this allows us to consider the interpolation of the linear maps directly. We thus introduce two novel KV-cache compression methods which we call GAIM and Q-DAIM, based on the Generalized Empirical Interpolation Method (GEIM) and the Q-Discrete Empirical Interpolation Method (Q-DEIM), respectively. As the cost of these methods is quadratic in terms of context length, we propose surrogate models based on the Taylor series, the Performer and the Random Fourier Features method which allow the compression to be done in linear time. Finally, we extend this result to the streaming attention setting, providing new methods which allow one to penalize the selection of interpolation nodes based on the previously interpolated context and to update the previous interpolation based on new information. We then provide numerical results on the convergence of the residuals and the output error in future queries and preliminary results on the LongBench-E benchmark showing performance comparable to the state-of-the-art methods. These experiments suggest that the range revealed by our Q-DAIM method could help identify where information is concentrated in the KV cache, thus enabling an efficient compression.",
+          "arxiv_id": "2610.40943",
+          "arxiv_url": "https://arxiv.org/abs/2610.40943",
+          "authors": [
+            "Michel Fabrice Serret, Laura Grigori"
+          ],
+          "bullets": [
+            "Addresses the quadratic cost of attention with increasing context length by compressing the KV cache.",
+            "Formulates attention in a kernel-associated Hilbert space, representing it as a ratio of linear maps whose interpolants can be compressed directly.",
+            "Proposes GAIM and Q-DAIM methods based on GEIM and Q-DEIM interpolation techniques.",
+            "Uses Taylor-series, Performer, and Random Fourier Features surrogates to reduce compression cost from quadratic to linear time, and extends the approach to streaming attention.",
+            "Numerical experiments evaluate residual and future-query output errors; preliminary LongBench-E results show performance comparable to existing methods, while suggesting Q-DAIM can reveal where KV-cache information is concentrated."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL",
+            "cs.NA",
+            "math.NA"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Residual operator convergence for the different methods. Relative squared norm of the augmented residual operator (top) and of the denominator residual operator (bottom) against the number of nodes n, median over the 16 KV heads. Each panel shows the variants of one method in colour and the curves of the other methods in grey. The norm of the numerator residual operator Mg ∆,η stays within about 3% of that of the augmented one and is not shown.",
+              "figure_id": "figure-1-26",
+              "figure_number": "1",
+              "height": 538,
+              "image_path": "figures/2610.40943/figure-001.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 936
+            },
+            {
+              "caption": "Figure 2: Heavy hitter relative error (27) in numerator and denominator with tsink = 32 and without range correction. Top: ε10%g ; bottom: ε10%h ; both on the future queries. Each curve is the median of this ratio over the 112 query heads; each panel shows the variants of one method in colour and the curves of the other methods in grey. The interquartile range over the heads is shown in Figure 11 of Appendix C.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 566,
+              "image_path": "figures/2610.40943/figure-002.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 938
+            },
+            {
+              "caption": "Figure 3: Attention error in L2 norm on future queries with tsink = 32 and trec = 0. Heavy hitter relative attention error ε10%Att without (top) and with (bottom) range correction. Each curve is the median of this ratio over the 112 query heads; each panel shows the variants of one method in colour and the curves of the other methods in grey. For both rows, the zero-readout errors are at least 3 times higher and have thus not been drawn in the figures. The interquartile range over the heads is shown in Figure 12 of Appendix C.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 565,
+              "image_path": "figures/2610.40943/figure-003.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 944
+            },
+            {
+              "caption": "Figure 14: Heavy hitter relative attention error ε10%Att using Q-DAIM exact v5 interpolation nodes for the projection methods of Table 1 and without projection (W = V [L, :]), as in Figure 7. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-14-16",
+              "figure_number": "14",
+              "height": 459,
+              "image_path": "figures/2610.40943/figure-004.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 914
+            },
+            {
+              "caption": "Figure 6: Heavy-hitter relative attention error ε10%Att (27) using GAIM exact v4 interpolation nodes for the different projection methods described in Table 1, and without projection, i.e. keeping the values of the selected keys, W = V [L, :]. Median over the 112 query heads; the interquartile range over the heads is shown in Figure 13 of Appendix C. The methodology used is the same as the experiments in §5.1.",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 458,
+              "image_path": "figures/2610.40943/figure-005.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 914
+            },
+            {
+              "caption": "Figure 7: Heavy-hitter relative attention error ε10%Att (27) using Q-DAIM exact v5 interpolation nodes for the different projection methods described in Table 1, and without projection, i.e. keeping the values of the selected keys, W = V [L, :]. Median over the 112 query heads; the interquartile range over the heads is shown in Figure 14 of Appendix C. The methodology used is the same as the experiments in §5.1.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 457,
+              "image_path": "figures/2610.40943/figure-006.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 914
+            },
+            {
+              "caption": "Figure 13: Heavy hitter relative attention error ε10%Att using GAIM exact v4 interpolation nodes for the projection methods of Table 1 and without projection (W = V [L, :]), as in Figure 6. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-13-17",
+              "figure_number": "13",
+              "height": 458,
+              "image_path": "figures/2610.40943/figure-007.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 909
+            },
+            {
+              "caption": "Figure 10: Impact of segment-interpolation parameters on best-performing GAIM and Q-DAIM variants. Top: relative attention error medq ∥Att(q) − ÃttL(q)∥2 /meanq∈top 10% ∥Att(q)∥2 on the future queries for the block method, in percent (median over the heads). Bottom: difference of this error between the streaming (with range deflation and refit) and the block method, streaming minus block, in percentage points (blue: lower with streaming, red: higher). Range correction on, tsink = 32, trec = 32.",
+              "figure_id": "figure-10-5",
+              "figure_number": "10",
+              "height": 376,
+              "image_path": "figures/2610.40943/figure-008.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 924
+            },
+            {
+              "caption": "Figure 9: Norm of the augmented residual operator for segmented interpolation. Top: relative squared norm ∥M∆,η∥22/∥Mη∥22 of the block method, in percent and shaded on a logarithmic scale (median over the heads). Bottom: difference of this norm between the streaming (with range deflation and refit) and the block method, streaming minus block, in percentage points (blue: lower with streaming, red: higher). Range correction on, tsink = 32.",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 375,
+              "image_path": "figures/2610.40943/figure-009.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 924
+            },
+            {
+              "caption": "Figure 1 displays the median squared norms of the augmented and denominator operators, the numerator being indistinguishable from the augmented one. We observe that, as expected, variants v1 and v5, which directly optimize these residuals, perform better than the other variants in these metrics. A surprising result is the fact that the residual norm of Mh ∆,η is also minimised by the selection of the un-augmented variant v1.",
+              "figure_id": "figure-1-13",
+              "figure_number": "1",
+              "height": 538,
+              "image_path": "figures/2610.40943/figure-010.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 936
+            },
+            {
+              "caption": "Figure 18: Q-DAIM exact (left) and Q-DAIM RFF (right) past the revealed rank, single pass of Algorithm 2 (dashed) against the restarted selections of Appendix E (solid), for the v1 and v5 targets. Top: relative squared norm of the augmented residual operator on the keys, without sink, as in Figure 1. Middle and bottom: heavy hitter relative attention error ε10%Att on the future queries with tsink = 32, without and with range correction, as in Figure 3. Each curve is the median over the heads. Dotted vertical lines: restarts, every d = 128 nodes for Q-DAIM RFF; for QDAIM exact, where at least half of the KV heads reset F , i.e. after 128, 256 and 384 nodes for the v1 target and one node later per block for v5 (on 14 of the 16 KV heads; the other two, of lower numerical rank, reset more often).",
+              "figure_id": "figure-18-20",
+              "figure_number": "18",
+              "height": 715,
+              "image_path": "figures/2610.40943/figure-011.webp",
+              "kind": "figure",
+              "page": 44,
+              "width": 840
+            },
+            {
+              "caption": "Figure 12: Heavy hitter relative attention error ε10%Att on the future queries without (top) and with (bottom) range correction, with tsink = 32 and trec = 0, as in Figure 3. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 565,
+              "image_path": "figures/2610.40943/figure-012.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 944
+            },
+            {
+              "caption": "Figure 11: Heavy hitter relative error (27) in numerator (top, ε10%g ) and denominator (bottom, ε10%h ) on the future queries, with tsink = 32 and without range correction, as in Figure 2. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-11-9",
+              "figure_number": "11",
+              "height": 565,
+              "image_path": "figures/2610.40943/figure-013.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 925
+            },
+            {
+              "caption": "Figure 4: Worst-case error for range-corrected GAIM interpolation in L∞ norm. Layer 0, query head 4. GAIM exact with the nodes selected in the L∞ score norm; each curve is a sliding mean over 205 consecutive queries.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 522,
+              "image_path": "figures/2610.40943/figure-014.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 938
+            },
+            {
+              "caption": "Figure 5: Worst-case GAIM interpolation error and its improvement with range-correction in L∞ norm. Layer 1, query head 16; this layer lies outside the layers {0, 7, 14, 21} used for the median curves. GAIM exact with the nodes selected in the L∞ score norm; each curve is a sliding mean over 205 consecutive queries. Range correction enables some of the variants to improve their error levels, especially on the tokens with higher attention scores.",
+              "figure_id": "figure-5-24",
+              "figure_number": "5",
+              "height": 521,
+              "image_path": "figures/2610.40943/figure-015.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 938
+            },
+            {
+              "caption": "Figure 17: Condition number κ2 per layer of the Gram matrices of the context keys, EKK (N = 4064, left), and of the n = 512 interpolation nodes selected by GAIM exact (centre) and Q-DAIM exact (right), ELL; tsink = 32 sink keys excluded. Blue: Gaussian Gram Ĕ (any centering); red: exponential Gram E with the keys at the origin; orange: exponential Gram with the keys centred on their mean. Lines: median over the four KV heads of the layer; small marks: one KV head. Past the double-precision resolution 1/(nϵ) (dotted), hollow marks give the lower bound κ(D) and the bars extend to κ(D)κ(Ĕ); triangles mark the heads beyond 1040, with the largest exponent of the layer.",
+              "figure_id": "figure-17-12",
+              "figure_number": "17",
+              "height": 423,
+              "image_path": "figures/2610.40943/figure-016.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 891
+            },
+            {
+              "caption": "Figure 8: Comparison of segment-local projection versus global interpolation node projection on attention residual. Ratio, head by head, of the error obtained with the global projection to the error obtained with the segment-local one, where the error is the median attention error medq ∥Att(q)− ÃttL(q)∥2 over the future queries (left, centre) or the fit residual ∥ĔKKV aug",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 276,
+              "image_path": "figures/2610.40943/figure-017.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 906
+            },
+            {
+              "caption": "Figures 15 and 16 give, for the same projections, the residual operator they leave on the keys, i.e. the relative squared norm ∥Mη − L̆T ϕX∥2H/∥Mη∥2H of the augmented operator and of its denominator part, computed from ĔKK , ĔLK and ĔLL on the context keys, the sink excluded. The GAIM exact nodes are those of the v1 variant: with the v4 nodes of Figure 6, every projection leaves the whole operator, about 0.9999 of its norm at n = 512. The Galerkin projection, the orthogonal projection in H , gives the smallest residual by construction, and the least-squares projection and the values of the selected keys, W = V [L, :], are within 0.1% of it. The revealed-range projection is larger and peaks around n = 129, where the number of nodes reaches the revealed rank. The WildCat temperature projection leaves the largest residual, above the norm of the denominator operator itself for small n, although it gives the lowest attention error at the future queries in Figures 6 and 7.",
+              "figure_id": "figure-15-21",
+              "figure_number": "15",
+              "height": 268,
+              "image_path": "figures/2610.40943/figure-018.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 907
+            },
+            {
+              "caption": "Figure 15: Relative squared norm of the residual operator on the keys left by each projection of Table 1, and without projection (W = V [L, :]), on GAIM exact v1 interpolation nodes (L∞ score), tsink = 32. Left: augmented operator; right: denominator. Median over the 16 KV heads.",
+              "figure_id": "figure-15-22",
+              "figure_number": "15",
+              "height": 268,
+              "image_path": "figures/2610.40943/figure-019.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 907
+            },
+            {
+              "caption": "Figure 16: Relative squared norm of the residual operator on the keys left by each projection of Table 1, and without projection (W = V [L, :]), on the Q-DAIM exact v5 interpolation nodes of Figure 7, tsink = 32. Left: augmented operator; right: denominator. Median over the 16 KV heads.",
+              "figure_id": "figure-16-23",
+              "figure_number": "16",
+              "height": 121,
+              "image_path": "figures/2610.40943/figure-020.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 676
+            },
+            {
+              "caption": "Table 8: LongBench-E - 25 prompts per task at 25% context compression. Key centers are given as the tuple (selection, solve), c = segment mean, g = global mean. The Exact and COMPRESSKV rows are the values reported in Table 4 of [SM26] (25% compression) on the complete benchmark (compared to our 25 samples/task). For comparison, the percentages rows give, per task, our best method on average (Q-DAIM exact, Nseg=64) and the best score per task relative to Dense, and COMPRESSKV relative to Exact. Proj.: Galerkin/basis projection (Gal.), none (each node keeps its own value with a unit weight, [VL | 1]), or Q-DAIM’s revealed-range projection restricted to the revealed rank (ranger). Methods optionally use the τ temperature scaled kernel for comparison with WildCat [SM26]. RP-Cholesky corresponds to an implementation of the WildCat selection and projection on our harness. †: run on PyTorch 2.14, whose GPU (MPS) attention kernels round differently.",
+              "figure_id": "table-8-29",
+              "figure_number": "8",
+              "height": 448,
+              "image_path": "figures/2610.40943/table-021.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 982
+            },
+            {
+              "caption": "Table 3: Parameters for interpolation of streaming attention.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 517,
+              "image_path": "figures/2610.40943/table-022.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 978
+            },
+            {
+              "caption": "Table 5: Computational cost of each step, for a single head, per segment. The selection and residual update costs are summed over the nseg picks, and the surrogate costs assume D ≥ d.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 653,
+              "image_path": "figures/2610.40943/table-023.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 978
+            },
+            {
+              "caption": "Table 1: Matrices and projectors associated with the different projection methods.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 168,
+              "image_path": "figures/2610.40943/table-024.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 752
+            },
+            {
+              "caption": "Table 4: Data in memory per head and per layer kept throughout the context compression.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 283,
+              "image_path": "figures/2610.40943/table-025.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 460
+            },
+            {
+              "caption": "Table 2: Modified matrices for each deflation type.",
+              "figure_id": "table-2-18",
+              "figure_number": "2",
+              "height": 119,
+              "image_path": "figures/2610.40943/table-026.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 740
+            },
+            {
+              "caption": "Table 7: Number of query heads per layer (out of 28) on which the temperature-scaled projection lowers the maximum error in L∞ norm, maxq∈Q ∥Att(q,K, V ) − ÃttL(q,K, V )∥∞. GAIM exact v4 with the nodes selected in the L∞ score norm, and Q-DAIM exact v5, tsink = 32, RC on, the projection is solved in the kernel rescaled as in [SM26], τ ≈ 2.04. In parentheses we give the heads for which the error decreases by more than 10%. The last column is the number of heads that improved for all n.",
+              "figure_id": "table-7-25",
+              "figure_number": "7",
+              "height": 171,
+              "image_path": "figures/2610.40943/table-027.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 736
+            },
+            {
+              "caption": "Table 6: Number of query heads per layer (out of 28) on which range correction lowers the maximum error in L∞ norm, maxq∈Q ∥Att(q,K, V )−ÃttL(q,K, V )∥∞. GAIM exact v2, nodes selected in the L∞ score norm, tsink = 32. In parentheses we give the heads for which the error decreases by more than 10%. Last column: heads improved under every variant and every budget.",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 71,
+              "image_path": "figures/2610.40943/table-028.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 494
+            },
+            {
+              "caption": "Table 6 shows the number of heads of each layer that were improved by range correction in terms of L∞ attention error in future queries. The decisive advantage of the range-corrected estimators on the median error observed in Figure 3 is less clear once we look at specific heads. Indeed, as can be seen from Table 6, while most heads are improved, few of them are improved by more than 10%. To illustrate this, Figure 4 and Figure 5 show two failure modes for the interpolation, one for the range-corrected case and one for the raw interpolation. Each figure plots the norm of the attention error for each future query, ordered according to the norm of the attention of the query; the solid black line indicates the norm of the attention output vector while the dotted line corresponds to the mean vector approximation. As can be seen from Figure 4, for some heads range correction adversely affects the performance of the interpolation. Indeed, as the mean vector approximation has a high error, range-corrected interpolation performs poorly",
+              "figure_id": "table-6-28",
+              "figure_number": "6",
+              "height": 71,
+              "image_path": "figures/2610.40943/table-029.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 494
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.40943/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.40943",
+          "relevance": 8,
+          "selection_reason": "KV-cache compression via kernel interpolation for attention mechanisms.",
+          "summary_status": "generated",
+          "title": "Kernel-based Interpolatory Methods for Context Compression of Attention Mechanisms",
+          "tldr": "The paper introduces kernel-based KV-cache compression methods that reduce attention-context storage and support linear-time and streaming settings.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-31",
       "paper_count": 1,
       "papers": [
@@ -59295,5 +61814,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 309
+  "total_paper_count": 319
 }

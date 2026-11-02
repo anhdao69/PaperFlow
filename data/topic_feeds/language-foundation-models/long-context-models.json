@@ -1,6 +1,1546 @@
 {
   "days": [
     {
+      "date": "2026-11-01",
+      "paper_count": 6,
+      "papers": [
+        {
+          "abstract": "Agentic workflows are increasingly shifting towards long-horizon tasks, such as open-ended scientific work, where models benefit from long context windows. However, at ultra-long context (above 1M tokens), full attention is prohibitively expensive. A promising approach is sparse attention, in which a dedicated indexer selects a subset of keys for the attention. Yet current methods of indexing either still have quadratic cost in context size or lose accuracy at ultra-long context scale. We address this with Latent Sparse Attention (LSA), an efficient attention method that maintains accuracy at ultra-long context. In LSA, keys are hierarchically clustered in a learned latent space, and queries score the hierarchy of clusters instead of scoring every key, making prefill, decode and training faster at long context. We propose two variants, Distilled-LSA (D-LSA), which can be applied to pre-trained models via distillation, and Native-LSA (N-LSA), which is trained natively on the next-token loss alone. On GLM-5.3-FLASH (QWEN-3.8-27B) at 10M tokens, D-LSA speeds up one attention layer by 22.7x (72.4x) in prefill and 4.6x (42.5x) in decode over its original sparse attention (full attention), while keeping similar accuracy across a variety of tasks. N-LSA matches the accuracy of full attention with a training speedup of 1.6x per layer at 128k tokens. LSA offers practical and efficient attention for models to benefit from ultra-long context.",
+          "arxiv_id": "2610.42147",
+          "arxiv_url": "https://arxiv.org/abs/2610.42147",
+          "authors": [
+            "Ales Kubicek, Andrea Caciolai, Liangzu Peng, Sukrit Sumant, Benjamin Hoover, Fraser Greenlee, Ruairidh M. Battleday, Radim Urban, Torsten Hoefler, James C. R. Whittington"
+          ],
+          "bullets": [
+            "Targets the prohibitive cost and accuracy degradation of existing sparse attention beyond 1M tokens.",
+            "Organizes keys into a learned latent hierarchy, allowing queries to score clusters rather than all keys.",
+            "Introduces Distilled-LSA for adapting pretrained models and Native-LSA for native next-token-loss training.",
+            "At 10M tokens, D-LSA substantially accelerates prefill and decode while maintaining similar accuracy across evaluated tasks.",
+            "N-LSA matches full-attention accuracy and provides per-layer training speedups at 128k tokens."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. D-LSA and N-LSA overview. Top: one attention layer. The keys are pooled and clustered into buckets. A query ( ) scores the bucket centroids ( ) and attends only to the selected long-range keys (plus sink and window). Bottom: accuracy and performance (P: prefill, D: decode, T: training) for both D-LSA and N-LSA. D-LSA is shown with flat search. Its subquadratic variant, D-LSA (Tree), follows a similar trend (Figure 5).",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 445,
+              "image_path": "figures/2610.42147/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 492
+            },
+            {
+              "caption": "Figure 12. Reasoning tokens against baselines. Reasoning tokens of each method relative to the baseline of its model, on the same questions. Grey bands mark the expected variation, and markers inside them show no measurable change in reasoning length.",
+              "figure_id": "figure-12-4",
+              "figure_number": "12",
+              "height": 329,
+              "image_path": "figures/2610.42147/figure-002.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 479
+            },
+            {
+              "caption": "Figure 6. D-LSA speedup of one global attention layer. Prefill and decode speedup over the baseline attention (log scale), Full Attention for QWEN-3.8-27B and Block Sparse Attention (Flat) for GLM-5.3-FLASH, required memory at 10M with one index key per block of four keys for Block Sparse Attention (Flat), and prefill scaling up to 100M (log-log), extrapolated beyond 10M (shaded).",
+              "figure_id": "figure-6-23",
+              "figure_number": "6",
+              "height": 433,
+              "image_path": "figures/2610.42147/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1006
+            },
+            {
+              "caption": "Figure 5. D-LSA accuracy is on par with full attention and sparse attention baselines on downstream tasks. Shown on knowledge, reasoning and long-context tasks up to 10M tokens. Baseline scores are given with their 95% confidence interval.",
+              "figure_id": "figure-5-17",
+              "figure_number": "5",
+              "height": 375,
+              "image_path": "figures/2610.42147/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1006
+            },
+            {
+              "caption": "Figure 3. D-LSA design. Left: D-LSA (Flat). Indexer keys: 1 projection and L2 norm, 2 pooling (4:1), 3 bottom-up agglomerative",
+              "figure_id": "figure-3-18",
+              "figure_number": "3",
+              "height": 367,
+              "image_path": "figures/2610.42147/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 4. N-LSA design. The attention layer of N-LSA, which can be trained from scratch on the next-token loss alone.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 425,
+              "image_path": "figures/2610.42147/figure-006.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 492
+            },
+            {
+              "caption": "Figure 7. N-LSA training speedup. Models trained natively on the NTP loss with Full Attention, SWA, NSA, PISA and N-LSA. Left: one attention layer, forward and backward, on one H200. Right: validation loss over the training time of the whole model in the decay phase (all on the same data and number of tokens).",
+              "figure_id": "figure-7-24",
+              "figure_number": "7",
+              "height": 205,
+              "image_path": "figures/2610.42147/figure-007.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 477
+            },
+            {
+              "caption": "Figure 11. D-LSA accuracy on RULER individual tasks. The 13 tasks of RULER from 4k to 10M tokens on QWEN-3.8-27B and GLM-5.3-FLASH, by task group, with their average.",
+              "figure_id": "figure-11-28",
+              "figure_number": "11",
+              "height": 590,
+              "image_path": "figures/2610.42147/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 1006
+            },
+            {
+              "caption": "Figure 8. Top-k Oracle Attention on RULER. QWEN-3.8-27B at 128k tokens. Each query attends to a 4-token sink, a 512-token window and the top-k long-range keys, one list shared by all heads. Process: sum over all heads, pick top-k, renormalise per head over the shared selection.",
+              "figure_id": "figure-8-21",
+              "figure_number": "8",
+              "height": 379,
+              "image_path": "figures/2610.42147/figure-009.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1008
+            },
+            {
+              "caption": "Figure 2. Traditional sparse attention at ultra-long context. One global attention layer of GLM-5.3-FLASH (512k to 10M tokens) on one H200, prefilling the last chunk of 32,768 queries and decoding one token. Speedup of sparse attention over full attention (blue), share of the indexer (%), and potential speedup over sparse attention if the indexer were ‘free’ (green).",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 400,
+              "image_path": "figures/2610.42147/figure-010.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 483
+            },
+            {
+              "caption": "Figure 18. D-LSA with tensor parallelism (TP8). Top: MLA (GLM-5.3-FLASH). Bottom: GQA (QWEN-3.8-27B). Indexer keys:",
+              "figure_id": "figure-18-6",
+              "figure_number": "18",
+              "height": 656,
+              "image_path": "figures/2610.42147/figure-011.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 19. D-LSA with context parallelism (CP8). Top: prefill of GLM-5.3-FLASH (PCP8 + DCP8), each rank holding a contiguous",
+              "figure_id": "figure-19-25",
+              "figure_number": "19",
+              "height": 648,
+              "image_path": "figures/2610.42147/figure-012.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 14. Block size of Block Sparse Attention (Tree). RULER and PaperTrail up to 1M tokens with blocks of 8, 16 and 64 keys (npool), each selecting the same 4,608 keys, against the baseline of each model and D-LSA (Flat).",
+              "figure_id": "figure-14-12",
+              "figure_number": "14",
+              "height": 331,
+              "image_path": "figures/2610.42147/figure-013.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 483
+            },
+            {
+              "caption": "Figure 17. B Bucket scan on H200. Left: the thread blocks (colours) over tiles of tq index queries and spans of centroid tiles, and below,",
+              "figure_id": "figure-17-22",
+              "figure_number": "17",
+              "height": 456,
+              "image_path": "figures/2610.42147/figure-014.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 9. LongDocs. Tokens of the distillation mix by domain and source (left) and by sequence length (right), with the in-house agent traces hatched.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 269,
+              "image_path": "figures/2610.42147/figure-015.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 479
+            },
+            {
+              "caption": "Figure 10. PaperTrail. 1 A sample, its fabricated, host and back-",
+              "figure_id": "figure-10-19",
+              "figure_number": "10",
+              "height": 710,
+              "image_path": "figures/2610.42147/figure-016.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 492
+            },
+            {
+              "caption": "Figure 13. D-LSA accuracy on PaperTrail per tier. Tier 1, tier 2 and tier 3 questions, each averaged over the three domains and three repeats.",
+              "figure_id": "figure-13-5",
+              "figure_number": "13",
+              "height": 329,
+              "image_path": "figures/2610.42147/figure-017.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 481
+            },
+            {
+              "caption": "Figure 15. Implementation of the steps of D-LSA. Badges as in Figure 3.",
+              "figure_id": "figure-15-10",
+              "figure_number": "15",
+              "height": 188,
+              "image_path": "figures/2610.42147/figure-018.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 486
+            },
+            {
+              "caption": "Figure 16. Threshold estimate. For one query i. Top: the sampled scores, with θi at or just below the nθ-th best. Bottom: the row, of which about γp buckets score at or above θi and are listed, the top-p among them.",
+              "figure_id": "figure-16-15",
+              "figure_number": "16",
+              "height": 177,
+              "image_path": "figures/2610.42147/figure-019.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 481
+            },
+            {
+              "caption": "Table 4. Native training accuracy. Accuracy (%) of models trained from scratch with Full Attention, SWA, NSA, PISA and N-LSA. Every sparse method attends to about 2,560 keys per query.",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 159,
+              "image_path": "figures/2610.42147/table-020.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 479
+            },
+            {
+              "caption": "Table 7. Accuracy compared to the baseline. Baseline scores are in bold. Other rows show the difference to the baseline in points. Differences smaller than the 95% confidence interval (CI) of the baseline are not significant.",
+              "figure_id": "table-7-26",
+              "figure_number": "7",
+              "height": 275,
+              "image_path": "figures/2610.42147/table-021.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 466
+            },
+            {
+              "caption": "Table 6. Evaluation setup. Questions, repeats, generation and metric of every benchmark, with RULER questions per task.",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 142,
+              "image_path": "figures/2610.42147/table-022.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 483
+            },
+            {
+              "caption": "Table 8. PaperTrail not-in-corpus questions and controls. Score (%) on the questions whose answer is not in the papers at 512k tokens, for Full Attention, Block Sparse Attention (Flat) and (Tree), and D-LSA (Flat), (Tree) and (Training-Free). The controls ask the scored questions over parts of a sample, with GLM-5.3-FLASH and D-LSA (Training-Free).",
+              "figure_id": "table-8-3",
+              "figure_number": "8",
+              "height": 329,
+              "image_path": "figures/2610.42147/table-023.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 458
+            },
+            {
+              "caption": "Table 9. Hardware specs. Specifications of the GPUs we use, as given by NVIDIA (NVIDIA, 2026c;d;a;b).",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 206,
+              "image_path": "figures/2610.42147/table-024.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 400
+            },
+            {
+              "caption": "Table 5. Notation. D-LSA symbols and their description.",
+              "figure_id": "table-5-20",
+              "figure_number": "5",
+              "height": 87,
+              "image_path": "figures/2610.42147/table-025.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 492
+            },
+            {
+              "caption": "Table 11. Indexer kernels. Time of each step of the indexer of D-LSA on one H200, with its CuTe DSL and its Triton kernels, and the regime of its main CuTe DSL kernel.",
+              "figure_id": "table-11-16",
+              "figure_number": "11",
+              "height": 432,
+              "image_path": "figures/2610.42147/table-026.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 492
+            },
+            {
+              "caption": "Table 13. Communication added by the indexer. Collectives that the indexer of D-LSA adds to one layer for TP alone, PCP and DCP, with MLA (GLM-5.3-FLASH) and GQA (QWEN-3.827B), beyond those of the attention. Sizes are per rank, and decode frequencies per request.",
+              "figure_id": "table-13-8",
+              "figure_number": "13",
+              "height": 113,
+              "image_path": "figures/2610.42147/table-027.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 492
+            },
+            {
+              "caption": "Table 12. Tree search in decode. Time of the selection of one layer for one decode step, from the scoring of the centroids to the index lists, in µs, with the flat and the tree search, on one H200, replayed from a CUDA graph. The faster search is in bold.",
+              "figure_id": "table-12-9",
+              "figure_number": "12",
+              "height": 109,
+              "image_path": "figures/2610.42147/table-028.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 290
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42147/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.42147",
+          "relevance": 9,
+          "selection_reason": "Subquadratic sparse attention for ultra-long context via latent hierarchical key selection; directly fits efficient attention and long-context models.",
+          "summary_status": "generated",
+          "title": "Latent Sparse Attention: Towards Subquadratic Ultra-Long Context Attention",
+          "tldr": "Latent Sparse Attention enables efficient ultra-long-context attention by hierarchically routing queries to learned key clusters instead of examining every key.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The quadratic scaling of attention is a fundamental bottleneck limiting the long-context capabilities of large language models (LLMs). A variety of approaches have attempted to circumvent this, but they either fail to match attention's expressiveness (e.g., sliding-window or linear attention variants with fixed-size state) or only achieve constant-factor speedups (e.g., sparse attention methods whose indexers themselves scale quadratically). In this paper, we derive an asymptotically subquadratic sparse attention method based on a hierarchical, tree-structured indexer, which we call Zyphra Hierarchical Attention (ZHA). ZHA constructs a tree of recursively compressed key summaries over the KV cache, which future queries traverse from the top down to retrieve a sparse subset of keys. Crucially, by iteratively growing the tree's depth, the total cost including routing and final attention grows sublinearly in sequence length, resulting in overall subquadratic (but superlinear) scaling for attention. We demonstrate that ZHA can be cheaply applied to existing pretrained models with only a short KL distillation training stage over a few billion tokens, and maintains performance on long-context retrieval and challenging reasoning, mathematical, and agentic coding evaluation tasks. Moreover, we show that our method is highly robust to tree geometry including very deep trees of up to 6 levels. Finally, we develop a detailed performance model and show that our approach scales subquadratically, dramatically outperforms competing methods beyond 1 million context, and ultimately has the potential to extend effective context windows to the hundreds of millions or billions of tokens.",
+          "arxiv_id": "2610.42112",
+          "arxiv_url": "https://arxiv.org/abs/2610.42112",
+          "authors": [
+            "Leon Lufkin, Cutter Dawes, Alexander Speicher, Kamesh Krishnamurthy, Tom\\'as Figliolia, Beren Millidge"
+          ],
+          "bullets": [
+            "Addresses quadratic attention cost, which limits long-context scaling.",
+            "Builds a hierarchical tree of compressed key summaries that queries traverse to select sparse keys.",
+            "Joint routing and attention cost grows subquadratically—sublinear in sequence length for the relevant computation, but still superlinear overall.",
+            "Can be added to pretrained models using a short KL-distillation stage and maintains long-context retrieval, reasoning, math, and coding performance.",
+            "The authors report strong scaling beyond 1 million tokens and potential context windows of hundreds of millions to billions of tokens; performance depends on the method’s tree-based indexing scope."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of the ZHA architecture: (a) tree construction and (b) sparse routing. During tree construction, for each chunk of contiguous key nodes, we construct a compressed key node at the higher level by an attention-weighted sum of the keys, where the attention is computed with respect to the learned reference queries. In practice, we use multiple reference queries and store the key nodes for each in parallel. This process continues recursively with higher level key nodes being constructed from the summaries of lower levels. During routing, we start at the top of the tree and compute dot-product similarity scores between our query and the key nodes of that level. We select the set of nodes to expand using top-p, and then recursively descend the tree until we reach the leaf nodes corresponding to raw KV cache entries. The union of all the leaves we reach defines the sparse KV cache subset that we dispatch to the main attention.",
+              "figure_id": "figure-3-39",
+              "figure_number": "3",
+              "height": 460,
+              "image_path": "figures/2610.42112/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 960
+            },
+            {
+              "caption": "Figure 8: For a fixed top-p, and hence sparsity level, ZHA (here, R = 1, C = 8, p = 0.75) scales subquadratically according to our decode roofline model, eventually dramatically outperforming both dense attention and the MSA sparse attention variant. Importantly, we have not empirically validated the scaling at these ultra-long context lengths due to the lack of existing LLMs which can operate at these contexts. Because of this, while we can obtain subquadratic latency, it is unclear to what extent reasoning and retrieval performance degrades at the level of depths required for these ultra-long contexts. Latencies are modeled per-token decode times for the attention subsystem of one layer at batch size 1.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 384,
+              "image_path": "figures/2610.42112/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 504
+            },
+            {
+              "caption": "Figure 7: Per-level selection scales sublinearly in the ZHA router with predictable power-law exponent. (a)–(e): For ZHA geometries with depths L = 2–6 (C = 4, R = 16, p = 0.8), per-level selection counts (normalized by first-bin count per-level) on AIME problems fitted by power-law scaling curves. (f): Per-level exponents fitted by cumulative top-down model, demonstrating that the across-depth variation in their exponents is well-described by a simple model that accumulates top-down contributions.",
+              "figure_id": "figure-7-35",
+              "figure_number": "7",
+              "height": 389,
+              "image_path": "figures/2610.42112/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1026
+            },
+            {
+              "caption": "Figure 24: Modeled BF16 decode latency for dense attention, MSA, and ZHA (R = 1, C = 8) at p = 0.7, 0.75, 0.8, with the H100 assumptions and nondecreasing latency-minimizing depth of Figure 8. Latencies are modeled per-token decode times for the attention subsystem of one layer at batch size 1.",
+              "figure_id": "figure-24-36",
+              "figure_number": "24",
+              "height": 427,
+              "image_path": "figures/2610.42112/figure-004.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 504
+            },
+            {
+              "caption": "Figure 5: (a) Reasoning and (b) retrieval evaluation scores with dense attention, MSA, and deep (C4 L6) or wide (C256 L1) ZHA (p = 0.95, R = 16, converted from Qwen3.6-35B-A3B). Appendix B gives evaluation details and results across routing thresholds. We observe that ZHA with both wide and deep geometries maintains performance even at high sparsity levels, while MSA suffers performance degradation especially on retrieval tasks such as RULER and LongBench v2.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 341,
+              "image_path": "figures/2610.42112/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1063
+            },
+            {
+              "caption": "Figure 6: Geometry and sparsity have predictable effects on RULER accuracy (mean across tasks). Greater sparsity without degrading performance is achieved by: (a) decreasing compression CL, (b) increasing depth at fixed compression (CL = 4096), or (c) making key summaries more expressive (with increasing reference-query number R) at fixed chunk size and depth. (The horizontal dotted lines in panels (a)–(c) show dense attention.) (d) For the simple geometry-to-performance model, predictions versus measurements across 64K, 128K, and 256K, holding out each length in turn (RMSE: 1.44 percentage points).",
+              "figure_id": "figure-6-21",
+              "figure_number": "6",
+              "height": 231,
+              "image_path": "figures/2610.42112/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1061
+            },
+            {
+              "caption": "Figure 11: Dense top-p set size for individual query heads in Qwen3.6-35B-A3B, using the same six-book cohort and thresholds as Figure 1. Rows identify full-attention layers and columns identify query heads, with zero-based indices. Each panel averages only across books. All panels share logarithmic axis limits; colors denote p and the dotted black line gives the p = 1 reference.",
+              "figure_id": "figure-11-29",
+              "figure_number": "11",
+              "height": 731,
+              "image_path": "figures/2610.42112/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1031
+            },
+            {
+              "caption": "Figure 20: Measured RULER-13 accuracy at 256K versus (a) measured decode key share and (b) modeled decode-attention speedup over dense for Qwen3.6-35B-A3B (115 settings, 28 geometries). Speedups are H100 BF16 attention-layer projections at batch size one, not measured end-to-end timings; missing higher-level union counts use the slower modeled scenario. Colors denote R, markers C, and curves sweep p within each geometry. Black lines mark Pareto frontiers; dotted horizontal lines show dense accuracy, and the vertical guide marks 1×.",
+              "figure_id": "figure-20-4",
+              "figure_number": "20",
+              "height": 425,
+              "image_path": "figures/2610.42112/figure-008.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 1050
+            },
+            {
+              "caption": "Figure 4: Illustrative ZHA tree geometries of the three core tree parameters. We can trade off depth and width for a given level of compression in the tree, since compression scales as CL. Secondly, at the cost of additional compute, we can increase the number of reference queries.",
+              "figure_id": "figure-4-25",
+              "figure_number": "4",
+              "height": 737,
+              "image_path": "figures/2610.42112/figure-009.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "Figure 2: Fraction of KV entries of a 256K sequence covered by the union of top-p attention subsets as the number of future queries increases, for several values of p. We observe that for the higher p values we use in practice, a substantial fraction of the total KV cache is included in the union of the queries.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 357,
+              "image_path": "figures/2610.42112/figure-010.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 494
+            },
+            {
+              "caption": "Figure 10: (a) Cosine similarity distribution of every pair of reference queries within a KV group; (b) norm distribution of every reference query. Reference queries within a KV group become slightly more similar and their norms more concentrated as the tree gets shallower and its chunks larger.",
+              "figure_id": "figure-10-32",
+              "figure_number": "10",
+              "height": 902,
+              "image_path": "figures/2610.42112/figure-011.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 529
+            },
+            {
+              "caption": "Figure 9: Reference-query selection rates per tree level for the C4 L6 ZHA router on natural text. (a) Within each KV group and level, reference queries are independently ranked by selection frequency. Each point shows the level’s share of selections at that rank, averaged over layers and KV groups. Higher levels concentrate selections among fewer reference queries, while lower levels use them more uniformly. (b) Spearman correlation between levels’ selection rates. Higher levels have strongly aligned reference-query rankings. Agreement generally weakens as levels become further separated, with the chunk level showing the greatest divergence from the upper levels.",
+              "figure_id": "figure-9-31",
+              "figure_number": "9",
+              "height": 671,
+              "image_path": "figures/2610.42112/figure-012.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 459
+            },
+            {
+              "caption": "Figure 21: Held-out dense-attention latency and timing divided by prediction. Within each subfigure, rows are MHA, GQA4, GQA8, and MQA; columns are causal prefill and decode. Colours distinguish d ∈ {64, 128, 256}. Dots show all recorded timing samples and short ticks mark medians; solid lines in the latency views show worker-aware predictions. Each CUDA-event sample averages a replay batch, not an individual invocation. The lower views show tFlash/tmodel; the dashed 1× line denotes exact prediction, and values below it indicate overprediction. Matching views retain the same layout, colours, marks, and axis limits across precisions; the ratio views share the same ratio scale.",
+              "figure_id": "figure-21-9",
+              "figure_number": "21",
+              "height": 1079,
+              "image_path": "figures/2610.42112/figure-013.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 25: Retrieval traversals at 64K tokens for (a) single-needle and (b) multi-key 2 RULER tasks (Qwen3.6-35B-A3B, C16 L3, R = 16, p = 0.9). Both show layer 35, query head 8, while emitting the first answer digit. Dark blue blocks are scored and expanded nodes; light blue blocks scored but pruned nodes; grey blocks are nodes which were never scored by the router. Dense-attention rows show chunk-level mass on a logarithmic scale. The green marker indicates the ground-truth needle location. Boxed regions are enlarged below to reveal finer traversal details. These examples illustrate task-dependent routing with top-p: for single-needle, the router explores few branches before reaching the answer-containing chunk; for multi-key 2, whose context contains many distractor needles, it explores substantially more upper-level nodes. Both traversals ultimately attend to a single answer-containing chunk.",
+              "figure_id": "figure-25-3",
+              "figure_number": "25",
+              "height": 812,
+              "image_path": "figures/2610.42112/figure-014.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 1050
+            },
+            {
+              "caption": "Figure 31: Reference-query cosine similarities with references independently ordered by top-level selection frequency within each geometry and KV group, most to least frequent. Frequencies were measured during routed prefill on 16 RULER prompts at 64K tokens and p = 0.9. No cross-geometry matching is applied; diagonal structure therefore indicates correspondence in both direction and selection rank.",
+              "figure_id": "figure-31-14",
+              "figure_number": "31",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-015.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 32: Mean cosine similarities of centered reference keys across geometries, evaluated on the same 60 top-level nodes from four RULER prompts at 64K tokens. Each node covers 4096 keys. Within each node and KV group, the mean over the 16 reference keys is subtracted before computing cosine similarities, which are then averaged over nodes. C16 L3 references are clustered using reference-key cosine similarity; other geometries are Hungarian-matched using the same measure. The cross-geometry correspondence extends to the pooled key representations.",
+              "figure_id": "figure-32-1",
+              "figure_number": "32",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-016.webp",
+              "kind": "figure",
+              "page": 43,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 30: Reference-query cosine similarities across the four Qwen3.6-35B-A3B ZHA geometries. The C16 L3 references are ordered by average-linkage clustering with cosine distance; references in each other geometry are Hungarian-matched to them by cosine similarity. Matched references therefore occupy corresponding positions. Diagonal structure within the off-diagonal blocks indicates similar reference directions across geometries.",
+              "figure_id": "figure-30-33",
+              "figure_number": "30",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-017.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 22: Per-level selection scaling for C = 4, R = 16, and p = 0.7, 0.9, 0.95, extending Figure 7. The first five columns show depths 2–6; the sixth compares observed median exponents with the r = 1/2 profile. Bars show pointwise 95% whole-problem bootstrap intervals.",
+              "figure_id": "figure-22-26",
+              "figure_number": "22",
+              "height": 703,
+              "image_path": "figures/2610.42112/figure-018.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 1051
+            },
+            {
+              "caption": "Figure 26: Agreement between tree levels in reference-query selection for Qwen3.6-35B-A3B ZHA (R = 16). Columns show C4 L6, C8 L4, C16 L3 and C64 L2; rows show RULER at 64K tokens and natural text at 32K tokens. For each layer/KV group, Spearman correlation is computed between the 16 reference-query selection shares at each pair of levels, then averaged over 20 groups (10 layers × 2 KV groups). Parenthesized axis labels give node spans in keys. Adjacent levels are similar in their reference selection rate while further apart levels have a different selection priority. This behavior holds across all geometries.",
+              "figure_id": "figure-26-10",
+              "figure_number": "26",
+              "height": 658,
+              "image_path": "figures/2610.42112/figure-019.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 1061
+            },
+            {
+              "caption": "Figure 23: Observed top-level exponents versus total tree depth for C = 4, R = 16. Dotted lines fit constant (gray) and linear (blue) depth dependence separately at each p, using only the five top-level observations. Bars show pointwise 95% whole-problem bootstrap intervals.",
+              "figure_id": "figure-23-27",
+              "figure_number": "23",
+              "height": 360,
+              "image_path": "figures/2610.42112/figure-020.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 12: Dense top-p set size for Nemotron-3.5-Lightning-30B-A3B using the same six-book cohort as Figure 1.",
+              "figure_id": "figure-12-28",
+              "figure_number": "12",
+              "height": 384,
+              "image_path": "figures/2610.42112/figure-021.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 492
+            },
+            {
+              "caption": "Figure 19: Per-task geometry, sparsity, and prediction accuracy for Qwen3.6-35B-A3B with reference-query-only routing; the final group shows the direct aggregate fit. Panels (a), (b), and (d) fix R = 16. (a) Measured accuracy at 256K versus decode keys attended across 11 geometries, colored by CL. (b) The matched CL = 4096 geometries, colored by depth L. (c) The C = 8, L = 2 slice at 256K, colored by reference count R. Curves sweep p ∈ {0.7, 0.8, 0.9, 0.95}, with p = 0.99 included where available; markers denote depth in (a,b) and R in (c). Key shares use each task’s native decode counters (pooled counters for the aggregate), and the key-share axes are logarithmic. Dotted horizontal lines show dense attention. (d) All 150 leave-one-length-out predictions per response over 64K, 128K, and 256K, colored and marked by held-out length; inset values give RMSE in percentage points and dashed diagonals show equality. Each task has four independent parameters in equation (2), fitted at the other two lengths across R ∈ {1, 2, 4, 16} using the measured dense baseline at the held-out length. Accuracy uses 100 examples per task; vertical-axis ranges vary by task.",
+              "figure_id": "figure-19-2",
+              "figure_number": "19",
+              "height": 1023,
+              "image_path": "figures/2610.42112/figure-022.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 1041
+            },
+            {
+              "caption": "Figure 14: Qwen3.6-35B-A3B decode key shares for deep (C4 L6, blue) and wide (C256 L1, green) ZHA (R = 16) at p ∈ {0.95, 0.9, 0.8}, compared with MSA (top-16 blocks of 128 tokens). (a) Reasoning; (b) retrieval. Darker shades indicate higher p; the dashed line marks dense attention (100%).",
+              "figure_id": "figure-14-11",
+              "figure_number": "14",
+              "height": 297,
+              "image_path": "figures/2610.42112/figure-023.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1067
+            },
+            {
+              "caption": "Figure 13: Qwen3.6-35B-A3B scores and decode key shares across routing thresholds for deep (C4 L6, blue) and wide (C256 L1, green) ZHA, with R = 16. Darker shades indicate higher p. (a) Reasoning; (b) retrieval. Labels above bars show the benchmark scores and labels inside bars give key shares where available.",
+              "figure_id": "figure-13-12",
+              "figure_number": "13",
+              "height": 298,
+              "image_path": "figures/2610.42112/figure-024.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1059
+            },
+            {
+              "caption": "Figure 16: Dense attention vs. the wide ZHA router (16 reference queries per KV group, 256-token chunks, one level; top-p 0.95) on Qwen3.6-35B-A3B, with the router in BF16 and in NVFP4 (router operands, reference-key cache and scoring in FP4; backbone, KV cache and the sparse attention in BF 16). (a) Reasoning (b) Retrieval",
+              "figure_id": "figure-16-19",
+              "figure_number": "16",
+              "height": 259,
+              "image_path": "figures/2610.42112/figure-025.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 15: Dense attention vs. a ZHA router with one reference query per KV group, 8-token chunks, fan 8 and two levels (R1 C8 L2) on Qwen3.6-35B-A3B, with uniform routing top-p 0.8, 0.75 and 0.7. (a) Reasoning (b) Retrieval.",
+              "figure_id": "figure-15-18",
+              "figure_number": "15",
+              "height": 258,
+              "image_path": "figures/2610.42112/figure-026.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 17: Nemotron-3.5-Lightning-30B-A3B scores and decode key shares across routing thresholds for deep (C4 L6, blue) and wide (C256 L1, green) ZHA, with R = 16. Darker shades indicate higher p. (a) Reasoning; (b) retrieval. Labels above bars show the benchmark scores and labels inside bars give key shares where available.",
+              "figure_id": "figure-17-20",
+              "figure_number": "17",
+              "height": 244,
+              "image_path": "figures/2610.42112/figure-027.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 18: The 28 geometries used in the RULER fits. Each panel fixes the reference count R; dotted curves mark constant top-level comparession CL. These geometries are evaluated at p ∈ {0.7, 0.8, 0.9, 0.95, 0.99} and sequence lengths of 64K, 128K, and 256K.",
+              "figure_id": "figure-18-34",
+              "figure_number": "18",
+              "height": 299,
+              "image_path": "figures/2610.42112/figure-028.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 1047
+            },
+            {
+              "caption": "Figure 28: Outlier selection across levels: layer 39, KV group 1 of the C4 L6 ZHA router on RULER at 64K tokens. Upper levels agree closely, while L1 reference rankings are negatively correlated with the top levels (L1 versus L6: ρ = −0.35).",
+              "figure_id": "figure-28-23",
+              "figure_number": "28",
+              "height": 287,
+              "image_path": "figures/2610.42112/figure-029.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 29: Outlier selection across levels: Similar reference rankings across all levels: layer 3, KV group 1 of the C4 L6 ZHA router on RULER at 64K tokens. Chunk and top-level rankings remain strongly aligned (ρ = 0.86).",
+              "figure_id": "figure-29-22",
+              "figure_number": "29",
+              "height": 287,
+              "image_path": "figures/2610.42112/figure-030.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 27: Typical selection behavior across levels: layer 19, KV group 0 of the C4 L6 ZHA router on RULER at 64K tokens. Adjacent levels have similar reference rankings, but agreement weakens over larger level separations; the chunk and top-level rankings are nearly unrelated (L1 versus L6: ρ = 0.12).",
+              "figure_id": "figure-27-24",
+              "figure_number": "27",
+              "height": 288,
+              "image_path": "figures/2610.42112/figure-031.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1023
+            },
+            {
+              "caption": "Table I: Percentage of individual rollout–layer–head fits for which the affine model beats the power law, ρ = (1−R2 lin)/(1−R2 pow) < 1, evaluated in log-y space at the leaf level. Raw and Cum-max denote raw and cumulative-maximum targets. Each percentage uses 9,600 paired fits (30 problems × 16 rollouts × 10 layers × 2 KV heads), without averaging across rollouts before fitting.",
+              "figure_id": "table-I-17",
+              "figure_number": "I",
+              "height": 950,
+              "image_path": "figures/2610.42112/table-032.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 994
+            },
+            {
+              "caption": "Table VII: Kernel and worker variables for the roofline model.",
+              "figure_id": "table-VII-37",
+              "figure_number": "VII",
+              "height": 774,
+              "image_path": "figures/2610.42112/table-033.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 1056
+            },
+            {
+              "caption": "Table VI: Variables for the ZHA roofline model.",
+              "figure_id": "table-VI-7",
+              "figure_number": "VI",
+              "height": 658,
+              "image_path": "figures/2610.42112/table-034.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 1054
+            },
+            {
+              "caption": "Table IV: Evaluation datasets, scoring metrics, and inference protocols.",
+              "figure_id": "table-IV-6",
+              "figure_number": "IV",
+              "height": 568,
+              "image_path": "figures/2610.42112/table-035.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 1043
+            },
+            {
+              "caption": "Table IX: Additional variables for the MSA roofline model.",
+              "figure_id": "table-IX-16",
+              "figure_number": "IX",
+              "height": 479,
+              "image_path": "figures/2610.42112/table-036.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 932
+            },
+            {
+              "caption": "Table II: Training setup and compute for the evaluated ZHA routers and MSA index. Backbones are frozen; ZHA trains only reference queries. Deep and wide ZHA use R = 16.",
+              "figure_id": "table-II-38",
+              "figure_number": "II",
+              "height": 427,
+              "image_path": "figures/2610.42112/table-037.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 810
+            },
+            {
+              "caption": "Table VIII: Variables for tree construction and maintenance.",
+              "figure_id": "table-VIII-30",
+              "figure_number": "VIII",
+              "height": 245,
+              "image_path": "figures/2610.42112/table-038.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 1027
+            },
+            {
+              "caption": "Table III: Final per-level ZHA training KL, averaged over logged points in the last 100 steps.",
+              "figure_id": "table-III-5",
+              "figure_number": "III",
+              "height": 130,
+              "image_path": "figures/2610.42112/table-039.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 548
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42112/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.42112",
+          "relevance": 9,
+          "selection_reason": "Subquadratic sparse attention with hierarchical tree indexer for long-context LLMs; directly relevant to efficient attention and long-context processing.",
+          "summary_status": "generated",
+          "title": "Subquadratic Attention with a Hierarchical Tree-Structured Indexer",
+          "tldr": "Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Linear attention scales linearly with sequence length, but its finite-state memory can limit long-context retrieval. In gated linear recurrences, memory retention depends on state decay, which is shaped jointly by gate parameters A_log and dt_bias and by input activations. In controlled Gated DeltaNet (GDN) experiments, both parameters remain highly correlated with their initial values after training, highlighting the importance of initialization. Therefore, we introduce Dual-Axis Memory Initialization (DAMI), which jointly configures these parameters before training. DAMI assigns geometric timescales across heads for varied retrieval distances and a low-high-low input-sensitivity profile across layers. A small activation sample calibrates the GDN-family implementation to match both behavioral targets without adding trainable parameters. Across GDN, KDA, GDN2, Mamba-2, and RWKV-7, DAMI improves average RULER-style retrieval accuracy by 5.29 to 16.71 percentage points over the corresponding random-initialization baselines. Performance on language modeling, commonsense reasoning, and 2K real-world retrieval remains broadly comparable to those baselines. Our code is available at https://speedai.com/research/dami.",
+          "arxiv_id": "2610.41994",
+          "arxiv_url": "https://arxiv.org/abs/2610.41994",
+          "authors": [
+            "Zhangchi Feng, Harry Jiang, Yangyifei Luo, Ray Zhang, Richong Zhang"
+          ],
+          "bullets": [
+            "Finite-state memory and initialization can limit long-context retrieval in linear attention.",
+            "DAMI jointly configures gate parameters before training using geometric head-wise timescales and a low-high-low layer-wise sensitivity profile.",
+            "A small activation sample calibrates the implementation to these targets without adding trainable parameters.",
+            "Across five gated linear-attention families, DAMI raises average RULER-style retrieval accuracy by 5.29–16.71 percentage points over random initialization.",
+            "Language modeling, commonsense reasoning, and 2K real-world retrieval performance remains broadly comparable to baseline initialization."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of DAMI initialization. (a) Head-wise timescales and layer-wise sensitivities define dual-axis targets. (b) Calibration proceeds layer by layer using projected activations without gradients. (c) Each head’s dt_bias is solved before A_log using calibration-set statistics. (d) Schematic parameter layouts illustrate the head and layer axes.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 515,
+              "image_path": "figures/2610.41994/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 937
+            },
+            {
+              "caption": "Figure 4: Effect of dt_bias on local Softplus sensitivity. Dashed and dotted curves show the asymptotic approximations; ϕ′(−4) ≈ 0.018 and ϕ′(4) ≈ 0.982.",
+              "figure_id": "figure-4-13",
+              "figure_number": "4",
+              "height": 309,
+              "image_path": "figures/2610.41994/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 431
+            },
+            {
+              "caption": "Figure 5: Normalized target sensitivity profiles across layers. The horizontal axis is normalized depth rℓ = (ℓ−1)/(L−1); the vertical axis is (S⋆ ℓ −Smin)/(Smax− Smin). Curves indicate initialization targets.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 245,
+              "image_path": "figures/2610.41994/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 447
+            },
+            {
+              "caption": "Figure 3: Initial–trained Pearson correlations of GDN memory parameters.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 245,
+              "image_path": "figures/2610.41994/figure-004.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 443
+            },
+            {
+              "caption": "Figure 1: Dual-axis memory initialization. (a) Diverse head-wise timescales broaden memory coverage across evidence–query distances; curves illustrate normalized exponential decay. (b) Schematic uniform-high and uniform-low Random regimes illustrate recent-pair bias and mixed memories, contrasted with DAMI’s low– high–low sensitivity profile. Text excerpts are from RULER; placements and outcomes are schematic.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 415,
+              "image_path": "figures/2610.41994/figure-005.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 450
+            },
+            {
+              "caption": "Figure 6: GDN retrieval accuracy by relative distance at four context lengths. Points show task-averaged accuracy in 16 shared bins.",
+              "figure_id": "figure-6-11",
+              "figure_number": "6",
+              "height": 429,
+              "image_path": "figures/2610.41994/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 435
+            },
+            {
+              "caption": "Table 2: Answer-containment accuracy (%) on the fixed v1 RULER-style NIAH benchmark. Each task–length setting contains the same 500 pregenerated samples for all models. Bold denotes the best result within each architecture; Avg. is the unweighted mean over the 11 settings.",
+              "figure_id": "table-2-2",
+              "figure_number": "2",
+              "height": 431,
+              "image_path": "figures/2610.41994/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 950
+            },
+            {
+              "caption": "Table 3: Language modeling and commonsense results. WikiText reports perplexity (lower is better); other tasks report accuracy (%, higher is better). Bold denotes the best result within each architecture. WinoG., ARC-E, ARC-C, OBQA, and SIQA denote WinoGrande, ARCEasy, ARC-Challenge, OpenBookQA, and Social IQa, respectively.",
+              "figure_id": "table-3-6",
+              "figure_number": "3",
+              "height": 431,
+              "image_path": "figures/2610.41994/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 461
+            },
+            {
+              "caption": "Table 4: Real-world retrieval at 2K tokens (%). TQA denotes TriviaQA; Avg. is the unweighted mean over six tasks. Bold denotes the best result within each architecture.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 411,
+              "image_path": "figures/2610.41994/table-009.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 458
+            },
+            {
+              "caption": "Table 8: GDN sensitivity-level and peak-location perturbations (%). Shift denotes profile translation; Peak denotes the peak layer.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 175,
+              "image_path": "figures/2610.41994/table-010.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 461
+            },
+            {
+              "caption": "Table 7: GDN retrieval with four layer-wise sensitivity profiles (%).",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 154,
+              "image_path": "figures/2610.41994/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 461
+            },
+            {
+              "caption": "Table 5: GDN single-parameter replacement ablations (%). The named parameter is restored to Random; the other retains its DAMI value.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 154,
+              "image_path": "figures/2610.41994/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 458
+            },
+            {
+              "caption": "Table 6: Effects of timescale coverage and spacing on GDN retrieval (%).",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 154,
+              "image_path": "figures/2610.41994/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 458
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41994/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41994",
+          "relevance": 8,
+          "selection_reason": "Improves long-context retrieval in gated linear attention via memory initialization, directly relevant to long-context models and efficient attention.",
+          "summary_status": "generated",
+          "title": "DAMI: Dual-Axis Memory Initialization for Enhanced Long-Context Retrieval in Gated Linear Attention",
+          "tldr": "DAMI improves long-context retrieval in gated linear attention by initializing memory decay and input sensitivity across heads and layers.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Long-context diffusion repeatedly pays for both token interaction and feed-forward computation. We formulate these costs as two separate budgets: the edges available to an attention graph and the experts activated for each token. This view connects local, dilated, and global attention with conditional expert computation without assuming that sparsity alone preserves document-level information. We specify normalized masked attention, distinguish denoising depth from sampling iterations, and derive graph and compute bounds. A reported sparse-expert configuration, denoted DualBudget, is analyzed across scientific summarization, multi-hop question answering, dialogue, and sentence-pair prediction. All supplied table measurements are retained. The length study shows gains over the listed baselines through 16K, together with measurable degradation as length increases. Ablations reveal mixed changes across the three reported scores, while the cost record indicates a 20% reduction relative to DiffuSeq under an unspecified timing convention. The analysis separates these observations from unmeasured claims about training speed, absorbing states, global coherence, and deployment memory.",
+          "arxiv_id": "2610.41487",
+          "arxiv_url": "https://arxiv.org/abs/2610.41487",
+          "authors": [
+            "Alexandros Christoforos, Chadbourne Davis, Paul Raj"
+          ],
+          "bullets": [
+            "Models long-context diffusion costs using two budgets: attention-graph edges and activated feed-forward experts.",
+            "Unifies local, dilated, and global attention with conditional expert computation without assuming sparsity preserves document-level information.",
+            "Defines normalized masked attention, distinguishes denoising depth from sampling iterations, and derives graph and compute bounds.",
+            "Evaluates the DualBudget configuration on scientific summarization, multi-hop QA, dialogue, and sentence-pair prediction.",
+            "Results show gains over listed baselines through 16K, mixed ablation effects, and measurable degradation as sequence length grows."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: One denoising evaluation and its two computational budgets. (a) The denoiser predicts a clean state for the sampling update. (b) Sparse token interactions. (c) Selected expert computation. Highlighting is schematic and specifies no measured activation count.",
+              "figure_id": "figure-1-4",
+              "figure_number": "1",
+              "height": 394,
+              "image_path": "figures/2610.41487/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 4: Two measured trajectories from the supplied length sweeps: summarization R1 and HotpotQA answer F1. Points reproduce table values; connecting segments guide the eye and do not introduce measurements between tested lengths.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 347,
+              "image_path": "figures/2610.41487/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 983
+            },
+            {
+              "caption": "Figure 3: Reported inference cost and 2-gram novelty. Coordinates reproduce the three source rows. The cost unit, normalization, and uncertainty are unspecified, so the plot supports an ordering within this record rather than a general latency claim.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 355,
+              "image_path": "figures/2610.41487/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 481
+            },
+            {
+              "caption": "Figure 2: Constructed attention masks illustrating local and dilated access with global positions. Rows are queries and columns are keys. These are protocol illustrations, not learned masks or benchmark measurements.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 294,
+              "image_path": "figures/2610.41487/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 480
+            },
+            {
+              "caption": "Table 7: Six reported ablation configurations. A/B/C preserve the three numeric columns because the source prose’s metric labels conflict with the matching summarization baseline. No uncertainty estimates are available.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 202,
+              "image_path": "figures/2610.41487/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 660
+            },
+            {
+              "caption": "Table 3: Dialogue scores under the source evaluation. Values retain their original fractional scale.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-006.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 420
+            },
+            {
+              "caption": "Table 2: Aggregate HotpotQA answer and supportingfact scores.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 416
+            },
+            {
+              "caption": "Table 8: Reported inference cost and 2-gram novelty. The source table does not define the timing unit or normalization.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 404
+            },
+            {
+              "caption": "Table 1: Scientific summarization: aggregate ROUGE comparison. This record is separate from the length sweep.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-009.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 316
+            },
+            {
+              "caption": "Table 6: HotpotQA scores at 8K, 12K, and 16K. Each pair is exact match / F1.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 387,
+              "image_path": "figures/2610.41487/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 416
+            },
+            {
+              "caption": "Table 5: Scientific summarization across reported context lengths. All three ROUGE metrics are retained.",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 152,
+              "image_path": "figures/2610.41487/table-011.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 698
+            },
+            {
+              "caption": "Table 4: QQP accuracy under the recorded protocol; this is not a direct measure of generated paraphrase quality.",
+              "figure_id": "table-4-1",
+              "figure_number": "4",
+              "height": 127,
+              "image_path": "figures/2610.41487/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 220
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41487/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41487",
+          "relevance": 6,
+          "selection_reason": "Sparse long-context text diffusion under attention and expert budgets is relevant to efficient attention and long-context generation.",
+          "summary_status": "generated",
+          "title": "Sparse Text Diffusion under Dual Budgets: Context Connectivity and Expert Activation",
+          "tldr": "A dual-budget framework analyzes sparse diffusion models by separately constraining attention connectivity and expert activation, with reported gains through 16K tokens but degradation at longer lengths and a 20% cost reduction under an unspecified timing convention.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Gated Delta Networks (GDNs) offer linear-time sequence modeling, yet long-context prefill remains costly due to dense intra-chunk computation, recurrent-state updates, and intermediate state storage. We introduce SparseGDN, a hardware-aware framework that combines structured intra-chunk approximation with input-dependent recurrent-event selection while producing outputs for every token. A block-adjacent solver reduces local Delta-solve computation, while a dynamic selector allocates recurrent-update budgets across head pairs. The GPU implementation materializes updates only for selected events and reconstructs token outputs using compact state snapshots and group-local interactions, reducing computation and memory traffic. We evaluate SparseGDN on Qwen3.5-4B and Qwen3.5-9B across RULER tasks and context lengths from 4K to 128K. Retaining approximately 29% of recurrent events on average, SparseGDN achieves 1.50-1.94x GDN-core prefill speedups over native FLA kernels, including online selection overhead.",
+          "arxiv_id": "2610.41420",
+          "arxiv_url": "https://arxiv.org/abs/2610.41420",
+          "authors": [
+            "Jiedong Zhuang, Peng Zhao, Jialin Tang, Haoji Hu"
+          ],
+          "bullets": [
+            "Targets the high cost of dense intra-chunk computation, recurrent-state updates, and intermediate storage in long-context GDN prefill.",
+            "Uses a block-adjacent solver for approximate local Delta computation and an input-dependent selector for recurrent-event allocation across head pairs.",
+            "Materializes only selected updates and reconstructs token outputs from compact state snapshots and group-local interactions.",
+            "On Qwen3.5-4B/9B across RULER and 4K–128K contexts, retaining about 29% of recurrent events yields 1.50–1.94× GDN-core prefill speedups over native FLA kernels, including selection overhead."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3 End-to-end SparseGDN execution pipeline. The block-adjacent intra-chunk kernel computes transformed values U, compact update coefficients, and selector scores. The dynamic selector converts these scores into a structured event mask. Only selected events trigger deferred W materialization and recurrent-state updates, producing compact event states. During output reconstruction, the mapped output kernel retrieves the appropriate preceding event state from HBM and applies the accumulated gap decay, while computing group-local interactions and producing outputs for every token.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 373,
+              "image_path": "figures/2610.41420/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 976
+            },
+            {
+              "caption": "Figure 1 GDN-core prefill latency across context lengths for Qwen3.5-9B and Qwen3.5-4B. Compared with FLA GDN, SparseGDN additionally includes the online selector overhead. Latency is aggregated over all 24 GDN layers. SparseGDN reduces latency at every context length, reaching 1.93× and 1.94× speedup at 128K for the 9B and 4B models, respectively. Lower is better.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 839,
+              "image_path": "figures/2610.41420/figure-002.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 1079
+            },
+            {
+              "caption": "Figure 9 Accuracy--efficiency trade-off across retention budgets. Each panel plots the aggregate RULER score difference ∆, defined in Table 3, against the geometric mean GDN-core speedup over 4K–128K. Point labels show measured recurrent-event keep rates. Solid lines connect nondominated configurations among the evaluated sparse operating points. The cross marks the approximately 49%-keep configuration, which is dominated by the approximately 39%-keep configuration for both models under these aggregate metrics. Speedups include online selection. Higher and farther right is better.",
+              "figure_id": "figure-9-17",
+              "figure_number": "9",
+              "height": 413,
+              "image_path": "figures/2610.41420/figure-003.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 966
+            },
+            {
+              "caption": "Figure 10 Tail-window ranking quality, scan cost, and illustrative task scores. Left: change in retained nonanchor dense-decode importance mass relative to Tail-16 on 130 stratified 8K requests per model, with task-stratified paired 95% bootstrap confidence intervals. Pair-tier assignments, exact per-pair keep counts, and anchors are fixed to Tail-16. The gray curve reports standalone score-kernel latency per layer at 8K. Right: illustrative 128K score curves. The shaded bands highlight the default Tail-16 window in both panels.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 452,
+              "image_path": "figures/2610.41420/figure-004.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 970
+            },
+            {
+              "caption": "Figure 5 Dynamic event selection and packing. Here, ZBi denotes the i-th 16-token block of the pre-activation output-gate tensor Z within a chunk. Chunk scores determine the retention order within each head pair. Recurrent lifetime and output-visibility proxies weight the estimated gains from larger budgets, which determine the low-, medium-, and high-retention tiers. The example assigns 9, 4, and 3 pairs to these tiers. Selected events are packed in temporal order into CSR chains for recurrent execution.",
+              "figure_id": "figure-5-4",
+              "figure_number": "5",
+              "height": 335,
+              "image_path": "figures/2610.41420/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 980
+            },
+            {
+              "caption": "Figure 11 Complete-model prefill peak allocated memory across context lengths. Measurements use BF16, batch size one, use_cache=True. The shaded region shows the absolute memory saved by SparseGDN wherever both paths complete. The dashed line marks the nominal 80 GB device capacity as a reference. Crosses indicate Native OOM at 256K and are placed on this reference line for display; they do not represent measured allocation peaks. SparseGDN completes at that length for both models. Lower is better.",
+              "figure_id": "figure-11-16",
+              "figure_number": "11",
+              "height": 423,
+              "image_path": "figures/2610.41420/figure-006.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 970
+            },
+            {
+              "caption": "Figure 7 Per-stage GDN-core prefill latency. The top and bottom rows show Qwen3.5-4B and Qwen3.5-9B, respectively. The left column compares native Intra with SparseGDN Intra plus online Selector; the middle and right columns compare H and O. For SparseGDN, H includes deferred W materialization. Each component reports the median of per-iteration CUDA-event times summed over all 24 GDN layers. The stacked Intra-plus-Selector bars sum the two component medians. Boxed values denote the corresponding native-to-sparse latency ratios. Lower latency is better.",
+              "figure_id": "figure-7-10",
+              "figure_number": "7",
+              "height": 381,
+              "image_path": "figures/2610.41420/figure-007.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 982
+            },
+            {
+              "caption": "Figure 8 GDN-core speedup across batch sizes and context lengths. Speedup is Native/Sparse, includes online selection, and uses batch latencies aggregated over all 24 GDN layers. Crosses mark configurations without a paired speedup because Native runs out of memory. Crosses are placed at a fixed height for display and do not represent measured speedups. The corresponding sparse-only outcomes are detailed in Table 2. Every completed paired configuration favors SparseGDN. Higher is better.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 415,
+              "image_path": "figures/2610.41420/figure-008.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 970
+            },
+            {
+              "caption": "Figure 2 Two empirical structures observed in layer 16 of native-dense Qwen3.5-4B on an 8K RULER input (niah_multikey_3, row 0). (a) Adjacent chunk-boundary states are frequently nearly stationary, while the magnitudes of their changes vary substantially across value heads. (b) The left panel shows |M−1 − I|, averaged over 123 complete 64-token chunks and all 32 value heads. Here M is the native Delta-solve matrix defined in Section 2.3; subtracting I removes the unit diagonal, and absolute values are taken elementwise before averaging. The coefficients concentrate near the causal diagonal and weaken across more distant token blocks. This observed locality motivates the block-adjacent approximation, whose computation support is shown in the right panel.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 279,
+              "image_path": "figures/2610.41420/figure-009.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 985
+            },
+            {
+              "caption": "Figure 6 Tier-aware scheduling of heterogeneous recurrent event chains. High-, medium-, and low-retention head pairs induce event chains with different workloads. Scheduling them in physical-head order can place a long high-tier chain behind shorter tasks, creating an SM straggler and extending kernel completion time (left). SparseGDN orders chains by expected workload and uses event-count-adaptive execution to distribute them across SMs (right), reducing load imbalance and tail latency. The red dashed line denotes kernel completion.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 223,
+              "image_path": "figures/2610.41420/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 976
+            },
+            {
+              "caption": "Table 6 Kernel-pipeline ablations at batch size one on a GPU. Speedup is the ratio of reference to optimized median latency over the stages listed in Scope. Each variant uses five warmup forwards and 30 interleaved CUDA-event measurements. Within each measurement, the indicated stage times are summed across all 24 GDN layers before computing the median across measurements. Separately timed Selector work is excluded; statistics fused into Intra remain included. Geomean is the geometric mean of speedups over the six lengths from 4K to 128K; the 128K column reports the longest-context result. Each row uses its own reference, so the isolated speedups should not be multiplied. Compact+mapped reports the joint effect of compact state storage and mapped output reads.",
+              "figure_id": "table-6-11",
+              "figure_number": "6",
+              "height": 218,
+              "image_path": "figures/2610.41420/table-011.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 664
+            },
+            {
+              "caption": "Table 4 Algorithmic component ablation on all 13 RULER tasks at 4K (1,300 examples per model). Scores and their arithmetic differences are expressed on the percentage scale. ∆ is the score difference from Native, computed from unrounded scores. Full64 + adaptive restores the full lower-triangular 64-token intra-chunk solve while retaining adaptive event selection; Block-adjacent + all retains every recurrent event. Adaptive and random variants use matched approximately 29% event budgets. All custom variants retain the same group-local output rule; Native uses the dense operator. Adaptive masks are recomputed for each Intra variant. Bold highlights the proposed method.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 195,
+              "image_path": "figures/2610.41420/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 736
+            },
+            {
+              "caption": "Table 1 RULER scores, recurrent-event sparsity, and GDN-core speedup for Qwen3.5-4B and Qwen3.5-9B. Scores follow the official RULER scoring rules and are reported as percentages. ∆ is the arithmetic difference between the Sparse and Base columns, computed from unrounded scores. Both scores and their differences are expressed on the percentage scale. Speedup compares native Intra+H+O against SparseGDN Selector+Intra+H+O, using the 24-layer GDN-core timing protocol in Section 3.1. Event sparsity is the mean fraction of valid recurrent pair–chunk events omitted across evaluation requests; padding chunks are excluded. The All row averages across the six context lengths.",
+              "figure_id": "table-1-14",
+              "figure_number": "1",
+              "height": 251,
+              "image_path": "figures/2610.41420/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 936
+            },
+            {
+              "caption": "Table 2 Batched GDN-core speedup (Native/Sparse). OOM† indicates that Native runs out of memory in the benchmark harness, while SparseGDN completes in a separate process. Plain OOM indicates that Native runs out of memory and sparse completion has not been independently verified. Speedups include online selection and cover only the GDN core.",
+              "figure_id": "table-2-7",
+              "figure_number": "2",
+              "height": 198,
+              "image_path": "figures/2610.41420/table-014.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 622
+            },
+            {
+              "caption": "Table 3 Retention-rate trade-off over all six context lengths. Keep is the mean fraction of valid recurrent pair–chunk events retained across evaluation requests; padding chunks are excluded. ∆ = Ssparse−Sbase is the arithmetic difference in aggregate RULER scores, computed from unrounded scores over 7,800 examples per model using the official scoring rules. Scores and their differences are expressed on the percentage scale. Speedup is the geometric mean of the six GDN-core speedups at batch size one under the timing protocol in Section 3.1, including online selection. Higher speedup and ∆ are better.",
+              "figure_id": "table-3-2",
+              "figure_number": "3",
+              "height": 195,
+              "image_path": "figures/2610.41420/table-015.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 706
+            },
+            {
+              "caption": "Table 7 Complete-model prefill peak allocated memory. “Incr.” denotes the peak allocation above memory already live at forward entry. “Incr. reduction” is the relative decrease in this increment, computed from unrounded values. Native OOMs during its first 256K warmup, so no completed-forward peak or increment is available. Lower is better.",
+              "figure_id": "table-7-15",
+              "figure_number": "7",
+              "height": 140,
+              "image_path": "figures/2610.41420/table-016.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 786
+            },
+            {
+              "caption": "Table 5 Effect of adaptive tier counts on Qwen3.5-9B. Scores are official RULER percentages over 100 examples per task at each context length (13 tasks; 7,800 examples in total). All is the mean over the six lengths. Score differences reported in the text are computed from unrounded values. Keep is the mean per-request fraction of valid recurrent pair–chunk events retained, expressed as a percentage. Both variants use the same retention tiers; realized keep rates are not forced to match. Bold indicates the higher score at each length and in aggregate.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 94,
+              "image_path": "figures/2610.41420/table-017.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 752
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41420/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.41420",
+          "relevance": 8,
+          "selection_reason": "Hardware-aware sparse linear attention with recurrent-event selection improves long-context prefill computation and memory traffic.",
+          "summary_status": "generated",
+          "title": "SparseGDN: Chunk Sparse in Linear Attention",
+          "tldr": "SparseGDN accelerates long-context GDN prefill by sparsifying local computation and recurrent updates while preserving outputs for every token.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Why does length generalization (LG) depend so sharply on the positional encoding (PE)? Relative schemes extrapolate fixed offsets, absolute schemes fix positions, and neither handles growing offsets. We give a realizability theory for a deliberately controlled abstraction, a single positional-only attention head, that derives this well-documented empirical pattern and says precisely where it holds and breaks. The device is a simulation transfer operator $T_L$ that re-evaluates a selected length-$L_0$-realizing positional kernel on the longer grid, with a scalar $\\alpha_L \\in [0,1]$ read off before any training from $(\\Phi, t_n)$ alone. Here $\\alpha_L$ serves as the computable witness of that taxonomy's derivation, not as a stronger empirical predictor. Our results are a relative-head deep-row characterization for kernels with a strict unique global maximizer (Theorem 2), an absolute/relative duality that derives the pattern (Proposition 4), a learned-absolute underdetermination result, and a static expressivity bound; a sufficiency theorem (Theorem 1) bridges $\\alpha_L$ to LG, and the general deterministic case is a precise open conjecture (correcting a tempting but invalid \"outside-colspan\" argument). Experiments confirm the structure: in the controlled single-head regime $\\alpha_L$ exactly separates the taxonomy's generalizing and non-generalizing (PE, task) cells (2625 trained-model measurements; stable at vocab 64/d=128). Together, these results turn the received PE taxonomy into a positional-kernel transfer theorem, and identify the content and depth mechanisms that escape it. The theory concerns the positional channel alone: tasks whose targets depend on token content, including the standard length-generalization suite such as addition and sorting, fall outside Theorem 2.",
+          "arxiv_id": "2610.41218",
+          "arxiv_url": "https://arxiv.org/abs/2610.41218",
+          "authors": [
+            "Jiasong Han, Yunkai Chai, Jintao Wang"
+          ],
+          "bullets": [
+            "Defines a transfer operator that reevaluates a length-$L_0$ positional kernel on longer grids and computes a pre-training witness $\\alpha_L$.",
+            "Characterizes relative-head generalization for kernels with a strict unique global maximizer and establishes an absolute/relative duality.",
+            "Shows that learned-absolute schemes are underdetermined and derives a static expressivity bound.",
+            "Experiments on 2,625 controlled trained-model measurements show $\\alpha_L$ exactly separates the studied generalizing and non-generalizing positional-encoding/task cells.",
+            "The theory does not cover content-dependent tasks such as addition or sorting; the general deterministic case remains an open conjecture."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Overview of the method. Select (fit) a single positional head’s kernel at length L0 realizing the task’s target pattern RL0 ; transfer the same kernel to a longer grid via TL (re-evaluate ΦLWΦ⊤ L , no retraining); old rows keep their argmax by the causal-mask identity (Thm 1); score the new rows [L0, L) to read off αL ∈ [0, 1]. The whole pipeline uses only (Φ, tn), with no Transformer training, no data samples, and no learned Transformer parameters (only a deterministic kernel-selection on the PE basis).",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 379,
+              "image_path": "figures/2610.41218/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 969
+            },
+            {
+              "caption": "Figure 2: The offset taxonomy, derived (Theorem 2, Prop. 4). A relative kernel length-generalizes a fixed relative offset; a clamped learned-absolute encoding does the reverse; and neither handles a growing offset (the shared blind spot, right column). Throughout, the relative statements are for kernels with a strict unique global maximizer, the hypothesis of Theorem 2; the accompanying text explains why it is needed and what the L0-fit contributes. This 2 × 3 verdict is exactly the empirical PE taxonomy, here a consequence of what a single positional head can realize.",
+              "figure_id": "figure-2-18",
+              "figure_number": "2",
+              "height": 390,
+              "image_path": "figures/2610.41218/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 892
+            },
+            {
+              "caption": "Figure 4: Empirical LG (solid) and training-free αL (dashed) vs. test length L (train L0=20), 1L1H. αL tracks both who generalizes and how LG decays with L.",
+              "figure_id": "figure-4-11",
+              "figure_number": "4",
+              "height": 417,
+              "image_path": "figures/2610.41218/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 673
+            },
+            {
+              "caption": "Figure 5: Training-free α60 (left) and empirical LG@60 (right) over (PE, task), 1L1H. Agreement is strong in this single-head regime; the content-driven disagreements (which emerge at depth, not shown here) are characterized in §7.",
+              "figure_id": "figure-5-12",
+              "figure_number": "5",
+              "height": 293,
+              "image_path": "figures/2610.41218/figure-004.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 948
+            },
+            {
+              "caption": "Figure 3: Training-free αL vs. empirical LG across the three tiers (5 seeds). Left (1L1H, the setting the theory describes): learnable cells (blue) give Spearman ρ=0.90. Center, right (scale, 2L4H, 4L4H): the graded rank correlation weakens (its bootstrap CI includes 0) as the content channel rescues low-αL cells, yet high αL remains a sufficient screen at every depth (precision ≥ 0.92).",
+              "figure_id": "figure-3-15",
+              "figure_number": "3",
+              "height": 251,
+              "image_path": "figures/2610.41218/figure-005.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 958
+            },
+            {
+              "caption": "Figure 6: H3: learnable-cell Spearman ρ(αL, LG) (circles) drops with depth (its bootstrap CI includes 0 at depths 2, 4), while sufficiency precision (squares) stays ≥ 0.92 with tight CIs. αL remains a sufficient screen at all depths.",
+              "figure_id": "figure-6-5",
+              "figure_number": "6",
+              "height": 337,
+              "image_path": "figures/2610.41218/figure-006.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 460
+            },
+            {
+              "caption": "Table 1: Positioning against the closest LG frameworks. αL’s niche: pre-training, keyed to the PE’s feature map, continuous, single-head, with matched sufficiency and relative-head necessity (the general necessary condition is conjectural).",
+              "figure_id": "table-1-13",
+              "figure_number": "1",
+              "height": 162,
+              "image_path": "figures/2610.41218/table-007.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 910
+            },
+            {
+              "caption": "Table 3: Training-free αL (at L=60) vs. empirical LG accuracy (mean over 5 seeds), 1-layer 1-head and scale (2L4H) tiers. Top: αL tracks 1L1H LG. Bottom: at scale, the content/recency channel (outside the positional-only abstraction, S3) lets ALiBi/NoPE generalize where αL=0, making the predictor’s onesidedness visible.",
+              "figure_id": "table-3-14",
+              "figure_number": "3",
+              "height": 335,
+              "image_path": "figures/2610.41218/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 622
+            },
+            {
+              "caption": "Table 10: RoPE frequency sweep on content-neutral skip-3 (1L1H). No discriminating cell: where the model generalizes the taxonomy is right; at scale 0.03 αL under-predicts (false negative); at 0.01 the model cannot learn at all.",
+              "figure_id": "table-10-17",
+              "figure_number": "10",
+              "height": 149,
+              "image_path": "figures/2610.41218/table-009.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 444
+            },
+            {
+              "caption": "Table 2: The evaluation grid. Each axis follows the theory’s categories or standard practice; the reason given for each level is the reason it was included.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 185,
+              "image_path": "figures/2610.41218/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 968
+            },
+            {
+              "caption": "Table 6: Interior fixed-absolute positions (1L1H, mean over 5 seeds). Absolute encodings realize and transfer them; relative encodings do not learn them at all. Compare first, where RoPE scores α60 = 0.20 purely because position 0 is the causal boundary.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 288,
+              "image_path": "figures/2610.41218/table-011.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 494
+            },
+            {
+              "caption": "Table 8: L0-sensitivity (1L1H, predictor αL / empirical LG at L=3L0). The screen AUC is 1.0 at every training length and the per-cell verdicts are stable; the separation is not an artifact of L0=20. Generated by experiments/l0_sensitivity.py.",
+              "figure_id": "table-8-10",
+              "figure_number": "8",
+              "height": 242,
+              "image_path": "figures/2610.41218/table-012.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 694
+            },
+            {
+              "caption": "Table 7: Scale robustness: cell-level Spearman ρ(αL, LG) on learnable cells, at the paper’s default size vs. a larger model. The predictor is identical; only the trained models change. The scale study uses 2 seeds (700 rows), and both columns are computed on the cells the two studies have in common, so the 2L4H entry (0.36) is over 19 cells rather than the 20 of Table 4, where the same quantity over all 20 cells is 0.31.",
+              "figure_id": "table-7-9",
+              "figure_number": "7",
+              "height": 101,
+              "image_path": "figures/2610.41218/table-013.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 552
+            },
+            {
+              "caption": "Table 9: Content-driven induction (target = token after the previous occurrence of xi): positional αL = 0 for all PEs, yet 2-layer models generalize (LG up to 0.84). α+ L flags the realizable through the content channel regime αL misses; residual PE-modulation of content LG is future work.",
+              "figure_id": "table-9-16",
+              "figure_number": "9",
+              "height": 175,
+              "image_path": "figures/2610.41218/table-014.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 618
+            },
+            {
+              "caption": "Table 12: αL for sinusoidal under the same sweep. The absolute verdict is invariant (first≈1 everywhere; growing offsets ≈0). The bounded-offset cells (prev/skip3) are the only entries whose verdict moves with frequency – they degrade as frequencies are added (num:8→32 drives prev 0.47→0.00); the other cells’ raw αL shifts stay sub-threshold (e.g. first 0.93→1.00) and never flip the verdict. This is what the theory predicts: enlarging the realizable space does not help the L0-fit select a transferring kernel (existence ̸= selection, Prop. 3). Verdict movement appears precisely at the selection gap and nowhere else.",
+              "figure_id": "table-12-3",
+              "figure_number": "12",
+              "height": 163,
+              "image_path": "figures/2610.41218/table-015.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 486
+            },
+            {
+              "caption": "Table 11: αL for RoPE under varying frequency count num (feature dimension m=2 num) and θ-base. The verdict is invariant: fixed relative offsets transfer (prev, skip3=1.00 everywhere), growing offsets never transfer (copy/reverse≈0), and the kernel the L0-fit selects does not hit a fixed absolute position (first stays at chance; a monotone kernel in the family could, but the fit does not select it, see the discussion after Prop. 4). For low-frequency scaling see Table 10.",
+              "figure_id": "table-11-2",
+              "figure_number": "11",
+              "height": 164,
+              "image_path": "figures/2610.41218/table-016.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 482
+            },
+            {
+              "caption": "Table 4: Depth trend (H3), learnable cells (train acc > 0.8), 5 seeds. The Spearman column is cell-level with a bootstrap 95% CI over the (PE, task) cells; the precision column is the rate Pr[LG ≥ 0.7 | αL ≥ 0.5] with a bootstrap 95% CI over the high-αL rows. αL stays a high-precision sufficient indicator at every depth (precision CIs well above chance); the graded rank correlation, by contrast, is significant only at depth 1 – at depths 2, 4 its CI includes 0, consistent with αL acting as a binary screen rather than a graded predictor once content rescues low-αL cells.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 194,
+              "image_path": "figures/2610.41218/table-017.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 764
+            },
+            {
+              "caption": "Table 5: Inductive-bias ablation (75 rows in the 1L1H setting). The cross-entropy fit, not the min-norm interpolant, drives the αL–LG correlation.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 125,
+              "image_path": "figures/2610.41218/table-018.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 614
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41218/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41218",
+          "relevance": 6,
+          "selection_reason": "Theoretical analysis of length generalization and positional encoding relevant to long-context models.",
+          "summary_status": "generated",
+          "title": "A Positional Realizability Theory of Length Generalization in Single-Head Attention",
+          "tldr": "A realizability theory explains when positional encodings enable length generalization in a controlled single-head, positional-only attention setting.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-29",
       "paper_count": 2,
       "papers": [
@@ -37072,5 +38612,5 @@
   "schema_version": 1,
   "subtopic_id": "long-context-models",
   "topic_id": "language-foundation-models",
-  "total_paper_count": 169
+  "total_paper_count": 175
 }

@@ -1,6 +1,971 @@
 {
   "days": [
     {
+      "date": "2026-11-01",
+      "paper_count": 3,
+      "papers": [
+        {
+          "abstract": "In real-world deployments, large language model (LLM) systems are increasingly evolving from single-model invocation toward heterogeneous deployments in which different models are dynamically invoked for inference. When the same context is reused across models, however, each newly selected target model typically has to process it again, repeatedly incurring substantial computational costs. Therefore, we propose ACCT (Asymmetric Cross-LLM Context Transfer), which targets KV cache transfer between models of different scales within the same model family. ACCT transforms the KV cache produced by a source model into sparse KV states that can be directly consumed by a target model, thereby enabling cross-model reuse of context computation and decoupling context computation from downstream inference. ACCT consists of three lightweight components: the Cartographer identifies query-relevant context tokens for each target layer and KV head; the Allocator determines how many context tokens each target layer and KV head retains under a shared total KV budget; and the Compiler transforms selected source KV into sparse target KV. The target model can therefore perform inference using the transferred KV without reprocessing the original context. We evaluate ACCT in two complementary settings comprising five general-capability benchmarks and six highly context-dependent tasks. Experiments show that ACCT matches or exceeds the target model's original inference performance even when reducing the KV cache size by 75%. At a context length of approximately 19K tokens, ACCT's KV conversion achieves a 6.5-21.2 times speedup over target context prefill. These results demonstrate the feasibility of transferring context computation across models under a limited KV budget.",
+          "arxiv_id": "2610.42116",
+          "arxiv_url": "https://arxiv.org/abs/2610.42116",
+          "authors": [
+            "Yuzhe Liu, Haolin Tian, Tonghan Wang"
+          ],
+          "bullets": [
+            "Addresses the cost of recomputing shared context when dynamically switching among heterogeneous LLMs.",
+            "Uses three components: Cartographer selects relevant tokens, Allocator distributes a shared KV budget, and Compiler converts source KV into target-compatible sparse KV.",
+            "Evaluated on five general-capability benchmarks and six context-dependent tasks.",
+            "Matches or exceeds original target-model performance with 75% less KV cache.",
+            "At roughly 19K-token contexts, KV conversion is 6.5–21.2× faster than target context prefill."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Context-state construction latency across six transfer directions. Target prefill encodes the complete context with the target model, whereas ACCT converts already computed source states. The comparison shows the efficiency gain from avoiding target-side context re-encoding, especially for longer contexts.",
+              "figure_id": "figure-2-3",
+              "figure_number": "2",
+              "height": 365,
+              "image_path": "figures/2610.42116/figure-001.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 827
+            },
+            {
+              "caption": "Figure 1: ACCT combines Cartographer selection, Allocator budgeting, and Compiler conversion to transfer source KV into sparse target KV for inference without context re-encoding.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 263,
+              "image_path": "figures/2610.42116/figure-002.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 826
+            },
+            {
+              "caption": "Table 12: Qwen3 stage latencies (ms) and state-conversion speedups by context length.",
+              "figure_id": "table-12-10",
+              "figure_number": "12",
+              "height": 418,
+              "image_path": "figures/2610.42116/table-003.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 827
+            },
+            {
+              "caption": "Table 13: Llama stage latencies (ms) and state-conversion speedups by context length.",
+              "figure_id": "table-13-9",
+              "figure_number": "13",
+              "height": 417,
+              "image_path": "figures/2610.42116/table-004.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 828
+            },
+            {
+              "caption": "Table 14: Qwen2.5 stage latencies (ms) and state-conversion speedups by context length.",
+              "figure_id": "table-14-13",
+              "figure_number": "14",
+              "height": 418,
+              "image_path": "figures/2610.42116/table-005.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 828
+            },
+            {
+              "caption": "Table 15: Target-state construction latency (ms), including source encoding, on the shortest and longest contexts.",
+              "figure_id": "table-15-1",
+              "figure_number": "15",
+              "height": 435,
+              "image_path": "figures/2610.42116/table-006.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 828
+            },
+            {
+              "caption": "Table 4: Recorded training schedules.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 234,
+              "image_path": "figures/2610.42116/table-007.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 514
+            },
+            {
+              "caption": "Table 6: Exact interface parameter counts; Compiler includes the fitted, frozen Bridge.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 171,
+              "image_path": "figures/2610.42116/table-008.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 590
+            },
+            {
+              "caption": "Table 5: Recorded geometry for six directions; D is the shared encoder/decoder depth.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 171,
+              "image_path": "figures/2610.42116/table-009.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 572
+            },
+            {
+              "caption": "Table 7: Compiler decomposition and gradient-optimized parameters of the entire interface.",
+              "figure_id": "table-7-6",
+              "figure_number": "7",
+              "height": 172,
+              "image_path": "figures/2610.42116/table-010.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 568
+            },
+            {
+              "caption": "Table 1: Task performance of ACCT at 4× compression versus Target Full, which uses the target model’s full context KV. Even with 4× compression (75% reduction in the global cache usage) and up to 95.3% reduction in prefilling time, our method can outperform full target KV on several tasks. F1 and accuracy are percentages (higher is better); PPL is lower-is-better. Bold marks improvements over Target Full. Relative is ACCT/Target Full for F1 and accuracy, and Target Full/ACCT for PPL.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 38,
+              "image_path": "figures/2610.42116/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 827
+            },
+            {
+              "caption": "Table 8: The fixed 10,000-example evaluation panel.",
+              "figure_id": "table-8-14",
+              "figure_number": "8",
+              "height": 273,
+              "image_path": "figures/2610.42116/table-012.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 548
+            },
+            {
+              "caption": "Table 9: Descriptive retention and task wins derived from the recorded main-table entries.",
+              "figure_id": "table-9-15",
+              "figure_number": "9",
+              "height": 171,
+              "image_path": "figures/2610.42116/table-013.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 586
+            },
+            {
+              "caption": "Table 11: Warm-up and timed repetitions for each stage.",
+              "figure_id": "table-11-4",
+              "figure_number": "11",
+              "height": 108,
+              "image_path": "figures/2610.42116/table-014.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 410
+            },
+            {
+              "caption": "Table 10: Additional Qwen3 results on 11 datasets (F1/accuracy in %; PPL ↓), with bold marking ACCT improvements over the corresponding Target Full.",
+              "figure_id": "table-10-2",
+              "figure_number": "10",
+              "height": 38,
+              "image_path": "figures/2610.42116/table-015.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 827
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42116/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.42116",
+          "relevance": 8,
+          "selection_reason": "Transfers sparse KV caches across LLMs under a budget, directly relevant to KV cache efficiency and token selection.",
+          "summary_status": "generated",
+          "title": "ACCT: Asymmetric Cross-LLM Context Transfer",
+          "tldr": "ACCT transfers sparse KV caches between differently sized LLMs in the same family, avoiding repeated context processing while preserving target-model performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "The quadratic scaling of attention is a fundamental bottleneck limiting the long-context capabilities of large language models (LLMs). A variety of approaches have attempted to circumvent this, but they either fail to match attention's expressiveness (e.g., sliding-window or linear attention variants with fixed-size state) or only achieve constant-factor speedups (e.g., sparse attention methods whose indexers themselves scale quadratically). In this paper, we derive an asymptotically subquadratic sparse attention method based on a hierarchical, tree-structured indexer, which we call Zyphra Hierarchical Attention (ZHA). ZHA constructs a tree of recursively compressed key summaries over the KV cache, which future queries traverse from the top down to retrieve a sparse subset of keys. Crucially, by iteratively growing the tree's depth, the total cost including routing and final attention grows sublinearly in sequence length, resulting in overall subquadratic (but superlinear) scaling for attention. We demonstrate that ZHA can be cheaply applied to existing pretrained models with only a short KL distillation training stage over a few billion tokens, and maintains performance on long-context retrieval and challenging reasoning, mathematical, and agentic coding evaluation tasks. Moreover, we show that our method is highly robust to tree geometry including very deep trees of up to 6 levels. Finally, we develop a detailed performance model and show that our approach scales subquadratically, dramatically outperforms competing methods beyond 1 million context, and ultimately has the potential to extend effective context windows to the hundreds of millions or billions of tokens.",
+          "arxiv_id": "2610.42112",
+          "arxiv_url": "https://arxiv.org/abs/2610.42112",
+          "authors": [
+            "Leon Lufkin, Cutter Dawes, Alexander Speicher, Kamesh Krishnamurthy, Tom\\'as Figliolia, Beren Millidge"
+          ],
+          "bullets": [
+            "Addresses quadratic attention cost, which limits long-context scaling.",
+            "Builds a hierarchical tree of compressed key summaries that queries traverse to select sparse keys.",
+            "Joint routing and attention cost grows subquadratically—sublinear in sequence length for the relevant computation, but still superlinear overall.",
+            "Can be added to pretrained models using a short KL-distillation stage and maintains long-context retrieval, reasoning, math, and coding performance.",
+            "The authors report strong scaling beyond 1 million tokens and potential context windows of hundreds of millions to billions of tokens; performance depends on the method’s tree-based indexing scope."
+          ],
+          "categories": [
+            "cs.CL",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of the ZHA architecture: (a) tree construction and (b) sparse routing. During tree construction, for each chunk of contiguous key nodes, we construct a compressed key node at the higher level by an attention-weighted sum of the keys, where the attention is computed with respect to the learned reference queries. In practice, we use multiple reference queries and store the key nodes for each in parallel. This process continues recursively with higher level key nodes being constructed from the summaries of lower levels. During routing, we start at the top of the tree and compute dot-product similarity scores between our query and the key nodes of that level. We select the set of nodes to expand using top-p, and then recursively descend the tree until we reach the leaf nodes corresponding to raw KV cache entries. The union of all the leaves we reach defines the sparse KV cache subset that we dispatch to the main attention.",
+              "figure_id": "figure-3-39",
+              "figure_number": "3",
+              "height": 460,
+              "image_path": "figures/2610.42112/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 960
+            },
+            {
+              "caption": "Figure 8: For a fixed top-p, and hence sparsity level, ZHA (here, R = 1, C = 8, p = 0.75) scales subquadratically according to our decode roofline model, eventually dramatically outperforming both dense attention and the MSA sparse attention variant. Importantly, we have not empirically validated the scaling at these ultra-long context lengths due to the lack of existing LLMs which can operate at these contexts. Because of this, while we can obtain subquadratic latency, it is unclear to what extent reasoning and retrieval performance degrades at the level of depths required for these ultra-long contexts. Latencies are modeled per-token decode times for the attention subsystem of one layer at batch size 1.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 384,
+              "image_path": "figures/2610.42112/figure-002.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 504
+            },
+            {
+              "caption": "Figure 7: Per-level selection scales sublinearly in the ZHA router with predictable power-law exponent. (a)–(e): For ZHA geometries with depths L = 2–6 (C = 4, R = 16, p = 0.8), per-level selection counts (normalized by first-bin count per-level) on AIME problems fitted by power-law scaling curves. (f): Per-level exponents fitted by cumulative top-down model, demonstrating that the across-depth variation in their exponents is well-described by a simple model that accumulates top-down contributions.",
+              "figure_id": "figure-7-35",
+              "figure_number": "7",
+              "height": 389,
+              "image_path": "figures/2610.42112/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1026
+            },
+            {
+              "caption": "Figure 24: Modeled BF16 decode latency for dense attention, MSA, and ZHA (R = 1, C = 8) at p = 0.7, 0.75, 0.8, with the H100 assumptions and nondecreasing latency-minimizing depth of Figure 8. Latencies are modeled per-token decode times for the attention subsystem of one layer at batch size 1.",
+              "figure_id": "figure-24-36",
+              "figure_number": "24",
+              "height": 427,
+              "image_path": "figures/2610.42112/figure-004.webp",
+              "kind": "figure",
+              "page": 37,
+              "width": 504
+            },
+            {
+              "caption": "Figure 5: (a) Reasoning and (b) retrieval evaluation scores with dense attention, MSA, and deep (C4 L6) or wide (C256 L1) ZHA (p = 0.95, R = 16, converted from Qwen3.6-35B-A3B). Appendix B gives evaluation details and results across routing thresholds. We observe that ZHA with both wide and deep geometries maintains performance even at high sparsity levels, while MSA suffers performance degradation especially on retrieval tasks such as RULER and LongBench v2.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 341,
+              "image_path": "figures/2610.42112/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1063
+            },
+            {
+              "caption": "Figure 6: Geometry and sparsity have predictable effects on RULER accuracy (mean across tasks). Greater sparsity without degrading performance is achieved by: (a) decreasing compression CL, (b) increasing depth at fixed compression (CL = 4096), or (c) making key summaries more expressive (with increasing reference-query number R) at fixed chunk size and depth. (The horizontal dotted lines in panels (a)–(c) show dense attention.) (d) For the simple geometry-to-performance model, predictions versus measurements across 64K, 128K, and 256K, holding out each length in turn (RMSE: 1.44 percentage points).",
+              "figure_id": "figure-6-21",
+              "figure_number": "6",
+              "height": 231,
+              "image_path": "figures/2610.42112/figure-006.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1061
+            },
+            {
+              "caption": "Figure 11: Dense top-p set size for individual query heads in Qwen3.6-35B-A3B, using the same six-book cohort and thresholds as Figure 1. Rows identify full-attention layers and columns identify query heads, with zero-based indices. Each panel averages only across books. All panels share logarithmic axis limits; colors denote p and the dotted black line gives the p = 1 reference.",
+              "figure_id": "figure-11-29",
+              "figure_number": "11",
+              "height": 731,
+              "image_path": "figures/2610.42112/figure-007.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 1031
+            },
+            {
+              "caption": "Figure 20: Measured RULER-13 accuracy at 256K versus (a) measured decode key share and (b) modeled decode-attention speedup over dense for Qwen3.6-35B-A3B (115 settings, 28 geometries). Speedups are H100 BF16 attention-layer projections at batch size one, not measured end-to-end timings; missing higher-level union counts use the slower modeled scenario. Colors denote R, markers C, and curves sweep p within each geometry. Black lines mark Pareto frontiers; dotted horizontal lines show dense accuracy, and the vertical guide marks 1×.",
+              "figure_id": "figure-20-4",
+              "figure_number": "20",
+              "height": 425,
+              "image_path": "figures/2610.42112/figure-008.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 1050
+            },
+            {
+              "caption": "Figure 4: Illustrative ZHA tree geometries of the three core tree parameters. We can trade off depth and width for a given level of compression in the tree, since compression scales as CL. Secondly, at the cost of additional compute, we can increase the number of reference queries.",
+              "figure_id": "figure-4-25",
+              "figure_number": "4",
+              "height": 737,
+              "image_path": "figures/2610.42112/figure-009.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 529
+            },
+            {
+              "caption": "Figure 2: Fraction of KV entries of a 256K sequence covered by the union of top-p attention subsets as the number of future queries increases, for several values of p. We observe that for the higher p values we use in practice, a substantial fraction of the total KV cache is included in the union of the queries.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 357,
+              "image_path": "figures/2610.42112/figure-010.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 494
+            },
+            {
+              "caption": "Figure 10: (a) Cosine similarity distribution of every pair of reference queries within a KV group; (b) norm distribution of every reference query. Reference queries within a KV group become slightly more similar and their norms more concentrated as the tree gets shallower and its chunks larger.",
+              "figure_id": "figure-10-32",
+              "figure_number": "10",
+              "height": 902,
+              "image_path": "figures/2610.42112/figure-011.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 529
+            },
+            {
+              "caption": "Figure 9: Reference-query selection rates per tree level for the C4 L6 ZHA router on natural text. (a) Within each KV group and level, reference queries are independently ranked by selection frequency. Each point shows the level’s share of selections at that rank, averaged over layers and KV groups. Higher levels concentrate selections among fewer reference queries, while lower levels use them more uniformly. (b) Spearman correlation between levels’ selection rates. Higher levels have strongly aligned reference-query rankings. Agreement generally weakens as levels become further separated, with the chunk level showing the greatest divergence from the upper levels.",
+              "figure_id": "figure-9-31",
+              "figure_number": "9",
+              "height": 671,
+              "image_path": "figures/2610.42112/figure-012.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 459
+            },
+            {
+              "caption": "Figure 21: Held-out dense-attention latency and timing divided by prediction. Within each subfigure, rows are MHA, GQA4, GQA8, and MQA; columns are causal prefill and decode. Colours distinguish d ∈ {64, 128, 256}. Dots show all recorded timing samples and short ticks mark medians; solid lines in the latency views show worker-aware predictions. Each CUDA-event sample averages a replay batch, not an individual invocation. The lower views show tFlash/tmodel; the dashed 1× line denotes exact prediction, and values below it indicate overprediction. Matching views retain the same layout, colours, marks, and axis limits across precisions; the ratio views share the same ratio scale.",
+              "figure_id": "figure-21-9",
+              "figure_number": "21",
+              "height": 1079,
+              "image_path": "figures/2610.42112/figure-013.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 25: Retrieval traversals at 64K tokens for (a) single-needle and (b) multi-key 2 RULER tasks (Qwen3.6-35B-A3B, C16 L3, R = 16, p = 0.9). Both show layer 35, query head 8, while emitting the first answer digit. Dark blue blocks are scored and expanded nodes; light blue blocks scored but pruned nodes; grey blocks are nodes which were never scored by the router. Dense-attention rows show chunk-level mass on a logarithmic scale. The green marker indicates the ground-truth needle location. Boxed regions are enlarged below to reveal finer traversal details. These examples illustrate task-dependent routing with top-p: for single-needle, the router explores few branches before reaching the answer-containing chunk; for multi-key 2, whose context contains many distractor needles, it explores substantially more upper-level nodes. Both traversals ultimately attend to a single answer-containing chunk.",
+              "figure_id": "figure-25-3",
+              "figure_number": "25",
+              "height": 812,
+              "image_path": "figures/2610.42112/figure-014.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 1050
+            },
+            {
+              "caption": "Figure 31: Reference-query cosine similarities with references independently ordered by top-level selection frequency within each geometry and KV group, most to least frequent. Frequencies were measured during routed prefill on 16 RULER prompts at 64K tokens and p = 0.9. No cross-geometry matching is applied; diagonal structure therefore indicates correspondence in both direction and selection rank.",
+              "figure_id": "figure-31-14",
+              "figure_number": "31",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-015.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 32: Mean cosine similarities of centered reference keys across geometries, evaluated on the same 60 top-level nodes from four RULER prompts at 64K tokens. Each node covers 4096 keys. Within each node and KV group, the mean over the 16 reference keys is subtracted before computing cosine similarities, which are then averaged over nodes. C16 L3 references are clustered using reference-key cosine similarity; other geometries are Hungarian-matched using the same measure. The cross-geometry correspondence extends to the pooled key representations.",
+              "figure_id": "figure-32-1",
+              "figure_number": "32",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-016.webp",
+              "kind": "figure",
+              "page": 43,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 30: Reference-query cosine similarities across the four Qwen3.6-35B-A3B ZHA geometries. The C16 L3 references are ordered by average-linkage clustering with cosine distance; references in each other geometry are Hungarian-matched to them by cosine similarity. Matched references therefore occupy corresponding positions. Diagonal structure within the off-diagonal blocks indicates similar reference directions across geometries.",
+              "figure_id": "figure-30-33",
+              "figure_number": "30",
+              "height": 813,
+              "image_path": "figures/2610.42112/figure-017.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 22: Per-level selection scaling for C = 4, R = 16, and p = 0.7, 0.9, 0.95, extending Figure 7. The first five columns show depths 2–6; the sixth compares observed median exponents with the r = 1/2 profile. Bars show pointwise 95% whole-problem bootstrap intervals.",
+              "figure_id": "figure-22-26",
+              "figure_number": "22",
+              "height": 703,
+              "image_path": "figures/2610.42112/figure-018.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 1051
+            },
+            {
+              "caption": "Figure 26: Agreement between tree levels in reference-query selection for Qwen3.6-35B-A3B ZHA (R = 16). Columns show C4 L6, C8 L4, C16 L3 and C64 L2; rows show RULER at 64K tokens and natural text at 32K tokens. For each layer/KV group, Spearman correlation is computed between the 16 reference-query selection shares at each pair of levels, then averaged over 20 groups (10 layers × 2 KV groups). Parenthesized axis labels give node spans in keys. Adjacent levels are similar in their reference selection rate while further apart levels have a different selection priority. This behavior holds across all geometries.",
+              "figure_id": "figure-26-10",
+              "figure_number": "26",
+              "height": 658,
+              "image_path": "figures/2610.42112/figure-019.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 1061
+            },
+            {
+              "caption": "Figure 23: Observed top-level exponents versus total tree depth for C = 4, R = 16. Dotted lines fit constant (gray) and linear (blue) depth dependence separately at each p, using only the five top-level observations. Bars show pointwise 95% whole-problem bootstrap intervals.",
+              "figure_id": "figure-23-27",
+              "figure_number": "23",
+              "height": 360,
+              "image_path": "figures/2610.42112/figure-020.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 12: Dense top-p set size for Nemotron-3.5-Lightning-30B-A3B using the same six-book cohort as Figure 1.",
+              "figure_id": "figure-12-28",
+              "figure_number": "12",
+              "height": 384,
+              "image_path": "figures/2610.42112/figure-021.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 492
+            },
+            {
+              "caption": "Figure 19: Per-task geometry, sparsity, and prediction accuracy for Qwen3.6-35B-A3B with reference-query-only routing; the final group shows the direct aggregate fit. Panels (a), (b), and (d) fix R = 16. (a) Measured accuracy at 256K versus decode keys attended across 11 geometries, colored by CL. (b) The matched CL = 4096 geometries, colored by depth L. (c) The C = 8, L = 2 slice at 256K, colored by reference count R. Curves sweep p ∈ {0.7, 0.8, 0.9, 0.95}, with p = 0.99 included where available; markers denote depth in (a,b) and R in (c). Key shares use each task’s native decode counters (pooled counters for the aggregate), and the key-share axes are logarithmic. Dotted horizontal lines show dense attention. (d) All 150 leave-one-length-out predictions per response over 64K, 128K, and 256K, colored and marked by held-out length; inset values give RMSE in percentage points and dashed diagonals show equality. Each task has four independent parameters in equation (2), fitted at the other two lengths across R ∈ {1, 2, 4, 16} using the measured dense baseline at the held-out length. Accuracy uses 100 examples per task; vertical-axis ranges vary by task.",
+              "figure_id": "figure-19-2",
+              "figure_number": "19",
+              "height": 1023,
+              "image_path": "figures/2610.42112/figure-022.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 1041
+            },
+            {
+              "caption": "Figure 14: Qwen3.6-35B-A3B decode key shares for deep (C4 L6, blue) and wide (C256 L1, green) ZHA (R = 16) at p ∈ {0.95, 0.9, 0.8}, compared with MSA (top-16 blocks of 128 tokens). (a) Reasoning; (b) retrieval. Darker shades indicate higher p; the dashed line marks dense attention (100%).",
+              "figure_id": "figure-14-11",
+              "figure_number": "14",
+              "height": 297,
+              "image_path": "figures/2610.42112/figure-023.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1067
+            },
+            {
+              "caption": "Figure 13: Qwen3.6-35B-A3B scores and decode key shares across routing thresholds for deep (C4 L6, blue) and wide (C256 L1, green) ZHA, with R = 16. Darker shades indicate higher p. (a) Reasoning; (b) retrieval. Labels above bars show the benchmark scores and labels inside bars give key shares where available.",
+              "figure_id": "figure-13-12",
+              "figure_number": "13",
+              "height": 298,
+              "image_path": "figures/2610.42112/figure-024.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1059
+            },
+            {
+              "caption": "Figure 16: Dense attention vs. the wide ZHA router (16 reference queries per KV group, 256-token chunks, one level; top-p 0.95) on Qwen3.6-35B-A3B, with the router in BF16 and in NVFP4 (router operands, reference-key cache and scoring in FP4; backbone, KV cache and the sparse attention in BF 16). (a) Reasoning (b) Retrieval",
+              "figure_id": "figure-16-19",
+              "figure_number": "16",
+              "height": 259,
+              "image_path": "figures/2610.42112/figure-025.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 15: Dense attention vs. a ZHA router with one reference query per KV group, 8-token chunks, fan 8 and two levels (R1 C8 L2) on Qwen3.6-35B-A3B, with uniform routing top-p 0.8, 0.75 and 0.7. (a) Reasoning (b) Retrieval.",
+              "figure_id": "figure-15-18",
+              "figure_number": "15",
+              "height": 258,
+              "image_path": "figures/2610.42112/figure-026.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 17: Nemotron-3.5-Lightning-30B-A3B scores and decode key shares across routing thresholds for deep (C4 L6, blue) and wide (C256 L1, green) ZHA, with R = 16. Darker shades indicate higher p. (a) Reasoning; (b) retrieval. Labels above bars show the benchmark scores and labels inside bars give key shares where available.",
+              "figure_id": "figure-17-20",
+              "figure_number": "17",
+              "height": 244,
+              "image_path": "figures/2610.42112/figure-027.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1068
+            },
+            {
+              "caption": "Figure 18: The 28 geometries used in the RULER fits. Each panel fixes the reference count R; dotted curves mark constant top-level comparession CL. These geometries are evaluated at p ∈ {0.7, 0.8, 0.9, 0.95, 0.99} and sequence lengths of 64K, 128K, and 256K.",
+              "figure_id": "figure-18-34",
+              "figure_number": "18",
+              "height": 299,
+              "image_path": "figures/2610.42112/figure-028.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 1047
+            },
+            {
+              "caption": "Figure 28: Outlier selection across levels: layer 39, KV group 1 of the C4 L6 ZHA router on RULER at 64K tokens. Upper levels agree closely, while L1 reference rankings are negatively correlated with the top levels (L1 versus L6: ρ = −0.35).",
+              "figure_id": "figure-28-23",
+              "figure_number": "28",
+              "height": 287,
+              "image_path": "figures/2610.42112/figure-029.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 29: Outlier selection across levels: Similar reference rankings across all levels: layer 3, KV group 1 of the C4 L6 ZHA router on RULER at 64K tokens. Chunk and top-level rankings remain strongly aligned (ρ = 0.86).",
+              "figure_id": "figure-29-22",
+              "figure_number": "29",
+              "height": 287,
+              "image_path": "figures/2610.42112/figure-030.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 27: Typical selection behavior across levels: layer 19, KV group 0 of the C4 L6 ZHA router on RULER at 64K tokens. Adjacent levels have similar reference rankings, but agreement weakens over larger level separations; the chunk and top-level rankings are nearly unrelated (L1 versus L6: ρ = 0.12).",
+              "figure_id": "figure-27-24",
+              "figure_number": "27",
+              "height": 288,
+              "image_path": "figures/2610.42112/figure-031.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 1023
+            },
+            {
+              "caption": "Table I: Percentage of individual rollout–layer–head fits for which the affine model beats the power law, ρ = (1−R2 lin)/(1−R2 pow) < 1, evaluated in log-y space at the leaf level. Raw and Cum-max denote raw and cumulative-maximum targets. Each percentage uses 9,600 paired fits (30 problems × 16 rollouts × 10 layers × 2 KV heads), without averaging across rollouts before fitting.",
+              "figure_id": "table-I-17",
+              "figure_number": "I",
+              "height": 950,
+              "image_path": "figures/2610.42112/table-032.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 994
+            },
+            {
+              "caption": "Table VII: Kernel and worker variables for the roofline model.",
+              "figure_id": "table-VII-37",
+              "figure_number": "VII",
+              "height": 774,
+              "image_path": "figures/2610.42112/table-033.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 1056
+            },
+            {
+              "caption": "Table VI: Variables for the ZHA roofline model.",
+              "figure_id": "table-VI-7",
+              "figure_number": "VI",
+              "height": 658,
+              "image_path": "figures/2610.42112/table-034.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 1054
+            },
+            {
+              "caption": "Table IV: Evaluation datasets, scoring metrics, and inference protocols.",
+              "figure_id": "table-IV-6",
+              "figure_number": "IV",
+              "height": 568,
+              "image_path": "figures/2610.42112/table-035.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 1043
+            },
+            {
+              "caption": "Table IX: Additional variables for the MSA roofline model.",
+              "figure_id": "table-IX-16",
+              "figure_number": "IX",
+              "height": 479,
+              "image_path": "figures/2610.42112/table-036.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 932
+            },
+            {
+              "caption": "Table II: Training setup and compute for the evaluated ZHA routers and MSA index. Backbones are frozen; ZHA trains only reference queries. Deep and wide ZHA use R = 16.",
+              "figure_id": "table-II-38",
+              "figure_number": "II",
+              "height": 427,
+              "image_path": "figures/2610.42112/table-037.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 810
+            },
+            {
+              "caption": "Table VIII: Variables for tree construction and maintenance.",
+              "figure_id": "table-VIII-30",
+              "figure_number": "VIII",
+              "height": 245,
+              "image_path": "figures/2610.42112/table-038.webp",
+              "kind": "table",
+              "page": 32,
+              "width": 1027
+            },
+            {
+              "caption": "Table III: Final per-level ZHA training KL, averaged over logged points in the last 100 steps.",
+              "figure_id": "table-III-5",
+              "figure_number": "III",
+              "height": 130,
+              "image_path": "figures/2610.42112/table-039.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 548
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42112/hero.webp",
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2610.42112",
+          "relevance": 9,
+          "selection_reason": "Subquadratic sparse attention with hierarchical tree indexer for long-context LLMs; directly relevant to efficient attention and long-context processing.",
+          "summary_status": "generated",
+          "title": "Subquadratic Attention with a Hierarchical Tree-Structured Indexer",
+          "tldr": "Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The bottleneck of attention mechanisms, which are the fundamental building block of modern language models, is their quadratic complexity in terms of context size. There has thus been an increasing interest in the compression of the context, also called KV-cache compression. In this article, we consider the problem of compressing the context of attention mechanisms by first formulating it in the Hilbert space associated with its kernel. In this formalism, attention can be represented as the ratio of two linear maps whose interpolant is also the ratio of interpolants, this allows us to consider the interpolation of the linear maps directly. We thus introduce two novel KV-cache compression methods which we call GAIM and Q-DAIM, based on the Generalized Empirical Interpolation Method (GEIM) and the Q-Discrete Empirical Interpolation Method (Q-DEIM), respectively. As the cost of these methods is quadratic in terms of context length, we propose surrogate models based on the Taylor series, the Performer and the Random Fourier Features method which allow the compression to be done in linear time. Finally, we extend this result to the streaming attention setting, providing new methods which allow one to penalize the selection of interpolation nodes based on the previously interpolated context and to update the previous interpolation based on new information. We then provide numerical results on the convergence of the residuals and the output error in future queries and preliminary results on the LongBench-E benchmark showing performance comparable to the state-of-the-art methods. These experiments suggest that the range revealed by our Q-DAIM method could help identify where information is concentrated in the KV cache, thus enabling an efficient compression.",
+          "arxiv_id": "2610.40943",
+          "arxiv_url": "https://arxiv.org/abs/2610.40943",
+          "authors": [
+            "Michel Fabrice Serret, Laura Grigori"
+          ],
+          "bullets": [
+            "Addresses the quadratic cost of attention with increasing context length by compressing the KV cache.",
+            "Formulates attention in a kernel-associated Hilbert space, representing it as a ratio of linear maps whose interpolants can be compressed directly.",
+            "Proposes GAIM and Q-DAIM methods based on GEIM and Q-DEIM interpolation techniques.",
+            "Uses Taylor-series, Performer, and Random Fourier Features surrogates to reduce compression cost from quadratic to linear time, and extends the approach to streaming attention.",
+            "Numerical experiments evaluate residual and future-query output errors; preliminary LongBench-E results show performance comparable to existing methods, while suggesting Q-DAIM can reveal where KV-cache information is concentrated."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL",
+            "cs.NA",
+            "math.NA"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Residual operator convergence for the different methods. Relative squared norm of the augmented residual operator (top) and of the denominator residual operator (bottom) against the number of nodes n, median over the 16 KV heads. Each panel shows the variants of one method in colour and the curves of the other methods in grey. The norm of the numerator residual operator Mg ∆,η stays within about 3% of that of the augmented one and is not shown.",
+              "figure_id": "figure-1-26",
+              "figure_number": "1",
+              "height": 538,
+              "image_path": "figures/2610.40943/figure-001.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 936
+            },
+            {
+              "caption": "Figure 2: Heavy hitter relative error (27) in numerator and denominator with tsink = 32 and without range correction. Top: ε10%g ; bottom: ε10%h ; both on the future queries. Each curve is the median of this ratio over the 112 query heads; each panel shows the variants of one method in colour and the curves of the other methods in grey. The interquartile range over the heads is shown in Figure 11 of Appendix C.",
+              "figure_id": "figure-2-1",
+              "figure_number": "2",
+              "height": 566,
+              "image_path": "figures/2610.40943/figure-002.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 938
+            },
+            {
+              "caption": "Figure 3: Attention error in L2 norm on future queries with tsink = 32 and trec = 0. Heavy hitter relative attention error ε10%Att without (top) and with (bottom) range correction. Each curve is the median of this ratio over the 112 query heads; each panel shows the variants of one method in colour and the curves of the other methods in grey. For both rows, the zero-readout errors are at least 3 times higher and have thus not been drawn in the figures. The interquartile range over the heads is shown in Figure 12 of Appendix C.",
+              "figure_id": "figure-3-3",
+              "figure_number": "3",
+              "height": 565,
+              "image_path": "figures/2610.40943/figure-003.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 944
+            },
+            {
+              "caption": "Figure 14: Heavy hitter relative attention error ε10%Att using Q-DAIM exact v5 interpolation nodes for the projection methods of Table 1 and without projection (W = V [L, :]), as in Figure 7. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-14-16",
+              "figure_number": "14",
+              "height": 459,
+              "image_path": "figures/2610.40943/figure-004.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 914
+            },
+            {
+              "caption": "Figure 6: Heavy-hitter relative attention error ε10%Att (27) using GAIM exact v4 interpolation nodes for the different projection methods described in Table 1, and without projection, i.e. keeping the values of the selected keys, W = V [L, :]. Median over the 112 query heads; the interquartile range over the heads is shown in Figure 13 of Appendix C. The methodology used is the same as the experiments in §5.1.",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 458,
+              "image_path": "figures/2610.40943/figure-005.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 914
+            },
+            {
+              "caption": "Figure 7: Heavy-hitter relative attention error ε10%Att (27) using Q-DAIM exact v5 interpolation nodes for the different projection methods described in Table 1, and without projection, i.e. keeping the values of the selected keys, W = V [L, :]. Median over the 112 query heads; the interquartile range over the heads is shown in Figure 14 of Appendix C. The methodology used is the same as the experiments in §5.1.",
+              "figure_id": "figure-7-15",
+              "figure_number": "7",
+              "height": 457,
+              "image_path": "figures/2610.40943/figure-006.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 914
+            },
+            {
+              "caption": "Figure 13: Heavy hitter relative attention error ε10%Att using GAIM exact v4 interpolation nodes for the projection methods of Table 1 and without projection (W = V [L, :]), as in Figure 6. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-13-17",
+              "figure_number": "13",
+              "height": 458,
+              "image_path": "figures/2610.40943/figure-007.webp",
+              "kind": "figure",
+              "page": 40,
+              "width": 909
+            },
+            {
+              "caption": "Figure 10: Impact of segment-interpolation parameters on best-performing GAIM and Q-DAIM variants. Top: relative attention error medq ∥Att(q) − ÃttL(q)∥2 /meanq∈top 10% ∥Att(q)∥2 on the future queries for the block method, in percent (median over the heads). Bottom: difference of this error between the streaming (with range deflation and refit) and the block method, streaming minus block, in percentage points (blue: lower with streaming, red: higher). Range correction on, tsink = 32, trec = 32.",
+              "figure_id": "figure-10-5",
+              "figure_number": "10",
+              "height": 376,
+              "image_path": "figures/2610.40943/figure-008.webp",
+              "kind": "figure",
+              "page": 30,
+              "width": 924
+            },
+            {
+              "caption": "Figure 9: Norm of the augmented residual operator for segmented interpolation. Top: relative squared norm ∥M∆,η∥22/∥Mη∥22 of the block method, in percent and shaded on a logarithmic scale (median over the heads). Bottom: difference of this norm between the streaming (with range deflation and refit) and the block method, streaming minus block, in percentage points (blue: lower with streaming, red: higher). Range correction on, tsink = 32.",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 375,
+              "image_path": "figures/2610.40943/figure-009.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 924
+            },
+            {
+              "caption": "Figure 1 displays the median squared norms of the augmented and denominator operators, the numerator being indistinguishable from the augmented one. We observe that, as expected, variants v1 and v5, which directly optimize these residuals, perform better than the other variants in these metrics. A surprising result is the fact that the residual norm of Mh ∆,η is also minimised by the selection of the un-augmented variant v1.",
+              "figure_id": "figure-1-13",
+              "figure_number": "1",
+              "height": 538,
+              "image_path": "figures/2610.40943/figure-010.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 936
+            },
+            {
+              "caption": "Figure 18: Q-DAIM exact (left) and Q-DAIM RFF (right) past the revealed rank, single pass of Algorithm 2 (dashed) against the restarted selections of Appendix E (solid), for the v1 and v5 targets. Top: relative squared norm of the augmented residual operator on the keys, without sink, as in Figure 1. Middle and bottom: heavy hitter relative attention error ε10%Att on the future queries with tsink = 32, without and with range correction, as in Figure 3. Each curve is the median over the heads. Dotted vertical lines: restarts, every d = 128 nodes for Q-DAIM RFF; for QDAIM exact, where at least half of the KV heads reset F , i.e. after 128, 256 and 384 nodes for the v1 target and one node later per block for v5 (on 14 of the 16 KV heads; the other two, of lower numerical rank, reset more often).",
+              "figure_id": "figure-18-20",
+              "figure_number": "18",
+              "height": 715,
+              "image_path": "figures/2610.40943/figure-011.webp",
+              "kind": "figure",
+              "page": 44,
+              "width": 840
+            },
+            {
+              "caption": "Figure 12: Heavy hitter relative attention error ε10%Att on the future queries without (top) and with (bottom) range correction, with tsink = 32 and trec = 0, as in Figure 3. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 565,
+              "image_path": "figures/2610.40943/figure-012.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 944
+            },
+            {
+              "caption": "Figure 11: Heavy hitter relative error (27) in numerator (top, ε10%g ) and denominator (bottom, ε10%h ) on the future queries, with tsink = 32 and without range correction, as in Figure 2. Solid: median over the 112 query heads; dashed: interquartile range over the heads.",
+              "figure_id": "figure-11-9",
+              "figure_number": "11",
+              "height": 565,
+              "image_path": "figures/2610.40943/figure-013.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 925
+            },
+            {
+              "caption": "Figure 4: Worst-case error for range-corrected GAIM interpolation in L∞ norm. Layer 0, query head 4. GAIM exact with the nodes selected in the L∞ score norm; each curve is a sliding mean over 205 consecutive queries.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 522,
+              "image_path": "figures/2610.40943/figure-014.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 938
+            },
+            {
+              "caption": "Figure 5: Worst-case GAIM interpolation error and its improvement with range-correction in L∞ norm. Layer 1, query head 16; this layer lies outside the layers {0, 7, 14, 21} used for the median curves. GAIM exact with the nodes selected in the L∞ score norm; each curve is a sliding mean over 205 consecutive queries. Range correction enables some of the variants to improve their error levels, especially on the tokens with higher attention scores.",
+              "figure_id": "figure-5-24",
+              "figure_number": "5",
+              "height": 521,
+              "image_path": "figures/2610.40943/figure-015.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 938
+            },
+            {
+              "caption": "Figure 17: Condition number κ2 per layer of the Gram matrices of the context keys, EKK (N = 4064, left), and of the n = 512 interpolation nodes selected by GAIM exact (centre) and Q-DAIM exact (right), ELL; tsink = 32 sink keys excluded. Blue: Gaussian Gram Ĕ (any centering); red: exponential Gram E with the keys at the origin; orange: exponential Gram with the keys centred on their mean. Lines: median over the four KV heads of the layer; small marks: one KV head. Past the double-precision resolution 1/(nϵ) (dotted), hollow marks give the lower bound κ(D) and the bars extend to κ(D)κ(Ĕ); triangles mark the heads beyond 1040, with the largest exponent of the layer.",
+              "figure_id": "figure-17-12",
+              "figure_number": "17",
+              "height": 423,
+              "image_path": "figures/2610.40943/figure-016.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 891
+            },
+            {
+              "caption": "Figure 8: Comparison of segment-local projection versus global interpolation node projection on attention residual. Ratio, head by head, of the error obtained with the global projection to the error obtained with the segment-local one, where the error is the median attention error medq ∥Att(q)− ÃttL(q)∥2 over the future queries (left, centre) or the fit residual ∥ĔKKV aug",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 276,
+              "image_path": "figures/2610.40943/figure-017.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 906
+            },
+            {
+              "caption": "Figures 15 and 16 give, for the same projections, the residual operator they leave on the keys, i.e. the relative squared norm ∥Mη − L̆T ϕX∥2H/∥Mη∥2H of the augmented operator and of its denominator part, computed from ĔKK , ĔLK and ĔLL on the context keys, the sink excluded. The GAIM exact nodes are those of the v1 variant: with the v4 nodes of Figure 6, every projection leaves the whole operator, about 0.9999 of its norm at n = 512. The Galerkin projection, the orthogonal projection in H , gives the smallest residual by construction, and the least-squares projection and the values of the selected keys, W = V [L, :], are within 0.1% of it. The revealed-range projection is larger and peaks around n = 129, where the number of nodes reaches the revealed rank. The WildCat temperature projection leaves the largest residual, above the norm of the denominator operator itself for small n, although it gives the lowest attention error at the future queries in Figures 6 and 7.",
+              "figure_id": "figure-15-21",
+              "figure_number": "15",
+              "height": 268,
+              "image_path": "figures/2610.40943/figure-018.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 907
+            },
+            {
+              "caption": "Figure 15: Relative squared norm of the residual operator on the keys left by each projection of Table 1, and without projection (W = V [L, :]), on GAIM exact v1 interpolation nodes (L∞ score), tsink = 32. Left: augmented operator; right: denominator. Median over the 16 KV heads.",
+              "figure_id": "figure-15-22",
+              "figure_number": "15",
+              "height": 268,
+              "image_path": "figures/2610.40943/figure-019.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 907
+            },
+            {
+              "caption": "Figure 16: Relative squared norm of the residual operator on the keys left by each projection of Table 1, and without projection (W = V [L, :]), on the Q-DAIM exact v5 interpolation nodes of Figure 7, tsink = 32. Left: augmented operator; right: denominator. Median over the 16 KV heads.",
+              "figure_id": "figure-16-23",
+              "figure_number": "16",
+              "height": 121,
+              "image_path": "figures/2610.40943/figure-020.webp",
+              "kind": "figure",
+              "page": 41,
+              "width": 676
+            },
+            {
+              "caption": "Table 8: LongBench-E - 25 prompts per task at 25% context compression. Key centers are given as the tuple (selection, solve), c = segment mean, g = global mean. The Exact and COMPRESSKV rows are the values reported in Table 4 of [SM26] (25% compression) on the complete benchmark (compared to our 25 samples/task). For comparison, the percentages rows give, per task, our best method on average (Q-DAIM exact, Nseg=64) and the best score per task relative to Dense, and COMPRESSKV relative to Exact. Proj.: Galerkin/basis projection (Gal.), none (each node keeps its own value with a unit weight, [VL | 1]), or Q-DAIM’s revealed-range projection restricted to the revealed rank (ranger). Methods optionally use the τ temperature scaled kernel for comparison with WildCat [SM26]. RP-Cholesky corresponds to an implementation of the WildCat selection and projection on our harness. †: run on PyTorch 2.14, whose GPU (MPS) attention kernels round differently.",
+              "figure_id": "table-8-29",
+              "figure_number": "8",
+              "height": 448,
+              "image_path": "figures/2610.40943/table-021.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 982
+            },
+            {
+              "caption": "Table 3: Parameters for interpolation of streaming attention.",
+              "figure_id": "table-3-4",
+              "figure_number": "3",
+              "height": 517,
+              "image_path": "figures/2610.40943/table-022.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 978
+            },
+            {
+              "caption": "Table 5: Computational cost of each step, for a single head, per segment. The selection and residual update costs are summed over the nseg picks, and the surrogate costs assume D ≥ d.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 653,
+              "image_path": "figures/2610.40943/table-023.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 978
+            },
+            {
+              "caption": "Table 1: Matrices and projectors associated with the different projection methods.",
+              "figure_id": "table-1-19",
+              "figure_number": "1",
+              "height": 168,
+              "image_path": "figures/2610.40943/table-024.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 752
+            },
+            {
+              "caption": "Table 4: Data in memory per head and per layer kept throughout the context compression.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 283,
+              "image_path": "figures/2610.40943/table-025.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 460
+            },
+            {
+              "caption": "Table 2: Modified matrices for each deflation type.",
+              "figure_id": "table-2-18",
+              "figure_number": "2",
+              "height": 119,
+              "image_path": "figures/2610.40943/table-026.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 740
+            },
+            {
+              "caption": "Table 7: Number of query heads per layer (out of 28) on which the temperature-scaled projection lowers the maximum error in L∞ norm, maxq∈Q ∥Att(q,K, V ) − ÃttL(q,K, V )∥∞. GAIM exact v4 with the nodes selected in the L∞ score norm, and Q-DAIM exact v5, tsink = 32, RC on, the projection is solved in the kernel rescaled as in [SM26], τ ≈ 2.04. In parentheses we give the heads for which the error decreases by more than 10%. The last column is the number of heads that improved for all n.",
+              "figure_id": "table-7-25",
+              "figure_number": "7",
+              "height": 171,
+              "image_path": "figures/2610.40943/table-027.webp",
+              "kind": "table",
+              "page": 27,
+              "width": 736
+            },
+            {
+              "caption": "Table 6: Number of query heads per layer (out of 28) on which range correction lowers the maximum error in L∞ norm, maxq∈Q ∥Att(q,K, V )−ÃttL(q,K, V )∥∞. GAIM exact v2, nodes selected in the L∞ score norm, tsink = 32. In parentheses we give the heads for which the error decreases by more than 10%. Last column: heads improved under every variant and every budget.",
+              "figure_id": "table-6-27",
+              "figure_number": "6",
+              "height": 71,
+              "image_path": "figures/2610.40943/table-028.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 494
+            },
+            {
+              "caption": "Table 6 shows the number of heads of each layer that were improved by range correction in terms of L∞ attention error in future queries. The decisive advantage of the range-corrected estimators on the median error observed in Figure 3 is less clear once we look at specific heads. Indeed, as can be seen from Table 6, while most heads are improved, few of them are improved by more than 10%. To illustrate this, Figure 4 and Figure 5 show two failure modes for the interpolation, one for the range-corrected case and one for the raw interpolation. Each figure plots the norm of the attention error for each future query, ordered according to the norm of the attention of the query; the solid black line indicates the norm of the attention output vector while the dotted line corresponds to the mean vector approximation. As can be seen from Figure 4, for some heads range correction adversely affects the performance of the interpolation. Indeed, as the mean vector approximation has a high error, range-corrected interpolation performs poorly",
+              "figure_id": "table-6-28",
+              "figure_number": "6",
+              "height": 71,
+              "image_path": "figures/2610.40943/table-029.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 494
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.40943/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.40943",
+          "relevance": 8,
+          "selection_reason": "KV-cache compression via kernel interpolation for attention mechanisms.",
+          "summary_status": "generated",
+          "title": "Kernel-based Interpolatory Methods for Context Compression of Attention Mechanisms",
+          "tldr": "The paper introduces kernel-based KV-cache compression methods that reduce attention-context storage and support linear-time and streaming settings.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-29",
       "paper_count": 7,
       "papers": [
@@ -83362,5 +84327,5 @@
   "schema_version": 1,
   "subtopic_id": "token-pruning-and-eviction",
   "topic_id": "efficient-ai",
-  "total_paper_count": 438
+  "total_paper_count": 441
 }

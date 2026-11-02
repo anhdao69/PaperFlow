@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**63 papers total**
+**64 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-01 | [Any Forcing: Any-Step Generality and One-Step Stability for Autoregressive Video Generation](https://arxiv.org/abs/2610.42031) | Video Generation and Understanding: Autoregressive Video Models | Any Forcing enables flexible-step autoregressive video generation while stabilizing high-quality one-step generation, including for long videos. | 8 | 7 |
 | 2026-10-29 | [Localizing Concepts in Visual Autoregressive Models](https://arxiv.org/abs/2610.40061) | Video Generation and Understanding: Autoregressive Video Models | LoCo localizes where and when concepts emerge in next-scale visual autoregressive models, enabling efficient and targeted model interventions. | 7 | 8 |
 | 2026-10-29 | [Hierarchical Diffusion for Camera-controlled Autoregressive Video Generation](https://arxiv.org/abs/2610.37983) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | WanAR+FixAR enables stable, camera-controlled long-video generation from a single image by combining autoregressive synthesis with hierarchical long-context denoising. | 9 | 8 |
 | 2026-10-26 | [Learning the Autoregressive: Direct Score-Difference Estimation with Amortized Future Credit for Video Distillation](https://arxiv.org/abs/2610.34092) | Video Generation and Understanding: Autoregressive Video Models | Leta improves few-step autoregressive video distillation by directly estimating teacher–student score differences and crediting earlier chunks for their future impact. | 7 | 8 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**390 papers total**
+**393 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-01 | [Coarse3D: Controllable and Faithful Sparse Structure Generation for Image-to-3D](https://arxiv.org/abs/2610.41231) | 3D Vision: 3D Foundation Models | Coarse3D generates controllable, image-faithful sparse 3D structures from unposed images, improving downstream 3D reconstruction and generation. | 9 | 9 |
+| 2026-11-01 | [Prior-Guided Single-Exposure HDR Novel View Synthesis via Base-Gain Representation](https://arxiv.org/abs/2610.41011) | Multimodal Foundation Models; 3D Vision: 3D Foundation Models | PriorGS enables single-exposure HDR novel view synthesis by combining pseudo-HDR priors, constrained camera-response modeling, and a robust base-gain 3D representation. | 6 | 7 |
+| 2026-11-01 | [RADI3N: GeometRic ImAge EDiting via ParametrIc 3D CoNtrol](https://arxiv.org/abs/2610.40973) | Multimodal Foundation Models; 3D Vision: 3D Foundation Models | RADI3N enables semantically grounded, part-level image editing with parametric 3D control while preserving geometry and appearance under complex transformations. | 6 | 7 |
 | 2026-10-29 | [LucidLyra: Feed-Forward Generative 3D Scene Reconstruction and Joint Understanding via Multi-Task Distillation](https://arxiv.org/abs/2610.40495) | 3D Vision: 3D Foundation Models | LucidLyra distills video-generation and 2D vision knowledge to produce queryable 3D Gaussian scenes with geometry, appearance, semantics, and instance structure in a single feed-forward pass. | 7 | 8 |
 | 2026-10-29 | [MLLM-GS: Multimodal Large Language Model Prior-Guided Fast Novel View Synthesis in Extreme Environments](https://arxiv.org/abs/2610.39936) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | MLLM-GS combines multimodal language-model priors with an efficiency-optimized 3D Gaussian Splatting pipeline for fast, high-quality novel-view synthesis in severely degraded scenes. | 8 | 8 |
 | 2026-10-29 | [PhysAg3D: Bridging 3D Generative and Agentic Models for High-Fidelity and Physically-Interactive Assets](https://arxiv.org/abs/2610.39924) | Embodied AI: Vision-Language-Action; 3D Vision: 3D Foundation Models | PhysAg3D combines 3D generation with agentic reasoning and physical tools to create detailed, image-aligned assets that can plausibly articulate and deform. | 9 | 9 |

@@ -1,6 +1,983 @@
 {
   "days": [
     {
+      "date": "2026-11-01",
+      "paper_count": 6,
+      "papers": [
+        {
+          "abstract": "Dense 3D tracking from monocular video requires establishing point correspondences over time, estimating their depth, and inferring their trajectories during occlusion. Existing methods typically learn these tasks jointly, a demanding objective given the scarcity of 4D supervision. We show that strong pretrained 2D trackers and 3D geometry models provide an effective foundation: lifted trajectories, with occluded segments simply interpolated, already rival dedicated 3D trackers using the same geometry. However, lifted trajectories inherit correspondence and depth errors, and under occlusion, their depth comes from the occluder rather than the tracked point. We introduce ReLift, an efficient feed-forward framework that recasts dense 3D tracking as geometric trajectory repair and completion. At its core, a trajectory corrector alternates attention along and across trajectories to preserve reliable observations, repair corrupted positions, and complete missing motion. Using only geometric inputs allows us to train directly on 3D trajectories with simulated lifting errors, decoupling training from images and from any specific tracker or geometry model. Concentrating 4D supervision on trajectory refinement yields a reusable model that consistently improves lifted trajectories across trackers and geometry providers without retraining, so it benefits directly from future advances in either component. On WorldTrack, ReLift achieves state-of-the-art mean accuracy, improving on the strongest baselines by 2.1 APD on all points and 3.0 on dynamic points, with faster configurations remaining competitive with leading 3D trackers while running faster than 4RC. Visit our supplementry page for more examples and code.",
+          "arxiv_id": "2610.42136",
+          "arxiv_url": "https://arxiv.org/abs/2610.42136",
+          "authors": [
+            "Assaf Singer, Maroun Khriesh, Noam Rotstein, Yoni Kasten, Or Litany"
+          ],
+          "bullets": [
+            "Addresses correspondence, depth, and occlusion errors inherited from lifting 2D tracks into 3D.",
+            "Uses a feed-forward trajectory corrector with attention along and across trajectories.",
+            "Trains only on geometric 3D trajectories with simulated lifting errors, independent of images, trackers, or geometry models.",
+            "Improves trajectories across different trackers and geometry providers without retraining.",
+            "Achieves state-of-the-art WorldTrack accuracy, with gains of 2.1 APD on all points and 3.0 APD on dynamic points; faster variants remain competitive."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Inference pipeline of ReLift. Frozen pretrained models lift video observations (a–b) into corrupted and incomplete 3D trajectories (c). The corrector adds residuals to initialized XYZ coordinates to produce the final trajectories (d–e). Below: ray–point tokens ϕti are grouped into Cframe tracklets and embedded as tokens hni, then processed by alternating temporal and across-track attention. The output head predicts frame-level XYZ residuals, which are added to the initialized trajectories. We train the corrector on simulated lifts from clean trajectory annotations (Sec. 3.4).",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 326,
+              "image_path": "figures/2610.42136/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 806
+            },
+            {
+              "caption": "Figure 5: Simulated versus provider-generated lifts. APD3D gains on all points, in percentage points over the initialized lift, with AllTracker and DA3 (left) or VGGT-Ω (right). “Real” denotes non-simulated, provider-generated training lifts. All runs use the same architecture and 150,000 training steps. Appendix D.1 reports a control with matched training windows.",
+              "figure_id": "figure-5-17",
+              "figure_number": "5",
+              "height": 214,
+              "image_path": "figures/2610.42136/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 690
+            },
+            {
+              "caption": "Figure 4: Qualitative comparison. Top to bottom: DyCheck spin (Gao et al., 2022) and DAVIS car-shadow and libby (Perazzi et al., 2016). Trajectories of the same reference pixels are shown from matched novel viewpoints. Ours uses AllTracker and VGGT-Ω; TrackCraft3R shares this geometry, while 4RC and V-DPM use their own reconstructions. Yellow boxes mark magnified regions.",
+              "figure_id": "figure-4-16",
+              "figure_number": "4",
+              "height": 361,
+              "image_path": "figures/2610.42136/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Gains from trajectory repair and completion. APD3D gains (%) over the initialized lift (Sec. 3.2), per dataset and averaged, for all six tracker–geometry combinations; hatching denotes CoWTracker. Occluded selects ground-truth-occluded point–frames from All, retaining the Allpoint alignment. This subset may differ from the corrector’s masked inputs.",
+              "figure_id": "figure-3-9",
+              "figure_number": "3",
+              "height": 248,
+              "image_path": "figures/2610.42136/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 816
+            },
+            {
+              "caption": "Figure 6: Simulated versus AllTracker+DA3 training lifts with matched data. Both models train on the same 3,890 filtered windows for 150,000 steps. APD3D gains on all points are reported in percentage points over the initialized lift, with AllTracker and DA3 (left) or VGGT-Ω (right). “Mean” averages the four datasets.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 242,
+              "image_path": "figures/2610.42136/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 780
+            },
+            {
+              "caption": "Figure 9: Effect of trajectory correction. Left to right: input frame, initialized lift, and corrected trajectories (C = 4). Top: DAVIS camel; bottom: skate-park. CoWTracker’s 2D tracks and DA3 geometry are held fixed; both trajectory panels use the same point cloud and novel viewpoint.",
+              "figure_id": "figure-9-1",
+              "figure_number": "9",
+              "height": 336,
+              "image_path": "figures/2610.42136/figure-006.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 826
+            },
+            {
+              "caption": "Figure 8: Additional qualitative comparisons. Top: DAVIS soccerball; bottom: lady-running. Ours uses CoWTracker with VGGT-Ω (top) and AllTracker with DA3 (bottom), with the same corrector weights (C = 4). TrackCraft3R uses VGGT-Ω in both rows (unlike ours in lady-running); 4RC and V-DPM use their own reconstructions. Methods track the same reference pixels, shown on their respective reconstructions from matched novel viewpoints.",
+              "figure_id": "figure-8-15",
+              "figure_number": "8",
+              "height": 213,
+              "image_path": "figures/2610.42136/figure-007.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 826
+            },
+            {
+              "caption": "Table 1: Dense 3D tracking on WorldTrack. APD3D (%) on all (All) and dynamic (Dyn) points after RANSAC Sim(3) alignment; bold best, underline second best. Time includes the complete pipeline. †Timing at 2562 instead of 5122. ‡Restricted ADT coverage for MotionCrafter, also affecting its means (Appendix B.2).",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 286,
+              "image_path": "figures/2610.42136/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 826
+            },
+            {
+              "caption": "Table 11: Image-plane accuracy on WorldTrack. APD2D (%) on all (All) and dynamic (Dyn) points. 3D trajectories are projected through the cameras in Table 10; native 2D references are scored without projection. Bold and underline rank 3D methods only. Scoring details are in Appendix C.4. ‡Restricted ADT coverage for MotionCrafter, also affecting its means (Appendix B.2).",
+              "figure_id": "table-11-18",
+              "figure_number": "11",
+              "height": 438,
+              "image_path": "figures/2610.42136/table-009.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 830
+            },
+            {
+              "caption": "Table 15: Run time and peak allocated GPU memory. Complete pipelines at three nominal resolutions. OOM: out of memory; FAIL: St4RTrack’s upsampling exceeds an implementation tensor-size limit; –: not run. †Hard-coded input resolution overridden for this experiment. OpenD4RT runs only at 2562; ours uses C = 4.",
+              "figure_id": "table-15-14",
+              "figure_number": "15",
+              "height": 382,
+              "image_path": "figures/2610.42136/table-010.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Training corruption distributions. U denotes uniform sampling. Noise levels and outlier rates are drawn once per training example.",
+              "figure_id": "table-4-20",
+              "figure_number": "4",
+              "height": 380,
+              "image_path": "figures/2610.42136/table-011.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 786
+            },
+            {
+              "caption": "Table 5: Baseline configurations. Input grids are H ×W ; settings apply to the accuracy comparisons. Runtime measurements use the settings in Appendix D.4.",
+              "figure_id": "table-5-13",
+              "figure_number": "5",
+              "height": 262,
+              "image_path": "figures/2610.42136/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 827
+            },
+            {
+              "caption": "Table 6: Dense tracking on Kubric. TrackCraft3R’s (Nam et al., 2026) 50 24-frame Kubric (Greff et al., 2022) clips, with ground-truth trajectories for every reference pixel. APD3D (%) on all and dynamic tracks and EPE (scene units) under RANSAC Sim(3) and global-scale alignment; bold best, underline second best.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 491,
+              "image_path": "figures/2610.42136/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 602
+            },
+            {
+              "caption": "Table 9: WorldTrack under global-scale alignment. APD3D (%) on all (All) and dynamic (Dyn) points, fitting only scale (Appendix B.1). MotionCrafter’s coordinate-frame mismatch makes its scores non-comparable under this alignment. ‡Restricted ADT coverage for MotionCrafter, also affecting its means (Appendix B.2).",
+              "figure_id": "table-9-12",
+              "figure_number": "9",
+              "height": 324,
+              "image_path": "figures/2610.42136/table-014.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 830
+            },
+            {
+              "caption": "Table 8: End-point error on WorldTrack. Mean 3D position error over evaluated point–frames, in metres after all-point RANSAC Sim(3) alignment. Lower is better. ‡Restricted ADT coverage for MotionCrafter, also affecting its mean (Appendix B.2).",
+              "figure_id": "table-8-11",
+              "figure_number": "8",
+              "height": 463,
+              "image_path": "figures/2610.42136/table-015.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 552
+            },
+            {
+              "caption": "Table 2: Contribution of training corruptions. Removing wrong-surface corruptions causes the largest drop. APD3D (%), averaged over four datasets; gains over the initialized lift are shown in parentheses, in percentage points. Each variant is retrained with the same data, network, loss and budget (Appendix D.1).",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 76,
+              "image_path": "figures/2610.42136/table-016.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 827
+            },
+            {
+              "caption": "Table 10: Camera sources for APD2D. Cameras are predicted, supplied by a geometry provider, or recovered from model outputs; no ground-truth camera parameters are used.",
+              "figure_id": "table-10-19",
+              "figure_number": "10",
+              "height": 151,
+              "image_path": "figures/2610.42136/table-017.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 814
+            },
+            {
+              "caption": "Table 12: Contribution of training corruptions on occluded points. APD3D (%) on groundtruth-occluded point–frames, averaged over the four datasets. Scoring retains the all-point RANSAC Sim(3) alignment. Parentheses report percentage-point gains over the initialized lift.",
+              "figure_id": "table-12-5",
+              "figure_number": "12",
+              "height": 211,
+              "image_path": "figures/2610.42136/table-018.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 636
+            },
+            {
+              "caption": "Table 7: AJ and OA on WorldTrack (%). Predicted visibility is thresholded at 0.5. AJ uses allpoint RANSAC Sim(3) alignment; OA requires no geometric alignment. Higher is better.",
+              "figure_id": "table-7-7",
+              "figure_number": "7",
+              "height": 203,
+              "image_path": "figures/2610.42136/table-019.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 830
+            },
+            {
+              "caption": "Table 13: Ray masking. APD3D (%) for separately trained correctors that mask or retain rays where the input mask is zero, using AllTracker and C = 4. All and Occ share the all-point RANSAC Sim(3) alignment; Occ scores ground-truth-occluded point–frames.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 177,
+              "image_path": "figures/2610.42136/table-020.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 786
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42136/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.42136",
+          "relevance": 7,
+          "selection_reason": "Dense 3D tracking from monocular video via trajectory repair; combines 3D geometry and temporal correspondence.",
+          "summary_status": "generated",
+          "title": "ReLift: Dense 3D Tracking as Lifted Trajectory Repair",
+          "tldr": "ReLift improves dense monocular 3D tracking by repairing and completing noisy lifted trajectories using geometric trajectory refinement.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [],
+              "topic_id": "3d-vision"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "A panoramic video captures all directions around the camera, but relevant evidence can appear in different directions and at different times. Understanding it requires models to connect observations across the viewing sphere and time. We introduce PanoVideoBench, the first manually annotated benchmark for comprehensive panoramic video understanding. Its 1,000 questions span five categories and 15 question types, with diagnostic annotations for target search and panoramic capabilities. Evaluation of 11 proprietary, open-source, and panoramic-specialized models identifies cross-view tracking and sphere-time evidence integration as their weakest capabilities. To strengthen these capabilities, we construct PanoVideoCoT, the first reasoning dataset grounded in real panoramic video, through sphere-time-grounded synthesis that converts verified panoramic observations and successful agentic explorations into 13,465 QA-CoT pairs. Starting from a general video MLLM, PanoVideoReasoner learns from this corpus through Panoramic CoT SFT and Evidence-Privileged On-Policy Self-Distillation, a panoramic instantiation of Vision-OPD's OPSD in which the teacher uses verified perspective views to guide student-generated trajectories. It reaches 55.7% on PanoVideoBench, improving the backbone by 12.5 points and the previous SOTA by 2.6. The gains concentrate on the same spatial, cross-view, and temporal capabilities exposed by the benchmark, showing that grounded sphere-time supervision can equip a general video MLLM with panoramic reasoning.",
+          "arxiv_id": "2610.42082",
+          "arxiv_url": "https://arxiv.org/abs/2610.42082",
+          "authors": [
+            "Lidong Lu, Lidong Zou, Xinyi Mao, Jiaxin Lv, Zhenquan Li, Liangrui Dong, Tong Lu, Guo Chen"
+          ],
+          "bullets": [
+            "Introduces PanoVideoBench, a manually annotated benchmark with 1,000 questions across five categories and 15 types.",
+            "Evaluation of 11 models finds cross-view tracking and integrating evidence across space and time to be the main weaknesses.",
+            "Constructs PanoVideoCoT with 13,465 reasoning QA pairs from verified panoramic observations and agentic explorations.",
+            "Trains PanoVideoReasoner using Panoramic CoT SFT and evidence-privileged on-policy self-distillation.",
+            "Achieves 55.7% on PanoVideoBench, improving its backbone by 12.5 points and prior state of the art by 2.6 points."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: A 360◦ video shows the whole scene, but the evidence can still be hard to find. PanoVideoBench evaluates how models find and connect evidence across direction and time. PanoVideoCoT turns verified sphere-time evidence and solution trajectories into reasoning supervision, improving Qwen3.5-9B by 12.5 points and establishing a new SOTA.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 495,
+              "image_path": "figures/2610.42082/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 824
+            },
+            {
+              "caption": "Figure 2: Question composition and diagnostic coverage in PanoVideoBench. The sunburst reports the five semantic categories and 15 question types. The heatmaps cross evidence-search settings and semantic categories with five panoramic capabilities. Percentages indicate dataset-wide frequency, and cells give question counts.",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 431,
+              "image_path": "figures/2610.42082/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 770
+            },
+            {
+              "caption": "Figure 3: Statistics of PanoVideoCoT. The source-video plots summarize duration and resolution. The remaining plots report angular evidence span, target-search setting, CoT length, and the co-occurrence of panoramic capabilities. Together they show how the corpus combines visually detailed source videos with supervision that connects evidence across viewing directions and time.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 313,
+              "image_path": "figures/2610.42082/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 799
+            },
+            {
+              "caption": "Figure 4: Accuracy across target-search settings and panoramic capabilities. The left radar shows Direction-Guided (S0), Landmark-Guided (S1), Event-/Moving-Entity-Guided (S2), and Unconstrained Panoramic Search (S3). The right radar shows Find, then Read (C0), See the Fine Detail (C1), Reason on the Sphere (C2), Track Across Views (C3), and Integrate Evidence Across Sphere–Time (C4). C0 denotes local readout, whereas C1–C4 can co-occur when a question requires several panoramic operations; each righthand score uses all questions carrying that label.",
+              "figure_id": "figure-4-8",
+              "figure_number": "4",
+              "height": 322,
+              "image_path": "figures/2610.42082/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 607
+            },
+            {
+              "caption": "Figure 5: Maintaining motion and orientation through a turn. The sequence follows the same person from a frontal view through the turn until his back faces the camera and he moves toward the left staircase. PanoVideoReasoner selects A, whereas Qwen3.8-27B reverses both the final orientation and destination.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 823,
+              "image_path": "figures/2610.42082/figure-005.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 810
+            },
+            {
+              "caption": "Figure 6: Confirming a fine detail across panoramic views. The orange chest emblem appears at several times and different ERP positions as the wearer turns. PanoVideoReasoner identifies the repeated mark as D and selects C; Qwen3.8-27B reads it as B at all evaluated input resolutions.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 796,
+              "image_path": "figures/2610.42082/figure-006.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 810
+            },
+            {
+              "caption": "Figure 7: Composing outcomes across two distant time windows. The upper sequence tracks the first group through the doorway at 145–153 seconds; the lower sequence shows a different pedestrian remaining outside at 185–193 seconds.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 1031,
+              "image_path": "figures/2610.42082/figure-007.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 810
+            },
+            {
+              "caption": "Table 3: PanoVideoBench comparison. Overall reports accuracy on all 1,000 questions; APP, SPA, ACT, MOT, and TEM report accuracy for the five semantic categories. Models are grouped into proprietary, open-source general-purpose, and open-source panoramic systems. Best results are in bold; second-best are underlined.",
+              "figure_id": "table-3-7",
+              "figure_number": "3",
+              "height": 385,
+              "image_path": "figures/2610.42082/table-008.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 782
+            },
+            {
+              "caption": "Table 2: Comparison with existing panoramic training datasets. The table compares source scale and modality, whether the visual data are real, the forms of supervision, and how questions and solutions are constructed. #Vis. and #Train report visual sources and training instances. VG, TG, E-QG, and ReSolve denote visual grounding, temporal grounding, evidence-grounded question generation, and independent visual re-solving; checkmarks indicate that a property is provided.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 262,
+              "image_path": "figures/2610.42082/table-009.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Input analysis on PanoVideoBench. (a) varies ERP resolution. (b) compares the default ERP input with an eight-view perspective mosaic (8V) and an orientation-overlaid ERP (Ovl); Appendix C.3 gives their construction and sampling details. Qwen and Gemma abbreviate Qwen3.8-27B and Gemma-431B-it; Bold and underlining mark each model’s best and second best.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2610.42082/table-010.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 416
+            },
+            {
+              "caption": "Table 5: Training ablations. All variants use the same Qwen3.5-9B backbone and PanoVideoCoT samples. (a) examines first-stage supervision: base, answer-only SFT, and CoT SFT. (b) starts from the CoT SFT checkpoint and compares second-stage OPSD with uniform (Unif.), question-guided (Q-g.), and evidence-privileged (EP) teacher views. Bold and underlining mark the top two results.",
+              "figure_id": "table-5-11",
+              "figure_number": "5",
+              "height": 188,
+              "image_path": "figures/2610.42082/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 388
+            },
+            {
+              "caption": "Table 1: Comparison with existing panoramic benchmarks. The table separates input modality, evaluation size, manual annotation, and task coverage. Manual denotes direct human annotation of the evaluation questions and gold answers. I, V, and A denote image, video, and audio; C360I denotes correlated panoramic images, and FOA denotes first-order Ambisonics. APP, SPA, ACT, MOT, TEM, and AV denote appearance and detail perception, spatial and viewpoint reasoning, action and state understanding, motion and identity tracking, temporal event reasoning, and audio-visual reasoning. Checkmarks indicate an explicitly evaluated dimension, and #Eval reports the number of evaluation questions.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 217,
+              "image_path": "figures/2610.42082/table-012.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 825
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.42082/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.42082",
+          "relevance": 8,
+          "selection_reason": "Benchmark and training for panoramic video reasoning in video MLLMs; targets cross-view and temporal understanding.",
+          "summary_status": "generated",
+          "title": "Think in 360{\\deg}: Benchmarking and Bootstrapping Panoramic Video Reasoning",
+          "tldr": "PanoVideoBench exposes weaknesses in panoramic video reasoning, while PanoVideoReasoner improves these abilities through grounded sphere-time reasoning supervision.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "multimodal-large-language-models"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "High accuracy on streaming video benchmarks does not establish whether a model uses visual history. Our review of OVO-Bench and StreamingBench finds that recent frames suffice for 32% of sampled historical questions, while models also answer many questions correctly from the question and options alone. We introduce TwinPast to test whether answers correctly follow changes in history, using 350 human-reviewed video pairs spanning five historical tasks. Each pair holds the recent video context, question, and ordered options fixed while changing critical historical evidence and the correct answer. Each video is evaluated independently, and PairAcc requires correct answers for both histories. We evaluate 34 model and input configurations. For Qwen3-VL-8B and DeepSeek-Flash, historical inputs improve performance on TwinPast, reversing the recent-frame advantage on existing benchmarks. The strongest evaluated streaming system reaches 49.14% PairAcc, compared with 66.57-91.43% for the evaluated general-purpose models. This gap persists across all five tasks. Case studies further show that models select states from the wrong time or contradict recorded event order despite retaining the relevant evidence. These findings highlight the need to connect historical memory and retrieval with reasoning that uses evidence according to the question's temporal references and event relations.",
+          "arxiv_id": "2610.41983",
+          "arxiv_url": "https://arxiv.org/abs/2610.41983",
+          "authors": [
+            "Haotian Yang, Yong Chen, Cheng Peng, Haobo Wang, Zhongle Xie, Xuanru Li, Gang Chen"
+          ],
+          "bullets": [
+            "Existing benchmarks can be solved using recent frames or the question and options alone in many cases, weakening claims of historical understanding.",
+            "TwinPast contains 350 human-reviewed video pairs across five historical tasks, changing critical past evidence while keeping recent context and questions fixed.",
+            "Its PairAcc metric requires a model to answer correctly under both histories, testing whether predictions follow historical changes.",
+            "Across 34 model/input configurations, the strongest streaming system achieved 49.14% PairAcc, below evaluated general-purpose models at 66.57–91.43%.",
+            "Failures include selecting states from the wrong time and contradicting the recorded order of events, motivating better temporal retrieval and evidence-based reasoning."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. TwinPast task examples: contrasting histories yield different answers to the same question with identical recent frames.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 620,
+              "image_path": "figures/2610.41983/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 1012
+            },
+            {
+              "caption": "Figure 3. Task wise paired answers: (a) same option; (b) both correct (PairAcc).",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 537,
+              "image_path": "figures/2610.41983/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1020
+            },
+            {
+              "caption": "Figure 4. Errors despite available evidence. (a) ReKV’s answers match initial rather than queried states. (b) OneStreamer contradicts its recorded event order.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 693,
+              "image_path": "figures/2610.41983/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 496
+            },
+            {
+              "caption": "Table 1. Input comparison (%). OVO Avg equally weights Real-Time/Backward task macros; StreamingBench groups are question weighted.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 542,
+              "image_path": "figures/2610.41983/table-004.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 972
+            },
+            {
+              "caption": "Table 2. TwinPast results (%). Task scores and Acc. measure branch accuracy; PairAcc requires both branches correct.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 1013,
+              "image_path": "figures/2610.41983/table-005.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 906
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41983/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.41983",
+          "relevance": 7,
+          "selection_reason": "Benchmark for historical evidence use in streaming video understanding; directly targets temporal reasoning and long-video understanding.",
+          "summary_status": "generated",
+          "title": "TwinPast: Benchmarking Historical Evidence Use in Streaming Video Understanding with Evidence Contrastive Video Pairs",
+          "tldr": "TwinPast shows that streaming video models often fail to use historical evidence correctly, even when they retain relevant past information.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Computer vision models learn hand action only from its visual consequences, without access to the underlying embodied motor signals. We address this absence with MotorSense, the first large-scale paired egocentric video and surface electromyography (EMG) dataset. MotorSense pairs bimanual EMG bands with egocentric video and yields synchronized video, bimanual EMG and IMU, and audio across 100 hours of unscripted manipulation. EMG offers a powerful scalable alternative to manual annotation: it captures finger movement, hand configuration, and the forces exerted between hand and environment as a dense signal free of occlusion and labeler bias, whereas manual annotation is costly, subjective, and unreliable under occlusion. We use MotorSense to learn sensorimotor alignment, producing an organization of action that is shared across the visual and motoric spaces, through cross-modal pre-training between video and EMG. The resultant vision models are then transferred to downstream tasks that benefit from sensorimotor alignment: in this case, action recognition, 3D hand reconstruction, and 3D contact reconstruction. We further demonstrate a generative application in which EMG motor signals are used to condition a video diffusion model, yielding videos of fine-grained hand manipulation. Across four action-centric computer vision tasks and eight popular video datasets, we demonstrate that sensorimotor alignment provides a stronger foundation for visual representation learning than conventional self-supervised learning methods over video, outperforming every baseline across all tasks and datasets evaluated.",
+          "arxiv_id": "2610.41127",
+          "arxiv_url": "https://arxiv.org/abs/2610.41127",
+          "authors": [
+            "Eadom Dessalene, Michael Maynord, Amir-Hossein Shahidzadeh, Botao He, Yasamin Tabatabaee, Ruoshi Liu, Ruohan Gao, Paul Pu Liang, Yiannis Aloimonos"
+          ],
+          "bullets": [
+            "Pairs egocentric video with bimanual EMG, IMU, and audio across 100 hours of unscripted manipulation.",
+            "Uses EMG as a dense, occlusion-free alternative to costly and subjective manual action annotation.",
+            "Learns shared sensorimotor representations through video–EMG cross-modal pretraining.",
+            "Transfers the learned representations to action recognition, 3D hand reconstruction, and 3D contact reconstruction.",
+            "Also conditions video diffusion on EMG to generate fine-grained hand-manipulation videos; the approach outperforms evaluated video self-supervised baselines across four tasks and eight datasets."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of MOTORSENSE. (A) Sensorimotor Alignment. Windows 1, . . . , N of bimanual EMG (left) and egocentric video (right) are embedded by an EMG encoder and a video encoder and aligned with a symmetric contrastive objective (Section 3.2): the video and EMG embeddings of the same window (Vi, Ei) are pulled together, while embeddings from different windows are pushed apart. (B) Downstream Tasks. The learned representations are used for downstream tasks: 1) video diffusion consisting of a single reference frame as input along with EMG control signals, 2) action recognition, 3) 3D hand-object Reconstruction, 4) 3D hand contact prediction.",
+              "figure_id": "figure-3-13",
+              "figure_number": "3",
+              "height": 357,
+              "image_path": "figures/2610.41127/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 829
+            },
+            {
+              "caption": "Figure 7: Qualitative results for video diffusion. We compare our proposed motor conditioning to a video diffusion model conditioned solely on the video history (unimodal conditioning), for a sequence involving the stirring of tofu in a pan. The video conditioning model misinterprets the action performed, generating a video of a scooping action as opposed to a stirring action, whereas our method correctly generates a video of the stirring of tofu.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 493,
+              "image_path": "figures/2610.41127/figure-002.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 829
+            },
+            {
+              "caption": "Figure 8: Qualitative results for video diffusion. We compare our proposed motor conditioning to a video diffusion model conditioned solely on the video history (unimodal conditioning), for a sequence involving the spreading of mayonnaise with a spoon. The video conditioning model misinterprets the action performed, generating a rotation of the bread as opposed to a spreading action of the spoon, whereas our method correctly generates a video of the spreading of mayonnaise with a spoon.",
+              "figure_id": "figure-8-8",
+              "figure_number": "8",
+              "height": 373,
+              "image_path": "figures/2610.41127/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 826
+            },
+            {
+              "caption": "Figure 9: Qualitative results for video diffusion. We compare our proposed motor conditioning to a video diffusion model conditioned solely on the video history (unimodal conditioning), for a bimanual manipulation sequence involving the peeling of an avocado. The video conditioning model renders the index finger as resting against the thumb, whereas our method correctly positions the index finger against the surface of the avocado for the peeling action.",
+              "figure_id": "figure-9-12",
+              "figure_number": "9",
+              "height": 486,
+              "image_path": "figures/2610.41127/figure-004.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 829
+            },
+            {
+              "caption": "Figure 4: Self-supervised sensorimotor alignment organizes video and EMG by hand action. (a) t-SNE plot of the joint embedding space for video (green) and EMG (purple) derived from the two towers of our self-supervised contrastive model (Section 3.2). A \"modality gap\" is observed [37] between video and EMG clusters. (b) The clips associated with each pair: the video query (left) and the clip whose EMG was retrieved (right). Each retrieved clip performs the query’s hand action—cutting, mixing in a bowl, drying—with a different object, scene, and recording. (c) The EMG embeddings of (a), coloured by verb with marker shape denoting the object. Despite the network never being trained over these labels, windows of the same action form compact regions (e.g. mix salad, scrape bowl) and verbs group together (the cut family in red). Best viewed zoomed-in and in colour.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 492,
+              "image_path": "figures/2610.41127/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 829
+            },
+            {
+              "caption": "Figure 1: EMG captures both categorical and continuous structure of hand actions. (Top) For three discrete hand configurations repeated twice—fist, point, and flat—each pose produces a distinct and reproducible EMG signature: fist is marked by a suppressed purple channel (#7) with respect to flat and a pronounced red channel (#1) with respect to point; point exhibits lower overall amplitude, with less purple than flat and less red than fist; flat is distinguished by pronounced purple and red activation. Sharp grey rectangles reflect the boundaries between hand gestures and rest states. (Bottom) A pick-and-lift sequence combines gradual and abrupt transitions: the hand moves smoothly from rest through pregrasp into grasp, changes sharply as force is applied at lift, then settles—non-instantaneously—into a steady hold. The EMG mirrors this structure, with channels quiet at rest, building subtly through pregrasp and grasp, peaking sharply as the lift begins, and stabilizing during hold.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 502,
+              "image_path": "figures/2610.41127/figure-006.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 829
+            },
+            {
+              "caption": "Figure 2: The bimanual EMG sensing setup of MOTORSENSE. Middle: the MindRove Armband used for data collection, worn on the left and right wrists (top and bottom row, respectively), with colored dots marking the electrode sensors equidistantly arranged around the band. Right: crosssectional anatomy of the lower forearm with each electrode overlaid. Left: example 8-channel EMG recordings from the left and right wristbands gathered during a manipulation task primarily involving the right hand; each colored trace corresponds to one electrode.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 277,
+              "image_path": "figures/2610.41127/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 500
+            },
+            {
+              "caption": "Figure 5: Qualitative results on ARCTIC [20] for 3D hand-object reconstruction. Each row shows the RGB input, reconstructions from a vision backbone trained without EMG and with EMG (MOTORSENSE pre-training), and ground truth. Incorporating EMG during pre-training yields 3D hands and objects that more closely match the ground truth.",
+              "figure_id": "figure-5-5",
+              "figure_number": "5",
+              "height": 212,
+              "image_path": "figures/2610.41127/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 417
+            },
+            {
+              "caption": "Figure 6: The MOTORSENSE data collection workflow. Each session is organized into four stages, flowing left to right: hardware setup (connecting the two MindRove armbands over separate Wi-Fi access points and verifying installation of Aria Studio), device fitting (placing the bands slightly above each wrist, powering on and configuring the Aria glasses, and confirming correct mounting via a clench test), recording (launching the EMG and Aria streams together and proceeding with unscripted manipulation), and post-recording (stopping both streams, offloading Aria recordings via Aria Studio, and resetting the hardware for the next session).",
+              "figure_id": "figure-6-14",
+              "figure_number": "6",
+              "height": 177,
+              "image_path": "figures/2610.41127/figure-009.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Action recognition results across benchmarks. Top-1 accuracy (%) with the backbone frozen (top) or fine-tuned end-to-end (bottom) on EPIC-Kitchens-100 [10], SomethingSomething v2 [26], Ego-Exo4D [28], and an annotated subset of MOTORSENSE. All rows use a Hiera-B backbone initialized from K400-MAE [50]; ρSimCLR, ρMoCo, and ρBYOL [22] are pre-trained on the same MOTORSENSE recordings with RGB-only objectives. Best result per column in bold; ∆ rows give our margin over the best baseline.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 409,
+              "image_path": "figures/2610.41127/table-010.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table 4: Image-to-video generation on held-out MOTORSENSE recordings. All methods other than the top row share the same frozen video diffusion backbone and differ only in their conditioning signal and the trainable HyperNetwork/LoRA parameters. Evaluation is performed over a bounding box produced by Aria MPS [18] (applied jointly to generated and original images). Best results are shown in bold.",
+              "figure_id": "table-4-10",
+              "figure_number": "4",
+              "height": 169,
+              "image_path": "figures/2610.41127/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 727
+            },
+            {
+              "caption": "Table 3: Hand contact reconstruction on MOTORSENSE. IoU (%) between predicted and annotated contact regions on hands in contact, and AUROC (%) for detecting whether a hand is in contact; mean ± std over three seeds. Best in bold; ∆ is our margin over the best baseline.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 208,
+              "image_path": "figures/2610.41127/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 424
+            },
+            {
+              "caption": "Table 5: Pre-training ablations. Action top-1 accuracy on EPIC-KITCHENS-100 and MotorSense with a Hiera-B backbone; each ablated row changes a single setting of the reference (EMG+IMU, 8 electrodes per arm, same-recording batches, time-resolved embeddings). Single seed per evaluation. Best pre-trained result per column in bold.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 248,
+              "image_path": "figures/2610.41127/table-013.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 668
+            },
+            {
+              "caption": "Table 2: 3D hand reconstruction. Mean per-joint position error (mm; lower is better) relative to the hand root (MPJPE) and in camera coordinates without root alignment (A-MPJPE) on ARCTIC [20], H2O [34], and HOT3D [3], using a hand-only ArcticNet-SF [20] with a ResNet-50 backbone initialized from ImageNet alone or after sensorimotor alignment on MOTORSENSE. ∆ is the change in error from our pre-training.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 163,
+              "image_path": "figures/2610.41127/table-014.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 794
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.41127/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2610.41127",
+          "relevance": 8,
+          "selection_reason": "Egocentric video and EMG sensorimotor alignment for action understanding; learns transferable embodied knowledge from human interaction videos.",
+          "summary_status": "generated",
+          "title": "MotorSense: A Video-EMG Dataset of Motoric Representations for Action Understanding",
+          "tldr": "MotorSense introduces a large-scale synchronized video–EMG dataset and cross-modal pretraining approach that aligns visual and motor representations for improved action understanding and hand manipulation generation.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "learning-from-human-video"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "The reasoning capabilities of vision-language models (VLMs) can be limited by incomplete or inaccurate visual observations in the general domain. In unmanned aerial vehicle (UAV) scenes, small targets, subtle attributes, and changing viewpoints further complicate perception and understanding. Therefore, we introduce Drone-PUR, a dataset and benchmark organized around visual clue discovery, interpretation, and integration, corresponding to the three capability dimensions of perception, understanding, and reasoning. Reasoning samples are designed to require models to combine multiple visual clues to derive visually grounded conclusions. Its 11 tasks provide 175k training and 20k test samples spanning single images, image sequences, cross-modal images, and multiple viewpoints. All test samples undergo human review. Evaluating 22 general-purpose VLMs reveals persistent limitations in spatial judgment and cross-modal and cross-view reasoning. Across models, stronger perception is associated with better reasoning, while single-task fine-tuning further reveals selective bidirectional transfer between these capabilities. To examine domain adaptation, we develop UAV-PUR from Qwen3-VL through staged fine-tuning with auxiliary supervision. Its 4B and 8B variants improve overall multiple-choice accuracy by 18.33 and 17.52 percentage points over their pretrained counterparts, respectively. The dataset and project resources are available at https://drone-pur.github.io.",
+          "arxiv_id": "2610.40801",
+          "arxiv_url": "https://arxiv.org/abs/2610.40801",
+          "authors": [
+            "Jiahe Wu, Bing Cao, Xingyue Guo, Ruipu Zhao, Beiming Yu, Jiekang Feng, Qinghua Hu, Pengfei Zhu"
+          ],
+          "bullets": [
+            "Targets incomplete visual observations involving small objects, subtle attributes, changing viewpoints, and multimodal inputs.",
+            "Organizes tasks around visual clue discovery, interpretation, and integration across images, sequences, cross-modal images, and viewpoints.",
+            "Contains 175k training and 20k human-reviewed test samples; evaluations cover 22 general-purpose VLMs.",
+            "Finds persistent weaknesses in spatial judgment and cross-modal/cross-view reasoning, with stronger perception linked to better reasoning.",
+            "UAV-PUR models adapted from Qwen3-VL improve multiple-choice accuracy by 18.33 and 17.52 percentage points for 4B and 8B variants, respectively."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Fig. 13. Qualitative comparisons of open-ended detection and grounding on Drone-PUR. OD predictions are displayed separately for each model, with TP, FP, FN, and F1 scores reported below. For VG, MMR-G, MVR-G, and MIG, predictions from four models are overlaid on the target image, with corresponding IoU scores. Green boxes indicate ground truth; model predictions follow the color legend. Enlarged crops highlight target details and grounding differences.",
+              "figure_id": "figure-13-3",
+              "figure_number": "13",
+              "height": 869,
+              "image_path": "figures/2610.40801/figure-001.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 939
+            },
+            {
+              "caption": "Fig. 9. Paired comparison of multiple-choice and open-ended predictions across six models. Stacked bars show the proportions of samples answered correctly in both formats, only one format, or neither.",
+              "figure_id": "figure-9-11",
+              "figure_number": "9",
+              "height": 538,
+              "image_path": "figures/2610.40801/figure-002.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 518
+            },
+            {
+              "caption": "Fig. 10. Effects of visual clue masking on reasoning accuracy. On the same task subsets, progressive key-clue masking is compared with masking regions matched in area and shape. Zero denotes full input. Horizontal dotted lines indicate each model’s text-only baseline.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 232,
+              "image_path": "figures/2610.40801/figure-003.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1019
+            },
+            {
+              "caption": "Fig. 12. Qualitative examples of multimodal and multi-view reasoning. Blue and orange borders mark essential clues from different input images; gray borders mark distracting regions. Model icons indicate selected options, with green and red denoting correct and incorrect answers, respectively. Only the GT option and options selected by the displayed models are shown.",
+              "figure_id": "figure-12-6",
+              "figure_number": "12",
+              "height": 770,
+              "image_path": "figures/2610.40801/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 439
+            },
+            {
+              "caption": "Fig. 11. Modality and view ablation study on MMR and MVR. Signed annotations indicate single-image accuracy changes relative to full-input performance.",
+              "figure_id": "figure-11-8",
+              "figure_number": "11",
+              "height": 216,
+              "image_path": "figures/2610.40801/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 1023
+            },
+            {
+              "caption": "Fig. 8. Cross-task transfer following single-task fine-tuning on Drone-PUR.",
+              "figure_id": "figure-8-1",
+              "figure_number": "8",
+              "height": 407,
+              "image_path": "figures/2610.40801/figure-006.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 462
+            },
+            {
+              "caption": "Fig. 7. Pearson correlations across tasks and capability dimensions.",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 406,
+              "image_path": "figures/2610.40801/figure-007.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 463
+            },
+            {
+              "caption": "TABLE I PERFORMANCE ON THE DRONE-PUR MULTIPLE-CHOICE BENCHMARK. WE REPORT API-EVALUATED MODELS, LOCALLY EVALUATED MODELS, AND FINE-TUNED MODELS. THE BEST AND SECOND-BEST SCORES WITHIN EACH MODEL CATEGORY ARE SHOWN IN BOLD AND UNDERLINED, RESPECTIVELY.",
+              "figure_id": "table-I-13",
+              "figure_number": "I",
+              "height": 759,
+              "image_path": "figures/2610.40801/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 1060
+            },
+            {
+              "caption": "TABLE VI ABLATION OF TRAINING STAGES, AUXILIARY SUPERVISION, AND MERGER ADAPTATION. WITHIN EACH SIZE GROUP, THE BEST AND SECOND-BEST SCORES ARE SHOWN IN BOLD AND UNDERLINED, RESPECTIVELY.",
+              "figure_id": "table-VI-7",
+              "figure_number": "VI",
+              "height": 396,
+              "image_path": "figures/2610.40801/table-009.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 529
+            },
+            {
+              "caption": "TABLE III PERFORMANCE COMPARISON ON THE FIVE SUBTASKS OF PSJ.",
+              "figure_id": "table-III-4",
+              "figure_number": "III",
+              "height": 469,
+              "image_path": "figures/2610.40801/table-010.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 516
+            },
+            {
+              "caption": "TABLE II PERFORMANCE COMPARISON ON THE SUBTASKS OF MMR AND MVR.",
+              "figure_id": "table-II-5",
+              "figure_number": "II",
+              "height": 469,
+              "image_path": "figures/2610.40801/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 506
+            },
+            {
+              "caption": "TABLE V OPEN-ENDED COUNTING PERFORMANCE AND UNDERESTIMATION RATES.",
+              "figure_id": "table-V-12",
+              "figure_number": "V",
+              "height": 321,
+              "image_path": "figures/2610.40801/table-012.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 516
+            },
+            {
+              "caption": "TABLE IV OPEN-ENDED DETECTION AND GROUNDING PERFORMANCE.",
+              "figure_id": "table-IV-10",
+              "figure_number": "IV",
+              "height": 303,
+              "image_path": "figures/2610.40801/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 523
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2610.40801/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2610.40801",
+          "relevance": 7,
+          "selection_reason": "UAV-scene VLM benchmark emphasizing spatial and cross-view reasoning; fits spatial intelligence and video understanding.",
+          "summary_status": "generated",
+          "title": "Drone-PUR: From Visual Clue Discovery to Understanding and Reasoning in UAV Scenes",
+          "tldr": "Drone-PUR benchmarks and improves VLM perception, understanding, and reasoning in challenging UAV scenes through 11 visually grounded tasks.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "spatial-intelligence"
+              ],
+              "topic_id": "multimodal-foundation-models"
+            },
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Streaming video assistance requires models to answer asynchronous questions from an observed prefix under a fixed context budget. Existing approaches model response timing or compress history, but an online state formed before future questions are known can omit visual details before later questions reveal their relevance; the retained state alone cannot recover them. We introduce Watch-Think-Interact (WTI), a closed-loop framework for multi-question streaming video reasoning. WTI maintains compact natural-language memory entries tagged with source-video time ranges; these entries support direct reasoning when sufficient and otherwise anchor selective recall of finer visual evidence. For each question, WTI answers when current context and memory suffice, continues watching when required evidence has not appeared, or recalls a relevant past interval and decides again after incorporating the returned chunks, without replaying the full observed history. To train this behavior, we construct WTI-82K, comprising 82,335 timed questions across 4,812 causally aligned trajectories, and develop Stream-GDPO to optimize complete multi-question streaming rollouts using trajectory-level feedback for response timing, source-video recall, and memory updates. WTI achieves state-of-the-art aggregate performance among the compared open-source streaming baselines, reaching 83.3% on StreamingBench and 73.6% weighted overall accuracy on OVO-Bench.",
+          "arxiv_id": "2609.37035",
+          "arxiv_url": "https://arxiv.org/abs/2609.37035",
+          "authors": [
+            "Ziheng Huang",
+            "Yicheng Bao",
+            "Xueheng Li",
+            "Zhenkun Gao",
+            "Bangwei Liu",
+            "Kunquan Li",
+            "Yuxiang Shen",
+            "Bangyan Li",
+            "Xuejiao Wang",
+            "Changbo Wang",
+            "Gaoqi He"
+          ],
+          "bullets": [
+            "Addresses the problem that early online summaries may omit visual details needed by later questions under a fixed context budget.",
+            "Stores compact natural-language memories linked to source-video time ranges, enabling targeted recall without replaying the full history.",
+            "Uses a closed-loop policy that decides whether to answer, continue watching, or retrieve past visual evidence before answering.",
+            "Trains with Stream-GDPO on WTI-82K, optimizing response timing, video recall, and memory updates across complete question trajectories.",
+            "Reports 83.3% on StreamingBench and 73.6% weighted accuracy on OVO-Bench, achieving state-of-the-art performance among compared open-source baselines."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of Watch-Think-Interact. For each arriving chunk, WTI updates a short thinking state and chooses to remain silent, answer, or recall. Recall returns visual evidence and loops back to the decision at the same time step; controller-triggered memory updates separately compress elapsed observations into a bounded temporal index. Stream-GDPO optimizes the resulting complete interaction trajectories.",
+              "figure_id": "figure-2-5",
+              "figure_number": "2",
+              "height": 571,
+              "image_path": "figures/2609.37035/figure-001.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 3: WTI-82K construction pipeline. WTI-82K converts videos into streaming-causal trajectories by standardizing clips, aligning chunk-level evidence chains, generating QAs from aligned evidence, placing query and answerable times, and checking timestamp bounds, answer availability, action grammar, and evidence-interval fields. The resulting samples cover Real-Time, Backward Tracing, and Proactive interactions under the same visibility constraints as inference.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 456,
+              "image_path": "figures/2609.37035/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1054
+            },
+            {
+              "caption": "Figure 1: Motivation for Watch-Think-Interact. In causal streaming video, asynchronous questions may require current, past, or not-yet-observed evidence. WTI uses a bounded active window for current perception, compact time-indexed memory for direct reasoning and temporal localization, and selective recall to reload a past visual interval.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 519,
+              "image_path": "figures/2609.37035/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 1052
+            },
+            {
+              "caption": "Figure 4: Training-time GSPO/Stream-GDPO diagnostics. Panels report outcome accuracy, BT recall triggering, post-recall outcome accuracy, and memory quality; faint and bold curves show raw and rolling values.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 164,
+              "image_path": "figures/2609.37035/figure-004.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1032
+            },
+            {
+              "caption": "Table 1: Results on OVO-Bench. Scores are grouped by Real-Time, Backward, and Forward tasks; Avg. gives the corresponding group average, and Overall gives the benchmark average.",
+              "figure_id": "table-1-7",
+              "figure_number": "1",
+              "height": 475,
+              "image_path": "figures/2609.37035/table-005.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 1026
+            },
+            {
+              "caption": "Table 5: Component ablation across OVO-BT and offline long-video benchmarks.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 131,
+              "image_path": "figures/2609.37035/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 354
+            },
+            {
+              "caption": "Table 4: Training-objective ablation across streaming and offline long-video benchmarks; GDPO denotes Stream-GDPO.",
+              "figure_id": "table-4-3",
+              "figure_number": "4",
+              "height": 131,
+              "image_path": "figures/2609.37035/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 646
+            }
+          ],
+          "first_seen_at": "2026-11-01T21:00:00-05:00",
+          "hero_figure": "figures/2609.37035/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2609.37035",
+          "relevance": 8,
+          "selection_reason": "Streaming video reasoning with memory and RL, directly relevant to video understanding.",
+          "summary_status": "generated",
+          "title": "Watch-Think-Interact: Bootstrapping Long-Horizon Multi-Turn Streaming Video Reasoning with Reinforcement Learning",
+          "tldr": "WTI enables long-horizon streaming video assistants to answer multi-turn questions by combining compact time-tagged memory, selective visual recall, and reinforcement learning for when to watch, recall, or respond.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-understanding"
+              ],
+              "topic_id": "video-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-31",
       "paper_count": 1,
       "papers": [
@@ -125611,5 +126588,5 @@
   "schema_version": 1,
   "subtopic_id": "video-understanding",
   "topic_id": "video-models",
-  "total_paper_count": 666
+  "total_paper_count": 672
 }

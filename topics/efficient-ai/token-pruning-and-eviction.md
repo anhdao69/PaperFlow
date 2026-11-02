@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**438 papers total**
+**441 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-01 | [ACCT: Asymmetric Cross-LLM Context Transfer](https://arxiv.org/abs/2610.42116) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | ACCT transfers sparse KV caches between differently sized LLMs in the same family, avoiding repeated context processing while preserving target-model performance. | 8 | 8 |
+| 2026-11-01 | [Subquadratic Attention with a Hierarchical Tree-Structured Indexer](https://arxiv.org/abs/2610.42112) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance. | 9 | 9 |
+| 2026-11-01 | [Kernel-based Interpolatory Methods for Context Compression of Attention Mechanisms](https://arxiv.org/abs/2610.40943) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | The paper introduces kernel-based KV-cache compression methods that reduce attention-context storage and support linear-time and streaming settings. | 8 | 7 |
 | 2026-10-29 | [Read, Allocate, Route: Role-Coupled Tokenization for Pixel-Space Generative Transformers](https://arxiv.org/abs/2610.40647) | Multimodal Foundation Models; Efficient AI: Token Pruning and Eviction | SpecSlot increases pixel-space image detail without lengthening the globally attended token sequence, improving quality–compute trade-offs. | 8 | 8 |
 | 2026-10-29 | [Don't Lose the Thread: Empowering Long-Horizon LLM Agents with Cognitive Resource Self-Allocation](https://arxiv.org/abs/2610.40350) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: LLM Memory | CORAL helps LLM agents solve long-horizon tasks by selectively checkpointing useful information and resetting cluttered context, improving accuracy while reducing token use. | 8 | 7 |
 | 2026-10-29 | [Raincheck: Deferred Multimodal Prefill for Efficient Multi-Turn MLLM Inference](https://arxiv.org/abs/2610.39562) | Multimodal Foundation Models: Multimodal Large Language Models; Efficient AI: Token Pruning and Eviction | Raincheck speeds up multi-turn MLLM inference by deferring unselected multimodal-token prefilling and recovering information as needed during decoding. | 8 | 7 |
