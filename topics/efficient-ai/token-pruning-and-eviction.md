@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**441 papers total**
+**442 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [Task-Relevant Null-Space Residuals for Non-Injective Neural Mappings](https://arxiv.org/abs/2609.37272) | Efficient AI: Token Pruning and Eviction | Task-Relevant Null-Space Residuals recover task-useful input distinctions discarded by non-injective neural mappings, improving performance in token merging and graph aggregation. | 8 | 7 |
 | 2026-11-01 | [ACCT: Asymmetric Cross-LLM Context Transfer](https://arxiv.org/abs/2610.42116) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | ACCT transfers sparse KV caches between differently sized LLMs in the same family, avoiding repeated context processing while preserving target-model performance. | 8 | 8 |
 | 2026-11-01 | [Subquadratic Attention with a Hierarchical Tree-Structured Indexer](https://arxiv.org/abs/2610.42112) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance. | 9 | 9 |
 | 2026-11-01 | [Kernel-based Interpolatory Methods for Context Compression of Attention Mechanisms](https://arxiv.org/abs/2610.40943) | Efficient AI: Token Pruning and Eviction, Efficient Attention, KV Cache and Memory Efficiency | The paper introduces kernel-based KV-cache compression methods that reduce attention-context storage and support linear-time and streaming settings. | 8 | 7 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1411 papers total**
+**1413 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [Omnilingual-MsASR: Benchmarking Multimodal, Multilingual, Long-Form Multi-Speaker ASR of Omni Large Language Models](https://arxiv.org/abs/2610.29455) | Multimodal Foundation Models: Multimodal Large Language Models | Omnilingual-MsASR benchmarks how well omni-modal LLMs transcribe long, multilingual videos while identifying who speaks when, revealing major weaknesses in current systems. | 6 | 7 |
+| 2026-11-02 | [TAEC: Trajectory-Aware Evidence Coordination for Multi-Step Visual RAG](https://arxiv.org/abs/2609.37349) | Multimodal Foundation Models: Multimodal Large Language Models | TAEC improves multi-step visual RAG by coordinating retrieved evidence with the reasoning requirements that remain unresolved. | 6 | 6 |
 | 2026-11-01 | [Latent Reasoning in Continuous Space for Unified Multimodal Models](https://arxiv.org/abs/2610.42149) | Multimodal Foundation Models: Multimodal Large Language Models | LARC enables unified multimodal models to reason in continuous latent space, improving controllable and scalable text-to-image generation. | 8 | 8 |
 | 2026-11-01 | [Think in 360{\\deg}: Benchmarking and Bootstrapping Panoramic Video Reasoning](https://arxiv.org/abs/2610.42082) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | PanoVideoBench exposes weaknesses in panoramic video reasoning, while PanoVideoReasoner improves these abilities through grounded sphere-time reasoning supervision. | 8 | 8 |
 | 2026-11-01 | [Aligning MLLMs with the Latent Structure of Human Cognition via Behavior-Derived Semantic Dimensions](https://arxiv.org/abs/2610.41951) | Multimodal Foundation Models: Multimodal Large Language Models | A behavior-grounded training framework makes MLLMs’ similarity judgments and representations more aligned with human cognition. | 8 | 7 |

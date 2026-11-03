@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**175 papers total**
+**176 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [RangeSWA: Training-Free Length Extrapolation for Continuous Diffusion Language Models](https://arxiv.org/abs/2610.42084) | Language Foundation Models: Long-Context Models | RangeSWA enables continuous diffusion language models to generate longer text without retraining by combining efficient long-range context access with generation-quality corrections. | 7 | 7 |
 | 2026-11-01 | [Latent Sparse Attention: Towards Subquadratic Ultra-Long Context Attention](https://arxiv.org/abs/2610.42147) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | Latent Sparse Attention enables efficient ultra-long-context attention by hierarchically routing queries to learned key clusters instead of examining every key. | 9 | 8 |
 | 2026-11-01 | [Subquadratic Attention with a Hierarchical Tree-Structured Indexer](https://arxiv.org/abs/2610.42112) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance. | 9 | 9 |
 | 2026-11-01 | [DAMI: Dual-Axis Memory Initialization for Enhanced Long-Context Retrieval in Gated Linear Attention](https://arxiv.org/abs/2610.41994) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | DAMI improves long-context retrieval in gated linear attention by initializing memory decay and input sensitivity across heads and layers. | 8 | 7 |

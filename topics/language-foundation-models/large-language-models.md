@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**2345 papers total**
+**2347 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [Asynchronous Flow Map Language Models](https://arxiv.org/abs/2610.42018) | Language Foundation Models: Large Language Models | aFMLMs enable one-step language generation by encoding token prediction order through learned asynchronous flow maps. | 6 | 8 |
+| 2026-11-02 | [MetaCtrl: Your Large Language Models Can Reason Better and More Concisely with a Metacognitive Controller](https://arxiv.org/abs/2609.37304) | Language Foundation Models: Large Language Models | MetaCtrl uses reinforcement learning to dynamically control a frozen language model’s reasoning, improving accuracy while substantially shortening its solutions. | 6 | 7 |
 | 2026-11-01 | [Proof-Carrying Evolution: Black-Box Search, White-Box Flight](https://arxiv.org/abs/2610.42043) | Embodied AI: Robot Learning and Manipulation; Language Foundation Models: Large Language Models | Proof-Carrying Evolution searches for controllers together with formally checkable certificates, returning only candidates that pass certification. | 7 | 8 |
 | 2026-11-01 | [RECAST: REconstruction of Chain-of-Thought via Auditable Structured Traces](https://arxiv.org/abs/2610.41813) | Language Foundation Models: Large Language Models | RECAST reconstructs structured chain-of-thought from a closed model’s question and final answer when hidden reasoning channels are unavailable. | 8 | 8 |
 | 2026-11-01 | [Whose Values, Which Contexts, and What Signals? Grounding Cultural Value Alignment with Re3Culture](https://arxiv.org/abs/2610.41793) | Language Foundation Models: Large Language Models | Re3Culture argues that culturally aligned AI needs human-grounded targets defined by representative communities, realistic situations, and explicit value priorities. | 6 | 7 |

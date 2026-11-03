@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**2481 papers total**
+**2484 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [No Frames, Just Frequencies: Bandwidth-Efficient Deployment-Time Adaptation for Smart Glasses](https://arxiv.org/abs/2610.29607) | Efficient AI; Adaptation and Memory: Test-Time Learning | A smart-glasses framework enables privacy-preserving, bandwidth-efficient model adaptation by transmitting compact frequency descriptors instead of camera frames. | 8 | 8 |
+| 2026-11-02 | [Scaling LLM Inference via Parallelism: Throughput-Latency Trade-off](https://arxiv.org/abs/2610.19405) | Efficient AI | The paper provides a framework for choosing tensor, pipeline, or hybrid parallelism configurations by balancing LLM prefill latency, decode latency, throughput, and SLOs across workloads and context lengths. | 7 | 7 |
+| 2026-11-02 | [Task-Relevant Null-Space Residuals for Non-Injective Neural Mappings](https://arxiv.org/abs/2609.37272) | Efficient AI: Token Pruning and Eviction | Task-Relevant Null-Space Residuals recover task-useful input distinctions discarded by non-injective neural mappings, improving performance in token merging and graph aggregation. | 8 | 7 |
 | 2026-11-01 | [Latent Sparse Attention: Towards Subquadratic Ultra-Long Context Attention](https://arxiv.org/abs/2610.42147) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | Latent Sparse Attention enables efficient ultra-long-context attention by hierarchically routing queries to learned key clusters instead of examining every key. | 9 | 8 |
 | 2026-11-01 | [A Better Critic Matters for Distribution Matching Distillation](https://arxiv.org/abs/2610.42135) | Video Generation and Understanding: Video Diffusion; Efficient AI | Reliable critics are essential for DMD: scaling them with the teacher and conditioning them on generation step improves few-step distillation across image and video generation tasks. | 6 | 7 |
 | 2026-11-01 | [ACCT: Asymmetric Cross-LLM Context Transfer](https://arxiv.org/abs/2610.42116) | Efficient AI: Token Pruning and Eviction, KV Cache and Memory Efficiency | ACCT transfers sparse KV caches between differently sized LLMs in the same family, avoiding repeated context processing while preserving target-model performance. | 8 | 8 |

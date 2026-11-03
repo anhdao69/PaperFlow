@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**3455 papers total**
+**3459 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [RangeSWA: Training-Free Length Extrapolation for Continuous Diffusion Language Models](https://arxiv.org/abs/2610.42084) | Language Foundation Models: Long-Context Models | RangeSWA enables continuous diffusion language models to generate longer text without retraining by combining efficient long-range context access with generation-quality corrections. | 7 | 7 |
+| 2026-11-02 | [Asynchronous Flow Map Language Models](https://arxiv.org/abs/2610.42018) | Language Foundation Models: Large Language Models | aFMLMs enable one-step language generation by encoding token prediction order through learned asynchronous flow maps. | 6 | 8 |
+| 2026-11-02 | [ContextRender: From Execution Dependencies to Agent Context](https://arxiv.org/abs/2609.37743) | Language Foundation Models: LLM Memory | ContextRender improves long-horizon agent context management by preserving tool results based on how later execution reuses them, achieving near-full-history performance at lower inference cost. | 7 | 7 |
+| 2026-11-02 | [MetaCtrl: Your Large Language Models Can Reason Better and More Concisely with a Metacognitive Controller](https://arxiv.org/abs/2609.37304) | Language Foundation Models: Large Language Models | MetaCtrl uses reinforcement learning to dynamically control a frozen language model’s reasoning, improving accuracy while substantially shortening its solutions. | 6 | 7 |
 | 2026-11-01 | [Latent Sparse Attention: Towards Subquadratic Ultra-Long Context Attention](https://arxiv.org/abs/2610.42147) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | Latent Sparse Attention enables efficient ultra-long-context attention by hierarchically routing queries to learned key clusters instead of examining every key. | 9 | 8 |
 | 2026-11-01 | [Subquadratic Attention with a Hierarchical Tree-Structured Indexer](https://arxiv.org/abs/2610.42112) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance. | 9 | 9 |
 | 2026-11-01 | [Proof-Carrying Evolution: Black-Box Search, White-Box Flight](https://arxiv.org/abs/2610.42043) | Embodied AI: Robot Learning and Manipulation; Language Foundation Models: Large Language Models | Proof-Carrying Evolution searches for controllers together with formally checkable certificates, returning only candidates that pass certification. | 7 | 8 |

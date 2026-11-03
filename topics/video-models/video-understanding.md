@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**672 papers total**
+**673 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [DUGO: Dual-Scale Gaussian Memory for Online Temporal Action Localization in Egocentric Procedural Videos](https://arxiv.org/abs/2610.41402) | Video Generation and Understanding: Video Understanding | DUGO improves real-time action localization in streaming egocentric videos by combining dual-scale temporal modeling with stochastic Gaussian memory. | 7 | 7 |
 | 2026-11-01 | [ReLift: Dense 3D Tracking as Lifted Trajectory Repair](https://arxiv.org/abs/2610.42136) | 3D Vision; Video Generation and Understanding: Video Understanding | ReLift improves dense monocular 3D tracking by repairing and completing noisy lifted trajectories using geometric trajectory refinement. | 7 | 7 |
 | 2026-11-01 | [Think in 360{\\deg}: Benchmarking and Bootstrapping Panoramic Video Reasoning](https://arxiv.org/abs/2610.42082) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | PanoVideoBench exposes weaknesses in panoramic video reasoning, while PanoVideoReasoner improves these abilities through grounded sphere-time reasoning supervision. | 8 | 8 |
 | 2026-11-01 | [TwinPast: Benchmarking Historical Evidence Use in Streaming Video Understanding with Evidence Contrastive Video Pairs](https://arxiv.org/abs/2610.41983) | Video Generation and Understanding: Video Understanding | TwinPast shows that streaming video models often fail to use historical evidence correctly, even when they retain relevant past information. | 7 | 7 |

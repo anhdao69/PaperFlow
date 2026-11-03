@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**777 papers total**
+**778 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [ContextRender: From Execution Dependencies to Agent Context](https://arxiv.org/abs/2609.37743) | Language Foundation Models: LLM Memory | ContextRender improves long-horizon agent context management by preserving tool results based on how later execution reuses them, achieving near-full-history performance at lower inference cost. | 7 | 7 |
 | 2026-11-01 | [TradeWar: A Benchmark for Execution-Grounded Trade Negotiation with Adaptive LLM Agents](https://arxiv.org/abs/2610.42004) | Language Foundation Models: LLM Memory | TradeWar evaluates whether LLM negotiation agreements create value after execution, showing that settlement-grounded adaptation improves long-horizon outcomes under changing conditions. | 6 | 6 |
 | 2026-11-01 | [ORION: An Outcome-Driven LLM Advisor for RL-Based Multi-Domain 6G Slice Placement](https://arxiv.org/abs/2610.41563) | Language Foundation Models: LLM Memory | ORION improves multi-domain 6G slice placement by using verified deployment outcomes to adapt LLM-generated plans, increasing admission by 4.6–11.5 percentage points in controlled tests. | 5 | 7 |
 | 2026-11-01 | [KEEPER: Learning Control-Sufficient Textual Memory for Long-Horizon LLM Agents](https://arxiv.org/abs/2610.41482) | Language Foundation Models: LLM Memory | KEEPER shows that evaluating long-horizon textual memory requires measuring both task performance and whether incorrect claims persist across recursive updates. | 7 | 8 |

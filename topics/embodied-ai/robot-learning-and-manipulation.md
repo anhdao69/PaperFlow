@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**2585 papers total**
+**2589 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [TinyAstral: Transferring Self-Evolving Harnesses to Tiny Generalist Manipulation Agents](https://arxiv.org/abs/2610.41216) | Embodied AI: Robot Learning and Manipulation | TinyAstral evolves a robot agent’s harness with a large teacher, then distills it into a 4B student that preserves most of the teacher’s manipulation performance at about one-fifth the accelerator time. | 8 | 7 |
+| 2026-11-02 | [PS-DLO: Property- and Spatially Aware Deformable Linear Object Manipulation Policy](https://arxiv.org/abs/2610.34147) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | PS-DLO improves deformable linear object manipulation by combining inferred physical-property priors with spatial guidance from future visual observations. | 9 | 8 |
+| 2026-11-02 | [VLA-Retain: Benchmarking Cross-Dimension Effects of Vision Tuning in VLAs](https://arxiv.org/abs/2610.27698) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | VLA-Retain shows that vision tuning can improve a VLA’s target condition while harming robustness to other observation shifts, making cross-dimensional retention essential to evaluate. | 8 | 7 |
+| 2026-11-02 | [Refuses When Asked, Complies When Acting: A Runtime Safety Check for Robot Control Loops](https://arxiv.org/abs/2610.27350) | Embodied AI: Robot Learning and Manipulation | A runtime self-check before robot motion prevented all tested hazardous actions that the default control loop otherwise attempted. | 7 | 6 |
 | 2026-11-01 | [Hierarchical World Models with Implicit Dynamics](https://arxiv.org/abs/2610.42146) | Embodied AI: Robot Navigation, Robot Learning and Manipulation; World Models: Interactive World Models | ID-WM is a hierarchical world model that separates reachable-state planning from precise action execution to improve long-horizon embodied control. | 10 | 9 |
 | 2026-11-01 | [RoboArchitect: Automating the Design of Robotic Agents with Persistent Memory](https://arxiv.org/abs/2610.42141) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboArchitect automatically improves frozen robot policies by evolving their control harness and persistent memory, substantially boosting manipulation success without updating model weights. | 9 | 9 |
 | 2026-11-01 | [Hyperbolic Inverse Reinforcement Learning](https://arxiv.org/abs/2610.42104) | Embodied AI: Robot Learning and Manipulation | Hyperbolic IRL models rewards using hyperbolic distances in feature space, matching leading methods while improving low-data performance and revealing interpretable feature interactions. | 5 | 6 |

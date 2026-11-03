@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Vision
 
-**1049 papers total**
+**1050 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [Road Infrastructure Perception for Autonomous Driving: Taxonomy, Representations, Tasks, and Challenges](https://arxiv.org/abs/2610.33758) | Embodied AI; 3D Vision | This survey unifies fragmented road infrastructure perception research through a functional taxonomy linking tasks, representations, sensing, evaluation, and autonomous-driving usability. | 7 | 5 |
 | 2026-11-01 | [SemEllipsoid: Semantic-aware Shape Abstraction with Ellipsoid](https://arxiv.org/abs/2610.42145) | 3D Vision | SemEllipsoid creates compact 3D shape abstractions that preserve geometry while keeping each ellipsoid within a single semantic part. | 7 | 7 |
 | 2026-11-01 | [ReLift: Dense 3D Tracking as Lifted Trajectory Repair](https://arxiv.org/abs/2610.42136) | 3D Vision; Video Generation and Understanding: Video Understanding | ReLift improves dense monocular 3D tracking by repairing and completing noisy lifted trajectories using geometric trajectory refinement. | 7 | 7 |
 | 2026-11-01 | [Rethinking Asymmetry in Self-Supervised 3D Geometry Learning](https://arxiv.org/abs/2610.42092) | 3D Vision | The paper improves self-supervised 3D geometry learning by placing input–target asymmetry in 3D scene representations and adding correspondence-based feature alignment. | 7 | 7 |

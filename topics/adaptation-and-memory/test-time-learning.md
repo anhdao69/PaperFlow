@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**682 papers total**
+**683 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [No Frames, Just Frequencies: Bandwidth-Efficient Deployment-Time Adaptation for Smart Glasses](https://arxiv.org/abs/2610.29607) | Efficient AI; Adaptation and Memory: Test-Time Learning | A smart-glasses framework enables privacy-preserving, bandwidth-efficient model adaptation by transmitting compact frequency descriptors instead of camera frames. | 8 | 8 |
 | 2026-11-01 | [When Does Test-Time Search Help World Action Models? An Empirical Audit of Candidate Selection and Simulator Integrity](https://arxiv.org/abs/2610.41970) | World Models: Interactive World Models; Adaptation and Memory: Test-Time Learning | An audit finds that test-time search provides little reliable benefit for the tested world-action-model setup because candidate selection has weak signal, compute savings translate poorly to end-to-end speedups, and simulator corruption can undermine evaluation. | 7 | 6 |
 | 2026-11-01 | [Online Learning of Heterogeneous Locomotion Dynamics under Reinforcement Learning Policies for Precise Loco-Manipulation](https://arxiv.org/abs/2610.41892) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning | An online learner models heterogeneous responses from a frozen locomotion policy to improve floating-base prediction and achieve precise loco-manipulation. | 8 | 8 |
 | 2026-11-01 | [From fleet trajectories to single-cell promises: hierarchically weighted conformal prediction for battery SOH monitoring](https://arxiv.org/abs/2610.41696) | Adaptation and Memory: Test-Time Learning | Hierarchically weighted conformal prediction improves per-cell battery SOH interval coverage, but its reliability is domain- and calibration-diversity-dependent. | 6 | 7 |

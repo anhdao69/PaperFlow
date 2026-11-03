@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**660 papers total**
+**661 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [Forensic-Aware Continual Adaptation for Image Forgery Localization](https://arxiv.org/abs/2609.38251) | Adaptation and Memory: Continual and Online Learning | A forensic-aware continual learning framework enables image forgery localization models to adapt to emerging manipulation types while retaining prior forensic knowledge. | 7 | 7 |
 | 2026-11-01 | [RAMA: Retrieval-Augmented Multi-Agent Routing with Episodic Memory for LEO Satellite Networks](https://arxiv.org/abs/2610.42068) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | RAMA improves decentralized LEO satellite routing by retrieving useful past experiences alongside current network information, substantially reducing latency and remaining stable under changing conditions. | 7 | 8 |
 | 2026-11-01 | [Less Loss, Fixed Weights: Logit Corrections for Forgetting](https://arxiv.org/abs/2610.42000) | Adaptation and Memory: Continual and Online Learning | Fixed token-level logit corrections, especially when combined with temperature scaling, recover only part of the language-model performance lost through fine-tuning or further pretraining. | 6 | 5 |
 | 2026-11-01 | [Continual Reinforcement Learning Is an Integration Problem](https://arxiv.org/abs/2610.41809) | Adaptation and Memory: Continual and Online Learning | Continual reinforcement learning should be evaluated as an integrated lifelong-agent problem rather than as a collection of isolated capabilities. | 6 | 6 |

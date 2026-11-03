@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**935 papers total**
+**937 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [PS-DLO: Property- and Spatially Aware Deformable Linear Object Manipulation Policy](https://arxiv.org/abs/2610.34147) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | PS-DLO improves deformable linear object manipulation by combining inferred physical-property priors with spatial guidance from future visual observations. | 9 | 8 |
+| 2026-11-02 | [VLA-Retain: Benchmarking Cross-Dimension Effects of Vision Tuning in VLAs](https://arxiv.org/abs/2610.27698) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | VLA-Retain shows that vision tuning can improve a VLA’s target condition while harming robustness to other observation shifts, making cross-dimensional retention essential to evaluate. | 8 | 7 |
 | 2026-11-01 | [REA: A Routed Embodied Agent Runtime for Asynchronous Brain-Cerebellum Control](https://arxiv.org/abs/2610.42053) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | REA is an asynchronous runtime that coordinates slow reasoning models with fast embodied policies, achieving strong task success while reducing control latency and steps. | 8 | 8 |
 | 2026-11-01 | [Language-Conditioned Behavioral Cloning for Autonomous Endoscope Guidance](https://arxiv.org/abs/2610.41978) | Embodied AI: Vision-Language-Action | A language-conditioned behavioral-cloning policy enables one visuomotor model to perform multiple surgeon-requested endoscope guidance behaviors in phantom experiments. | 9 | 7 |
 | 2026-11-01 | [Movens-Zero: Scaling Humanoid Motion Foundation Models with Large-Scale Human Videos](https://arxiv.org/abs/2610.41877) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | Movens-Zero scales humanoid motion foundation models using 15 million human-motion sequences and 5 million execution-verified humanoid motions for multimodal, real-time control. | 9 | 8 |

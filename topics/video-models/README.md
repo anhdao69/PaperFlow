@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**1154 papers total**
+**1155 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-02 | [DUGO: Dual-Scale Gaussian Memory for Online Temporal Action Localization in Egocentric Procedural Videos](https://arxiv.org/abs/2610.41402) | Video Generation and Understanding: Video Understanding | DUGO improves real-time action localization in streaming egocentric videos by combining dual-scale temporal modeling with stochastic Gaussian memory. | 7 | 7 |
 | 2026-11-01 | [ReLift: Dense 3D Tracking as Lifted Trajectory Repair](https://arxiv.org/abs/2610.42136) | 3D Vision; Video Generation and Understanding: Video Understanding | ReLift improves dense monocular 3D tracking by repairing and completing noisy lifted trajectories using geometric trajectory refinement. | 7 | 7 |
 | 2026-11-01 | [A Better Critic Matters for Distribution Matching Distillation](https://arxiv.org/abs/2610.42135) | Video Generation and Understanding: Video Diffusion; Efficient AI | Reliable critics are essential for DMD: scaling them with the teacher and conditioning them on generation step improves few-step distillation across image and video generation tasks. | 6 | 7 |
 | 2026-11-01 | [Think in 360{\\deg}: Benchmarking and Bootstrapping Panoramic Video Reasoning](https://arxiv.org/abs/2610.42082) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | PanoVideoBench exposes weaknesses in panoramic video reasoning, while PanoVideoReasoner improves these abilities through grounded sphere-time reasoning supervision. | 8 | 8 |
