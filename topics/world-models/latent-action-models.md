@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**140 papers total**
+**142 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-03 | [DreamX: Video Diffusion Model is a Universal Latent Action Learner](https://arxiv.org/abs/2611.05377) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | DreamX repurposes a pretrained video diffusion model to learn compact, appearance-invariant latent actions that transfer across embodiments, environments, and action formats. | 9 | 8 |
+| 2026-11-03 | [Coordinating Humanoid Loco-Manipulation through Action-Conditioned Latent Foresight](https://arxiv.org/abs/2611.04839) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | Action-conditioned latent foresight improves humanoid loco-manipulation by evaluating and replanning command sequences before execution. | 9 | 8 |
 | 2026-11-01 | [CausalWAM: Learning the Causes of Actions in World Action Models](https://arxiv.org/abs/2610.42096) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | CausalWAM identifies and uses only the latent factors that cause demonstrated actions, improving closed-loop action efficiency without changing the world-modeling objective. | 8 | 8 |
 | 2026-10-31 | [I Act Therefore I Am: When Is JEPA's Action-Conditioning Enough to Learn Causal Mechanisms?](https://arxiv.org/abs/2609.31161) | World Models: Latent Action Models | The paper characterizes when action-conditioned JEPAs can recover causal latent states rather than merely predict future observations, and proposes A-JEPA to do so. | 8 | 7 |
 | 2026-10-29 | [Continuous-Action World Models: Learning Cross-Embodiment Spatiotemporal Dynamics Priors](https://arxiv.org/abs/2610.40401) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Latent Action Models | CoAWM learns shared spatiotemporal action priors across robot embodiments and control frequencies, then uses them to generate task-conditioned actions at arbitrary query times. | 9 | 9 |

@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**293 papers total**
+**296 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-03 | [HTCE: Homeomorphism-inspired Topological Cross-Scene Experience Canonicalization and Reuse for Object Navigation](https://arxiv.org/abs/2611.04836) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | HTCE canonicalizes topologically similar navigation experiences across scenes, enabling a frozen vision-language policy to reuse them and improve object-navigation performance. | 8 | 7 |
+| 2026-11-03 | [Spatial Memory for AR Glasses: Hierarchical Visual Acquisition and Source-Linked Recall](https://arxiv.org/abs/2611.04494) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction; Adaptation and Memory: Embodied Memory | A spatial-memory architecture for AR glasses selectively captures detailed views and links interpretations to source images to support grounded recall of past encounters. | 9 | 8 |
+| 2026-11-03 | [SEAM: Situated Executable Associative Memory for a Co-located Community](https://arxiv.org/abs/2611.04296) | Adaptation and Memory: Embodied Memory | SEAM is a community social app that turns members’ shared experiences into a situated, associative, and partially programmable collective memory. | 6 | 7 |
 | 2026-11-01 | [RoboArchitect: Automating the Design of Robotic Agents with Persistent Memory](https://arxiv.org/abs/2610.42141) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboArchitect automatically improves frozen robot policies by evolving their control harness and persistent memory, substantially boosting manipulation success without updating model weights. | 9 | 9 |
 | 2026-11-01 | [RAMA: Retrieval-Augmented Multi-Agent Routing with Episodic Memory for LEO Satellite Networks](https://arxiv.org/abs/2610.42068) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | RAMA improves decentralized LEO satellite routing by retrieving useful past experiences alongside current network information, substantially reducing latency and remaining stable under changing conditions. | 7 | 8 |
 | 2026-11-01 | [When the Past Shapes Action: Understanding Embodied Memory](https://arxiv.org/abs/2610.41688) | Adaptation and Memory: Embodied Memory | This survey organizes embodied-memory approaches and benchmarks, showing why retaining and updating past information is essential for reliable, adaptive action in dynamic environments. | 9 | 7 |

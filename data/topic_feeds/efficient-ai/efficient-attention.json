@@ -1,6 +1,1847 @@
 {
   "days": [
     {
+      "date": "2026-11-03",
+      "paper_count": 7,
+      "papers": [
+        {
+          "abstract": "Expert offloading enables large mixture-of-experts (MoE) language models to run locally, but conventional batching stalls the GPU while missing experts are fetched. A popular remedy, known as prefetching, is to predict what experts will be needed soon and fetch them using idle link bandwidth. Imprecise prediction, however, wastes bandwidth and GPU memory on fetching unnecessary experts. Our key finding is that prefetching can be harmful when there is an expert cache in GPU memory. This is because as the cache includes more necessary experts, expert prediction becomes less precise. Our key insight is that proper request scheduling beats prefetching. Building on this insight, we present Bevy, an MoE inference system based on runahead inference for concurrent requests. A request whose experts are available can run ahead to later layers while other requests wait for fetches, revealing the experts it needs next. Bevy can then fetch the missing experts so identified while computing ready requests, overlapping computation and fetching without predicting expert selections. Running requests separately, however, repeats reads of shared weights in GPU memory and increases compute time. To limit this cost, Bevy's self-balancing scheduler batches ready requests at each layer and prioritizes lagging requests, adapting their grouping as expert availability changes. Across two local platforms, Bevy delivers up to 3.46$\\times$ the decode throughput of llama.cpp and up to 1.55$\\times$ that of the fastest prefetching baseline.",
+          "arxiv_id": "2611.04794",
+          "arxiv_url": "https://arxiv.org/abs/2611.04794",
+          "authors": [
+            "Hongseung Yu, In Gim, Kyunghan Lee, Lin Zhong"
+          ],
+          "bullets": [
+            "Expert offloading can stall GPU execution when required experts must be fetched.",
+            "Prefetching may waste bandwidth and GPU memory because larger expert caches reduce prediction precision.",
+            "Bevy uses runahead inference: requests with available experts advance to reveal future needs while others wait.",
+            "A self-balancing scheduler batches ready requests and prioritizes lagging requests to reduce repeated weight reads and computation.",
+            "Across two local platforms, Bevy achieves up to 3.46× the decode throughput of llama.cpp and 1.55× that of the fastest prefetching baseline."
+          ],
+          "categories": [
+            "cs.DC",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 6. System overview of Bevy.",
+              "figure_id": "figure-6-10",
+              "figure_number": "6",
+              "height": 252,
+              "image_path": "figures/2611.04794/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 483
+            },
+            {
+              "caption": "Figure 8. Throughput as the number of concurrent requests grows. The numbers above the bars give Bevy’s speedup over the fastest baseline. Even without prefetching, Bevy achieves the highest throughput in every configuration.",
+              "figure_id": "figure-8-4",
+              "figure_number": "8",
+              "height": 424,
+              "image_path": "figures/2611.04794/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 1009
+            },
+            {
+              "caption": "Figure 7. Operation of opportunistic layerwise grouping. (a) With many misses, only R2 is ready when R1 finishes, so R2 runs alone. (b) With few misses, R2, R3, and R4 are all ready and run together as one batch.",
+              "figure_id": "figure-7-1",
+              "figure_number": "7",
+              "height": 252,
+              "image_path": "figures/2611.04794/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1013
+            },
+            {
+              "caption": "Figure 1. Timeline of two concurrent requests, R1 and R2. (a) With batching, the GPU idles during fetches and the link idles during computation. (b) Same as (a), but predicted experts are prefetched during computation. Because prediction is never perfect, prefetching unnecessary experts wastes both bandwidth and GPU memory. (c) Each request runs without waiting for the other’s fetches, so fetches overlap with computation.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 317,
+              "image_path": "figures/2611.04794/figure-004.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 486
+            },
+            {
+              "caption": "Figure 11. Mean step time against the number of missing experts per step, for static groupings and Bevy’s opportunistic layerwise grouping. Which static grouping is fastest depends on the number of missing experts, while Bevy achieves the lowest step time at every point by adapting groups to the missing experts at each layer.",
+              "figure_id": "figure-11-9",
+              "figure_number": "11",
+              "height": 285,
+              "image_path": "figures/2611.04794/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 487
+            },
+            {
+              "caption": "Figure 5. Accumulated extra misses over the mean for four concurrent requests ranked by their misses in layers 0–3 (Qwen3.6-35BA3B, ShareGPT, 30% expert cache).",
+              "figure_id": "figure-5-7",
+              "figure_number": "5",
+              "height": 263,
+              "image_path": "figures/2611.04794/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 487
+            },
+            {
+              "caption": "Figure 4. Compute and fetch time per step for six concurrent requests (Gemma4-26B-A4B, Agentic Coding, 30% expert cache, Apple M6). (a) Compute time when the requests run in 1, 2, 3, or 6 groups. (b) Fetch time of each step over 256 steps.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 263,
+              "image_path": "figures/2611.04794/figure-007.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 485
+            },
+            {
+              "caption": "Figure 10. (a) Step time split by whether the link and the GPU are busy or idle. (b) Expert fetches per step: missing experts fetched on demand, and prefetched experts that the step needed or wasted. Bevy keeps the link and the GPU busy together for most of the step while fetching only the experts that the requests need.",
+              "figure_id": "figure-10-5",
+              "figure_number": "10",
+              "height": 250,
+              "image_path": "figures/2611.04794/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 485
+            },
+            {
+              "caption": "Figure 13. (a) Throughput of Bevy and Bevy + Prefetch as the number of concurrent requests grows. (b) Expert prefetches per step, split into needed and wasted. Prefetching does not improve the throughput of Bevy: with few requests, many prefetches are wasted, and with more requests, the link has no idle time left for prefetching.",
+              "figure_id": "figure-13-3",
+              "figure_number": "13",
+              "height": 247,
+              "image_path": "figures/2611.04794/figure-009.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 487
+            },
+            {
+              "caption": "Figure 12. (a) Change in GPU busy time, GPU idle time, and step time relative to Bevy when the fetch order, the compute order, or both are changed. (b) Share of groups by group size, the number of jobs that run together as one batch. Lowest-layer-first compute ordering creates batching opportunities: it forms larger groups, and the GPU busy time it saves outweighs the increase in GPU idle time.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 223,
+              "image_path": "figures/2611.04794/figure-010.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 485
+            }
+          ],
+          "first_seen_at": "2026-11-03T21:00:00-05:00",
+          "hero_figure": "figures/2611.04794/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2611.04794",
+          "relevance": 8,
+          "selection_reason": "Proposes Bevy, a system for accelerating MoE inference by interleaving concurrent requests and using a self-balancing scheduler. This addresses inference efficiency and optimization, fitting the Efficient AI subtopic.",
+          "summary_status": "generated",
+          "title": "Accelerating Offloading-Based MoE Inference by Interleaving Concurrent Requests",
+          "tldr": "Bevy accelerates local MoE inference by scheduling concurrent requests to overlap expert fetching with computation, avoiding inaccurate prefetch predictions.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Attention is known to be sparse in vision transformers. In particular, we analyze the unequal relevance of attention-matrix columns to the final computation and show that this phenomenon becomes increasingly pronounced with network depth. This can be interpreted as saying that tokens have an absolute importance for the attention process, independently of queries. Inspired by this, we propose a reformulation of the attention formula that makes this phenomenon explicit by adding an input-dependent bias to the query-key dot product. We show that this new term gives each token a scalar value indicating its anticipated influence on other tokens during the attention process, and can thus serve as a proxy for pruning attention maps. Across multiple transformer model sizes, this allows us to substantially reduce the computational cost of attention, in terms of both FLOPs and inference latency, while retaining most of the original classification accuracy. We publicly released the code and models at https://github.com/EIDOSLAB/AttentionWithBias.",
+          "arxiv_id": "2611.04657",
+          "arxiv_url": "https://arxiv.org/abs/2611.04657",
+          "authors": [
+            "Charles Herr, Gabriele Spadaro, Enzo Tartaglione"
+          ],
+          "bullets": [
+            "Attention-matrix columns contribute unequally to the final computation, with this imbalance increasing at greater network depth.",
+            "The method adds an input-dependent bias to query–key dot products to estimate each token’s anticipated influence on others.",
+            "These scalar token scores act as a proxy for pruning attention maps.",
+            "Across multiple transformer sizes, pruning substantially reduces attention FLOPs and inference latency while retaining most classification accuracy.",
+            "Code and models are publicly released."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 11. Attention maps for DeiT-S at layers {1, 3, 4, 8, 9, 11} (columns), head 4, across several ImageNet validation images (rows). The transition from diagonal to vertical attention structure is visible and consistent across all images, confirming that column sparsity is a systematic property of the attention mechanism rather than an image-specific artifact.",
+              "figure_id": "figure-11-14",
+              "figure_number": "11",
+              "height": 514,
+              "image_path": "figures/2611.04657/figure-001.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 2. Bias-based pruning pipeline. The importance score b is computed first (shaded) and selects the kept set K. All queries are kept, but keys and values are computed only for the kept tokens, so the pruned columns are never materialized.",
+              "figure_id": "figure-2-25",
+              "figure_number": "2",
+              "height": 214,
+              "image_path": "figures/2611.04657/figure-002.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 473
+            },
+            {
+              "caption": "Figure 12. Attention maps for DeiT-B at layers {1, 3, 4, 8, 9, 11} (columns), head 7, across several ImageNet validation images (rows). The same depth-wise evolution observed in DeiT-Ti and DeiT-S is reproduced here, showing that column sparsity is not specific to a particular model width.",
+              "figure_id": "figure-12-26",
+              "figure_number": "12",
+              "height": 513,
+              "image_path": "figures/2611.04657/figure-003.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 16. Decomposition of the attention logits for DeiT-Bb at layers {1, 3, 5, 7, 9, 11}, head 2. The depth-wise takeover of the bias term is visible across all three model sizes, confirming that the learned bias captures a universal property of deep vision-transformer attention.",
+              "figure_id": "figure-16-8",
+              "figure_number": "16",
+              "height": 563,
+              "image_path": "figures/2611.04657/figure-004.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 17. Decomposition of the attention logits (QK⊤, b, and QK⊤ + b) for MAE-pretrained ViT-Lb at layers {3, 7, 11, 15, 19, 22}, head 2. The model is fine-tuned with the bias term but without top-k pruning. As depth increases, the bias progressively captures the vertical, query-independent structure of the combined logits, reproducing the behavior observed for DeiT.",
+              "figure_id": "figure-17-9",
+              "figure_number": "17",
+              "height": 563,
+              "image_path": "figures/2611.04657/figure-005.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 3. Attention maps at different depths of the pretrained DeiT-S model. Vertical lines naturally emerge in the last layers.",
+              "figure_id": "figure-3-32",
+              "figure_number": "3",
+              "height": 145,
+              "image_path": "figures/2611.04657/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 482
+            },
+            {
+              "caption": "Figure 20. Scatter plots for DeiT-Bb at layers {1, 3, 5, 7, 9, 11}, head 2, across multiple validation images. The depth-wise growth of r is reproduced in the larger model, confirming that the relationship between the bias and the query-averaged column importance is a property of the attention mechanism rather than of a specific model scale.",
+              "figure_id": "figure-20-16",
+              "figure_number": "20",
+              "height": 532,
+              "image_path": "figures/2611.04657/figure-007.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1016
+            },
+            {
+              "caption": "Figure 10. Attention maps for DeiT-Ti at layers {1, 3, 4, 8, 9, 11} (columns), head 2, across several ImageNet validation images (rows). In all cases the attention evolves from a diagonal, locally-concentrated pattern in early layers to strongly column-sparse maps in the final blocks, where a small number of tokens attract the attention of virtually all queries.",
+              "figure_id": "figure-10-15",
+              "figure_number": "10",
+              "height": 515,
+              "image_path": "figures/2611.04657/figure-008.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 13. Attention maps for the MAE-pretrained ViT-L at layers {3, 7, 11, 15, 19, 22} (columns), head 11, across several ImageNet validation images (rows). Despite its greater depth and different pretraining strategy, ViT-L exhibits the same transition from predominantly diagonal attention in early blocks to increasingly column-sparse patterns in deeper blocks.",
+              "figure_id": "figure-13-27",
+              "figure_number": "13",
+              "height": 515,
+              "image_path": "figures/2611.04657/figure-009.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 1014
+            },
+            {
+              "caption": "Figure 8. Global versus query-dependent column selection in the original pretrained DeiT-S, averaged over all attention heads and 200 ImageNet-1K validation images. (a–c) Retained attention mass at different keep ratios. (d) Oracle gap ∆ = Cquery − Cglobal across all evaluated keep ratios.",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 323,
+              "image_path": "figures/2611.04657/figure-010.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1009
+            },
+            {
+              "caption": "Figure 15. Decomposition of the attention logits for DeiT-Sb at layers {1, 3, 5, 7, 9, 11}, head 2. The bias term increasingly dominates the combined logits with depth, consistently with Fig. 4 and Fig. 5 of the main paper.",
+              "figure_id": "figure-15-30",
+              "figure_number": "15",
+              "height": 564,
+              "image_path": "figures/2611.04657/figure-011.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 1021
+            },
+            {
+              "caption": "Figure 14. Decomposition of the attention logits (QK⊤, b, QK⊤ + b) for DeiT-Tib at layers {1, 3, 5, 7, 9, 11}, head 2. In the early layers, QK⊤ dominates with a strong diagonal pattern. With increasing depth the bias b progressively captures the vertical structures, until in the final layers it accounts for most of the visible structure in the combined logits QK⊤ + b.",
+              "figure_id": "figure-14-31",
+              "figure_number": "14",
+              "height": 563,
+              "image_path": "figures/2611.04657/figure-012.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 19. Scatter plots for DeiT-Sb at layers {1, 3, 5, 7, 9, 11}, head 2, across multiple validation images. The correlation reaches r ≈ 0.98 in the final layer, independently of the input image, showing that the bias approximates the query-averaged column importance with high fidelity in the deeper blocks.",
+              "figure_id": "figure-19-12",
+              "figure_number": "19",
+              "height": 532,
+              "image_path": "figures/2611.04657/figure-013.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1017
+            },
+            {
+              "caption": "Figure 18. Scatter plots of the learned bias b versus meanq(QK⊤)k for DeiT-Tib at layers {1, 3, 5, 7, 9, 11} (columns), head 2, across multiple validation images (rows). The Pearson correlation r reported per panel grows steadily with depth and remains consistent across images, confirming that the bias provides a reliable surrogate across different input images of column importance.",
+              "figure_id": "figure-18-13",
+              "figure_number": "18",
+              "height": 532,
+              "image_path": "figures/2611.04657/figure-014.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 1013
+            },
+            {
+              "caption": "Figure 4. Decomposition of the attention logits at different network depths.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 509,
+              "image_path": "figures/2611.04657/figure-015.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 482
+            },
+            {
+              "caption": "Figure 1. Bias-based column pruning. The learned bias provides a query-independent importance score for each token, allowing lowbias columns to be removed before computing keys and values. Attention is then evaluated only over the retained set K, reducing its size from N ×N to N × |K|.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 363,
+              "image_path": "figures/2611.04657/figure-016.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 479
+            },
+            {
+              "caption": "Figure 7. Accuracy-efficiency trade-off for ToME [2], our biasbased column pruning (star), and their combination on DeiT-S. The dashed line denotes the original DeiT-S accuracy.",
+              "figure_id": "figure-7-24",
+              "figure_number": "7",
+              "height": 187,
+              "image_path": "figures/2611.04657/figure-017.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 469
+            },
+            {
+              "caption": "Figure 5. Learned bias b versus the per-column mean of the querykey logits meanq(QK⊤), at three depths. The correlation grows with depth (r reported per panel).",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 163,
+              "image_path": "figures/2611.04657/figure-018.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 485
+            },
+            {
+              "caption": "Figure 6. Layer-wise Pearson correlation between the learned bias and the mean attention received by each column.",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 165,
+              "image_path": "figures/2611.04657/figure-019.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 428
+            },
+            {
+              "caption": "Figure 21. Learned bias b versus the per-column mean meanq(QK⊤)k for MAE-pretrained ViT-Lb at layers {3, 7, 11, 15, 19, 22} (columns), head 2, across multiple ImageNet validation images (rows). The Pearson correlation reported in each panel becomes stronger with depth, showing that the bias also learns a reliable proxy for query-averaged column importance in ViT-L.",
+              "figure_id": "figure-21-17",
+              "figure_number": "21",
+              "height": 531,
+              "image_path": "figures/2611.04657/figure-020.webp",
+              "kind": "figure",
+              "page": 23,
+              "width": 1016
+            },
+            {
+              "caption": "Figure 9. Layer-wise Pearson correlation between the learned bias and the pre-softmax per-column mean meanq(QK⊤). The correlation grows steadily with depth, reaching r ≈ 0.98 in the final layer, confirming that the bias serves as an effective and cheap surrogate of column importance.",
+              "figure_id": "figure-9-28",
+              "figure_number": "9",
+              "height": 200,
+              "image_path": "figures/2611.04657/figure-021.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 381
+            },
+            {
+              "caption": "Table 11. Inference latency (ms) of the original and bias-pruned models using the math and efficient attention backends. Measurements use a single 1024×1024 image on one NVIDIA A40 GPU. Values in parentheses report the speedup of the pruned model over its corresponding original model.",
+              "figure_id": "table-11-6",
+              "figure_number": "11",
+              "height": 542,
+              "image_path": "figures/2611.04657/table-022.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 1036
+            },
+            {
+              "caption": "Table 1. Accuracy and efficiency of bias-based attention pruning on ImageNet-1k. End-to-end inference latency, including bias computation, top-k selection, index gathering, and all remaining model operations, is measured with the math attention backend on a single 1024× 1024 image on one NVIDIA A40 GPU.",
+              "figure_id": "table-1-10",
+              "figure_number": "1",
+              "height": 309,
+              "image_path": "figures/2611.04657/table-023.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 496
+            },
+            {
+              "caption": "Table 2. Object detection and instance segmentation on COCO val2017. Both models use Mask R-CNN with a DeiT-S backbone and the same ViTDet-style training recipe. GFLOPs and end-to-end latency are reported for the isolated backbone and the complete detector. Latency is measured in full precision with the math attention backend on one NVIDIA A40 GPU using a single 1024× 1024 image.",
+              "figure_id": "table-2-11",
+              "figure_number": "2",
+              "height": 93,
+              "image_path": "figures/2611.04657/table-024.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 491
+            },
+            {
+              "caption": "Table 6. Accuracy and efficiency of bias-based attention pruning on ImageNet-1k with different pruning schedules. Inference latency is measured with the math attention backend on a single 1024× 1024 image on one NVIDIA A40 GPU.",
+              "figure_id": "table-6-29",
+              "figure_number": "6",
+              "height": 147,
+              "image_path": "figures/2611.04657/table-025.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 496
+            },
+            {
+              "caption": "Table 9. Results of the top-k pruning strategy on ImageNet100. The pruning ratio denotes the fraction of removed attention columns. The top-k value is expressed as the fraction of tokens that are kept.",
+              "figure_id": "table-9-20",
+              "figure_number": "9",
+              "height": 238,
+              "image_path": "figures/2611.04657/table-026.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 496
+            },
+            {
+              "caption": "Table 10. ImageNet100 accuracy when replacing the query–key term with the broadcast bias in the last transformer blocks. “Query-key-free blocks” denote the number of final blocks using only 1b⊤.",
+              "figure_id": "table-10-21",
+              "figure_number": "10",
+              "height": 163,
+              "image_path": "figures/2611.04657/table-027.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 496
+            },
+            {
+              "caption": "Table 12. CPU inference latency (ms) of the original and biaspruned models. Measurements use one 1024×1024 image on an AMD EPYC 7402 processor with 12 CPU threads and the math attention backend. We report the mean and standard deviation over 20 runs after 5 warm-up iterations. Parentheses indicate the speedup over the corresponding original model.",
+              "figure_id": "table-12-33",
+              "figure_number": "12",
+              "height": 124,
+              "image_path": "figures/2611.04657/table-028.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 496
+            },
+            {
+              "caption": "Table 4. Effect of applying top-k pruning during training and inference on ImageNet-1k. All configurations use DeiT-Sb and the 0.9 ↘ 0.1 keep-ratio schedule whenever pruning is enabled.",
+              "figure_id": "table-4-22",
+              "figure_number": "4",
+              "height": 135,
+              "image_path": "figures/2611.04657/table-029.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 496
+            },
+            {
+              "caption": "Table 3. Comparison with 30% ℓ2-norm structured pruning on DeiT-S. Latency is measured with the math attention backend at 1024× 1024 resolution on one NVIDIA A40 GPU.",
+              "figure_id": "table-3-23",
+              "figure_number": "3",
+              "height": 121,
+              "image_path": "figures/2611.04657/table-030.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 496
+            },
+            {
+              "caption": "Table 5. Training recipe used for the ImageNet100 experiments. RandAugment “2/9” denotes 2 operations at magnitude 9, following the torchvision implementation. Mixup (α = 0.2) and Cutmix (α = 1.0) intensities follow the PyTorch convention: α is the parameter of the symmetric Beta distribution from which the mixing coefficient is sampled.",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 322,
+              "image_path": "figures/2611.04657/table-031.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 350
+            },
+            {
+              "caption": "Table 7. Ablation of the column-selection strategy on ImageNet100 using ViT-Sb. The pruning ratio denotes the fraction of removed attention columns.",
+              "figure_id": "table-7-18",
+              "figure_number": "7",
+              "height": 76,
+              "image_path": "figures/2611.04657/table-032.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 496
+            },
+            {
+              "caption": "Table 8. Results of the probability-threshold pruning strategy on ImageNet100. The pruning ratio denotes the fraction of removed attention columns and is measured at the end of training.",
+              "figure_id": "table-8-19",
+              "figure_number": "8",
+              "height": 67,
+              "image_path": "figures/2611.04657/table-033.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 496
+            }
+          ],
+          "first_seen_at": "2026-11-03T21:00:00-05:00",
+          "hero_figure": "figures/2611.04657/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2611.04657",
+          "relevance": 8,
+          "selection_reason": "Proposes a bias-based attention reformulation enabling attention map pruning, directly relevant to efficient AI.",
+          "summary_status": "generated",
+          "title": "Exploiting Biases in Attention for Transformers",
+          "tldr": "The paper exposes depth-amplified token-importance biases in vision-transformer attention and uses them to prune attention computation with limited accuracy loss.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "In this paper, we introduce the Cone Alignment Index (CAI), a scale-invariant sparsity measure associated with a Lorentz-cone geometry. We provide a probabilistic analysis of the distribution of the CAI score, including a general theorem and explicit corollaries for Gaussian and uniform distributions. As a consequence, we show that, in the high-sparsity regime, the probability that the samples lie within the convex cone tends to one. Building upon this formulation, we derive two complementary projections: the \\emph{Parametric Linear Conic Projection} (PLCP), an efficient closed-form approximation, and the \\emph{Parametric Euclidean Conic Projection} (PECP), the exact Euclidean projection onto the cone boundary. Our analysis establishes several fundamental theoretical properties. We prove that PLCP and PECP are collinear, differ only by a positive radial scaling factor, and induce exactly the same sparsity threshold, thereby preserving an identical active support. Furthermore, we derive a support-identification theorem showing that, for any prescribed sparsity level $l<n$, the number of coefficients discarded at each iteration is theoretically controlled. Building on this theoretical foundation, we develop a bilevel PLCP framework for structured matrix sparsification. The proposed method naturally generates hardware-friendly structured sparsity patterns, including row-wise, column-wise, and diagonal masks, making it particularly well suited for accelerating Transformer attention mechanisms.",
+          "arxiv_id": "2611.04479",
+          "arxiv_url": "https://arxiv.org/abs/2611.04479",
+          "authors": [
+            "Michel Barlaud, Clement Genninasca, Maxime Zanella, Benoit Macq, Benoit Legat"
+          ],
+          "bullets": [
+            "Defines the scale-invariant Cone Alignment Index (CAI) and analyzes its distribution under general, Gaussian, and uniform settings.",
+            "Proposes PLCP, a closed-form conic projection approximation, alongside PECP, the exact Euclidean projection.",
+            "Proves PLCP and PECP are collinear, preserve the same sparsity threshold, and identify identical active supports.",
+            "Establishes theoretical control over the number of coefficients discarded for a target sparsity level.",
+            "Extends PLCP to bilevel matrix sparsification with row-wise, column-wise, and diagonal structured masks."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: CAI score asymptotic distribution.",
+              "figure_id": "figure-1-7",
+              "figure_number": "1",
+              "height": 337,
+              "image_path": "figures/2611.04479/figure-001.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 506
+            },
+            {
+              "caption": "Figure 2: Synthetic Gaussian distribution with µ σ active size: Average activeset size after five PLCP iterations as a function of the target parameter l for synthetic Gaussian data. Results are reported for different values of µ/σ and compared with the theoretical bound (green).",
+              "figure_id": "figure-2-12",
+              "figure_number": "2",
+              "height": 343,
+              "image_path": "figures/2611.04479/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 506
+            },
+            {
+              "caption": "Figure 3: Illustration of Algorithm 1 with l = 1.8 starting x = (1.78, 1.4, 1). The boundary of the CAI cone is represented by the blue and orange surfaces. The red circle in the interior of the cone is the starting x. After one iteration of the algorithm, x3 is set to 0 and we obtain the second red dot. This point belongs to the blue face in the x1–x2 plane which is itself a two-dimensional CAI cone. The yellow star represents d and the green circle is the output λx+ (1− λ)d.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 538,
+              "image_path": "figures/2611.04479/figure-003.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 504
+            },
+            {
+              "caption": "Figure 4: Convergence of the active support size for different size of the Gaussian data as a function of loop number.",
+              "figure_id": "figure-4-6",
+              "figure_number": "4",
+              "height": 335,
+              "image_path": "figures/2611.04479/figure-004.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 506
+            },
+            {
+              "caption": "Figure 5: Up: runtime comparison of PLCP vs GSP as a function of the size of matrices. bottom: quadratic fit of the speed-up of PLCP vs GSP as a function of the size of matrices using an NVIDIA A100 GPU.",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 648,
+              "image_path": "figures/2611.04479/figure-005.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 438
+            },
+            {
+              "caption": "Figure 6: Runtime comparison of different one-dimensional PLCP implementations: iterative PLCP (blue), GPU-friendly TopK PLCP (red), and fully sorted PLCP (green) on a M3 apple CPU",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 366,
+              "image_path": "figures/2611.04479/figure-006.webp",
+              "kind": "figure",
+              "page": 25,
+              "width": 506
+            },
+            {
+              "caption": "Figure 8: PLCP vs GSP, Pruning and BigBird: sparsity–accuracy trade-off. Left: QNLI dataset. Right: QQP dataset.",
+              "figure_id": "figure-8-9",
+              "figure_number": "8",
+              "height": 258,
+              "image_path": "figures/2611.04479/figure-007.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 714
+            },
+            {
+              "caption": "Figure 9: PLCP vs GSP, Pruning and BigBird: sparsity–accuracy trade-off. Left: GLUE MNLI dataset; Right: SuperGLUE WiC dataset",
+              "figure_id": "figure-9-10",
+              "figure_number": "9",
+              "height": 256,
+              "image_path": "figures/2611.04479/figure-008.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 714
+            },
+            {
+              "caption": "Figure 7: PLCP vs GSP, Pruning and BigBird: sparsity–accuracy trade-off. SST-2 dataset",
+              "figure_id": "figure-7-2",
+              "figure_number": "7",
+              "height": 256,
+              "image_path": "figures/2611.04479/figure-009.webp",
+              "kind": "figure",
+              "page": 26,
+              "width": 356
+            },
+            {
+              "caption": "Table 3: Ablation. Accuracy at 90% attention sparsity. Baseline (no projection), BigBird, PLCP, GSP and Pruning",
+              "figure_id": "table-3-3",
+              "figure_number": "3",
+              "height": 158,
+              "image_path": "figures/2611.04479/table-010.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 560
+            },
+            {
+              "caption": "Table 2: Comparison between PLCP and PECP on QNLI dataset for different CAI constraint levels l.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 106,
+              "image_path": "figures/2611.04479/table-011.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 623
+            },
+            {
+              "caption": "Table 1: Average standard deviation of classification accuracy across random seeds for BigBird, PLCP, GSP, and structured pruning.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 56,
+              "image_path": "figures/2611.04479/table-012.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 573
+            }
+          ],
+          "first_seen_at": "2026-11-03T21:00:00-05:00",
+          "hero_figure": "figures/2611.04479/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.04479",
+          "relevance": 9,
+          "selection_reason": "Introduces a conic-projection-based structured sparse attention method specifically aimed at accelerating Transformer attention, directly fitting efficient-attention research.",
+          "summary_status": "generated",
+          "title": "A Parametric Linear Conic Projection for Structured Sparse Attention",
+          "tldr": "The paper introduces a cone-based sparsity measure and efficient projection method that theoretically controls support selection while producing hardware-friendly structured sparsity for Transformer attention.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "We introduce a training-free sparse attention method that builds a prompt-specific key index to accelerate both prefill and decoding. The method clusters the keys into large semantic blocks that group tokens from noncontiguous positions. Each query position selects blocks by scoring their centroids and attends to the original keys and values within them. Queries that select the same block are processed together, so prefill stays fast even though each query chooses its own blocks. Large blocks make centroid scoring and this grouped processing cheap, so each query can attend to more tokens in the same time. Larger blocks with a larger token budget can thus be both faster and more accurate on long-context tasks than smaller blocks with a smaller budget. We evaluate two hybrid LLMs, Qwen3.5-4B and 35B-A3B, on one NVIDIA H200. Including the cost of building and using the index, whole-model wall-clock speedups over dense attention are 2.3-2.4x for prefill and 1.7-2.0x for decoding at 512K tokens, and 2.9-3.0x for prefill at 1M. The 35B-A3B model stays close to dense attention on five RULER tasks through 1M, on LongBench-v2 overall, and on MRCR through 256K. The 4B model loses accuracy mainly on multi-key retrieval, yet outperforms dense Qwen3.5-2B, whose latency is similar at 512K, on all three benchmarks.",
+          "arxiv_id": "2611.04313",
+          "arxiv_url": "https://arxiv.org/abs/2611.04313",
+          "authors": [
+            "Sosuke Kobayashi, Shoichiro Yamaguchi, Seiya Tokui"
+          ],
+          "bullets": [
+            "Builds a prompt-specific index by clustering noncontiguous keys into large semantic blocks.",
+            "Each query scores block centroids, then attends to the original keys and values within selected blocks.",
+            "Groups queries selecting the same blocks to keep prefill efficient despite query-specific routing.",
+            "On one H200, whole-model speedups reach 2.3–2.4× for 512K prefill, 1.7–2.0× for 512K decoding, and 2.9–3.0× for 1M prefill.",
+            "The 35B-A3B model remains close to dense attention on several long-context evaluations; the 4B model mainly degrades on multi-key retrieval."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Prefill and decode latency on one H200 with a token budget of L/16 for a prompt of L tokens. Whole-model latency is measured by wall clock, and full-attention layers (shaded) by GPU time. The rows are Qwen3.5-4B (top) and 35B-A3B (bottom). Dense (2B) is Qwen3.5-2B. Speedups are over dense attention (Tables 13 and 31).",
+              "figure_id": "figure-1-16",
+              "figure_number": "1",
+              "height": 434,
+              "image_path": "figures/2611.04313/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 827
+            },
+            {
+              "caption": "Figure 4: GPU-time breakdown for a 512K prefill on Qwen3.5-4B. The upper panel shows wholemodel GPU time, and the lower panel breaks down our attention-kernel time (Table 14). Times are profiler totals, not wall-clock latency.",
+              "figure_id": "figure-4-17",
+              "figure_number": "4",
+              "height": 229,
+              "image_path": "figures/2611.04313/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 382
+            },
+            {
+              "caption": "Figure 14: FlashPrefill V2 in SGLang and our method in vLLM on Qwen3.5-4B at 512K, against time on each engine (top) and against time relative to dense attention on the same engine (bottom). Labels are our budget K and the threshold α of FlashPrefill V2.",
+              "figure_id": "figure-14-49",
+              "figure_number": "14",
+              "height": 476,
+              "image_path": "figures/2611.04313/figure-003.webp",
+              "kind": "figure",
+              "page": 31,
+              "width": 678
+            },
+            {
+              "caption": "Figure 9: Qwen3.5-4B latency on one H200 at K = L/16. The columns show whole-model wallclock latency (left) and GPU time over the eight full-attention layers (right). The rows show prefill (top) and decoding (bottom).",
+              "figure_id": "figure-9-23",
+              "figure_number": "9",
+              "height": 437,
+              "image_path": "figures/2611.04313/figure-004.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 717
+            },
+            {
+              "caption": "Figure 17: Nemotron 3.5 Lightning, latency against prompt length on one H200 at K = L/16 for three target mean block sizes u, with the doubled budget K = L/8 at u = 2,048 dashed. The left column is the whole model by wall clock and the right column the six full-attention layers by profiler accounting. The rows are prefill and decoding. The brackets are dense over ours at u = 2,048 and K = L/16, under the conditions of Table 35.",
+              "figure_id": "figure-17-6",
+              "figure_number": "17",
+              "height": 412,
+              "image_path": "figures/2611.04313/figure-005.webp",
+              "kind": "figure",
+              "page": 38,
+              "width": 685
+            },
+            {
+              "caption": "Figure 16: Qwen3.5-35B-A3B latency on one H200 at K = L/16. The columns show whole-model wall-clock latency (left) and GPU time over the ten full-attention layers (right). The rows show prefill (top) and decoding (bottom).",
+              "figure_id": "figure-16-40",
+              "figure_number": "16",
+              "height": 412,
+              "image_path": "figures/2611.04313/figure-006.webp",
+              "kind": "figure",
+              "page": 36,
+              "width": 679
+            },
+            {
+              "caption": "Figure 15: Prompt-attention coverage by full-attention layer at K = L/16 under our centroid scores, dense-ranked clusters, and dense-ranked tokens, on ten 512K examples per task, for Qwen3.5-4B (top, eight layers) and Qwen3.5-35B-A3B (bottom, ten). All curves use dense-model states.",
+              "figure_id": "figure-15-29",
+              "figure_number": "15",
+              "height": 340,
+              "image_path": "figures/2611.04313/figure-007.webp",
+              "kind": "figure",
+              "page": 33,
+              "width": 802
+            },
+            {
+              "caption": "Figure 6: Cluster size and token budget on MK2 at 512K, Qwen3.5-4B. Larger clusters with a larger budget can improve both accuracy and latency over finer clusters with a smaller budget.",
+              "figure_id": "figure-6-37",
+              "figure_number": "6",
+              "height": 295,
+              "image_path": "figures/2611.04313/figure-008.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 374
+            },
+            {
+              "caption": "Figure 18: GPU time of one 512K prefill on Nemotron 3.5 Lightning at K = L/16 by cluster size u, drawn as Figure 7.",
+              "figure_id": "figure-18-21",
+              "figure_number": "18",
+              "height": 437,
+              "image_path": "figures/2611.04313/figure-009.webp",
+              "kind": "figure",
+              "page": 39,
+              "width": 827
+            },
+            {
+              "caption": "Figure 13: Quality against prefill time over token budgets from L/64 to L/8 on Qwen3.5-4B and Qwen3.5-35B-A3B.",
+              "figure_id": "figure-13-20",
+              "figure_number": "13",
+              "height": 294,
+              "image_path": "figures/2611.04313/figure-010.webp",
+              "kind": "figure",
+              "page": 29,
+              "width": 801
+            },
+            {
+              "caption": "Figure 5: MK-3 and MK-2 accuracy against prefill latency on Qwen3.5-4B at 512K, without and with an initial block of 1,024 positions. Numbers are the positional block size B, and g is the number of queries sharing one selection. Adding the initial block has little effect on prefill time (Appendix F.4). We therefore reuse timings measured without it for per-query selection and shared semantic selection.",
+              "figure_id": "figure-5-18",
+              "figure_number": "5",
+              "height": 217,
+              "image_path": "figures/2611.04313/figure-011.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 802
+            },
+            {
+              "caption": "Figure 2: Keys are clustered separately for each layer and KV head. The query heads that share a KV head score the centroids separately (rh), and the sum of their scores (s) selects the clusters. Each head attends to the original KV of the selected clusters, together with recent tokens Dt, under a causal mask. Only positions at or before the query contribute to the attention sum.",
+              "figure_id": "figure-2-27",
+              "figure_number": "2",
+              "height": 209,
+              "image_path": "figures/2611.04313/figure-012.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 742
+            },
+            {
+              "caption": "Figure 11: Cluster size and token budget on MK-3 and MK-2 at 512K for Qwen3.5-4B, Qwen3.535B-A3B, and Nemotron 3.5 Lightning.",
+              "figure_id": "figure-11-43",
+              "figure_number": "11",
+              "height": 813,
+              "image_path": "figures/2611.04313/figure-013.webp",
+              "kind": "figure",
+              "page": 27,
+              "width": 802
+            },
+            {
+              "caption": "Figure 8: The order of operations in one prefill, shown for a full-attention layer and its feed-forward block, where “all” is every prompt position. Linear-attention layers follow the same order without the index.",
+              "figure_id": "figure-8-53",
+              "figure_number": "8",
+              "height": 166,
+              "image_path": "figures/2611.04313/figure-014.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 768
+            },
+            {
+              "caption": "Figure 10: Decode latency of Qwen3.5-4B after a 512K prompt, index updates included.",
+              "figure_id": "figure-10-45",
+              "figure_number": "10",
+              "height": 192,
+              "image_path": "figures/2611.04313/figure-015.webp",
+              "kind": "figure",
+              "page": 24,
+              "width": 490
+            },
+            {
+              "caption": "Figure 12: GPU time of one 512K prefill on Qwen3.5-35B-A3B by cluster size u and token budget K, drawn as Figure 7.",
+              "figure_id": "figure-12-36",
+              "figure_number": "12",
+              "height": 366,
+              "image_path": "figures/2611.04313/figure-016.webp",
+              "kind": "figure",
+              "page": 28,
+              "width": 475
+            },
+            {
+              "caption": "Figure 20: Five additional clusters containing color vocabulary, tokens in a passage about color, pronouns, UUID digits, and adjectives in MK-2 keys. Positions are token indices, and highlights mark member tokens. Rows are sorted by key–centroid cosine similarity, with a gap between the two ends.",
+              "figure_id": "figure-20-26",
+              "figure_number": "20",
+              "height": 164,
+              "image_path": "figures/2611.04313/figure-017.webp",
+              "kind": "figure",
+              "page": 42,
+              "width": 665
+            },
+            {
+              "caption": "Table 37: Sparse-attention methods as their papers describe and evaluate them. The groups are training-free methods aimed mainly at prefill, training-free methods aimed mainly at decoding, and methods with learned components. Learned components are those trained for sparsity beyond the pretrained model. Whole-model time means that the paper times the whole model, such as end-to-end latency, time to first token, or time per output token, rather than only the attention layer or kernel. DSA reports token costs derived from deployed-service benchmarks.",
+              "figure_id": "table-37-38",
+              "figure_number": "37",
+              "height": 512,
+              "image_path": "figures/2611.04313/table-018.webp",
+              "kind": "table",
+              "page": 40,
+              "width": 827
+            },
+            {
+              "caption": "Table 13: Qwen3.5-4B latency on one H200. Whole-model columns are wall-clock measurements, the attention-layer columns profiler totals over the eight full-attention layers. The last rows are the dense reference model, Qwen3.5-2B.",
+              "figure_id": "table-13-22",
+              "figure_number": "13",
+              "height": 377,
+              "image_path": "figures/2611.04313/table-019.webp",
+              "kind": "table",
+              "page": 22,
+              "width": 823
+            },
+            {
+              "caption": "Table 26: FlashPrefill V2 in SGLang and our method in vLLM on Qwen3.5-4B at 512K. Accuracy is on 100 prompts per task. Times are the prefill time of the latency prompt on vLLM and the median time to the first token over the 100 prompts on SGLang.",
+              "figure_id": "table-26-50",
+              "figure_number": "26",
+              "height": 317,
+              "image_path": "figures/2611.04313/table-020.webp",
+              "kind": "table",
+              "page": 31,
+              "width": 688
+            },
+            {
+              "caption": "Table 4: Main Qwen3.5-4B runtime parameters. Benchmark-specific budgets are described in Section 4.",
+              "figure_id": "table-4-9",
+              "figure_number": "4",
+              "height": 525,
+              "image_path": "figures/2611.04313/table-021.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 826
+            },
+            {
+              "caption": "Table 1: Long-context performance at K = L/16, with L the upper bound of the length bin for MRCR-8 and of the length band for LongBench-v2, and whole-model prefill latency at 1M. MRCR-8 reports a match ratio, and the other quality scores are percentages. At 1M, the multi-value prompts of RULER-5 are about 647K tokens long (Appendix C.3). Appendix F.3 gives other budgets.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 202,
+              "image_path": "figures/2611.04313/table-022.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 777
+            },
+            {
+              "caption": "Table 2: Centroid fitting data on Qwen3.5-4B at 512K (K = L/16).",
+              "figure_id": "table-2-46",
+              "figure_number": "2",
+              "height": 138,
+              "image_path": "figures/2611.04313/table-023.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 387
+            },
+            {
+              "caption": "Table 9: RULER-5 by task and length on the three models, in percent, on 100 examples per task at K = L/16. For the Qwen models, the ours rows are means over three clustering seeds, and the 35B-A3B model also has multi-key rows at half and a quarter of the budget at 512K. Nemotron is measured at 512K with one seed, and its last row doubles the budget. Common-word extraction beyond 128K is on the filled prompts, and the 1M multi-value prompts are about 647K tokens long (Appendix C.3).",
+              "figure_id": "table-9-51",
+              "figure_number": "9",
+              "height": 622,
+              "image_path": "figures/2611.04313/table-024.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 706
+            },
+            {
+              "caption": "Table 11: RULER-5 by length and task at 512K, without and with the initial block, on Qwen3.5-4B, Qwen3.5-35B-A3B, and Nemotron 3.5 Lightning. Qwen rows average three clustering seeds.",
+              "figure_id": "table-11-11",
+              "figure_number": "11",
+              "height": 388,
+              "image_path": "figures/2611.04313/table-025.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 806
+            },
+            {
+              "caption": "Table 7: RULER results of our method in the main table, Qwen3.5-4B at K = L/16 and u = 2,048, 100 items per task and length. Each entry is the mean (sample s.d.) over three clustering seeds. RULER-5 is the mean over the five tasks, and its s.d. is computed over the three seeds’ five-task means.",
+              "figure_id": "table-7-31",
+              "figure_number": "7",
+              "height": 129,
+              "image_path": "figures/2611.04313/table-026.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 700
+            },
+            {
+              "caption": "Table 23: Positional and semantic retrieval on Qwen3.5-4B at 512K, K = L/16, MK-3 and MK-2 accuracy in percent with n = 100, without and with the fixed initial block of Appendix D.3. B is positional block size and g query sharing span. Min/max rows describe each positional block by its minimum and maximum keys, and their shared rows use the averaged query. Our per-token row is the mean over three clustering seeds. A dash denotes an unmeasured entry.",
+              "figure_id": "table-23-13",
+              "figure_number": "23",
+              "height": 534,
+              "image_path": "figures/2611.04313/table-027.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 794
+            },
+            {
+              "caption": "Table 27: Mean prompt-attention coverage on ten 512K examples per task, Qwen3.5-4B.",
+              "figure_id": "table-27-28",
+              "figure_number": "27",
+              "height": 486,
+              "image_path": "figures/2611.04313/table-028.webp",
+              "kind": "table",
+              "page": 33,
+              "width": 802
+            },
+            {
+              "caption": "Table 35: Nemotron 3.5 Lightning latency on one H200 and MK-3 accuracy in percent (n = 100) by prompt length, at K = L/16 unless noted. The attention-layer columns are profiler totals over the six full-attention layers.",
+              "figure_id": "table-35-5",
+              "figure_number": "35",
+              "height": 367,
+              "image_path": "figures/2611.04313/table-029.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 798
+            },
+            {
+              "caption": "Table 21: The values behind Figure 11, Qwen3.5-4B and Qwen3.5-35B-A3B at 512K. A dash marks a point that was not measured.",
+              "figure_id": "table-21-35",
+              "figure_number": "21",
+              "height": 336,
+              "image_path": "figures/2611.04313/table-030.webp",
+              "kind": "table",
+              "page": 28,
+              "width": 640
+            },
+            {
+              "caption": "Table 25: Positional and semantic retrieval on Qwen3.5-4B at 512K with the smaller budget K = L/32, accuracy in percent with n = 100, without and with the fixed initial block, and 512K prefill time without it.",
+              "figure_id": "table-25-14",
+              "figure_number": "25",
+              "height": 254,
+              "image_path": "figures/2611.04313/table-031.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 822
+            },
+            {
+              "caption": "Table 31: Qwen3.5-35B-A3B latency on one H200 at K = L/16 and u = 2,048, as Table 13. Wholemodel columns are wall clock, the attention-layer columns profiler totals over the ten full-attention layers. The last rows halve and quarter the budget at 512K.",
+              "figure_id": "table-31-39",
+              "figure_number": "31",
+              "height": 296,
+              "image_path": "figures/2611.04313/table-032.webp",
+              "kind": "table",
+              "page": 36,
+              "width": 622
+            },
+            {
+              "caption": "Table 6: The clustering seed and the seeding procedure, with RULER multi-key accuracy in percent at K = L/16 and u = 2,048, 100 items per task and length.",
+              "figure_id": "table-6-32",
+              "figure_number": "6",
+              "height": 285,
+              "image_path": "figures/2611.04313/table-033.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 502
+            },
+            {
+              "caption": "Table 10: Qwen3.5-4B and Qwen3.5-2B under alternative context-extension settings at 512K, with multi-key and multi-value accuracy in percent, n = 100 per task, one clustering seed. Unqualified YaRN rows use factor four, and interpolation-only cancels attention-temperature scaling.",
+              "figure_id": "table-10-52",
+              "figure_number": "10",
+              "height": 274,
+              "image_path": "figures/2611.04313/table-034.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 502
+            },
+            {
+              "caption": "Table 12: MRCR-8 and LongBench-v2 of Qwen3.5-4B and Qwen3.5-35B-A3B without and with the initial block, the mean over three runs with the standard deviation across runs in parentheses.",
+              "figure_id": "table-12-12",
+              "figure_number": "12",
+              "height": 243,
+              "image_path": "figures/2611.04313/table-035.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 823
+            },
+            {
+              "caption": "Table 3: Clustering per KV head at u = 2,048, at the four prompt lengths we report.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 129,
+              "image_path": "figures/2611.04313/table-036.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 510
+            },
+            {
+              "caption": "Table 5: Qwen3.5-4B memory on one H200, in GiB. Dense totals are derived request-sized estimates that exclude excess preallocated cache capacity, while sparse peaks are measured allocated memory, so dense and sparse rows are accounted differently.",
+              "figure_id": "table-5-42",
+              "figure_number": "5",
+              "height": 192,
+              "image_path": "figures/2611.04313/table-037.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 794
+            },
+            {
+              "caption": "Table 19: The routing key on Qwen3.5-4B, with RULER multi-key and multi-value accuracy in percent at 512K, K = L/16, u = 2,048, 100 items per entry. Our row, the post-RoPE row, and the multi-key entries of the non-rotary row are means over three clustering seeds, and all other entries use seed 0. A dash marks an entry that was not measured.",
+              "figure_id": "table-19-7",
+              "figure_number": "19",
+              "height": 213,
+              "image_path": "figures/2611.04313/table-038.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 606
+            },
+            {
+              "caption": "Table 24: Positional and semantic retrieval on Qwen3.5-35B-A3B at 512K, K = L/16, without the initial block, MK-3 and MK-2 accuracy in percent with n = 100 (ours on clustering seed 0) and 512K prefill time.",
+              "figure_id": "table-24-15",
+              "figure_number": "24",
+              "height": 203,
+              "image_path": "figures/2611.04313/table-039.webp",
+              "kind": "table",
+              "page": 30,
+              "width": 582
+            },
+            {
+              "caption": "Table 20: The values behind Figure 6, Qwen3.5-4B at 512K.",
+              "figure_id": "table-20-8",
+              "figure_number": "20",
+              "height": 191,
+              "image_path": "figures/2611.04313/table-040.webp",
+              "kind": "table",
+              "page": 26,
+              "width": 508
+            },
+            {
+              "caption": "Table 30: Adapting Qwen3.5-4B to sparse attention with LoRA trained on 64K documents. RULER multi-key scores are accuracy (%), and MRCR-8 reports a mean match ratio. All configurations use the same sparse runtime and token budget.",
+              "figure_id": "table-30-30",
+              "figure_number": "30",
+              "height": 159,
+              "image_path": "figures/2611.04313/table-041.webp",
+              "kind": "table",
+              "page": 35,
+              "width": 506
+            },
+            {
+              "caption": "Table 34: Nemotron 3.5 Lightning, the 64K pilot behind the clustering settings, with MK-3 accuracy in percent on 20 items, K = L/16. Centering subtracts the mean key before routing, whitening scales the centered keys by their covariance, and iterations and samples are the k-means fit.",
+              "figure_id": "table-34-4",
+              "figure_number": "34",
+              "height": 150,
+              "image_path": "figures/2611.04313/table-042.webp",
+              "kind": "table",
+              "page": 38,
+              "width": 464
+            },
+            {
+              "caption": "Table 8: Every RULER task on Qwen3.5-4B at a nominal 512K, in percent, 100 items per task, K = L/16 except the last row, which halves it. Ours on the starred tasks and SQuAD is the mean over three clustering seeds, on the others one seed. The second row is the median length of each task’s prompts in thousands of tokens (Appendix C.3). S1–S3 are the single-needle tasks, MK-1 to MK-3 multi-key, MQ multi-query, MV multi-value, VT variable tracking, CWE and FWE common- and frequent-word extraction, SQuAD the QA task with its paragraphs repeated, and Hotpot HotpotQA. The starred tasks form RULER-5.",
+              "figure_id": "table-8-41",
+              "figure_number": "8",
+              "height": 106,
+              "image_path": "figures/2611.04313/table-043.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 829
+            },
+            {
+              "caption": "Table 14: GPU time in seconds for a 512K prefill on Qwen3.5-4B. The attention rows contain only FlashAttention-3 kernels, with scoring, selection, gathering, and merging reported separately. Totals come from profiling rather than the wall-clock medians in Table 13.",
+              "figure_id": "table-14-34",
+              "figure_number": "14",
+              "height": 409,
+              "image_path": "figures/2611.04313/table-044.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 464
+            },
+            {
+              "caption": "Table 15: Effect of the dense-prefix cutoff on Qwen3.5-4B at 512K and K = 32,768. Timings are GPU seconds for one prefill, and accuracy is measured on 100 examples per task.",
+              "figure_id": "table-15-33",
+              "figure_number": "15",
+              "height": 178,
+              "image_path": "figures/2611.04313/table-045.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 718
+            },
+            {
+              "caption": "Table 16: Ablation of the kernel design on Qwen3.5-4B at 512K and K = 32,768, with the prefill and decode times of each execution.",
+              "figure_id": "table-16-44",
+              "figure_number": "16",
+              "height": 150,
+              "image_path": "figures/2611.04313/table-046.webp",
+              "kind": "table",
+              "page": 24,
+              "width": 716
+            },
+            {
+              "caption": "Table 17: Qwen3.5-4B mean decode time over the full generation after a nominal 1M prompt, in milliseconds per token.",
+              "figure_id": "table-17-3",
+              "figure_number": "17",
+              "height": 129,
+              "image_path": "figures/2611.04313/table-047.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 582
+            },
+            {
+              "caption": "Table 18: Qwen3.5-4B LongBench-v2 accuracy (%) without and with flushing (F = 1,024, W = 512), on the same items and sampling seed. The sparse columns are separate runs from Table 1’s.",
+              "figure_id": "table-18-2",
+              "figure_number": "18",
+              "height": 110,
+              "image_path": "figures/2611.04313/table-048.webp",
+              "kind": "table",
+              "page": 25,
+              "width": 432
+            },
+            {
+              "caption": "Table 22: Qwen3.5-4B, MK-3 accuracy in percent (n = 100) and prefill speedup at each length and budget. The K = L/16 column is the three-seed mean of the main table, and the other entries are single runs.",
+              "figure_id": "table-22-19",
+              "figure_number": "22",
+              "height": 160,
+              "image_path": "figures/2611.04313/table-049.webp",
+              "kind": "table",
+              "page": 29,
+              "width": 728
+            },
+            {
+              "caption": "Table 29: Learning query and key maps for clustering and selection on Qwen3.5-4B. The left columns report held-out KL loss, retained attention mass, and selection parameters. The right columns report long-context task performance.",
+              "figure_id": "table-29-25",
+              "figure_number": "29",
+              "height": 133,
+              "image_path": "figures/2611.04313/table-050.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 830
+            },
+            {
+              "caption": "Table 33: Qwen3.5-35B-A3B on MRCR-8 (mean match ratio) and LongBench-v2 (accuracy over the same 470 items), thinking on, at K = L/16 and at half of it. Flushing uses F = 1,024 and W = 512 (Appendix E.5).",
+              "figure_id": "table-33-48",
+              "figure_number": "33",
+              "height": 161,
+              "image_path": "figures/2611.04313/table-051.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 644
+            },
+            {
+              "caption": "Table 32: Qwen3.5-35B-A3B, mean decode time after a 1M prompt in milliseconds per token, over 64 and over 65,536 generated tokens, K = L/16, one H200.",
+              "figure_id": "table-32-47",
+              "figure_number": "32",
+              "height": 129,
+              "image_path": "figures/2611.04313/table-052.webp",
+              "kind": "table",
+              "page": 37,
+              "width": 452
+            },
+            {
+              "caption": "Table 28: Cluster scoring on Qwen3.5-4B at 512K, u = 2,048, K = L/16. Accuracy (%) on 50 examples per task.",
+              "figure_id": "table-28-24",
+              "figure_number": "28",
+              "height": 108,
+              "image_path": "figures/2611.04313/table-053.webp",
+              "kind": "table",
+              "page": 34,
+              "width": 360
+            }
+          ],
+          "first_seen_at": "2026-11-03T21:00:00-05:00",
+          "hero_figure": "figures/2611.04313/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2611.04313",
+          "relevance": 8,
+          "selection_reason": "Training-free sparse attention with semantic block selection, directly relevant to efficient attention and long-context LLM inference.",
+          "summary_status": "generated",
+          "title": "Coarse Semantic Blocks for Efficient Training-Free Sparse Attention",
+          "tldr": "A training-free semantic-block index makes sparse attention substantially faster for long-context prefill and decoding while largely preserving accuracy.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Self-attention has become the standard for modern sequence modeling, enabling Transformers to model long-range dependencies across a wide range of modalities. Despite these advances, its quadratic cost with respect to sequence length remains a significant computational bottleneck. Recent work addresses this limitation by introducing linear variants of self-attention, namely with kernel approximations of the softmax operator. However, their first-order aggregation restricts expressivity and struggles to capture higher-order structure. We propose Linear Stochastic Attention (LiSA), a linear attention plug-in module that enables higher-order token interactions via a stochastic diffusion process based on truncated random walks. LiSA incorporates adaptive locality, favoring semantically similar neighbors to preserve fine-grained structures, while maintaining stable and efficient training. We conduct extensive experiments on classification, semantic segmentation, and object detection tasks and show improved results over state-of-the-art methods.",
+          "arxiv_id": "2611.04216",
+          "arxiv_url": "https://arxiv.org/abs/2611.04216",
+          "authors": [
+            "Sahar Dastani, Fereshteh Shakeri, Samuel Barbeau, Kunal Mahatha, Ismail Ben Ayed, Herve Lombaert, Christian Desrosiers"
+          ],
+          "bullets": [
+            "Addresses the quadratic sequence-length cost of standard self-attention and the limited expressivity of first-order linear attention.",
+            "Uses truncated random walks to enable higher-order token interactions within a linear-attention framework.",
+            "Employs adaptive locality to emphasize semantically similar neighbors and preserve fine-grained visual structure.",
+            "Evaluated on classification, semantic segmentation, and object detection, with improved results over state-of-the-art methods.",
+            "The abstract does not specify numerical gains or experimental datasets."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2. Overview of LiSA. We patchify the input image into tokens and treat them as nodes in a graph G = (V,E), where edge weights define a row-stochastic transition matrix S. Aggregating the truncated terms on S yields a global attention map that captures transitive (higher-order) dependencies. In parallel, we compute content-based similarity within each token’s local neighborhood to form a local attention map. The layer output is a convex combination of the two, blending sharp local context with long-range structure.",
+              "figure_id": "figure-2-15",
+              "figure_number": "2",
+              "height": 567,
+              "image_path": "figures/2611.04216/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 1036
+            },
+            {
+              "caption": "Figure 4. Visualization of attention behavior in DeiT-T.",
+              "figure_id": "figure-4-12",
+              "figure_number": "4",
+              "height": 470,
+              "image_path": "figures/2611.04216/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 496
+            },
+            {
+              "caption": "Figure 5. Efficiency comparison across sequence lengths.",
+              "figure_id": "figure-5-13",
+              "figure_number": "5",
+              "height": 177,
+              "image_path": "figures/2611.04216/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 491
+            },
+            {
+              "caption": "Figure 1. Softmax vs. Linear vs. Higher-order attention. Given Q,K, V ∈ Rn×d: softmax-attention forms QK⊤ then applies to V . Linear-attention computes K⊤V then applies to Q. Higherorder attention (ours) uses a truncation length T , retaining multiple diffusion terms while remaining linear in n and expanding the effective receptive field.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 152,
+              "image_path": "figures/2611.04216/figure-004.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 496
+            },
+            {
+              "caption": "Figure 3. Effect of truncation length T on DeiT-T accuracy, reported as mean ± standard deviation across three runs.",
+              "figure_id": "figure-3-8",
+              "figure_number": "3",
+              "height": 301,
+              "image_path": "figures/2611.04216/figure-005.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 345
+            },
+            {
+              "caption": "Table 11. Architectures of LiSA-PVT models. At all stages, the original PVT transformer blocks are removed (#PVT blocks = 0) and replaced with LiSA blocks.",
+              "figure_id": "table-11-9",
+              "figure_number": "11",
+              "height": 229,
+              "image_path": "figures/2611.04216/table-006.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 496
+            },
+            {
+              "caption": "Table 12. Architecture of the LiSA-Swin model. At all stages, the original Swin transformer blocks are removed (#Swin blocks = 0) and replaced with LiSA blocks.",
+              "figure_id": "table-12-11",
+              "figure_number": "12",
+              "height": 192,
+              "image_path": "figures/2611.04216/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 496
+            },
+            {
+              "caption": "Table 2. Four-stage pyramid architecture: classification and segmentation results. Segmentation is with S-FPN. Dashes indicate values not reported.",
+              "figure_id": "table-2-3",
+              "figure_number": "2",
+              "height": 181,
+              "image_path": "figures/2611.04216/table-008.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 492
+            },
+            {
+              "caption": "Table 10. Architectures of LiSA-DeiT models. All original DeiT transformer blocks are removed (#DeiT blocks = 0) and replaced with LiSA blocks.",
+              "figure_id": "table-10-10",
+              "figure_number": "10",
+              "height": 100,
+              "image_path": "figures/2611.04216/table-009.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 496
+            },
+            {
+              "caption": "Table 13. Latency, throughput, and peak GPU memory across input resolutions.",
+              "figure_id": "table-13-4",
+              "figure_number": "13",
+              "height": 400,
+              "image_path": "figures/2611.04216/table-010.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 1026
+            },
+            {
+              "caption": "Table 1. Results of Classification. Comparison of LiSA across diverse vision backbones. Red indicates gains over the self-attention baseline (in all tables).",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 551,
+              "image_path": "figures/2611.04216/table-011.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 487
+            },
+            {
+              "caption": "Table 4. Results of object detection. The FLOPs are computed over backbone, FPN and detection head with input resolution of 1280×800.",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 152,
+              "image_path": "figures/2611.04216/table-012.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 477
+            },
+            {
+              "caption": "Table 5. Comparison of linear-attention variants on DeiT-S (ImageNet).",
+              "figure_id": "table-5-6",
+              "figure_number": "5",
+              "height": 209,
+              "image_path": "figures/2611.04216/table-013.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 296
+            },
+            {
+              "caption": "Table 6. Component ablation on DeiT-T/DeiT-S classification.",
+              "figure_id": "table-6-7",
+              "figure_number": "6",
+              "height": 99,
+              "image_path": "figures/2611.04216/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 487
+            },
+            {
+              "caption": "Table 7. Component ablation on DeiT-T classification.",
+              "figure_id": "table-7-14",
+              "figure_number": "7",
+              "height": 75,
+              "image_path": "figures/2611.04216/table-015.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 487
+            },
+            {
+              "caption": "Table 9. Ablation study on local window size using DeiT-T.",
+              "figure_id": "table-9-17",
+              "figure_number": "9",
+              "height": 66,
+              "image_path": "figures/2611.04216/table-016.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 339
+            },
+            {
+              "caption": "Table 8. Impact of different kernel functions (DeiT-T).",
+              "figure_id": "table-8-16",
+              "figure_number": "8",
+              "height": 69,
+              "image_path": "figures/2611.04216/table-017.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 267
+            }
+          ],
+          "first_seen_at": "2026-11-03T21:00:00-05:00",
+          "hero_figure": "figures/2611.04216/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.04216",
+          "relevance": 8,
+          "selection_reason": "Proposes Linear Stochastic Attention (LiSA) to improve efficiency in Transformers, a direct contribution to Efficient AI (Efficient Attention) and relevant to LLM architectures.",
+          "summary_status": "generated",
+          "title": "LiSA: Linear Stochastic Attention for Long-Range Visual Modeling",
+          "tldr": "LiSA is a linear-attention module that uses stochastic diffusion to capture higher-order, long-range visual interactions more efficiently than quadratic self-attention.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Sparse attention cuts the cost of long-context inference by making the attention matrix sparse: each query attends only a subset of the sequence, chosen by a fixed pattern or, in recent production LLMs, learned per query. In DeepSeek Sparse Attention (DSA), the attention of DeepSeek-V3.2 and the GLM-5 family, every layer is preceded by a lightning indexer that scores the whole cache and keeps the k=2048 highest-scoring tokens for the layer to attend. At long context this indexer scan, not the sparse attention it feeds, is where the decode time goes. But adjacent layers select nearly the same tokens, so a layer can attend the selection of the previous indexer layer instead of its own. This removes the dependency: each indexer then runs concurrently with the attention of its layer. The resulting Multi-layer Indexer (MLI) needs no retraining and no new weights. Its default realization changes no kernel, running inside SGLang's production decode graph; an optional fused decode kernel accelerates it further on DeepSeek-V3.2. MLI composes with IndexCache (the cross-layer reuse GLM-5.2 ships as IndexShare): IndexCache drops the indexer from some layers, and MLI hides the scan on the rest. We serve DeepSeek-V3.2 and GLM-5 under IndexCache's protocol at retentions 1/2 to 1/32 (the fraction of layers that keep an indexer) and contexts 10K to 195K. At equal retention the composition decodes faster than IndexCache: up to 14.5% faster on DeepSeek-V3.2 and 9.8% on GLM-5 at 1/2, and 7.9% and 5.1% at 1/4, largest where IndexCache keeps the most indexers and growing with context. At retention 1/r it is faster still than IndexCache at 1/(2r) while keeping twice the fresh selections: at 128K it reaches 1.32x the unmodified model's decode throughput at 1/4, above IndexCache's 1.28x at 1/8. Its LongBench, RULER and LongBench v2 accuracy stays within a few percentage points of IndexCache's.",
+          "arxiv_id": "2611.03768",
+          "arxiv_url": "https://arxiv.org/abs/2611.03768",
+          "authors": [
+            "Serdarcan Dilbaz, Arjun Krishna, Kiran Kamble, Daniel M. Bikel"
+          ],
+          "bullets": [
+            "DSA’s full-cache indexer scan dominates decode time at long contexts, while adjacent layers choose nearly identical tokens.",
+            "MLI lets each layer attend to the preceding layer’s selection, allowing indexer computation to overlap with attention.",
+            "It requires no retraining or new weights; the default implementation runs in SGLang without kernel changes, with an optional fused kernel.",
+            "Combined with IndexCache, MLI improves decoding speed by up to 14.5% on DeepSeek-V3.2 and 9.8% on GLM-5 at equal retention.",
+            "Long-context accuracy on LongBench, RULER, and LongBench v2 remains within a few percentage points of IndexCache."
+          ],
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 4: What adding MLI to IndexCache does at each retention, at the longest measured context of each model. Left: per-request decode speedup over the unmodified model; right: LongBench macro-F1 change (symmetric-log axis so the 1/32 collapse fits). Light: IndexCache alone; dark: IndexCache+MLI at the same retention; hollow: distilled arms.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 524,
+              "image_path": "figures/2611.03768/figure-001.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 764
+            },
+            {
+              "caption": "Figure 3: Layer schedule with depth k=1, drawn for a dense layer followed by two DSA layers. Left: standard DSA. Attention at layer ℓ starts only after the indexer of layer ℓ has produced Sℓ. Right: Multi-layer Indexer. The indexer of layer ℓ+1 and the attention of layer ℓ read the same hidden state and run concurrently (green step); a selection is attended one step after it is produced.",
+              "figure_id": "figure-3-2",
+              "figure_number": "3",
+              "height": 390,
+              "image_path": "figures/2611.03768/figure-002.webp",
+              "kind": "figure",
+              "page": 11,
+              "width": 826
+            },
+            {
+              "caption": "Figure 2: Two-stream realization, depth 1, one decode step across two full layers. The indexer of layer ℓ forks onto the side stream once hℓ exists and runs under the attention, output projection and feed-forward block of layer ℓ; its selection is joined at the prepare step of layer ℓ+1, which attends it. The whole pattern is captured once into the decode CUDA graph.",
+              "figure_id": "figure-2-9",
+              "figure_number": "2",
+              "height": 218,
+              "image_path": "figures/2611.03768/figure-003.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 819
+            },
+            {
+              "caption": "Figure 1: Per-layer decode latency of the DSA attention path (DeepSeek-V3.2, H100, one request; kernels timed in isolation). (a) Standard DSA runs the indexer and attention in sequence, so their latencies add; the prefix scan grows with context and comes to dominate. (b) MLI overlaps them on a second stream, so the per-layer time is the bottleneck, not the sum; the full-width bar is the bottleneck and the striped bar the hidden component, the indexer split into scan and top-k as in (a). Idealized ceiling; the realized gain is smaller and bandwidth-bound (Section 5.2).",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 209,
+              "image_path": "figures/2611.03768/figure-004.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 742
+            },
+            {
+              "caption": "Table 2: Quality at the retentions IndexCache reports, IndexCache and IndexCache+MLI side by side. Base row: absolute score of the unmodified model; other cells: percentage change over base, positive = better, with the better arm of each IndexCache/+MLI pair in bold. LongBench: macro-F1 over 11 tasks; RULER: mean over tasks and lengths 4K–128K; LongBench v2: accuracy on the full 503-question set (one question is 0.2 points, so differences under a point are within its resolution). Distilled rows: indexer-only distillation, same recipe and budget for both methods. Needle retrieval is 1.00 for every arm shown (it collapses only at 1/16–1/32, outside this table; see Table 8) and decode perplexity is within ±6% (±11% on GLM-5) of base; Table 8 has every arm, metric and retention.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 496,
+              "image_path": "figures/2611.03768/table-005.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 708
+            },
+            {
+              "caption": "Table 8: Quality vs the unmodified model (same job, same endpoints, greedy). LongBench: macro-F1 over 11 tasks; NIAH: worst score over haystacks up to 520K characters and both needle modes; PPL: perplexity of the model’s own greedy continuation, geometric mean over 4K–64K inputs and five seeds (a deviation in either direction is drift from the unmodified model); RULER: mean over tasks and lengths 4K–128K; LongBench v2: accuracy on the full 503-question set. Distilled rows use indexer-only span-aware distillation with the same recipe for both methods. A missing entry (–) is an evaluation whose server ran out of memory during prefill in two attempts.",
+              "figure_id": "table-8-15",
+              "figure_number": "8",
+              "height": 1146,
+              "image_path": "figures/2611.03768/table-006.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 840
+            },
+            {
+              "caption": "Table 1: Per-request decode throughput at single concurrency. Base row: tokens/s of the unmodified model; all other cells: percentage change over base in the same cell, positive = faster, for IndexCache alone and for IndexCache+MLI at the same retention. All arms of a cell run in one job on one node. 1/16 and 1/32 extend IndexCache’s published sweep (1/2–1/8). DeepSeek-V3.2 +MLI cells use the fused-kernel realization (Section 5.3); GLM-5 uses the deferred-stream realization, which is faster there; both are selection-identical to the production top-k.",
+              "figure_id": "table-1-1",
+              "figure_number": "1",
+              "height": 469,
+              "image_path": "figures/2611.03768/table-007.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 822
+            },
+            {
+              "caption": "Table 5: Full-KV-cache decode throughput. Base row: aggregate tokens/s of the unmodified model with the request set sized to the KV cache (the number of requests decoding together is given per context); other cells: percentage change over base, positive = faster. Reference is the closing base run of the cell where the opening run was cold by more than 2%.",
+              "figure_id": "table-5-7",
+              "figure_number": "5",
+              "height": 507,
+              "image_path": "figures/2611.03768/table-008.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 822
+            },
+            {
+              "caption": "Table 9: The halving pair: IndexCache at 1/2r and IndexCache+MLI at 1/r, the latter with twice the fresh selections. Decode: per-request throughput change over base at the longest context of each model (IndexCache+MLI at 1/r is faster than IndexCache at 1/2r, not merely equal); quality: percentage change over base, positive = better.",
+              "figure_id": "table-9-11",
+              "figure_number": "9",
+              "height": 386,
+              "image_path": "figures/2611.03768/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 732
+            },
+            {
+              "caption": "Table 3: MLI scheduling ablation with every indexer retained (r=1), the deferred-stream realization on the same overlay and recipe as Table 1 (HH_LAG_NO_ALT). Per-request decode throughput relative to the unmodified model on the same node, drift-gated (base within 2% of a closing base), at the two ends of the context range. Deepening the lag window to k=2 or 3 full layers and giving the indexer a high-priority CUDA stream both leave the gain unchanged, so scheduling is not the limit. The DeepSeek cells here ran on nodes with a lower absolute base than Table 1 (82.9–86.1 vs ∼ 85.5 tok/s), so their percentages run a few percentage points high; the deferred arm reaches the same absolute throughput (∼ 100.7 tok/s at 128K, matching Section 5.3).",
+              "figure_id": "table-3-13",
+              "figure_number": "3",
+              "height": 173,
+              "image_path": "figures/2611.03768/table-010.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 540
+            },
+            {
+              "caption": "Table 7: Replication under attention data-parallelism: full-KV-cache aggregate decode throughput relative to the unmodified model; positive = faster.",
+              "figure_id": "table-7-5",
+              "figure_number": "7",
+              "height": 230,
+              "image_path": "figures/2611.03768/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 640
+            },
+            {
+              "caption": "Table 10: DeepSeek-V3.2. Paired bootstrap 95% intervals for the contrasts in the text (percentage change over the unmodified model’s score; 10,000 resamples of examples, the same resample applied to both arms; LongBench resampled within each of its 11 tasks and RULER within each of its 30 task×length cells, both macro-averaged as in Table 8). ∗: interval excludes zero. Examples per arm: LongBench 1,100, RULER 234, LongBench v2 as stated in Table 8.",
+              "figure_id": "table-10-10",
+              "figure_number": "10",
+              "height": 715,
+              "image_path": "figures/2611.03768/table-012.webp",
+              "kind": "table",
+              "page": 19,
+              "width": 802
+            },
+            {
+              "caption": "Table 11: GLM-5. Paired bootstrap 95% intervals for the contrasts in the text (percentage change over the unmodified model’s score; 10,000 resamples of examples, the same resample applied to both arms; LongBench resampled within each of its 11 tasks and RULER within each of its 30 task×length cells, both macro-averaged as in Table 8). ∗: interval excludes zero. Examples per arm: LongBench 1,100, RULER 234, LongBench v2 as stated in Table 8.",
+              "figure_id": "table-11-14",
+              "figure_number": "11",
+              "height": 797,
+              "image_path": "figures/2611.03768/table-013.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 826
+            },
+            {
+              "caption": "Table 6: Replication under attention data-parallelism (–enable-dp-attention –dp-size 8, IndexCache’s parallelism): per-request decode throughput (tokens/s, single concurrency) relative to the unmodified model in the same cell; positive = faster. Decode throughput is the client-side output tokens / (latency − TTFT), which agrees with the server-side metric within 0.5% on the TP cells.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 152,
+              "image_path": "figures/2611.03768/table-014.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 640
+            },
+            {
+              "caption": "Table 4: Unmodified SGLang release (stock) vs our build (ours), same job and node, per-request decode tok/s; IndexCache arms use the release’s own index_topk_freq. Closing base sentinels: 0.0 to 0.2%.",
+              "figure_id": "table-4-12",
+              "figure_number": "4",
+              "height": 150,
+              "image_path": "figures/2611.03768/table-015.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 656
+            }
+          ],
+          "first_seen_at": "2026-11-03T21:00:00-05:00",
+          "hero_figure": "figures/2611.03768/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.03768",
+          "relevance": 8,
+          "selection_reason": "Optimizes sparse attention and long-context LLM decode, directly fitting efficient attention and long-context model developments.",
+          "summary_status": "generated",
+          "title": "Multi-layer Indexer: Overlapping Selection and Attention in DeepSeek Sparse Attention",
+          "tldr": "Multi-layer Indexer (MLI) hides DeepSeek Sparse Attention’s expensive indexer scans by reusing the previous layer’s token selection, delivering faster long-context decoding without retraining.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "long-context-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Language models are typically trained with a single choice of architecture on diverse domains and data sources. Modern transformers have been extensively refined for such general-purpose learning, but are they equally effective across different subsets of the pretraining data? We investigate this question by training small language models from scratch on representative subsets of pretraining data such as web text, code, and mathematics. We introduce variants of transformers in which standard activation functions are replaced with learned splines tuned on specific datasets, providing a simple way to modify their inductive biases. Using a mix-and-match of architectures and datasets, we evaluate cross-domain transfer, i.e. how well does an architecture tuned for one domain perform on data from another? We find that the tuned transformer variants improve training efficiency or generalization on all seven of our tested datasets, but the gains are often domain-specific. For example, architectures tuned on a natural language dataset such as FineWeb perform well on TinyStories, whereas those tuned on mathematics perform poorly on natural language. We identify several mechanisms underlying these improvements, including wider loss basins and more abundant \"lottery tickets\". Our results show that different subsets of pretraining data can benefit from different learning mechanisms, highlighting a limitation of the prevailing trend towards a small set of general-purpose architectures and optimizers. This points to an opportunity to improve data efficiency by developing domain-specific learning strategies that retain the ability to train general-purpose models.",
+          "arxiv_id": "2611.03756",
+          "arxiv_url": "https://arxiv.org/abs/2611.03756",
+          "authors": [
+            "Damien Teney, Liangze Jiang, Zachary Shinnick, Hemanth Saratchandran, Simon Lucey"
+          ],
+          "bullets": [
+            "The study tests small language models trained from scratch on web text, code, and mathematics.",
+            "It replaces standard transformer activations with learned splines tuned to specific datasets.",
+            "Cross-domain evaluations show that architectures tuned for natural language transfer better within language domains, while math-tuned variants perform poorly on natural language.",
+            "Improvements appear across all seven tested datasets, with mechanisms linked to wider loss basins and more abundant lottery tickets.",
+            "The findings suggest domain-specific learning strategies could improve data efficiency while supporting general-purpose models."
+          ],
+          "categories": [
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Validation performance of models trained on three datasets representative of natural language, code, and mathematics. Dots represent models trained with different seeds or nonlinearities (see legend on the left). Coloured outlines represent approximate distributions. The architectures specialized for each target dataset (D1=D2 ) almost always improve over the baselines, whereas the transfer across domains (D1 ̸=D2) varies a lot. See Figure 8 for similar results on other datasets.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 274,
+              "image_path": "figures/2611.03756/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 822
+            },
+            {
+              "caption": "Figure 4: Validation loss on pairs of datasets for language and code. Each marker corresponds to a specific seed and nonlinearity, used to train models on either of two datasets. The patterns formed by the markers indicate whether the improvements on one dataset correlate with improvements on the other. With some exceptions, most panels show a good correlation, indicating a compatibility between language and code datasets. See the discussion in Section 4.1.",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 677,
+              "image_path": "figures/2611.03756/figure-002.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 875
+            },
+            {
+              "caption": "Figure 6: Generalist vs. specialist models on MATH (i.e. trained on all vs. individual question types). We observe larger improvements from learned nonlinearities in specialist models. This means that each type of math question can benefit from question-specific inductive biases. Note that we adjust the amount of training tokens such that the overall accuracy is similar between generalist and specialist baselines. See Figure 10 for a detailed view including the full set of labels on the Y axis.",
+              "figure_id": "figure-6-3",
+              "figure_number": "6",
+              "height": 304,
+              "image_path": "figures/2611.03756/figure-003.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 814
+            },
+            {
+              "caption": "Figure 9: Counter-example to Figure 4 where we observe inverse correlations in the performance on pairs of datasets. We consider here the SHAKESPEARE datasets with a character-level tokenization. This likely requires different inductive biases than standard subword tokenization because of longerrange interactions, different typical entropy in the predictions, etc. As a result, the architectures optimized for this dataset (SHAKESPEARE-CHAR, vertical axis) work badly on others (FINEWEB, ENWIK8) and vice versa.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 223,
+              "image_path": "figures/2611.03756/figure-004.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 739
+            },
+            {
+              "caption": "Figure 1: Our experimental setup quantifies the compatibility of inductive biases across subsets of data. We specialize a transformer variant for a source domain D1 (left) by replacing nonlinearities with parameterized splines, pre-trained in a warm-up phase. We then reuse these frozen components to train a model on a target dataset D2 (right). Only very few parameters are transferred.",
+              "figure_id": "figure-1-2",
+              "figure_number": "1",
+              "height": 231,
+              "image_path": "figures/2611.03756/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 418
+            },
+            {
+              "caption": "Figure 2: Typical training curves during the warmup phase (on CSN-PYTHON here), where we optimize both the weights of transformers and their nonlinearities, initialized as constant functions (left). We train multiple models in a staggered schedule. They share the same nonlinearities, providing a regularizing effect that makes them more likely to transfer later to other models.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 201,
+              "image_path": "figures/2611.03756/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 397
+            },
+            {
+              "caption": "Figure 7: Baseline models often improve late in training ( ) when the LR reaches tiny values (on FINEWEB, see Figure 14 for other datasets). Our models converge more smoothly, suggesting that their minima lie in wider basins, easier to reach by gradient descent. Indeed, without LR decay, the advantage of our model grows significantly larger.",
+              "figure_id": "figure-7-5",
+              "figure_number": "7",
+              "height": 173,
+              "image_path": "figures/2611.03756/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 411
+            },
+            {
+              "caption": "Figure 14: More examples like Figure 7. The baseline with standard LR decay (--) often improves late during training when the LR reaches very small values. In comparison, our model converges more easily both with (–) and without (–) LR decay.",
+              "figure_id": "figure-14-11",
+              "figure_number": "14",
+              "height": 467,
+              "image_path": "figures/2611.03756/figure-008.webp",
+              "kind": "figure",
+              "page": 20,
+              "width": 804
+            },
+            {
+              "caption": "Figure 11: Learned nonlinearities for various datasets (MLP/attention).",
+              "figure_id": "figure-11-7",
+              "figure_number": "11",
+              "height": 721,
+              "image_path": "figures/2611.03756/figure-009.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 872
+            },
+            {
+              "caption": "Figure 13: Comparison of nonlinearities learned with models of 4 vs. 12 layers for different MATH question types.",
+              "figure_id": "figure-13-9",
+              "figure_number": "13",
+              "height": 1093,
+              "image_path": "figures/2611.03756/figure-010.webp",
+              "kind": "figure",
+              "page": 19,
+              "width": 669
+            },
+            {
+              "caption": "Figure 8: Complement to Figure 3 with results on all datasets. Consistent observations are made per domain. See discussion in Section 4.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 528,
+              "image_path": "figures/2611.03756/figure-011.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 805
+            },
+            {
+              "caption": "Figure 10: Larger version of Figure 6 with all Y-axis labels.",
+              "figure_id": "figure-10-10",
+              "figure_number": "10",
+              "height": 664,
+              "image_path": "figures/2611.03756/figure-012.webp",
+              "kind": "figure",
+              "page": 17,
+              "width": 750
+            },
+            {
+              "caption": "Figure 12: Learned layer-specific nonlinearities for ENWIK8.",
+              "figure_id": "figure-12-6",
+              "figure_number": "12",
+              "height": 111,
+              "image_path": "figures/2611.03756/figure-013.webp",
+              "kind": "figure",
+              "page": 18,
+              "width": 829
+            },
+            {
+              "caption": "Table 1: Validation accuracy (%) on MATHSUBSET. Our learned nonlinearities are significantly better in all cases, especially when most of the model is frozen. This suggests that they already instantiate useful circuits in attention and MLP layers at initialization (with random weights).",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 161,
+              "image_path": "figures/2611.03756/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 372
+            }
+          ],
+          "first_seen_at": "2026-11-03T21:00:00-05:00",
+          "hero_figure": "figures/2611.03756/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.03756",
+          "relevance": 8,
+          "selection_reason": "Demonstrates that domain-specific inductive biases (e.g., learned splines) improve LLM training efficiency and generalization, relevant to LLM architecture and efficiency.",
+          "summary_status": "generated",
+          "title": "Language Models Can Benefit from Domain-Specific Inductive Biases",
+          "tldr": "Domain-specific transformer inductive biases can improve language-model training efficiency or generalization, but their benefits often do not transfer across domains.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            },
+            {
+              "subtopic_ids": [
+                "large-language-models"
+              ],
+              "topic_id": "language-foundation-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-11-01",
       "paper_count": 10,
       "papers": [
@@ -61814,5 +63655,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 319
+  "total_paper_count": 326
 }

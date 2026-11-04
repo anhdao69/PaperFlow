@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**176 papers total**
+**180 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-03 | [You don't need long context](https://arxiv.org/abs/2611.05306) | Language Foundation Models: Long-Context Models | Frequent context compaction can preserve frontier LLM accuracy on long-input and long-horizon tasks while substantially reducing the need for long contexts. | 8 | 7 |
+| 2026-11-03 | [Anchor: Augmented Cross-Layer Recurrent State for Long-Context Retrieval in Test-Time Training](https://arxiv.org/abs/2611.04327) | Efficient AI: KV Cache and Memory Efficiency; Adaptation and Memory: Test-Time Learning; Language Foundation Models: Long-Context Models | Anchor improves long-context retrieval and efficiency by storing TTT memory only in a few anchor layers and sharing it across layers through learned read transformations. | 8 | 8 |
+| 2026-11-03 | [Coarse Semantic Blocks for Efficient Training-Free Sparse Attention](https://arxiv.org/abs/2611.04313) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | A training-free semantic-block index makes sparse attention substantially faster for long-context prefill and decoding while largely preserving accuracy. | 8 | 7 |
+| 2026-11-03 | [Multi-layer Indexer: Overlapping Selection and Attention in DeepSeek Sparse Attention](https://arxiv.org/abs/2611.03768) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | Multi-layer Indexer (MLI) hides DeepSeek Sparse Attention’s expensive indexer scans by reusing the previous layer’s token selection, delivering faster long-context decoding without retraining. | 8 | 8 |
 | 2026-11-02 | [RangeSWA: Training-Free Length Extrapolation for Continuous Diffusion Language Models](https://arxiv.org/abs/2610.42084) | Language Foundation Models: Long-Context Models | RangeSWA enables continuous diffusion language models to generate longer text without retraining by combining efficient long-range context access with generation-quality corrections. | 7 | 7 |
 | 2026-11-01 | [Latent Sparse Attention: Towards Subquadratic Ultra-Long Context Attention](https://arxiv.org/abs/2610.42147) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | Latent Sparse Attention enables efficient ultra-long-context attention by hierarchically routing queries to learned key clusters instead of examining every key. | 9 | 8 |
 | 2026-11-01 | [Subquadratic Attention with a Hierarchical Tree-Structured Indexer](https://arxiv.org/abs/2610.42112) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | Zyphra Hierarchical Attention uses a recursively compressed tree index to achieve subquadratic sparse attention for very long-context LLMs while preserving key task performance. | 9 | 9 |

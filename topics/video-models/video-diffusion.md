@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**345 papers total**
+**348 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-03 | [Behind Video Generation: Observations and Insights on Multimodal Understanding from Kling](https://arxiv.org/abs/2611.04916) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Diffusion | The report presents Kling’s multimodal understanding stack as the key to controllable video generation, spanning data, conditioning, alignment, and evaluation. | 8 | 7 |
+| 2026-11-03 | [ReXMo: End-to-End Video Character Replacement with Expression and Motion Preservation](https://arxiv.org/abs/2611.04633) | Video Generation and Understanding: Video Diffusion | ReXMo is an end-to-end video character replacement framework designed to preserve identity-independent expressions, motion, and scene dynamics across single, multiple, and selective character replacement. | 6 | 6 |
+| 2026-11-03 | [Visualizing Distribution Coverage in Generative Diffusion Models](https://arxiv.org/abs/2609.38853) | Video Generation and Understanding: Video Diffusion | Pass@$k$ reveals that diffusion distillation can improve single-sample quality while reducing coverage of diverse valid outputs, depending on the training objective. | 6 | 7 |
 | 2026-11-01 | [A Better Critic Matters for Distribution Matching Distillation](https://arxiv.org/abs/2610.42135) | Video Generation and Understanding: Video Diffusion; Efficient AI | Reliable critics are essential for DMD: scaling them with the teacher and conditioning them on generation step improves few-step distillation across image and video generation tasks. | 6 | 7 |
 | 2026-11-01 | [GeoFlip: Benchmarking Geometry-Sensitive Physics in Video Generation](https://arxiv.org/abs/2610.42002) | Video Generation and Understanding: Video Diffusion | GeoFlip benchmarks whether video generation models produce physically correct outcomes when only the initial scene geometry changes, revealing major weaknesses in geometry-conditioned physics. | 7 | 7 |
 | 2026-11-01 | [Optimizing Stochastic Policy Geometry for Few-Step Flow Reinforcement Learning](https://arxiv.org/abs/2610.41949) | Video Generation and Understanding: Video Diffusion | Geo-FSRL optimizes the stochastic transition geometry used by GRPO in few-step flow reinforcement learning, improving reward performance for 4-step image and video generation. | 6 | 7 |
