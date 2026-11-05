@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**296 papers total**
+**299 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-04 | [PyRUA-REAL: Robot Exploration and Adaptive Learning through RSI in the Real World](https://arxiv.org/abs/2611.06768) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | PyRUA-REAL enables coding agents to improve robot manipulation through physical exploration, persistent experience, and reusable executable skills, achieving strong performance across real-world and benchmark tasks. | 9 | 8 |
+| 2026-11-04 | [Towards Robust Long-Lived Agents: Benchmarking Experience Lifecycles in Evolving Environments](https://arxiv.org/abs/2611.05450) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | ReScopeBench evaluates whether long-lived agents can acquire, reuse, and update experience as interactive environments evolve. | 8 | 7 |
+| 2026-11-04 | [GROME: GROunding Factorized MEmory into Video World Models](https://arxiv.org/abs/2610.39812) | World Models: Video World Models; Adaptation and Memory: Embodied Memory | GROME improves long-horizon video world-model consistency by separately remembering static scene geometry and dynamic entities, then injecting retrieved memories without retraining the backbone. | 8 | 8 |
 | 2026-11-03 | [HTCE: Homeomorphism-inspired Topological Cross-Scene Experience Canonicalization and Reuse for Object Navigation](https://arxiv.org/abs/2611.04836) | Embodied AI: Vision-Language Navigation, Robot Navigation; Adaptation and Memory: Embodied Memory | HTCE canonicalizes topologically similar navigation experiences across scenes, enabling a frozen vision-language policy to reuse them and improve object-navigation performance. | 8 | 7 |
 | 2026-11-03 | [Spatial Memory for AR Glasses: Hierarchical Visual Acquisition and Source-Linked Recall](https://arxiv.org/abs/2611.04494) | Multimodal Foundation Models: Spatial Intelligence; Efficient AI: Token Pruning and Eviction; Adaptation and Memory: Embodied Memory | A spatial-memory architecture for AR glasses selectively captures detailed views and links interpretations to source images to support grounded recall of past encounters. | 9 | 8 |
 | 2026-11-03 | [SEAM: Situated Executable Associative Memory for a Co-located Community](https://arxiv.org/abs/2611.04296) | Adaptation and Memory: Embodied Memory | SEAM is a community social app that turns members’ shared experiences into a situated, associative, and partially programmable collective memory. | 6 | 7 |

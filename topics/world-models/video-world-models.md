@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**395 papers total**
+**399 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-04 | [EvoWorld: Towards Out-of-Sight World Evolution in Generative Video Models](https://arxiv.org/abs/2611.06748) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EvoWorld enables video models to evolve worlds causally beyond the visible frame by combining explicit state reasoning with autoregressive visual rendering. | 8 | 7 |
+| 2026-11-04 | [Dynamical State-Space Diffusion for Spatiotemporal Prediction](https://arxiv.org/abs/2611.06652) | World Models: Video World Models | DSSD improves spatiotemporal diffusion by learning temporally correlated corruption through a stable state-space model rather than adding independent noise to each frame. | 8 | 8 |
+| 2026-11-04 | [ReactWorld: Structuring Interaction Responses for Embodied Video Generation](https://arxiv.org/abs/2611.06120) | World Models: Video World Models, Interactive World Models | ReactWorld improves embodied video generation by anticipating structured interaction responses and feeding them back into object and temporal features. | 9 | 9 |
+| 2026-11-04 | [GROME: GROunding Factorized MEmory into Video World Models](https://arxiv.org/abs/2610.39812) | World Models: Video World Models; Adaptation and Memory: Embodied Memory | GROME improves long-horizon video world-model consistency by separately remembering static scene geometry and dynamic entities, then injecting retrieved memories without retraining the backbone. | 8 | 8 |
 | 2026-11-03 | [FloMo: 3D Scene Flow as a World Action Model Intermediate for Learning from Human Video](https://arxiv.org/abs/2611.05062) | Embodied AI: Learning from Human Videos; World Models: Video World Models, Interactive World Models | FloMo uses 3D scene flow as a compact intermediate between video pretraining and robot action prediction, improving transfer and generalization over directly predicting video. | 8 | 8 |
 | 2026-11-03 | [HiLo-WAM: Decoupling Long-Horizon Task Evolution and Local Dynamics in World Action Models](https://arxiv.org/abs/2611.05023) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | HiLo-WAM improves long-horizon robotic manipulation by separating task evolution from local dynamics in a dual-stream world action model. | 9 | 8 |
 | 2026-11-03 | [PrimeSim: A Generalist World Model Simulator from Large-Scale Cross-Embodiment Demonstrations](https://arxiv.org/abs/2611.04870) | Embodied AI: Learning from Human Videos; World Models: Video World Models, Interactive World Models | PrimeSim is a cross-embodiment, multiview action-conditioned world model that enables fast, coherent long-horizon robot simulation and supports policy optimization. | 9 | 8 |

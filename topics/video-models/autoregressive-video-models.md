@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Autoregressive Video Models
 
-**65 papers total**
+**68 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-04 | [EvoWorld: Towards Out-of-Sight World Evolution in Generative Video Models](https://arxiv.org/abs/2611.06748) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EvoWorld enables video models to evolve worlds causally beyond the visible frame by combining explicit state reasoning with autoregressive visual rendering. | 8 | 7 |
+| 2026-11-04 | [NanoKV: High-Ratio KV Cache Compression for Autoregressive Video Generation](https://arxiv.org/abs/2611.06377) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: KV Cache and Memory Efficiency | NanoKV compresses autoregressive video KV caches at high ratios while preserving quality, with an optional variant that also accelerates attention. | 9 | 8 |
+| 2026-11-04 | [What Remains in Sight? Autoregressive Video Decoding as Representation-Guided Context Rewriting](https://arxiv.org/abs/2611.04164) | Video Generation and Understanding: Autoregressive Video Models; Efficient AI: Token Pruning and Eviction | ReCR improves long-horizon autoregressive video generation by explicitly rewriting which past content remains visible to the decoder. | 8 | 9 |
 | 2026-11-03 | [Pixel-space video generation with U-JiT](https://arxiv.org/abs/2611.04764) | Video Generation and Understanding: Autoregressive Video Models | U-JiT makes pixel-space video generation practical with a UNet-like transformer, outperforming latent and prior pixel-space baselines in controlled experiments. | 7 | 7 |
 | 2026-11-01 | [Any Forcing: Any-Step Generality and One-Step Stability for Autoregressive Video Generation](https://arxiv.org/abs/2610.42031) | Video Generation and Understanding: Autoregressive Video Models | Any Forcing enables flexible-step autoregressive video generation while stabilizing high-quality one-step generation, including for long videos. | 8 | 7 |
 | 2026-10-29 | [Localizing Concepts in Visual Autoregressive Models](https://arxiv.org/abs/2610.40061) | Video Generation and Understanding: Autoregressive Video Models | LoCo localizes where and when concepts emerge in next-scale visual autoregressive models, enabling efficient and targeted model interventions. | 7 | 8 |

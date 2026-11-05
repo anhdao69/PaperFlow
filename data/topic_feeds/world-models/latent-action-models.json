@@ -1,6 +1,485 @@
 {
   "days": [
     {
+      "date": "2026-11-04",
+      "paper_count": 3,
+      "papers": [
+        {
+          "abstract": "JEPA-style world models learn action-conditioned latent dynamics without reconstructing observations, but distributional regularization alone does not ensure that their representations preserve information needed for control. We identify static collapse, a failure mode in which the encoder preserves episode-specific static content while suppressing manipulation-relevant state changes. Because static content is temporally predictable yet diverse across episodes, this failure can persist despite regularizers such as SIGReg. A controlled study on OGBench-Cube shows that introducing randomized backgrounds substantially degrades planning performance while leaving the underlying manipulation task unchanged. To address this problem, we propose motion-guided contrastive regularization. Our approach compares predicted latent transitions with transitions to candidate observations from the same episode, reducing the usefulness of static background identity for distinguishing action outcomes. Optical-flow similarities provide soft contrastive targets, allowing candidates with similar motion to receive similar supervision. Combined with latent prediction and SIGReg, our objective encourages representations to preserve within-episode state distinctions and similarities between related transitions. Our method improves planning success over LeWorldModel (LeWM) from 52% to 78% on OGBench-Cube with randomized backgrounds and from 14% to 54% on LIBERO-Object, while maintaining comparable performance on four other visual-control benchmarks.",
+          "arxiv_id": "2611.06901",
+          "arxiv_url": "https://arxiv.org/abs/2611.06901",
+          "authors": [
+            "Yiwen Chen, Qiqi Hou, Jisoo Jeong, Yinhao Zhu, Huaizu Jiang, Amir Said"
+          ],
+          "bullets": [
+            "JEPA-style latent dynamics can preserve episode-specific static content while discarding manipulation-relevant state changes, harming control.",
+            "Randomized backgrounds expose this failure: planning degrades even when the underlying manipulation task is unchanged.",
+            "The method contrasts predicted latent transitions with same-episode candidate observations, using optical-flow similarity as soft supervision.",
+            "Combined with latent prediction and SIGReg, it promotes within-episode state distinctions and motion-related similarities.",
+            "Planning success improves from 52% to 78% on OGBench-Cube and from 14% to 54% on LIBERO-Object, with comparable performance on four other benchmarks."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Static collapse and our solution. (A) We train JEPA world models end-to-end on OGBench-Cube (Cube) and a variant with randomized backgrounds (Cube-RB). In Cube-RB, one background image is sampled per episode and held fixed throughout it. Only distant pixels (depth ≥ 1.0m) are replaced, so the robot, cube, and dynamics are unchanged and only task-irrelevant background variation is added. (B) t-SNE visualizations of the encoder embeddings, where each point is one input frame and each color one episode. On Cube-RB, LeWorldModel (LeWM; Maes et al., 2026) maps distinct states within each episode to tightly clustered latents, whereas our motionguided contrastive regularization preserves within-episode state variation. (C) Planning success of LeWM, Planning with Latent Dynamics Models (PLDM; Sobal et al., 2026), and our method. LeWM and our method perform similarly on Cube, but LeWM’s success drops on Cube-RB and is low on LIBERO-Object. Our method achieves the highest success of the three in all settings.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 369,
+              "image_path": "figures/2611.06901/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 819
+            },
+            {
+              "caption": "Figure 2: Motion-guided contrastive learning. The world model encodes the current observation xt and predicts ẑt+1. The true next observation xpos = xt+1 provides the positive sample, while other frames from the same episode provide negative candidates xm and xn. All observations share the same encoder. Image-space: Optical flow is computed from xt to each candidate. Comparing these fields with the positive flow assigns higher target similarity to candidates with similar motion (xm) than to those with different motion (xn). Latent-space: Angles illustrate cosine similarities between the predicted transition ẑt+1 − zt and candidate transitions zj − zt. Our motion-guided contrastive loss matches the resulting latent similarity distribution to the motion-derived target distribution through cross-entropy. The prediction loss aligns ẑt+1 with zpos. The grippers in the sample frames are highlighted for illustration purposes only.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 406,
+              "image_path": "figures/2611.06901/figure-002.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 826
+            },
+            {
+              "caption": "Figure 3: Latent-space decoding on Cube, Cube-RB, and LIBERO-Object. Compared to LeWM, reconstructions from our frozen latents more clearly preserve the robot and manipulated objects on the challenging Cube-RB and LIBERO-Object datasets. Check our video demo for more comparisons.",
+              "figure_id": "figure-3-4",
+              "figure_number": "3",
+              "height": 277,
+              "image_path": "figures/2611.06901/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 825
+            },
+            {
+              "caption": "Figure 4: Encoder attention over image patches (brighter = more attention). On Cube-RB and LIBERO-Object, LeWM attends to background and static objects; ours focuses on the gripper and manipulated object.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 321,
+              "image_path": "figures/2611.06901/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 352
+            },
+            {
+              "caption": "Table 3: Ablation of training objectives on Cube-RB and LIBERO-Object. Entries are planning success (%). All variants retain the prediction loss. InfoNCE uses the same within-episode candidates (N = 6) and latent transition scores (τz = 0.1) as our method.",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 145,
+              "image_path": "figures/2611.06901/table-005.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 482
+            },
+            {
+              "caption": "Table 2: MLP probing of physical state from frozen latents. Position errors are Euclidean distances in centimeters. Holding object (AUROC) is a binary gripper-state classification on LIBEROObject.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 192,
+              "image_path": "figures/2611.06901/table-006.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 410
+            },
+            {
+              "caption": "Table 4: Hyperparameter sensitivity on LIBERO-Object. “Succ.” denotes planning success (%). Bold marks the highest result within each sweep; underlining marks the reference parameter value.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 199,
+              "image_path": "figures/2611.06901/table-007.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 648
+            },
+            {
+              "caption": "Table 1: Planning success rate (%) on six settings. † uses a frozen pretrained visual encoder. Peak GPU memory and planning time are measured on Cube dataset with an A5000 GPU and averaged over its 50 evaluation instances; planning time is the wall-clock time to plan one full trajectory (five replanning rounds). CEM uses 128 candidates and 10 iterations per round, with a planning horizon of up to 5 control steps.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 156,
+              "image_path": "figures/2611.06901/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-11-04T21:00:00-05:00",
+          "hero_figure": "figures/2611.06901/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.06901",
+          "relevance": 8,
+          "selection_reason": "Addresses static collapse in latent world models with motion-guided contrastive regularization, directly relevant to latent action models.",
+          "summary_status": "generated",
+          "title": "Motion-guided Contrastive Regularization For Latent World Models",
+          "tldr": "Motion-guided contrastive regularization prevents static-background collapse in latent world models and substantially improves visual-control planning under randomized backgrounds.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Robot imitation learning is limited by the scarcity of action-labeled data, while action-free demonstrations such as videos are abundant. Recent latent-action methods learn action-relevant representations from observation transitions, but they do not optimize latent actions for downstream control, leading to latent representations that are difficult for policies to model and difficult to accurately decode into continuous robot actions. This paper introduces ELA, an end-to-end framework for learning from video demonstrations via latent actions jointly optimized for policy learning and action decoding. ELA jointly trains a latent action model, latent action policy, and action decoder, enabling policies to leverage abundant video data with only a handful of action-labeled robot demonstrations. Experiments on simulated and real-world manipulation tasks show that ELA consistently outperforms prior latent action baselines. Moreover, it integrates seamlessly with existing imitation learning methods through lightweight 4M-parameter action decoders, requiring no changes to policy architectures or training objectives. Additional materials can be found on: https://end2end-latent-action.github.io/",
+          "arxiv_id": "2611.05571",
+          "arxiv_url": "https://arxiv.org/abs/2611.05571",
+          "authors": [
+            "Cheng-Chun Hsu, Peter Stone"
+          ],
+          "bullets": [
+            "Addresses the scarcity of action-labeled robot data by leveraging action-free video demonstrations.",
+            "Jointly trains a latent action model, latent action policy, and action decoder for downstream control.",
+            "Uses lightweight 4M-parameter action decoders without changing existing policy architectures or training objectives.",
+            "Outperforms prior latent-action baselines on simulated and real-world manipulation tasks.",
+            "Scope: applies to imitation learning with video demonstrations and limited robot action labels."
+          ],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: ELA Overview. Our framework extends existing behavior cloning methods, e.g. diffusion policies, with latent actions jointly optimized for policy learning and action decoding. The approach enables training on mixtures of action-labeled and video demonstrations with little overhead, requiring only a lightweight action decoder.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 752,
+              "image_path": "figures/2611.05571/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 977
+            },
+            {
+              "caption": "Figure 4: Few-shot Policy Learning. Comparative analysis of success rates on the LIBERO-10 benchmark. All evaluated methods were trained using N action-labeled samples selected from 50 robot demonstrations per task. The two dashed lines at the top indicate the upper-bound performance of DP and UWM trained on the full set of 50 action-labeled demonstrations.",
+              "figure_id": "figure-4-3",
+              "figure_number": "4",
+              "height": 281,
+              "image_path": "figures/2611.05571/figure-002.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 723
+            },
+            {
+              "caption": "Figure 3: End-to-End Joint Training. ELA jointly trains the latent action model (LAM), latent action policy, and action decoder using two alternating forward passes. In the LAM-update pass, the policy is frozen and the alignment, action, and FDM losses are backpropagated to update the LAM. In the Policy-update pass, the LAM is frozen and the alignment and policy losses are used to update the policy network.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 386,
+              "image_path": "figures/2611.05571/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 822
+            },
+            {
+              "caption": "Figure 5: Real-world Results. (a) Comparative analysis of success rates on the real-world benchmark. (b) Ablation study of representation alignment across a subset of task suites. (c) Modelability versus Decodability for each latent action spaces.",
+              "figure_id": "figure-5-8",
+              "figure_number": "5",
+              "height": 281,
+              "image_path": "figures/2611.05571/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 813
+            },
+            {
+              "caption": "Figure 6: Robot Setup.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 284,
+              "image_path": "figures/2611.05571/figure-005.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 374
+            },
+            {
+              "caption": "Table 1: IDM model sizes and training budgets for baselines. † DINO encoder parameters are excluded from the count.",
+              "figure_id": "table-1-4",
+              "figure_number": "1",
+              "height": 186,
+              "image_path": "figures/2611.05571/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 377
+            },
+            {
+              "caption": "Table 7: ELA Training schedule",
+              "figure_id": "table-7-12",
+              "figure_number": "7",
+              "height": 382,
+              "image_path": "figures/2611.05571/table-007.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 867
+            },
+            {
+              "caption": "Table 6: LIBERO-10 results across different numbers of action-labeled demonstrations (N) out of 50 demonstrations per task. Each entry reports mean ± standard deviation over 3 runs. Best results per task are highlighted in bold.",
+              "figure_id": "table-6-2",
+              "figure_number": "6",
+              "height": 919,
+              "image_path": "figures/2611.05571/table-008.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 642
+            },
+            {
+              "caption": "Table 4: Ablations on the latent action. We vary the number of latent-action tokens (k) (left) and the FSQ codebook configuration (right), one factor at a time while keeping all other settings fixed. The default configuration is marked with (†).",
+              "figure_id": "table-4-6",
+              "figure_number": "4",
+              "height": 173,
+              "image_path": "figures/2611.05571/table-009.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 652
+            },
+            {
+              "caption": "Table 5: Success rates on the real-world benchmark (20 trials per task).",
+              "figure_id": "table-5-5",
+              "figure_number": "5",
+              "height": 196,
+              "image_path": "figures/2611.05571/table-010.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 727
+            },
+            {
+              "caption": "Table 2: Real-world success under matched data access.",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 150,
+              "image_path": "figures/2611.05571/table-011.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 183
+            },
+            {
+              "caption": "Table 3: Linear probing for action regression.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 202,
+              "image_path": "figures/2611.05571/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 171
+            }
+          ],
+          "first_seen_at": "2026-11-04T21:00:00-05:00",
+          "hero_figure": "figures/2611.05571/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.05571",
+          "relevance": 8,
+          "selection_reason": "Joint latent-action and policy learning from video demonstrations for robot manipulation; relevant to imitation learning and latent action discovery.",
+          "summary_status": "generated",
+          "title": "ELA: End-to-End Latent Action Policy Learning from Video Demonstrations",
+          "tldr": "ELA learns control-relevant latent actions end to end from abundant videos and a small number of action-labeled robot demonstrations.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation",
+                "learning-from-human-video"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Surgical world models have the potential to provide intra-operative guidance, accelerate risk-free training and facilitate transfer of expert surgical maneuvers. However, the use of world models for transferring surgical expertise has been largely unexplored. Moreover, recent approaches in this domain have mainly relied on ground truth kinematics actions or expert annotations for specific tasks, limiting their applicability beyond the narrow range of tasks with ground-truth annotations. In contrast, existing works in the natural domain have shown promising results in learning latent actions solely from unlabeled videos and transferring the learned actions across contexts. We observe that this paradigm is short-sighted for the surgical domain, failing to capture the hierarchical and goal-directed structure of surgical procedures. Thus, we propose a novel multi-step action learning framework to learn context-invariant latent actions that are easily transferable across various surgical contexts. We perform extensive experiments on the publicly available datasets, SurgToolLoc-2022 and PitVis-2023, verifying our approach with both quantitative metrics and qualitative evaluation by surgical experts. We have published our code and the implementation details at https://github.com/bhattarailab/Surgical-Vision-World-Model.",
+          "arxiv_id": "2611.05443",
+          "arxiv_url": "https://arxiv.org/abs/2611.05443",
+          "authors": [
+            "Saurabh Koju, Love Panta, Deepak Thapa, Rudra P. K. Poudel, Prajwal Ghimire, Angus Watson, Yash Raj Shrestha, Prashnna Kumar Gyawali, Binod Bhattarai"
+          ],
+          "bullets": [
+            "Addresses limited surgical world-model transfer methods that depend on ground-truth kinematics or task-specific expert annotations.",
+            "Introduces a multi-step action learning framework designed to capture the hierarchical and goal-directed structure of surgical procedures.",
+            "Learns latent actions intended to transfer across diverse surgical contexts without requiring task-specific annotations.",
+            "Evaluated quantitatively and through surgical-expert qualitative assessment on SurgToolLoc-2022 and PitVis-2023.",
+            "Code and implementation details are publicly available."
+          ],
+          "categories": [
+            "cs.CV",
+            "cs.AI",
+            "cs.LG"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. Our framework learns composable actions that can be transferred from demonstrations to novel surgical contexts.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 202,
+              "image_path": "figures/2611.05443/figure-001.webp",
+              "kind": "figure",
+              "page": 1,
+              "width": 427
+            },
+            {
+              "caption": "Figure 11. Although SurgTransfer has high error in tracking tip displacement, we can see that the error is due to over-amplification of the movements in the source video suggesting that the model can be prone to overweighing the conditioning action signal.",
+              "figure_id": "figure-11-6",
+              "figure_number": "11",
+              "height": 847,
+              "image_path": "figures/2611.05443/figure-002.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 1018
+            },
+            {
+              "caption": "Figure 9. Action transfer (source and target taken from different videos): source represents the source clip from which the action is inferred, the first frame represents the context, rest of the frames are generated using the context and transferred actions. In the first example, both models show increase in brightness for the visible instrument in later frames as in the source video, showing that the models have learned to transfer visual intensity as well. In the second example, the motion of monopolar curved scissors in the source video is transferred to the needle driver present in the target context. Here SurgTransfer can more effectively replicate the sudden movements of the instrument than AdaWorld.",
+              "figure_id": "figure-9-14",
+              "figure_number": "9",
+              "height": 422,
+              "image_path": "figures/2611.05443/figure-003.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 991
+            },
+            {
+              "caption": "Figure 10. Here, SurgTransfer tightly tracks the relative tip displacements showing high adherence to the conditioning action signal.",
+              "figure_id": "figure-10-9",
+              "figure_number": "10",
+              "height": 847,
+              "image_path": "figures/2611.05443/figure-004.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 1019
+            },
+            {
+              "caption": "Figure 7. Action transfer: source represents the source clip from which the action is inferred, the first frame (highlighted in light green box) represents the context, rest of the frames are generated using the context and transferred actions",
+              "figure_id": "figure-7-12",
+              "figure_number": "7",
+              "height": 557,
+              "image_path": "figures/2611.05443/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 893
+            },
+            {
+              "caption": "Figure 6. Comparison of SurgTransfer and AdaWorld for long-horizon prediction.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 460,
+              "image_path": "figures/2611.05443/figure-006.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 1030
+            },
+            {
+              "caption": "Figure 4. Comparison of temporal attention maps between SurgTransfer and Autoregressive LAM models. Autoregressive LAM shows greater reliance on the preceding frame.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 306,
+              "image_path": "figures/2611.05443/figure-007.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 615
+            },
+            {
+              "caption": "Figure 2. Comparison of different Latent Action Models. SurgTransfer (multi-step LAM) learns composable action i.e â that encodes long horizon changes.",
+              "figure_id": "figure-2-10",
+              "figure_number": "2",
+              "height": 312,
+              "image_path": "figures/2611.05443/figure-008.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 552
+            },
+            {
+              "caption": "Figure 3. SurgTransfer dynamics model conditions on the composite action representation.",
+              "figure_id": "figure-3-11",
+              "figure_number": "3",
+              "height": 265,
+              "image_path": "figures/2611.05443/figure-009.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 337
+            },
+            {
+              "caption": "Figure 5. Increasing context length leads to improved performace in action modeling.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 252,
+              "image_path": "figures/2611.05443/figure-010.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 317
+            },
+            {
+              "caption": "Figure 8. Action transfer (source and target from different parts of same video): source represents the source clip from which the action is inferred, the first frame represents the context, rest of the frames are generated using the context and transferred actions. In the first example, for SurgTransfer, we can see the needle driver on the bottom right holding the thread as in the source video. In the second example SurgTransfer replicates the grasping and the subsequent release of a tissue by bipolar forceps as opposed to AdaWorld.",
+              "figure_id": "figure-8-13",
+              "figure_number": "8",
+              "height": 423,
+              "image_path": "figures/2611.05443/figure-011.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 991
+            },
+            {
+              "caption": "Table 2. Comparison of SurgTransfer against different baselines on Action Transfer. AR: autoregressive models. All LAMs use continuous actions unless otherwise specified.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 413,
+              "image_path": "figures/2611.05443/table-012.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 458
+            },
+            {
+              "caption": "Table 1. Clinical evaluation of SurgTransfer and AdaWorld on different levels of surgical plausibility.",
+              "figure_id": "table-1-15",
+              "figure_number": "1",
+              "height": 163,
+              "image_path": "figures/2611.05443/table-013.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 456
+            },
+            {
+              "caption": "Table 3. Comparison of SurgTransfer against baselines on reconstruction for SurgToolLoc [45].",
+              "figure_id": "table-3-8",
+              "figure_number": "3",
+              "height": 219,
+              "image_path": "figures/2611.05443/table-014.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 894
+            },
+            {
+              "caption": "Table 4. Comparison on Action Transfer for disparate domains",
+              "figure_id": "table-4-5",
+              "figure_number": "4",
+              "height": 122,
+              "image_path": "figures/2611.05443/table-015.webp",
+              "kind": "table",
+              "page": 11,
+              "width": 487
+            }
+          ],
+          "first_seen_at": "2026-11-04T21:00:00-05:00",
+          "hero_figure": "figures/2611.05443/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2611.05443",
+          "relevance": 8,
+          "selection_reason": "Multi-step latent action modeling for surgical world models, fits latent action models.",
+          "summary_status": "generated",
+          "title": "SurgTransfer: Multi-Step Latent Action Modeling for Action Transfer in Surgical World Model",
+          "tldr": "SurgTransfer learns transferable, context-invariant latent surgical actions from unlabeled videos by modeling procedures as hierarchical multi-step behaviors.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-11-03",
       "paper_count": 2,
       "papers": [
@@ -26877,5 +27356,5 @@
   "schema_version": 1,
   "subtopic_id": "latent-action-models",
   "topic_id": "world-models",
-  "total_paper_count": 142
+  "total_paper_count": 145
 }

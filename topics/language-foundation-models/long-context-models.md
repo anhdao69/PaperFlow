@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**180 papers total**
+**185 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-04 | [SpecCompact: Accelerating LLM Agent Context Compaction with Slot-Parallel Semantic Speculative Verification](https://arxiv.org/abs/2611.06876) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory, Long-Context Models | SpecCompact speeds up LLM-agent context compaction by speculatively generating summary slots in parallel and having a target model verify and repair them. | 7 | 7 |
+| 2026-11-04 | [LooM: Loop-Invariant Memory for Causal Encoder-Decoder Language Models](https://arxiv.org/abs/2611.06835) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models, Long-Context Models | LooM enables flexible, memory-efficient looping in causal encoder-decoder language models, allowing deployment-time depth adjustment without increasing cache size. | 8 | 8 |
+| 2026-11-04 | [Accelerating Long-Context Decoding in Large-Scale Hybrid LLMs Without Retraining](https://arxiv.org/abs/2611.06133) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | A training-free sparse-attention strategy accelerates long-context decoding in hybrid LLMs while preserving baseline accuracy. | 7 | 6 |
+| 2026-11-04 | [SRRM: A Retrieval-Reconstruction Benchmark for Evaluating Long-Context Memory in Small Language Models](https://arxiv.org/abs/2611.05386) | Language Foundation Models: Long-Context Models | SRRM shows that retrieval accuracy alone overestimates long-context memory in small language models, as reconstruction degrades much faster with increasing context. | 6 | 5 |
+| 2026-11-04 | [Length Is Cheap, Competition Is Not: Attention Predicts Context Rot in Retrieval](https://arxiv.org/abs/2611.04169) | Language Foundation Models: Long-Context Models | Retrieval failures in long contexts are driven mainly by competing evidence that steals attention, not by context length alone. | 6 | 7 |
 | 2026-11-03 | [You don't need long context](https://arxiv.org/abs/2611.05306) | Language Foundation Models: Long-Context Models | Frequent context compaction can preserve frontier LLM accuracy on long-input and long-horizon tasks while substantially reducing the need for long contexts. | 8 | 7 |
 | 2026-11-03 | [Anchor: Augmented Cross-Layer Recurrent State for Long-Context Retrieval in Test-Time Training](https://arxiv.org/abs/2611.04327) | Efficient AI: KV Cache and Memory Efficiency; Adaptation and Memory: Test-Time Learning; Language Foundation Models: Long-Context Models | Anchor improves long-context retrieval and efficiency by storing TTT memory only in a few anchor layers and sharing it across layers through learned read transformations. | 8 | 8 |
 | 2026-11-03 | [Coarse Semantic Blocks for Efficient Training-Free Sparse Attention](https://arxiv.org/abs/2611.04313) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | A training-free semantic-block index makes sparse attention substantially faster for long-context prefill and decoding while largely preserving accuracy. | 8 | 7 |

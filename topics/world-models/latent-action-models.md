@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**142 papers total**
+**145 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-04 | [Motion-guided Contrastive Regularization For Latent World Models](https://arxiv.org/abs/2611.06901) | World Models: Latent Action Models | Motion-guided contrastive regularization prevents static-background collapse in latent world models and substantially improves visual-control planning under randomized backgrounds. | 8 | 8 |
+| 2026-11-04 | [ELA: End-to-End Latent Action Policy Learning from Video Demonstrations](https://arxiv.org/abs/2611.05571) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | ELA learns control-relevant latent actions end to end from abundant videos and a small number of action-labeled robot demonstrations. | 8 | 8 |
+| 2026-11-04 | [SurgTransfer: Multi-Step Latent Action Modeling for Action Transfer in Surgical World Model](https://arxiv.org/abs/2611.05443) | World Models: Latent Action Models | SurgTransfer learns transferable, context-invariant latent surgical actions from unlabeled videos by modeling procedures as hierarchical multi-step behaviors. | 8 | 7 |
 | 2026-11-03 | [DreamX: Video Diffusion Model is a Universal Latent Action Learner](https://arxiv.org/abs/2611.05377) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | DreamX repurposes a pretrained video diffusion model to learn compact, appearance-invariant latent actions that transfer across embodiments, environments, and action formats. | 9 | 8 |
 | 2026-11-03 | [Coordinating Humanoid Loco-Manipulation through Action-Conditioned Latent Foresight](https://arxiv.org/abs/2611.04839) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | Action-conditioned latent foresight improves humanoid loco-manipulation by evaluating and replanning command sequences before execution. | 9 | 8 |
 | 2026-11-01 | [CausalWAM: Learning the Causes of Actions in World Action Models](https://arxiv.org/abs/2610.42096) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models, Interactive World Models | CausalWAM identifies and uses only the latent factors that cause demonstrated actions, improving closed-loop action efficiency without changing the world-modeling objective. | 8 | 8 |

@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**326 papers total**
+**330 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-04 | [Accelerating Long-Context Decoding in Large-Scale Hybrid LLMs Without Retraining](https://arxiv.org/abs/2611.06133) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | A training-free sparse-attention strategy accelerates long-context decoding in hybrid LLMs while preserving baseline accuracy. | 7 | 6 |
+| 2026-11-04 | [ChanSFormer: A Channel Agnostic Vision Transformer for Multi-Channel Cell Painting Images](https://arxiv.org/abs/2611.06015) | Efficient AI: Efficient Attention | ChanSFormer is a channel-agnostic vision transformer that preserves channel identity and cross-channel interactions while improving accuracy, transferability, and computational efficiency. | 6 | 7 |
+| 2026-11-04 | [DecoupAttn: Decoupled Sparse Attention for Training-Free Acceleration of Video Diffusion](https://arxiv.org/abs/2611.05917) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | DecoupAttn accelerates video diffusion without retraining by combining fixed exact-attention blocks, semantic compensation, and distortion-aware sparse-budget allocation. | 8 | 8 |
+| 2026-11-04 | [CHARM+: Cross-Hardware Attention with Re-Merge Multistream Mechanism](https://arxiv.org/abs/2611.05906) | Efficient AI: Efficient Attention | CHARM+ accelerates distributed attention across heterogeneous hardware by restructuring communication for greater overlap and less synchronization. | 8 | 8 |
 | 2026-11-03 | [Accelerating Offloading-Based MoE Inference by Interleaving Concurrent Requests](https://arxiv.org/abs/2611.04794) | Efficient AI: Efficient Attention | Bevy accelerates local MoE inference by scheduling concurrent requests to overlap expert fetching with computation, avoiding inaccurate prefetch predictions. | 8 | 7 |
 | 2026-11-03 | [Exploiting Biases in Attention for Transformers](https://arxiv.org/abs/2611.04657) | Efficient AI: Token Pruning and Eviction, Efficient Attention | The paper exposes depth-amplified token-importance biases in vision-transformer attention and uses them to prune attention computation with limited accuracy loss. | 8 | 7 |
 | 2026-11-03 | [A Parametric Linear Conic Projection for Structured Sparse Attention](https://arxiv.org/abs/2611.04479) | Efficient AI: Efficient Attention | The paper introduces a cone-based sparsity measure and efficient projection method that theoretically controls support selection while producing hardware-friendly structured sparsity for Transformer attention. | 9 | 8 |
