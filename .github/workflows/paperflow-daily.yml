@@ -50,9 +50,12 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      - name: Report initial disk space
+        run: df -h
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 0
+          # Publication commits only need the current tree, not past data snapshots.
+          fetch-depth: 1
           # A queued cron run may carry a SHA from before the preceding run
           # published. Read the latest state so the due gate can exit cleanly.
           ref: main
@@ -147,3 +150,6 @@ jobs:
           python -m paperflow.cli.commit_generated \
             --message "chore: update PaperFlow generated content"
           git push
+      - name: Report final disk space
+        if: always()
+        run: df -h

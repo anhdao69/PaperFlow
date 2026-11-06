@@ -39,16 +39,30 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Report initial disk space
+        run: df -h
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          # Fetch only public deployment inputs, without canonical state/history.
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /site/
+            /figures/
+            /data/feed_index.json
+            /data/topics.json
+            /data/daily_feeds/
+            /data/topic_feeds/
       - uses: actions/configure-pages@v5
       - name: Stage public site and feed allowlist
         run: |
+          # Rename on the same filesystem instead of duplicating every public byte.
+          mv site _pages
           mkdir -p _pages/data
-          cp -R site/. _pages/
-          cp data/feed_index.json data/topics.json _pages/data/
-          if [ -d data/daily_feeds ]; then cp -R data/daily_feeds _pages/data/; fi
-          if [ -d data/topic_feeds ]; then cp -R data/topic_feeds _pages/data/; fi
-          if [ -d figures ]; then cp -R figures _pages/; fi
+          mv data/feed_index.json data/topics.json _pages/data/
+          if [ -d data/daily_feeds ]; then mv data/daily_feeds _pages/data/; fi
+          if [ -d data/topic_feeds ]; then mv data/topic_feeds _pages/data/; fi
+          if [ -d figures ]; then mv figures _pages/; fi
           touch _pages/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -56,3 +70,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Report final disk space
+        if: always()
+        run: df -h
