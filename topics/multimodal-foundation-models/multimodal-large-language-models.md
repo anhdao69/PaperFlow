@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1456 papers total**
+**1459 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [STAR: Steering Action Representations during Inference](https://arxiv.org/abs/2610.41009) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | STAR is a training-free inference technique that improves robot manipulation by steering late-layer action representations toward better visual grounding. | 9 | 8 |
+| 2026-11-05 | [Execution Logs Sway VLM Judges of Robot Progress](https://arxiv.org/abs/2610.34151) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | Robot-progress judgments by VLMs can be strongly swayed by misleading execution logs, though warnings reduce the effect and susceptibility varies by model. | 8 | 7 |
+| 2026-11-05 | [AV-FABLE: Audio-Visual Manipulation Forensics in Long-Form Videos](https://arxiv.org/abs/2610.33413) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AV-FABLE benchmarks sparse audio-visual manipulations in long-form videos and shows that separated readouts of frozen AV-LLM features enable strong modality-specific temporal localization. | 8 | 9 |
 | 2026-11-04 | [Where to Connect? Boosting MLLMs via Dynamic Gated Pathways across ALL ViT and LLM Layers](https://arxiv.org/abs/2611.06844) | Multimodal Foundation Models: Multimodal Large Language Models | DGP improves MLLMs by dynamically routing visual features from every ViT layer to each LLM layer according to its semantic needs. | 7 | 7 |
 | 2026-11-04 | [Benchmarking Fine-Grained Visual Reasoning for Remote Sensing in Urban Management](https://arxiv.org/abs/2611.06770) | Multimodal Foundation Models: Multimodal Large Language Models | UMBEnch benchmarks fine-grained visual reasoning in UAV imagery for urban management and introduces a training-free evidence-first prompting method that improves MLLM performance. | 5 | 5 |
 | 2026-11-04 | [Trick-or-Treat: Adversarial Evaluation of Multimodal Medical Reasoning with Synthetic Images](https://arxiv.org/abs/2611.06631) | Multimodal Foundation Models: Multimodal Large Language Models | Trick-or-Treat is an adversarial benchmark showing that frontier multimodal models often hallucinate clinical findings to force inconsistent medical images into a single diagnosis. | 5 | 6 |

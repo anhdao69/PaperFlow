@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**2413 papers total**
+**2418 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [STAR: Steering Action Representations during Inference](https://arxiv.org/abs/2610.41009) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | STAR is a training-free inference technique that improves robot manipulation by steering late-layer action representations toward better visual grounding. | 9 | 8 |
+| 2026-11-05 | [Execution Logs Sway VLM Judges of Robot Progress](https://arxiv.org/abs/2610.34151) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | Robot-progress judgments by VLMs can be strongly swayed by misleading execution logs, though warnings reduce the effect and susceptibility varies by model. | 8 | 7 |
+| 2026-11-05 | [AV-FABLE: Audio-Visual Manipulation Forensics in Long-Form Videos](https://arxiv.org/abs/2610.33413) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AV-FABLE benchmarks sparse audio-visual manipulations in long-form videos and shows that separated readouts of frozen AV-LLM features enable strong modality-specific temporal localization. | 8 | 9 |
+| 2026-11-05 | [ZeroMAG: Zero-Shot Multimodal Adapter Generation for Plug-and-Play EEG Foundation Models](https://arxiv.org/abs/2610.03546) | Multimodal Foundation Models; Adaptation and Memory: Test-Time Learning | ZeroMAG enables frozen EEG foundation models to use unlabeled multimodal recordings by generating task-specific adapters without target-side training or labels. | 8 | 8 |
+| 2026-11-05 | [FAST: Flow Any Scene Transformer](https://arxiv.org/abs/2609.39748) | Multimodal Foundation Models: Spatial Intelligence | FAST turns a single-view vision foundation model into a scalable cross-view correspondence matcher by rewiring self-attention into cross-attention and reusing pretrained projections. | 8 | 8 |
 | 2026-11-04 | [Occlusion for Free: Detecting Occlusion from the Disagreement Between Two Monocular Distance Cues](https://arxiv.org/abs/2611.06899) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | Occlusion can be detected without occlusion labels by comparing two monocular distance cues whose disagreement reveals when depth is pulled toward an occluder. | 7 | 8 |
 | 2026-11-04 | [Where to Connect? Boosting MLLMs via Dynamic Gated Pathways across ALL ViT and LLM Layers](https://arxiv.org/abs/2611.06844) | Multimodal Foundation Models: Multimodal Large Language Models | DGP improves MLLMs by dynamically routing visual features from every ViT layer to each LLM layer according to its semantic needs. | 7 | 7 |
 | 2026-11-04 | [Transforming Integer Grids to Spatial Intuition: Perception, Not Planning, Governs ARC-AGI-3](https://arxiv.org/abs/2611.06793) | Multimodal Foundation Models: Spatial Intelligence | SARBLOH shows that grounded spatial perception, rather than planning alone, is the main bottleneck for efficient ARC-AGI-3 reasoning. | 9 | 8 |

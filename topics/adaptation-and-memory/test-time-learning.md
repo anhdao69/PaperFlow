@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**703 papers total**
+**705 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [Structured Neural Modeling of Daily Arctic Sea-Ice Concentration Evolution: Physical-Trajectory-Driven Learning and Forecast-Domain Adaptation](https://arxiv.org/abs/2610.03743) | World Models: Video World Models; Adaptation and Memory: Test-Time Learning | A dual-domain framework learns stable daily Arctic sea-ice concentration evolution from physical trajectories and adapts it to forecast data without altering the learned evolution core. | 8 | 8 |
+| 2026-11-05 | [ZeroMAG: Zero-Shot Multimodal Adapter Generation for Plug-and-Play EEG Foundation Models](https://arxiv.org/abs/2610.03546) | Multimodal Foundation Models; Adaptation and Memory: Test-Time Learning | ZeroMAG enables frozen EEG foundation models to use unlabeled multimodal recordings by generating task-specific adapters without target-side training or labels. | 8 | 8 |
 | 2026-11-04 | [Reinforcement Learning Enables Scaling Generalist Robot Policy Improvement](https://arxiv.org/abs/2611.06905) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Reinforcement learning can adapt generalist robot policies across many tasks at once, improving both trained and unseen tasks when the training distribution and value-based design are chosen carefully. | 9 | 8 |
 | 2026-11-04 | [PyRUA-REAL: Robot Exploration and Adaptive Learning through RSI in the Real World](https://arxiv.org/abs/2611.06768) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | PyRUA-REAL enables coding agents to improve robot manipulation through physical exploration, persistent experience, and reusable executable skills, achieving strong performance across real-world and benchmark tasks. | 9 | 8 |
 | 2026-11-04 | [From Reconstruction to Imputation: Test-Time Optimization for Missing Time-Series Channels](https://arxiv.org/abs/2611.06612) | Adaptation and Memory: Test-Time Learning | A frozen time-series reconstructor can be adapted at test time to impute an entirely missing channel by optimizing the missing values for consistency with observed outputs. | 7 | 7 |

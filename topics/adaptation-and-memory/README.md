@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1600 papers total**
+**1604 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [Robocasa-Mem: Benchmarking Environment and Process Memory in Long-Horizon Mobile Manipulation](https://arxiv.org/abs/2611.06475) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboCasa-Mem benchmarks whether mobile manipulation agents can use environment and process memory to make consistent long-horizon decisions. | 10 | 9 |
+| 2026-11-05 | [Can Astra Solve RoboMME without Breaking the Bank?](https://arxiv.org/abs/2611.06184) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A three-tier robot system uses Astra sparingly for long-term planning while lower-cost models execute and monitor subtasks, achieving 79.13% success on RoboMME. | 10 | 8 |
+| 2026-11-05 | [Structured Neural Modeling of Daily Arctic Sea-Ice Concentration Evolution: Physical-Trajectory-Driven Learning and Forecast-Domain Adaptation](https://arxiv.org/abs/2610.03743) | World Models: Video World Models; Adaptation and Memory: Test-Time Learning | A dual-domain framework learns stable daily Arctic sea-ice concentration evolution from physical trajectories and adapts it to forecast data without altering the learned evolution core. | 8 | 8 |
+| 2026-11-05 | [ZeroMAG: Zero-Shot Multimodal Adapter Generation for Plug-and-Play EEG Foundation Models](https://arxiv.org/abs/2610.03546) | Multimodal Foundation Models; Adaptation and Memory: Test-Time Learning | ZeroMAG enables frozen EEG foundation models to use unlabeled multimodal recordings by generating task-specific adapters without target-side training or labels. | 8 | 8 |
 | 2026-11-04 | [Reinforcement Learning Enables Scaling Generalist Robot Policy Improvement](https://arxiv.org/abs/2611.06905) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Reinforcement learning can adapt generalist robot policies across many tasks at once, improving both trained and unseen tasks when the training distribution and value-based design are chosen carefully. | 9 | 8 |
 | 2026-11-04 | [PyRUA-REAL: Robot Exploration and Adaptive Learning through RSI in the Real World](https://arxiv.org/abs/2611.06768) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | PyRUA-REAL enables coding agents to improve robot manipulation through physical exploration, persistent experience, and reusable executable skills, achieving strong performance across real-world and benchmark tasks. | 9 | 8 |
 | 2026-11-04 | [Compounding Physical RSI: Turning Execution Failure into Inherited Capability](https://arxiv.org/abs/2611.06654) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | Compounding Physical RSI turns sequential robot execution failures into stage-specific, inherited improvements while preserving previously learned skills. | 7 | 7 |

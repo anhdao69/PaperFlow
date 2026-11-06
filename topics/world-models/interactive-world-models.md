@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**645 papers total**
+**646 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [Dream4ACT: A Shared Visual Action Interface for Multi-Embodiment Video-Action Modeling](https://arxiv.org/abs/2609.40153) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | Dream4ACT unifies multi-embodiment video and action modeling through a shared visual action interface that enables executable robot control without embodiment-specific decoders. | 9 | 8 |
 | 2026-11-04 | [EvoWorld: Towards Out-of-Sight World Evolution in Generative Video Models](https://arxiv.org/abs/2611.06748) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EvoWorld enables video models to evolve worlds causally beyond the visible frame by combining explicit state reasoning with autoregressive visual rendering. | 8 | 7 |
 | 2026-11-04 | [Interactive World Simulation with Cosmos for Physical AI](https://arxiv.org/abs/2611.06627) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | A Cosmos-based framework enables real-time, action- and state-conditioned interactive world simulation for Physical AI training and evaluation. | 9 | 9 |
 | 2026-11-04 | [MKD2World: A Typed Spatial MarkDown World Model For Web Agents](https://arxiv.org/abs/2611.06544) | World Models: Interactive World Models | MKD2World uses a typed, spatial Markdown representation to predict web-interface states and improve GUI-agent decision-making. | 8 | 8 |

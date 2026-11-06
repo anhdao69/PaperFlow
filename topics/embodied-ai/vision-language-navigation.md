@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**189 papers total**
+**190 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [PathPilot: An Adaptive Question-Conditioned Multi-Magnification Navigation Agent for Whole-Slide Image Analysis](https://arxiv.org/abs/2610.16734) | Embodied AI: Vision-Language Navigation | PathPilot adaptively navigates whole-slide images across regions and magnifications, using the diagnostic question and accumulated evidence to guide exploration like a pathologist. | 9 | 8 |
 | 2026-11-04 | [Jev with Foresight: Safe Language-Guided Autonomous Driving via a Language World Model](https://arxiv.org/abs/2611.05448) | Embodied AI: Vision-Language Navigation; World Models: Interactive World Models | Jev-AD improves language-guided driving safety by predicting nearby vehicles’ responses to candidate actions before making decisions. | 8 | 7 |
 | 2026-11-03 | [WayTrace: A Map-to-Language-to-Trace Hierarchy for Embodied Urban Navigation](https://arxiv.org/abs/2611.05129) | Embodied AI: Vision-Language Navigation, Robot Navigation | WayTrace enables robots to follow long-range urban map directions by converting them into language-guided visual traces for motion control. | 9 | 7 |
 | 2026-11-03 | [Caging Vision-Language Navigation for Legged Robots via Barrier-Certified Safety Architecture](https://arxiv.org/abs/2611.04972) | Embodied AI: Vision-Language Navigation, Robot Navigation, Vision-Language-Action | A modular safety architecture “cages” vision-language navigation for legged robots by grounding VLA plans in physical perception and enforcing provable collision avoidance. | 9 | 8 |

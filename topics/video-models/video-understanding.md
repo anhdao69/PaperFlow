@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**698 papers total**
+**700 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [AV-FABLE: Audio-Visual Manipulation Forensics in Long-Form Videos](https://arxiv.org/abs/2610.33413) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AV-FABLE benchmarks sparse audio-visual manipulations in long-form videos and shows that separated readouts of frozen AV-LLM features enable strong modality-specific temporal localization. | 8 | 9 |
+| 2026-11-05 | [STATERA: Hidden Mass Estimation via Zero-Shot Sim-to-Real Kinematics using Frozen Temporal Tubelets](https://arxiv.org/abs/2610.00003) | Video Generation and Understanding: Video Understanding | STATERA uses mostly frozen video representations plus a lightweight temporal mixer to estimate hidden centers of mass from monocular motion, achieving strong simulation performance and meaningful zero-shot transfer to real objects. | 7 | 7 |
 | 2026-11-04 | [Coupled Scene Graph Anticipation: When With-Constraint Recall Hides Structural Inconsistency](https://arxiv.org/abs/2611.06738) | Video Generation and Understanding: Video Understanding | CoupledSGA enforces structurally consistent future scene-graph predictions, sharply reducing predicate contradictions while revealing that standard With-Constraint recall can hide this trade-off. | 6 | 6 |
 | 2026-11-04 | [Turns Matter: Advancing Streaming Video RL via Turn-Level Credit](https://arxiv.org/abs/2611.06728) | Video Generation and Understanding: Video Understanding | TurnWise improves streaming video RL by assigning credit to each response-or-wait decision instead of sharing one advantage across the entire trajectory. | 6 | 7 |
 | 2026-11-04 | [Sekai: Incremental Event Memory for Generalized Reasoning Video Segmentation](https://arxiv.org/abs/2611.06685) | Video Generation and Understanding: Video Understanding | Sekai introduces Generalized Reasoning Video Segmentation, using event memory to track query-dependent targets that evolve as a video unfolds. | 7 | 7 |

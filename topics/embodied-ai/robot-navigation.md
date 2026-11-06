@@ -6,10 +6,14 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**902 papers total**
+**906 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [Object- and Task-Aware Active Perception for Safe Navigation of Mobile Manipulators in Semi-Static Environments](https://arxiv.org/abs/2610.29964) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An active-perception system uses a mobile manipulator’s hand camera to update uncertain, task-relevant regions during navigation, improving map consistency and reducing collision risk in semi-static environments. | 9 | 8 |
+| 2026-11-05 | [ColoACT: Multi-Cue Action Chunking for Smooth Autonomous Colon Navigation on a Self-Propelled Endoscopic Robot](https://arxiv.org/abs/2610.01258) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | ColoACT combines multi-cue visual inputs with action-chunking control to enable smoother autonomous navigation of a self-propelled colonoscopic robot through challenging colon anatomy. | 8 | 7 |
+| 2026-11-05 | [GPU-Accelerated Path-Dependent Marginal Information Gain for Autonomous Exploration](https://arxiv.org/abs/2609.40297) | Embodied AI: Robot Navigation | A GPU-accelerated depth-buffer method efficiently computes path-dependent marginal information gain, improving autonomous exploration speed and coverage. | 8 | 6 |
+| 2026-11-05 | [Rethinking Legibility in Social Robot Hallway Navigation: Impact of Intent Representation and Human Distraction](https://arxiv.org/abs/2609.40158) | Embodied AI: Robot Navigation | In hallway navigation, representing a robot’s intent as its passing side—especially with adaptive updates—improves coordination and supports smoother human motion, including when pedestrians are distracted. | 8 | 5 |
 | 2026-11-04 | [Occlusion for Free: Detecting Occlusion from the Disagreement Between Two Monocular Distance Cues](https://arxiv.org/abs/2611.06899) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | Occlusion can be detected without occlusion labels by comparing two monocular distance cues whose disagreement reveals when depth is pulled toward an occluder. | 7 | 8 |
 | 2026-11-04 | [When to Ask for Help: Uncertainty-Triggered Aerial Refinement for Off-Road Navigation](https://arxiv.org/abs/2611.06702) | Embodied AI: Robot Navigation | An uncertainty-triggered planner asks an aerial robot for help only when resolving map ambiguity is predicted to improve the ground vehicle’s navigation, enabling high success with much less UAV flight. | 7 | 7 |
 | 2026-11-04 | [FOSCo-Net: Ego-centric Voxel Completion for Forest LiDAR Occlusions](https://arxiv.org/abs/2611.06588) | Embodied AI: Robot Navigation | FOSCo-Net uses temporally accumulated LiDAR observations to self-supervise completion of trunk-induced occlusions, improving forest-robot traversal safety. | 7 | 6 |

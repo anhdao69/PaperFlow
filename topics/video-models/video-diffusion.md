@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**355 papers total**
+**356 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [IDRF: Inverse-Distilled Reward Fine-tuning of Masked Discrete Diffusion Models](https://arxiv.org/abs/2610.03641) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | IDRF enables reward fine-tuning of few-step masked discrete diffusion models using an inverse-distillation surrogate that avoids costly reference-model rollouts. | 8 | 8 |
 | 2026-11-04 | [VA-TDM: A Unified View for Improving Few-Step Diffusion Models by Velocity Adversarial Distillation](https://arxiv.org/abs/2611.06796) | Video Generation and Understanding: Video Diffusion | VA-TDM improves few-step diffusion and flow generation by adversarially matching student and teacher velocity fields throughout the student’s denoising trajectory. | 7 | 7 |
 | 2026-11-04 | [EmoReward: Self-Evolving Reward Calibration for Emotional Video Generation RL](https://arxiv.org/abs/2611.06518) | Video Generation and Understanding: Video Diffusion | EmoReward adaptively calibrates multiple emotional video-quality signals across RL runs to better align generated videos with intended emotional expression. | 6 | 6 |
 | 2026-11-04 | [PathoS2VD: From 2D Histopathology to Pseudo Z-Stack Representations](https://arxiv.org/abs/2611.05974) | Video Generation and Understanding: Video Diffusion | PathoS2VD generates plausible pseudo z-stacks from single 2D histopathology images to add 3D-like morphological information and improve prostate cancer classification. | 5 | 7 |

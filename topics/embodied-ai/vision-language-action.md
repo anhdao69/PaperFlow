@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**960 papers total**
+**962 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [STAR: Steering Action Representations during Inference](https://arxiv.org/abs/2610.41009) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | STAR is a training-free inference technique that improves robot manipulation by steering late-layer action representations toward better visual grounding. | 9 | 8 |
+| 2026-11-05 | [Execution Logs Sway VLM Judges of Robot Progress](https://arxiv.org/abs/2610.34151) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | Robot-progress judgments by VLMs can be strongly swayed by misleading execution logs, though warnings reduce the effect and susceptibility varies by model. | 8 | 7 |
 | 2026-11-04 | [From Pixels to Actions - Towards Native Vision-Language-Action Policies](https://arxiv.org/abs/2611.06918) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | NEO-VLA improves vision-language-action control by letting action policies access evolving, instruction-conditioned visual representations instead of relying on a fixed visual encoder output. | 9 | 9 |
 | 2026-11-04 | [BEAKER: An Expert-Curated Benchmark for Embodied Brains in Self-Driving Chemical Laboratories](https://arxiv.org/abs/2611.06911) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | BEAKER is an expert-curated benchmark showing that multimodal models understand coarse lab procedures but struggle with precise, safe, action-grounded execution in self-driving chemical laboratories. | 8 | 7 |
 | 2026-11-04 | [VABAR: A Variational Automation Benchmark for Agentic Robotics](https://arxiv.org/abs/2611.06881) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | VABAR is an open simulation benchmark for testing whether agentic robots can reliably perform varied manipulation tasks across industrial, medical, and infrastructure settings. | 8 | 7 |

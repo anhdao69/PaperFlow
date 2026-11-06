@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**1201 papers total**
+**1204 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [AV-FABLE: Audio-Visual Manipulation Forensics in Long-Form Videos](https://arxiv.org/abs/2610.33413) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AV-FABLE benchmarks sparse audio-visual manipulations in long-form videos and shows that separated readouts of frozen AV-LLM features enable strong modality-specific temporal localization. | 8 | 9 |
+| 2026-11-05 | [IDRF: Inverse-Distilled Reward Fine-tuning of Masked Discrete Diffusion Models](https://arxiv.org/abs/2610.03641) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | IDRF enables reward fine-tuning of few-step masked discrete diffusion models using an inverse-distillation surrogate that avoids costly reference-model rollouts. | 8 | 8 |
+| 2026-11-05 | [STATERA: Hidden Mass Estimation via Zero-Shot Sim-to-Real Kinematics using Frozen Temporal Tubelets](https://arxiv.org/abs/2610.00003) | Video Generation and Understanding: Video Understanding | STATERA uses mostly frozen video representations plus a lightweight temporal mixer to estimate hidden centers of mass from monocular motion, achieving strong simulation performance and meaningful zero-shot transfer to real objects. | 7 | 7 |
 | 2026-11-04 | [VA-TDM: A Unified View for Improving Few-Step Diffusion Models by Velocity Adversarial Distillation](https://arxiv.org/abs/2611.06796) | Video Generation and Understanding: Video Diffusion | VA-TDM improves few-step diffusion and flow generation by adversarially matching student and teacher velocity fields throughout the student’s denoising trajectory. | 7 | 7 |
 | 2026-11-04 | [EvoWorld: Towards Out-of-Sight World Evolution in Generative Video Models](https://arxiv.org/abs/2611.06748) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EvoWorld enables video models to evolve worlds causally beyond the visible frame by combining explicit state reasoning with autoregressive visual rendering. | 8 | 7 |
 | 2026-11-04 | [Coupled Scene Graph Anticipation: When With-Constraint Recall Hides Structural Inconsistency](https://arxiv.org/abs/2611.06738) | Video Generation and Understanding: Video Understanding | CoupledSGA enforces structurally consistent future scene-graph predictions, sharply reducing predicate contradictions while revealing that standard With-Constraint recall can hide this trade-off. | 6 | 6 |

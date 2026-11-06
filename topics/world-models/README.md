@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**1270 papers total**
+**1273 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [Structured Neural Modeling of Daily Arctic Sea-Ice Concentration Evolution: Physical-Trajectory-Driven Learning and Forecast-Domain Adaptation](https://arxiv.org/abs/2610.03743) | World Models: Video World Models; Adaptation and Memory: Test-Time Learning | A dual-domain framework learns stable daily Arctic sea-ice concentration evolution from physical trajectories and adapts it to forecast data without altering the learned evolution core. | 8 | 8 |
+| 2026-11-05 | [IDRF: Inverse-Distilled Reward Fine-tuning of Masked Discrete Diffusion Models](https://arxiv.org/abs/2610.03641) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | IDRF enables reward fine-tuning of few-step masked discrete diffusion models using an inverse-distillation surrogate that avoids costly reference-model rollouts. | 8 | 8 |
+| 2026-11-05 | [Dream4ACT: A Shared Visual Action Interface for Multi-Embodiment Video-Action Modeling](https://arxiv.org/abs/2609.40153) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | Dream4ACT unifies multi-embodiment video and action modeling through a shared visual action interface that enables executable robot control without embodiment-specific decoders. | 9 | 8 |
 | 2026-11-04 | [Motion-guided Contrastive Regularization For Latent World Models](https://arxiv.org/abs/2611.06901) | World Models: Latent Action Models | Motion-guided contrastive regularization prevents static-background collapse in latent world models and substantially improves visual-control planning under randomized backgrounds. | 8 | 8 |
 | 2026-11-04 | [EvoWorld: Towards Out-of-Sight World Evolution in Generative Video Models](https://arxiv.org/abs/2611.06748) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EvoWorld enables video models to evolve worlds causally beyond the visible frame by combining explicit state reasoning with autoregressive visual rendering. | 8 | 7 |
 | 2026-11-04 | [Detecting Silent Action-Interface Mismatch with Calibrated Relational World Models](https://arxiv.org/abs/2611.06653) | Embodied AI: Robot Learning and Manipulation; World Models | Calibrated relational world models detect silent robot action-interface mismatches offline, with joint conditional scoring improving detection recall while slightly reducing localization precision. | 7 | 7 |

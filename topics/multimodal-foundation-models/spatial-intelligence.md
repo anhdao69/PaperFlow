@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**779 papers total**
+**780 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [FAST: Flow Any Scene Transformer](https://arxiv.org/abs/2609.39748) | Multimodal Foundation Models: Spatial Intelligence | FAST turns a single-view vision foundation model into a scalable cross-view correspondence matcher by rewiring self-attention into cross-attention and reusing pretrained projections. | 8 | 8 |
 | 2026-11-04 | [Occlusion for Free: Detecting Occlusion from the Disagreement Between Two Monocular Distance Cues](https://arxiv.org/abs/2611.06899) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | Occlusion can be detected without occlusion labels by comparing two monocular distance cues whose disagreement reveals when depth is pulled toward an occluder. | 7 | 8 |
 | 2026-11-04 | [Transforming Integer Grids to Spatial Intuition: Perception, Not Planning, Governs ARC-AGI-3](https://arxiv.org/abs/2611.06793) | Multimodal Foundation Models: Spatial Intelligence | SARBLOH shows that grounded spatial perception, rather than planning alone, is the main bottleneck for efficient ARC-AGI-3 reasoning. | 9 | 8 |
 | 2026-11-04 | [MonoLaDN: Language-Guided DeNoising for Monocular 3D Object Detection](https://arxiv.org/abs/2611.06282) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision | MonoLaDN transfers a VLM’s geometric reasoning into a vision-only monocular 3D detector through language-guided denoising, improving detection without adding inference overhead. | 8 | 7 |

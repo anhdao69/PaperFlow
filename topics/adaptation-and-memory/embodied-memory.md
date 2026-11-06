@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**299 papers total**
+**301 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-05 | [Robocasa-Mem: Benchmarking Environment and Process Memory in Long-Horizon Mobile Manipulation](https://arxiv.org/abs/2611.06475) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboCasa-Mem benchmarks whether mobile manipulation agents can use environment and process memory to make consistent long-horizon decisions. | 10 | 9 |
+| 2026-11-05 | [Can Astra Solve RoboMME without Breaking the Bank?](https://arxiv.org/abs/2611.06184) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A three-tier robot system uses Astra sparingly for long-term planning while lower-cost models execute and monitor subtasks, achieving 79.13% success on RoboMME. | 10 | 8 |
 | 2026-11-04 | [PyRUA-REAL: Robot Exploration and Adaptive Learning through RSI in the Real World](https://arxiv.org/abs/2611.06768) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | PyRUA-REAL enables coding agents to improve robot manipulation through physical exploration, persistent experience, and reusable executable skills, achieving strong performance across real-world and benchmark tasks. | 9 | 8 |
 | 2026-11-04 | [Towards Robust Long-Lived Agents: Benchmarking Experience Lifecycles in Evolving Environments](https://arxiv.org/abs/2611.05450) | Adaptation and Memory: Continual and Online Learning, Embodied Memory | ReScopeBench evaluates whether long-lived agents can acquire, reuse, and update experience as interactive environments evolve. | 8 | 7 |
 | 2026-11-04 | [GROME: GROunding Factorized MEmory into Video World Models](https://arxiv.org/abs/2610.39812) | World Models: Video World Models; Adaptation and Memory: Embodied Memory | GROME improves long-horizon video world-model consistency by separately remembering static scene geometry and dynamic entities, then injecting retrieved memories without retraining the backbone. | 8 | 8 |
