@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1604 papers total**
+**1605 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [Certainty Is Not Just Correctness: Rethinking Token-Level Certainty in LLM Reasoning](https://arxiv.org/abs/2610.00296) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Token-level certainty is more useful for judging question difficulty than answer correctness, but strategically using it at different generation stages improves accuracy while greatly reducing test-time compute. | 8 | 8 |
 | 2026-11-05 | [Robocasa-Mem: Benchmarking Environment and Process Memory in Long-Horizon Mobile Manipulation](https://arxiv.org/abs/2611.06475) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboCasa-Mem benchmarks whether mobile manipulation agents can use environment and process memory to make consistent long-horizon decisions. | 10 | 9 |
 | 2026-11-05 | [Can Astra Solve RoboMME without Breaking the Bank?](https://arxiv.org/abs/2611.06184) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A three-tier robot system uses Astra sparingly for long-term planning while lower-cost models execute and monitor subtasks, achieving 79.13% success on RoboMME. | 10 | 8 |
 | 2026-11-05 | [Structured Neural Modeling of Daily Arctic Sea-Ice Concentration Evolution: Physical-Trajectory-Driven Learning and Forecast-Domain Adaptation](https://arxiv.org/abs/2610.03743) | World Models: Video World Models; Adaptation and Memory: Test-Time Learning | A dual-domain framework learns stable daily Arctic sea-ice concentration evolution from physical trajectories and adapts it to forecast data without altering the learned evolution core. | 8 | 8 |

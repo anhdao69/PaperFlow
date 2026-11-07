@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**267 papers total**
+**268 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [A Framework for Egocentric and Exocentric Procedural Understanding via Temporal Segmentation and Semantic Abstraction](https://arxiv.org/abs/2610.00069) | Embodied AI: Learning from Human Videos | A privacy-preserving framework compresses long-horizon egocentric and exocentric workplace video into an auditable procedural memory for retrieval and question answering. | 9 | 8 |
 | 2026-11-04 | [Open-HumanScale: An Open Recipe for Scaling Human and Robot Experience for Embodied Foundation Models](https://arxiv.org/abs/2611.06817) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | Open-HumanScale provides an open recipe and 50,000-hour corpus for scaling human and robot experience into generalizable embodied foundation models. | 9 | 8 |
 | 2026-11-04 | [Dexterous Robotic Hands in the Foundation-Model Era: A Full-Stack Survey of Hardware, Data, Cross-Embodiment Transfer, Learning, and Evaluation](https://arxiv.org/abs/2611.06724) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | This survey presents a full-stack view of dexterous robotic hands, linking hardware, data, cross-embodiment transfer, learning, and evaluation while identifying gaps in reliable contact-rich deployment. | 8 | 6 |
 | 2026-11-04 | [Playing Soccer Like Humans Do: Learning Versatile and Agile Humanoid Soccer via Latent Motion Priors](https://arxiv.org/abs/2611.06564) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | Soccerbot uses human motion priors and hierarchical reinforcement learning to teach a humanoid robot a unified repertoire of agile, natural soccer skills. | 8 | 7 |

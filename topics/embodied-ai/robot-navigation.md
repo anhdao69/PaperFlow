@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**906 papers total**
+**909 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [Learning Multiple Timescales for Goal-Conditioned Reinforcement Learning](https://arxiv.org/abs/2610.00849) | Embodied AI: Robot Navigation | GITA improves offline goal-conditioned reinforcement learning by learning across multiple temporal abstractions, preserving both long-range guidance and local state distinctions. | 9 | 8 |
+| 2026-11-06 | [Reward as Observation: Learning Reward-Based Policies for Rapid Adaptation](https://arxiv.org/abs/2610.00729) | Embodied AI: Robot Navigation | A policy conditioned only on rewards and actions enables zero-shot transfer across environments with radically different observations. | 9 | 8 |
+| 2026-11-06 | [Meta-Multi-Agent Reinforcement Learning for Fast Adaptation of Interactive Policies with Applications to Autonomous Driving](https://arxiv.org/abs/2610.00705) | Embodied AI: Robot Navigation | A meta-MARL framework enables multi-agent policies to adapt rapidly to new strategic interaction settings, with autonomous-driving experiments showing faster adaptation than pretrained MARL baselines. | 9 | 8 |
 | 2026-11-05 | [Object- and Task-Aware Active Perception for Safe Navigation of Mobile Manipulators in Semi-Static Environments](https://arxiv.org/abs/2610.29964) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | An active-perception system uses a mobile manipulator’s hand camera to update uncertain, task-relevant regions during navigation, improving map consistency and reducing collision risk in semi-static environments. | 9 | 8 |
 | 2026-11-05 | [ColoACT: Multi-Cue Action Chunking for Smooth Autonomous Colon Navigation on a Self-Propelled Endoscopic Robot](https://arxiv.org/abs/2610.01258) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | ColoACT combines multi-cue visual inputs with action-chunking control to enable smoother autonomous navigation of a self-propelled colonoscopic robot through challenging colon anatomy. | 8 | 7 |
 | 2026-11-05 | [GPU-Accelerated Path-Dependent Marginal Information Gain for Autonomous Exploration](https://arxiv.org/abs/2609.40297) | Embodied AI: Robot Navigation | A GPU-accelerated depth-buffer method efficiently computes path-dependent marginal information gain, improving autonomous exploration speed and coverage. | 8 | 6 |

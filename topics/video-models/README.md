@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**1204 papers total**
+**1205 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [MoDDiT: Simple Token Routing in Diffusion Transformers](https://arxiv.org/abs/2610.28086) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction | MoDDiT dynamically routes image and video tokens through DiT MLP and attention blocks, reducing computation while maintaining or improving generation quality. | 8 | 8 |
 | 2026-11-05 | [AV-FABLE: Audio-Visual Manipulation Forensics in Long-Form Videos](https://arxiv.org/abs/2610.33413) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AV-FABLE benchmarks sparse audio-visual manipulations in long-form videos and shows that separated readouts of frozen AV-LLM features enable strong modality-specific temporal localization. | 8 | 9 |
 | 2026-11-05 | [IDRF: Inverse-Distilled Reward Fine-tuning of Masked Discrete Diffusion Models](https://arxiv.org/abs/2610.03641) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | IDRF enables reward fine-tuning of few-step masked discrete diffusion models using an inverse-distillation surrogate that avoids costly reference-model rollouts. | 8 | 8 |
 | 2026-11-05 | [STATERA: Hidden Mass Estimation via Zero-Shot Sim-to-Real Kinematics using Frozen Temporal Tubelets](https://arxiv.org/abs/2610.00003) | Video Generation and Understanding: Video Understanding | STATERA uses mostly frozen video representations plus a lightweight temporal mixer to estimate hidden centers of mass from monocular motion, achieving strong simulation performance and meaningful zero-shot transfer to real objects. | 7 | 7 |

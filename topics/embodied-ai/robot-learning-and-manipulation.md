@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**2675 papers total**
+**2678 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [FR-VLA: Implicit Force Reasoning VLA for Contact-Rich Manipulation](https://arxiv.org/abs/2610.25981) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | FR-VLA improves contact-rich robot manipulation by learning when and how strongly force feedback should influence VLA-generated actions. | 9 | 8 |
+| 2026-11-06 | [Scalable Multi-Task Inverse Reinforcement Learning](https://arxiv.org/abs/2610.00758) | Embodied AI: Robot Learning and Manipulation | A low-rank multi-task IRL method pools data from agents with different rewards to improve coverage, transfer policies across environments, and scale evaluation with task count. | 9 | 8 |
+| 2026-11-06 | [Bellman-Certified Rounding for Sparse Policy Deployment in MDPs](https://arxiv.org/abs/2610.00325) | Embodied AI: Robot Learning and Manipulation | A Bellman-based certification method safely rounds continuous policy updates into sparse binary policies while producing much tighter loss bounds. | 7 | 8 |
 | 2026-11-05 | [Robocasa-Mem: Benchmarking Environment and Process Memory in Long-Horizon Mobile Manipulation](https://arxiv.org/abs/2611.06475) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboCasa-Mem benchmarks whether mobile manipulation agents can use environment and process memory to make consistent long-horizon decisions. | 10 | 9 |
 | 2026-11-05 | [Can Astra Solve RoboMME without Breaking the Bank?](https://arxiv.org/abs/2611.06184) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A three-tier robot system uses Astra sparingly for long-term planning while lower-cost models execute and monitor subtasks, achieving 79.13% success on RoboMME. | 10 | 8 |
 | 2026-11-05 | [Spectrally Routed Diffusion Policy for Multi-Task Robotic Manipulation](https://arxiv.org/abs/2611.04477) | Embodied AI: Robot Learning and Manipulation | SR-DP improves multi-task diffusion policies by combining task-discriminative visual features with spectrally routed denoiser experts to reduce cross-task interference. | 9 | 8 |

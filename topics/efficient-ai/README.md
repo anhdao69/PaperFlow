@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**2558 papers total**
+**2560 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [MoDDiT: Simple Token Routing in Diffusion Transformers](https://arxiv.org/abs/2610.28086) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction | MoDDiT dynamically routes image and video tokens through DiT MLP and attention blocks, reducing computation while maintaining or improving generation quality. | 8 | 8 |
+| 2026-11-06 | [Right In-Place (RiP) Convolution: A Simple, General, and Near-Optimal Strategy for Memory-Efficient CNN Inference](https://arxiv.org/abs/2610.00586) | Efficient AI: KV Cache and Memory Efficiency | RiP convolution enables safe, near-minimal in-place CNN inference for constrained devices while preserving speed and bit-identical outputs. | 9 | 8 |
 | 2026-11-04 | [SpecCompact: Accelerating LLM Agent Context Compaction with Slot-Parallel Semantic Speculative Verification](https://arxiv.org/abs/2611.06876) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory, Long-Context Models | SpecCompact speeds up LLM-agent context compaction by speculatively generating summary slots in parallel and having a target model verify and repair them. | 7 | 7 |
 | 2026-11-04 | [Visual Token Routing: Learning to keep tokens that matter](https://arxiv.org/abs/2611.06854) | Efficient AI: Token Pruning and Eviction | Visual Token Routing sparsifies screenshot representations for computer-use agents, preserving action performance while substantially reducing visual-token and inference costs. | 7 | 7 |
 | 2026-11-04 | [LooM: Loop-Invariant Memory for Causal Encoder-Decoder Language Models](https://arxiv.org/abs/2611.06835) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models, Long-Context Models | LooM enables flexible, memory-efficient looping in causal encoder-decoder language models, allowing deployment-time depth adjustment without increasing cache size. | 8 | 8 |

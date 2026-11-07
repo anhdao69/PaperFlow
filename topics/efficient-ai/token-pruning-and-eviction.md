@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Token Pruning and Eviction
 
-**455 papers total**
+**456 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [MoDDiT: Simple Token Routing in Diffusion Transformers](https://arxiv.org/abs/2610.28086) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction | MoDDiT dynamically routes image and video tokens through DiT MLP and attention blocks, reducing computation while maintaining or improving generation quality. | 8 | 8 |
 | 2026-11-04 | [Visual Token Routing: Learning to keep tokens that matter](https://arxiv.org/abs/2611.06854) | Efficient AI: Token Pruning and Eviction | Visual Token Routing sparsifies screenshot representations for computer-use agents, preserving action performance while substantially reducing visual-token and inference costs. | 7 | 7 |
 | 2026-11-04 | [Template Gap Reconstruction for Shell Output Simulation with Small Language Models](https://arxiv.org/abs/2611.06731) | Efficient AI: Token Pruning and Eviction; Language Foundation Models: Large Language Models | Template gap reconstruction helps small language models simulate shell outputs more faithfully while generating 26.3–38.3% fewer tokens. | 8 | 8 |
 | 2026-11-04 | [Where Is VLA Inference Time Spent? Bottlenecks and Optimization Interactions Across GPUs](https://arxiv.org/abs/2611.06710) | Efficient AI: Token Pruning and Eviction | A cross-GPU study identifies where VLA inference time is spent and provides guidelines for combining optimizations to meet robot latency requirements. | 7 | 6 |

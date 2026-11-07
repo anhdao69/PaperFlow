@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**356 papers total**
+**357 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [MoDDiT: Simple Token Routing in Diffusion Transformers](https://arxiv.org/abs/2610.28086) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction | MoDDiT dynamically routes image and video tokens through DiT MLP and attention blocks, reducing computation while maintaining or improving generation quality. | 8 | 8 |
 | 2026-11-05 | [IDRF: Inverse-Distilled Reward Fine-tuning of Masked Discrete Diffusion Models](https://arxiv.org/abs/2610.03641) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | IDRF enables reward fine-tuning of few-step masked discrete diffusion models using an inverse-distillation surrogate that avoids costly reference-model rollouts. | 8 | 8 |
 | 2026-11-04 | [VA-TDM: A Unified View for Improving Few-Step Diffusion Models by Velocity Adversarial Distillation](https://arxiv.org/abs/2611.06796) | Video Generation and Understanding: Video Diffusion | VA-TDM improves few-step diffusion and flow generation by adversarially matching student and teacher velocity fields throughout the student’s denoising trajectory. | 7 | 7 |
 | 2026-11-04 | [EmoReward: Self-Evolving Reward Calibration for Emotional Video Generation RL](https://arxiv.org/abs/2611.06518) | Video Generation and Understanding: Video Diffusion | EmoReward adaptively calibrates multiple emotional video-quality signals across RL runs to better align generated videos with intended emotional expression. | 6 | 6 |

@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1459 papers total**
+**1460 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [UnifiedAttack: Evaluating the Safety of Large Multimodal Models in Synergistic Harmful Image-Text Generation](https://arxiv.org/abs/2610.00341) | Multimodal Foundation Models: Multimodal Large Language Models | UnifiedAttack benchmarks and exposes how coordinated image-text generation can systematically bypass safety alignment in unified multimodal models. | 7 | 8 |
 | 2026-11-05 | [STAR: Steering Action Representations during Inference](https://arxiv.org/abs/2610.41009) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | STAR is a training-free inference technique that improves robot manipulation by steering late-layer action representations toward better visual grounding. | 9 | 8 |
 | 2026-11-05 | [Execution Logs Sway VLM Judges of Robot Progress](https://arxiv.org/abs/2610.34151) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | Robot-progress judgments by VLMs can be strongly swayed by misleading execution logs, though warnings reduce the effect and susceptibility varies by model. | 8 | 7 |
 | 2026-11-05 | [AV-FABLE: Audio-Visual Manipulation Forensics in Long-Form Videos](https://arxiv.org/abs/2610.33413) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AV-FABLE benchmarks sparse audio-visual manipulations in long-form videos and shows that separated readouts of frozen AV-LLM features enable strong modality-specific temporal localization. | 8 | 9 |

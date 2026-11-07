@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**962 papers total**
+**963 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [FR-VLA: Implicit Force Reasoning VLA for Contact-Rich Manipulation](https://arxiv.org/abs/2610.25981) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | FR-VLA improves contact-rich robot manipulation by learning when and how strongly force feedback should influence VLA-generated actions. | 9 | 8 |
 | 2026-11-05 | [STAR: Steering Action Representations during Inference](https://arxiv.org/abs/2610.41009) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | STAR is a training-free inference technique that improves robot manipulation by steering late-layer action representations toward better visual grounding. | 9 | 8 |
 | 2026-11-05 | [Execution Logs Sway VLM Judges of Robot Progress](https://arxiv.org/abs/2610.34151) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Multimodal Large Language Models | Robot-progress judgments by VLMs can be strongly swayed by misleading execution logs, though warnings reduce the effect and susceptibility varies by model. | 8 | 7 |
 | 2026-11-04 | [From Pixels to Actions - Towards Native Vision-Language-Action Policies](https://arxiv.org/abs/2611.06918) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | NEO-VLA improves vision-language-action control by letting action policies access evolving, instruction-conditioned visual representations instead of relying on a fixed visual encoder output. | 9 | 9 |

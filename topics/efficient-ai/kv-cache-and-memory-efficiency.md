@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # KV Cache and Memory Efficiency
 
-**677 papers total**
+**678 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [Right In-Place (RiP) Convolution: A Simple, General, and Near-Optimal Strategy for Memory-Efficient CNN Inference](https://arxiv.org/abs/2610.00586) | Efficient AI: KV Cache and Memory Efficiency | RiP convolution enables safe, near-minimal in-place CNN inference for constrained devices while preserving speed and bit-identical outputs. | 9 | 8 |
 | 2026-11-04 | [SpecCompact: Accelerating LLM Agent Context Compaction with Slot-Parallel Semantic Speculative Verification](https://arxiv.org/abs/2611.06876) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory, Long-Context Models | SpecCompact speeds up LLM-agent context compaction by speculatively generating summary slots in parallel and having a target model verify and repair them. | 7 | 7 |
 | 2026-11-04 | [LooM: Loop-Invariant Memory for Causal Encoder-Decoder Language Models](https://arxiv.org/abs/2611.06835) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models, Long-Context Models | LooM enables flexible, memory-efficient looping in causal encoder-decoder language models, allowing deployment-time depth adjustment without increasing cache size. | 8 | 8 |
 | 2026-11-04 | [CRESiST: Self-Enhancing Explorative Policy Learning for Simultaneous Speech Translation](https://arxiv.org/abs/2611.06501) | Efficient AI: KV Cache and Memory Efficiency | CRESiST enables segmentation-free, low-latency simultaneous speech translation by combining interleaved speech-text processing with self-enhancing policy learning. | 6 | 7 |

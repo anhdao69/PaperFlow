@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Spatial Intelligence
 
-**780 papers total**
+**781 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [Beyond Unimodal Bases: Pullback Geometry for Multimodal Data](https://arxiv.org/abs/2610.00708) | Multimodal Foundation Models: Spatial Intelligence | A Gaussian-mixture pullback geometry extends scalable manifold representations to multimodal data, producing smoother, more realistic paths through high-likelihood regions. | 8 | 9 |
 | 2026-11-05 | [FAST: Flow Any Scene Transformer](https://arxiv.org/abs/2609.39748) | Multimodal Foundation Models: Spatial Intelligence | FAST turns a single-view vision foundation model into a scalable cross-view correspondence matcher by rewiring self-attention into cross-attention and reusing pretrained projections. | 8 | 8 |
 | 2026-11-04 | [Occlusion for Free: Detecting Occlusion from the Disagreement Between Two Monocular Distance Cues](https://arxiv.org/abs/2611.06899) | Embodied AI: Robot Navigation; Multimodal Foundation Models: Spatial Intelligence | Occlusion can be detected without occlusion labels by comparing two monocular distance cues whose disagreement reveals when depth is pulled toward an occluder. | 7 | 8 |
 | 2026-11-04 | [Transforming Integer Grids to Spatial Intuition: Perception, Not Planning, Governs ARC-AGI-3](https://arxiv.org/abs/2611.06793) | Multimodal Foundation Models: Spatial Intelligence | SARBLOH shows that grounded spatial perception, rather than planning alone, is the main bottleneck for efficient ARC-AGI-3 reasoning. | 9 | 8 |

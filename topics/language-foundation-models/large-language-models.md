@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**2414 papers total**
+**2416 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-06 | [Certainty Is Not Just Correctness: Rethinking Token-Level Certainty in LLM Reasoning](https://arxiv.org/abs/2610.00296) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Token-level certainty is more useful for judging question difficulty than answer correctness, but strategically using it at different generation stages improves accuracy while greatly reducing test-time compute. | 8 | 8 |
+| 2026-11-06 | [Signed Lexical Confidence for Risk-Calibrated Intent Routing](https://arxiv.org/abs/2610.00262) | Language Foundation Models: Large Language Models | A compact signed lexical gate improves risk-calibrated intent routing by adding interpretable lexical evidence to a classifier’s confidence without changing its predictions. | 6 | 7 |
 | 2026-11-05 | [When the Consumer Is an Agent: Execution-Grounded Service-Level Agreements](https://arxiv.org/abs/2611.04182) | Language Foundation Models: Large Language Models | Execution-grounded contracts verify LLM-agent task completion through independently observed service state rather than agent self-assessment or call acceptance. | 7 | 8 |
 | 2026-11-05 | [PACT: Certifying What Is Written in Parallel Decoding of Diffusion Language Models](https://arxiv.org/abs/2611.04152) | Language Foundation Models: Large Language Models | PACT is a training-free parallel decoding rule for diffusion language models that certifies sampled tokens before writing them, preserving quality while reducing forward passes. | 7 | 8 |
 | 2026-11-05 | [Characterizing Recoverable Expert-Utilization Signatures in Fine-Tuned Mixture-of-Experts LLMs](https://arxiv.org/abs/2610.41039) | Language Foundation Models: Large Language Models | Fine-tuned MoE LLMs can memorize and reveal expert-routing pathways, enabling data-free recovery of training-related structural signatures and targeted attacks in distributed deployments. | 7 | 8 |
