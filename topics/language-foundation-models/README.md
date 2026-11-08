@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Language Foundation Models
 
-**3575 papers total**
+**3577 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-07 | [A Conditional Mutual Information Analysis of Response Variety in Language Models](https://arxiv.org/abs/2611.03836) | Language Foundation Models: Large Language Models | The paper uses conditional mutual information to quantify and categorize the variety of language-model responses beyond temperature-based analysis. | 4 | 5 |
+| 2026-11-07 | [HeadEdit: Calibrating Language Model Behavior Through the Frozen Unembedding Matrix](https://arxiv.org/abs/2610.01170) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | HeadEdit calibrates language-model behavior by extracting a low-rank behavioral subspace and applying adaptive vocabulary-wide corrections through the frozen unembedding matrix. | 7 | 7 |
 | 2026-11-06 | [Certainty Is Not Just Correctness: Rethinking Token-Level Certainty in LLM Reasoning](https://arxiv.org/abs/2610.00296) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Token-level certainty is more useful for judging question difficulty than answer correctness, but strategically using it at different generation stages improves accuracy while greatly reducing test-time compute. | 8 | 8 |
 | 2026-11-06 | [Signed Lexical Confidence for Risk-Calibrated Intent Routing](https://arxiv.org/abs/2610.00262) | Language Foundation Models: Large Language Models | A compact signed lexical gate improves risk-calibrated intent routing by adding interpretable lexical evidence to a classifier’s confidence without changing its predictions. | 6 | 7 |
 | 2026-11-05 | [When the Consumer Is an Agent: Execution-Grounded Service-Level Agreements](https://arxiv.org/abs/2611.04182) | Language Foundation Models: Large Language Models | Execution-grounded contracts verify LLM-agent task completion through independently observed service state rather than agent self-assessment or call acceptance. | 7 | 8 |

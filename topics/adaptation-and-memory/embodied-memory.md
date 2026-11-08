@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**301 papers total**
+**302 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-07 | [Retrospective Open-Vocabulary Memory for Long-Term Object Search](https://arxiv.org/abs/2610.00330) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | ECROM uses opportunity-aware probabilistic memory to improve long-term open-vocabulary object search in changing environments. | 8 | 7 |
 | 2026-11-05 | [Robocasa-Mem: Benchmarking Environment and Process Memory in Long-Horizon Mobile Manipulation](https://arxiv.org/abs/2611.06475) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboCasa-Mem benchmarks whether mobile manipulation agents can use environment and process memory to make consistent long-horizon decisions. | 10 | 9 |
 | 2026-11-05 | [Can Astra Solve RoboMME without Breaking the Bank?](https://arxiv.org/abs/2611.06184) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A three-tier robot system uses Astra sparingly for long-term planning while lower-cost models execute and monitor subtasks, achieving 79.13% success on RoboMME. | 10 | 8 |
 | 2026-11-04 | [PyRUA-REAL: Robot Exploration and Adaptive Learning through RSI in the Real World](https://arxiv.org/abs/2611.06768) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Embodied Memory | PyRUA-REAL enables coding agents to improve robot manipulation through physical exploration, persistent experience, and reusable executable skills, achieving strong performance across real-world and benchmark tasks. | 9 | 8 |

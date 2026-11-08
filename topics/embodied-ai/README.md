@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied AI
 
-**4274 papers total**
+**4276 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-07 | [All-For-One: Distilling Visual Foundation Models to a Fast, Memory-Efficient Visuomotor Policy](https://arxiv.org/abs/2611.04485) | Embodied AI: Robot Learning and Manipulation | AFO distills privileged visual foundation-model knowledge into a lightweight RGB-only policy for fast, memory-efficient robotic manipulation. | 9 | 7 |
+| 2026-11-07 | [Retrospective Open-Vocabulary Memory for Long-Term Object Search](https://arxiv.org/abs/2610.00330) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | ECROM uses opportunity-aware probabilistic memory to improve long-term open-vocabulary object search in changing environments. | 8 | 7 |
 | 2026-11-06 | [FR-VLA: Implicit Force Reasoning VLA for Contact-Rich Manipulation](https://arxiv.org/abs/2610.25981) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | FR-VLA improves contact-rich robot manipulation by learning when and how strongly force feedback should influence VLA-generated actions. | 9 | 8 |
 | 2026-11-06 | [Learning Multiple Timescales for Goal-Conditioned Reinforcement Learning](https://arxiv.org/abs/2610.00849) | Embodied AI: Robot Navigation | GITA improves offline goal-conditioned reinforcement learning by learning across multiple temporal abstractions, preserving both long-range guidance and local state distinctions. | 9 | 8 |
 | 2026-11-06 | [Scalable Multi-Task Inverse Reinforcement Learning](https://arxiv.org/abs/2610.00758) | Embodied AI: Robot Learning and Manipulation | A low-rank multi-task IRL method pools data from agents with different rewards to improve coverage, transfer policies across environments, and scale evaluation with task count. | 9 | 8 |

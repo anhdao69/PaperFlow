@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**909 papers total**
+**910 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-07 | [Retrospective Open-Vocabulary Memory for Long-Term Object Search](https://arxiv.org/abs/2610.00330) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | ECROM uses opportunity-aware probabilistic memory to improve long-term open-vocabulary object search in changing environments. | 8 | 7 |
 | 2026-11-06 | [Learning Multiple Timescales for Goal-Conditioned Reinforcement Learning](https://arxiv.org/abs/2610.00849) | Embodied AI: Robot Navigation | GITA improves offline goal-conditioned reinforcement learning by learning across multiple temporal abstractions, preserving both long-range guidance and local state distinctions. | 9 | 8 |
 | 2026-11-06 | [Reward as Observation: Learning Reward-Based Policies for Rapid Adaptation](https://arxiv.org/abs/2610.00729) | Embodied AI: Robot Navigation | A policy conditioned only on rewards and actions enables zero-shot transfer across environments with radically different observations. | 9 | 8 |
 | 2026-11-06 | [Meta-Multi-Agent Reinforcement Learning for Fast Adaptation of Interactive Policies with Applications to Autonomous Driving](https://arxiv.org/abs/2610.00705) | Embodied AI: Robot Navigation | A meta-MARL framework enables multi-agent policies to adapt rapidly to new strategic interaction settings, with autonomous-driving experiments showing faster adaptation than pretrained MARL baselines. | 9 | 8 |

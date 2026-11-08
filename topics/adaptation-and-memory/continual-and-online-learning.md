@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**684 papers total**
+**685 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-07 | [Block Optimism for Nonstationary Bandits with Latent Linear Dynamics](https://arxiv.org/abs/2610.00911) | Adaptation and Memory: Continual and Online Learning | A block-level optimism algorithm improves regret for latent linear-dynamics bandits from \\(\\tilde O(T^{2/3})\\) to \\(\\tilde O(\\sqrt T)\\). | 5 | 7 |
 | 2026-11-04 | [Reinforcement Learning Enables Scaling Generalist Robot Policy Improvement](https://arxiv.org/abs/2611.06905) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Test-Time Learning, Continual and Online Learning | Reinforcement learning can adapt generalist robot policies across many tasks at once, improving both trained and unseen tasks when the training distribution and value-based design are chosen carefully. | 9 | 8 |
 | 2026-11-04 | [Compounding Physical RSI: Turning Execution Failure into Inherited Capability](https://arxiv.org/abs/2611.06654) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | Compounding Physical RSI turns sequential robot execution failures into stage-specific, inherited improvements while preserving previously learned skills. | 7 | 7 |
 | 2026-11-04 | [Human Motion Prediction via Continual Prior Compensation](https://arxiv.org/abs/2611.06637) | Adaptation and Memory: Continual and Online Learning | CPC and CPC++ improve human motion prediction by progressively learning near- to far-future poses while compensating for forgotten prior information. | 6 | 6 |

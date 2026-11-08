@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Test-Time Learning
 
-**706 papers total**
+**707 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-07 | [HeadEdit: Calibrating Language Model Behavior Through the Frozen Unembedding Matrix](https://arxiv.org/abs/2610.01170) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | HeadEdit calibrates language-model behavior by extracting a low-rank behavioral subspace and applying adaptive vocabulary-wide corrections through the frozen unembedding matrix. | 7 | 7 |
 | 2026-11-06 | [Certainty Is Not Just Correctness: Rethinking Token-Level Certainty in LLM Reasoning](https://arxiv.org/abs/2610.00296) | Adaptation and Memory: Test-Time Learning; Language Foundation Models: Large Language Models | Token-level certainty is more useful for judging question difficulty than answer correctness, but strategically using it at different generation stages improves accuracy while greatly reducing test-time compute. | 8 | 8 |
 | 2026-11-05 | [Structured Neural Modeling of Daily Arctic Sea-Ice Concentration Evolution: Physical-Trajectory-Driven Learning and Forecast-Domain Adaptation](https://arxiv.org/abs/2610.03743) | World Models: Video World Models; Adaptation and Memory: Test-Time Learning | A dual-domain framework learns stable daily Arctic sea-ice concentration evolution from physical trajectories and adapts it to forecast data without altering the learned evolution core. | 8 | 8 |
 | 2026-11-05 | [ZeroMAG: Zero-Shot Multimodal Adapter Generation for Plug-and-Play EEG Foundation Models](https://arxiv.org/abs/2610.03546) | Multimodal Foundation Models; Adaptation and Memory: Test-Time Learning | ZeroMAG enables frozen EEG foundation models to use unlabeled multimodal recordings by generating task-specific adapters without target-side training or labels. | 8 | 8 |
