@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**409 papers total**
+**414 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-08 | [InstantHMR : Real-Time Human Mesh Recovery on Your Phone](https://arxiv.org/abs/2611.09195) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | InstantHMR enables fast, accurate single-image 3D human mesh recovery on mobile devices, producing a 6,890-vertex mesh in 5.5 ms on a Samsung Galaxy S23 NPU. | 8 | 8 |
+| 2026-11-08 | [OmniLatent: Unified Latent for 3D Part Modeling](https://arxiv.org/abs/2611.09055) | 3D Vision: 3D Foundation Models | OmniLatent jointly generates 3D geometry and part decomposition from a single image in a shared latent space, enabling editable, complete, and interactive part-aware assets. | 7 | 7 |
+| 2026-11-08 | [Segmenting Geometric Textures of 3D Meshes](https://arxiv.org/abs/2611.08897) | 3D Vision: 3D Foundation Models | A pipeline for segmenting middle-level geometric textures on 3D meshes combines SAM3, DINO-based clustering, and 2D-to-3D lifting, outperforming existing methods and enabling editing and retrieval. | 7 | 7 |
+| 2026-11-08 | [From Geometry to Function: A Multi-Task LiDAR Benchmark Dataset for Semantic and Functional Parsing of Urban Facades](https://arxiv.org/abs/2611.08645) | Embodied AI: Robot Learning and Manipulation; 3D Vision: 3D Foundation Models | HFX3D is a multi-tier LiDAR benchmark that extends urban facade understanding from geometry and semantics to instance-level functional roles. | 8 | 8 |
+| 2026-11-08 | [HaNDF: Object-Conditioned Geometric Neural Hand Distance Fields](https://arxiv.org/abs/2611.08578) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | HaNDF models plausible hand articulations conditioned on interacting objects using a geometry-aware neural distance field. | 9 | 9 |
 | 2026-11-04 | [Trainspotting: Learning Object-Centric 3D Reconstruction from Found Photos](https://arxiv.org/abs/2611.06849) | 3D Vision: 3D Foundation Models | Trainspotting introduces a large found-photo dataset and shows that fine-tuning reconstruction models on diverse real-world object photos improves in-the-wild 3D reconstruction. | 6 | 6 |
 | 2026-11-04 | [A 3D foundation model unifying CT interpretation and segmentation](https://arxiv.org/abs/2611.06471) | 3D Vision: 3D Foundation Models | HoloCT unifies 3D CT interpretation with voxel-level segmentation, using spatial masks to make findings verifiable and improving performance across diverse clinical tasks. | 9 | 9 |
 | 2026-11-04 | [Scale Anchoring via Implicit Semantics and Sequence-Consistent Loop Closure for VGGT-Based SLAM](https://arxiv.org/abs/2611.06308) | 3D Vision: 3D Foundation Models | SALAD improves VGGT-SLAM 2.0 by anchoring submap scales and validating direct loop closures with short image sequences, substantially reducing trajectory error in reported evaluations. | 9 | 8 |

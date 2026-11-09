@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient Attention
 
-**330 papers total**
+**335 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-08 | [BitDecoding-FP4: Native FP4 KV Cache Decoding via Algorithm-System Co-Design](https://arxiv.org/abs/2611.09825) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | BitDecoding-FP4 co-designs quantization algorithms and GPU kernels to enable accurate, native FP4 KV-cache decoding with up to 3.0× higher serving throughput than BF16 KV. | 8 | 7 |
+| 2026-11-08 | [FOSCAR: Accelerating Decode Attention over 2- and 4-Bit KV Caches through Affine Folding](https://arxiv.org/abs/2611.09722) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | FOSCAR accelerates 2- and 4-bit KV-cache decode attention by folding quantization scales and offsets into matrix operations instead of dequantizing each value. | 8 | 7 |
+| 2026-11-08 | [Attend at the Right Resolution: Head-Adaptive Sparse Attention via Query-Key Interaction Structure](https://arxiv.org/abs/2611.09700) | Efficient AI: Token Pruning and Eviction, Efficient Attention | HASA is a training-free sparse-attention method that adapts feature and token-region resolution to each attention head, reducing long-context costs while retaining most dense-attention mass. | 9 | 8 |
+| 2026-11-08 | [Fused-Softmax for efficient quantized attention](https://arxiv.org/abs/2611.09225) | Efficient AI: Efficient Attention | Fused-Softmax reformulates softmax to use GPU matrix cores, substantially accelerating quantized attention while keeping its added error within the GEMM quantization error floor. | 7 | 7 |
+| 2026-11-08 | [InstaGen: Group-Shared Importance Sampling for Fast Video Generation](https://arxiv.org/abs/2611.08610) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | InstaGen accelerates video diffusion by replacing inefficient top-block selection with group-shared importance sampling, improving reconstruction quality at comparable compute. | 8 | 8 |
 | 2026-11-04 | [Accelerating Long-Context Decoding in Large-Scale Hybrid LLMs Without Retraining](https://arxiv.org/abs/2611.06133) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | A training-free sparse-attention strategy accelerates long-context decoding in hybrid LLMs while preserving baseline accuracy. | 7 | 6 |
 | 2026-11-04 | [ChanSFormer: A Channel Agnostic Vision Transformer for Multi-Channel Cell Painting Images](https://arxiv.org/abs/2611.06015) | Efficient AI: Efficient Attention | ChanSFormer is a channel-agnostic vision transformer that preserves channel identity and cross-channel interactions while improving accuracy, transferability, and computational efficiency. | 6 | 7 |
 | 2026-11-04 | [DecoupAttn: Decoupled Sparse Attention for Training-Free Acceleration of Video Diffusion](https://arxiv.org/abs/2611.05917) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | DecoupAttn accelerates video diffusion without retraining by combining fixed exact-attention blocks, semantic compensation, and distortion-aware sparse-budget allocation. | 8 | 8 |

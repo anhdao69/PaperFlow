@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**402 papers total**
+**404 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-08 | [MotionCore: A Latent Neural Simulator for Video Generation with Rigid-Body Dynamics](https://arxiv.org/abs/2611.08904) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion | MotionCore combines a latent rigid-body dynamics simulator with video diffusion to generate visually realistic videos whose object motion better follows physical trajectories. | 7 | 7 |
+| 2026-11-08 | [JEPAhead: From Inpainting to Causal Forecasting for Urban Driving](https://arxiv.org/abs/2611.08657) | World Models: Video World Models | JEPAhead adapts a frozen V-JEPA1 encoder for causal latent forecasting in urban driving, improving future retrieval and semantic prediction over persistence while downstream utility remains unverified. | 8 | 7 |
 | 2026-11-05 | [Structured Neural Modeling of Daily Arctic Sea-Ice Concentration Evolution: Physical-Trajectory-Driven Learning and Forecast-Domain Adaptation](https://arxiv.org/abs/2610.03743) | World Models: Video World Models; Adaptation and Memory: Test-Time Learning | A dual-domain framework learns stable daily Arctic sea-ice concentration evolution from physical trajectories and adapts it to forecast data without altering the learned evolution core. | 8 | 8 |
 | 2026-11-05 | [IDRF: Inverse-Distilled Reward Fine-tuning of Masked Discrete Diffusion Models](https://arxiv.org/abs/2610.03641) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | IDRF enables reward fine-tuning of few-step masked discrete diffusion models using an inverse-distillation surrogate that avoids costly reference-model rollouts. | 8 | 8 |
 | 2026-11-05 | [Dream4ACT: A Shared Visual Action Interface for Multi-Embodiment Video-Action Modeling](https://arxiv.org/abs/2609.40153) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | Dream4ACT unifies multi-embodiment video and action modeling through a shared visual action interface that enables executable robot control without embodiment-specific decoders. | 9 | 8 |

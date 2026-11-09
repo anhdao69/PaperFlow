@@ -1,6 +1,846 @@
 {
   "days": [
     {
+      "date": "2026-11-08",
+      "paper_count": 5,
+      "papers": [
+        {
+          "abstract": "The key-value (KV) cache dominates memory capacity and bandwidth in long-context LLM serving. While 4-bit microscaling formats (NVFP4, MXFP4) shrink the cache and run attention on FP4 Tensor Cores, a fundamental gap remains between algorithmic quantization and system-aware acceleration: existing FP4 KV systems use vanilla quantization that causes severe accuracy drops, whereas accuracy-oriented 4-bit algorithms rely on vector codebooks whose lookup overhead degrades decoding throughput. We present BitDecoding-FP4, an algorithm--system co-design for accurate and efficient native FP4 KV decoding. We mitigate three error sources: Dual-Residual Query Quantization splits queries into two FP4 tensors, cutting query logit error from 60% to 1%; Underflow-Aware Probability Scaling prevents E4M3 scales from rounding long-context probabilities to zero; and Outlier-Aware Key Quantization combines static smoothing, Hadamard rotation, and scale search to suppress key outliers under token-wise scaling. At the system level, we remove the softmax bottleneck via transposed softmax with fused probability quantization and stacked query MMA on paged KV caches. Across dense and MoE models with GQA and MLA, BitDecoding-FP4 stays within 0.5 points of BF16 KV accuracy with NVFP4 (1 point with MXFP4), and tracks BF16 KV in RL training rollouts. In end-to-end serving on NVIDIA B300 with Qwen3-4B and Qwen3-30B-A3B, it delivers 2.4-3.0$\\times$ higher peak serving throughput than BF16 KV. The implementation is available at https://github.com/OpenBitSys/BitDecoding-FP4.",
+          "arxiv_id": "2611.09825",
+          "arxiv_url": "https://arxiv.org/abs/2611.09825",
+          "authors": [
+            "Dayou Du, Woon Yee Ng, Guangming Sheng, Nick Lau, Jianyi Cheng, Luo Mai"
+          ],
+          "bullets": [
+            "Targets KV-cache memory and bandwidth bottlenecks in long-context LLM serving.",
+            "Uses dual-residual query quantization, underflow-aware probability scaling, and outlier-aware key quantization to reduce FP4 accuracy loss.",
+            "Removes softmax overhead with transposed softmax, fused probability quantization, and stacked query MMA on paged KV caches.",
+            "Stays within 0.5 accuracy points of BF16 KV with NVFP4 and within 1 point with MXFP4 across dense and MoE models.",
+            "On NVIDIA B300, achieves 2.4–3.0× higher peak serving throughput than BF16 KV for Qwen3 models."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.AR",
+            "cs.CL",
+            "cs.PF"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1. Overview of BitDecoding-FP4 (left), achieving higher accuracy and serving throughput when running Qwen3-4B (right). See Table 1 for the average accuracy and Figure 10(b) for the per-GPU serving throughput on B300 at 128K context.",
+              "figure_id": "figure-1-6",
+              "figure_number": "1",
+              "height": 223,
+              "image_path": "figures/2611.09825/figure-001.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 486
+            },
+            {
+              "caption": "Figure 10. End-to-end serving throughput on Qwen3-4B and Qwen3-30B-A3B across 1, 8, 16, 32, and 64 concurrent requests (up and to the right is better). When concurrent requests exceed KV cache capacity, excess requests are queued or preempted. BitDecoding-NVFP4 achieves the best latency–throughput trade-off across both workloads.",
+              "figure_id": "figure-10-18",
+              "figure_number": "10",
+              "height": 275,
+              "image_path": "figures/2611.09825/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 1000
+            },
+            {
+              "caption": "Figure 9. Decode attention kernel speedup over BF16 KV at 128K context across batch sizes (BitDecoding denotes the NVFP4 integration of (Du et al., 2026)); BitDecoding-NVFP4 consistently outperforms all baselines on both GPUs.",
+              "figure_id": "figure-9-17",
+              "figure_number": "9",
+              "height": 258,
+              "image_path": "figures/2611.09825/figure-003.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 993
+            },
+            {
+              "caption": "Figure 5. (a) Roofline of decode attention on B300 (TC: Tensor Core): the conventional softmax caps every KV precision. (b) Conventional softmax: threads are assigned to head rows, so most sit idle. (c) Ours: threads are assigned to keys, so all threads do useful work, reductions run in parallel via butterfly shuffles, and the FP4 block scales come for free from the butterfly.",
+              "figure_id": "figure-5-1",
+              "figure_number": "5",
+              "height": 237,
+              "image_path": "figures/2611.09825/figure-004.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 990
+            },
+            {
+              "caption": "Figure 3. Mean squared logit error for each query format, split into key and query terms. Dual-Residual Query Quantization reduces the query quantization error to 1% of the total.",
+              "figure_id": "figure-3-16",
+              "figure_number": "3",
+              "height": 284,
+              "image_path": "figures/2611.09825/figure-005.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 484
+            },
+            {
+              "caption": "Figure 4. (a) E4M3 scaling underflow on probability blocks in long-context decoding over the empirical block distribution. (b) Relative block quantization error (RMSE) across max(pb).",
+              "figure_id": "figure-4-15",
+              "figure_number": "4",
+              "height": 285,
+              "image_path": "figures/2611.09825/figure-006.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 478
+            },
+            {
+              "caption": "Figure 7. BitDecoding-FP4 in vLLM (ri: batch row, si: BF16 slot). (1) The control kernel assigns each row a slot and splits its sequence. (2) The decode kernel reads the FP4 pages and the BF16 slot. (3) A full recent page is promoted into its FP4 block.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 282,
+              "image_path": "figures/2611.09825/figure-007.webp",
+              "kind": "figure",
+              "page": 7,
+              "width": 479
+            },
+            {
+              "caption": "Figure 6. Stacked Query MMA with In-Softmax Joining. (1) Before the KV loop, q(2) is stacked into the zero padding of the q(1) tile. (2) Each KV block issues one FP4 MMA for both terms. (3) The softmax joins the two halves of S⊤ j in FP32.",
+              "figure_id": "figure-6-2",
+              "figure_number": "6",
+              "height": 215,
+              "image_path": "figures/2611.09825/figure-008.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 479
+            },
+            {
+              "caption": "Figure 11. Accuracy ablation on Qwen3-4B (MXFP4 omits P scaling since E8M0 scales do not underflow).",
+              "figure_id": "figure-11-10",
+              "figure_number": "11",
+              "height": 209,
+              "image_path": "figures/2611.09825/figure-009.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 466
+            },
+            {
+              "caption": "Figure 12. Decode kernel latency ablation at batch 64 and 128K context on B300.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 168,
+              "image_path": "figures/2611.09825/figure-010.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 486
+            },
+            {
+              "caption": "Figure 2. Dequantization overhead of FlashInfer-XQA (Ye et al., 2025) kernel with NVFP4 KV Cache.",
+              "figure_id": "figure-2-13",
+              "figure_number": "2",
+              "height": 154,
+              "image_path": "figures/2611.09825/figure-011.webp",
+              "kind": "figure",
+              "page": 3,
+              "width": 474
+            },
+            {
+              "caption": "Figure 13. Quantization and metadata overhead of VLLM on Qwen3-4B. Both Kitty and BitDecoding-NVFP4 manage BF16 sink tokens.",
+              "figure_id": "figure-13-9",
+              "figure_number": "13",
+              "height": 102,
+              "image_path": "figures/2611.09825/figure-012.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 467
+            },
+            {
+              "caption": "Table 2. Accuracy (%) and KV cache memory footprint on large FP8-weight models with GQA and sparse MLA attention; BitDecoding-NVFP4 stays within 0.4 average points of BF16 KV while shrinking the KV cache by up to 3.5×.",
+              "figure_id": "table-2-14",
+              "figure_number": "2",
+              "height": 265,
+              "image_path": "figures/2611.09825/table-013.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 500
+            },
+            {
+              "caption": "Table 4. Key smoothing calibration on Qwen3-4B. Time is the seconds on one B300 GPU to produce the calibration text and measure µk with the serving engine. MRCR and AIME24 are the teacher-forced KL from BF16 KV (×10−3, Appendix A), with the change relative to our calibration in parentheses.",
+              "figure_id": "table-4-11",
+              "figure_number": "4",
+              "height": 162,
+              "image_path": "figures/2611.09825/table-014.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 466
+            },
+            {
+              "caption": "Table 3. Teacher-forced KL tracks end-to-end accuracy on Qwen34B: the lower a configuration’s KL and top-1 mismatch on the MRCR trajectories, the higher its MRCR accuracy. KL is in units of 10−3 nats; top-1 mismatch is the fraction of steps where the FP4 argmax token differs from BF16 KV’s, and the BF16 KV row reruns BF16 KV against its own reference.",
+              "figure_id": "table-3-12",
+              "figure_number": "3",
+              "height": 136,
+              "image_path": "figures/2611.09825/table-015.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 466
+            },
+            {
+              "caption": "Table 5. Threshold code selected by each calibration source on Qwen3-4B-Thinking-2507; code 10 is the production τ . The last four columns give the percentage of 1,000 random subsets of N samples that select code 10.",
+              "figure_id": "table-5-4",
+              "figure_number": "5",
+              "height": 215,
+              "image_path": "figures/2611.09825/table-016.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 414
+            },
+            {
+              "caption": "Table 6. Mean squared logit error (×10−2) of each query format against NVFP4 keys on Qwen3-4B. Dual-residual query quantization achieves the lowest error.",
+              "figure_id": "table-6-5",
+              "figure_number": "6",
+              "height": 160,
+              "image_path": "figures/2611.09825/table-017.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 483
+            },
+            {
+              "caption": "Table 8. Leave-one-out KL ablation of Outlier-Aware Key Quantization on Qwen3-4B-Thinking-2507. Each row removes one part from the full recipe; values are the teacher-forced KL from BF16 KV (×10−3, Appendix A). Since KL tracks end-to-end accuracy (Table 3), every part contributes to accuracy.",
+              "figure_id": "table-8-19",
+              "figure_number": "8",
+              "height": 267,
+              "image_path": "figures/2611.09825/table-018.webp",
+              "kind": "table",
+              "page": 16,
+              "width": 450
+            },
+            {
+              "caption": "Table 7. Comparison of probability scaling rules on Qwen3-4B. Underflow-aware scaling matches the accuracy of two-level scaling without per-tile rescaling overhead.",
+              "figure_id": "table-7-3",
+              "figure_number": "7",
+              "height": 136,
+              "image_path": "figures/2611.09825/table-019.webp",
+              "kind": "table",
+              "page": 15,
+              "width": 483
+            }
+          ],
+          "first_seen_at": "2026-11-08T21:00:00-05:00",
+          "hero_figure": "figures/2611.09825/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2611.09825",
+          "relevance": 8,
+          "selection_reason": "Algorithm-system co-design for native FP4 KV cache decoding, directly targeting KV cache memory and inference efficiency.",
+          "summary_status": "generated",
+          "title": "BitDecoding-FP4: Native FP4 KV Cache Decoding via Algorithm-System Co-Design",
+          "tldr": "BitDecoding-FP4 co-designs quantization algorithms and GPU kernels to enable accurate, native FP4 KV-cache decoding with up to 3.0× higher serving throughput than BF16 KV.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Large-language-model decode attention streams the key-value (KV) cache for every generated token. Packing that cache into 2-bit or 4-bit quantized integers reduces memory traffic but does not automatically translate into latency saving. Existing 2-bit fused kernels reach under 31%/15% of peak HBM throughput on H100/B200. Converting each value and applying its scale and offset before feeding Tensor Cores is a major bottleneck because instruction-issue throughput is scarce on modern GPUs. Instead of applying scale and offset to each KV value, FOSCAR uses affine folding to apply them to the other operand or the output of decode-attention matrix products, depending on the quantization scheme (token-wise or channel-wise). This reduces scale-and-offset operations by up to two orders of magnitude while preserving the dequantized attention output in exact arithmetic. FOSCAR also uses bit manipulation to feed KV operands to Tensor Cores efficiently, requiring only 1 and 0.19 ALU instructions per INT2 element on H100 and B200, respectively. Finally, FOSCAR builds warp-specialized GPU pipelines for Hopper (H100) and Blackwell (B200) using wgmma and tcgen05. On H100, FOSCAR INT2 and INT4 kernels achieve geo-mean speedups of $3.36\\times$ and $2.83\\times$ over FlashInfer BF16, and $2.03\\times$ and $1.71\\times$ over TensorRT-LLM FP8. On B200, the corresponding INT2 and INT4 speedups are $2.67\\times$ and $2.30\\times$ over FlashInfer BF16, $1.48\\times$ and $1.28\\times$ over TensorRT-LLM FP8, and $1.16\\times$ and $1.00\\times$ over TensorRT-LLM NVFP4. We integrate FOSCAR into SGLang to benchmark serving efficiency. On long-context serving workloads, FOSCAR increases peak aggregate throughput by up to 170% and 341% over 2-bit and 16-bit baselines, respectively. We open-source FOSCAR as a kernel library at https://github.com/FutureMLS-Lab/FOSCAR.",
+          "arxiv_id": "2611.09722",
+          "arxiv_url": "https://arxiv.org/abs/2611.09722",
+          "authors": [
+            "Donglin Zhuang, Pragaash Ponnusamy, Xiaoxia Wu, Shuaiwen Leon Song, Zhongzhu Zhou"
+          ],
+          "bullets": [
+            "Targets decode attention, where quantized KV caches reduce memory traffic but can remain latency-bound by dequantization overhead.",
+            "Uses affine folding tailored to token-wise or channel-wise quantization, preserving the exact dequantized attention output in exact arithmetic.",
+            "Employs bit manipulation and warp-specialized Hopper/Blackwell GPU pipelines to efficiently feed quantized operands to Tensor Cores.",
+            "Reports substantial kernel speedups on H100 and B200 against BF16, FP8, and, in some cases, NVFP4 baselines.",
+            "Integrated into SGLang, it improves peak aggregate throughput on long-context serving workloads by up to 170% versus 2-bit and 341% versus 16-bit baselines."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 6. Register packing and global-to-Tensor-Core dataflow for INT2 K in FOSCAR.",
+              "figure_id": "figure-6-1",
+              "figure_number": "6",
+              "height": 523,
+              "image_path": "figures/2611.09722/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 1010
+            },
+            {
+              "caption": "Figure 12. Per-user and aggregate Qwen3-8B serving throughput on a single GPU with 100K input and 1K output tokens.",
+              "figure_id": "figure-12-8",
+              "figure_number": "12",
+              "height": 473,
+              "image_path": "figures/2611.09722/figure-002.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 485
+            },
+            {
+              "caption": "Figure 8. Kernel speedups of FOSCAR and 2- and 4-bit baselines over FlashInfer BF16.",
+              "figure_id": "figure-8-6",
+              "figure_number": "8",
+              "height": 463,
+              "image_path": "figures/2611.09722/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 487
+            },
+            {
+              "caption": "Figure 9. Kernel speedups of FOSCAR and 8- and 16-bit baselines over FlashInfer BF16. The dashed line marks parity.",
+              "figure_id": "figure-9-7",
+              "figure_number": "9",
+              "height": 462,
+              "image_path": "figures/2611.09722/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 487
+            },
+            {
+              "caption": "Figure 1. Effective KV access throughput of baseline kernels and FOSCAR at B = 128 and KV = 32K as a percentage of peak HBM throughput.",
+              "figure_id": "figure-1-5",
+              "figure_number": "1",
+              "height": 311,
+              "image_path": "figures/2611.09722/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 488
+            },
+            {
+              "caption": "Figure 5. Affine folding in attention. Dashed arrows show where each K and V quantization scheme applies its scales.",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 233,
+              "image_path": "figures/2611.09722/figure-006.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 460
+            },
+            {
+              "caption": "Figure 14. Scalar scale and offset operations per stored K or V value for affine folding versus element-wise sq + z reconstruction (dashed).",
+              "figure_id": "figure-14-3",
+              "figure_number": "14",
+              "height": 283,
+              "image_path": "figures/2611.09722/figure-007.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 482
+            },
+            {
+              "caption": "Figure 13. Decode kernel speed across channel-wise K and V quantization combinations relative to token-wise K and V (1.0, dashed line) at the same stored bit width and shape (HQ = 32, HKV = 8, D = 128, group size g = 128).",
+              "figure_id": "figure-13-4",
+              "figure_number": "13",
+              "height": 249,
+              "image_path": "figures/2611.09722/figure-008.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 483
+            },
+            {
+              "caption": "Figure 15. FOSCAR INT2 speedup over FlashInfer BF16 across HKV at 128K context (HQ = 32, D = 128).",
+              "figure_id": "figure-15-2",
+              "figure_number": "15",
+              "height": 218,
+              "image_path": "figures/2611.09722/figure-009.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 481
+            },
+            {
+              "caption": "Table 1. Tensor Core operand mappings and their static ALU costs per stored value. The q→y column gives the bit-level construction of y from q.",
+              "figure_id": "table-1-11",
+              "figure_number": "1",
+              "height": 108,
+              "image_path": "figures/2611.09722/table-010.webp",
+              "kind": "table",
+              "page": 5,
+              "width": 492
+            },
+            {
+              "caption": "Table 2. Qwen3-8B serving accuracy on H100 (mean ± sample standard deviation across five runs).",
+              "figure_id": "table-2-9",
+              "figure_number": "2",
+              "height": 109,
+              "image_path": "figures/2611.09722/table-011.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 462
+            }
+          ],
+          "first_seen_at": "2026-11-08T21:00:00-05:00",
+          "hero_figure": "figures/2611.09722/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2611.09722",
+          "relevance": 8,
+          "selection_reason": "Presents a kernel-level technique for accelerating decode attention over quantized KV caches, directly addressing KV cache memory and inference efficiency.",
+          "summary_status": "generated",
+          "title": "FOSCAR: Accelerating Decode Attention over 2- and 4-Bit KV Caches through Affine Folding",
+          "tldr": "FOSCAR accelerates 2- and 4-bit KV-cache decode attention by folding quantization scales and offsets into matrix operations instead of dequantizing each value.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention",
+                "kv-cache-and-memory-efficiency"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Attention is a major scalability bottleneck in large language models (LLMs), with its computational cost and key-value (KV) memory traffic becoming increasingly prohibitive as context length grows. Sparse attention addresses this bottleneck by restricting each query to a subset of the context, but its effectiveness hinges on identifying relevant regions both cheaply and reliably. Existing training-free methods primarily rely on runtime relevance estimates, with selection dimensionality and granularity typically governed by fixed heuristics rather than the intrinsic interaction structure of pretrained attention heads. We take a different perspective: the query-key operator of each pretrained head defines a characteristic response structure that determines the resolution needed for sparse selection, both across feature directions and across context tokens. Building on this insight, we propose Head-Adaptive Sparse Attention (HASA), a training-free sparse attention framework that jointly adapts selection resolution along these two dimensions. Along the feature dimension, the singular spectrum of each head's query-key operator determines an effective rank, yielding a compact, head-specific response space. Along the sequence dimension, neighboring regions are progressively merged according to the directional coherence of their token responses in this same space, while heterogeneous regions remain separate. Exact attention is then computed using the original full-dimensional KV states of the selected regions. HASA captures 88.1% of dense-attention mass and, compared with UNIQUE, a strong recent sparse-attention baseline, improves accuracy by up to 3.47 and 2.57 points on RULER and LongBench-Pro, respectively, and accelerates self-attention by up to 1.32x, while achieving up to 14.07x speedup over dense attention.",
+          "arxiv_id": "2611.09700",
+          "arxiv_url": "https://arxiv.org/abs/2611.09700",
+          "authors": [
+            "Wajih Hassan Raza, Ahsan Bilal, Yidan Shen, Renjie Hu, Xin Fu, Yu Wen"
+          ],
+          "bullets": [
+            "Targets the computational and KV-memory bottleneck of attention as context length grows.",
+            "Uses each head’s query-key operator to determine an effective feature rank and compact response space.",
+            "Merges neighboring token regions when their responses are directionally coherent, while preserving heterogeneous regions separately.",
+            "Computes exact attention with original full-dimensional KV states for selected regions.",
+            "Captures 88.1% of dense-attention mass, improves reported RULER and LongBench-Pro accuracy over UNIQUE by up to 3.47 and 2.57 points, and reaches up to 14.07× speedup over dense attention."
+          ],
+          "categories": [
+            "cs.AI"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of HASA. (1) Each head’s pretrained query–key interaction structure determines its effective rank, yielding a compact head-specific response space. (2) In this compact response space, neighboring regions with coherent token responses are progressively merged, while heterogeneous regions remain separate. (3) Relevant regions are selected using compact region summaries, followed by exact attention over their original full-dimensional KV states.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 354,
+              "image_path": "figures/2611.09700/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 800
+            },
+            {
+              "caption": "Figure 4: Self-attention efficiency at increasing context lengths. (a) Our method substantially reduces latency compared with dense attention. (b) Our method achieves higher self-attention speedup than Quest and UNIQUE.",
+              "figure_id": "figure-4-4",
+              "figure_number": "4",
+              "height": 243,
+              "image_path": "figures/2611.09700/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 407
+            },
+            {
+              "caption": "Figure 1: Motivation for HASA. Coarse-grained selection risks missing relevant tokens, while finegrained selection increases selection overhead. HASA adapts selection granularity for each head.",
+              "figure_id": "figure-1-1",
+              "figure_number": "1",
+              "height": 300,
+              "image_path": "figures/2611.09700/figure-003.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 394
+            },
+            {
+              "caption": "Figure 3: Head-specific resolution and attention recall. (a–b) High recall is achievable by adjusting feature rank and block size, with different heads requiring different resolutions. (c) Adaptive resolution improves normalized attention recall over fixed configurations across RULER-32K tasks. (d–e) HASA selects varying feature ranks and sequence granularities across layers and KV heads, confirming head-specific adaptation.",
+              "figure_id": "figure-3-6",
+              "figure_number": "3",
+              "height": 210,
+              "image_path": "figures/2611.09700/figure-004.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 819
+            },
+            {
+              "caption": "Table 2: Accuracy results on RULER-32K using Ministral-3-8B-Instruct-2512. The budget denotes the number of KV tokens available to each query during decoding; full attention is unrestricted.",
+              "figure_id": "table-2-5",
+              "figure_number": "2",
+              "height": 277,
+              "image_path": "figures/2611.09700/table-005.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 822
+            },
+            {
+              "caption": "Table 4: Accuracy results on LongBench-Pro using Qwen3-8B. The KV budget denotes the number of KV tokens available to each query during decoding; full attention is unrestricted.",
+              "figure_id": "table-4-8",
+              "figure_number": "4",
+              "height": 276,
+              "image_path": "figures/2611.09700/table-006.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 736
+            },
+            {
+              "caption": "Table 1: Accuracy results on LongBench-Pro using Ministral-3-8B-Instruct-2512. The budget denotes the number of KV tokens available to each query during decoding; full attention is unrestricted.",
+              "figure_id": "table-1-2",
+              "figure_number": "1",
+              "height": 330,
+              "image_path": "figures/2611.09700/table-007.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 602
+            },
+            {
+              "caption": "Table 3: Ablation of adaptive feature and sequence resolution at 1024 KV budget, RULER-32K.",
+              "figure_id": "table-3-10",
+              "figure_number": "3",
+              "height": 149,
+              "image_path": "figures/2611.09700/table-008.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 354
+            },
+            {
+              "caption": "Table 6: Hyperparameter sensitivity on RULER-32K at a 1024-token KV budget. Each hyperparameter is varied independently while the remaining parameters are fixed to their best-performing values: ϵmax = 0.10, ρmin = 0.70, and Cmax = 512.",
+              "figure_id": "table-6-3",
+              "figure_number": "6",
+              "height": 342,
+              "image_path": "figures/2611.09700/table-009.webp",
+              "kind": "table",
+              "page": 18,
+              "width": 427
+            },
+            {
+              "caption": "Table 5: Accuracy results on RULER-32K using Qwen3-8B. The KV budget denotes the number of KV tokens available to each query during decoding; full attention is unrestricted.",
+              "figure_id": "table-5-9",
+              "figure_number": "5",
+              "height": 196,
+              "image_path": "figures/2611.09700/table-010.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 822
+            }
+          ],
+          "first_seen_at": "2026-11-08T21:00:00-05:00",
+          "hero_figure": "figures/2611.09700/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.09700",
+          "relevance": 9,
+          "selection_reason": "Head-adaptive sparse attention for LLMs; directly addresses efficient attention and token selection.",
+          "summary_status": "generated",
+          "title": "Attend at the Right Resolution: Head-Adaptive Sparse Attention via Query-Key Interaction Structure",
+          "tldr": "HASA is a training-free sparse-attention method that adapts feature and token-region resolution to each attention head, reducing long-context costs while retaining most dense-attention mass.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "token-pruning-and-eviction",
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Low-precision matrix throughput on modern GPUs is growing far faster than vector-arithmetic throughput. Attention therefore cannot realize the available GEMM performance because softmax has become the pipeline bottleneck. We introduce Fused-Softmax Attention, a training-free algorithm that reformulates and approximates softmax to fold its dominant operations into the attention GEMMs, moving work from vector units to matrix cores. Implemented for the AMD CDNA 4 architecture, our MXFP8, MXFP6 and MXFP4 kernels reach approximately 3.0, 4.0 and 4.6 PFLOP/s on an AMD Instinct MI355X GPU, yielding speedups of $2.1\\times$, $2.8\\times$ and $3.2\\times$ over the BF16 attention. Importantly, the additional error introduced by Fused-Softmax remains below the error floor set by quantizing the GEMM operands. On Wan2.2-T2V-A14B, a hybrid MXFP6/4 schedule delivers up to $2.05\\times$ end-to-end speedup while preserving the visual quality of the outputs. The kernels ship in AMD's open-source AITER library, and they powered AMD's MLPerf Inference v6.1 Wan2.2 submission, which ran $1.7\\times$ faster than AMD's previous-round result on the same hardware. Our results show that redesigning softmax to utilize the matrix pipeline enables attention to capitalize on continued growth in low-precision matrix throughput.",
+          "arxiv_id": "2611.09225",
+          "arxiv_url": "https://arxiv.org/abs/2611.09225",
+          "authors": [
+            "Tianxing Wu, Juuso Korhonen, Jesus Carabano Bravo"
+          ],
+          "bullets": [
+            "Addresses softmax as the bottleneck preventing attention from exploiting rapidly increasing low-precision matrix throughput.",
+            "Introduces a training-free approximation that folds dominant softmax operations into attention GEMMs.",
+            "On AMD CDNA 4, MXFP8/6/4 kernels achieve about 3.0/4.0/4.6 PFLOP/s and 2.1×/2.8×/3.2× speedups over BF16 attention.",
+            "A hybrid MXFP6/4 schedule provides up to 2.05× end-to-end speedup on Wan2.2-T2V-A14B without degrading visual quality.",
+            "Implemented in AMD’s open-source AITER library and used in an MLPerf Inference v6.1 submission."
+          ],
+          "categories": [
+            "cs.AI",
+            "cs.LG",
+            "cs.PF"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 1: Eight-wave ping-pong schedule on four SIMDs. Waves 0–3 and 4–7 form phase-shifted groups: each wave overlaps its matrix operations with its SIMD partner’s softmax, and barriers preserve the phase offset across tiles.",
+              "figure_id": "figure-1-16",
+              "figure_number": "1",
+              "height": 561,
+              "image_path": "figures/2611.09225/figure-001.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 979
+            },
+            {
+              "caption": "Figure 3: Forward throughput against sequence length at b=1, h=24, d=128, non-causal: our kernels on MI355X next to the BF16 FlashAttention-4 and Attn-QAT throughput published on GB300 (Zhang et al., 2026b).",
+              "figure_id": "figure-3-10",
+              "figure_number": "3",
+              "height": 298,
+              "image_path": "figures/2611.09225/figure-002.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 971
+            },
+            {
+              "caption": "Figure 5: Motorcycle prompt across two additional models and all self-attention kernels.",
+              "figure_id": "figure-5-3",
+              "figure_number": "5",
+              "height": 233,
+              "image_path": "figures/2611.09225/figure-003.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 974
+            },
+            {
+              "caption": "Figure 4: Wan2.2-T2V-A14B, frame 40 of the cat (top) and motorcycle (bottom) prompts with each selfattention kernel.",
+              "figure_id": "figure-4-2",
+              "figure_number": "4",
+              "height": 233,
+              "image_path": "figures/2611.09225/figure-004.webp",
+              "kind": "figure",
+              "page": 15,
+              "width": 971
+            },
+            {
+              "caption": "Figure 2: One SIMD pair in the Fused-Softmax schedule. While one wave issues the denominator, PV and the next QK matrix operations, its partner evaluates the row maximum, rollback gate and two-stage conversion. Prefetch and drain operations use alternating LDS slots; the rollback path below the timeline runs very rarely, only when the gate fires.",
+              "figure_id": "figure-2-11",
+              "figure_number": "2",
+              "height": 174,
+              "image_path": "figures/2611.09225/figure-005.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 976
+            },
+            {
+              "caption": "Figure 6: Wan2.2-T2V-A14B, motorcycle prompt, at the MLPerf text-to-video settings with the scheduler’s default flow shift of 3 (left) and with 12 (right), frames 0, 40 and 80, for BF16 and MXFP6 attention. Only the flow shift differs between the two sides.",
+              "figure_id": "figure-6-6",
+              "figure_number": "6",
+              "height": 226,
+              "image_path": "figures/2611.09225/figure-006.webp",
+              "kind": "figure",
+              "page": 21,
+              "width": 976
+            },
+            {
+              "caption": "Figure 7: The ramp error, independent of any datatype. Top: over one doubling interval the mantissa field interpolates 2x linearly, the chord from (0, 1) to (1, 2). Bottom: the resulting relative error is periodic with period one doubling.",
+              "figure_id": "figure-7-7",
+              "figure_number": "7",
+              "height": 649,
+              "image_path": "figures/2611.09225/figure-007.webp",
+              "kind": "figure",
+              "page": 22,
+              "width": 698
+            },
+            {
+              "caption": "Table 4: Component ablation on normal inputs (b=1, h=24, s=32768, d=128, ten seeds): global relative error in % and cosine similarity against BF16 attention with the conventional softmax. Each row enables the marked components. The bolded row is our complete Fused-Softmax pipeline; the last two rows vary the Schraudolph proxy of the complete pipeline.",
+              "figure_id": "table-4-13",
+              "figure_number": "4",
+              "height": 249,
+              "image_path": "figures/2611.09225/table-008.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 972
+            },
+            {
+              "caption": "Table 1: Throughput evolution on the last two CDNA generations. Matrix, vector arithmetic logic unit (VALU), and exponential rows are ops/clock/CU; the local data share (LDS) row is bytes/clock/CU.",
+              "figure_id": "table-1-12",
+              "figure_number": "1",
+              "height": 238,
+              "image_path": "figures/2611.09225/table-009.webp",
+              "kind": "table",
+              "page": 4,
+              "width": 598
+            },
+            {
+              "caption": "Table 2: Per-tile roofline, in clock cycles.",
+              "figure_id": "table-2-1",
+              "figure_number": "2",
+              "height": 209,
+              "image_path": "figures/2611.09225/table-010.webp",
+              "kind": "table",
+              "page": 6,
+              "width": 536
+            },
+            {
+              "caption": "Table 6: Wan2.2-T2V-A14B: VBench score and PSNR (dB), SSIM and LPIPS against the BF16 videos over the 248 prompts. The last two columns report end-to-end latency (s) of the motorcycle prompt under the BF16 and optimized model configurations of Section 5.3.3; parentheses give the speedup over BF16 attention in the same configuration.",
+              "figure_id": "table-6-8",
+              "figure_number": "6",
+              "height": 225,
+              "image_path": "figures/2611.09225/table-011.webp",
+              "kind": "table",
+              "page": 14,
+              "width": 794
+            },
+            {
+              "caption": "Table 3: The three operand configurations. Throughout our kernels FP8 operands are E4M3, FP6 operands are E2M3 and FP4 operands are E2M1. Per-row FP8 P carries a power-of-two scale per row and key tile.",
+              "figure_id": "table-3-15",
+              "figure_number": "3",
+              "height": 142,
+              "image_path": "figures/2611.09225/table-012.webp",
+              "kind": "table",
+              "page": 9,
+              "width": 590
+            },
+            {
+              "caption": "Table 5: Throughput and BF16-reference cosine on normal input (b=1, h=24, s=32768, d=128): our kernels versus published Attn-QAT (Zhang et al., 2026b) and Direct-P (Hu, 2026) results.",
+              "figure_id": "table-5-14",
+              "figure_number": "5",
+              "height": 183,
+              "image_path": "figures/2611.09225/table-013.webp",
+              "kind": "table",
+              "page": 12,
+              "width": 772
+            },
+            {
+              "caption": "Table 8: What each proxy width buys. M and E are the mantissa and exponent widths of the pattern the proxy carries. The exponent-scale reach of P is approximately 22 E−1 and depends on E alone. The error columns depend on M alone and are swept over one doubling interval of f ; the last column is the part of the RMS contributed by f̂ , separated in quadrature from the 1.770% the ramp carries regardless.",
+              "figure_id": "table-8-5",
+              "figure_number": "8",
+              "height": 239,
+              "image_path": "figures/2611.09225/table-014.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 840
+            },
+            {
+              "caption": "Table 7: VBench scores and closeness to the BF16 videos for Wan2.2-T2V-A14B, flow shift 12. Each VBench dimension is the mean over the prompts it applies to, on the 0–100 scale; Overall is the mean of the six dimensions, the benchmark’s accuracy score. PSNR, SSIM and LPIPS compare every fourth frame of each video with the same frame of the BF16 video of the same prompt, averaged over the 248 prompts.",
+              "figure_id": "table-7-4",
+              "figure_number": "7",
+              "height": 196,
+              "image_path": "figures/2611.09225/table-015.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 979
+            },
+            {
+              "caption": "Table 9: How v pk maximum3 f16 reads a Stage-A pattern. Here e = pattern ≫ 7 is the pattern’s nine-bit sign-plus-exponent code, and ∆ = e− 127 its offset from the retained reference in doublings. The gate is an unsigned compare against the cap, ∆ = 32, of Section 4.1. Only the third band misreads; its upper boundary falls inside e = 504, so the bands are delimited by pattern.",
+              "figure_id": "table-9-9",
+              "figure_number": "9",
+              "height": 139,
+              "image_path": "figures/2611.09225/table-016.webp",
+              "kind": "table",
+              "page": 23,
+              "width": 976
+            }
+          ],
+          "first_seen_at": "2026-11-08T21:00:00-05:00",
+          "hero_figure": "figures/2611.09225/hero.webp",
+          "novelty": 7,
+          "pdf_url": "https://arxiv.org/pdf/2611.09225",
+          "relevance": 7,
+          "selection_reason": "Presents a training-free algorithm that folds softmax operations into attention GEMMs to exploit low-precision matrix throughput, a direct efficiency contribution to attention computation.",
+          "summary_status": "generated",
+          "title": "Fused-Softmax for efficient quantized attention",
+          "tldr": "Fused-Softmax reformulates softmax to use GPU matrix cores, substantially accelerating quantized attention while keeping its added error within the GEMM quantization error floor.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        },
+        {
+          "abstract": "Diffusion Transformers (DiTs) are the dominant architecture for video generation, but their quadratic attention complexity results in substantial computational cost and latency. Permuted block-sparse attention (PBSA) offers a promising approach to reducing this cost by selectively computing blocks of a semantically permuted attention matrix. However, existing approaches typically select only the top few key blocks for each query block, following a top-$p$ paradigm. We find that top-$p$ selection can be highly sample inefficient in high-entropy attention regimes, which are common in video generation. In these regimes, we show that sampling can provide substantially better approximations under the same computational budget. More generally, we cast block selection as importance sampling, where the top-scoring keys form an exact set that is computed in full and the remaining keys are represented by a sample drawn in proportion to their estimated attention and reweighted by inverse sampling probability. Building on this formulation, we present InstaGen, which can be parameterized by any PBSA method: it replaces the method's block selection with an exact set plus a weighted sample. Each query cluster draws one sample shared by all its queries, so the sampled keys form blocks amenable to efficient GPU execution. In this paper, we take the SVG family of PBSA methods and show that, on Wan2.1-T2V-1.3B and Wan2.1-T2V-14B, InstaGen parameterized by SVG2 improves PSNR over SVG2 by 3.4 dB and 2 dB, respectively, at matched attention density, and by 1.6 dB and 2.2 dB at matched wall-clock time. On Wan2.1-T2V-14B, InstaGen also beats SVG-EAR by 1.1 dB PSNR at nearly the same density while running faster (1.65x against 1.48x over dense).",
+          "arxiv_id": "2611.08610",
+          "arxiv_url": "https://arxiv.org/abs/2611.08610",
+          "authors": [
+            "Kislay Aditya Oj, Kumar Krishna Agrawal, Sri Surya Varma Datla, Aditya Desai"
+          ],
+          "bullets": [
+            "Top-p block selection can be sample-inefficient when video attention has high entropy.",
+            "It treats block selection as importance sampling: exact computation for top-scoring keys and inverse-probability-weighted samples for the rest.",
+            "Each query cluster shares a sampled set, preserving block structure for efficient GPU execution.",
+            "With SVG2, InstaGen improves PSNR at matched attention density and wall-clock time on Wan2.1-T2V models.",
+            "It also outperforms SVG-EAR on Wan2.1-T2V-14B while running faster at nearly the same density."
+          ],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 3: Overview of InstaGen. (a) Queries and keys are clustered into groups. (b) Centroid scores give each key group a probability π of being used by each query group. (c) The top key group is always kept; the remaining keys are sampled in proportion to π and weighted by 1/π. (d) Queries in a group share the same keys, so attention runs over dense blocks in one kernel.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 300,
+              "image_path": "figures/2611.08610/figure-001.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 829
+            },
+            {
+              "caption": "Figure 4: InstaGen approximates attention more accurately than prior sparse methods. Left: relative L2 error of one self-attention call from Wan2.1-T2V-1.3B against exact attention. Importance sampling gives the lowest error at every density, several times below SVG2. Right: per-block, per-head error over one full generation averaged across all steps. InstaGen (uniform, 16+16, no warm-up) keeps the error low everywhere at 32% density, while SVG2 (p=0.9, warm-up counted as zero error) leaves large errors in individual heads and layers despite computing 46%.",
+              "figure_id": "figure-4-5",
+              "figure_number": "4",
+              "height": 313,
+              "image_path": "figures/2611.08610/figure-002.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Warmup ablations on Wan2.1-T2V-14B (720p, 81 frames, 50 steps). InstaGen with uniform sampling runs its first 0, 5, 10 or 15 of 50 steps at full attention (warmup), ranging from 4+4% to 32+32% budget. SVG2 runs at its paper configurations at top-p 0.1, 0.25, 0.5, 0.75, 0.9 and 0.99. A 5–10 step warmup matches or beats the 15 steps SVG2 uses. The hollow diamond is SVG2 without its one-layer warmup; the InstaGen runs have none. The prompt used is svg2 ex1, Appendix A.1.",
+              "figure_id": "figure-5-6",
+              "figure_number": "5",
+              "height": 321,
+              "image_path": "figures/2611.08610/figure-003.webp",
+              "kind": "figure",
+              "page": 8,
+              "width": 829
+            },
+            {
+              "caption": "Figure 6: InstaGen with importance sampling matches SVG2’s quality at much lower density. (a) PSNR against overall attention density (warm-up steps count as dense), averaged over 22 VBench prompts on Wan2.1-T2V-1.3B (720p, 81 frames, 50 steps). SVG2 in its paper configuration (p=0.9) reaches 25.03 dB at 44.1%; InstaGen (importance sampling) reaches the same PSNR at 34.0% with the same 30% warm-up, and at 20.0% with no warm-up. (b) Denoising time against the number of frames on one H100 SXM, on one prompt (svg2 ex1, Appendix A.1; VAE decoding excluded), with InstaGen (importance sampling) at 4+4% with the 30% warm-up and at 14+14% with no warm-up, budgets at which it beats SVG2 (p=0.9) on PSNR, SSIM and LPIPS on this prompt at 81 frames. At 561 frames dense takes 162 min, SVG2 82.8 min (1.97×), and InstaGen 61.9 min (2.62×) with warm-up and 57.3 min (2.83×) without.",
+              "figure_id": "figure-6-7",
+              "figure_number": "6",
+              "height": 266,
+              "image_path": "figures/2611.08610/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 806
+            },
+            {
+              "caption": "Figure 2: InstaGen gives higher quality than SVG2 at both matched density and matched latency on Wan2.1-T2V-1.3B. Left: PSNR against generation time per video. Right: PSNR against attention density, the share of attention computed over the whole generation. SVG2 uses the configuration from its paper (Cq=100, Ck=500, full attention for the first 30% of steps, key floor 0.1) at top-p 0.5, 0.75, 0.9 and 0.95. InstaGen runs exact + sampled budgets from 4+4% to 32+32% at two clustering configurations for uniform and one for importance, with the same warmup and without it.",
+              "figure_id": "figure-2-2",
+              "figure_number": "2",
+              "height": 263,
+              "image_path": "figures/2611.08610/figure-005.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 664
+            },
+            {
+              "caption": "Table 1: Main results on Wan2.1-T2V-1.3B and 14B. PSNR, SSIM and LPIPS compare each video with the dense video from the same seed, and all quality metrics are averaged over the 22 VBench prompts. E+S: exact and sampled share of keys per sparse call with dense warmup, as prescribed by each baseline’s paper; InstaGen uses SVG2’s (first 30% of steps and 3% of layers). Density is overall, counting warmup calls as full attention. Speedup is end-to-end wall-clock on one H100 against a dense run. Bold: best sparse method in each column.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 418,
+              "image_path": "figures/2611.08610/table-006.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 830
+            },
+            {
+              "caption": "Table 2: The 22 VBench prompts.",
+              "figure_id": "table-2-4",
+              "figure_number": "2",
+              "height": 608,
+              "image_path": "figures/2611.08610/table-007.webp",
+              "kind": "table",
+              "page": 13,
+              "width": 766
+            }
+          ],
+          "first_seen_at": "2026-11-08T21:00:00-05:00",
+          "hero_figure": "figures/2611.08610/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.08610",
+          "relevance": 8,
+          "selection_reason": "Improves diffusion-based video generation with sparse/block attention and importance sampling, fitting video diffusion and efficient attention.",
+          "summary_status": "generated",
+          "title": "InstaGen: Group-Shared Importance Sampling for Fast Video Generation",
+          "tldr": "InstaGen accelerates video diffusion by replacing inefficient top-block selection with group-shared importance sampling, improving reconstruction quality at comparable compute.",
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "video-diffusion"
+              ],
+              "topic_id": "video-models"
+            },
+            {
+              "subtopic_ids": [
+                "efficient-attention"
+              ],
+              "topic_id": "efficient-ai"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-11-04",
       "paper_count": 4,
       "papers": [
@@ -64818,5 +65658,5 @@
   "schema_version": 1,
   "subtopic_id": "efficient-attention",
   "topic_id": "efficient-ai",
-  "total_paper_count": 330
+  "total_paper_count": 335
 }

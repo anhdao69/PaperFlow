@@ -6,10 +6,15 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Diffusion
 
-**357 papers total**
+**362 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-08 | [AR-Edit: Training-Free Autoregressive Video Editing without Inversion](https://arxiv.org/abs/2611.09795) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | AR-Edit enables real-time, training-free video editing from streaming frames by caching and reusing source value features, avoiding inversion. | 7 | 8 |
+| 2026-11-08 | [UniRGBA: Unifying RGB and Alpha in Pretrained Video Diffusion Models](https://arxiv.org/abs/2611.09069) | Video Generation and Understanding: Video Diffusion | UniRGBA adds native RGBA generation to pretrained video diffusion models with minimal architectural changes while preserving RGB quality. | 8 | 8 |
+| 2026-11-08 | [MotionCore: A Latent Neural Simulator for Video Generation with Rigid-Body Dynamics](https://arxiv.org/abs/2611.08904) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion | MotionCore combines a latent rigid-body dynamics simulator with video diffusion to generate visually realistic videos whose object motion better follows physical trajectories. | 7 | 7 |
+| 2026-11-08 | [Decoding spatial and semantic information from large-scale visual cortical activity for natural-movie reconstruction](https://arxiv.org/abs/2611.08887) | Video Generation and Understanding: Video Diffusion | Ca2REAL uses calcium activity from large visual-cortex populations to guide a video diffusion model, reconstructing natural movies with preserved spatial layout, semantics, and temporal dynamics. | 5 | 6 |
+| 2026-11-08 | [InstaGen: Group-Shared Importance Sampling for Fast Video Generation](https://arxiv.org/abs/2611.08610) | Video Generation and Understanding: Video Diffusion; Efficient AI: Efficient Attention | InstaGen accelerates video diffusion by replacing inefficient top-block selection with group-shared importance sampling, improving reconstruction quality at comparable compute. | 8 | 8 |
 | 2026-11-06 | [MoDDiT: Simple Token Routing in Diffusion Transformers](https://arxiv.org/abs/2610.28086) | Video Generation and Understanding: Video Diffusion; Efficient AI: Token Pruning and Eviction | MoDDiT dynamically routes image and video tokens through DiT MLP and attention blocks, reducing computation while maintaining or improving generation quality. | 8 | 8 |
 | 2026-11-05 | [IDRF: Inverse-Distilled Reward Fine-tuning of Masked Discrete Diffusion Models](https://arxiv.org/abs/2610.03641) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | IDRF enables reward fine-tuning of few-step masked discrete diffusion models using an inverse-distillation surrogate that avoids costly reference-model rollouts. | 8 | 8 |
 | 2026-11-04 | [VA-TDM: A Unified View for Improving Few-Step Diffusion Models by Velocity Adversarial Distillation](https://arxiv.org/abs/2611.06796) | Video Generation and Understanding: Video Diffusion | VA-TDM improves few-step diffusion and flow generation by adversarially matching student and teacher velocity fields throughout the student’s denoising trajectory. | 7 | 7 |

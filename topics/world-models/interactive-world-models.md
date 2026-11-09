@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**646 papers total**
+**649 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-08 | [MotionCore: A Latent Neural Simulator for Video Generation with Rigid-Body Dynamics](https://arxiv.org/abs/2611.08904) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion | MotionCore combines a latent rigid-body dynamics simulator with video diffusion to generate visually realistic videos whose object motion better follows physical trajectories. | 7 | 7 |
+| 2026-11-08 | [FATHOM: World-Model-Guided Diffusion Action-Trajectory Selection for Sparse-Marker AUV Tracking](https://arxiv.org/abs/2611.08898) | Embodied AI; World Models: Interactive World Models | FATHOM enables robust real-time AUV tracking from sparse, noisy visual markers by predicting future outcomes of diffusion-generated action trajectories and selecting the best one with a learned world model. | 7 | 8 |
+| 2026-11-08 | [Personalized health coaching via coachable health age and counterfactual wearable trajectories](https://arxiv.org/abs/2611.08568) | World Models: Interactive World Models | A wearable-based system combines an interpretable health-age metric with counterfactual trajectory forecasting to generate safer, more actionable personalized coaching plans. | 5 | 5 |
 | 2026-11-05 | [Dream4ACT: A Shared Visual Action Interface for Multi-Embodiment Video-Action Modeling](https://arxiv.org/abs/2609.40153) | Embodied AI: Robot Learning and Manipulation; World Models: Video World Models, Interactive World Models | Dream4ACT unifies multi-embodiment video and action modeling through a shared visual action interface that enables executable robot control without embodiment-specific decoders. | 9 | 8 |
 | 2026-11-04 | [EvoWorld: Towards Out-of-Sight World Evolution in Generative Video Models](https://arxiv.org/abs/2611.06748) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Autoregressive Video Models | EvoWorld enables video models to evolve worlds causally beyond the visible frame by combining explicit state reasoning with autoregressive visual rendering. | 8 | 7 |
 | 2026-11-04 | [Interactive World Simulation with Cosmos for Physical AI](https://arxiv.org/abs/2611.06627) | Embodied AI: Robot Learning and Manipulation; World Models: Interactive World Models | A Cosmos-based framework enables real-time, action- and state-conditioned interactive world simulation for Physical AI training and evaluation. | 9 | 9 |

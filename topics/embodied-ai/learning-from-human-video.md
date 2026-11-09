@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Learning from Human Videos
 
-**268 papers total**
+**270 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-08 | [ToolDex: An Ego-Exo Human Demonstration Dataset for Creative Physical Tool Use](https://arxiv.org/abs/2611.09036) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | ToolDex is a large-scale ego-exo dataset and benchmark for learning creative physical tool use from richly annotated, multi-view human demonstrations. | 9 | 8 |
+| 2026-11-08 | [HOC2R: Hand-Object Contact Trajectories for Human-to-Robot Motion Transfer](https://arxiv.org/abs/2611.08920) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | HOC2R extracts robot-usable hand–object contact trajectories from human videos using frozen vision features and learned localization heads, improving contact detection and robot task success in evaluated scenes. | 8 | 7 |
 | 2026-11-06 | [A Framework for Egocentric and Exocentric Procedural Understanding via Temporal Segmentation and Semantic Abstraction](https://arxiv.org/abs/2610.00069) | Embodied AI: Learning from Human Videos | A privacy-preserving framework compresses long-horizon egocentric and exocentric workplace video into an auditable procedural memory for retrieval and question answering. | 9 | 8 |
 | 2026-11-04 | [Open-HumanScale: An Open Recipe for Scaling Human and Robot Experience for Embodied Foundation Models](https://arxiv.org/abs/2611.06817) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation, Learning from Human Videos | Open-HumanScale provides an open recipe and 50,000-hour corpus for scaling human and robot experience into generalizable embodied foundation models. | 9 | 8 |
 | 2026-11-04 | [Dexterous Robotic Hands in the Foundation-Model Era: A Full-Stack Survey of Hardware, Data, Cross-Embodiment Transfer, Learning, and Evaluation](https://arxiv.org/abs/2611.06724) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos | This survey presents a full-stack view of dexterous robotic hands, linking hardware, data, cross-embodiment transfer, learning, and evaluation while identifying gaps in reliable contact-rich deployment. | 8 | 6 |

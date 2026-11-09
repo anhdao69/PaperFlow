@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Embodied Memory
 
-**302 papers total**
+**305 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-08 | [On Agentic Manipulation Policies](https://arxiv.org/abs/2611.09892) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Generalist AI models can directly control diverse robots with strong zero-shot reliability, outperforming specialist manipulation policies and improving further through persistent memory. | 9 | 9 |
+| 2026-11-08 | [Encoding Memory in World Models with Test-Time Model-Based Reinforcement Learning](https://arxiv.org/abs/2611.09625) | World Models; Adaptation and Memory: Test-Time Learning, Embodied Memory | TT-MBRL uses test-time gradient updates to encode each episode’s observations into world-model parameters, improving long-term memory and planning in memory-intensive tasks. | 8 | 8 |
+| 2026-11-08 | [HiMEM: Hippocampus-Inspired Memory Consolidation, Pruning, and Composition for Vision-Language-Action Models in 3D Scenes](https://arxiv.org/abs/2611.09355) | Embodied AI: Vision-Language-Action; Adaptation and Memory: Embodied Memory | HiMEM improves long-horizon execution and cross-task generalization in 3D VLA agents by consolidating, pruning, and composing memories inspired by hippocampal processes. | 9 | 8 |
 | 2026-11-07 | [Retrospective Open-Vocabulary Memory for Long-Term Object Search](https://arxiv.org/abs/2610.00330) | Embodied AI: Robot Navigation; Adaptation and Memory: Embodied Memory | ECROM uses opportunity-aware probabilistic memory to improve long-term open-vocabulary object search in changing environments. | 8 | 7 |
 | 2026-11-05 | [Robocasa-Mem: Benchmarking Environment and Process Memory in Long-Horizon Mobile Manipulation](https://arxiv.org/abs/2611.06475) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | RoboCasa-Mem benchmarks whether mobile manipulation agents can use environment and process memory to make consistent long-horizon decisions. | 10 | 9 |
 | 2026-11-05 | [Can Astra Solve RoboMME without Breaking the Bank?](https://arxiv.org/abs/2611.06184) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | A three-tier robot system uses Astra sparingly for long-term planning while lower-cost models execute and monitor subtasks, achieving 79.13% success on RoboMME. | 10 | 8 |
