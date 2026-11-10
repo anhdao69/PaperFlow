@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**823 papers total**
+**826 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Accept Changes, Reject Attacks: Robust Memory Management for LLM Agents](https://arxiv.org/abs/2610.41056) | Language Foundation Models: LLM Memory | A one-shot, episode-based fine-tuning recipe makes LLM-agent memory managers more robust to both outdated facts and memory-poisoning attacks, substantially improving evidence-conditioned accuracy while leaving room for improvement. | 8 | 7 |
+| 2026-11-09 | [SLICE-Mem: Salience-Gated Lightweight Information Curation for Efficient LLM Agent Memory](https://arxiv.org/abs/2610.33015) | Language Foundation Models: LLM Memory | SLICE-Mem builds long-term LLM-agent memory with lightweight salience filtering and extraction, cutting LLM token use substantially while maintaining near-baseline memory quality. | 8 | 7 |
+| 2026-11-09 | [Beyond the Parameter Monolith: Reconstructive Memories, Executable Skills, and Residual Assembly for Language Models](https://arxiv.org/abs/2610.04012) | Language Foundation Models: LLM Memory | FEM-ASM explores separating language-model storage, execution, and coordination through reconstructive memories, executable skills, and residual proposal assembly, with promising component-level findings but no evidence of competitive general capability. | 6 | 8 |
 | 2026-11-08 | [CPU-ARC: Agentic Reasoning Caching for on-CPU Reasoning Reuse](https://arxiv.org/abs/2611.09891) | Language Foundation Models: LLM Memory | CPU-ARC reuses LLM-derived reasoning through explainable, CPU-executable caches, achieving frontier-level performance at 16–291× lower invocation cost. | 6 | 7 |
 | 2026-11-08 | [Compaction, decay and reinforcement in a two-tier conversational memory: a paired evaluation against retrieval-augmented generation](https://arxiv.org/abs/2611.09807) | Language Foundation Models: LLM Memory | Compacting conversational turns into atomic facts improves answers and reduces prompt length for value-based questions, but retrieval of the original transcript is better when exact wording matters. | 8 | 7 |
 | 2026-11-08 | [MemoryDojo: Benchmarking Poisoning Through LLM Agent Memory](https://arxiv.org/abs/2611.09721) | Language Foundation Models: LLM Memory | MemoryDojo benchmarks how malicious instructions poison LLM agent memory and influence behavior across sessions and memory architectures. | 6 | 7 |

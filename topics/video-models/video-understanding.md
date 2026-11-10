@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Understanding
 
-**709 papers total**
+**710 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Are We Measuring Anticipation? Auditing Privileged Information in Procedural Video Evaluation](https://arxiv.org/abs/2610.03826) | Video Generation and Understanding: Video Understanding | Evaluation protocols for action anticipation can appear causal yet overstate capability by giving models privileged intermediate information. | 7 | 7 |
 | 2026-11-08 | [BEV3SR: Evidence-Aware 3D Spatial Reasoning from Video](https://arxiv.org/abs/2611.09816) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | BEV3SR enables training-free, evidence-aware 3D spatial reasoning from RGB-D video by building a metric BEV scene memory and selecting geometric or visual reasoning pathways. | 8 | 8 |
 | 2026-11-08 | [AnimWeb-Bench: Benchmarking Animated Webpage Code Generation from Videos](https://arxiv.org/abs/2611.09769) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AnimWeb-Bench evaluates how well MLLMs and coding agents reconstruct complete animated webpages from videos, showing that animation remains substantially harder than static appearance. | 8 | 7 |
 | 2026-11-08 | [CRTrack-Cap: A New Benchmark for Cross-View Dense Video Object Captioning](https://arxiv.org/abs/2611.09617) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | CRTrack-Cap introduces a benchmark and baseline for associating person tracklets across camera views and generating one consistent caption per global trajectory. | 8 | 7 |

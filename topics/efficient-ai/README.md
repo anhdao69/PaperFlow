@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Efficient AI
 
-**2593 papers total**
+**2594 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Spend Teacher Tokens Where They Matter: Success-Referenced On-Policy Distillation](https://arxiv.org/abs/2610.02678) | Efficient AI | SR-OPD cuts teacher supervision to roughly 3.46–5.02% of Vanilla OPD’s token cost while maintaining comparable mathematical reasoning performance by using successful student rollouts to target informative failures. | 6 | 7 |
 | 2026-11-08 | [CodeQuant2: Enhanced Outlier Mitigation and Adaptive Clustering for Low-Precision LRMs](https://arxiv.org/abs/2611.09868) | Efficient AI | CodeQuant2 improves low-precision quantization for large reasoning models by modeling early decoding activations and adapting weight codebooks, while accelerating inference by up to 2.85× over BF16. | 7 | 6 |
 | 2026-11-08 | [BitDecoding-FP4: Native FP4 KV Cache Decoding via Algorithm-System Co-Design](https://arxiv.org/abs/2611.09825) | Efficient AI: Efficient Attention, KV Cache and Memory Efficiency | BitDecoding-FP4 co-designs quantization algorithms and GPU kernels to enable accurate, native FP4 KV-cache decoding with up to 3.0× higher serving throughput than BF16 KV. | 8 | 7 |
 | 2026-11-08 | [A lightweight convolutional neural network for target detection in an edge environment](https://arxiv.org/abs/2611.09756) | Efficient AI | A lightweight CNN enables real-time target detection on edge devices, achieving up to 20 fps and over 400 m detection range with thermal sensors. | 5 | 4 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Adaptation and Memory
 
-**1629 papers total**
+**1631 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Fine-Grained Analysis of Catastrophic Forgetting in Continual Learning via Algorithmic Stability](https://arxiv.org/abs/2610.31551) | Adaptation and Memory: Continual and Online Learning | A model-agnostic algorithmic stability framework explains how SGD dynamics and learning-rate schedules contribute to catastrophic forgetting in continual learning. | 8 | 7 |
+| 2026-11-09 | [Continual Humanoid Motion Learning](https://arxiv.org/abs/2610.04231) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | A similarity-guided LoRA progressive network enables humanoid controllers to learn new sequential skills while preserving prior abilities efficiently. | 9 | 8 |
 | 2026-11-08 | [On Agentic Manipulation Policies](https://arxiv.org/abs/2611.09892) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Generalist AI models can directly control diverse robots with strong zero-shot reliability, outperforming specialist manipulation policies and improving further through persistent memory. | 9 | 9 |
 | 2026-11-08 | [On the Reliability of Majority-Vote Pseudo-Labels in Test-Time Reinforcement Learning](https://arxiv.org/abs/2611.09872) | Adaptation and Memory: Test-Time Learning | PC-Dr.DPO improves test-time reinforcement learning by making DPO updates more cautious for prompts whose majority-vote pseudo-labels are unreliable. | 7 | 7 |
 | 2026-11-08 | [ROSE: Risk-Aware Orthogonal Subspace Navigation for Lifelong Knowledge Editing in Multimodal Large Language Models](https://arxiv.org/abs/2611.09770) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | ROSE enables stable lifelong knowledge editing in multimodal large language models by navigating risk-aware orthogonal parameter subspaces and selectively integrating edited knowledge. | 8 | 8 |

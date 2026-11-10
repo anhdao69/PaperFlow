@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Navigation
 
-**920 papers total**
+**922 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [DexDICE: Reconciling Safety and Performance via Dual-Expert Offline Imitation Learning](https://arxiv.org/abs/2611.09433) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | DexDICE combines safe but imperfect demonstrations with high-performing yet potentially unsafe demonstrations to learn policies that pursue strong returns while avoiding unsafe regions. | 8 | 7 |
+| 2026-11-09 | [Autoware in Construction: Gap Analysis and LiDAR Perception Toward Off-Road Autonomous Driving](https://arxiv.org/abs/2610.04187) | Embodied AI: Robot Navigation | The paper analyzes how Autoware must adapt from public roads to construction sites and outlines LiDAR perception advances and a roadmap for autonomous dump trucks. | 6 | 5 |
 | 2026-11-08 | [Extended Model-Based Learned Inertial Odometry](https://arxiv.org/abs/2611.09584) | Embodied AI: Robot Navigation | A model-based learned inertial odometry system improves generalization to unseen quadrotor trajectories by combining body-frame dynamics with IMU fusion. | 8 | 7 |
 | 2026-11-08 | [Lightweight Path-Aware Frontier Re-ranking for LiDAR-Based UAV Exploration](https://arxiv.org/abs/2611.09561) | Embodied AI: Robot Navigation | A lightweight frontier re-ranking strategy uses quick utility screening and time-bounded RRT* path costs to improve LiDAR-based UAV exploration in cluttered environments. | 8 | 7 |
 | 2026-11-08 | [Keyline Detection with YOLO: Runway Perception for Vision-Based Aircraft Landing](https://arxiv.org/abs/2611.09316) | Embodied AI: Robot Navigation | The paper introduces YOLO-based object keyline detection, using semantic infinite lines to improve robust runway perception for vision-based aircraft landing. | 7 | 7 |

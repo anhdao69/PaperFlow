@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Large Language Models
 
-**1480 papers total**
+**1481 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Code-Interactive Visual Reasoning for Financial Candlestick Understanding](https://arxiv.org/abs/2610.16587) | Multimodal Foundation Models: Multimodal Large Language Models | Fin-Thinker improves financial candlestick reasoning by generating executable code to gather chart evidence, compute results, and guide grounded answers. | 6 | 6 |
 | 2026-11-08 | [ROSE: Risk-Aware Orthogonal Subspace Navigation for Lifelong Knowledge Editing in Multimodal Large Language Models](https://arxiv.org/abs/2611.09770) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | ROSE enables stable lifelong knowledge editing in multimodal large language models by navigating risk-aware orthogonal parameter subspaces and selectively integrating edited knowledge. | 8 | 8 |
 | 2026-11-08 | [AnimWeb-Bench: Benchmarking Animated Webpage Code Generation from Videos](https://arxiv.org/abs/2611.09769) | Multimodal Foundation Models: Multimodal Large Language Models; Video Generation and Understanding: Video Understanding | AnimWeb-Bench evaluates how well MLLMs and coding agents reconstruct complete animated webpages from videos, showing that animation remains substantially harder than static appearance. | 8 | 7 |
 | 2026-11-08 | [Zero-Shot Benchmarking of Unified Multimodal Models for Shallow-Water UAV Image Distortion Assessment and Restoration](https://arxiv.org/abs/2611.09740) | Multimodal Foundation Models: Multimodal Large Language Models | A zero-shot benchmark finds that unified multimodal models can inconsistently detect shallow-water image distortion but generally fail to restore imagery reliably without reference information. | 5 | 6 |

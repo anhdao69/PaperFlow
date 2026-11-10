@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Continual and Online Learning
 
-**690 papers total**
+**692 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Fine-Grained Analysis of Catastrophic Forgetting in Continual Learning via Algorithmic Stability](https://arxiv.org/abs/2610.31551) | Adaptation and Memory: Continual and Online Learning | A model-agnostic algorithmic stability framework explains how SGD dynamics and learning-rate schedules contribute to catastrophic forgetting in continual learning. | 8 | 7 |
+| 2026-11-09 | [Continual Humanoid Motion Learning](https://arxiv.org/abs/2610.04231) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | A similarity-guided LoRA progressive network enables humanoid controllers to learn new sequential skills while preserving prior abilities efficiently. | 9 | 8 |
 | 2026-11-08 | [ROSE: Risk-Aware Orthogonal Subspace Navigation for Lifelong Knowledge Editing in Multimodal Large Language Models](https://arxiv.org/abs/2611.09770) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | ROSE enables stable lifelong knowledge editing in multimodal large language models by navigating risk-aware orthogonal parameter subspaces and selectively integrating edited knowledge. | 8 | 8 |
 | 2026-11-08 | [TimeOmni-Live: Continuous & Live Time Series Understanding with Long-Term Memory](https://arxiv.org/abs/2611.09502) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | TimeOmni-Live enables real-time, continuous time-series understanding by retaining long-term stream context while balancing accuracy, responsiveness, and efficiency. | 6 | 7 |
 | 2026-11-08 | [ENGRAM: From Agent Experience to Weights through Verified Consolidation](https://arxiv.org/abs/2611.09472) | Adaptation and Memory: Continual and Online Learning; Language Foundation Models: LLM Memory | ENGRAM consolidates agent experience into model weights while verifying when external memories can be safely released. | 8 | 7 |

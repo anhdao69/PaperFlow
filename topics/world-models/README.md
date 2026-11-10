@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # World Models
 
-**1283 papers total**
+**1286 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [PING: physics informed graph neural network for advection-diffusion processes with applications to solar power forecasting](https://arxiv.org/abs/2610.18280) | World Models | PING combines graph neural networks with advection-diffusion physics to forecast transport processes on irregular sensor networks and improve intraday solar power forecasting. | 5 | 5 |
+| 2026-11-09 | [Learning Transferable Policies from Action-free Time Series Through Dynamical Embeddings](https://arxiv.org/abs/2610.03065) | World Models: Latent Action Models, Interactive World Models | A hierarchical model-based RL framework learns transferable control policies from action-free time series by embedding shared and system-specific dynamics, then simulating interventions to train policies. | 7 | 7 |
+| 2026-11-09 | [Counterfactual Action Evaluation, Observation Bottlenecks, and Representation Geometry in Joint-Embedding Predictive World Models](https://arxiv.org/abs/2610.02860) | World Models: Interactive World Models | The paper shows that low latent prediction error can hide weak action sensitivity, observation bottlenecks, and poor physical identifiability in predictive world models. | 8 | 8 |
 | 2026-11-08 | [Encoding Memory in World Models with Test-Time Model-Based Reinforcement Learning](https://arxiv.org/abs/2611.09625) | World Models; Adaptation and Memory: Test-Time Learning, Embodied Memory | TT-MBRL uses test-time gradient updates to encode each episode’s observations into world-model parameters, improving long-term memory and planning in memory-intensive tasks. | 8 | 8 |
 | 2026-11-08 | [Half-precision inference of AI weather prediction models: negligible loss of skill at a fraction of the cost](https://arxiv.org/abs/2611.09573) | World Models; Efficient AI | Running AI weather models with fp16 networks while keeping physical states in fp32 preserves forecast skill almost entirely while substantially reducing inference cost. | 7 | 6 |
 | 2026-11-08 | [TurtLES: A Large-Scale Benchmark for Turbulent 3D Neural PDE Surrogates](https://arxiv.org/abs/2611.09567) | World Models | TurtLES is a large-scale benchmark for testing neural PDE surrogates on realistic, long-horizon 3D turbulent cylinder wakes. | 6 | 7 |

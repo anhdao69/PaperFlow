@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Large Language Models
 
-**2427 papers total**
+**2428 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [To Explore The Strange New World Beyond Data Distribution: System Behavior, Causality Tax, and Non-causal Base Model](https://arxiv.org/abs/2610.02839) | Language Foundation Models: Large Language Models | The paper argues that language-model causality can impose a structural “Causality Tax” when system behavior beyond the data distribution is ignored, and proposes a non-causal alternative that improves theoretical and measured performance. | 6 | 8 |
 | 2026-11-08 | [A Tight Hierarchy for Chain of Thought](https://arxiv.org/abs/2611.09759) | Language Foundation Models: Large Language Models | More Chain-of-Thought steps strictly increase the computational power of transformer models, yielding a tight resource hierarchy. | 5 | 8 |
 | 2026-11-08 | [Decoupled Mode Connectivity for Base-to-Novel Generalization in Vision-Language Models](https://arxiv.org/abs/2611.09655) | Multimodal Foundation Models: Multimodal Large Language Models; Language Foundation Models: Large Language Models | DMC improves base-to-novel generalization in vision-language prompt learning by separately optimizing specialization and generalization prompts, then merging their text features at inference. | 9 | 8 |
 | 2026-11-08 | [From LoRA to Language: Recovering Skill Documents from Adapters](https://arxiv.org/abs/2611.09454) | Language Foundation Models: Large Language Models | Skill documents can often be recovered from LoRA adapters by executing the adapted model, but recovery depends strongly on whether the adapter encoded the original instructions or only behavior. | 8 | 8 |

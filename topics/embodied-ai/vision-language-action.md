@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language-Action
 
-**979 papers total**
+**982 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Can LLMs Debug Robots by Editing Their Weights?](https://arxiv.org/abs/2611.09376) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | An LLM can improve a robot policy’s lexical instruction grounding by editing only 65 token-embedding rows, without gradients or new demonstrations. | 8 | 8 |
+| 2026-11-09 | [Q-OIL: Optimistic Exploration in Learning from Human Interventions](https://arxiv.org/abs/2611.08576) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Q-OIL improves robot learning from human interventions by modeling realistic intervention behavior and optimistically guiding exploration toward human corrections. | 8 | 7 |
+| 2026-11-09 | [Think Densely, Act Sparsely: Latent Expert Cognitive Chains for Vision-Language-Action Autonomous Driving](https://arxiv.org/abs/2610.25734) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | LECDrive improves vision-language-action driving by building dense latent scene representations before producing sparse driving actions. | 9 | 8 |
 | 2026-11-08 | [Computer-Use Agents Are Embodied Generalists](https://arxiv.org/abs/2611.09847) | Embodied AI: Vision-Language-Action | Computer-use agents can act as embodied generalists by controlling simulated physical environments through screenshots and standard mouse-and-keyboard inputs. | 9 | 9 |
 | 2026-11-08 | [SURE:Spatiotemporal Uncertainty Representation for Efficient Vision-Language-Action Learning](https://arxiv.org/abs/2611.09684) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | SURE improves data-efficient vision-language-action learning by modeling spatial and temporal uncertainty in robot demonstrations. | 8 | 7 |
 | 2026-11-08 | [ODEAction: From Predicting Chunks to Evolving Actions](https://arxiv.org/abs/2611.09672) | Embodied AI: Vision-Language-Action | ODEAction replaces chunked robot-action prediction with continuous ODE-based action evolution to produce smoother, more effective trajectories. | 9 | 8 |

@@ -6,10 +6,16 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Robot Learning and Manipulation
 
-**2722 papers total**
+**2728 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [DexDICE: Reconciling Safety and Performance via Dual-Expert Offline Imitation Learning](https://arxiv.org/abs/2611.09433) | Embodied AI: Robot Navigation, Robot Learning and Manipulation | DexDICE combines safe but imperfect demonstrations with high-performing yet potentially unsafe demonstrations to learn policies that pursue strong returns while avoiding unsafe regions. | 8 | 7 |
+| 2026-11-09 | [Can LLMs Debug Robots by Editing Their Weights?](https://arxiv.org/abs/2611.09376) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | An LLM can improve a robot policy’s lexical instruction grounding by editing only 65 token-embedding rows, without gradients or new demonstrations. | 8 | 8 |
+| 2026-11-09 | [Mitigating Covariate Shift in Behavioral Cloning via Robust Stationary Distribution Correction](https://arxiv.org/abs/2611.09371) | Embodied AI: Robot Learning and Manipulation | DrilDICE improves behavioral cloning’s robustness to covariate shift caused by arbitrarily distributed or incomplete expert data. | 7 | 6 |
+| 2026-11-09 | [Q-OIL: Optimistic Exploration in Learning from Human Interventions](https://arxiv.org/abs/2611.08576) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation | Q-OIL improves robot learning from human interventions by modeling realistic intervention behavior and optimistically guiding exploration toward human corrections. | 8 | 7 |
+| 2026-11-09 | [ORBIT: A Modular Multi-finger Robotic Hand Platform with Rotational Finger Reconfiguration](https://arxiv.org/abs/2610.33241) | Embodied AI: Robot Learning and Manipulation | ORBIT is a modular robotic hand whose fingers can rapidly rotate around the palm, enabling direct comparison of hand morphologies and novel manipulation behaviors. | 6 | 7 |
+| 2026-11-09 | [Continual Humanoid Motion Learning](https://arxiv.org/abs/2610.04231) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Continual and Online Learning | A similarity-guided LoRA progressive network enables humanoid controllers to learn new sequential skills while preserving prior abilities efficiently. | 9 | 8 |
 | 2026-11-08 | [On Agentic Manipulation Policies](https://arxiv.org/abs/2611.09892) | Embodied AI: Robot Learning and Manipulation; Adaptation and Memory: Embodied Memory | Generalist AI models can directly control diverse robots with strong zero-shot reliability, outperforming specialist manipulation policies and improving further through persistent memory. | 9 | 9 |
 | 2026-11-08 | [Grasp-TAGS: Task-Aware Grasp Selection via Critic Distillation for Prehensile Loco-Manipulation](https://arxiv.org/abs/2611.09864) | Embodied AI: Robot Learning and Manipulation | Grasp-TAGS selects task-effective initial grasps before contact, improving long-horizon loco-manipulation rearrangement success. | 9 | 8 |
 | 2026-11-08 | [Seeing What Matters: Benchmarking Task-Conditioned Actionable Spatial Belief for Manipulation](https://arxiv.org/abs/2611.09794) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | Seeing What Matters benchmarks whether robots select views that acquire the task-specific evidence needed to execute manipulation commands. | 9 | 8 |

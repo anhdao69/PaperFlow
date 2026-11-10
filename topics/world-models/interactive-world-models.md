@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Interactive World Models
 
-**649 papers total**
+**651 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Learning Transferable Policies from Action-free Time Series Through Dynamical Embeddings](https://arxiv.org/abs/2610.03065) | World Models: Latent Action Models, Interactive World Models | A hierarchical model-based RL framework learns transferable control policies from action-free time series by embedding shared and system-specific dynamics, then simulating interventions to train policies. | 7 | 7 |
+| 2026-11-09 | [Counterfactual Action Evaluation, Observation Bottlenecks, and Representation Geometry in Joint-Embedding Predictive World Models](https://arxiv.org/abs/2610.02860) | World Models: Interactive World Models | The paper shows that low latent prediction error can hide weak action sensitivity, observation bottlenecks, and poor physical identifiability in predictive world models. | 8 | 8 |
 | 2026-11-08 | [MotionCore: A Latent Neural Simulator for Video Generation with Rigid-Body Dynamics](https://arxiv.org/abs/2611.08904) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion | MotionCore combines a latent rigid-body dynamics simulator with video diffusion to generate visually realistic videos whose object motion better follows physical trajectories. | 7 | 7 |
 | 2026-11-08 | [FATHOM: World-Model-Guided Diffusion Action-Trajectory Selection for Sparse-Marker AUV Tracking](https://arxiv.org/abs/2611.08898) | Embodied AI; World Models: Interactive World Models | FATHOM enables robust real-time AUV tracking from sparse, noisy visual markers by predicting future outcomes of diffusion-generated action trajectories and selecting the best one with a learned world model. | 7 | 8 |
 | 2026-11-08 | [Personalized health coaching via coachable health age and counterfactual wearable trajectories](https://arxiv.org/abs/2611.08568) | World Models: Interactive World Models | A wearable-based system combines an interpretable health-age metric with counterfactual trajectory forecasting to generate safer, more actionable personalized coaching plans. | 5 | 5 |

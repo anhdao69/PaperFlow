@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video Generation and Understanding
 
-**1221 papers total**
+**1222 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Are We Measuring Anticipation? Auditing Privileged Information in Procedural Video Evaluation](https://arxiv.org/abs/2610.03826) | Video Generation and Understanding: Video Understanding | Evaluation protocols for action anticipation can appear causal yet overstate capability by giving models privileged intermediate information. | 7 | 7 |
 | 2026-11-08 | [Video-Coder: Reinforcing Agentic Coding for Video Generation](https://arxiv.org/abs/2611.09894) | Video Generation and Understanding | Video-Coder trains an agent to write and execute code for constructing dynamic 3D scenes that guide more structurally accurate and controllable video generation. | 8 | 8 |
 | 2026-11-08 | [BEV3SR: Evidence-Aware 3D Spatial Reasoning from Video](https://arxiv.org/abs/2611.09816) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | BEV3SR enables training-free, evidence-aware 3D spatial reasoning from RGB-D video by building a metric BEV scene memory and selecting geometric or visual reasoning pathways. | 8 | 8 |
 | 2026-11-08 | [AR-Edit: Training-Free Autoregressive Video Editing without Inversion](https://arxiv.org/abs/2611.09795) | Video Generation and Understanding: Video Diffusion, Autoregressive Video Models | AR-Edit enables real-time, training-free video editing from streaming frames by caching and reusing source value features, avoiding inversion. | 7 | 8 |

@@ -6,10 +6,12 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Multimodal Foundation Models
 
-**2450 papers total**
+**2452 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Think Densely, Act Sparsely: Latent Expert Cognitive Chains for Vision-Language-Action Autonomous Driving](https://arxiv.org/abs/2610.25734) | Embodied AI: Vision-Language-Action; Multimodal Foundation Models: Spatial Intelligence | LECDrive improves vision-language-action driving by building dense latent scene representations before producing sparse driving actions. | 9 | 8 |
+| 2026-11-09 | [Code-Interactive Visual Reasoning for Financial Candlestick Understanding](https://arxiv.org/abs/2610.16587) | Multimodal Foundation Models: Multimodal Large Language Models | Fin-Thinker improves financial candlestick reasoning by generating executable code to gather chart evidence, compute results, and guide grounded answers. | 6 | 6 |
 | 2026-11-08 | [BEV3SR: Evidence-Aware 3D Spatial Reasoning from Video](https://arxiv.org/abs/2611.09816) | Multimodal Foundation Models: Spatial Intelligence; Video Generation and Understanding: Video Understanding | BEV3SR enables training-free, evidence-aware 3D spatial reasoning from RGB-D video by building a metric BEV scene memory and selecting geometric or visual reasoning pathways. | 8 | 8 |
 | 2026-11-08 | [Seeing What Matters: Benchmarking Task-Conditioned Actionable Spatial Belief for Manipulation](https://arxiv.org/abs/2611.09794) | Embodied AI: Robot Learning and Manipulation; Multimodal Foundation Models: Spatial Intelligence | Seeing What Matters benchmarks whether robots select views that acquire the task-specific evidence needed to execute manipulation commands. | 9 | 8 |
 | 2026-11-08 | [ROSE: Risk-Aware Orthogonal Subspace Navigation for Lifelong Knowledge Editing in Multimodal Large Language Models](https://arxiv.org/abs/2611.09770) | Multimodal Foundation Models: Multimodal Large Language Models; Adaptation and Memory: Continual and Online Learning | ROSE enables stable lifelong knowledge editing in multimodal large language models by navigating risk-aware orthogonal parameter subspaces and selectively integrating edited knowledge. | 8 | 8 |

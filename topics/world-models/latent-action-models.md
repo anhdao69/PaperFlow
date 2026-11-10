@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**146 papers total**
+**147 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-09 | [Learning Transferable Policies from Action-free Time Series Through Dynamical Embeddings](https://arxiv.org/abs/2610.03065) | World Models: Latent Action Models, Interactive World Models | A hierarchical model-based RL framework learns transferable control policies from action-free time series by embedding shared and system-specific dynamics, then simulating interventions to train policies. | 7 | 7 |
 | 2026-11-08 | [MDF++: Visuo-Tactile World Action Model with End-to-end Representation Learning](https://arxiv.org/abs/2611.09293) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | MDF++ learns control-relevant visuo-tactile representations end-to-end for world-action models, improving contact-rich robot manipulation performance over frozen-encoder approaches. | 9 | 8 |
 | 2026-11-04 | [Motion-guided Contrastive Regularization For Latent World Models](https://arxiv.org/abs/2611.06901) | World Models: Latent Action Models | Motion-guided contrastive regularization prevents static-background collapse in latent world models and substantially improves visual-control planning under randomized backgrounds. | 8 | 8 |
 | 2026-11-04 | [ELA: End-to-End Latent Action Policy Learning from Video Demonstrations](https://arxiv.org/abs/2611.05571) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | ELA learns control-relevant latent actions end to end from abundant videos and a small number of action-labeled robot demonstrations. | 8 | 8 |
