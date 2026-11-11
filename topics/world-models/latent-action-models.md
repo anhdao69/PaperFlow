@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Latent Action Models
 
-**147 papers total**
+**150 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-10 | [OnlyAct: Extracting Action Representations from Foundation Models for World Models](https://arxiv.org/abs/2611.14420) | World Models: Latent Action Models; Multimodal Foundation Models | Video world models promise general-purpose interactive simulators, but their training is limited by action supervision: action labels are scarce, fragmented across incompatible specifications, and do not scale with the unlabeled video pret… | 9 | 8 |
+| 2026-11-10 | [From Egocentric Human Video to Robot Manipulation in the Era of Embodied Intelligence](https://arxiv.org/abs/2611.13610) | Embodied AI: Robot Learning and Manipulation, Learning from Human Videos; World Models: Latent Action Models | Egocentric human video (EHV) records close-range hand-object interaction (HOI) and the temporal structure of everyday activities, offering a potentially scalable source of experience for robot manipulation. Using this experience for robot… | 9 | 6 |
+| 2026-11-10 | [ProTEUS: A mutation-resolved world model for closed-loop protein evolution](https://arxiv.org/abs/2611.13348) | World Models: Latent Action Models, Interactive World Models | Protein engineering requires navigating rugged fitness landscapes, where small sequence changes can produce large functional differences, but experimental screening can only sample a small fraction of sequence space. Thus, a central challe… | 8 | 9 |
 | 2026-11-09 | [Learning Transferable Policies from Action-free Time Series Through Dynamical Embeddings](https://arxiv.org/abs/2610.03065) | World Models: Latent Action Models, Interactive World Models | A hierarchical model-based RL framework learns transferable control policies from action-free time series by embedding shared and system-specific dynamics, then simulating interventions to train policies. | 7 | 7 |
 | 2026-11-08 | [MDF++: Visuo-Tactile World Action Model with End-to-end Representation Learning](https://arxiv.org/abs/2611.09293) | Embodied AI: Robot Learning and Manipulation; World Models: Latent Action Models | MDF++ learns control-relevant visuo-tactile representations end-to-end for world-action models, improving contact-rich robot manipulation performance over frozen-encoder approaches. | 9 | 8 |
 | 2026-11-04 | [Motion-guided Contrastive Regularization For Latent World Models](https://arxiv.org/abs/2611.06901) | World Models: Latent Action Models | Motion-guided contrastive regularization prevents static-background collapse in latent world models and substantially improves visual-control planning under randomized backgrounds. | 8 | 8 |

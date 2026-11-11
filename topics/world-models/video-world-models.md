@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Video World Models
 
-**404 papers total**
+**407 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-10 | [UGG: Unified Generative Geometry Model](https://arxiv.org/abs/2611.14440) | World Models: Video World Models; 3D Vision: 3D Foundation Models | Understanding 4D scenes is a core challenge in visual intelligence, requiring models to jointly capture scene geometry, appearance, and dynamics from partial observations. However, existing approaches are subdivided into feedforward models… | 8 | 8 |
+| 2026-11-10 | [Game-Enhanced Embodied Learning with Event and Foresight Pretraining](https://arxiv.org/abs/2611.13819) | Embodied AI: Vision-Language-Action, Robot Learning and Manipulation; World Models: Video World Models | Human gameplay supplies paired observations, actions, and visual consequences that can supplement robot-policy training. We study event-and-foresight pretraining for InternVLA-A1.5, combining recorded keyboard/mouse event prediction with h… | 8 | 7 |
+| 2026-11-10 | [Learning Conditional Source Distribution via Flow Reversal for Temporal Flow Matching](https://arxiv.org/abs/2610.05349) | World Models: Video World Models; Video Generation and Understanding: Video Diffusion | We introduce CNP-Flow, a flow matching framework for temporal generation that learns conditional source distributions through flow reversal. Whereas standard conditional flow matching (FM) incorporates conditioning through the vector field… | 7 | 7 |
 | 2026-11-08 | [MotionCore: A Latent Neural Simulator for Video Generation with Rigid-Body Dynamics](https://arxiv.org/abs/2611.08904) | World Models: Video World Models, Interactive World Models; Video Generation and Understanding: Video Diffusion | MotionCore combines a latent rigid-body dynamics simulator with video diffusion to generate visually realistic videos whose object motion better follows physical trajectories. | 7 | 7 |
 | 2026-11-08 | [JEPAhead: From Inpainting to Causal Forecasting for Urban Driving](https://arxiv.org/abs/2611.08657) | World Models: Video World Models | JEPAhead adapts a frozen V-JEPA1 encoder for causal latent forecasting in urban driving, improving future retrieval and semantic prediction over persistence while downstream utility remains unverified. | 8 | 7 |
 | 2026-11-05 | [Structured Neural Modeling of Daily Arctic Sea-Ice Concentration Evolution: Physical-Trajectory-Driven Learning and Forecast-Domain Adaptation](https://arxiv.org/abs/2610.03743) | World Models: Video World Models; Adaptation and Memory: Test-Time Learning | A dual-domain framework learns stable daily Arctic sea-ice concentration evolution from physical trajectories and adapts it to forecast data without altering the learned evolution core. | 8 | 8 |

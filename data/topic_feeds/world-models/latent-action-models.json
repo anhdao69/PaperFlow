@@ -1,6 +1,370 @@
 {
   "days": [
     {
+      "date": "2026-11-10",
+      "paper_count": 3,
+      "papers": [
+        {
+          "abstract": "Video world models promise general-purpose interactive simulators, but their training is limited by action supervision: action labels are scarce, fragmented across incompatible specifications, and do not scale with the unlabeled video pretraining corpus. A common workaround jointly trains an action encoder to compress consecutive frames into a latent action and a decoder to reconstruct the next frame from the previous frame and that latent, forcing the latent to capture only new information. This has two limitations: learning the action space from scratch can limit generalization to unseen domains, and the bottleneck trades expressiveness for separation, with tighter settings losing nuance and looser ones risking scene leakage under domain shifts. We argue for a different starting point: rather than learning actions from scratch, we start from a pretrained foundation model (V-JEPA 2), whose embeddings of a frame pair already carry substantial action information after large-scale, diverse video pretraining. The remaining challenge is to extract the action while discarding the scene. We propose a label-free contrastive adaptation framework that pulls together frame pairs sharing the same motion under a different scene and pushes apart pairs from the same scene with different motion, reshaping the geometry of the pretrained space without imposing a reconstruction bottleneck. We introduce a unified evaluation protocol along three axes (action expressiveness, scene invariance, and action-conditioned video generation quality) across robot manipulation, camera navigation, game, and driving benchmarks, most of which are unseen during adaptation. Compared with annotation-free latent-action methods, our representations are substantially more expressive while matching their scene invariance, and they yield world models that transfer demonstrated actions to new scenes more faithfully.",
+          "arxiv_id": "2611.14420",
+          "arxiv_url": "https://arxiv.org/abs/2611.14420",
+          "authors": [
+            "Runjia Li, Minghao Chen, Junyu Xie, Philip Torr, Andrea Vedaldi, Tomas Jakab"
+          ],
+          "bullets": [],
+          "categories": [
+            "cs.CV"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 2: Overview of the proposed learning pipeline. Left: Contrastive action adaptation. An anchor frame pair (ot, ot+k) is encoded as a two-frame clip by the OnlyAct encoder ϕθ, a pretrained foundation model with low-rank adapters whose weights are shared across all branches. The positive keeps the action but changes the scene: the moving region of the anchor, found by optical flow, is cut out and pasted at a shifted location onto the background of a different scene (for moving cameras, a different photometric augmentation of the anchor is used instead). The hard negative is drawn from a non-overlapping window (ot′ , ot′+k) of the same video, sharing the scene but corresponding to a different action. In the action space, the anchor is pulled towards its positive and pushed away from its hard negative. Right: Action-conditioned video world model. The frozen OnlyAct encoder ϕθ maps consecutive frame pairs into the learned action space, yielding an action stream α1:t that conditions an autoregressive video world model Gψ. Given past frames o1:t and the action stream, Gψ predicts the next frame ot+1, and is rolled out autoregressively to generate subsequent frames.",
+              "figure_id": "figure-2-7",
+              "figure_number": "2",
+              "height": 254,
+              "image_path": "figures/2611.14420/figure-001.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 826
+            },
+            {
+              "caption": "Figure 6: Additional action-transfer results. Latent actions extracted from the demonstration frames (top) condition the video world model generations (bottom). OnlyAct reproduces the demonstrated actions across various settings. Best seen as videos in the supplementary material which also includes more examples.",
+              "figure_id": "figure-6-12",
+              "figure_number": "6",
+              "height": 662,
+              "image_path": "figures/2611.14420/figure-002.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 823
+            },
+            {
+              "caption": "Figure 3: Two control modes. After pretraining the video world model on latent actions from the OnlyAct encoder, the learned action space supports two modes. First, action transfer extracts an action stream from a demonstration video and uses it to condition the world model from a new initial frame, reproducing the demonstrated action with no labels. Second, real-action control learns a lightweight interface from real actions onto the learned latent-action space on a small action-labeled set, so that real actions drive the world model directly.",
+              "figure_id": "figure-3-1",
+              "figure_number": "3",
+              "height": 172,
+              "image_path": "figures/2611.14420/figure-003.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 829
+            },
+            {
+              "caption": "Figure 5: Action transfer. Latent actions extracted from the demonstration frames (top) condition the video world model generations (bottom). OnlyAct faithfully reproduces the demonstrated action in the new target scene, e.g. in the cross-source example it turns right and then performs the attack action. Best seen as a video in the supplementary material.",
+              "figure_id": "figure-5-11",
+              "figure_number": "5",
+              "height": 149,
+              "image_path": "figures/2611.14420/figure-004.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 823
+            },
+            {
+              "caption": "Figure 4: Real-action control. Left: OnlyAct learns to generate videos that faithfully respond to different actions, Right: comparison of action representations between OnlyAct and AdaWorld using t-SNE.",
+              "figure_id": "figure-4-10",
+              "figure_number": "4",
+              "height": 186,
+              "image_path": "figures/2611.14420/figure-005.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 825
+            },
+            {
+              "caption": "Table 2: Scene leakage. A decoder with the same architecture for every representation (trained with L1 + 0.5×LPIPS, 10 epochs, 128×128) reconstructs the post-action frame from the representation and is evaluated on scenes held out from its training; values are averaged over 4 decoder seeds. Per-dataset columns: held-out LPIPS↑ (higher = less scene information recoverable). Last three columns: LPIPS↑, SSIM↓ and L1↑ averaged over the 13 datasets. A representation that carries no information at all also leaks nothing, so read this table together with Table 1. Markers and baselines as in Table 1. ∆: ours minus the best other method (green: ours leaks less). Bold: least leakage; underline: second least.",
+              "figure_id": "table-2-6",
+              "figure_number": "2",
+              "height": 107,
+              "image_path": "figures/2611.14420/table-006.webp",
+              "kind": "table",
+              "page": 8,
+              "width": 840
+            },
+            {
+              "caption": "Table 4: Downstream world-model fine-tuning: controllability and fidelity. Each pretrained world model from Table 3 is fine-tuned on a small labeled set of a target domain (all unseen by our encoder, which was trained on VPT Minecraft recordings, not these TECO videos). (a) Controllability after 800 updates. Follow↑: accuracy of an inverse-dynamics classifier at recognizing the commanded action in the generated frame (chance 0.333; Real frames: the same classifier on real frames); on nuScenes, Spearman correlation between commanded and generated forward motion (chance 0). Control↑: PSNR under the commanded action minus under other actions (dB; 0 = action ignored). (b) Fidelity: PSNR↑ (dB) after 0, 200 and 800 updates (0: interface initialized from the labeled clips, no gradient update). Markers as in Table 3. ∆: ours minus the best baseline; grey when the 95% paired bootstrap interval contains 0. Bold: best; underline: second best.",
+              "figure_id": "table-4-4",
+              "figure_number": "4",
+              "height": 379,
+              "image_path": "figures/2611.14420/table-007.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 844
+            },
+            {
+              "caption": "Table 1: Linear probing of action information. A linear layer predicts the ground-truth action from each frozen representation. We report test R2 on held-out scenes (LIBERO, RLBench: held-out demonstrations of training scenes; Procgen: macro-F1 over 15 discrete actions), averaged over 3 probe seeds (std ≤ 0.03). MetaWorld actions are clipped to [−1, 1]. ◦Videos seen by our encoder during training, without action labels; all other datasets are entirely unseen. †Retrained on the same 168K training pairs as our encoder. V-JEPA 2 (frozen): our backbone, embedded identically but without contrastive adaptation. Avg.: mean R2 over the 12 continuous-action datasets. ∆: ours minus the best other method. Bold: best; underline: second best.",
+              "figure_id": "table-1-3",
+              "figure_number": "1",
+              "height": 134,
+              "image_path": "figures/2611.14420/table-008.webp",
+              "kind": "table",
+              "page": 7,
+              "width": 840
+            },
+            {
+              "caption": "Table 6: The OnlyAct recipe on a multimodal embedding backbone. Left: linear probing of action information (test R2; Procgen: macro-F1; mean over 3 probe seeds) with the protocol, clips, splits and seeds of Table 1. Right: scene leakage (held-out LPIPS↑, higher = less scene information recoverable; mean over 4 decoder seeds) with the decoders and held-out scenes of Table 2. V-JEPA 2: the frozen backbone of OnlyAct; OnlyAct: main-text results; Qwen recipe: the same recipe (168K training pairs, augmentation, loss, optimizer, 10,000 steps) on Qwen3-VL-Embedding-8B (Appendix A.3). ∆: Qwen recipe minus OnlyAct; green: better for the Qwen recipe (higher R2, less leakage). Avg.: probe over the 12 continuous-action datasets, leakage over all 13. ◦Videos seen during contrastive training (the same for both backbones).",
+              "figure_id": "table-6-9",
+              "figure_number": "6",
+              "height": 459,
+              "image_path": "figures/2611.14420/table-009.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 798
+            },
+            {
+              "caption": "Table 7: Licenses of existing assets, as stated by each source.",
+              "figure_id": "table-7-2",
+              "figure_number": "7",
+              "height": 806,
+              "image_path": "figures/2611.14420/table-010.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 831
+            },
+            {
+              "caption": "Table 3: Action-conditioned world model. The same world model (AdaWorld backbone, same recipe and data) is trained with each action representation. Self : PSNR↑ (dB) when driven by the clip’s own actions. Transfer: a source clip’s actions drive a different scene; Dir↑ is the cosine between the optical-flow direction of the generated video and of the source (0: unrelated; 1: same). ◦Seen by our encoder without action labels. †Retrained on our data. ∆: ours minus the best baseline. Bold: best; underline: second best (no-action row excluded).",
+              "figure_id": "table-3-5",
+              "figure_number": "3",
+              "height": 47,
+              "image_path": "figures/2611.14420/table-011.webp",
+              "kind": "table",
+              "page": 10,
+              "width": 830
+            },
+            {
+              "caption": "Table 5: Whitening control. DreamDojo† world models trained with their native latent actions (as in Table 3) and with the same whitening rule as OnlyAct (statistics computed on its own embeddings), everything else identical, evaluated on the same clips and source–target pairs as Table 3 (LIBERO and RLBench: 40; SpatialVID: 20). RLBench transfer and nuScenes were not evaluated for the whitened model (–). ∆: ours minus the whitened DreamDojo, tested with a paired t-test over clips (Self PSNR) and a two-sided Wilcoxon signed-rank test over source–target pairs (Transfer Dir); grey: not significant at the 0.05 level. Single training seed.",
+              "figure_id": "table-5-8",
+              "figure_number": "5",
+              "height": 35,
+              "image_path": "figures/2611.14420/table-012.webp",
+              "kind": "table",
+              "page": 17,
+              "width": 830
+            }
+          ],
+          "first_seen_at": "2026-11-10T21:00:00-05:00",
+          "hero_figure": "figures/2611.14420/hero.webp",
+          "novelty": 8,
+          "pdf_url": "https://arxiv.org/pdf/2611.14420",
+          "relevance": 9,
+          "selection_reason": "Addresses the action supervision bottleneck in World Models by extracting action representations from a pretrained foundation model (V-JEPA 2) via label-free contrastive adaptation. This is highly relevant to Latent Action Models and Multimodal Foundation Models.",
+          "summary_status": "failed",
+          "title": "OnlyAct: Extracting Action Representations from Foundation Models for World Models",
+          "tldr": null,
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            },
+            {
+              "subtopic_ids": [],
+              "topic_id": "multimodal-foundation-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Egocentric human video (EHV) records close-range hand-object interaction (HOI) and the temporal structure of everyday activities, offering a potentially scalable source of experience for robot manipulation. Using this experience for robot control requires recovering useful supervision without recorded robot actions and accounting for differences in morphology, viewpoint, and action space. We define Ego2Robot learning as the process of learning or adapting robot manipulation policies from EHV, organized into four learning paradigms: explicit embodiment transfer, explicit action and task supervision, egocentric video representation pretraining, and latent action and dynamics modeling. The four paradigms differ in what they derive from human video: robot-format demonstrations, interpretable supervision, visual representations, or predictive models of actions and dynamics. For each paradigm, we trace what EHV information is extracted, how robot policies use it, and when the additional data is required. Besides, we review the benchmark datasets that cover EHV, robot demonstrations, and synthetic and simulated resources. This paper links EHV data's contribution to the task information preserved and the robot-specific grounding used during training or deployment. Finally, we identify challenges in physical feasibility, agent coordination, in-context adaptation, controlled evaluation, and predictive control.",
+          "arxiv_id": "2611.13610",
+          "arxiv_url": "https://arxiv.org/abs/2611.13610",
+          "authors": [
+            "Yi Wang, Jingqiu Wu, Lei Yao, Zhaoshuo Li, Haoyu Zhu, Yirui Zhou, Huaiyuan Xu, Ying Zheng, Chuang Yang, Lap-Pui Chau"
+          ],
+          "bullets": [],
+          "categories": [
+            "cs.RO"
+          ],
+          "figure_status": "ready",
+          "figures": [
+            {
+              "caption": "Figure 10 A representative joint video-action architecture conditioned on visual observations and task instructions, with model-dependent robot state or past-action inputs. In the illustrated training setup, EHV supplies predictive supervision and robot demonstrations supply action supervision. Future-observation generation may be omitted at deployment. All video frames are from RH20T [41].",
+              "figure_id": "figure-10-13",
+              "figure_number": "10",
+              "height": 308,
+              "image_path": "figures/2611.13610/figure-001.webp",
+              "kind": "figure",
+              "page": 16,
+              "width": 972
+            },
+            {
+              "caption": "Figure 1 Taxonomy of Ego2Robot learning of four learning paradigms with representative methods and supporting data resources. Example images from EgoDex [60], RoboMimic [110], and RoboTurk [109].",
+              "figure_id": "figure-1-3",
+              "figure_number": "1",
+              "height": 450,
+              "image_path": "figures/2611.13610/figure-002.webp",
+              "kind": "figure",
+              "page": 2,
+              "width": 806
+            },
+            {
+              "caption": "Figure 3 Motion retargeting transfers the human motion recovered from EHVs onto the target robot embodiment subject to its joint limits and workspace constraints. Additional contact and dynamics constraints are method-dependent. The mapping is schematic, illustrated with a human grasp frame from EgoDex [60]. The robot overlay is an illustrative composite.",
+              "figure_id": "figure-3-12",
+              "figure_number": "3",
+              "height": 306,
+              "image_path": "figures/2611.13610/figure-003.webp",
+              "kind": "figure",
+              "page": 5,
+              "width": 860
+            },
+            {
+              "caption": "Figure 7 Egocentric video representation pretraining through temporal contrastive learning, masked modeling, and language-conditioned objectives. The transferred encoder supplies features for robot policies and may be frozen or fine-tuned. Human and robot frames are from EgoDex [60] and RH20T [41], respectively.",
+              "figure_id": "figure-7-9",
+              "figure_number": "7",
+              "height": 425,
+              "image_path": "figures/2611.13610/figure-004.webp",
+              "kind": "figure",
+              "page": 12,
+              "width": 962
+            },
+            {
+              "caption": "Figure 4 Two routes for Ego2Robot video translation: replacement-based editing replaces the human embodiment within the retained scene; rendering-based synthesis reconstructs and re-renders interactions from a target viewpoint. Both video translations produce robot observations with aligned actions for policy learning. Example images from WARPED [44].",
+              "figure_id": "figure-4-1",
+              "figure_number": "4",
+              "height": 402,
+              "image_path": "figures/2611.13610/figure-005.webp",
+              "kind": "figure",
+              "page": 6,
+              "width": 981
+            },
+            {
+              "caption": "Figure 5 Human-derived affordances and their three complementary uses: action generation, learning supervision, and policy conditioning. Images from EgoDex [60] and so100_grasp_cup [153].",
+              "figure_id": "figure-5-10",
+              "figure_number": "5",
+              "height": 402,
+              "image_path": "figures/2611.13610/figure-006.webp",
+              "kind": "figure",
+              "page": 9,
+              "width": 979
+            },
+            {
+              "caption": "Figure 6 An illustrative progress estimate for picking up a spoon and holding it beside the tray. Progress ranges from 0 at task initiation to 1 when the spoon is held at the goal. Progress is useful information to support reward construction and execution monitoring. Video frames from EgoVerse [130].",
+              "figure_id": "figure-6-4",
+              "figure_number": "6",
+              "height": 382,
+              "image_path": "figures/2611.13610/figure-007.webp",
+              "kind": "figure",
+              "page": 10,
+              "width": 962
+            },
+            {
+              "caption": "Figure 2 Hand pose and HOI reconstruction from EHV. It recovers hand meshes and joints, interaction trajectories, and contact locations for subsequent retargeting. Trajectory colors indicate temporal progression; yellow boxes and markers identify manipulated objects and contacts. Frames from EgoDex [60]; meshes and overlays are schematic.",
+              "figure_id": "figure-2-8",
+              "figure_number": "2",
+              "height": 339,
+              "image_path": "figures/2611.13610/figure-008.webp",
+              "kind": "figure",
+              "page": 4,
+              "width": 923
+            },
+            {
+              "caption": "Figure 8 Spatial masked pretraining on EHV frames [58; 133]. The encoder processes visible patches; encoded features and mask tokens enter the decoder to reconstruct masked content. Predictions are compared with ground-truth patches. The encoder transfers to Ego2Robot learning. The decoder is discarded. Video frames are from EgoDex [60].",
+              "figure_id": "figure-8-7",
+              "figure_number": "8",
+              "height": 285,
+              "image_path": "figures/2611.13610/figure-009.webp",
+              "kind": "figure",
+              "page": 13,
+              "width": 979
+            },
+            {
+              "caption": "Figure 9 Contrastive video-language alignment illustrated with drawer-opening and drawer-closing clips from EPICKITCHENS [34]. Matched video-text pairs are aligned, and mismatched pairs are separated. Text descriptions, similarity scores, and embedding positions are illustrative.",
+              "figure_id": "figure-9-5",
+              "figure_number": "9",
+              "height": 296,
+              "image_path": "figures/2611.13610/figure-010.webp",
+              "kind": "figure",
+              "page": 14,
+              "width": 970
+            },
+            {
+              "caption": "Table 1 Comparison of survey papers related to robot manipulation from video. Primary scope identifies each review’s central topic and data focus. Organizing and analytical perspective summarizes its classification framework and main analytical concerns. Our paper centers on egocentric human video (EHV) with Ego2Robot learning, where robot demonstrations and synthetic/simulated data are considered as complementary resources for grounding and augmentation. VLA: vision-language-action.",
+              "figure_id": "table-1-6",
+              "figure_number": "1",
+              "height": 363,
+              "image_path": "figures/2611.13610/table-011.webp",
+              "kind": "table",
+              "page": 3,
+              "width": 964
+            },
+            {
+              "caption": "Table 4 Comparison of representative synthetic and simulated data resources, grouped by generation method or resource type. Demos: demonstrations; EHV: egocentric human video; sim.: simulation. The Validation columns distinguish resource use from the evaluation setting. Under Use, Train denotes policy training, Plan denotes model-based planning, and Benchmark denotes policy evaluation. Under Eval., Sim and Real denote evaluation in simulation and on physical robots, respectively. NR indicates information not reported.",
+              "figure_id": "table-4-2",
+              "figure_number": "4",
+              "height": 780,
+              "image_path": "figures/2611.13610/table-012.webp",
+              "kind": "table",
+              "page": 21,
+              "width": 958
+            },
+            {
+              "caption": "Table 3 Comparison of representative robot demonstration resources. Multi: multiple robot embodiments; ep.: episodes; traj.: trajectories; env.: environments; h: hours. Obs./Act.: observations/actions; EE: end effector; proprio.: proprioception. Contact sensing: F/T, force/torque; T, tactile; T*, tactile on a subset; Mixed, heterogeneous coverage; NR, not reported. H–R pairs: ✓ human-robot demonstration associations; ✗ no pairing. Associations need not be frame-aligned or one-to-one. YUBI uses handheld grippers.",
+              "figure_id": "table-3-11",
+              "figure_number": "3",
+              "height": 813,
+              "image_path": "figures/2611.13610/table-013.webp",
+              "kind": "table",
+              "page": 20,
+              "width": 958
+            }
+          ],
+          "first_seen_at": "2026-11-10T21:00:00-05:00",
+          "hero_figure": "figures/2611.13610/hero.webp",
+          "novelty": 6,
+          "pdf_url": "https://arxiv.org/pdf/2611.13610",
+          "relevance": 9,
+          "selection_reason": "Directly addresses learning robot manipulation policies from egocentric human video, including latent action and dynamics modeling.",
+          "summary_status": "failed",
+          "title": "From Egocentric Human Video to Robot Manipulation in the Era of Embodied Intelligence",
+          "tldr": null,
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "robot-learning-and-manipulation",
+                "learning-from-human-video"
+              ],
+              "topic_id": "embodied-ai"
+            },
+            {
+              "subtopic_ids": [
+                "latent-action-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        },
+        {
+          "abstract": "Protein engineering requires navigating rugged fitness landscapes, where small sequence changes can produce large functional differences, but experimental screening can only sample a small fraction of sequence space. Thus, a central challenge is to efficiently traverse the large combinatorial space of mutations in silico. We introduce ProTEUS, a mutation-resolved world model for closed-loop protein evolution. Pretrained on deep mutational scanning assays, ProTEUS learns a joint representation of sequence, evolutionary, and structural information using MutationFormer, a mutation-biased attention architecture. Variants are represented as states in this joint latent space, and mutations define actions whose functional consequences are predicted. To support exploration of many mutants, we developed a fast, physics-constrained all-atom predictor that utilizes explicit geometric constraint enforcement to achieve >10 fold increase in speed than AlphaFold3 with guaranteed physical validity. Lastly, ProTEUS refines its prediction and understanding of protein activity through closed loop experimental feedback to guide evolution toward a desired phenotype. ProTEUS surpasses established models in both zero-shot and supervised fine-tuning mutation prediction tasks. We experimentally demonstrate its utility in two closed-loop multi-objective engineering campaigns on aldehyde dehydrogenase and levansucrase, yielding variants with >10 fold higher activity than wild type. ProTEUS provides a world-model framework that connects virtual evaluation of mutational outcomes with experimental learning for efficient protein evolution.",
+          "arxiv_id": "2611.13348",
+          "arxiv_url": "https://arxiv.org/abs/2611.13348",
+          "authors": [
+            "Yikun Zhang, Minghao Guo, Guangxue Xu, Peter Yichen Chen, Wojciech Matusik, Wengong Jin, Jingjing Chai, Kaiyi Jiang"
+          ],
+          "bullets": [],
+          "categories": [
+            "q-bio.BM",
+            "cs.AI"
+          ],
+          "figure_status": "failed",
+          "figures": [],
+          "first_seen_at": "2026-11-10T21:00:00-05:00",
+          "hero_figure": null,
+          "novelty": 9,
+          "pdf_url": "https://arxiv.org/pdf/2611.13348",
+          "relevance": 8,
+          "selection_reason": "ProTEUS is a mutation-resolved world model for closed-loop protein evolution, using a physics-constrained predictor and feedback loops. This fits World Models (Latent Action Models, Interactive World Models).",
+          "summary_status": "failed",
+          "title": "ProTEUS: A mutation-resolved world model for closed-loop protein evolution",
+          "tldr": null,
+          "topic_assignments": [
+            {
+              "subtopic_ids": [
+                "latent-action-models",
+                "interactive-world-models"
+              ],
+              "topic_id": "world-models"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-11-09",
       "paper_count": 1,
       "papers": [
@@ -27732,5 +28096,5 @@
   "schema_version": 1,
   "subtopic_id": "latent-action-models",
   "topic_id": "world-models",
-  "total_paper_count": 147
+  "total_paper_count": 150
 }

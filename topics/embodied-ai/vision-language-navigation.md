@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Vision-Language Navigation
 
-**190 papers total**
+**191 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-10 | [PhysMoE: Fast Spatial Grounding with Single-Token Coordinate Representation in Modality-Decoupled VLMs](https://arxiv.org/abs/2611.13000) | Embodied AI: Vision-Language Navigation, Robot Learning and Manipulation | PhysMoE accelerates coordinate grounding in embodied VLMs by combining modality-specific experts, single-token spatial encoding, and SDF supervision for irregular targets. | 9 | 8 |
 | 2026-11-05 | [PathPilot: An Adaptive Question-Conditioned Multi-Magnification Navigation Agent for Whole-Slide Image Analysis](https://arxiv.org/abs/2610.16734) | Embodied AI: Vision-Language Navigation | PathPilot adaptively navigates whole-slide images across regions and magnifications, using the diagnostic question and accumulated evidence to guide exploration like a pathologist. | 9 | 8 |
 | 2026-11-04 | [Jev with Foresight: Safe Language-Guided Autonomous Driving via a Language World Model](https://arxiv.org/abs/2611.05448) | Embodied AI: Vision-Language Navigation; World Models: Interactive World Models | Jev-AD improves language-guided driving safety by predicting nearby vehicles’ responses to candidate actions before making decisions. | 8 | 7 |
 | 2026-11-03 | [WayTrace: A Map-to-Language-to-Trace Hierarchy for Embodied Urban Navigation](https://arxiv.org/abs/2611.05129) | Embodied AI: Vision-Language Navigation, Robot Navigation | WayTrace enables robots to follow long-range urban map directions by converting them into language-guided visual traces for motion control. | 9 | 7 |

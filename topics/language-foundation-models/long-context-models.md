@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # Long-Context Models
 
-**186 papers total**
+**189 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-10 | [TreeAgent: Structure-Aware Memory Agent for Processing Long Hierarchical Data](https://arxiv.org/abs/2611.13946) | Language Foundation Models: LLM Memory, Long-Context Models | TreeAgent improves long hierarchical-data processing by preserving structure during segmentation and memory access, yielding an average 3.61% gain across evaluated memory agents. | 8 | 6 |
+| 2026-11-10 | [POEM: Output-Relative Block-Sparse Attention for Long-Context Prefilling](https://arxiv.org/abs/2611.13578) | Efficient AI: Efficient Attention; Language Foundation Models: Long-Context Models | Large language models (LLMs) have shown strong capabilities across diverse applications, making both safety and utility essential for reliable deployment. Jailbreak attacks use diverse forms of adversarial prompting to bypass alignment saf… | 6 | 6 |
+| 2026-11-10 | [ADIndex: Layer-Adaptive Sparse Attention Indexing via Group-Level Distillation](https://arxiv.org/abs/2611.12956) | Efficient AI: Token Pruning and Eviction, Efficient Attention; Language Foundation Models: Long-Context Models | ADIndex accelerates DeepSeek Sparse Attention indexing for long-context inference by sharing group-level token scans while preserving near-lossless task performance. | 9 | 8 |
 | 2026-11-08 | [Query-Guided RoPE Modulation for Lost-in-the-Middle Mitigation in Long-Context LLMs](https://arxiv.org/abs/2611.09554) | Language Foundation Models: Long-Context Models | QGPM is a training-free, query-guided RoPE modification that reduces lost-in-the-middle effects in long-context language models. | 8 | 7 |
 | 2026-11-04 | [SpecCompact: Accelerating LLM Agent Context Compaction with Slot-Parallel Semantic Speculative Verification](https://arxiv.org/abs/2611.06876) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: LLM Memory, Long-Context Models | SpecCompact speeds up LLM-agent context compaction by speculatively generating summary slots in parallel and having a target model verify and repair them. | 7 | 7 |
 | 2026-11-04 | [LooM: Loop-Invariant Memory for Causal Encoder-Decoder Language Models](https://arxiv.org/abs/2611.06835) | Efficient AI: KV Cache and Memory Efficiency; Language Foundation Models: Large Language Models, Long-Context Models | LooM enables flexible, memory-efficient looping in causal encoder-decoder language models, allowing deployment-time depth adjustment without increasing cache size. | 8 | 8 |
