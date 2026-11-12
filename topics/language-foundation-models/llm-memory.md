@@ -6,10 +6,11 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # LLM Memory
 
-**835 papers total**
+**836 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-11 | [Voltic: Distinguishing Volatility from Stochasticity in Recurrent Memory](https://arxiv.org/abs/2610.05700) | Language Foundation Models: LLM Memory | Voltic improves recurrent memory by distinguishing changing associations from noisy observations, enabling more responsive and uncertainty-aware updates. | 7 | 8 |
 | 2026-11-10 | [When Should Agents Remember? Falsification-Gated Self-Evolution for LLM Agents](https://arxiv.org/abs/2611.14326) | Language Foundation Models: LLM Memory | FGSE makes LLM agents test experience-derived memory updates as falsifiable hypotheses before permanently adopting them, improving reliable long-term adaptation. | 7 | 7 |
 | 2026-11-10 | [Don't Just Trust Your Memory: Evidence-Linked Memory Reduces Memory-Induced Degradation in LLM Agents](https://arxiv.org/abs/2611.14320) | Language Foundation Models: LLM Memory | WikiTrace reduces LLM agents’ memory-induced failures by linking lessons to trajectory evidence that agents can inspect and verify before acting. | 7 | 7 |
 | 2026-11-10 | [Personalized Memory Rubrics: Learning What to Remember per User via Rubric-Guided Credit Assignment](https://arxiv.org/abs/2611.14017) | Language Foundation Models: LLM Memory | PMR learns user-specific memory update policies by converting terminal feedback into fine-grained, rubric-guided credit assignment without adding deployment-time inference cost. | 7 | 7 |

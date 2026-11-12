@@ -6,10 +6,13 @@ SOURCE: configs/topics.yaml + data/papers.json
 
 # 3D Foundation Models
 
-**420 papers total**
+**423 papers total**
 
 | Date | Paper | Topics | TL;DR | Rel. | Nov. |
 |---|---|---|---|---:|---:|
+| 2026-11-11 | [Data Scaling Laws in Stereo Matching: From In-domain Fitting to Cross-domain Generalization](https://arxiv.org/abs/2610.38600) | 3D Vision: 3D Foundation Models | In the era of large models, stereo matching is developing towards generalizable foundation models trained on million-scale synthetic images. However, how model performance scales up with synthetic data is still underexplored. In this work,… | 7 | 7 |
+| 2026-11-11 | [3D Occupancy-Language Fields from mmWave Radar](https://arxiv.org/abs/2610.37929) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Radar systems can recover scene geometry and recognize predefined categories, but these outputs do not provide a persistent spatial representation for open-ended language queries. Such queries require linking observations from different vi… | 9 | 8 |
+| 2026-11-11 | [Deep Prior Learning for Embodied Perception](https://arxiv.org/abs/2610.05531) | Embodied AI; Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Embodied systems need geometric perception that exploits available observations beyond images alone. Recent feed-forward 3D models incorporate geometric priors, including camera poses, intrinsics, and depth. However, handling noisy poses,… | 8 | 7 |
 | 2026-11-10 | [UGG: Unified Generative Geometry Model](https://arxiv.org/abs/2611.14440) | World Models: Video World Models; 3D Vision: 3D Foundation Models | Understanding 4D scenes is a core challenge in visual intelligence, requiring models to jointly capture scene geometry, appearance, and dynamics from partial observations. However, existing approaches are subdivided into feedforward models… | 8 | 8 |
 | 2026-11-10 | [ViGA-FLAME: Aligning Latent Visual and Geometric Representations for Robust 3D Head Expression Estimation](https://arxiv.org/abs/2611.14218) | 3D Vision: 3D Foundation Models | Estimating 3D head expression from a single image requires mapping visual appearance to underlying facial geometry. We propose ViGA-FLAME, a two-stage framework that aligns semantic visual features with a structured geometric latent space.… | 8 | 7 |
 | 2026-11-10 | [Satellite Pretraining Is Not One Thing: A Matched-Pair Study of Generic and Earth-Observation Foundation Models for Scene Classification](https://arxiv.org/abs/2611.13849) | Multimodal Foundation Models: Spatial Intelligence; 3D Vision: 3D Foundation Models | Geospatial foundation models are pretrained on satellite and aerial imagery, but whether such an encoder beats a strong generic one for few-label land-use/land-cover mapping remains unclear, as prior comparisons rarely isolate the pretrain… | 8 | 7 |
