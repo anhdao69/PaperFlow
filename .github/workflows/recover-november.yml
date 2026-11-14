@@ -1,0 +1,55 @@
+name: Recover November 12-13
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: paperflow-november-recovery
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            src
+            configs
+            tests/live
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e '.[dev]'
+      - name: Check OpenRouter before publication work
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          PAPERFLOW_LIVE_OPENROUTER: "1"
+        run: >-
+          python -m pytest tests/live/test_openrouter_smoke.py
+          -q -x --tb=short -k deepseek_v4_flash
+  november_12:
+    needs: preflight
+    uses: ./.github/workflows/paperflow-daily.yml
+    with:
+      catch_up: true
+      recovery_date: "2026-11-12"
+    secrets:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+  november_13:
+    needs: november_12
+    uses: ./.github/workflows/paperflow-daily.yml
+    with:
+      catch_up: true
+      recovery_date: "2026-11-13"
+    secrets:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}

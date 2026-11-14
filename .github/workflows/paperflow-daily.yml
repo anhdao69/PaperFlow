@@ -27,6 +27,8 @@ on:
           - "2026-10-07"
           - "2026-10-08"
           - "2026-10-13"
+          - "2026-11-12"
+          - "2026-11-13"
   workflow_call:
     inputs:
       catch_up:
@@ -76,6 +78,8 @@ jobs:
           previous = state.get("last_successful_local_date")
           if previous in {"2026-10-05", "2026-10-06", "2026-10-07"} and not os.environ.get("RECOVERY_DATE"):
               raise SystemExit("October recovery is pending; use Recover October 6-8 or an explicit recovery_date.")
+          if previous in {"2026-11-11", "2026-11-12"} and not os.environ.get("RECOVERY_DATE"):
+              raise SystemExit("November recovery is pending; use Recover November 12-13 or an explicit recovery_date.")
           PY
       - name: Check publication schedule
         id: schedule
@@ -119,6 +123,7 @@ jobs:
             case "$RECOVERY_DATE" in
               2026-10-06|2026-10-07|2026-10-08) snapshot="recovery/2026-10-09/$RECOVERY_DATE.json" ;;
               2026-10-13) snapshot="recovery/2026-10-14/$RECOVERY_DATE.json" ;;
+              2026-11-12|2026-11-13) snapshot="recovery/2026-11-14/$RECOVERY_DATE.json" ;;
               *) echo "Unsupported recovery date"; exit 1 ;;
             esac
             python -m paperflow.main \
