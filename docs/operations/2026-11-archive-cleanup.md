@@ -32,3 +32,21 @@ cleanup fails the expected-count check harmlessly.
 This reduces the current checkout and deployment footprint. Previous Git commits
 retain recoverable copies, so this operation does not purge GitHub history or
 reduce all historical repository storage. No force-push or history rewrite is used.
+
+## Queued execution without interrupting recovery
+
+The one-off branch `maintenance/archive-cleanup-2026-11-14` runs this cleanup
+through the already registered `recover-november.yml` workflow. On that branch
+only, the workflow is named **Cleanup oldest month after November recovery**.
+It shares the recovery's caller concurrency group, with cancellation disabled,
+so it queues behind the entire active two-day recovery. Its cleanup job also
+holds the daily publication lock. The date gate still requires successful state
+through November 13 before any deletion.
+
+The job checks out the reviewed cleanup code at its immutable dispatch SHA,
+separately checks out the latest `main`, and runs the cleanup script using the
+published application's dependencies. Only validated generated content is
+committed to `main`. It explicitly dispatches Pages after the push. This avoids
+pushing source changes into `main` while recovery is preparing its own commits.
+The branch-only replacement of the recovery workflow is an execution wrapper;
+do not merge that replacement over the normal November recovery workflow.
